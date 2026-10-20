@@ -2367,6 +2367,12 @@ namespace Azure.AI.Projects
         protected ProjectsRealtimeSessionClient() : base (default(System.ClientModel.ApiKeyCredential), default(System.Uri), default(string), default(string), default(OpenAI.Realtime.RealtimeClient)) { }
         protected override System.Threading.Tasks.Task ConnectAsync(string queryString = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+    public partial class ProjectsRealtimeSessionClientOptions : OpenAI.Realtime.RealtimeSessionClientOptions
+    {
+        public ProjectsRealtimeSessionClientOptions() { }
+        public Azure.AI.Projects.Agents.VoiceAgentTransport? Transport { get { throw null; } set { } }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ProjectsRoutine : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ProjectsRoutine>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsRoutine>
     {
@@ -4590,13 +4596,11 @@ namespace Azure.AI.Projects.Memory
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0006")]
         public virtual System.ClientModel.Primitives.OperationResult UpdateMemories(bool waitUntilCompleted, string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryUpdateResult> UpdateMemories(string memoryStoreName, Azure.AI.Projects.Memory.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult UpdateMemories(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0006")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> UpdateMemoriesAsync(bool waitUntilCompleted, string memoryStoreName, Azure.AI.Projects.Memory.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0006")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> UpdateMemoriesAsync(bool waitUntilCompleted, string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, Azure.AI.Projects.Memory.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateMemoriesAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult UpdateMemory(string name, string memoryId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem> UpdateMemory(string name, string memoryId, string content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateMemoryAsync(string name, string memoryId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }

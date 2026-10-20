@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> An object representing collection of ValidatedSolutionRecipes and their operations over a ValidatedSolutionRecipeResource. </returns>
         public virtual ValidatedSolutionRecipeCollection GetValidatedSolutionRecipes(AzureLocation location)
         {
-            return GetCachedClient(client => new ValidatedSolutionRecipeCollection(client, Id, location));
+            return new ValidatedSolutionRecipeCollection(Client, Id, location);
         }
 
         /// <summary>

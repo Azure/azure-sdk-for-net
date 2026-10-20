@@ -24,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Voice Agent realtime transport](#voice-agent-realtime-transport)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -52,6 +53,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Toolboxes](#toolboxes)
   - [Routines](#routines)
 - [Tracing](#tracing)
+    - [Voice Agent REST and realtime tracing](#voice-agent-rest-and-realtime-tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
     - [Enabling content recording](#enabling-content-recording)
@@ -98,6 +100,33 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new Defau
 Once the `AIProjectClient` is created, you can use properties such as `.Datasets` and `.Indexes` on this client to perform relevant operations.
 
 ## Examples
+
+### Voice Agent realtime transport
+
+To select a transport for a Voice Agent connection, pass `ProjectsRealtimeSessionClientOptions`
+to `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync`:
+
+```C#
+#pragma warning disable AAIP001 // VoiceAgentTransport is experimental.
+#pragma warning disable AAIP002 // The realtime client is experimental.
+#pragma warning disable OPENAI002 // OpenAI realtime types are experimental.
+ProjectsRealtimeSessionClientOptions options = new()
+{
+    Transport = VoiceAgentTransport.Websocket,
+    QueryString = "store=true"
+};
+using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient.StartSessionAsync(
+    "my-voice-agent", intent: null, options: options);
+```
+
+Use `Transport` to select the connection transport; the SDK handles the connection details.
+Setting `VoiceAgentTransport.Webrtc` selects WebRTC signaling over the WebSocket; your application
+must also handle the peer connection, media, and SDP exchange.
+
+See the [runnable WebSocket transport sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketTransport.md)
+for a complete text exchange using the typed transport with `store=true` and a REST read of the
+persisted conversation. The [WebSocket audio sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_WebSocketAudio.md)
+demonstrates streaming PCM input and output while logging actual byte counts.
 
 ### Performing Agent operations
 
@@ -1957,6 +1986,53 @@ var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddConsoleExporter() // Export traces to the console
                 .Build();
 ```
+
+### Voice Agent REST and realtime tracing
+
+Voice Agent tracing uses the existing GenAI tracing and content-recording settings described above.
+No Voice Agent-specific option or environment variable is required. Register an `ActivityListener`
+or an OpenTelemetry provider for `Azure.AI.Projects.*` before starting operations.
+
+Voice Agent creation enriches the existing Foundry GenAI traces. Telephony operations, conversation
+operations, and high-level agent generation retain their original SDK diagnostic scopes and operation
+names; their REST implementations are unchanged.
+
+Realtime Activities use the source `Azure.AI.Projects.ProjectsRealtimeClient`. Connection and
+session Activities are named `voice_agents.realtime.connect` and `voice_agents.realtime.session`;
+each server-created response has an `invoke_agent` Activity parented to its session. These are
+client Activities. They include endpoint hostname, agent/session/response identifiers, token usage
+when returned by the service, reported audio formats/sample rates, transferred audio byte counts,
+and time to first nonempty text or output-audio delta. Session spans aggregate input and output
+audio bytes; response spans retain their own output-audio counts. Realtime spans identify the
+agent type as `voice`.
+Tool requests, tool outputs, cancellation requests, session updates, and safe error notifications
+are events rather than separate spans for every message or audio chunk. The SDK does not create
+tool-execution spans because the application, not the SDK, executes client-side functions.
+Session lifecycle events are named `voice_agents.session.created`, `voice_agents.session.updated`,
+and `voice_agents.session.update`.
+
+Realtime tracing respects `AIProjectClientOptions.EnableDistributedTracing = false`. When GenAI
+tracing is disabled or no listener is registered, the realtime connection is not wrapped for
+instrumentation. Incoming events are observed as the application reads updates, matching the
+OpenAI realtime client's pull-based receive behavior. Dispose the session to finish its Activity
+and any interrupted response Activities.
+
+The `Azure-AI-Projects-Realtime` EventSource emits connection states and protocol milestone names
+with trace/span identifiers. It honors the existing logging enablement setting and can be consumed
+with an `AzureEventSourceListener`. It does not log protocol payloads or exception messages.
+Raw audio, credentials, authentication headers, query strings, and close reasons are never added
+by the realtime instrumentation. Text, transcripts, and tool details are excluded unless the existing
+content-recording option is enabled; opted-in content is bounded. This includes Voice Agent
+creation instructions, input-audio transcripts correlated to their items, and tool message details.
+Tool results use the OpenTelemetry `tool_call_response` part's `response` field.
+Enriched Voice Agent creation traces do not record request or response bodies. Other REST
+diagnostic scopes are unchanged.
+
+For complete runnable examples, see the
+[Voice Agent REST telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Rest.md)
+and the
+[Voice Agent realtime telemetry sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample_VoiceAgent_Telemetry_Realtime.md).
+Both use the existing Foundry enablement settings and OpenTelemetry console exporter.
 
 ### Enabling content recording
 

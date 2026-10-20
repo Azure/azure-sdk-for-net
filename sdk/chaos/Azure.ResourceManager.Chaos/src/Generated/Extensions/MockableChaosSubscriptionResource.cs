@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> An object representing collection of ChaosActions and their operations over a ChaosActionResource. </returns>
         public virtual ChaosActionCollection GetChaosActions(AzureLocation location)
         {
-            return GetCachedClient(client => new ChaosActionCollection(client, Id, location));
+            return new ChaosActionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> An object representing collection of ChaosTargetMetadata and their operations over a ChaosTargetMetadataResource. </returns>
         public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
         {
-            return GetCachedClient(client => new ChaosTargetMetadataCollection(client, Id, location));
+            return new ChaosTargetMetadataCollection(Client, Id, location);
         }
 
         /// <summary>
