@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal AccountPropertiesPatch Properties { get; set; }
 
         /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories
+        public IList<NetAppAccountActiveDirectoryPatch> ActiveDirectories
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Encryption settings. </summary>
-        public NetAppAccountEncryption Encryption
+        public NetAppAccountEncryptionPatch Encryption
         {
             get
             {
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain
+        public string NfsV4IDDomain
         {
             get
             {
-                return Properties is null ? default : Properties.NfsV4IdDomain;
+                return Properties is null ? default : Properties.NfsV4IDDomain;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new AccountPropertiesPatch();
                 }
-                Properties.NfsV4IdDomain = value;
+                Properties.NfsV4IDDomain = value;
             }
         }
     }
