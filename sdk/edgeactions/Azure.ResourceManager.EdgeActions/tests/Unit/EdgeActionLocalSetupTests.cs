@@ -20,12 +20,22 @@ namespace Azure.ResourceManager.EdgeActions.Tests
         [TestCase(RecordedTestMode.Live, "TRUE", false, null, null, true)]
         [TestCase(RecordedTestMode.Playback, "true", false, null, null, false)]
         [TestCase(null, "true", false, null, null, false)]
-        [TestCase(RecordedTestMode.Record, null, false, null, null, false)]
+        [TestCase(RecordedTestMode.Record, null, false, null, null, true)]
+        [TestCase(RecordedTestMode.Live, null, false, null, null, true)]
+        [TestCase(RecordedTestMode.Record, "", false, null, null, true)]
+        [TestCase(RecordedTestMode.Record, " ", false, null, null, true)]
+        [TestCase(RecordedTestMode.Playback, null, false, null, null, false)]
+        [TestCase(null, null, false, null, null, false)]
         [TestCase(RecordedTestMode.Record, "false", false, null, null, false)]
+        [TestCase(RecordedTestMode.Live, "FALSE", false, null, null, false)]
         [TestCase(RecordedTestMode.Record, "true", true, null, null, false)]
+        [TestCase(RecordedTestMode.Record, null, true, null, null, false)]
+        [TestCase(RecordedTestMode.Live, null, true, null, null, false)]
         [TestCase(RecordedTestMode.Record, "true", false, "test-secret", null, false)]
         [TestCase(RecordedTestMode.Record, "true", false, null, "test-pipeline-token", false)]
-        public void CliSetupIsLimitedToOptedInLocalServiceTests(RecordedTestMode? mode, string enabled, bool isCI,
+        [TestCase(RecordedTestMode.Record, null, false, "test-secret", null, false)]
+        [TestCase(RecordedTestMode.Live, null, false, null, "test-pipeline-token", false)]
+        public void CliSetupDefaultsToLocalServiceTestsOnly(RecordedTestMode? mode, string enabled, bool isCI,
             string clientSecret, string pipelineToken, bool expected)
         {
             Assert.That(EdgeActionsManagementTestEnvironment.ShouldUseAzureCli(mode, enabled, isCI, clientSecret, pipelineToken), Is.EqualTo(expected));

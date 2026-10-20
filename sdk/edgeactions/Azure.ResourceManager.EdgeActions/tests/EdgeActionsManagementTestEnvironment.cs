@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeActions.Tests
         internal static bool ShouldUseAzureCli(RecordedTestMode? mode, string enabled, bool isCI, string clientSecret, string pipelineToken)
         {
             return mode is RecordedTestMode.Record or RecordedTestMode.Live
-                && string.Equals(enabled, "true", StringComparison.OrdinalIgnoreCase)
+                && (string.IsNullOrWhiteSpace(enabled) || string.Equals(enabled, "true", StringComparison.OrdinalIgnoreCase))
                 && !isCI
                 && string.IsNullOrWhiteSpace(clientSecret)
                 && string.IsNullOrWhiteSpace(pipelineToken);

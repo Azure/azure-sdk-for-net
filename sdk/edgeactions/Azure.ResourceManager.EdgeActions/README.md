@@ -135,13 +135,12 @@ To create fresh recordings using an Azure CLI login with permission to manage th
 ```powershell
 az login
 az account set --subscription "<subscription-id>"
-$env:EDGEACTIONS_USE_AZURE_CLI = "true"
 $env:AZURE_TEST_MODE = "Record"
 dotnet test sdk\edgeactions\Azure.ResourceManager.EdgeActions\tests\Azure.ResourceManager.EdgeActions.Tests.csproj -f net10.0
 Remove-Item Env:AZURE_TEST_MODE
 ```
 
-With this opt-in, local Record/Live setup reads the selected Azure CLI account and fills missing
+By default, local Record/Live setup reads the selected Azure CLI account and fills missing
 subscription and tenant settings for the test process. Explicit `EDGEACTIONS_SUBSCRIPTION_ID` /
 `EDGEACTIONS_TENANT_ID` or `AZURE_SUBSCRIPTION_ID` / `AZURE_TENANT_ID` settings remain authoritative:
 an explicit subscription selects the account queried, and a mismatched tenant fails setup rather
@@ -151,7 +150,7 @@ Before recording requests, setup checks `Microsoft.Cdn` registration in that sub
 the provider only when needed and waits up to 10 minutes for registration to complete. This requires
 permission to register resource providers; authentication, permission, and timeout failures fail setup.
 Initialization runs once per test process and is excluded from recordings. Playback performs no CLI
-account lookup or provider registration, even when the opt-in remains set. CI, service-principal, and
+account lookup or provider registration. CI, service-principal, and
 pipeline credentials retain their existing behavior.
 
 To record just the version deployment and execution-filter scenarios with the same credentials:
@@ -174,8 +173,9 @@ total budget for two code deployments and the swap; its existing filter steps sh
 The framework's shorter playback limits remain unchanged, and resource-group cleanup runs
 independently of the test's cancellation token.
 
-The CLI credential is an opt-in for local development; normal framework credentials remain
-the default. Test Proxy sanitizes signed polling query values without collapsing status and
+Set `EDGEACTIONS_USE_AZURE_CLI=false` to opt out of CLI discovery and automatic provider registration
+and use the normal framework credential chain instead. Explicit Record/Live mode is still required;
+the default test mode remains Playback. Test Proxy sanitizes signed polling query values without collapsing status and
 result URLs, and playback continues to match API versions.
 
 Recordings are stored in the external Azure SDK assets repository, not in this package.
