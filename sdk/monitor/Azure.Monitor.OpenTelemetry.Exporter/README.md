@@ -420,14 +420,6 @@ In AOT scenarios, you can configure the Azure Monitor Exporter using one of the 
         });
     ```
 
-## Internal Attach statistics in multi-endpoint mode
-
-When the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch is enabled, internal Attach SDK statistics report a separate metric point for each customer instrumentation key observed in routed traces, logs, or metrics. Each point carries that key in `cikey` and the application's existing `rp` and `rpId`. Repeated observations across signals do not create additional points within the long reporting interval.
-
-Attach uses one SDKStats meter provider and periodic reader. A connection string is not required, and newly observed keys are eligible at the next collection without waiting for earlier keys' reporting intervals. Points go to the EU or non-EU internal stats destination according to the observed ingestion endpoint. The `APPLICATIONINSIGHTS_STATS_CONNECTION_STRING` override takes precedence. Distro configuration and disablement are resolved independently for each region.
-
-Each shared stats owner tracks up to 2,000 customer associations. Additional associations are skipped silently while at capacity, without changing customer telemetry delivery. Inactive associations expire after the long reporting interval once their metric slots can safely be reused. The existing internal SDKStats opt-outs still apply. This does not add per-customer Network SDK statistics or new resource-provider detection.
-
 ## Multi-endpoint routing with Microsoft Entra ID
 
 With multi-endpoint routing enabled (the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch), each telemetry item names its destination with the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes. To send to a resource that uses Microsoft Entra ID authentication:
