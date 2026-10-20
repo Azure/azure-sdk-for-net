@@ -5,8 +5,11 @@ namespace Azure.ResourceManager.Relationships.Mocking
 {
     public partial class MockableRelationshipsResourceGroupResource
     {
-        // TODO: Remove this workaround after regenerating with the fix for
-        // https://github.com/Azure/azure-sdk-for-net/issues/62600 (resource-type API-version overrides).
+        // These contains list operations have no resource association in generator metadata,
+        // so their generated REST client does not apply resource-type API-version overrides.
+        // Explicitly use the known resource-type key to preserve ArmClientOptions.SetApiVersion behavior.
+        // There is currently no general solution because ArmClientOptions only configures
+        // resource-type API versions, not versions for individual non-resource operations.
         private ContainsRelationships ContainsRelationshipsRestClient
         {
             get
