@@ -3,6 +3,7 @@
 ## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
 
 ### Breaking Changes
@@ -16,6 +17,8 @@
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 
 ### Bugs Fixed
+- Preserved typed Realtime/Live definition dispatch and existing Realtime model-factory signatures.
+- Fixed Live history pagination to honor `has_more` even when a terminal page retains `last_id`.
 
 ### Other Changes
 

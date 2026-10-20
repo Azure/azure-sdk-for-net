@@ -24,6 +24,9 @@ namespace Azure.AI.Projects.Agents
         };
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private BetaVoiceAgentsLiveConversations _cachedBetaVoiceAgentsLiveConversations;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
 
@@ -81,6 +84,14 @@ namespace Azure.AI.Projects.Agents
         {
             return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
         }
+
+        /// <summary> Initializes a new instance of BetaVoiceAgentsLiveConversations. </summary>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        public virtual BetaVoiceAgentsLiveConversations GetBetaVoiceAgentsLiveConversationsClient()
+        {
+            return Volatile.Read(ref _cachedBetaVoiceAgentsLiveConversations) ?? Interlocked.CompareExchange(ref _cachedBetaVoiceAgentsLiveConversations, new BetaVoiceAgentsLiveConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaVoiceAgentsLiveConversations;
+        }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
         public virtual AgentToolboxes GetAgentToolboxesClient()
