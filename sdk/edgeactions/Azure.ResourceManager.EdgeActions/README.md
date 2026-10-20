@@ -104,7 +104,7 @@ For more information about Microsoft Azure SDK, see [this website](https://azure
 
 ### Running tests
 
-The tests use the repository's [management recorded-test framework](../../core/Azure.Core.TestFramework/README.md).
+The tests use the repository's [management recorded-test framework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md).
 Run from the repository root:
 
 ```powershell
