@@ -42,6 +42,12 @@ namespace Azure.ResourceManager.Network
         public static BinaryData FormatBinaryData(BinaryData value) => value;
         internal static void SerializeCertificateData(Utf8JsonWriter writer, BinaryData value)
         {
+            if (value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(value);
 #else

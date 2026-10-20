@@ -155,6 +155,39 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(document.RootElement.GetProperty("properties").GetProperty("publicCertData").ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
 
+        [TestCase("J")]
+        [TestCase("W")]
+        public void VpnClientRootCertificateWritesMissingDataAsJsonNull(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var model = ModelReaderWriter.Read<VpnClientRootCertificate>(
+                BinaryData.FromString("{\"properties\":{}}"), options, AzureResourceManagerNetworkContext.Default);
+
+            Assert.That(model.PublicCertData, Is.Null);
+
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(model, options, AzureResourceManagerNetworkContext.Default));
+            Assert.That(document.RootElement.GetProperty("properties").GetProperty("publicCertData").ValueKind, Is.EqualTo(JsonValueKind.Null));
+        }
+
+        [TestCase("J", false)]
+        [TestCase("W", false)]
+        [TestCase("J", true)]
+        [TestCase("W", true)]
+        public void VpnClientRootCertificateWritesCallerNullAsJsonNull(string format, bool setNullAfterConstruction)
+        {
+            var model = new VpnClientRootCertificate(setNullAfterConstruction ? BinaryData.FromObjectAsJson(Base64Certificate) : null);
+            if (setNullAfterConstruction)
+            {
+                model.PublicCertData = null;
+            }
+
+            Assert.That(model.PublicCertData, Is.Null);
+
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(
+                model, new ModelReaderWriterOptions(format), AzureResourceManagerNetworkContext.Default));
+            Assert.That(document.RootElement.GetProperty("properties").GetProperty("publicCertData").ValueKind, Is.EqualTo(JsonValueKind.Null));
+        }
+
         [TestCase("J", "data")]
         [TestCase("W", "data")]
         [TestCase("J", "validatedCertData")]
