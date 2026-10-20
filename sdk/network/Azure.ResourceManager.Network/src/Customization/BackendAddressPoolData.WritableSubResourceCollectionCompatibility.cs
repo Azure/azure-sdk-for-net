@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the BackendAddressPoolData type. </summary>
     [CodeGenSuppress("InboundNatRules")]
     [CodeGenSuppress("LoadBalancingRules")]
     [CodeGenSuppress("OutboundRules")]

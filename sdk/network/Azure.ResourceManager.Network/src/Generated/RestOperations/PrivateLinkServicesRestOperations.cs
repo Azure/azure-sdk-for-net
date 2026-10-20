@@ -353,14 +353,14 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesPrivateLinkServicesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/autoApprovedPrivateLinkServices", false);
             if (_apiVersion != null)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAutoApprovedPrivateLinkServicesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetAutoApprovedPrivateLinkServicesPrivateLinkServicesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string location, RequestContext context)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/autoApprovedPrivateLinkServices", false);
             if (_apiVersion != null)
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAutoApprovedPrivateLinkServicesByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string location, RequestContext context)
+        internal HttpMessage CreateNextGetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

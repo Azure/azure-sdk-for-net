@@ -10,13 +10,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionListEntity type. </summary>
     [CodeGenSuppress("VirtualNetworkGatewayConnectionListEntity", typeof(WritableSubResource), typeof(VirtualNetworkGatewayConnectionType))]
     public partial class VirtualNetworkGatewayConnectionListEntity
     {
         /// <summary> Initializes a new instance of the VirtualNetworkGatewayConnectionListEntity class. </summary>
         public VirtualNetworkGatewayConnectionListEntity(WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType)
-            : this(new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
+            : this(null, null, null, null, null, null, new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
                 null,
                 null,
                 null,
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                 null,
                 null,
                 null,
-                null))
+                null), null)
         {
         }
     }

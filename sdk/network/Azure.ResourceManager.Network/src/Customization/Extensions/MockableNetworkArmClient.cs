@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkArmClient type. </summary>
     public partial class MockableNetworkArmClient
     {
         /// <summary> Invokes the GetVirtualMachineScaleSetNetworkResource compatibility operation. </summary>

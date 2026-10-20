@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declarations for generated members that intentionally hide inherited ARM members. </summary>
     [CodeGenSuppress("Name")]
     public partial class ExpressRouteProviderPortData
     {

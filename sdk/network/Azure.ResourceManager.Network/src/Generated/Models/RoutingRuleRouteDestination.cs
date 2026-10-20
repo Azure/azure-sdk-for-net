@@ -25,24 +25,24 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(destinationAddress, nameof(destinationAddress));
 
-            Type = @type;
+            DestinationType = @type;
             DestinationAddress = destinationAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
-        /// <param name="type"> Destination type. </param>
+        /// <param name="destinationType"> Destination type. </param>
         /// <param name="destinationAddress"> Destination address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRuleRouteDestination(RoutingRuleDestinationType destinationType, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            DestinationType = destinationType;
             DestinationAddress = destinationAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Destination type. </summary>
         [WirePath("type")]
-        public RoutingRuleDestinationType Type { get; set; }
+        public RoutingRuleDestinationType DestinationType { get; set; }
 
         /// <summary> Destination address. </summary>
         [WirePath("destinationAddress")]

@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the StaticCidrProperties type. </summary>
     public partial class StaticCidrProperties
     {
         /// <summary> Gets or sets the ProvisioningState compatibility property. </summary>

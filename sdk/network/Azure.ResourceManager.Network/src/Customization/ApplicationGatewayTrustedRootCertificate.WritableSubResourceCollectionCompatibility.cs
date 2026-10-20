@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayTrustedRootCertificate type. </summary>
     [CodeGenSuppress("Data")]
     public partial class ApplicationGatewayTrustedRootCertificate
     {

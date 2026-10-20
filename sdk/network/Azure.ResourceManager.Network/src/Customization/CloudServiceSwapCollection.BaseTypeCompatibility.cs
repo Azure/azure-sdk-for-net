@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the CloudServiceSwapCollection type. </summary>
     public partial class CloudServiceSwapCollection : IEnumerable<CloudServiceSwapResource>, IAsyncEnumerable<CloudServiceSwapResource>
     {
         IEnumerator<CloudServiceSwapResource> IEnumerable<CloudServiceSwapResource>.GetEnumerator() => ((IEnumerable<CloudServiceSwapResource>)Array.Empty<CloudServiceSwapResource>()).GetEnumerator();

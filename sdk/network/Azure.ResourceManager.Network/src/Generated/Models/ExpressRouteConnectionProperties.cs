@@ -19,13 +19,9 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/>. </summary>
-        /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitPeering"/> is null. </exception>
-        public ExpressRouteConnectionProperties(ResourceIdentifier expressRouteCircuitPeering)
+        public ExpressRouteConnectionProperties()
         {
-            Argument.AssertNotNull(expressRouteCircuitPeering, nameof(expressRouteCircuitPeering));
 
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/>. </summary>
@@ -38,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteConnectionProperties(NetworkProvisioningState? provisioningState, ResourceIdentifier expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteConnectionProperties(NetworkProvisioningState? provisioningState, ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
@@ -57,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ExpressRoute circuit peering. </summary>
         [WirePath("expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeering { get; set; }
+        internal ExpressRouteCircuitPeeringId ExpressRouteCircuitPeering { get; set; }
 
         /// <summary> Authorization key to establish the connection. </summary>
         [WirePath("authorizationKey")]
@@ -82,5 +78,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
         public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+
+        /// <summary> The ID of the ExpressRoute circuit peering. </summary>
+        [WirePath("expressRouteCircuitPeering.id")]
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            }
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                {
+                    ExpressRouteCircuitPeering = new ExpressRouteCircuitPeeringId();
+                }
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
     }
 }

@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceData type. </summary>
     public partial class NetworkVerifierWorkspaceData
     {
         /// <summary> Invokes the this compatibility operation. </summary>

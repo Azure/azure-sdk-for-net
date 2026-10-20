@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnConnectionData type. </summary>
     public partial class VpnConnectionData
     {
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -603,7 +604,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = {
                         new SubnetData() {AddressPrefix = "10.0.0.0/24" },
                         new SubnetData() {AddressPrefix = "10.0.1.0/24" }
@@ -735,7 +736,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.21.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = { "10.21.1.1", "10.21.2.4" } },
+                DhcpOptionsDnsServers = { "10.21.1.1", "10.21.2.4" },
                 Subnets = {
                         new SubnetData() {AddressPrefix = "10.21.1.0/24" },
                         new SubnetData() {AddressPrefix = "10.21.0.0/24" }
@@ -831,7 +832,9 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task ApplicationGatewayAvailableSslOptionsInfoTest()
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync(System.Threading.CancellationToken.None);
+#pragma warning disable CS0618 // This live test intentionally validates the legacy response adapter.
+            ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken.None);
+#pragma warning restore CS0618
             Assert.NotNull(sslOptionsInfo);
             Assert.AreEqual(sslOptionsInfo.Name, "default");
             Assert.AreEqual(new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions"), sslOptionsInfo.ResourceType);

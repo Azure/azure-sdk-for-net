@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FlowLogData type. </summary>
     [CodeGenSuppress("Format")]
     public partial class FlowLogData
     {

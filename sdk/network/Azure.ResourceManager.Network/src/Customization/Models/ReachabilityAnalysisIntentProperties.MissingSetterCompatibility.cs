@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ReachabilityAnalysisIntentProperties type. </summary>
     public partial class ReachabilityAnalysisIntentProperties
     {
         /// <summary> Gets or sets the ProvisioningState compatibility property. </summary>

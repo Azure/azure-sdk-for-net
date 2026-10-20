@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the CloudServiceSwapCollection type. </summary>
     public partial class CloudServiceSwapCollection
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>

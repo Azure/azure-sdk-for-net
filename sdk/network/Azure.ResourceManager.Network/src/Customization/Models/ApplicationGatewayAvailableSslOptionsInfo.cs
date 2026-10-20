@@ -4,17 +4,19 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Keep the released model in Models: only the replacement *Data resource type is generated.
+    // The persistence adapters in the serialization partial preserve ResourceType, not the complete legacy payload.
     /// <summary> Compatibility type for available SSL options info. </summary>
-    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData, IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>, IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This model is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
@@ -24,8 +26,9 @@ namespace Azure.ResourceManager.Network.Models
             AvailableProtocols = new List<ApplicationGatewaySslProtocol>();
         }
 
-        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, string type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols)
-            : base(id, name, type, location, tags, default)
+        // Adapt the generated resource result to the released model using the base's native metadata storage.
+        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols)
+            : base(id, name, resourceType, location, tags, default)
         {
             PredefinedPolicies = new List<WritableSubResource>(predefinedPolicies ?? Array.Empty<WritableSubResource>());
             AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>(availableCipherSuites ?? Array.Empty<ApplicationGatewaySslCipherSuite>());
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.Network.Models
             DefaultPolicy = defaultPolicy;
         }
 
-        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(global::Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptionsInfoData data, string subscriptionId = null)
+        // Retain the legacy response shape and policy identifiers while preferring the service's typed metadata.
+        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(ApplicationGatewayAvailableSslOptionsInfoData data, string subscriptionId = null)
         {
             if (data is null)
             {
@@ -48,12 +52,14 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             string name = data.Name ?? "default";
-            string type = data.Type ?? "Microsoft.Network/applicationGatewayAvailableSslOptions";
-            return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, type, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
+            ResourceType resourceType = data.ResourceType ?? new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions");
+            return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, resourceType, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
         }
 
+        // ApiCompat CP0002: 1.17.0 requires the non-nullable ResourceType.get, not the inherited nullable getter.
+        // Read the base's native storage rather than duplicating metadata.
         /// <summary> The resource type. </summary>
-        public new ResourceType ResourceType => Type;
+        public new ResourceType ResourceType => base.ResourceType ?? default;
 
         private static string GetNameFromId(ResourceIdentifier id)
         {
@@ -82,14 +88,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Available protocols. </summary>
         [WirePath("properties.availableProtocols")]
         public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }
-
-        ApplicationGatewayAvailableSslOptionsInfo IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        void IJsonModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        ApplicationGatewayAvailableSslOptionsInfo IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => new ApplicationGatewayAvailableSslOptionsInfo();
-        string IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 }

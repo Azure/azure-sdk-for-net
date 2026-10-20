@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyData type. </summary>
     [CodeGenSuppress("ChildPolicies")]
     [CodeGenSuppress("Firewalls")]
     [CodeGenSuppress("RuleCollectionGroups")]

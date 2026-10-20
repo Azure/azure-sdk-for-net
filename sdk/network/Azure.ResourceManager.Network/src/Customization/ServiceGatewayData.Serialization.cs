@@ -15,7 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> ServiceGatewayData serialization compatibility. </summary>
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class ServiceGatewayData
     {

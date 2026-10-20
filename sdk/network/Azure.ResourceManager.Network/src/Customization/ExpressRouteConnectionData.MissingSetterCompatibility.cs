@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRouteConnectionData type. </summary>
     public partial class ExpressRouteConnectionData
     {
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Network.Models
     // REST shape, but the shipped SDK exposed location/tags only on the nested
     // ConnectionMonitorCreateOrUpdateContent compatibility model. Suppress them here to avoid
     // adding duplicate public properties with different ownership.
-    /// <summary> Compatibility declaration for the ConnectionMonitorContent type. </summary>
     [CodeGenSuppress("Location")]
     [CodeGenSuppress("Tags")]
     public partial class ConnectionMonitorContent

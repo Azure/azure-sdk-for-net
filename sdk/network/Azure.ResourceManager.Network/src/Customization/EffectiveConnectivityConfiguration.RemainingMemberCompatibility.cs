@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the EffectiveConnectivityConfiguration type. </summary>
     [CodeGenSuppress("AppliesToGroups")]
     [CodeGenSuppress("Hubs")]
     public partial class EffectiveConnectivityConfiguration

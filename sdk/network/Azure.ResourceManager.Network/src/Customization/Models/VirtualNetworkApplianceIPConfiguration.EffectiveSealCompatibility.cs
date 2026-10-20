@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkApplianceIPConfiguration type. </summary>
     public partial class VirtualNetworkApplianceIPConfiguration
     {
         /// <summary> Initializes a new instance of the VirtualNetworkApplianceIPConfiguration class. </summary>

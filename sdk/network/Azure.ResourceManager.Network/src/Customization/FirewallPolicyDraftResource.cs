@@ -7,7 +7,6 @@ using Azure;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyDraftResource type. </summary>
     public partial class FirewallPolicyDraftResource
     {
         /// <summary> Updates a draft Firewall Policy. </summary>

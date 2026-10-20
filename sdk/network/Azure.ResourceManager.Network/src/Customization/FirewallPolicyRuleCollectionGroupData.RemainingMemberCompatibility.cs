@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the FirewallPolicyRuleCollectionGroupData type. </summary>
     public partial class FirewallPolicyRuleCollectionGroupData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>

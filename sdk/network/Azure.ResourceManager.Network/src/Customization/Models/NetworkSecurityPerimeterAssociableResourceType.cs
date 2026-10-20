@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("ResourceType")]
     public partial class NetworkSecurityPerimeterAssociableResourceType
     {
+        // 1.15.0 inherited ResourceData.Id (ResourceIdentifier); this string-hiding alias shipped in 1.17.0.
         /// <summary> Identifier of the perimeter associable resource. </summary>
         public new string Id => base.Id?.ToString();
 

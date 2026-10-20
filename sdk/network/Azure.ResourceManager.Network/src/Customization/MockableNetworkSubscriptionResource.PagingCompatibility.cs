@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> Compatibility declaration for the MockableNetworkSubscriptionResource type. </summary>
     public partial class MockableNetworkSubscriptionResource
     {
         /// <summary> Invokes the GetExpressRouteGatewaysAsync compatibility operation. </summary>

@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NatGatewayData type. </summary>
     [CodeGenSuppress("Subnets")]
     public partial class NatGatewayData
     {

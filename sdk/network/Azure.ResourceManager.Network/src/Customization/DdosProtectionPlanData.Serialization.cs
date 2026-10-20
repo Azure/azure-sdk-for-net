@@ -15,7 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A DDoS protection plan in a resource group. </summary>
     [CodeGenSuppress("DdosProtectionPlanData", typeof(DdosProtectionPlanPropertiesFormat), typeof(string), typeof(ETag?), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     [CodeGenSuppress("DeserializeDdosProtectionPlanData", typeof(JsonElement), typeof(ModelReaderWriterOptions))]

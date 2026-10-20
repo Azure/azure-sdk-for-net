@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the HubVirtualNetworkConnectionData type. </summary>
     public partial class HubVirtualNetworkConnectionData
     {
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>

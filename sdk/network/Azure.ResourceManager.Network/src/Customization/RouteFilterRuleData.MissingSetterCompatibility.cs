@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the RouteFilterRuleData type. </summary>
     public partial class RouteFilterRuleData
     {
         /// <summary> Gets or sets the Location compatibility property. </summary>

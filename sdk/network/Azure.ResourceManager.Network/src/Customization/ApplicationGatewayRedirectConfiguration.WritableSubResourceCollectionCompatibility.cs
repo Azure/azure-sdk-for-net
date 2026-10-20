@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the ApplicationGatewayRedirectConfiguration type. </summary>
     [CodeGenSuppress("TargetUri")]
     public partial class ApplicationGatewayRedirectConfiguration
     {

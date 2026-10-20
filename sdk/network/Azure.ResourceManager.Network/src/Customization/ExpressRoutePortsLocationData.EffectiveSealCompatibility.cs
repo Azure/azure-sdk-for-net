@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortsLocationData type. </summary>
     public partial class ExpressRoutePortsLocationData
     {
         /// <summary> Initializes a new instance of the ExpressRoutePortsLocationData class. </summary>

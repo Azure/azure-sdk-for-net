@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnSiteLinkConnectionResource type. </summary>
     public partial class VpnSiteLinkConnectionResource
     {
         /// <summary> Invokes the GetIkeSasVpnLinkConnectionAsync compatibility operation. </summary>

@@ -1,0 +1,59 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Azure.ResourceManager.Resources.Models;
+
+namespace Azure.ResourceManager.Network.Models
+{
+    public partial class P2SConnectionConfiguration : NetworkResourceData
+    {
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
+        /// <summary> A list of address blocks reserved for P2S VPN clients in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.vpnClientAddressPool.addressPrefixes")]
+        public IList<string> VpnClientAddressPrefixes
+        {
+            get
+            {
+                VpnClientAddressPool ??= new VirtualNetworkAddressSpace();
+                return VpnClientAddressPool.AddressPrefixes;
+            }
+        }
+
+        // This was an active generated property in 1.15.0, typed as RoutingConfiguration rather than RoutingConfigurationNfv.
+        /// <summary> Gets or sets the routing configuration. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                if (Properties?.RoutingConfiguration is null)
+                {
+                    return null;
+                }
+                if (Properties.RoutingConfiguration is not RoutingConfiguration routingConfiguration)
+                {
+                    routingConfiguration = new RoutingConfiguration(Properties.RoutingConfiguration);
+                    Properties.RoutingConfiguration = routingConfiguration;
+                }
+                return routingConfiguration;
+            }
+            set
+            {
+                Properties ??= new P2SConnectionConfigurationProperties();
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets a read-only view of the configuration policy groups. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]
+        public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations => new ReadOnlyCollection<WritableSubResource>(ConfigurationPolicyGroups);
+    }
+}

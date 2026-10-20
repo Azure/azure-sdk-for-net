@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the BackendAddressPoolResource type. </summary>
     public partial class BackendAddressPoolResource
     {
         /// <summary> Invokes the GetInboundNatRulePortMappingsLoadBalancerAsync compatibility operation. </summary>

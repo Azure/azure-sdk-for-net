@@ -36,5 +36,15 @@ namespace Azure.ResourceManager.Network
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
+
+        /// <summary> perimeter guid of the network security perimeter. </summary>
+        [WirePath("properties.perimeterGuid")]
+        public Guid? PerimeterGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerimeterGuid;
+            }
+        }
     }
 }

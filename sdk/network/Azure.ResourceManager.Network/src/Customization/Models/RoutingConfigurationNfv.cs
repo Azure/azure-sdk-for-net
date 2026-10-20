@@ -1,0 +1,35 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.Network.Models
+{
+    [CodeGenType("RoutingConfiguration")]
+    public partial class RoutingConfigurationNfv
+    {
+        // Let the legacy derived wrapper preserve native fields and unknown JSON when reading.
+        internal RoutingConfigurationNfv(RoutingConfigurationNfv original)
+            : this(original.AssociatedRouteTable, original.PropagatedRouteTables, original.VnetRoutes,
+                  original.InboundRouteMap, original.OutboundRouteMap, original._additionalBinaryDataProperties)
+        {
+        }
+
+        /// <summary> Compatibility member. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and no longer functions. Please use AssociatedRouteTableId instead.", false)]
+        public Uri AssociatedRouteTableResourceUri { get; set; }
+        /// <summary> Compatibility member. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and no longer functions. Please use InboundRouteMapId instead.", false)]
+        public Uri InboundRouteMapResourceUri { get; set; }
+        /// <summary> Compatibility member. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and no longer functions. Please use OutboundRouteMapId instead.", false)]
+        public Uri OutboundRouteMapResourceUri { get; set; }
+    }
+}

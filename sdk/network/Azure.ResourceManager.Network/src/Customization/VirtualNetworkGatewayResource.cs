@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkGatewayResource type. </summary>
     public partial class VirtualNetworkGatewayResource
     {
     }

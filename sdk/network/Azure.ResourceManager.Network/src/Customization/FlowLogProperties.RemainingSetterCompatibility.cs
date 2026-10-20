@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the FlowLogProperties type. </summary>
     public partial class FlowLogProperties
     {
         /// <summary> Gets or sets the FormatType compatibility property. </summary>

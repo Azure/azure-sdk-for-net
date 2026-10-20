@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ServiceEndpointPolicyDefinitionData type. </summary>
     [CodeGenSuppress("ServiceResources")]
     public partial class ServiceEndpointPolicyDefinitionData
     {

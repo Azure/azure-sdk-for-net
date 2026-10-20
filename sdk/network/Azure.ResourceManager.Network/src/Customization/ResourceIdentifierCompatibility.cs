@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declaration for the EffectiveBaseSecurityAdminRule type. </summary>
     public abstract partial class EffectiveBaseSecurityAdminRule
     {
         /// <summary> Resource ID. </summary>

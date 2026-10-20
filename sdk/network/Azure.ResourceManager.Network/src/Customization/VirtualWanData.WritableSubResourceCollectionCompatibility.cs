@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualWanData type. </summary>
     [CodeGenSuppress("VirtualHubs")]
     [CodeGenSuppress("VpnSites")]
     public partial class VirtualWanData

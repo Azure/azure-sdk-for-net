@@ -3,14 +3,23 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using LegacyModels = Azure.ResourceManager.Network.Models;
+
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceResource type. </summary>
     public partial class NetworkVirtualApplianceResource
     {
         /// <summary> Invokes the CreateOrUpdateInboundSecurityRule compatibility operation. </summary>
-        public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.InboundSecurityRule> CreateOrUpdateInboundSecurityRule(global::Azure.WaitUntil p0, global::System.String p1, global::Azure.ResourceManager.Network.Models.InboundSecurityRule p2, global::System.Threading.CancellationToken p3) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use GetInboundSecurityRules().CreateOrUpdate instead.")]
+        public virtual ArmOperation<LegacyModels.InboundSecurityRule> CreateOrUpdateInboundSecurityRule(WaitUntil p0, string p1, LegacyModels.InboundSecurityRule p2, CancellationToken p3) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdateInboundSecurityRuleAsync compatibility operation. </summary>
-        public virtual global::System.Threading.Tasks.Task<global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(global::Azure.WaitUntil p0, global::System.String p1, global::Azure.ResourceManager.Network.Models.InboundSecurityRule p2, global::System.Threading.CancellationToken p3) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use GetInboundSecurityRules().CreateOrUpdateAsync instead.")]
+        public virtual Task<ArmOperation<LegacyModels.InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(WaitUntil p0, string p1, LegacyModels.InboundSecurityRule p2, CancellationToken p3) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

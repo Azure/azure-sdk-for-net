@@ -19,11 +19,14 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntityPropertiesFormat"/>. </summary>
-        /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
+        /// <param name="virtualNetworkGateway1Id"> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </param>
         /// <param name="connectionType"> Gateway connection type. </param>
-        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, VirtualNetworkGatewayConnectionType connectionType)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1Id"/> is null. </exception>
+        public VirtualNetworkGatewayConnectionListEntityPropertiesFormat(ResourceIdentifier virtualNetworkGateway1Id, VirtualNetworkGatewayConnectionType connectionType)
         {
-            VirtualNetworkGateway1 = virtualNetworkGateway1;
+            Argument.AssertNotNull(virtualNetworkGateway1Id, nameof(virtualNetworkGateway1Id));
+
+            VirtualNetworkGateway1 = new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway1Id);
             ConnectionType = connectionType;
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
             GatewayCustomBgpIPAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
@@ -88,39 +91,39 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The authorizationKey. </summary>
         [WirePath("authorizationKey")]
-        public string AuthorizationKey { get; }
+        public string AuthorizationKey { get; set; }
 
         /// <summary> The reference to virtual network gateway resource. </summary>
         [WirePath("virtualNetworkGateway1")]
-        internal VirtualNetworkConnectionGatewayReference VirtualNetworkGateway1 { get; }
+        internal VirtualNetworkConnectionGatewayReference VirtualNetworkGateway1 { get; set; }
 
         /// <summary> The reference to virtual network gateway resource. </summary>
         [WirePath("virtualNetworkGateway2")]
-        internal VirtualNetworkConnectionGatewayReference VirtualNetworkGateway2 { get; }
+        internal VirtualNetworkConnectionGatewayReference VirtualNetworkGateway2 { get; set; }
 
         /// <summary> The reference to local network gateway resource. </summary>
         [WirePath("localNetworkGateway2")]
-        internal VirtualNetworkConnectionGatewayReference LocalNetworkGateway2 { get; }
+        internal VirtualNetworkConnectionGatewayReference LocalNetworkGateway2 { get; set; }
 
         /// <summary> Gateway connection type. </summary>
         [WirePath("connectionType")]
-        public VirtualNetworkGatewayConnectionType ConnectionType { get; }
+        public VirtualNetworkGatewayConnectionType ConnectionType { get; set; }
 
         /// <summary> Connection protocol used for this connection. </summary>
         [WirePath("connectionProtocol")]
-        public VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol { get; }
+        public VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol { get; set; }
 
         /// <summary> The routing weight. </summary>
         [WirePath("routingWeight")]
-        public int? RoutingWeight { get; }
+        public int? RoutingWeight { get; set; }
 
         /// <summary> The connection mode for this connection. </summary>
         [WirePath("connectionMode")]
-        public VirtualNetworkGatewayConnectionMode? ConnectionMode { get; }
+        public VirtualNetworkGatewayConnectionMode? ConnectionMode { get; set; }
 
         /// <summary> The IPSec shared key. We will no longer return sharedKey in VirtualNetworkGatewayConnection Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGatewayConnection GetSharedKey API to fetch connection sharedKey. </summary>
         [WirePath("sharedKey")]
-        public string SharedKey { get; }
+        public string SharedKey { get; set; }
 
         /// <summary> Virtual Network Gateway connection status. </summary>
         [WirePath("connectionStatus")]
@@ -140,11 +143,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to peerings resource. </summary>
         [WirePath("peer")]
-        internal NetworkSubResource Peer { get; }
+        internal NetworkSubResource Peer { get; set; }
 
         /// <summary> EnableBgp flag. </summary>
         [WirePath("enableBgp")]
-        public bool? EnableBgp { get; }
+        public bool? EnableBgp { get; set; }
 
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
         [WirePath("gatewayCustomBgpIpAddresses")]
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Enable policy-based traffic selectors. </summary>
         [WirePath("usePolicyBasedTrafficSelectors")]
-        public bool? UsePolicyBasedTrafficSelectors { get; }
+        public bool? UsePolicyBasedTrafficSelectors { get; set; }
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
         [WirePath("ipsecPolicies")]
@@ -172,15 +175,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Bypass ExpressRoute Gateway for data forwarding. </summary>
         [WirePath("expressRouteGatewayBypass")]
-        public bool? ExpressRouteGatewayBypass { get; }
+        public bool? ExpressRouteGatewayBypass { get; set; }
 
         /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
         [WirePath("enablePrivateLinkFastPath")]
-        public bool? EnablePrivateLinkFastPath { get; }
+        public bool? EnablePrivateLinkFastPath { get; set; }
 
         /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration { get; }
+        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
 
         /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
         [WirePath("virtualNetworkGateway1.id")]
@@ -188,7 +191,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return VirtualNetworkGateway1.Id;
+                return VirtualNetworkGateway1 is null ? default : VirtualNetworkGateway1.Id;
+            }
+            set
+            {
+                VirtualNetworkGateway1 = new VirtualNetworkConnectionGatewayReference(value);
             }
         }
 
@@ -200,6 +207,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return VirtualNetworkGateway2 is null ? default : VirtualNetworkGateway2.Id;
             }
+            set
+            {
+                VirtualNetworkGateway2 = new VirtualNetworkConnectionGatewayReference(value);
+            }
         }
 
         /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
@@ -210,6 +221,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return LocalNetworkGateway2 is null ? default : LocalNetworkGateway2.Id;
             }
+            set
+            {
+                LocalNetworkGateway2 = new VirtualNetworkConnectionGatewayReference(value);
+            }
         }
 
         /// <summary> Resource ID. </summary>
@@ -219,6 +234,14 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Peer is null ? default : Peer.Id;
+            }
+            set
+            {
+                if (Peer is null)
+                {
+                    Peer = new NetworkSubResource();
+                }
+                Peer.Id = value;
             }
         }
     }

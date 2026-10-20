@@ -5,7 +5,6 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the NetworkVirtualApplianceSkuData type. </summary>
     public partial class NetworkVirtualApplianceSkuData
     {
         /// <summary> Initializes a new instance of the NetworkVirtualApplianceSkuData class. </summary>

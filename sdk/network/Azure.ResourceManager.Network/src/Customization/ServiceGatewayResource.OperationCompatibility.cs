@@ -10,7 +10,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ServiceGatewayResource type. </summary>
     public partial class ServiceGatewayResource
     {
         /// <summary> Invokes the UpdateAddressLocationsAsync compatibility operation. </summary>

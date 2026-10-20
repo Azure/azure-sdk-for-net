@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VpnGatewayNatRuleData type. </summary>
     [CodeGenSuppress("EgressVpnSiteLinkConnections")]
     [CodeGenSuppress("IngressVpnSiteLinkConnections")]
     public partial class VpnGatewayNatRuleData

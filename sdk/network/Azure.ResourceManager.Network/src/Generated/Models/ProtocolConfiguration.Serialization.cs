@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(HTTPConfiguration))
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue(HTTPConfiguration, options);
+                writer.WriteObjectValue(HttpConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

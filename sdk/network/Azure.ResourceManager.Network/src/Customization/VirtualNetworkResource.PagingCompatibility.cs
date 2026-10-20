@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the VirtualNetworkResource type. </summary>
     [CodeGenSuppress("GetNetworkManagerEffectiveConnectivityConfigurationsAsync", typeof(NetworkManagementQueryContent), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetNetworkManagerEffectiveConnectivityConfigurations", typeof(NetworkManagementQueryContent), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("GetNetworkManagerEffectiveSecurityAdminRulesAsync", typeof(NetworkManagementQueryContent), typeof(int?), typeof(CancellationToken))]

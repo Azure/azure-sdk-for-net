@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Compatibility declarations for generated members that intentionally hide inherited ARM members. </summary>
     [CodeGenSuppress("_name")]
     public partial class TrackedResourceWithSettableIdOptionalLocation
     {
