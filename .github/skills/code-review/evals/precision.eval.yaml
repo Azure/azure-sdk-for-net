@@ -388,3 +388,22 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: allow-ga-serviceversion-default-bump-to-latest
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic
+      csproj-adjacent diff and return findings only. `BlobClientOptions` is a GA (stable),
+      already-shipped client options type. Its constructor's `ServiceVersion version` parameter
+      default changes from `ServiceVersion.V2024_11_04` to the newly added
+      `ServiceVersion.V2025_01_01`, tracking the latest released service version. There are no
+      other changes. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'

@@ -42,38 +42,25 @@ API additions, edits, removals, and renames are not findings by themselves. Beta
 never-shipped contracts may change. Continue checking changed APIs against other applicable
 design, correctness, and repository rules.
 
-For an established GA contract, classify by what changed and how it manifests:
+For an established GA contract, classify by what changed and how it manifests. Use
+[dotnet/runtime's breaking-change rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-changes.md)
+as the authoritative source for what qualifies in each category and why — it covers both
+source/binary-compatibility changes and behavioral changes. Do not re-derive examples from
+memory; consult it for borderline cases.
 
 **API-breaking — never permitted in any release (major, minor, or patch).**
-Existing code fails to compile or bind:
-- Removing or renaming a public/protected type, member, parameter, or namespace
-- Changing a return type, parameter type, or parameter name (named args break)
-- Changing accessibility downward (`public` → `internal`, `protected` → `private`)
-- Adding/removing/reordering parameters on an existing signature (add an overload instead)
-- Sealing a previously unsealed type; removing `virtual`; adding `abstract` members
-- Adding a member to an existing public interface, or a required member to a public type
-- Moving a type between namespaces or assemblies without a `TypeForwardedTo`
-- Changing generic arity or adding/tightening generic constraints
-- Changing a class to a struct or vice versa; changing base type or removing an implemented
-  interface
-- Removing enum members or changing their explicit values
+Existing code fails to compile or bind.
 
 **Binary-breaking — never permitted in minor or patch releases.**
-Public API shape is unchanged but pre-compiled callers break or silently misbehave:
-- Changing the value of a `const` field (old value is inlined into caller IL)
-- Changing a default parameter value (defaults are baked into the caller's IL)
-- Removing or altering `TypeForwardedTo` when relocating types
+Public API shape is unchanged but pre-compiled callers break or silently misbehave.
 
 **Source-breaking — major release only, with documented justification.**
-API only grew, but recompiling existing source resolves differently or fails:
-- Adding an overload that changes overload resolution at existing call sites
-- Adding an implicit conversion that introduces ambiguity
-- Adding an extension method that shadows/conflicts with an existing one
+API only grew, but recompiling existing source resolves differently or fails.
 
-**Behavioral breaks count too.** Same signature, different observable behavior is a break:
-changed exception type or message contract, changed null/empty handling, changed default
-values, changed ordering/pagination, changed serialized wire or on-disk format, changed
-thread-safety or disposal semantics, changed timing (sync → async-over-sync).
+**Behavioral breaks count too.** Same signature, different observable behavior is a break.
+The one explicitly required exception: bumping a GA client options constructor's
+`ServiceVersion` default to the latest supported service version (see Client Design) is not a
+finding.
 
 **How to check:**
 - Establish each affected API's GA contract using released reference assemblies or

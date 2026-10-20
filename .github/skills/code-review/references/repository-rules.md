@@ -124,7 +124,6 @@ shipping package has
   not `.netstandard2.0.cs` is a violation
 
 Also specific to this repo:
-- Changing a `const` or a default parameter value on GA-shipped API → binary break → 🔴
 - `ServiceVersion` enum: values are explicit and start at 1, `0` is reserved and must throw
   `ArgumentException`. Never renumber or remove a GA-shipped member
 - Incompatible changes to a model property's GA type or value-type nullability are breaks
