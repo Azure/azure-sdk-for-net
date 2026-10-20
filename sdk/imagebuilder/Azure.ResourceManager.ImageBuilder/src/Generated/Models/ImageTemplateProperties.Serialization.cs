@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 customize ?? new ChangeTrackingList<ImageTemplateCustomizer>(),
                 optimize,
                 validate,
-                distribute,
+                distribute ?? new ChangeTrackingList<ImageTemplateDistributor>(),
                 errorHandling,
                 provisioningState,
                 provisioningError,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationList(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationList(value ?? new ChangeTrackingList<VirtualApplicationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new GatewayCertificateAuthorityGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new ApiManagementGatewayCertificateAuthorityDataAsyncCollectionResultOfT(
                 _gatewayCertificateAuthorityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new GatewayCertificateAuthorityGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGatewayCertificateAuthorityData, ApiManagementGatewayCertificateAuthorityResource>(new ApiManagementGatewayCertificateAuthorityDataCollectionResultOfT(
                 _gatewayCertificateAuthorityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

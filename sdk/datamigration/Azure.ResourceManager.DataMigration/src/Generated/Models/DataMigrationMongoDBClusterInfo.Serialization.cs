@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataMigrationMongoDBClusterInfo(databases, isShardingSupported, clusterType, version, additionalBinaryDataProperties);
+            return new DataMigrationMongoDBClusterInfo(databases ?? new ChangeTrackingList<DataMigrationMongoDBDatabaseInfo>(), isShardingSupported, clusterType, version, additionalBinaryDataProperties);
         }
     }
 }

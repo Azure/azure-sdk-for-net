@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisServiceResource.ResourceType, out string healthcareApisServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisServiceApiVersion ?? "2025-04-01-preview");
+            _servicesRestClient = new Services(
+                _servicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                healthcareApisServiceApiVersion ?? "2025-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisServiceCollection.GetAll"), data => new HealthcareApisServiceResource(Client, data));
+            return new AsyncPageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new HealthcareApisServiceDataAsyncCollectionResultOfT(_servicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisServiceCollection.GetAll"), data => new HealthcareApisServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisServiceCollection.GetAll"), data => new HealthcareApisServiceResource(Client, data));
+            return new PageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new HealthcareApisServiceDataCollectionResultOfT(_servicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthcareApisServiceCollection.GetAll"), data => new HealthcareApisServiceResource(Client, data));
         }
 
         /// <summary>

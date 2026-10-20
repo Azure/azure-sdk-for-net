@@ -30,22 +30,47 @@ namespace Azure.Security.Attestation
             ValidateExpirationTime = true;
             ValidateNotBeforeTime = true;
             ValidateToken = true;
+            ValidateIssuer = true;
+            TimeValidationSlack = DefaultTimeValidationSlack;
         }
+
+        // The service stamps nbf with its own clock, which can be slightly ahead of the caller's, so a fresh token can
+        // appear to be valid only from a moment in the future.
+        private const long DefaultTimeValidationSlack = 5;
 
         internal async Task<bool> RaiseValidationCallbackAsync(AttestationToken token, AttestationSigner signer, ClientDiagnostics diagnostics, bool isRunningSynchronously, CancellationToken cancellationToken)
         {
             if (diagnostics != null)
             {
+                SyncAsyncEventHandler<AttestationTokenValidationEventArgs> tokenValidated = TokenValidated;
+                if (tokenValidated == null)
+                {
+                    return true;
+                }
+
+                // Each handler decides independently, so a later handler cannot overrule one that rejected the token.
+                bool rejected = false;
+                SyncAsyncEventHandler<AttestationTokenValidationEventArgs> handlers = null;
+                foreach (SyncAsyncEventHandler<AttestationTokenValidationEventArgs> handler in tokenValidated.GetInvocationList())
+                {
+                    handlers += async args =>
+                    {
+                        args.IsValid = true;
+                        await handler(args).ConfigureAwait(false);
+                        rejected |= !args.IsValid;
+                    };
+                }
+
                 var eventArgs = new AttestationTokenValidationEventArgs(token: token,
                         signer: signer,
                         isRunningSynchronously: isRunningSynchronously,
                         cancellationToken);
 
-                await TokenValidated.RaiseAsync(eventArgs,
+                await handlers.RaiseAsync(eventArgs,
                     nameof(AttestationTokenValidationOptions),
                     nameof(TokenValidated),
                     diagnostics).ConfigureAwait(false);
-                return eventArgs.IsValid;
+                return !rejected;
             }
             else
             {
@@ -61,6 +86,9 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Raised when an attestation token should be validated.
         /// </summary>
+        /// <remarks>
+        /// The token is rejected if any handler sets <see cref="AttestationTokenValidationEventArgs.IsValid"/> to false.
+        /// </remarks>
         public event SyncAsyncEventHandler<AttestationTokenValidationEventArgs> TokenValidated;
 
         /// <summary>
@@ -79,18 +107,19 @@ namespace Azure.Security.Attestation
         public bool ValidateNotBeforeTime { get; set; }
 
         /// <summary>
-        /// Specifies whether or not the validation logic should validate the Issuer of the token, if present.
+        /// Specifies whether or not the validation logic should require the Issuer of the token to match <see cref="ExpectedIssuer"/>. Defaults to true.
         /// </summary>
         public bool ValidateIssuer { get; set; }
 
         /// <summary>
-        /// Expected Issuer for the token, if present.
+        /// The base URI of the attestation provider which must have issued the token, for example "https://contoso.attest.azure.net".
+        /// When a token is validated by <see cref="AttestationClient"/> or <see cref="AttestationAdministrationClient"/> and this is not set, the client's endpoint is used.
         /// </summary>
         public string ExpectedIssuer { get; set; }
 
         /// <summary>
         /// Allowable slack in time validations - used to account for differences between the clock on the client
-        /// and the clock on the server.
+        /// and the clock on the server, in seconds. Defaults to 5 seconds.
         /// </summary>
         public long TimeValidationSlack { get; set; }
 
@@ -111,6 +140,19 @@ namespace Azure.Security.Attestation
             };
             returnedToken.TokenValidated = this.TokenValidated;
             return returnedToken;
+        }
+
+        // Returns a copy so options shared between clients for different providers are never modified.
+        internal AttestationTokenValidationOptions WithDefaultIssuer(Uri endpoint)
+        {
+            if (!ValidateIssuer || ExpectedIssuer != null)
+            {
+                return this;
+            }
+
+            AttestationTokenValidationOptions options = Clone();
+            options.ExpectedIssuer = endpoint.GetLeftPart(UriPartial.Authority);
+            return options;
         }
     }
 }

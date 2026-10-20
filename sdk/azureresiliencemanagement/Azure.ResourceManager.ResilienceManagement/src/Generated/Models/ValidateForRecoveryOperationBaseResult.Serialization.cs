@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidateForRecoveryOperationBaseResult(recoveryResourceQualifications, additionalBinaryDataProperties);
+            return new ValidateForRecoveryOperationBaseResult(recoveryResourceQualifications ?? new ChangeTrackingList<RecoveryResourceQualification>(), additionalBinaryDataProperties);
         }
     }
 }

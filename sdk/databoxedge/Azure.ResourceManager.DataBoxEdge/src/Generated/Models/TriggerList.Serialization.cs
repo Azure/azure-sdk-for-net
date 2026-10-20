@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TriggerList(value, nextLink, additionalBinaryDataProperties);
+            return new TriggerList(value ?? new ChangeTrackingList<DataBoxEdgeTriggerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 
         private ClientDiagnostics LedgerClientDiagnostics => _ledgerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Ledger LedgerRestClient => _ledgerRestClient ??= new Ledger(LedgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-23");
+        private Ledger LedgerRestClient => _ledgerRestClient ??= new Ledger(LedgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConfidentialLedger/ledgers", out string apiVersion) ? apiVersion : "2026-02-23");
 
         private ClientDiagnostics ConfidentialLedgerClientClientDiagnostics => _confidentialLedgerClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionAsyncCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
+            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerDataAsync0CollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetBySubscriptionCollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
+            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new ConfidentialLedgerData0CollectionResultOfT(LedgerRestClient, Id.SubscriptionId, filter, context, "MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStorageReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PureStorageReservationResource.ResourceType, out string pureStorageReservationApiVersion);
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageReservationResource.ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageReservationApiVersion ?? "2024-11-01");
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PureStorage.Block/reservations", out string reservationsApiVersionOverride) ? reservationsApiVersionOverride : "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new PureStorageReservationDataAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
+            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new PureStorageReservationDataCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>

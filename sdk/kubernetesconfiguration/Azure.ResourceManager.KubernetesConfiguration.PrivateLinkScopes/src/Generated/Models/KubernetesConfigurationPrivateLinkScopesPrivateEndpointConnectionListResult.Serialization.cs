@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new NotificationHubsPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new PrivateEndpointConnectionsGetGroupIdsCollectionResultOfT(
+            return new PageableWrapper<NotificationHubsPrivateLinkResourceData, NotificationHubsPrivateLinkResource>(new NotificationHubsPrivateLinkResourceDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

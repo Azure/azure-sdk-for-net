@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 
         private ClientDiagnostics CloudHsmClustersClientDiagnostics => _cloudHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/cloudHsmClusters", out string apiVersion) ? apiVersion : "2025-12-01-preview");
 
         private ClientDiagnostics DedicatedHsmsClientDiagnostics => _dedicatedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/dedicatedHSMs", out string apiVersion0) ? apiVersion0 : "2025-12-01-preview");
 
         private ClientDiagnostics PaymentHsmClustersClientDiagnostics => _paymentHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PaymentHsmClusters PaymentHsmClustersRestClient => _paymentHsmClustersRestClient ??= new PaymentHsmClusters(PaymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private PaymentHsmClusters PaymentHsmClustersRestClient => _paymentHsmClustersRestClient ??= new PaymentHsmClusters(PaymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/paymentHsmClusters", out string apiVersion1) ? apiVersion1 : "2025-12-01-preview");
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterDataAsync0CollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetBySubscriptionCollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterData0CollectionResultOfT(CloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionAsyncCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataAsync0CollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmData0CollectionResultOfT(DedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClustersGetBySubscriptionAsyncCollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClusterDataAsync0CollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClustersGetBySubscriptionCollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
+            return new PageableWrapper<PaymentHsmClusterData, PaymentHsmClusterResource>(new PaymentHsmClusterData0CollectionResultOfT(PaymentHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), skiptoken, context, "MockableHardwareSecurityModulesSubscriptionResource.GetPaymentHsmClusters"), data => new PaymentHsmClusterResource(Client, data));
         }
     }
 }

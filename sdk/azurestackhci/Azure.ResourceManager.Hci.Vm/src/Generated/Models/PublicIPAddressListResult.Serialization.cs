@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PublicIPAddressListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PublicIPAddressListResult(value ?? new ChangeTrackingList<HciVmPublicIPAddressData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

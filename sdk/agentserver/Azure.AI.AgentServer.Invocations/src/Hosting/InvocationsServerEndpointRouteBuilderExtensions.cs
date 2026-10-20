@@ -19,6 +19,8 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
 {
     /// <summary>
     /// Maps the Invocations API routes to the endpoint routing pipeline.
+    /// When a typed Voice handler is registered with <c>AddVoice&lt;THandler&gt;()</c>,
+    /// also maps the standalone <c>/conversation_engine</c> WebSocket route.
     /// </summary>
     /// <param name="endpoints">The endpoint route builder to map routes on.</param>
     /// <param name="prefix">Optional route prefix (e.g., "/v1"). Default: empty (routes at /invocations).</param>
@@ -108,6 +110,19 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         {
             await endpointHandler.HandleAsync(httpContext, userHandler);
         }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
+
+        // CE is available only for the typed Voice registration. Raw WS handlers
+        // retain their existing routes and do not implicitly become CE handlers.
+        if (endpoints.ServiceProvider.GetService<VoiceRegistrationMarker>() is not null)
+        {
+            group.Map("/conversation_engine", async (
+                HttpContext httpContext,
+                WebSocketEndpointHandler endpointHandler,
+                InvocationHandler userHandler) =>
+            {
+                await endpointHandler.HandleAsync(httpContext, userHandler);
+            }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
+        }
 
         group.WithTags("Invocations");
 

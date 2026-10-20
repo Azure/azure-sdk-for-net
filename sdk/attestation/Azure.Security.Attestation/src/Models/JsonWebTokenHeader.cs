@@ -3,14 +3,12 @@
 
 using System;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents the standardized claims in the header of a JSON Web Token.
     /// </summary>
-    [CodeGenModel("JsonWebTokenHeader")]
     internal partial class JsonWebTokenHeader
     {
         /// <summary>
@@ -18,12 +16,6 @@ namespace Azure.Security.Attestation
         /// </summary>
         [JsonPropertyName("alg")]
         public string Algorithm { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        [JsonPropertyName("jwk")]
-        internal JsonWebKey JsonWebKey { get; set; }
 
         /// <summary>
         ///
@@ -47,7 +39,7 @@ namespace Azure.Security.Attestation
         ///
         /// </summary>
         [JsonPropertyName("kid")]
-        public string KeyId{ get; set; }
+        public string KeyId { get; set; }
 
         /// <summary>
         ///

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal P2SVpnGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(P2SVpnGatewayResource.ResourceType, out string p2SVpnGatewayApiVersion);
             _p2sVpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
-            _p2sVpnGatewaysRestClient = new P2sVpnGateways(_p2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, p2SVpnGatewayApiVersion ?? "2026-01-01");
+            _p2sVpnGatewaysRestClient = new P2sVpnGateways(_p2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetByResourceGroupAsyncCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
+            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayDataAsyncCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetByResourceGroupCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
+            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayDataCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>

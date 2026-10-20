@@ -1,5 +1,21 @@
 # Release History
 
+## 1.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
+- Multi-endpoint routing can now be used with `AzureMonitorExporterOptions.Credential`. Only telemetry marked `"aad"` is sent with a token, scoped to the audience in the `Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience` AppContext value (public cloud by default). Without a credential, telemetry marked `"aad"` is dropped.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
+  ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
+
+### Other Changes
+
 ## 1.10.0 (2026-10-05)
 
 ### Features Added

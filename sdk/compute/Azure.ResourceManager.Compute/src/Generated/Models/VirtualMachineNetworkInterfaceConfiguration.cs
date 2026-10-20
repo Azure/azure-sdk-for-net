@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier NetworkSecurityGroupId
+        public virtual ResourceIdentifier NetworkSecurityGroupId
         {
             get
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DscpConfigurationId
+        public virtual ResourceIdentifier DscpConfigurationId
         {
             get
             {

@@ -13,6 +13,8 @@ namespace Azure.Provisioning.Storage
         /// <summary> RunOnce. </summary>
         RunOnce = 0,
         /// <summary> OnSchedule. </summary>
-        OnSchedule = 1
+        OnSchedule = 1,
+        /// <summary> Run the task as a mock for testing. </summary>
+        MockRun = 2
     }
 }

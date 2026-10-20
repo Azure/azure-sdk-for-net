@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HostNameBindingData, SiteHostNameBindingResource>(new HostNameBindingsGetHostNameBindingsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HostNameBindingData, SiteHostNameBindingResource>(new HostNameBindingDataAsync0CollectionResultOfT(
                 _hostNameBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HostNameBindingData, SiteHostNameBindingResource>(new HostNameBindingsGetHostNameBindingsCollectionResultOfT(
+            return new PageableWrapper<HostNameBindingData, SiteHostNameBindingResource>(new HostNameBindingData0CollectionResultOfT(
                 _hostNameBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

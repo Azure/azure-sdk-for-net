@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory
                 name,
                 resourceType,
                 systemData,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                 eTag,
                 additionalBinaryDataProperties);
         }

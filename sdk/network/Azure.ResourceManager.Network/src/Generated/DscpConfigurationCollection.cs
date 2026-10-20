@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DscpConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DscpConfigurationResource.ResourceType, out string dscpConfigurationApiVersion);
             _dscpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _dscpConfigurationRestClient = new DscpConfiguration(_dscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscpConfigurationApiVersion ?? "2026-01-01");
+            _dscpConfigurationRestClient = new DscpConfiguration(_dscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>

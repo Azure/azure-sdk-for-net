@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricResource.ResourceType, out string networkFabricApiVersion);
             _networkFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricResource.ResourceType.Namespace, Diagnostics);
-            _networkFabricsRestClient = new NetworkFabrics(_networkFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricApiVersion ?? "2025-07-15");
+            _networkFabricsRestClient = new NetworkFabrics(_networkFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkFabrics", out string networkFabricsApiVersionOverride) ? networkFabricsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricsGetByResourceGroupAsyncCollectionResultOfT(_networkFabricsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricCollection.GetAll"), data => new NetworkFabricResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricDataAsyncCollectionResultOfT(_networkFabricsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricCollection.GetAll"), data => new NetworkFabricResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricsGetByResourceGroupCollectionResultOfT(_networkFabricsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricCollection.GetAll"), data => new NetworkFabricResource(Client, data));
+            return new PageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricDataCollectionResultOfT(_networkFabricsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricCollection.GetAll"), data => new NetworkFabricResource(Client, data));
         }
 
         /// <summary>

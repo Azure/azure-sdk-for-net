@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceTapConfigurationData, NetworkInterfaceTapConfigurationResource>(new NetworkInterfaceTapConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceTapConfigurationData, NetworkInterfaceTapConfigurationResource>(new NetworkInterfaceTapConfigurationDataAsyncCollectionResultOfT(
                 _networkInterfaceTapConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceTapConfigurationData, NetworkInterfaceTapConfigurationResource>(new NetworkInterfaceTapConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceTapConfigurationData, NetworkInterfaceTapConfigurationResource>(new NetworkInterfaceTapConfigurationDataCollectionResultOfT(
                 _networkInterfaceTapConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

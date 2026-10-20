@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloudManagerTenantList(value, additionalBinaryDataProperties);
+            return new CloudManagerTenantList(value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
