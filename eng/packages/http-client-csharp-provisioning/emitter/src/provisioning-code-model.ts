@@ -194,7 +194,9 @@ export function buildResourceProjectionMetadata(
     ),
     readableScopes: collectScopes(resources, "Read"),
     writableScopes,
-    isExtensionResource: writableScopes.some(isExtensionScope)
+    isExtensionResource: resources.some((resource) =>
+      isExtensionScope(resource.metadata.scope.kind)
+    )
   };
 }
 

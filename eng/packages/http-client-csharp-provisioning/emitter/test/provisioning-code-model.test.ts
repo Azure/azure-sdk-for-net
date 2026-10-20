@@ -238,7 +238,7 @@ describe("resource projection metadata", () => {
     );
   });
 
-  it("exposes scope metadata only for createable extension resources", () => {
+  it("preserves extension scope independently of deployability", () => {
     const readOnly = createResource({
       path: "/{scope}/providers/Microsoft.Test/extensions/{extensionName}",
       scope: ResourceScopeKind.Extension,
@@ -254,7 +254,7 @@ describe("resource projection metadata", () => {
     const writableProjection = buildResourceProjectionMetadata([writable]);
 
     deepStrictEqual(readOnlyProjection.writableScopes, []);
-    strictEqual(readOnlyProjection.isExtensionResource, false);
+    strictEqual(readOnlyProjection.isExtensionResource, true);
     deepStrictEqual(writableProjection.writableScopes, [
       ResourceScopeKind.Extension
     ]);

@@ -85,7 +85,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         private ProvisioningResourceProvider? ResolveImmediateParentResource()
         {
-            if (_resourceProjection is not { IsExtensionResource: false, ParentResourceId: { } parentId } resourceProjection)
+            if (_resourceProjection is not { ParentResourceId: { } parentId } resourceProjection)
                 return null;
 
             var parent = ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId);
@@ -227,7 +227,8 @@ namespace Azure.Generator.Provisioning.Providers
                 properties.Add(_parentProperty);
             }
 
-            if (_resourceProjection?.IsExtensionResource == true)
+            // Structural children inherit the external scope through their parent.
+            if (_parentType is null && _resourceProjection?.IsExtensionResource == true)
             {
                 _scopeField = new FieldProvider(
                     FieldModifiers.Private,
@@ -628,7 +629,10 @@ namespace Azure.Generator.Provisioning.Providers
                         "DefineResource",
                         [
                             Nameof(Identifier("Scope")),
-                            New.Array(typeof(string), [Literal("scope")])
+                            New.Array(typeof(string), [Literal("scope")]),
+                            new PositionalParameterReferenceExpression("isRequired", Literal(
+                                _resourceProjection!.ReadableScopes.Concat(_resourceProjection.WritableScopes)
+                                    .All(scope => scope == ResourceScope.Extension)))
                         ],
                         [typeof(ProvisionableResource)],
                         false)
