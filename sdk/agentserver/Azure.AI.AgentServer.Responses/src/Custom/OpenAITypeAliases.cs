@@ -43,8 +43,6 @@ global using CreateResponse = OpenAI.Responses.CreateResponseOptions;
 global using Error = OpenAI.Responses.ResponseError;
 global using FabricDataAgentToolCall = Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall;
 global using FabricDataAgentToolCallOutput = Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput;
-global using FileCitationBody = OpenAI.Responses.FileCitationMessageAnnotation;
-global using FilePath = OpenAI.Responses.FilePathMessageAnnotation;
 global using FileSearchCallStatus = OpenAI.Responses.FileSearchCallStatus;
 global using FunctionCallOutputItemParam = OpenAI.Responses.FunctionCallOutputResponseItem;
 global using FunctionCallStatus = OpenAI.Responses.FunctionCallStatus;
@@ -59,8 +57,9 @@ global using ItemImageGenToolCall = OpenAI.Responses.ImageGenerationCallResponse
 global using ItemMcpApprovalRequest = OpenAI.Responses.McpToolCallApprovalRequestItem;
 global using ItemMcpListTools = OpenAI.Responses.McpToolDefinitionListItem;
 global using ItemMcpToolCall = OpenAI.Responses.McpToolCallItem;
-// Message items: client.tsp maps OpenAI.ItemMessage / OpenAI.OutputMessage / OpenAI.Message
-// to OpenAI.Responses.MessageResponseItem, so no Azure message item type is emitted.
+// Message items: client.tsp maps OpenAI.ItemMessage to OpenAI.Responses.MessageResponseItem.
+// OpenAI.OutputMessage and OpenAI.Message are not reachable from the emitted operations,
+// so no Azure message item type is emitted.
 global using ItemMessage = OpenAI.Responses.MessageResponseItem;
 global using ItemReasoningItem = OpenAI.Responses.ReasoningResponseItem;
 global using ItemReferenceParam = OpenAI.Responses.ReferenceResponseItem;
