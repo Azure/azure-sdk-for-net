@@ -210,7 +210,7 @@ try {
         }
     )
     [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($outputFile)) | Out-Null
-    [System.IO.File]::WriteAllLines($outputFile, $markdown, [System.Text.UTF8Encoding]::new($false))
+    [System.IO.File]::WriteAllText($outputFile, ($markdown -join "`n") + "`n", [System.Text.UTF8Encoding]::new($false))
     Write-Output $outputFile
 }
 finally {

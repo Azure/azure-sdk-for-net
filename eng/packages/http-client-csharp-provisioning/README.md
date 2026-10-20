@@ -30,6 +30,14 @@ The report lists each concrete `ProvisionableResource` type, its ARM resource ty
 
 Only inspect trusted libraries: assembly loading and resource constructors execute code. The script supports resource constructors taking a Bicep identifier and an optional API version, or just a Bicep identifier.
 
+Generating the emitter's test projects also exports `resource-inventory.md` into each generated project directory:
+
+```powershell
+.\eng\packages\http-client-csharp-provisioning\eng\scripts\Generate.ps1
+```
+
+Commit these reports alongside the generated code under `generator\TestProjects\Local` so resource metadata changes can be reviewed. A filtered generation updates only the selected project's report.
+
 ## Architecture
 
 ```

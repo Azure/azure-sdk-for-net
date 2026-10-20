@@ -83,6 +83,13 @@ Describe 'Export-ResourceInventory' {
         Get-Content -LiteralPath $output -Raw | Should -Be $directoryReport
     }
 
+    It 'writes UTF-8 without a BOM and uses LF line endings for committed reports' {
+        $bytes = [System.IO.File]::ReadAllBytes($reportPath)
+        $bytes[0] | Should -Be 35
+        $directoryReport.Contains("`r") | Should -BeFalse
+        $directoryReport.EndsWith("`n") | Should -BeTrue
+    }
+
     It 'supports repeated loads and explicit project-file inputs' {
         $output = Join-Path $TestDrive 'project.md'
         & $scriptPath -Path $projectPath -OutputPath $output -Framework $framework
