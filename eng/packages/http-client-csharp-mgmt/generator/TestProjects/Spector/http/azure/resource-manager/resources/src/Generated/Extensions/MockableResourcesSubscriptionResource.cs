@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An object representing collection of LocationResources and their operations over a LocationResource. </returns>
         public virtual LocationResourceCollection GetLocationResources(AzureLocation location)
         {
-            return GetCachedClient(client => new LocationResourceCollection(client, Id, location));
+            return new LocationResourceCollection(Client, Id, location);
         }
 
         /// <summary>

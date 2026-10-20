@@ -11,7 +11,7 @@ tags:
 defaults:
   runs: 1
   timeout: "120s"
-  model: gpt-5.4
+  model: gpt-6.1-sol
   executor: copilot-sdk
 
 scoring:

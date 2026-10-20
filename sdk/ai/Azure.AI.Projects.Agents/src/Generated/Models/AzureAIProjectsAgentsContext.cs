@@ -144,6 +144,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(McpToolFilter))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelSamplingParams))]
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]

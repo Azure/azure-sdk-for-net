@@ -186,7 +186,7 @@ namespace Azure.Storage.Sas
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
         internal static string FormatRequestHeadersForSasSigning(Dictionary<string, string> requestHeaders)
         {
