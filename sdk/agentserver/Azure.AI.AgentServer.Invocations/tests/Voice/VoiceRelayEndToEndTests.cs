@@ -112,7 +112,8 @@ public class VoiceRelayEndToEndTests
             """{"type":"user.message","id":"m_2","ts":"2026-08-13T00:00:01.000Z","item_id":"in_1","content":[{"type":"input_text","text":"hello"}]}""",
             """{"type":"user.no_input","id":"m_3","ts":"2026-08-13T00:00:02.000Z","item_id":"in_2","count":1}""",
             """{"type":"user.speech_started","id":"m_4","ts":"2026-08-13T00:00:03.000Z"}""",
-            """{"type":"barge_in","id":"m_5","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","heard_text":"heard"}""",
+            """{"type":"barge_in","id":"m_legacy","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","heard_text":"ignored"}""",
+            """{"type":"user.barge_in","id":"m_5","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","item_id":"it_1","heard_text":"heard"}""",
             """{"type":"response.accepted","id":"m_6","ts":"2026-08-13T00:00:05.000Z","response_id":"r_2"}""",
             """{"type":"response.dropped","id":"m_7","ts":"2026-08-13T00:00:06.000Z","response_id":"r_3","reason":"queue_full"}""",
             """{"type":"response.cancelled","id":"m_8","ts":"2026-08-13T00:00:07.000Z","response_id":"r_4","heard_text":"heard"}""",
@@ -134,7 +135,7 @@ public class VoiceRelayEndToEndTests
                 "user.message",
                 "user.no_input",
                 "user.speech_started",
-                "barge_in",
+                "user.barge_in",
                 "response.accepted",
                 "response.dropped",
                 "response.cancelled",
@@ -142,6 +143,10 @@ public class VoiceRelayEndToEndTests
                 "session.end",
             }));
             Assert.That(handler.Sessions.Distinct(ReferenceEqualityComparer.Instance).Count(), Is.EqualTo(1));
+            Assert.That(handler.Interruption, Is.Not.Null);
+            Assert.That(handler.Interruption!.ResponseId, Is.EqualTo("r_1"));
+            Assert.That(handler.Interruption.ItemId, Is.EqualTo("it_1"));
+            Assert.That(handler.Interruption.HeardText, Is.EqualTo("heard"));
         });
 
         await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
@@ -598,6 +603,8 @@ public class VoiceRelayEndToEndTests
 
         public List<VoiceSession> Sessions { get; } = new();
 
+        public VoiceUserBargeInEvent? Interruption { get; private set; }
+
         public TaskCompletionSource AllEventsReceived { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -624,10 +631,14 @@ public class VoiceRelayEndToEndTests
             VoiceUserSpeechStartedEvent speechStarted,
             CancellationToken cancellationToken) => Record(session, speechStarted);
 
-        protected override Task OnBargeInAsync(
+        protected override Task OnUserBargeInAsync(
             VoiceSession session,
-            VoiceBargeInEvent bargeIn,
-            CancellationToken cancellationToken) => Record(session, bargeIn);
+            VoiceUserBargeInEvent bargeIn,
+            CancellationToken cancellationToken)
+        {
+            Interruption = bargeIn;
+            return Record(session, bargeIn);
+        }
 
         protected override Task OnResponseAcceptedAsync(
             VoiceSession session,

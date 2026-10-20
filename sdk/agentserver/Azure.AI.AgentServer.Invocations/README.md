@@ -155,6 +155,8 @@ For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request s
 
 `VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
 
+Caller interruptions use `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`. The former `barge_in`, `VoiceBargeInEvent`, and `OnBargeInAsync` names are no longer supported. Update the Voice Live sender together with the SDK. Generic raw WebSocket handlers and application-owned cancellation/history are unchanged.
+
 The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
 
 ```C#

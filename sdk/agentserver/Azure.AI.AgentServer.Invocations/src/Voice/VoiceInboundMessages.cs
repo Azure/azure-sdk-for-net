@@ -117,16 +117,16 @@ public sealed class VoiceUserSpeechStartedEvent : VoiceInboundMessage
 
 /// <summary>Reports caller interruption and the played-text snapshot.</summary>
 [Experimental("AAAS001")]
-public sealed class VoiceBargeInEvent : VoiceInboundMessage
+public sealed class VoiceUserBargeInEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a barge-in event.</summary>
-    public VoiceBargeInEvent(
+    public VoiceUserBargeInEvent(
         string id,
         DateTimeOffset timestamp,
         string responseId,
         string heardText,
         string? itemId = null)
-        : base("barge_in", id, timestamp)
+        : base("user.barge_in", id, timestamp)
     {
         ResponseId = responseId;
         HeardText = heardText;

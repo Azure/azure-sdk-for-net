@@ -124,7 +124,7 @@ internal static partial class VoiceProtocolCodec
                     PrefixedIdentifier(root, "item_id", "in_"),
                     PositiveInteger(root, "count")),
                 "user.speech_started" => new VoiceUserSpeechStartedEvent(id, timestamp),
-                "barge_in" => new VoiceBargeInEvent(
+                "user.barge_in" => new VoiceUserBargeInEvent(
                     id,
                     timestamp,
                     PrefixedIdentifier(root, "response_id", "r_"),

@@ -2,6 +2,8 @@
 
 This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay over the existing `/invocations_ws` endpoint. The handler explicitly acknowledges startup, creates every response and output ID, and owns cancellation for its response tasks.
 
+Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. The former event/model/callback names are not supported. Update the Voice Live sender together with the library; interruption cancellation and the `heard_text` snapshot are unchanged.
+
 ## Prerequisites
 
 ```dotnetcli
@@ -107,9 +109,9 @@ public class VoiceSupportHandler : VoiceHandler
             generation);
     }
 
-    protected override Task OnBargeInAsync(
+    protected override Task OnUserBargeInAsync(
         VoiceSession session,
-        VoiceBargeInEvent bargeIn,
+        VoiceUserBargeInEvent bargeIn,
         CancellationToken cancellationToken)
     {
         CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);

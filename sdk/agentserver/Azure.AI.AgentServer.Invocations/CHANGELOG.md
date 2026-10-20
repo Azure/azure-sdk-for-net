@@ -8,6 +8,8 @@
 
 ### Breaking Changes
 
+- Renamed the experimental Voice interruption event to `user.barge_in`, `VoiceBargeInEvent` to `VoiceUserBargeInEvent`, and `OnBargeInAsync` to `OnUserBargeInAsync`. The former event and API names are no longer supported. The typed Voice relay requires the renamed event and a matching Voice Live sender; generic raw WebSocket handlers are unchanged.
+
 ### Bugs Fixed
 
 ### Other Changes

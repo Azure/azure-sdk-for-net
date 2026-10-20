@@ -940,6 +940,46 @@ public partial class SampleEndToEndTests
         }
     }
 
+    [TestCase("invocations_ws")]
+    public async Task SampleVoice1_UserBargeInCancelsApplicationGeneration(string path)
+    {
+        DelayedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<DelayedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, path), CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_user", "in_1", "hello");
+        await DelayedVoiceSupportHandler.Started.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+        try
+        {
+            await SendJsonAsync(ws, new
+            {
+                type = "user.barge_in",
+                id = "m_interrupt",
+                ts = "2026-10-19T00:00:02Z",
+                response_id = created.GetProperty("response_id").GetString(),
+                heard_text = "",
+            });
+            await DelayedVoiceSupportHandler.Cancelled.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+        }
+    }
+
     [Test]
     public async Task SampleVoice1_ResponseCreatedPreservesInputOrder()
     {

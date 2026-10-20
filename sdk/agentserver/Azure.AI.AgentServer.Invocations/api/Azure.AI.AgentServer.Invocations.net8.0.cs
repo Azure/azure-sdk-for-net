@@ -52,14 +52,6 @@ namespace Azure.AI.AgentServer.Invocations
 namespace Azure.AI.AgentServer.Invocations.Voice
 {
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
-    public sealed partial class VoiceBargeInEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
-    {
-        public VoiceBargeInEvent(string id, System.DateTimeOffset timestamp, string responseId, string heardText, string? itemId = null) { }
-        public string HeardText { get { throw null; } }
-        public string? ItemId { get { throw null; } }
-        public string ResponseId { get { throw null; } }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
     public sealed partial class VoiceEndCallMessage : Azure.AI.AgentServer.Invocations.Voice.VoiceOutboundMessage
     {
         public VoiceEndCallMessage(string reason, Azure.AI.AgentServer.Invocations.Voice.VoiceEndCallMode mode = Azure.AI.AgentServer.Invocations.Voice.VoiceEndCallMode.Drain, string? id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { }
@@ -86,7 +78,6 @@ namespace Azure.AI.AgentServer.Invocations.Voice
     {
         protected VoiceHandler() { }
         public sealed override System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.Threading.Tasks.Task OnBargeInAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceBargeInEvent bargeIn, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual void OnConnectionTerminating(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session) { }
         protected virtual System.Threading.Tasks.Task OnResponseAcceptedAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceResponseAcceptedEvent accepted, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnResponseCancelledAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceResponseCancelledEvent cancelled, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -94,6 +85,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         protected virtual System.Threading.Tasks.Task OnResponseTimeoutAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceResponseTimeoutEvent timeout, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnSessionEndAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceSessionEndEvent end, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnSessionStartAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceSessionStartEvent start, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task OnUserBargeInAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceUserBargeInEvent bargeIn, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnUserMessageAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceUserMessageEvent message, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnUserNoInputAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceUserNoInputEvent noInput, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task OnUserSpeechStartedAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceSession session, Azure.AI.AgentServer.Invocations.Voice.VoiceUserSpeechStartedEvent speechStarted, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -319,6 +311,14 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public virtual System.IDisposable Activate() { throw null; }
         public virtual void Complete(Azure.AI.AgentServer.Invocations.Voice.VoiceTurnResult result) { }
         public virtual void Dispose() { }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
+    public sealed partial class VoiceUserBargeInEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
+    {
+        public VoiceUserBargeInEvent(string id, System.DateTimeOffset timestamp, string responseId, string heardText, string? itemId = null) { }
+        public string HeardText { get { throw null; } }
+        public string? ItemId { get { throw null; } }
+        public string ResponseId { get { throw null; } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAAS001")]
     public sealed partial class VoiceUserMessageEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
