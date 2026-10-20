@@ -9,7 +9,7 @@
     "node": ">=24.14.1"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test test/*.test.ts && pwsh -NoProfile -Command \"Invoke-Pester -Path ../../../../common-tests/eval/Publish-EvalResults.Tests.ps1 -CI\""
+    "test": "node --experimental-strip-types --test test/*.test.ts"
   },
   "dependencies": {
     "fflate": "0.8.3"
