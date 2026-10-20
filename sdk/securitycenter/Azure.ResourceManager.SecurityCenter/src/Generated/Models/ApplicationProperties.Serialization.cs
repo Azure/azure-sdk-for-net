@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationProperties(displayName, description, sourceResourceType, conditionSets, additionalBinaryDataProperties);
+            return new ApplicationProperties(displayName, description, sourceResourceType, conditionSets ?? new ChangeTrackingList<BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

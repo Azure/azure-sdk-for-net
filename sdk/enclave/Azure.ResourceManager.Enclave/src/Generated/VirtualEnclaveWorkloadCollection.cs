@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveWorkloadCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveWorkloadResource.ResourceType, out string virtualEnclaveWorkloadApiVersion);
             _workloadClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", VirtualEnclaveWorkloadResource.ResourceType.Namespace, Diagnostics);
-            _workloadRestClient = new Workload(_workloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveWorkloadApiVersion ?? "2026-04-01");
+            _workloadRestClient = new Workload(_workloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Mission/virtualEnclaves/workloads", out string workloadApiVersionOverride) ? workloadApiVersionOverride : "2026-04-01");
             ValidateResourceId(id);
         }
 

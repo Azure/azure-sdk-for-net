@@ -155,7 +155,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("top_p"u8);
             }
-            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
+            if (Optional.IsDefined(ResponseFormat, _responseFormatIsDefined))
             {
                 if (ResponseFormat != null)
                 {

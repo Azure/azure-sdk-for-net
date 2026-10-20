@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PaymentHsmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PaymentHsmClusterResource.ResourceType, out string paymentHsmClusterApiVersion);
             _paymentHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", PaymentHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
+            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/paymentHsmClusters", out string paymentHsmClustersApiVersionOverride) ? paymentHsmClustersApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

@@ -56,47 +56,47 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
 
         private ClientDiagnostics GalleryImagesClientDiagnostics => _galleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/galleryImages", out string apiVersion) ? apiVersion : "2025-09-01-preview");
 
         private ClientDiagnostics LogicalNetworksClientDiagnostics => _logicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/logicalNetworks", out string apiVersion0) ? apiVersion0 : "2025-09-01-preview");
 
         private ClientDiagnostics MarketplaceGalleryImagesClientDiagnostics => _marketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/marketplaceGalleryImages", out string apiVersion1) ? apiVersion1 : "2025-09-01-preview");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkInterfaces", out string apiVersion2) ? apiVersion2 : "2025-09-01-preview");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkSecurityGroups", out string apiVersion3) ? apiVersion3 : "2025-09-01-preview");
 
         private ClientDiagnostics StorageContainersClientDiagnostics => _storageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/storageContainers", out string apiVersion4) ? apiVersion4 : "2025-09-01-preview");
 
         private ClientDiagnostics VirtualHardDisksClientDiagnostics => _virtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualHardDisks", out string apiVersion5) ? apiVersion5 : "2025-09-01-preview");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/virtualNetworks", out string apiVersion6) ? apiVersion6 : "2025-09-01-preview");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/publicIPAddresses", out string apiVersion7) ? apiVersion7 : "2025-09-01-preview");
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/natGateways", out string apiVersion8) ? apiVersion8 : "2025-09-01-preview");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/loadBalancers", out string apiVersion9) ? apiVersion9 : "2025-09-01-preview");
 
         /// <summary>
         /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.

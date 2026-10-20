@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OutboundEnvironmentEndpointListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OutboundEnvironmentEndpointListResult(value ?? new ChangeTrackingList<OutboundEnvironmentEndpoint>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

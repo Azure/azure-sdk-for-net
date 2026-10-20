@@ -51,11 +51,17 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiManagement/gateways", out string apiVersion) ? apiVersion : "2025-09-01-preview");
 
         private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(ApiManagementServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(
+            ApiManagementServiceClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

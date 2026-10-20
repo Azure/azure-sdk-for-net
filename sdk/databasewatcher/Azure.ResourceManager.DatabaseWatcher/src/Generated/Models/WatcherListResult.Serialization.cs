@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WatcherListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WatcherListResult(value ?? new ChangeTrackingList<DatabaseWatcherData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

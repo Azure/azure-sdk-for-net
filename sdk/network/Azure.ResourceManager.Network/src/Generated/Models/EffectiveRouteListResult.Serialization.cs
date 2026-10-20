@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EffectiveRouteListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EffectiveRouteListResult(value ?? new ChangeTrackingList<EffectiveRoute>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

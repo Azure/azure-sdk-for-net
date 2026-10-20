@@ -1,14 +1,48 @@
 # Release History
 
-## 3.0.0-beta.4 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
 
 ### Breaking Changes
+- `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
+- `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
+- `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
+- `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeout`.
+- `VoiceAgentSubagent.InvokeTimeoutSeconds` was renamed to `VoiceAgentSubagent.InvokeTimeout`.
+- `OtlpTelemetryEndpoint.Endpoint` type was changed from `string` to `System.Uri`.
+- `VoiceAgentMcpTool.AllowedTools` and `MCPToolboxTool.AllowedTools`, along with their model-factory parameters, now use `OpenAI.Responses.McpToolFilter` instead of `BinaryData`. `MCPToolboxTool.AllowedTools` now requires the `AAIP002` experimental opt-in.
+- `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Breaking Changes
+- Changed types of `VoiceAgentAvatarVideoCrop.BottomRight` and `TopLeft` from `IList<object>` to `IList<uint>`. Its constructor and `ProjectsAgentsModelFactory.VoiceAgentAvatarVideoCrop` now accept `IEnumerable<uint>` instead of `IEnumerable<object>`.
+
+## 3.0.0-beta.4 (2026-10-12)
+
+### Features Added
+- Expanded Agent Optimization with cost estimation, a dedicated candidate-listing client, and new models for optimization configuration, evaluation sets, candidate mutations, results, token usage, and latency metrics.
+- Added toolbox support for browser automation tool, and added external web access configuration for web-search toolbox tools.
+- Added language and keyword metadata to voice telephony call records.
+- Added support for starting an agent's initiated process from a memory snapshot.
+
+### Breaking Changes
+- Redesigned the Agent Optimization API and model hierarchy. Job creation now uses optimization model and configuration objects, job listings return `AgentOptimizationJob`, and the previous dataset input, job input, options, progress, and list-item models were removed.
+- Renamed the Teams Phone Extension telephony APIs to Teams Phone Extensibility and renamed `MCPToolboxToolConnectorId` to `McpToolConnectorId`.
+- Replaced voice response status, output modality, semantic VAD eagerness, and web-search context-size types with the corresponding shared OpenAI types.
+- Moved `CallableToolAllowedCaller`, `VoiceAgentAudioInputConfigTranscriptionDelay`, `RealtimeFunctionToolParameters`, `ContainerSkill`, `InlineSkillParam`, `InlineSkillSourceParam`, and `SkillReferenceParam` from the `OpenAI` namespace to `Azure.AI.Projects.Agents`.
+
+### Other Changes
+- Agent Optimization no longer requires the `AAIP001` warning suppression or the `AgentsOptimization=V2Preview` feature opt-in.
+
+### Sample Updates
+- Updated the Agent Optimization samples for the redesigned job configuration and candidate APIs.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

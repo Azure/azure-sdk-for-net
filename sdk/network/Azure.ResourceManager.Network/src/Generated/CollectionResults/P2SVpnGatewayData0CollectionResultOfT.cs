@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of P2SVpnGatewayData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<P2SVpnGatewayData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

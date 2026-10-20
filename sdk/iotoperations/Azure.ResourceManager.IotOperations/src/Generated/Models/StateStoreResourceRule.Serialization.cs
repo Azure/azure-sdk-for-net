@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StateStoreResourceRule(keyType, keys, @method, additionalBinaryDataProperties);
+            return new StateStoreResourceRule(keyType, keys ?? new ChangeTrackingList<string>(), @method, additionalBinaryDataProperties);
         }
     }
 }

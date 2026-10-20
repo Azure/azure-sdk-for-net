@@ -16,9 +16,9 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _name;
-        internal bool _nameIsDefined;
+        private bool _nameIsDefined;
         private VectorStoreExpirationPolicy _expiresAfter;
-        internal bool _expiresAfterIsDefined;
+        private bool _expiresAfterIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ModifyVectorStoreRequest"/>. </summary>
         internal ModifyVectorStoreRequest()

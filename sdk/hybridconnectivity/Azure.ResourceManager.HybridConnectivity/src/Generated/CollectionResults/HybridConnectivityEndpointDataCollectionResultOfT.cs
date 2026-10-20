@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> The pages of HybridConnectivityEndpointDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<HybridConnectivityEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

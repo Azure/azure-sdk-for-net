@@ -941,6 +941,7 @@ public partial class SampleEndToEndTests
     }
 
     [TestCase("invocations_ws")]
+    [TestCase("conversation_engine")]
     public async Task SampleVoice1_UserBargeInCancelsApplicationGeneration(string path)
     {
         DelayedVoiceSupportHandler.Reset();

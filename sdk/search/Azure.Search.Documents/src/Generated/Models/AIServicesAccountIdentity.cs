@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AIServicesAccountIdentity : CognitiveServicesAccount
     {
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountIdentity"/>. </summary>
         /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>

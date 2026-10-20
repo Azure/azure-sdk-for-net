@@ -17,7 +17,7 @@ namespace Azure.Security.Attestation
     /// A list of all Azure supported baseline details for the a TEE type along with an
     /// indication of which one is in enforced for the attestation provider
     /// </summary>
-    internal partial class TcbBaselineResult : IJsonModel<TcbBaselineResult>
+    public partial class TcbBaselineResult : IJsonModel<TcbBaselineResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -136,7 +136,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            IList<TcbBaseline> tcbBaselines = default;
+            IReadOnlyList<TcbBaseline> tcbBaselines = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

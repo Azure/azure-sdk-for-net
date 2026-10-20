@@ -153,7 +153,27 @@ For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request s
 
 ### Typed Voice relay
 
-`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over
+`/conversation_engine` and the existing `/invocations_ws` transport. Registering
+with `AddVoice<THandler>()` exposes both routes; existing Voice applications keep
+the same startup code and legacy WS registration. Generic `AddInvocations()` raw
+WebSocket handlers do not expose CE. The application explicitly sends readiness,
+responses, output, completion, control, and error messages.
+
+To use standalone CE, declare `conversation_engine` version `1.0.0` in the hosted
+agent definition. New-schema definitions use `protocol_versions`; legacy
+definitions use `container_protocol_versions`. The library does not create or
+modify these declarations, and registering the container route alone does not
+enable the public Foundry endpoint. CE does not require `invocations_ws`,
+`voiceLiveCompatible`, or `bridgeProtocolVersion` declarations. Existing legacy
+Agent manifests and metadata can remain unchanged.
+
+Both routes reuse the same callbacks, transport limits, tracing, and cleanup;
+neither redirects to or falls back to the other. The Bridge message handshake
+remains `session.start.protocol_version="1.0"`, independent of the CE container
+protocol version `1.0.0`. Rebuild the container with a library build containing CE
+support, and deploy Foundry CE routing and CE-aware Voice Live before enabling a
+CE-declaring agent version. Local library tests do not establish deployment readiness.
 
 Caller interruptions use `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`. The former `barge_in`, `VoiceBargeInEvent`, and `OnBargeInAsync` names are no longer supported. Update the Voice Live sender together with the SDK. Generic raw WebSocket handlers and application-owned cancellation/history are unchanged.
 

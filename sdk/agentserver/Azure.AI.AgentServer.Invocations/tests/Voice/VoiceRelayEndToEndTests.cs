@@ -20,13 +20,15 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceRelayEndToEndTests
 {
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task DataAndSilentCompletionAreRelayed(bool silent)
+    [TestCase(false, "invocations_ws")]
+    [TestCase(true, "invocations_ws")]
+    [TestCase(false, "conversation_engine")]
+    [TestCase(true, "conversation_engine")]
+    public async Task DataAndSilentCompletionAreRelayed(bool silent, string path)
     {
         await using var app = BuildApp(new DataHandler(silent));
         await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
+        using var webSocket = await ConnectAsync(app, path);
         await SendTextAsync(webSocket, """
             {"type":"session.start","id":"m_start","ts":"2026-09-20T00:00:00Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1000,"idle_ms":1000,"max_duration_ms":5000}}
             """);
@@ -99,13 +101,14 @@ public class VoiceRelayEndToEndTests
         Assert.That(handler.TerminationCount, Is.EqualTo(1));
     }
 
-    [Test]
-    public async Task SelectedInboundEventsAreDispatchedInWireOrderOnOneSession()
+    [TestCase("invocations_ws")]
+    [TestCase("conversation_engine")]
+    public async Task SelectedInboundEventsAreDispatchedInWireOrderOnOneSession(string path)
     {
         var handler = new OrderedDispatchHandler();
         await using var app = BuildApp(handler);
         await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
+        using var webSocket = await ConnectAsync(app, path);
         var frames = new[]
         {
             """{"type":"session.start","id":"m_1","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}""",
@@ -534,11 +537,11 @@ public class VoiceRelayEndToEndTests
         return app;
     }
 
-    private static async Task<WebSocket> ConnectAsync(WebApplication app)
+    private static async Task<WebSocket> ConnectAsync(WebApplication app, string path = "invocations_ws")
     {
         var client = app.GetTestServer().CreateWebSocketClient();
         return await client.ConnectAsync(
-            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            new Uri(app.GetTestServer().BaseAddress, path),
             CancellationToken.None);
     }
 

@@ -47,11 +47,23 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(
+            DenyAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(
+            RoleAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-04-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

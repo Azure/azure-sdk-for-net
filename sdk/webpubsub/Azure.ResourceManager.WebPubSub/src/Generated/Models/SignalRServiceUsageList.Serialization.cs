@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SignalRServiceUsageList(value, nextLink, additionalBinaryDataProperties);
+            return new SignalRServiceUsageList(value ?? new ChangeTrackingList<SignalRServiceUsage>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<ComputeWriteableSubResourceData> Subgroups { get; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier InterconnectGroupId
+        public virtual ResourceIdentifier InterconnectGroupId
         {
             get
             {

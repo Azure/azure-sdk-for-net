@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport, additionalBinaryDataProperties);
+            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport ?? new ChangeTrackingList<AzureReachabilityReportItem>(), additionalBinaryDataProperties);
         }
     }
 }

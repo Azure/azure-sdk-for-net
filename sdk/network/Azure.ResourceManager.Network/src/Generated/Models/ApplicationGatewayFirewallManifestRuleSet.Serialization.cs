@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                 status,
                 displayName,
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
-                ruleGroups,
+                ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(),
                 additionalBinaryDataProperties);
         }
     }
