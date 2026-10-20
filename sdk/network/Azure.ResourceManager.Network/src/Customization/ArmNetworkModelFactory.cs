@@ -401,24 +401,21 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionStateSnapshot();
         }
 
-        // Keep the released overload without RuleType and forward its metadata to the legacy model factory below.
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use InboundSecurityRuleData instead.")]
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, IEnumerable<InboundSecurityRules> rules = default, NetworkProvisioningState? provisioningState = default)
         {
             return InboundSecurityRule(id, name, resourceType, etag, default, rules, provisioningState);
         }
 
-        // The released legacy type has no generated factory; preserve ResourceType in its inherited native storage.
-        // Other currently unassigned envelope arguments are outside this metadata repair.
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use InboundSecurityRuleData instead.")]
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, InboundSecurityRuleType? ruleType = default, IEnumerable<InboundSecurityRules> rules = default, NetworkProvisioningState? provisioningState = default)
         {
-            var result = new InboundSecurityRule { RuleType = ruleType, ResourceType = resourceType };
-            foreach (var item in rules ?? Enumerable.Empty<InboundSecurityRules>())
-            {
-                result.Rules.Add(item);
-            }
-            return result;
+            var properties = new InboundSecurityRuleProperties(ruleType, (rules ?? Enumerable.Empty<InboundSecurityRules>()).ToList(), provisioningState, default);
+            return new InboundSecurityRule(id, name, resourceType, etag, properties, default);
         }
 
         // Adds the model factory method omitted for the custom canonical shared network manager connection model.

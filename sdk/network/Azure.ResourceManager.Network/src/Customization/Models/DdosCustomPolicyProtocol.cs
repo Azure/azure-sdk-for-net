@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Syn. </summary>
         public static DdosCustomPolicyProtocol Syn { get; } = new DdosCustomPolicyProtocol("Syn");
         /// <summary> TcpSyn. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This value belongs to DdosTrafficType. Please use DdosTrafficType.TcpSyn instead.")]
         public static DdosCustomPolicyProtocol TcpSyn { get; } = new DdosCustomPolicyProtocol("TcpSyn");
 
         /// <summary> Determines if two <see cref="DdosCustomPolicyProtocol"/> values are the same. </summary>

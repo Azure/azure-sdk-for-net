@@ -3,19 +3,17 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.Network.Models
 {
-    [CodeGenSuppress("FirewallPolicyRuleCollectionInfo")]
     public abstract partial class FirewallPolicyRuleCollectionInfo
     {
         /// <summary> Initializes a new instance of the FirewallPolicyRuleCollectionInfo class. </summary>
         protected FirewallPolicyRuleCollectionInfo()
         {
         }
+
+        // Absent in 1.15.0, but shipped in 1.17.0. Preserve the released subclass constructor signature.
+        /// <summary> Initializes a new instance of the FirewallPolicyRuleCollectionInfo class. </summary>
+        protected FirewallPolicyRuleCollectionInfo(bool _) { }
     }
 }

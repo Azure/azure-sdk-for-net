@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
@@ -16,12 +17,14 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         // Reuse native deserialization storage instead of returning an empty legacy wrapper.
-        private RoutingConfiguration(RoutingConfigurationNfv original) : base(original)
+        internal RoutingConfiguration(RoutingConfigurationNfv original) : base(original)
         {
         }
 
         /// <summary> The propagated route tables. </summary>
         [WirePath("propagatedRouteTables")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete. Please use RoutingConfigurationNfv.PropagatedRouteTables instead.")]
         public new PropagatedRouteTable PropagatedRouteTables { get; set; }
 
         // Preserve the supported flattened facade without copying the native route list.

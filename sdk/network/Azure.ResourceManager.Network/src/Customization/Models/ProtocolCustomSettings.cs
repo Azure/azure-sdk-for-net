@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The protocol. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility property is not supported by the current DDoS API.")]
         public DdosCustomPolicyProtocol? Protocol { get; set; }
 
         /// <summary> The source rate override. </summary>
@@ -32,8 +30,6 @@ namespace Azure.ResourceManager.Network.Models
         public string TriggerRateOverride { get; set; }
 
         /// <summary> The trigger sensitivity override. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility property is not supported by the current DDoS API.")]
         public DdosCustomPolicyTriggerSensitivityOverride? TriggerSensitivityOverride { get; set; }
     }
 }

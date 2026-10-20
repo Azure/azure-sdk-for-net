@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class LoadBalancerBackendAddress
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
+        // This alias was absent in 1.15.0 but shipped in 1.17.0; the 1.15.0 name already had the Id suffix.
         /// <inheritdoc cref="LoadBalancerFrontendIPConfigurationId"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use LoadBalancerFrontendIPConfigurationId instead.")]

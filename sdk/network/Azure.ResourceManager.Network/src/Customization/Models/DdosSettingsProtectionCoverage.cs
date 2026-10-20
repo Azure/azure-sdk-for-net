@@ -28,16 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         public static DdosSettingsProtectionCoverage Standard { get; } = new DdosSettingsProtectionCoverage("Standard");
 
         /// <summary> VirtualNetworkInherited. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.VirtualNetworkInherited instead.")]
         public static DdosSettingsProtectionCoverage VirtualNetworkInherited { get; } = new DdosSettingsProtectionCoverage("VirtualNetworkInherited");
         /// <summary> Enabled. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Enabled instead.")]
         public static DdosSettingsProtectionCoverage Enabled { get; } = new DdosSettingsProtectionCoverage("Enabled");
         /// <summary> Disabled. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Disabled instead.")]
         public static DdosSettingsProtectionCoverage Disabled { get; } = new DdosSettingsProtectionCoverage("Disabled");
 
         /// <inheritdoc/>

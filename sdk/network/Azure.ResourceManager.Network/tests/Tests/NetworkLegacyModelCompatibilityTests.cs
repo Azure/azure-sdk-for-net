@@ -39,19 +39,28 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(typeof(ManagedRuleSensitivityType), nameof(ManagedRuleSensitivityType.None))]
         [TestCase(typeof(VpnAuthenticationType), nameof(VpnAuthenticationType.AAD))]
         [TestCase(typeof(DdosSettings), nameof(DdosSettings.ProtectionCoverage))]
+        [TestCase(typeof(DdosCustomPolicyData), nameof(DdosCustomPolicyData.ProtocolCustomSettings))]
+        public void ObsoleteCompatibilityPropertiesAreHidden(Type type, string name)
+        {
+            AssertDeprecated(type.GetProperty(name));
+        }
+
         [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.VirtualNetworkInherited))]
         [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Enabled))]
         [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Disabled))]
         [TestCase(typeof(DdosCustomPolicyProtocol), nameof(DdosCustomPolicyProtocol.TcpSyn))]
         [TestCase(typeof(ProtocolCustomSettings), nameof(ProtocolCustomSettings.Protocol))]
         [TestCase(typeof(ProtocolCustomSettings), nameof(ProtocolCustomSettings.TriggerSensitivityOverride))]
-        [TestCase(typeof(DdosCustomPolicyData), nameof(DdosCustomPolicyData.ProtocolCustomSettings))]
         [TestCase(typeof(ConnectionMonitorQueryResult), nameof(ConnectionMonitorQueryResult.SourceStatus))]
         [TestCase(typeof(ConnectionMonitorQueryResult), nameof(ConnectionMonitorQueryResult.States))]
+        [TestCase(typeof(ConnectionStateSnapshot), nameof(ConnectionStateSnapshot.NetworkConnectionState))]
         [TestCase(typeof(ConnectionStateSnapshot), nameof(ConnectionStateSnapshot.EvaluationState))]
-        public void ObsoleteCompatibilityPropertiesAreHidden(Type type, string name)
+        public void ObsoleteContainersDoNotRedundantlyDeprecateTheirProperties(Type type, string name)
         {
-            AssertDeprecated(type.GetProperty(name));
+            AssertDeprecated(type);
+            PropertyInfo property = type.GetProperty(name);
+            Assert.That(property.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+            Assert.That(property.GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
         }
 
         [Test]

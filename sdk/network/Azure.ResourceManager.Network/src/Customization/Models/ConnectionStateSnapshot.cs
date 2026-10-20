@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Evaluation state. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This legacy query evaluation state is not supported by the current connection monitor API.")]
         public EvaluationState? EvaluationState { get; }
 
         /// <summary> Average latency in milliseconds. </summary>

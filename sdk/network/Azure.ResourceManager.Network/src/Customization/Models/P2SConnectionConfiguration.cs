@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,10 +26,30 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and no longer functions.")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        // This was an active generated property in 1.15.0, typed as RoutingConfiguration rather than RoutingConfigurationNfv.
+        /// <summary> Gets or sets the routing configuration. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                if (Properties?.RoutingConfiguration is null)
+                {
+                    return null;
+                }
+                if (Properties.RoutingConfiguration is not RoutingConfiguration routingConfiguration)
+                {
+                    routingConfiguration = new RoutingConfiguration(Properties.RoutingConfiguration);
+                    Properties.RoutingConfiguration = routingConfiguration;
+                }
+                return routingConfiguration;
+            }
+            set
+            {
+                Properties ??= new P2SConnectionConfigurationProperties();
+                Properties.RoutingConfiguration = value;
+            }
+        }
 
         /// <summary> Gets a read-only view of the configuration policy groups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

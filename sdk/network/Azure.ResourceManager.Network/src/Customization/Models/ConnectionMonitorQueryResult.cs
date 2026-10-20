@@ -23,13 +23,9 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Source status. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public ConnectionMonitorSourceStatus? SourceStatus { get; }
 
         /// <summary> Connection state snapshots. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public IReadOnlyList<ConnectionStateSnapshot> States { get; }
 
         ConnectionMonitorQueryResult IJsonModel<ConnectionMonitorQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ConnectionMonitorQueryResult();

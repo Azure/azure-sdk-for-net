@@ -4,16 +4,14 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // ConnectionState is reachable only through the retired connection-monitor query result, not an active operation.
     /// <summary> Network connection state. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This legacy connection state is not supported by the current connection monitor API.")]
     public readonly partial struct NetworkConnectionState : IEquatable<NetworkConnectionState>
     {
         private readonly string _value;

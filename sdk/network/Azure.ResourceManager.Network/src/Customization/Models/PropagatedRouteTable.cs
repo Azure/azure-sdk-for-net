@@ -6,14 +6,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility alias for propagated route table. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This model is obsolete. Please use PropagatedRouteTableNfv instead.")]
     public partial class PropagatedRouteTable : PropagatedRouteTableNfv, IJsonModel<PropagatedRouteTable>, IPersistableModel<PropagatedRouteTable>
     {
         /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Route table resource identifiers. </summary>
-        [Azure.ResourceManager.Network.WirePath("ids")]
+        [WirePath("ids")]
         public new IList<WritableSubResource> Ids { get; }
 
         PropagatedRouteTable IJsonModel<PropagatedRouteTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new PropagatedRouteTable();

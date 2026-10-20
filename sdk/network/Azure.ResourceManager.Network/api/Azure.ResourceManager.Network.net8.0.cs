@@ -512,12 +512,16 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult> GetLearnedPrefixes(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult>> GetLearnedPrefixesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
         public virtual Azure.ResourceManager.ArmOperation PacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult> PacketCaptureOperation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult> PacketCaptureOperation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -6166,7 +6170,9 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation CommitMigration(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkVirtualApplianceCommitMigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CommitMigrationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkVirtualApplianceCommitMigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete. Please use GetInboundSecurityRules().CreateOrUpdate instead.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.InboundSecurityRule> CreateOrUpdateInboundSecurityRule(Azure.WaitUntil p0, string p1, Azure.ResourceManager.Network.Models.InboundSecurityRule p2, System.Threading.CancellationToken p3) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete. Please use GetInboundSecurityRules().CreateOrUpdateAsync instead.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(Azure.WaitUntil p0, string p1, Azure.ResourceManager.Network.Models.InboundSecurityRule p2, System.Threading.CancellationToken p3) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -13242,7 +13248,9 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.InboundNatRuleData InboundNatRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData backendIPConfiguration = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), int? frontendPortRangeStart = default(int?), int? frontendPortRangeEnd = default(int?), Azure.Core.ResourceIdentifier backendAddressPoolId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.InboundNatRuleData InboundNatRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, string type = null, Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData backendIPConfiguration = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), int? frontendPortRangeStart = default(int?), int? frontendPortRangeEnd = default(int?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier backendAddressPoolId = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.InboundNatRulePortMapping InboundNatRulePortMapping(string inboundNatRuleName = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPort = default(int?), int? backendPort = default(int?)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete. Please use InboundSecurityRuleData instead.")]
         public static Azure.ResourceManager.Network.Models.InboundSecurityRule InboundSecurityRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete. Please use InboundSecurityRuleData instead.")]
         public static Azure.ResourceManager.Network.Models.InboundSecurityRule InboundSecurityRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.InboundSecurityRuleType? ruleType = default(Azure.ResourceManager.Network.Models.InboundSecurityRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.InboundSecurityRuleData InboundSecurityRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.InboundSecurityRuleType? ruleType = default(Azure.ResourceManager.Network.Models.InboundSecurityRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.InboundSecurityRuleData InboundSecurityRuleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ResourceManager.Network.Models.InboundSecurityRuleType? ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
@@ -15566,9 +15574,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ConnectionMonitorQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>
     {
         public ConnectionMonitorQueryResult() { }
-        [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
         public Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus? SourceStatus { get { throw null; } }
-        [System.ObsoleteAttribute("This legacy query result is not supported by the current connection monitor API.")]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot> States { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15785,7 +15791,6 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectionStateSnapshot() { }
         public long? AvgLatencyInMs { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        [System.ObsoleteAttribute("This legacy query evaluation state is not supported by the current connection monitor API.")]
         public Azure.ResourceManager.Network.Models.EvaluationState? EvaluationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityHopInfo> Hops { get { throw null; } }
         public long? MaxLatencyInMs { get { throw null; } }
@@ -16170,7 +16175,6 @@ namespace Azure.ResourceManager.Network.Models
         public DdosCustomPolicyProtocol(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Syn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Tcp { get { throw null; } }
-        [System.ObsoleteAttribute("This value belongs to DdosTrafficType. Please use DdosTrafficType.TcpSyn instead.")]
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol TcpSyn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol other) { throw null; }
@@ -16262,12 +16266,9 @@ namespace Azure.ResourceManager.Network.Models
         private readonly int _dummyPrimitive;
         public DdosSettingsProtectionCoverage(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Basic { get { throw null; } }
-        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Disabled instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Disabled { get { throw null; } }
-        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.Enabled instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Enabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Standard { get { throw null; } }
-        [System.ObsoleteAttribute("This value belongs to DdosSettingsProtectionMode. Please use DdosSettingsProtectionMode.VirtualNetworkInherited instead.")]
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage VirtualNetworkInherited { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -18268,6 +18269,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This model is obsolete. Please use FirewallPacketCaptureContent instead.")]
     public partial class FirewallPacketCaptureRequestContent : Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent>
     {
         public FirewallPacketCaptureRequestContent() { }
@@ -19595,6 +19597,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This model is obsolete. Please use InboundSecurityRuleData instead.")]
     public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>
     {
         public InboundSecurityRule() { }
@@ -19602,8 +19605,11 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.InboundSecurityRules> Rules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.InboundSecurityRuleType? RuleType { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Network.Models.NetworkSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static implicit operator Azure.ResourceManager.Network.InboundSecurityRuleData (Azure.ResourceManager.Network.Models.InboundSecurityRule rule) { throw null; }
+        protected override Azure.ResourceManager.Network.Models.NetworkSubResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Network.Models.InboundSecurityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.InboundSecurityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -20979,6 +20985,7 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This legacy connection state is not supported by the current connection monitor API.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkConnectionState : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkConnectionState>
     {
@@ -22540,7 +22547,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is obsolete and no longer functions.")]
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace VpnClientAddressPool { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VpnClientAddressPrefixes { get { throw null; } }
@@ -23212,6 +23218,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.ProcessorArchitecture left, Azure.ResourceManager.Network.Models.ProcessorArchitecture right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This model is obsolete. Please use PropagatedRouteTableNfv instead.")]
     public partial class PropagatedRouteTable : Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.PropagatedRouteTable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTable>
     {
         public PropagatedRouteTable() { }
@@ -23241,11 +23248,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ProtocolCustomSettings
     {
         public ProtocolCustomSettings() { }
-        [System.ObsoleteAttribute("This compatibility property is not supported by the current DDoS API.")]
         public Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol? Protocol { get { throw null; } set { } }
         public string SourceRateOverride { get { throw null; } set { } }
         public string TriggerRateOverride { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is not supported by the current DDoS API.")]
         public Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride? TriggerSensitivityOverride { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -23869,6 +23874,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class RoutingConfiguration : Azure.ResourceManager.Network.Models.RoutingConfigurationNfv, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>
     {
         public RoutingConfiguration() { }
+        [System.ObsoleteAttribute("This property is obsolete. Please use RoutingConfigurationNfv.PropagatedRouteTables instead.")]
         public new Azure.ResourceManager.Network.Models.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.StaticRoute> StaticRoutes { get { throw null; } }
         Azure.ResourceManager.Network.Models.RoutingConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
