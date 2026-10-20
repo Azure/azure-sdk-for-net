@@ -108,7 +108,7 @@ namespace Azure.Generator.Provisioning.Primitives
         internal IReadOnlyList<ResourceScope> WritableScopes { get; }
 
         /// <summary>
-        /// Gets whether any resource identity path uses an external scope.
+        /// Gets whether any readable or writable scope is an external scope.
         /// Structural children inherit that scope through their parent.
         /// </summary>
         internal bool IsExtensionResource { get; }

@@ -1396,7 +1396,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
-                metadata.Scope.Kind == ResourceScope.Extension);
+                readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

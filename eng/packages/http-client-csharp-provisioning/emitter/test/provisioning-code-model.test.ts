@@ -260,6 +260,61 @@ describe("resource projection metadata", () => {
     ]);
     strictEqual(writableProjection.isExtensionResource, true);
   });
+
+  it.each([
+    { methodKinds: [ResourceOperationKind.Read], isExtensionResource: true },
+    { methodKinds: [ResourceOperationKind.Create], isExtensionResource: true },
+    { methodKinds: [ResourceOperationKind.Update], isExtensionResource: false },
+    { methodKinds: [ResourceOperationKind.Delete], isExtensionResource: false },
+    { methodKinds: [], isExtensionResource: false }
+  ])(
+    "classifies extension identity from Read/Create scopes for $methodKinds",
+    ({ methodKinds, isExtensionResource }) => {
+      const extension = createResource({
+        path: "/{scope}/providers/Microsoft.Test/extensions/{extensionName}",
+        scope: ResourceScopeKind.Extension,
+        methodKinds
+      });
+      const root = createResource({
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/extensions/{extensionName}",
+        scope: ResourceScopeKind.ResourceGroup,
+        methodKinds: [ResourceOperationKind.Read, ResourceOperationKind.Create]
+      });
+
+      const projection = buildResourceProjectionMetadata([extension]);
+      strictEqual(projection.isExtensionResource, isExtensionResource);
+      deepStrictEqual(
+        projection.readableScopes,
+        methodKinds.includes(ResourceOperationKind.Read)
+          ? [ResourceScopeKind.Extension]
+          : []
+      );
+      deepStrictEqual(
+        projection.writableScopes,
+        methodKinds.includes(ResourceOperationKind.Create)
+          ? [ResourceScopeKind.Extension]
+          : []
+      );
+
+      const mixedProjection = buildResourceProjectionMetadata([
+        root,
+        extension
+      ]);
+      strictEqual(mixedProjection.isExtensionResource, isExtensionResource);
+      strictEqual(
+        mixedProjection.readableScopes.includes(
+          ResourceScopeKind.ResourceGroup
+        ),
+        true
+      );
+      strictEqual(
+        mixedProjection.writableScopes.includes(
+          ResourceScopeKind.ResourceGroup
+        ),
+        true
+      );
+    }
+  );
 });
 
 interface ResourceOptions {

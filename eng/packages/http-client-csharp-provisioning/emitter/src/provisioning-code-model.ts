@@ -158,6 +158,7 @@ export function buildResourceProjectionMetadata(
   resources: ArmResourceSchema[]
 ): Omit<ResourceProjection, "resourceModel" | "resourceName" | "isSettable"> {
   const first = resources[0];
+  const readableScopes = collectScopes(resources, "Read");
   const writableScopes = collectScopes(resources, "Create");
 
   return {
@@ -192,11 +193,11 @@ export function buildResourceProjectionMetadata(
       resources.flatMap((resource) => resource.metadata.rbacRoles),
       (role) => `${role.name}\0${role.value}`
     ),
-    readableScopes: collectScopes(resources, "Read"),
+    readableScopes,
     writableScopes,
-    isExtensionResource: resources.some((resource) =>
-      isExtensionScope(resource.metadata.scope.kind)
-    )
+    isExtensionResource:
+      readableScopes.some(isExtensionScope) ||
+      writableScopes.some(isExtensionScope)
   };
 }
 
