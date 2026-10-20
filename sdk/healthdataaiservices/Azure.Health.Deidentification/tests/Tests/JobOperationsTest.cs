@@ -206,16 +206,9 @@ namespace Azure.Health.Deidentification.Tests
 
             if (job.Status == OperationStatus.Running)
             {
-                try
-                {
-                    job = await client.CancelJobAsync(jobName);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // The job may complete between the status poll and the cancel request.
-                    TestContext.WriteLine($"Cancel request for job '{jobName}' failed ({ex.Status}); verifying the job reached a terminal state.");
-                    job = await client.GetJobAsync(jobName);
-                }
+                // Per the service contract, canceling a job that has already completed has no effect,
+                // so the job may report Succeeded if it finished before the cancel request was processed.
+                job = await client.CancelJobAsync(jobName);
 
                 Assert.That(job.Status, Is.EqualTo(OperationStatus.Canceled).Or.EqualTo(OperationStatus.Succeeded),
                     $"Job '{jobName}' should be Canceled (or Succeeded if it completed before cancellation).");
