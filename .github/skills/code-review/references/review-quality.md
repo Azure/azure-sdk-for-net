@@ -146,9 +146,12 @@ listed here.
   useful return type out; never return `null` for a collection — return empty
 
 **Async & cancellation**
-- A `CancellationToken` parameter must actually be honored, not just declared — AZC0002/CA1068
-  already enforce that one exists (or an equivalent protocol-method overload), named correctly,
-  and last in position
+- A `CancellationToken` parameter must actually be honored, not just declared. `AZC0002`/`CA1068`
+  enforce its existence (or an equivalent `RequestContext` protocol overload), naming, and
+  position — but only for `Azure.Core` methods; `AZC0002` doesn't inspect `System.ClientModel`
+  methods at all (it only recognizes `Azure.Core` return types), so for those, still check that
+  convenience methods declare `CancellationToken cancellationToken = default` and that protocol
+  methods instead accept cancellation through their trailing `RequestOptions` parameter
 - No `async void` except event handlers; no sync-over-async (`.Result`, `.Wait()`,
   `GetAwaiter().GetResult()`) in library code
 - Return `Task`/`ValueTask`, not `void`; use `ConfigureAwait(false)` in library code where

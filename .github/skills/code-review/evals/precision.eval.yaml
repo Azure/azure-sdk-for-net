@@ -102,6 +102,21 @@ stimuli:
         config:
           pattern: '(?m)^No findings\.$'
 
+  - name: flag-missing-cancellationtoken-on-scm-stack-convenience-method
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic new
+      public API and return findings only. The library is on the `System.ClientModel` stack. A new
+      convenience method adds the signature `public virtual Task<ClientResult<Widget>>
+      GetWidgetAsync(string widgetName)` — it takes no `CancellationToken` parameter at all, and
+      no protocol-method overload with a trailing `RequestOptions` parameter exists either.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)CancellationToken'
+
   - name: ignore-unrelated-unchanged-code
     prompt: >-
       First invoke the code-review skill. Then use it to review this synthetic PR
