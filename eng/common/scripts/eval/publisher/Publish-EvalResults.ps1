@@ -82,9 +82,10 @@ try {
     $failureCode = 'publication_failed'
     $duplicate = $false
     try {
-        # CLI owns transport retries. Never overwrite, rebuild the ZIP, or create a container.
+        # CLI owns transport retries. Keep the wildcard in one option=value argument
+        # so native argument expansion on Linux cannot turn it into local file names.
         Invoke-AzJson -Arguments (@('storage', 'blob', 'upload') + $storage + @('--file', $BundlePath,
-            '--type', 'block', '--overwrite', 'false', '--if-none-match', '*', '--no-progress', '--content-type', 'application/zip',
+            '--type', 'block', '--overwrite', 'false', '--if-none-match=*', '--no-progress', '--content-type', 'application/zip',
             '--metadata', 'schema=1', "sha256=$hash", "publisher=$owner", "storedat=$storedAt", '--timeout', '30', '--socket-timeout', '30')) | Out-Null
     } catch {
         # Also covers a lost success response: adopt only the same already-stored archive.

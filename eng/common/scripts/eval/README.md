@@ -105,8 +105,9 @@ compressed-size cap is checked afterward. Full ZIP decoding remains in contract
 tests rather than reopening the archive in production. JSONL is decoded once and
 parsed directly as text, with byte limits on both source and serialized records.
 
-Uploads use `--auth-mode login --overwrite false --if-none-match '*'` with the **same
+Uploads use `--auth-mode login --overwrite false --if-none-match=*` with the **same
 saved ZIP**; Azure CLI owns transport retries, without another script/task retry loop.
+The condition is one argument so Linux does not expand a standalone `*` into file names.
 `--no-progress` keeps CLI progress out of captured command results. JSON is parsed
 from stdout only; captured native stderr is never mixed into JSON or echoed.
 Request/socket timeouts and the task deadline bound execution. Existing archives must match metadata,
