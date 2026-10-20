@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -147,11 +148,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             using var methodSource = new CancellationTokenSource();
             using var firstSource = new CancellationTokenSource();
             using var secondSource = new CancellationTokenSource();
-            var pageable = new RelationshipsAsyncPageable<int>(token =>
-            {
-                tokens.Add(token);
-                return AsyncPageable<int>.FromPages(new[] { Page<int>.FromValues(new[] { 1 }, null, new MockResponse(200)) });
-            }, new Uri("https://management.azure.com"), methodSource.Token);
+            var pageable = new AsyncPageableWrapper<int, int>(
+                new TokenRecordingPageable(tokens.Add, methodSource.Token), item => item);
 
             await using (IAsyncEnumerator<int> first = pageable.GetAsyncEnumerator(firstSource.Token))
             await using (IAsyncEnumerator<int> second = pageable.GetAsyncEnumerator(secondSource.Token))
@@ -165,8 +163,9 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
                 Assert.IsFalse(secondSource.IsCancellationRequested);
             }
 
-            await foreach (int item in pageable.WithCancellation(secondSource.Token)) { }
-            Assert.AreEqual(3, tokens.Count, "Re-enumeration must construct a fresh source");
+            await foreach (int item in pageable.WithCancellation(secondSource.Token))
+            { }
+            Assert.AreEqual(3, tokens.Count, "Re-enumeration must use an independent effective token");
             Assert.IsFalse(tokens[2].IsCancellationRequested);
         }
 
@@ -176,15 +175,15 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             CancellationToken effectiveToken = default;
             using var methodSource = new CancellationTokenSource();
             using var enumeratorSource = new CancellationTokenSource();
-            var pageable = new RelationshipsAsyncPageable<int>(token =>
-            {
-                effectiveToken = token;
-                return AsyncPageable<int>.FromPages(new[] { Page<int>.FromValues(new[] { 1 }, null, new MockResponse(200)) });
-            }, new Uri("https://management.azure.com"), methodSource.Token);
+            var pageable = new AsyncPageableWrapper<int, int>(
+                new TokenRecordingPageable(token => effectiveToken = token, methodSource.Token), item => item);
 
             await using (IAsyncEnumerator<int> enumerator = pageable.GetAsyncEnumerator(enumeratorSource.Token))
             {
                 Assert.IsTrue(await enumerator.MoveNextAsync());
+                Assert.IsTrue(effectiveToken.CanBeCanceled);
+                Assert.AreNotEqual(methodSource.Token, effectiveToken);
+                Assert.AreNotEqual(enumeratorSource.Token, effectiveToken);
             }
             methodSource.Cancel();
             enumeratorSource.Cancel();
@@ -195,6 +194,29 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
 
         private static MockResponse EmptyPage() => new MockResponse(200).SetContent("{\"value\":[]}");
+
+        // Record the enumeration token before the HTTP pipeline creates and disposes
+        // its per-request token, which cannot expose the enumeration's lifetime.
+        private sealed class TokenRecordingPageable : AsyncPageable<int>
+        {
+            private readonly Action<CancellationToken> _recordToken;
+
+            public TokenRecordingPageable(Action<CancellationToken> recordToken, CancellationToken cancellationToken)
+                : base(cancellationToken)
+            {
+                _recordToken = recordToken;
+            }
+
+            public override IAsyncEnumerable<Page<int>> AsPages(string continuationToken = default, int? pageSizeHint = default) =>
+                EnumeratePagesAsync(CancellationToken);
+
+            private async IAsyncEnumerable<Page<int>> EnumeratePagesAsync([EnumeratorCancellation] CancellationToken cancellationToken)
+            {
+                _recordToken(cancellationToken);
+                yield return Page<int>.FromValues(new[] { 1 }, null, new MockResponse(200));
+                await Task.CompletedTask;
+            }
+        }
 
         private static string GetListPath(string family) => family switch
         {
@@ -218,11 +240,13 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             if (pages)
             {
-                await foreach (Page<T> page in pageable.AsPages().WithCancellation(token)) { }
+                await foreach (Page<T> page in pageable.AsPages().WithCancellation(token))
+                { }
             }
             else
             {
-                await foreach (T item in pageable.WithCancellation(token)) { }
+                await foreach (T item in pageable.WithCancellation(token))
+                { }
             }
         }
 

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT : AsyncPageable<ContainsRelationship>
+    internal partial class ContainsRelationshipAsync0CollectionResultOfT : AsyncPageable<ContainsRelationship>
     {
         private readonly ContainsRelationships _client;
         private readonly Guid _subscriptionId;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Relationships
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ContainsRelationshipAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ContainsRelationships client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT(ContainsRelationships client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainsRelationshipAsync0CollectionResultOfT(ContainsRelationships client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Relationships
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainsRelationshipAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ContainsRelationshipAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override IAsyncEnumerable<Page<ContainsRelationship>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);

@@ -17,31 +17,31 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT : AsyncPageable<DependencyOfRelationshipData>
+    internal partial class ServiceGroupMemberRelationshipDataAsyncCollectionResultOfT : AsyncPageable<ServiceGroupMemberRelationshipData>
     {
-        private readonly ServiceGroupDependencyOfRelationship _client;
-        private readonly string _serviceGroupName;
+        private readonly ServiceGroupMemberRelationships _client;
+        private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ServiceGroupDependencyOfRelationship client used to send requests. </param>
-        /// <param name="serviceGroupName"> The name of the service group. </param>
+        /// <summary> Initializes a new instance of ServiceGroupMemberRelationshipDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceGroupMemberRelationships client used to send requests. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT(ServiceGroupDependencyOfRelationship client, string serviceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ServiceGroupMemberRelationshipDataAsyncCollectionResultOfT(ServiceGroupMemberRelationships client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _serviceGroupName = serviceGroupName;
+            _resourceUri = resourceUri;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceGroupMemberRelationshipDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<DependencyOfRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ServiceGroupMemberRelationshipDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<ServiceGroupMemberRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<DependencyOfRelationshipData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<ServiceGroupMemberRelationshipData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.Relationships
                 {
                     yield break;
                 }
-                DependencyOfRelationshipListResult result = DependencyOfRelationshipListResult.FromResponse(response);
+                ServiceGroupMemberRelationshipListResult result = ServiceGroupMemberRelationshipListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DependencyOfRelationshipData>.FromValues((IReadOnlyList<DependencyOfRelationshipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ServiceGroupMemberRelationshipData>.FromValues((IReadOnlyList<ServiceGroupMemberRelationshipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _serviceGroupName, _context) : _client.CreateGetAllRequest(_serviceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _resourceUri, _context) : _client.CreateGetByParentRequest(_resourceUri, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

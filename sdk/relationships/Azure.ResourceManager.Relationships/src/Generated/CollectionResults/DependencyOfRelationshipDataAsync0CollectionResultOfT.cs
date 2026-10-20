@@ -17,30 +17,30 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT : AsyncPageable<DependencyOfRelationshipData>
+    internal partial class DependencyOfRelationshipDataAsync0CollectionResultOfT : AsyncPageable<DependencyOfRelationshipData>
     {
-        private readonly DependencyOfRelationships _client;
-        private readonly string _resourceUri;
+        private readonly ServiceGroupDependencyOfRelationship _client;
+        private readonly string _serviceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DependencyOfRelationships client used to send requests. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <summary> Initializes a new instance of DependencyOfRelationshipDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceGroupDependencyOfRelationship client used to send requests. </param>
+        /// <param name="serviceGroupName"> The name of the service group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT(DependencyOfRelationships client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DependencyOfRelationshipDataAsync0CollectionResultOfT(ServiceGroupDependencyOfRelationship client, string serviceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _resourceUri = resourceUri;
+            _serviceGroupName = serviceGroupName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DependencyOfRelationshipDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DependencyOfRelationshipDataAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override IAsyncEnumerable<Page<DependencyOfRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _resourceUri, _context) : _client.CreateGetByParentRequest(_resourceUri, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _serviceGroupName, _context) : _client.CreateGetAllRequest(_serviceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -14,19 +14,19 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT : Pageable<ServiceGroupMemberRelationshipData>
+    internal partial class DependencyOfRelationshipDataCollectionResultOfT : Pageable<DependencyOfRelationshipData>
     {
-        private readonly ServiceGroupMemberRelationships _client;
+        private readonly DependencyOfRelationships _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ServiceGroupMemberRelationships client used to send requests. </param>
+        /// <summary> Initializes a new instance of DependencyOfRelationshipDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DependencyOfRelationships client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT(ServiceGroupMemberRelationships client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DependencyOfRelationshipDataCollectionResultOfT(DependencyOfRelationships client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Relationships
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DependencyOfRelationshipDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ServiceGroupMemberRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DependencyOfRelationshipDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<DependencyOfRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Relationships
                 {
                     yield break;
                 }
-                ServiceGroupMemberRelationshipListResult result = ServiceGroupMemberRelationshipListResult.FromResponse(response);
+                DependencyOfRelationshipListResult result = DependencyOfRelationshipListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ServiceGroupMemberRelationshipData>.FromValues((IReadOnlyList<ServiceGroupMemberRelationshipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DependencyOfRelationshipData>.FromValues((IReadOnlyList<DependencyOfRelationshipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

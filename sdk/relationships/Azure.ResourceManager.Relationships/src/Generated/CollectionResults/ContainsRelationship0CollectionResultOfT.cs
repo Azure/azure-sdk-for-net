@@ -14,33 +14,36 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT : Pageable<ContainsRelationship>
+    internal partial class ContainsRelationship0CollectionResultOfT : Pageable<ContainsRelationship>
     {
         private readonly ContainsRelationships _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ContainsRelationship0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ContainsRelationships client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT(ContainsRelationships client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainsRelationship0CollectionResultOfT(ContainsRelationships client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainsRelationship0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ContainsRelationship0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ContainsRelationship>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionContainsRelationshipsRequest(nextLink, _subscriptionId, _filter, _context) : _client.CreateGetBySubscriptionContainsRelationshipsRequest(_subscriptionId, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupContainsRelationshipsRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _context) : _client.CreateGetByResourceGroupContainsRelationshipsRequest(_subscriptionId, _resourceGroupName, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
