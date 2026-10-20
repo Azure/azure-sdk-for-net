@@ -1,0 +1,226 @@
+[
+  {
+    "Name": "ConfigurationStore",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ConfigurationStore",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "ConfigurationStorePrivateLinkResource",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "DiscriminatedResourceProfile",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.DiscriminatedResourceProfile",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "ExtensionAssignment",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ExtensionAssignment",
+    "ResourceType": "ProvisioningTypeSpec/extensionAssignments",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": true,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "Item",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.Item",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/items",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "KeyValue",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.KeyValue",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/keyValues",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "LatestStableResource",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.LatestStableResource",
+    "ResourceType": "ProvisioningTypeSpec/latestStableResources",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "LegacySingleton",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.LegacySingleton",
+    "ResourceType": "ProvisioningTypeSpec/legacySingletons",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "OrphanedSingleton",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.OrphanedSingleton",
+    "ResourceType": "ProvisioningTypeSpec/unmodeledParents/orphanedSingletons",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "PreviewRetainedResource",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.PreviewRetainedResource",
+    "ResourceType": "ProvisioningTypeSpec/previewRetainedResources",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "Profile",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.Profile",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/profiles",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "ProfileRevision",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ProfileRevision",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/profiles/revisions",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "Profile"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "ResourceProfile",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ResourceProfile",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "ResourceProfileRevision",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.ResourceProfileRevision",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ResourceProfile"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "SingletonSetting",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.SingletonSetting",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/settings",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "SpecializedResourceProfile",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.SpecializedResourceProfile",
+    "ResourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [
+      "ConfigurationStore"
+    ],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  },
+  {
+    "Name": "VersionedResource",
+    "FullName": "Azure.Provisioning.ProvisioningTypeSpec.VersionedResource",
+    "ResourceType": "ProvisioningTypeSpec/versionedResources",
+    "CollectionType": null,
+    "ChildCollections": null,
+    "ChildResources": null,
+    "ParentResources": [],
+    "Scopes": null,
+    "HasScope": false,
+    "ResourceVersion": "2024-05-01"
+  }
+]

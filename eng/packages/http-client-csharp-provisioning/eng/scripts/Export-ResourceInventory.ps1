@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-    Writes a Markdown inventory of ARM resources in a provisioning library.
+    Writes a management-shaped JSON hierarchy of provisioning ARM resources.
 .DESCRIPTION
     Accepts an existing DLL, a .csproj, or a directory containing one .csproj
     directly or under src. Projects are built before loading their assembly.
@@ -11,21 +11,23 @@
     Inspects concrete types derived from ProvisionableResource, including types
     with non-public constructors. Parent and Scope describe public instance
     properties, not assigned parent instances or ARM deployment scope kinds.
+    Uses a subset of Get-ResourceHierarchy.ps1 field names, with null for metadata
+    unavailable from provisioning reflection. Adds HasScope and ResourceVersion.
 
     Only inspect trusted libraries: loading assemblies and invoking resource
     constructors executes code. Use a PowerShell runtime compatible with the DLL.
 .PARAMETER Path
     Library DLL, project file, project directory, or SDK package directory.
 .PARAMETER OutputPath
-    Destination Markdown file. An existing file is overwritten after inspection.
+    Destination JSON file. An existing file is overwritten after inspection.
 .PARAMETER Framework
     Target framework used when building a project. Defaults to netstandard2.0.
 .PARAMETER Configuration
     Build configuration used for project inputs. Defaults to Debug.
 .EXAMPLE
-    .\Export-ResourceInventory.ps1 -Path .\sdk\batch\Azure.Provisioning.Batch -OutputPath .\batch-resources.md
+    .\Export-ResourceInventory.ps1 -Path .\sdk\batch\Azure.Provisioning.Batch -OutputPath .\batch-resources.json
 .EXAMPLE
-    .\Export-ResourceInventory.ps1 -Path .\artifacts\bin\Azure.Provisioning.Batch\Debug\netstandard2.0\Azure.Provisioning.Batch.dll -OutputPath .\batch-resources.md
+    .\Export-ResourceInventory.ps1 -Path .\artifacts\bin\Azure.Provisioning.Batch\Debug\netstandard2.0\Azure.Provisioning.Batch.dll -OutputPath .\batch-resources.json
 #>
 [CmdletBinding()]
 param(
@@ -43,17 +45,10 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-function ConvertTo-MarkdownCell([string] $Value) {
-    if ([string]::IsNullOrEmpty($Value)) {
-        return '-'
-    }
-    return $Value.Replace('&', '&amp;').Replace('<', '&lt;').Replace('>', '&gt;').Replace('|', '&#124;').Replace('`', '&#96;').Replace("`r", '').Replace("`n", '<br>')
-}
-
 $inputItem = Get-Item -LiteralPath $Path
 $outputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputPath)
-if ([System.IO.Path]::GetExtension($outputFile) -ne '.md') {
-    throw 'OutputPath must name a .md file.'
+if ([System.IO.Path]::GetExtension($outputFile) -ne '.json') {
+    throw 'OutputPath must name a .json file.'
 }
 
 if ($inputItem.PSIsContainer) {
@@ -145,7 +140,7 @@ try {
     }
 
     $resources = @(
-        foreach ($type in ($types | Sort-Object FullName)) {
+        foreach ($type in ($types | Sort-Object Name, FullName)) {
             if ($type.IsAbstract -or $type.ContainsGenericParameters) {
                 continue
             }
@@ -170,7 +165,7 @@ try {
             try {
                 $instance = $constructor.Invoke($arguments)
                 $resourceType = [string] $base.GetProperty('ResourceType').GetValue($instance)
-                $version = [string] $base.GetProperty('ResourceVersion').GetValue($instance)
+                $version = $base.GetProperty('ResourceVersion').GetValue($instance)
             }
             catch {
                 throw "Cannot inspect resource '$($type.FullName)': $($_.Exception.GetBaseException().Message)"
@@ -181,12 +176,17 @@ try {
 
             $publicInstance = [System.Reflection.BindingFlags] 'Instance,Public'
             $parent = $type.GetProperty('Parent', $publicInstance)
-            [PSCustomObject] @{
+            [PSCustomObject] [ordered] @{
                 Name = $type.Name
+                FullName = $type.FullName
                 ResourceType = $resourceType
-                Parent = if ($null -ne $parent) { $parent.PropertyType.Name } else { '-' }
-                HasScope = if ($null -ne $type.GetProperty('Scope', $publicInstance)) { 'Yes' } else { 'No' }
-                Version = $version
+                CollectionType = $null
+                ChildCollections = $null
+                ChildResources = $null
+                ParentResources = [string[]] @(if ($null -ne $parent) { $parent.PropertyType.Name })
+                Scopes = $null
+                HasScope = $null -ne $type.GetProperty('Scope', $publicInstance)
+                ResourceVersion = $version
             }
         }
     )
@@ -194,23 +194,9 @@ try {
         throw "No concrete ProvisionableResource types were found in '$assemblyPath'."
     }
 
-    $markdown = @(
-        "# $(ConvertTo-MarkdownCell $assembly.GetName().Name) ARM resources"
-        ''
-        "Resources: $($resources.Count)"
-        ''
-        'Parent resource and Has scope describe public properties (including inherited properties), not deployment scope kinds.'
-        ''
-        '| Resource | ARM resource type | Parent resource | Has scope | Default API version |'
-        '| --- | --- | --- | --- | --- |'
-        foreach ($resource in $resources) {
-            $cells = @($resource.Name, $resource.ResourceType, $resource.Parent, $resource.HasScope, $resource.Version) |
-                ForEach-Object { ConvertTo-MarkdownCell $_ }
-            '| ' + ($cells -join ' | ') + ' |'
-        }
-    )
+    $json = ConvertTo-Json -InputObject $resources -Depth 10
     [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($outputFile)) | Out-Null
-    [System.IO.File]::WriteAllText($outputFile, ($markdown -join "`n") + "`n", [System.Text.UTF8Encoding]::new($false))
+    [System.IO.File]::WriteAllText($outputFile, $json.Replace("`r`n", "`n") + "`n", [System.Text.UTF8Encoding]::new($false))
     Write-Output $outputFile
 }
 finally {

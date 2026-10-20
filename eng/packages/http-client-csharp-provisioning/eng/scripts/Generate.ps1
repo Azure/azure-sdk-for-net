@@ -54,7 +54,7 @@ foreach ($project in $provisioningTypespecProjects) {
     Write-Host "Exporting resource inventory for $($project.Name)" -ForegroundColor Cyan
     & (Join-Path $PSScriptRoot "Export-ResourceInventory.ps1") `
         -Path $testCsproj.FullName `
-        -OutputPath (Join-Path $project.OutputDirectory "resource-inventory.md") `
+        -OutputPath (Join-Path $project.OutputDirectory "resource-inventory.json") `
         -ErrorAction Stop
 }
 
