@@ -389,4 +389,15 @@ Describe 'CI failure analysis original behavior' -Tag 'Original' {
         (Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput $output).disposition |
             Should -BeExactly 'publish'
     }
+
+    It '[G63] finalizer recognizes a published report even when the add-comment handler prepends its own threat-detection banner' {
+        $prepared = New-CiPrepared $Fixture
+        $validated = (Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput (New-CiAgentOutput)).agentOutput.items[0].body
+        # gh-aw's add_comment handler prepends a "> [!CAUTION]" banner ahead of our header when
+        # threat detection concludes 'warning', after our own GuardOutput validation already ran.
+        $published = "> [!CAUTION]`n> Potential prompt injection detected; please review before trusting this content.`n<!-- gh-aw-threat-detected -->`n`n$validated"
+        $Fixture.State.comments.Add((New-CiPostedComment $published))
+        Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults $SuccessfulJobs
+        $Fixture.State.claims[0].conclusion | Should -BeExactly 'success'
+    }
 }

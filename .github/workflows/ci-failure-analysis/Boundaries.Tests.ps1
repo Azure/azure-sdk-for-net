@@ -180,7 +180,6 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         @{ Label = 'bot type casing'; Change = { param($c) $c.user.type = 'bot' } }
         @{ Label = 'a user impersonating the login'; Change = { param($c) $c.user.type = 'User' } }
         @{ Label = 'header casing'; Change = { param($c) $c.body = $c.body.Replace('CI Failure Analysis', 'CI failure analysis') } }
-        @{ Label = 'header not at the beginning'; Change = { param($c) $c.body = 'Intro' + $c.body } }
         @{ Label = 'a different PR header'; Change = { param($c) $c.body = $c.body.Replace('PR #42', 'PR #43') } }
         @{ Label = 'a different completion marker'; Change = { param($c) $c.body = $c.body.Replace('18:00:00Z', '19:00:00Z') } }
         @{ Label = 'a missing completion marker'; Change = { param($c) $c.body = ($c.body -split '<sub>')[0] } }
@@ -190,6 +189,14 @@ Describe 'PowerShell runtime boundaries' -Tag 'Boundary' {
         & $Change $Fixture.State.comments[0]
         $Fixture.State.claims.Clear()
         (Initialize-CiFailureAnalysis -Context $Fixture.Context).eligible | Should -BeTrue
+    }
+
+    It 'suppresses analysis when a framework-owned prefix (e.g. a threat-detection banner) precedes the header' {
+        $prepared = New-CiPrepared $Fixture
+        Add-CiPublishedReport $Fixture $prepared
+        $Fixture.State.comments[0].body = "> [!CAUTION]`nFlagged content.`n<!-- gh-aw-threat-detected -->`n`n$($Fixture.State.comments[0].body)"
+        $Fixture.State.claims.Clear()
+        (Initialize-CiFailureAnalysis -Context $Fixture.Context).eligible | Should -BeFalse
     }
 
     It 'rejects a claim whose <Field> differs by case or identity' -ForEach @(

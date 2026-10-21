@@ -261,9 +261,12 @@ function Test-CiReportExists {
     $header = "## 🔍 CI Failure Analysis for PR #$PrNumber`n"
     $comments = Get-CiCollection -Context $Context -Path "$(Get-CiRepoPath $Context)/issues/$PrNumber/comments?per_page=100"
     foreach ($comment in $comments) {
+        # Contains, not StartsWith: the add_comment safe-output handler can prepend its own
+        # framework-owned prefix (e.g. a threat-detection caution banner) ahead of our header
+        # after GuardOutput already validated the agent's body started with it.
         if ((Test-CiEqual $comment.user.login 'github-actions[bot]') -and
             (Test-CiEqual $comment.user.type 'Bot') -and $comment.body -is [string] -and
-            $comment.body.StartsWith($header, [StringComparison]::Ordinal) -and
+            $comment.body.Contains($header, [StringComparison]::Ordinal) -and
             $comment.body.Contains($marker, [StringComparison]::Ordinal)) {
             return $true
         }
