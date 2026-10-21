@@ -223,6 +223,28 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ModelReaderWriter.Write(workspace, new ModelReaderWriterOptions("W")).ToString(), Does.Not.Contain("provisioningState"));
         }
 
+        [Test]
+        public void NvaTypeAndReleasedAliasShareOneWireBackedList()
+        {
+            var empty = new NvaInterfaceConfigurationsProperties();
+            Assert.That(empty.Type, Is.Empty);
+            Assert.That(empty.PropertiesType, Is.SameAs(empty.Type));
+            var configuration = ModelReaderWriter.Read<NvaInterfaceConfigurationsProperties>(BinaryData.FromString("""{"type":["PrivateNic"],"subnet":{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet"}}"""));
+            Assert.That(configuration.Type.Count, Is.EqualTo(1));
+            Assert.That(configuration.PropertiesType, Is.SameAs(configuration.Type));
+            configuration.Type.Add(new NvaNicType("PublicNic"));
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(configuration));
+            Assert.That(document.RootElement.GetProperty("type").GetArrayLength(), Is.EqualTo(2));
+            using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(configuration, new ModelReaderWriterOptions("W")));
+            Assert.That(wire.RootElement.GetProperty("type").GetArrayLength(), Is.EqualTo(2));
+            Assert.That(typeof(NvaInterfaceConfigurationsProperties).GetProperty(nameof(NvaInterfaceConfigurationsProperties.Type)).GetCustomAttributes().Any(attribute => attribute.GetType().Name == "CodeGenMemberAttribute"), Is.False);
+            Assert.That(typeof(NvaInterfaceConfigurationsProperties).GetProperty(nameof(NvaInterfaceConfigurationsProperties.Type)).GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+            AssertDeprecated(typeof(NvaInterfaceConfigurationsProperties).GetProperty(nameof(NvaInterfaceConfigurationsProperties.PropertiesType)));
+            var factoryModel = ArmNetworkModelFactory.NvaInterfaceConfigurationsProperties(configuration.SubnetId, configuration.Type, "factory");
+            Assert.That(factoryModel.Type, Is.EqualTo(configuration.Type));
+            Assert.That(factoryModel.Name, Is.EqualTo("factory"));
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public void ReleasedBooleanConstructorsRemainCallableAndIgnoreTheArgument(bool value)

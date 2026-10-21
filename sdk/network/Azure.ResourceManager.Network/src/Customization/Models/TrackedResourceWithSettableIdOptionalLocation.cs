@@ -3,18 +3,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
     [CodeGenSuppress("_name")]
-    public partial class TrackedResourceWithSettableIdOptionalLocation
+    public partial class TrackedResourceWithSettableIdOptionalLocation : NetworkTrackedResourceData
     {
         // The generated member intentionally preserves the service wire shape while hiding an inherited ARM member.
-        // TODO: Remove this SDK-side workaround after https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed.
+        // TODO: Revisit duplicated inherited metadata, optional location and settable ID together
+        // after https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed.
         private protected new string _name;
     }
 }

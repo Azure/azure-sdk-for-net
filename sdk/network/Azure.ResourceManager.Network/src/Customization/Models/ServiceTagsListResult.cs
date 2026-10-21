@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     // The Type attributes direct callers to the canonical ResourceType property; inherited metadata owns serialization.
     public partial class ServiceTagsListResult
     {
+        // 1.15 inherited ResourceIdentifier; the string facade itself shipped in 1.17.
         /// <summary> The ID of the cloud. </summary>
         public new string Id => base.Id?.ToString();
 

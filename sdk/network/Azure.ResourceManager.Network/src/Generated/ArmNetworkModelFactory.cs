@@ -6982,7 +6982,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             @type ??= new ChangeTrackingList<NvaNicType>();
 
-            return new NvaInterfaceConfigurationsProperties(subnetId is null ? default : new NvaInVnetSubnetReferenceProperties(subnetId, default), default, name, default);
+            return new NvaInterfaceConfigurationsProperties(subnetId is null ? default : new NvaInVnetSubnetReferenceProperties(subnetId, default), (@type ?? new ChangeTrackingList<NvaNicType>()).ToList(), name, default);
         }
 
         /// <summary> The migration status of a Network Virtual Appliance. </summary>

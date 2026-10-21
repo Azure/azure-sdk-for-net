@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
@@ -236,6 +237,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
+        [CodeGenMember("GatewayDefaultSite")]
         [WirePath("properties.gatewayDefaultSite")]
         public WritableSubResource GatewayDefaultSite
         {

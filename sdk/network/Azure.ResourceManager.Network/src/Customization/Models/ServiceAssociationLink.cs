@@ -7,6 +7,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ServiceAssociationLink
     {
+        // Retain the protected constructor shipped in 1.17; its argument is intentionally ignored.
         /// <summary> Initializes a new instance of the ServiceAssociationLink class. </summary>
         protected ServiceAssociationLink(bool _) { }
     }

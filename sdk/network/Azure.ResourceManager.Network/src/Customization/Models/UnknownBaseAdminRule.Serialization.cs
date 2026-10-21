@@ -6,14 +6,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    // The generator emits these deserialization bodies with the inherited BaseAdminRuleData return type. Matching custom methods
-    // are discovered without CodeGenSuppress and preserve the released protected signatures for API compatibility.
     internal partial class UnknownBaseAdminRule
     {
+        // The native unknown-model overrides return ResourceData, but the restored base
+        // signatures return BaseAdminRuleData. Even this internal type fails CS0508 without the shim.
         protected override BaseAdminRuleData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;

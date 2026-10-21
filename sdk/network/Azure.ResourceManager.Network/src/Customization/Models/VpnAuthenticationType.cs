@@ -5,7 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,9 +17,5 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This value is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public static VpnAuthenticationType AAD => Aad;
-
-        /// <summary> AAD. </summary>
-        [CodeGenMember("AAD")]
-        public static VpnAuthenticationType Aad { get; } = new VpnAuthenticationType("AAD");
     }
 }

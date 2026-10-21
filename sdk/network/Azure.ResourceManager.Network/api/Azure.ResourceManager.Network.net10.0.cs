@@ -22392,9 +22392,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         public NvaInterfaceConfigurationsProperties() { }
         public string Name { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NvaNicType> PropertiesType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PropertiesType instead.")]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NvaNicType> Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -25226,6 +25226,7 @@ namespace Azure.ResourceManager.Network.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.UndoReservationType left, Azure.ResourceManager.Network.Models.UndoReservationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.UndoReservationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.UndoReservationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.UndoReservationType left, Azure.ResourceManager.Network.Models.UndoReservationType right) { throw null; }
         public override string ToString() { throw null; }
     }

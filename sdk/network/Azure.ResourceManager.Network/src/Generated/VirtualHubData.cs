@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
@@ -140,6 +141,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of references to IpConfigurations. </summary>
+        [CodeGenMember("IPConfigurations")]
         [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<WritableSubResource> IPConfigurations
         {

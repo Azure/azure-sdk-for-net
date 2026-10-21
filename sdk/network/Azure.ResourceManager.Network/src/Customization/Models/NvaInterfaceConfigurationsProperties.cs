@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NvaInterfaceConfigurationsProperties
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="PropertiesType"/>
+        // PropertiesType was already the generated 1.15.0 name; retain it as an alias over the same wire-backed list.
+        /// <inheritdoc cref="Type"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use PropertiesType instead.")]
-        public IList<NvaNicType> Type => PropertiesType;
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
+        public IList<NvaNicType> PropertiesType => Type;
     }
 }
