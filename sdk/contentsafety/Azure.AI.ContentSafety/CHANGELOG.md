@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added support for the `2026-10-15-preview` Unified Moderate API, including Agent Hooks contexts and policy-evaluation receipts.
+
 ### Breaking Changes
+
+- `UnifiedModerate` and `UnifiedModerateAsync` now accept `AgentContext` and return `AgentEvaluationResult`. Policy selectors are supplied as method arguments rather than request-body properties.
+- Removed the September preview's `UnifiedModerateConfig`, `UnifiedModerateResult`, and associated moderation models from the generated SDK surface.
 
 ### Bugs Fixed
 

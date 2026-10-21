@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Include="Samples\sample_data\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="AgentHooksExamples\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
