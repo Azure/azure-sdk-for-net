@@ -25,6 +25,29 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
         }
     }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
+    /// </summary>
+    /// <param name="minInclusive">The minimum success status code (inclusive).</param>
+    /// <param name="maxInclusive">The maximum success status code (inclusive).</param>
+    public ResponseStatusClassifier(ushort minInclusive, ushort maxInclusive)
+    {
+        Argument.AssertInRange((int)minInclusive, 0, 639, nameof(minInclusive));
+        Argument.AssertInRange((int)maxInclusive, 0, 639, nameof(maxInclusive));
+
+        if (minInclusive > maxInclusive)
+        {
+            throw new ArgumentException("minInclusive must be less than or equal to maxInclusive.", nameof(minInclusive));
+        }
+
+        _successCodes = new();
+
+        for (int code = minInclusive; code <= maxInclusive; code++)
+        {
+            AddClassifier(code, isError: false);
+        }
+    }
+
     public override bool TryClassify(PipelineMessage message, out bool isError)
     {
         Argument.AssertNotNull(message, nameof(message));
