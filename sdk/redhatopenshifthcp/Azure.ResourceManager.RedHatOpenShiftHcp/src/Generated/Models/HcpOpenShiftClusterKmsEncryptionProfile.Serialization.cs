@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             writer.WriteStringValue(Visibility.ToString());
             writer.WritePropertyName("activeKey"u8);
             writer.WriteObjectValue(ActiveKey, options);
+            if (Optional.IsDefined(KeyVaultType))
+            {
+                writer.WritePropertyName("keyVaultType"u8);
+                writer.WriteStringValue(KeyVaultType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             string vaultName = default;
             HcpOpenShiftClusterKeyVaultVisibility visibility = default;
             HcpOpenShiftClusterKmsKey activeKey = default;
+            KmsKeyVaultType? keyVaultType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,12 +158,21 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     activeKey = HcpOpenShiftClusterKmsKey.DeserializeHcpOpenShiftClusterKmsKey(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("keyVaultType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultType = new KmsKeyVaultType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, additionalBinaryDataProperties);
+            return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, keyVaultType, additionalBinaryDataProperties);
         }
     }
 }

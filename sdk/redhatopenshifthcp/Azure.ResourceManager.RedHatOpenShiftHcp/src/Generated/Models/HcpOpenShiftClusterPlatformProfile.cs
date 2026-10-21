@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/>. </summary>
         /// <param name="subnetId">
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters.
         /// </param>
         /// <param name="vnetIntegrationSubnetId">
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/>. </summary>
         /// <param name="managedResourceGroup">
-        /// Resource group name to put cluster resources
+        /// The name of the resource group to put cluster resources in.
         /// If not specified then a unique name is generated from the
         /// following pattern
         /// "aro-hcp-" + clusterName + "-" + UUID
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// identifier per RFC 4122.
         /// </param>
         /// <param name="subnetId">
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters.
         /// </param>
         /// <param name="vnetIntegrationSubnetId">
@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Note that NSGs cannot be reused for other ARO-HCP clusters.
         /// </param>
         /// <param name="operatorsAuthentication"> The configuration that the operators of the cluster have to authenticate to Azure. </param>
+        /// <param name="containerRegistry">
+        /// Azure Container Registry configuration for authenticating image pulls
+        /// on the cluster's worker nodes.
+        /// </param>
         /// <param name="issuerUri">
         /// URL for the OIDC provider to be used for authentication
         /// to authenticate against user Azure cloud account
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterPlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, HcpOpenShiftClusterOutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, HcpOpenShiftClusterOperatorsAuthenticationProfile operatorsAuthentication, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterPlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, HcpOpenShiftClusterOutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, HcpOpenShiftClusterOperatorsAuthenticationProfile operatorsAuthentication, ContainerRegistryProfile containerRegistry, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedResourceGroup = managedResourceGroup;
             SubnetId = subnetId;
@@ -90,12 +94,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             OutboundType = outboundType;
             NetworkSecurityGroupId = networkSecurityGroupId;
             OperatorsAuthentication = operatorsAuthentication;
+            ContainerRegistry = containerRegistry;
             IssuerUri = issuerUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
-        /// Resource group name to put cluster resources
+        /// The name of the resource group to put cluster resources in.
         /// If not specified then a unique name is generated from the
         /// following pattern
         /// "aro-hcp-" + clusterName + "-" + UUID
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string ManagedResourceGroup { get; set; }
 
         /// <summary>
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters.
         /// </summary>
         public ResourceIdentifier SubnetId { get; set; }
@@ -132,6 +137,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal HcpOpenShiftClusterOperatorsAuthenticationProfile OperatorsAuthentication { get; set; }
 
         /// <summary>
+        /// Azure Container Registry configuration for authenticating image pulls
+        /// on the cluster's worker nodes.
+        /// </summary>
+        internal ContainerRegistryProfile ContainerRegistry { get; set; }
+
+        /// <summary>
         /// URL for the OIDC provider to be used for authentication
         /// to authenticate against user Azure cloud account
         /// </summary>
@@ -150,6 +161,23 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             set
             {
                 OperatorsAuthentication = new HcpOpenShiftClusterOperatorsAuthenticationProfile(value);
+            }
+        }
+
+        /// <summary> The user-assigned managed identity used for container registry image pulls. </summary>
+        public ResourceIdentifier ContainerRegistryManagedIdentity
+        {
+            get
+            {
+                return ContainerRegistry is null ? default : ContainerRegistry.ManagedIdentity;
+            }
+            set
+            {
+                if (ContainerRegistry is null)
+                {
+                    ContainerRegistry = new ContainerRegistryProfile();
+                }
+                ContainerRegistry.ManagedIdentity = value;
             }
         }
     }

@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// especially relevant to cluster upgrades.
         /// Valid values are in minutes and from 0 to 10080 minutes (1 week).
         /// 0 means that the MachinePool can be drained without any time limitation.
-        /// This is the value is used a default for all NodePools. It can be overridden
+        /// This value is used as a default for all NodePools. It can be overridden
         /// by specifying nodeDrainTimeoutMinutes for a given NodePool
         /// </param>
         /// <param name="clusterImageRegistry"> OpenShift internal image registry. </param>
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterDnsProfile dns, HcpOpenShiftClusterNetworkProfile network, HcpOpenShiftClusterConsoleProfile console, HcpOpenShiftClusterApiProfile api, HcpOpenShiftClusterIngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, HcpOpenShiftClusterAutoscalingProfile autoscaling, HcpOpenShiftClusterEtcdProfile etcd, IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry, HcpOpenShiftClusterResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterDnsProfile dns, HcpOpenShiftClusterNetworkProfile network, HcpOpenShiftClusterConsoleProfile console, HcpOpenShiftClusterApiProfile api, HcpOpenShiftClusterIngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, HcpOpenShiftClusterAutoscalingProfile autoscaling, HcpOpenShiftClusterEtcdProfile etcd, IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry, ClusterResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// especially relevant to cluster upgrades.
         /// Valid values are in minutes and from 0 to 10080 minutes (1 week).
         /// 0 means that the MachinePool can be drained without any time limitation.
-        /// This is the value is used a default for all NodePools. It can be overridden
+        /// This value is used as a default for all NodePools. It can be overridden
         /// by specifying nodeDrainTimeoutMinutes for a given NodePool
         /// </summary>
         public int? NodeDrainTimeoutMinutes { get; set; }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal HcpOpenShiftClusterImageRegistryProfile ClusterImageRegistry { get; set; }
 
         /// <summary> Status of the cluster resource. </summary>
-        internal HcpOpenShiftClusterResourceStatus Status { get; }
+        public ClusterResourceStatus Status { get; }
 
         /// <summary> Cryptographic restrictions for kernel and userspace libraries. </summary>
         public CryptoRestrictions? CryptoRestrictions { get; set; }
@@ -205,15 +205,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     ClusterImageRegistry = new HcpOpenShiftClusterImageRegistryProfile();
                 }
                 ClusterImageRegistry.State = value;
-            }
-        }
-
-        /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<HcpOpenShiftClusterCondition> StatusConditions
-        {
-            get
-            {
-                return Status is null ? default : Status.Conditions;
             }
         }
     }

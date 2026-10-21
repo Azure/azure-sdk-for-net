@@ -11,22 +11,22 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
-    /// <summary> ResourceStatus represents the observed status of the resource. </summary>
-    internal partial class HcpOpenShiftClusterResourceStatus
+    /// <summary> ExternalAuthResourceStatus represents the observed status of the external auth resource. </summary>
+    internal partial class ExternalAuthResourceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterResourceStatus"/>. </summary>
-        internal HcpOpenShiftClusterResourceStatus()
+        /// <summary> Initializes a new instance of <see cref="ExternalAuthResourceStatus"/>. </summary>
+        internal ExternalAuthResourceStatus()
         {
             Conditions = new ChangeTrackingList<HcpOpenShiftClusterCondition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterResourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalAuthResourceStatus"/>. </summary>
         /// <param name="conditions"> The conditions on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalAuthResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conditions = conditions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

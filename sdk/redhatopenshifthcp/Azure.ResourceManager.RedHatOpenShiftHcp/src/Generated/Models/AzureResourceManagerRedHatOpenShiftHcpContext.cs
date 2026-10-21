@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ClusterActiveVersion))]
+    [ModelReaderWriterBuildable(typeof(ClusterResourceStatus))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredential))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredentialRequestContent))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterApiProfile))]
@@ -61,6 +63,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(HcpOperatorIdentityRoleSetProperties))]
     [ModelReaderWriterBuildable(typeof(HcpOperatorIdentityRoleSetResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NodePoolActiveVersion))]
+    [ModelReaderWriterBuildable(typeof(NodePoolResourceStatus))]
     [ModelReaderWriterBuildable(typeof(OperatorIdentityRoles))]
     [ModelReaderWriterBuildable(typeof(RoleDefinitionInfo))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
