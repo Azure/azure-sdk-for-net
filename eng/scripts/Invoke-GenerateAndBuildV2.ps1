@@ -196,7 +196,7 @@ function Update-MgmtPackageChangelog {
         -SdkRepoPath $sdkPath
 
     if ($LASTEXITCODE -ne 0) {
-        throw "[ERROR] Failed to generate changelog for package: $($generatedPackage.packageName)"
+        Write-Warning "Failed to generate changelog for package '$($generatedPackage.packageName)'. Continuing without changelog updates."
     }
 }
 
