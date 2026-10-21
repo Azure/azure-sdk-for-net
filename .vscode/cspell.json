@@ -480,6 +480,12 @@
       ]
     },
     {
+      "filename": "**/sdk/contentsafety/Azure.AI.ContentSafety/**/*.cs",
+      "words": [
+        "aacs"
+      ]
+    },
+    {
       "filename": "**/sdk/cosmosdbforpostgresql/**/*",
       "words": [
         "citus"
