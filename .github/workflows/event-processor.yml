@@ -22,10 +22,8 @@ jobs:
     if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
     permissions:
       issues: write
-      pull-requests: write
       # For OIDC auth
       id-token: write
-      contents: read
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event with azure login
     runs-on: ubuntu-latest
     steps:
@@ -87,8 +85,8 @@ jobs:
     if: ${{ !(github.event_name == 'issues' && github.event.action == 'opened') }}
     permissions:
       issues: write
+      # PR events can dismiss approvals after untrusted changes.
       pull-requests: write
-      contents: read
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
