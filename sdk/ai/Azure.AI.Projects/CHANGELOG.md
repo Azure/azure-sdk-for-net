@@ -12,10 +12,13 @@
 
 ### Bugs Fixed
 
+- Preserved native Live startup error types, codes, and messages instead of returning only a generic startup failure.
+
 ### Other Changes
 
 ### Sample Updates
 
+- Fixed Live audio pacing to send all input speech before its silence tail, and surfaced delegated backend errors without waiting for cancellation.
 - Added native Live connection, real-speech WAV, text-guidance, and Responses function-calling samples.
 - Added scripted multi-turn Live text and strengthened sample tool-result batching, error reporting, premature-disconnect checks, and audio-task cancellation.
 - Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.

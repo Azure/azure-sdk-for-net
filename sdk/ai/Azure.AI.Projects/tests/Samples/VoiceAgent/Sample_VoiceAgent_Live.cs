@@ -319,6 +319,14 @@ public static class Sample_VoiceAgent_Live
         {
             throw new InvalidDataException("A delegated backend event must have a nonempty type.");
         }
+        if (type == "error")
+        {
+            string code = envelope.Event.TryGetValue("code", out BinaryData errorCode) && errorCode != null
+                ? errorCode.ToObjectFromJson<string>() : null;
+            string message = envelope.Event.TryGetValue("message", out BinaryData errorMessage) && errorMessage != null
+                ? errorMessage.ToObjectFromJson<string>() : null;
+            throw new InvalidOperationException($"Responses backend error (code={code ?? "<not supplied>"}): {message ?? "<not supplied>"}");
+        }
         if (type is "response.failed" or "response.incomplete")
         {
             throw new InvalidOperationException($"The delegated backend did not complete: {type}.");
@@ -386,19 +394,23 @@ public static class Sample_VoiceAgent_Live
     private static async Task FeedAudioAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
     {
         const int chunkSize = 960;
+        const int chunkMilliseconds = 20;
         byte[] silence = new byte[chunkSize];
         int offset = 0;
-        int chunks = 0;
+        int silenceChunksRemaining = 8000 / chunkMilliseconds;
         Stopwatch clock = Stopwatch.StartNew();
-        TimeSpan duration = TimeSpan.FromSeconds(speech.Length / 48000.0 + 8);
-        while (clock.Elapsed < duration)
+        while (offset < speech.Length || silenceChunksRemaining > 0)
         {
+            TimeSpan chunkStarted = clock.Elapsed;
             int count = Math.Min(chunkSize, speech.Length - offset);
             BinaryData audio = count > 0 ? BinaryData.FromBytes(speech.AsMemory(offset, count)) : BinaryData.FromBytes(silence);
             await session.SendInputAudioAsync(audio, cancellationToken);
             offset += count;
-            chunks++;
-            TimeSpan delay = TimeSpan.FromMilliseconds(chunks * 20) - clock.Elapsed;
+            if (count == 0)
+            {
+                silenceChunksRemaining--;
+            }
+            TimeSpan delay = TimeSpan.FromMilliseconds(chunkMilliseconds) - (clock.Elapsed - chunkStarted);
             if (delay > TimeSpan.Zero)
             {
                 await Task.Delay(delay, cancellationToken);

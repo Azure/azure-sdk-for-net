@@ -179,9 +179,10 @@ internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient s
 }
 ```
 
-The recorded-audio example adds eight seconds of silence after the input as a demonstration
-window. This is **not** a service speech-completion signal and can truncate unusually long
-answers. Silent PCM advances the Live timeline and **voice usage remains billable**, including
+The recorded-audio example sends all input speech before adding eight seconds of silence as a
+demonstration window. Backpressure can extend the elapsed time but does not truncate the input
+or consume the silence tail. This is **not** a service speech-completion signal and can truncate
+unusually long answers. Silent PCM advances the Live timeline and **voice usage remains billable**, including
 while waiting. Always supply a bounded cancellation token.
 
 Only one event enumeration can receive from a session at a time. Sends may run concurrently
@@ -244,6 +245,8 @@ The allowlisted function returns a deliberate test value, not external service d
 Duplicate call IDs, unsupported tools/arguments, missing final text, premature disconnects,
 and more than eight continuation rounds fail explicitly. Native errors retain their type
 and explanatory message even when the service omits an error code.
+Wrapped Responses backend errors also fail immediately with their supplied code and message,
+rather than waiting for the caller's timeout.
 Backend completion does not establish that the Live model spoke the result or that a user
 heard it; observe output transcript/audio events separately.
 

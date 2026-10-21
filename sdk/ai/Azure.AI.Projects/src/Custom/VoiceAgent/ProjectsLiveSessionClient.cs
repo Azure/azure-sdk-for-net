@@ -62,7 +62,14 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         string type = document.RootElement.GetProperty("type").GetString();
         if (type == "error")
         {
-            throw new InvalidOperationException("The Live service rejected session startup.");
+            LiveServerEventLiveErrorEvent error = ModelReaderWriter.Read<LiveServerEventLiveErrorEvent>(
+                data, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+            if (error?.Error == null)
+            {
+                throw new InvalidDataException("The Live service returned a startup error without error details.");
+            }
+            throw new InvalidOperationException($"The Live service rejected session startup ({error.Error.Type}, " +
+                $"code={error.Error.Code ?? "<not supplied>"}): {error.Error.Message}");
         }
         if (type != "session.started")
         {

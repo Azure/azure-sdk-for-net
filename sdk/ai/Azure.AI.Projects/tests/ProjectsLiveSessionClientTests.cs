@@ -24,6 +24,44 @@ public class ProjectsLiveSessionClientTests
     private const string ErrorJson = """{"type":"error","event_id":"error-event","error":{"type":"invalid_request_error","code":"invalid_request","message":"A deterministic service error.","client_event_id":"client-command"}}""";
     private const string PcmSessionStartedJson = """{"type":"session.started","event_id":"started-event","session":{"id":"live-session","model":"gpt-live-1","expires_at":2000000000,"status":"active","audio":{"format":{"type":"audio/pcm","rate":24000}}}}""";
 
+    [TestCase("model_not_found")]
+    [TestCase(null)]
+    public void StartupErrorsRetainNativeTypeCodeAndMessage(string code)
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+        socket.QueueText(BinaryData.FromObjectAsJson(new
+        {
+            type = "error",
+            error = new { type = "invalid_request_error", code, message = "The requested Live deployment does not exist." }
+        }).ToString());
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            LiveTestHelpers.InitializeAsync(session, timeout.Token));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain("invalid_request_error")
+                .And.Contain(code ?? "<not supplied>").And.Contain("The requested Live deployment does not exist."));
+            Assert.That(session.SessionStarted, Is.Null);
+            Assert.That(socket.SentCommands, Is.Empty);
+        });
+    }
+
+    [TestCase("""{"type":"error"}""")]
+    [TestCase("""{"type":"error","error":null}""")]
+    public void StartupErrorsWithoutDetailsAreRejectedAsMalformed(string json)
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+        socket.QueueText(json);
+
+        Assert.ThrowsAsync<InvalidDataException>(() => LiveTestHelpers.InitializeAsync(session, timeout.Token));
+        Assert.That(session.SessionStarted, Is.Null);
+    }
+
     [Test]
     public async Task StartupAcknowledgmentIsReplayedOnceAcrossEnumerations()
     {

@@ -154,6 +154,48 @@ public class VoiceAgentLiveSampleTests
         Assert.That(session.Commands, Has.Count.EqualTo(2));
     }
 
+    [TestCase("model_not_found")]
+    [TestCase(null)]
+    public void BackendErrorsRetainCodeAndMessageWithoutWaitingForCancellation(string code)
+    {
+        using ScriptedSession session = new(Tool("call"), Backend(BinaryData.FromObjectAsJson(new
+        {
+            type = "error",
+            code,
+            message = "The requested backend deployment does not exist."
+        }).ToString())) { WaitAfterEvents = true };
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(3));
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.RunResponsesConversationAsync(session, ["Use the test function."],
+                TextWriter.Null, true, timeout.Token));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain(code ?? "<not supplied>")
+                .And.Contain("The requested backend deployment does not exist."));
+            Assert.That(timeout.IsCancellationRequested, Is.False);
+            Assert.That(session.Commands, Has.Count.EqualTo(2), "Backend errors must not return pending tool results.");
+            Assert.That(session.ReceiverEnded, Is.True);
+        });
+    }
+
+    [Test]
+    public void BackendErrorWithoutCodeStillRetainsItsMessage()
+    {
+        using ScriptedSession session = new(Backend("""
+            {"type":"error","message":"Backend request rejected."}
+            """)) { WaitAfterEvents = true };
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(3));
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.RunResponsesConversationAsync(session, ["Prompt"],
+                TextWriter.Null, false, timeout.Token));
+
+        Assert.That(error.Message, Does.Contain("<not supplied>").And.Contain("Backend request rejected."));
+        Assert.That(timeout.IsCancellationRequested, Is.False);
+    }
+
     [Test]
     public void PrematureNativeCloseIsNotReportedAsCompletedConversation()
     {
@@ -287,6 +329,33 @@ public class VoiceAgentLiveSampleTests
         Assert.That(session.ReceiverEnded, Is.True);
     }
 
+    [Test]
+    public async Task SlowAudioSendDoesNotTruncateSpeechOrShortenSilenceTail()
+    {
+        using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}"""))
+        {
+            FirstAudioDelay = TimeSpan.FromSeconds(9),
+            WaitForClose = true
+        };
+        byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
+        using MemoryStream output = new();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(30));
+
+        await Sample_VoiceAgent_Live.RunAudioConversationAsync(session, speech, output, TextWriter.Null, timeout.Token);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.AudioChunks.Take(2).SelectMany(chunk => chunk.ToArray()), Is.EqualTo(speech),
+                "A slow send must not consume the time reserved for sending the remaining speech.");
+            Assert.That(session.AudioChunks.Skip(2).Count(), Is.EqualTo(400),
+                "Eight seconds of 20 ms silence chunks must follow all input speech.");
+            Assert.That(session.AudioChunks.Skip(2).All(chunk => chunk.ToArray().All(value => value == 0)), Is.True);
+            Assert.That(output.Length, Is.GreaterThan(0));
+            Assert.That(session.ReceiverEnded, Is.True);
+            Assert.That(timeout.IsCancellationRequested, Is.False);
+        });
+    }
+
     private static Task Run(ScriptedSession session, IEnumerable<string> prompts = null, bool tools = false)
         => Sample_VoiceAgent_Live.RunResponsesConversationAsync(session, prompts ?? new[] { "Prompt" }, TextWriter.Null, tools, default);
 
@@ -332,6 +401,7 @@ public class VoiceAgentLiveSampleTests
     private sealed class ScriptedSession : ProjectsLiveSessionClient
     {
         private readonly LiveServerEvent[] _events;
+        private readonly TaskCompletionSource<bool> _closed = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
         public ScriptedSession(params LiveServerEvent[] events)
         {
@@ -339,11 +409,14 @@ public class VoiceAgentLiveSampleTests
         }
 
         public List<BinaryData> Commands { get; } = new();
+        public List<BinaryData> AudioChunks { get; } = new();
         public int Receivers { get; private set; }
         public bool ReceiverEnded { get; private set; }
         public bool AudioEnded { get; private set; }
         public bool BlockAudio { get; set; }
         public bool WaitAfterEvents { get; set; }
+        public bool WaitForClose { get; set; }
+        public TimeSpan FirstAudioDelay { get; set; }
         public Exception AudioFailure { get; set; }
         public CancellationToken ReceiveToken { get; private set; }
         public CancellationToken AudioToken { get; private set; }
@@ -369,11 +442,23 @@ public class VoiceAgentLiveSampleTests
                 {
                     await Task.Delay(Timeout.Infinite, cancellationToken);
                 }
+                AudioChunks.Add(BinaryData.FromBytes(audio.ToArray()));
+                if (AudioChunks.Count == 1 && FirstAudioDelay > TimeSpan.Zero)
+                {
+                    await Task.Delay(FirstAudioDelay, cancellationToken);
+                }
             }
             finally
             {
                 AudioEnded = true;
             }
+        }
+
+        public override Task CloseAsync(CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            _closed.TrySetResult(true);
+            return Task.CompletedTask;
         }
 
         public override async IAsyncEnumerable<LiveServerEvent> ReceiveEventsAsync(
@@ -393,6 +478,12 @@ public class VoiceAgentLiveSampleTests
                 if (WaitAfterEvents)
                 {
                     await Task.Delay(Timeout.Infinite, cancellationToken);
+                }
+                if (WaitForClose)
+                {
+                    using CancellationTokenRegistration registration = cancellationToken.Register(() => _closed.TrySetCanceled());
+                    await _closed.Task;
+                    yield return Closed();
                 }
             }
             finally
