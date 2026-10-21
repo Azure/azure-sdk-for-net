@@ -97,7 +97,7 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
-        internal HttpMessage CreateUnifiedModerateRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateUnifiedModerateRequest(RequestContent content, string targetResourceId, string policyId, string selectedPolicyId, string selectedPolicyRevision, string selectedPolicySemanticDigest, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -106,6 +106,26 @@ namespace Azure.AI.ContentSafety
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (targetResourceId != null)
+            {
+                uri.AppendQuery("targetResourceId", targetResourceId, true);
+            }
+            if (policyId != null)
+            {
+                uri.AppendQuery("policyId", policyId, true);
+            }
+            if (selectedPolicyId != null)
+            {
+                uri.AppendQuery("selectedPolicyId", selectedPolicyId, true);
+            }
+            if (selectedPolicyRevision != null)
+            {
+                uri.AppendQuery("selectedPolicyRevision", selectedPolicyRevision, true);
+            }
+            if (selectedPolicySemanticDigest != null)
+            {
+                uri.AppendQuery("selectedPolicySemanticDigest", selectedPolicySemanticDigest, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -169,152 +169,1027 @@ namespace Azure.AI.ContentSafety
             return new DocumentInjectionAnalysisResult(attackDetected, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A request to evaluate and enforce an applicable policy for one workload event. The service uses the first policy it can resolve from policyId and then from the policy binding for targetResourceId, in that order. The request fails if neither selector resolves a policy. </summary>
-        /// <param name="policyId"> The identifier of a policy available to the Content Safety resource. When provided, the service attempts to resolve this policy before using the policy bound to targetResourceId. </param>
-        /// <param name="targetResourceId"> The Azure resource identifier whose policy binding is resolved if no policy is resolved from policyId. The target resource must already have a policy binding available to the Content Safety resource. </param>
-        /// <param name="source"> The workload event source. The source selects the policy intervention point. </param>
-        /// <param name="content"> The content to evaluate. For input and output sources, provide nonempty plain text. For pre_tool_call, provide a string containing a JSON-encoded object with the proposed tool arguments. For post_tool_call, provide a string containing the JSON-encoded tool result. </param>
-        /// <param name="toolName"> The tool name. Required and nonempty for tool-call sources and not allowed for input or output sources. </param>
-        /// <param name="toolCallId"> An optional caller-provided tool-call identifier. The service generates one when omitted for a tool-call source. </param>
-        /// <param name="toolArguments"> A string containing a JSON-encoded object with the original arguments for a completed tool call. This property applies only to post_tool_call. The service uses an empty object when omitted. </param>
-        /// <param name="toolResultIsError"> Whether the completed tool call returned an error. This property applies only to post_tool_call. </param>
-        /// <param name="toolDurationMs"> The non-negative duration of the completed tool call, in milliseconds. This property applies only to post_tool_call. </param>
-        /// <param name="context"> Optional agent, session, and request context supplied to policy evaluation. </param>
-        /// <returns> A new <see cref="ContentSafety.UnifiedModerateConfig"/> instance for mocking. </returns>
-        public static UnifiedModerateConfig UnifiedModerateConfig(string policyId = default, string targetResourceId = default, UnifiedModerateSource source = default, string content = default, string toolName = default, string toolCallId = default, string toolArguments = default, bool? toolResultIsError = default, double? toolDurationMs = default, UnifiedModerateContext context = default)
+        /// <summary>
+        /// Canonical Agent Hooks 0.1 context. The host supplies the exact point and a target equal to its point-specific payload. Authentication, policy selection and composition are transport or host configuration, not body fields. The service validates conditional payloads and target equality.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentSafety.AgentInputContext"/>, <see cref="ContentSafety.AgentOutputContext"/>, <see cref="ContentSafety.AgentPostModelCallContext"/>, <see cref="ContentSafety.AgentPostToolCallContext"/>, <see cref="ContentSafety.AgentPreModelCallContext"/>, <see cref="ContentSafety.AgentPreToolCallContext"/>, <see cref="ContentSafety.AgentShutdownContext"/>, and <see cref="ContentSafety.AgentStartupContext"/>.
+        /// </summary>
+        /// <param name="interceptionPoint"> The lifecycle point being evaluated. </param>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentContext"/> instance for mocking. </returns>
+        public static AgentContext AgentContext(string interceptionPoint = default, DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
         {
-            return new UnifiedModerateConfig(
-                policyId,
-                targetResourceId,
-                source,
-                content,
-                toolName,
-                toolCallId,
-                toolArguments,
-                toolResultIsError,
-                toolDurationMs,
-                context,
-                additionalBinaryDataProperties: null);
-        }
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
 
-        /// <summary> Optional agent, session, and request context supplied to policy evaluation. </summary>
-        /// <param name="agentId"> Caller-provided identifier of the agent associated with the event. </param>
-        /// <param name="sessionId"> Caller-provided identifier of the session associated with the event. </param>
-        /// <param name="sequence"> Zero-based event sequence within the session, when available. </param>
-        /// <param name="correlationId"> Caller-provided end-to-end correlation identifier. </param>
-        /// <param name="userId"> Caller-provided workload user identifier. </param>
-        /// <param name="tenantId"> Caller-provided workload tenant identifier. </param>
-        /// <param name="extensions"> A string containing a JSON-encoded object with validated host-specific context extensions. </param>
-        /// <returns> A new <see cref="ContentSafety.UnifiedModerateContext"/> instance for mocking. </returns>
-        public static UnifiedModerateContext UnifiedModerateContext(string agentId = default, string sessionId = default, long? sequence = default, string correlationId = default, string userId = default, string tenantId = default, string extensions = default)
-        {
-            return new UnifiedModerateContext(
-                agentId,
-                sessionId,
+            return new UnknownAgentContext(
+                "agent-hooks/0.1",
+                interceptionPoint.ToAgentInterceptionPoint(),
+                timestamp,
                 sequence,
-                correlationId,
-                userId,
-                tenantId,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
                 extensions,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The enforced result of unified moderation. </summary>
-        /// <param name="verdict"> The caller-facing enforcement outcome. </param>
-        /// <param name="reason"> An optional machine-readable policy reason. </param>
-        /// <param name="content"> The original or transformed content when allowed, using the same source-specific representation as the request content. Structured content is returned as a string containing the JSON-encoded value. This property is omitted when blocked. </param>
-        /// <param name="acsVerdict"> The complete Agent Control Specification policy verdict. </param>
-        /// <returns> A new <see cref="ContentSafety.UnifiedModerateResult"/> instance for mocking. </returns>
-        public static UnifiedModerateResult UnifiedModerateResult(UnifiedModerateVerdict verdict = default, string reason = default, string content = default, AcsVerdict acsVerdict = default)
+        /// <summary> Caller-supplied agent definition metadata. This metadata does not authorize policy selection or resource access. </summary>
+        /// <param name="id"> Stable identifier of the agent definition, shared across its sessions. </param>
+        /// <param name="framework"> Lowercase framework identifier. </param>
+        /// <param name="name"> Optional display name. </param>
+        /// <param name="version"> Optional agent definition version. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentDefinition"/> instance for mocking. </returns>
+        public static AgentDefinition AgentDefinition(string id = default, string framework = default, string name = default, string version = default)
         {
-            return new UnifiedModerateResult(verdict, reason, content, acsVerdict, additionalBinaryDataProperties: null);
+            return new AgentDefinition(id, framework, name, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The complete Agent Control Specification policy verdict. </summary>
-        /// <param name="decision"> The canonical policy decision. </param>
-        /// <param name="reason"> An optional machine-readable reason for the decision. </param>
-        /// <param name="message"> An optional human-readable message for the decision. </param>
-        /// <param name="warnings"> Optional non-blocking warnings produced by policy evaluation. </param>
-        /// <param name="approval"> Optional approval metadata for a deny decision. Unified Moderate does not invoke an approval workflow, so the content remains blocked. </param>
-        /// <param name="transform"> Canonical transform metadata. Required when the decision is transform. </param>
-        /// <param name="evidence"> Optional policy evidence and verification pointers. </param>
-        /// <param name="harmResults"> Optional moderation results keyed by harm category. Category names come from the policy harm configuration and are not restricted to a predefined set. A policy deny that is unrelated to a configured harm can omit this property. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsVerdict"/> instance for mocking. </returns>
-        public static AcsVerdict AcsVerdict(AcsDecision decision = default, string reason = default, string message = default, IEnumerable<string> warnings = default, AcsApproval approval = default, AcsTransform transform = default, IEnumerable<AcsEvidence> evidence = default, IDictionary<string, AcsHarmResult> harmResults = default)
+        /// <summary> Caller-supplied execution-session metadata. </summary>
+        /// <param name="id"> Stable identifier of the run or conversation. </param>
+        /// <param name="startedOn"> Time the session started. </param>
+        /// <param name="turn"> Non-negative turn number, when available. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentSession"/> instance for mocking. </returns>
+        public static AgentSession AgentSession(string id = default, DateTimeOffset? startedOn = default, long? turn = default)
         {
-            warnings ??= new ChangeTrackingList<string>();
-            evidence ??= new ChangeTrackingList<AcsEvidence>();
-            harmResults ??= new ChangeTrackingDictionary<string, AcsHarmResult>();
+            return new AgentSession(id, startedOn, turn, additionalBinaryDataProperties: null);
+        }
 
-            return new AcsVerdict(
-                decision,
+        /// <summary> The execution-session initialization payload. </summary>
+        /// <param name="toolsRegistered"> Names of tools registered for this session. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentInitialization"/> instance for mocking. </returns>
+        public static AgentInitialization AgentInitialization(IEnumerable<string> toolsRegistered = default)
+        {
+            toolsRegistered ??= new ChangeTrackingList<string>();
+
+            return new AgentInitialization(toolsRegistered.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An input payload. Content is native JSON, not a JSON-encoded string. </summary>
+        /// <param name="content"> The input content as a native JSON value. </param>
+        /// <param name="role"> The input origin. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentInput"/> instance for mocking. </returns>
+        public static AgentInput AgentInput(BinaryData content = default, AgentInputRole role = default)
+        {
+            return new AgentInput(content, role, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata for a model request or response. </summary>
+        /// <param name="id"> Logical model identifier. </param>
+        /// <param name="vendor"> Optional model vendor. </param>
+        /// <param name="params"> Optional model parameters as a JSON object. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentModel"/> instance for mocking. </returns>
+        public static AgentModel AgentModel(string id = default, string vendor = default, AgentJsonObject @params = default)
+        {
+            return new AgentModel(id, vendor, @params, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A native JSON object whose member values may be any JSON type, including null. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="ContentSafety.AgentJsonObject"/> instance for mocking. </returns>
+        public static AgentJsonObject AgentJsonObject(IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AgentJsonObject(additionalProperties);
+        }
+
+        /// <summary> One model message. </summary>
+        /// <param name="role"> The message role. </param>
+        /// <param name="content"> The message content as a native JSON value. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentMessage"/> instance for mocking. </returns>
+        public static AgentMessage AgentMessage(string role = default, BinaryData content = default)
+        {
+            return new AgentMessage(role, content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A completed model response. tool_calls is present even when it is an empty array. </summary>
+        /// <param name="content"> Response content as a native JSON value, including null. </param>
+        /// <param name="toolCalls"> Tool calls proposed by the model, or an empty array. </param>
+        /// <param name="finishReason"> The model's finish reason. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentModelResult"/> instance for mocking. </returns>
+        public static AgentModelResult AgentModelResult(BinaryData content = default, IEnumerable<AgentModelToolCall> toolCalls = default, string finishReason = default)
+        {
+            toolCalls ??= new ChangeTrackingList<AgentModelToolCall>();
+
+            return new AgentModelResult(content, toolCalls.ToList(), finishReason, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool call proposed by a model. </summary>
+        /// <param name="id"> Optional model-supplied call identifier. </param>
+        /// <param name="name"> The proposed tool name. </param>
+        /// <param name="args"> Proposed arguments as a native JSON object. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentModelToolCall"/> instance for mocking. </returns>
+        public static AgentModelToolCall AgentModelToolCall(string id = default, string name = default, AgentJsonObject args = default)
+        {
+            return new AgentModelToolCall(id, name, args, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Optional model token usage. </summary>
+        /// <param name="promptTokens"> Non-negative prompt token count. </param>
+        /// <param name="completionTokens"> Non-negative completion token count. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentModelUsage"/> instance for mocking. </returns>
+        public static AgentModelUsage AgentModelUsage(long? promptTokens = default, long? completionTokens = default)
+        {
+            return new AgentModelUsage(promptTokens, completionTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool invocation. For a completed call, args contains the arguments actually dispatched after any host-applied transform. </summary>
+        /// <param name="id"> Tool-call identifier. </param>
+        /// <param name="name"> Tool name. </param>
+        /// <param name="args"> Arguments as a native JSON object. </param>
+        /// <param name="contentHash"> Optional host-defined content hash, comparable only within that host. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentToolCall"/> instance for mocking. </returns>
+        public static AgentToolCall AgentToolCall(string id = default, string name = default, AgentJsonObject args = default, string contentHash = default)
+        {
+            return new AgentToolCall(id, name, args, contentHash, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A completed tool result. </summary>
+        /// <param name="value"> The native JSON result value, including null. </param>
+        /// <param name="isError"> Whether the tool returned an error. </param>
+        /// <param name="durationMs"> Optional non-negative call duration in milliseconds. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentToolResult"/> instance for mocking. </returns>
+        public static AgentToolResult AgentToolResult(BinaryData value = default, bool isError = default, double? durationMs = default)
+        {
+            return new AgentToolResult(value, isError, durationMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool declaration available to the host. </summary>
+        /// <param name="name"> Tool name. </param>
+        /// <param name="description"> Optional tool description. </param>
+        /// <param name="schema"> Optional tool schema as a JSON object. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentToolDeclaration"/> instance for mocking. </returns>
+        public static AgentToolDeclaration AgentToolDeclaration(string name = default, string description = default, AgentJsonObject schema = default)
+        {
+            return new AgentToolDeclaration(name, description, schema, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Output that the host has not yet released. </summary>
+        /// <param name="content"> Output content as a native JSON value. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentOutput"/> instance for mocking. </returns>
+        public static AgentOutput AgentOutput(BinaryData content = default)
+        {
+            return new AgentOutput(content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-reported execution-session summary. The evaluation service does not initiate shutdown or undo previous actions. </summary>
+        /// <param name="reason"> Why the session ended. </param>
+        /// <param name="toolCalls"> Optional non-negative tool-call count. </param>
+        /// <param name="errors"> Optional non-negative error count. </param>
+        /// <param name="durationSeconds"> Optional non-negative session duration in seconds. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentSummary"/> instance for mocking. </returns>
+        public static AgentSummary AgentSummary(AgentShutdownReason reason = default, long? toolCalls = default, long? errors = default, double? durationSeconds = default)
+        {
+            return new AgentSummary(reason, toolCalls, errors, durationSeconds, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Optional trace identifiers. </summary>
+        /// <param name="traceId"> Trace identifier. </param>
+        /// <param name="spanId"> Span identifier. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentTrace"/> instance for mocking. </returns>
+        public static AgentTrace AgentTrace(string traceId = default, string spanId = default)
+        {
+            return new AgentTrace(traceId, spanId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-reported tenant metadata, not an authorization fact. </summary>
+        /// <param name="id"> Optional tenant identifier. </param>
+        /// <param name="name"> Optional tenant name. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentTenant"/> instance for mocking. </returns>
+        public static AgentTenant AgentTenant(string id = default, string name = default)
+        {
+            return new AgentTenant(id, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-reported actor metadata, not an authorization fact. </summary>
+        /// <param name="id"> Optional actor identifier. </param>
+        /// <param name="kind"> Optional actor kind. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentActor"/> instance for mocking. </returns>
+        public static AgentActor AgentActor(string id = default, AgentActorKind? kind = default)
+        {
+            return new AgentActor(id, kind, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Optional caller-reported budget counters. </summary>
+        /// <param name="toolCallCount"> Reported tool-call count. </param>
+        /// <param name="tokenCount"> Reported token count. </param>
+        /// <param name="elapsedSeconds"> Reported elapsed seconds. </param>
+        /// <param name="costUsd"> Reported cost in US dollars. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentBudgets"/> instance for mocking. </returns>
+        public static AgentBudgets AgentBudgets(double? toolCallCount = default, double? tokenCount = default, double? elapsedSeconds = default, double? costUsd = default)
+        {
+            return new AgentBudgets(toolCallCount, tokenCount, elapsedSeconds, costUsd, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Canonical namespaced extensions, including the optional Azure AI Content Safety (AACS) classifier-role bridge. </summary>
+        /// <param name="aacs"> Optional Azure AI Content Safety (AACS) metadata; do not copy the legacy Unified Moderate body here. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="ContentSafety.AgentContextExtensions"/> instance for mocking. </returns>
+        public static AgentContextExtensions AgentContextExtensions(AacsContextExtension aacs = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AgentContextExtensions(aacs, additionalProperties);
+        }
+
+        /// <summary> Minimal Azure AI Content Safety (AACS) request metadata for existing non-Hooks classification paths. </summary>
+        /// <param name="role"> Optional original classifier subject role for existing Azure AI Content Safety (AACS) prompt, completion and tool paths when the canonical payload cannot represent it. Canonical payload roles take precedence; contradictory claims, unsupported roles, and use at model/startup/shutdown points are rejected. Point-derived roles are defaults only. This does not authorize a caller or change the interception point. </param>
+        /// <returns> A new <see cref="ContentSafety.AacsContextExtension"/> instance for mocking. </returns>
+        public static AacsContextExtension AacsContextExtension(AacsSubjectRole? role = default)
+        {
+            return new AacsContextExtension(role, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Startup context. target equals agent_init; a host must reject startup transforms. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentStartupContext"/> instance for mocking. </returns>
+        public static AgentStartupContext AgentStartupContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentStartupContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.AgentStartup,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input context. target equals the complete input object, not only its content. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentInputContext"/> instance for mocking. </returns>
+        public static AgentInputContext AgentInputContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentInputContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.Input,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Pre-model context. target equals the messages array actually proposed for dispatch. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentPreModelCallContext"/> instance for mocking. </returns>
+        public static AgentPreModelCallContext AgentPreModelCallContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentPreModelCallContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.PreModelCall,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Post-model context. target equals the complete response object; the service cannot undo the model call. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentPostModelCallContext"/> instance for mocking. </returns>
+        public static AgentPostModelCallContext AgentPostModelCallContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentPostModelCallContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.PostModelCall,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Pre-tool context. target equals tool_call.args. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentPreToolCallContext"/> instance for mocking. </returns>
+        public static AgentPreToolCallContext AgentPreToolCallContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentPreToolCallContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.PreToolCall,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Post-tool context. target equals tool_result.value; the service cannot undo the tool call. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentPostToolCallContext"/> instance for mocking. </returns>
+        public static AgentPostToolCallContext AgentPostToolCallContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentPostToolCallContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.PostToolCall,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Output context. target equals the complete output object. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentOutputContext"/> instance for mocking. </returns>
+        public static AgentOutputContext AgentOutputContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentOutputContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.Output,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shutdown context. target equals summary; a host must reject shutdown transforms. </summary>
+        /// <param name="timestamp"> UTC instant when the host constructed the context. </param>
+        /// <param name="sequence"> Strictly increasing, non-negative emission sequence within the session. </param>
+        /// <param name="agent"> Agent definition metadata. </param>
+        /// <param name="session"> Execution-session metadata. </param>
+        /// <param name="target"> The native JSON value under evaluation. It must equal the corresponding point payload and is the root addressed by a transform. </param>
+        /// <param name="agentInit"> Initialization payload when available; required at agent_startup. </param>
+        /// <param name="input"> Input payload when available; required at input. </param>
+        /// <param name="model"> Model metadata when available; required at both model-call points. </param>
+        /// <param name="messages"> Model messages when available; required at pre_model_call. </param>
+        /// <param name="requestId"> Optional model-request correlation identifier. </param>
+        /// <param name="response"> Model response when available; required at post_model_call. </param>
+        /// <param name="usage"> Optional model token usage. </param>
+        /// <param name="toolCall"> Tool-call payload when available; required at both tool-call points. </param>
+        /// <param name="toolResult"> Tool-result payload when available; required at post_tool_call. </param>
+        /// <param name="tools"> Optional tools available to the host. </param>
+        /// <param name="output"> Output payload when available; required at output. </param>
+        /// <param name="summary"> Session summary when available; required at agent_shutdown. </param>
+        /// <param name="trace"> Optional trace identifiers. </param>
+        /// <param name="tenant"> Optional caller-reported tenant metadata. </param>
+        /// <param name="actor"> Optional caller-reported actor metadata. </param>
+        /// <param name="budgets"> Optional caller-reported budget counters. </param>
+        /// <param name="extensions"> Namespaced extension values. Namespace keys match ^[a-z][a-z0-9_]*$. Values are native JSON; caller extensions cannot override trusted service annotations. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentShutdownContext"/> instance for mocking. </returns>
+        public static AgentShutdownContext AgentShutdownContext(DateTimeOffset timestamp = default, long sequence = default, AgentDefinition agent = default, AgentSession session = default, BinaryData target = default, AgentInitialization agentInit = default, AgentInput input = default, AgentModel model = default, IEnumerable<AgentMessage> messages = default, string requestId = default, AgentModelResult response = default, AgentModelUsage usage = default, AgentToolCall toolCall = default, AgentToolResult toolResult = default, IEnumerable<AgentToolDeclaration> tools = default, AgentOutput output = default, AgentSummary summary = default, AgentTrace trace = default, AgentTenant tenant = default, AgentActor actor = default, AgentBudgets budgets = default, AgentContextExtensions extensions = default)
+        {
+            messages ??= new ChangeTrackingList<AgentMessage>();
+            tools ??= new ChangeTrackingList<AgentToolDeclaration>();
+
+            return new AgentShutdownContext(
+                "agent-hooks/0.1",
+                AgentInterceptionPoint.AgentShutdown,
+                timestamp,
+                sequence,
+                agent,
+                session,
+                target,
+                agentInit,
+                input,
+                model,
+                messages.ToList(),
+                requestId,
+                response,
+                usage,
+                toolCall,
+                toolResult,
+                tools.ToList(),
+                output,
+                summary,
+                trace,
+                tenant,
+                actor,
+                budgets,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> October Unified Moderate transport response. Verdict is the canonical closed Agent Hooks object. Receipt is separate transport metadata used by the host to fence enforcement and join later host-action evidence. </summary>
+        /// <param name="verdict"> Canonical aggregate Agent Hooks Verdict. </param>
+        /// <param name="receipt"> Policy-evaluation receipt for this attempt. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentEvaluationResult"/> instance for mocking. </returns>
+        public static AgentEvaluationResult AgentEvaluationResult(AgentVerdict verdict = default, AgentPolicyEvaluationReceipt receipt = default)
+        {
+            return new AgentEvaluationResult(verdict, receipt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Canonical closed Agent Hooks Verdict. HTTP 200 indicates evaluation completed, not permission to proceed. Azure AI Content Safety composes the applicable selected, bound, subscription and hierarchy policies within this evaluation. The calling host owns composition across independent interceptors, transform application, final enforcement, approvals, timeouts and audit. The service does not add transport or policy-evaluation metadata to this object.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentSafety.AgentAllowVerdict"/>, <see cref="ContentSafety.AgentDenyVerdict"/>, and <see cref="ContentSafety.AgentTransformVerdict"/>.
+        /// </summary>
+        /// <param name="decision"> Canonical decision: allow, deny or transform. </param>
+        /// <param name="reason"> Optional machine-readable reason. host_error: is reserved for host-synthesized failures. </param>
+        /// <param name="message"> Optional human-readable message. </param>
+        /// <param name="warnings"> Optional structured, non-blocking warnings. </param>
+        /// <param name="evidence"> Optional opaque evidence pointer. </param>
+        /// <param name="resultLabels"> Optional labels. The host persists labels with produced data only if the action proceeds and resurfaces them on later derived contexts. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentVerdict"/> instance for mocking. </returns>
+        public static AgentVerdict AgentVerdict(string decision = default, string reason = default, string message = default, IEnumerable<AgentWarning> warnings = default, AgentEvidence evidence = default, IEnumerable<string> resultLabels = default)
+        {
+            warnings ??= new ChangeTrackingList<AgentWarning>();
+            resultLabels ??= new ChangeTrackingList<string>();
+
+            return new UnknownAgentVerdict(
+                decision.ToAgentDecision(),
                 reason,
                 message,
                 warnings.ToList(),
-                approval,
-                transform,
-                evidence.ToList(),
+                evidence,
+                resultLabels.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A non-blocking concern. Both reason and message are preserved when present. </summary>
+        /// <param name="reason"> Optional machine-readable reason, excluding the host_error: namespace. </param>
+        /// <param name="message"> Optional human-readable message. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentWarning"/> instance for mocking. </returns>
+        public static AgentWarning AgentWarning(string reason = default, string message = default)
+        {
+            return new AgentWarning(reason, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An opaque offline-verifiable evidence pointer. The host must not automatically dereference verification pointers. Its canonical JSON representation is limited to 10,240 UTF-8 bytes. </summary>
+        /// <param name="artefact"> Optional content address or URI of an evidence artefact. </param>
+        /// <param name="verificationPointers"> Optional named verification pointers. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentEvidence"/> instance for mocking. </returns>
+        public static AgentEvidence AgentEvidence(string artefact = default, IDictionary<string, string> verificationPointers = default)
+        {
+            verificationPointers ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgentEvidence(artefact, verificationPointers, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Permit the original target without mutation. </summary>
+        /// <param name="reason"> Optional machine-readable reason. host_error: is reserved for host-synthesized failures. </param>
+        /// <param name="message"> Optional human-readable message. </param>
+        /// <param name="warnings"> Optional structured, non-blocking warnings. </param>
+        /// <param name="evidence"> Optional opaque evidence pointer. </param>
+        /// <param name="resultLabels"> Optional labels. The host persists labels with produced data only if the action proceeds and resurfaces them on later derived contexts. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentAllowVerdict"/> instance for mocking. </returns>
+        public static AgentAllowVerdict AgentAllowVerdict(string reason = default, string message = default, IEnumerable<AgentWarning> warnings = default, AgentEvidence evidence = default, IEnumerable<string> resultLabels = default)
+        {
+            warnings ??= new ChangeTrackingList<AgentWarning>();
+            resultLabels ??= new ChangeTrackingList<string>();
+
+            return new AgentAllowVerdict(
+                AgentDecision.Allow,
+                reason,
+                message,
+                warnings.ToList(),
+                evidence,
+                resultLabels.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Deny the action. Approval metadata makes a deny liftable only by the host's configured approval seam; without a resolver it remains denied. An unconditional mandatory deny cannot be lifted by another policy's approval. </summary>
+        /// <param name="reason"> Optional machine-readable reason. host_error: is reserved for host-synthesized failures. </param>
+        /// <param name="message"> Optional human-readable message. </param>
+        /// <param name="warnings"> Optional structured, non-blocking warnings. </param>
+        /// <param name="evidence"> Optional opaque evidence pointer. </param>
+        /// <param name="resultLabels"> Optional labels. The host persists labels with produced data only if the action proceeds and resurfaces them on later derived contexts. </param>
+        /// <param name="approval"> Optional complete approval metadata as a native JSON object, which may be empty. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentDenyVerdict"/> instance for mocking. </returns>
+        public static AgentDenyVerdict AgentDenyVerdict(string reason = default, string message = default, IEnumerable<AgentWarning> warnings = default, AgentEvidence evidence = default, IEnumerable<string> resultLabels = default, AgentJsonObject approval = default)
+        {
+            warnings ??= new ChangeTrackingList<AgentWarning>();
+            resultLabels ??= new ChangeTrackingList<string>();
+
+            return new AgentDenyVerdict(
+                AgentDecision.Deny,
+                reason,
+                message,
+                warnings.ToList(),
+                evidence,
+                resultLabels.ToList(),
+                additionalBinaryDataProperties: null,
+                approval);
+        }
+
+        /// <summary> Permit only after the host applies the specified transform. The service does not apply it. </summary>
+        /// <param name="reason"> Optional machine-readable reason. host_error: is reserved for host-synthesized failures. </param>
+        /// <param name="message"> Optional human-readable message. </param>
+        /// <param name="warnings"> Optional structured, non-blocking warnings. </param>
+        /// <param name="evidence"> Optional opaque evidence pointer. </param>
+        /// <param name="resultLabels"> Optional labels. The host persists labels with produced data only if the action proceeds and resurfaces them on later derived contexts. </param>
+        /// <param name="transform"> Required transform metadata. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentTransformVerdict"/> instance for mocking. </returns>
+        public static AgentTransformVerdict AgentTransformVerdict(string reason = default, string message = default, IEnumerable<AgentWarning> warnings = default, AgentEvidence evidence = default, IEnumerable<string> resultLabels = default, AgentTransform transform = default)
+        {
+            warnings ??= new ChangeTrackingList<AgentWarning>();
+            resultLabels ??= new ChangeTrackingList<string>();
+
+            return new AgentTransformVerdict(
+                AgentDecision.Transform,
+                reason,
+                message,
+                warnings.ToList(),
+                evidence,
+                resultLabels.ToList(),
+                additionalBinaryDataProperties: null,
+                transform);
+        }
+
+        /// <summary> A replacement the host applies to its target, not a transform already applied by the service. </summary>
+        /// <param name="path"> Path rooted at $target using dot members, bracket indices or quoted members. The deprecated $policy_target alias is accepted by Agent Hooks 0.1. The host rejects unresolvable paths and startup/shutdown transforms. </param>
+        /// <param name="value"> Native JSON replacement value, including null. An absent member is equivalent to null; structured values are never JSON-encoded strings. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentTransform"/> instance for mocking. </returns>
+        public static AgentTransform AgentTransform(string path = default, BinaryData value = default)
+        {
+            return new AgentTransform(path, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Common versioned receipt fields for one AACS evaluation attempt. The receipt proves what was evaluated; it does not replace the Verdict or prove that the calling host enforced it.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentSafety.AgentFoundryProjectReceipt"/> and <see cref="ContentSafety.AgentNamedPolicyReceipt"/>.
+        /// </summary>
+        /// <param name="profile"> Hosted evaluation profile. </param>
+        /// <param name="evaluationId"> Stable evaluation identifier used to join AACS evaluation evidence to a separate host action or release attestation. </param>
+        /// <param name="attempt"> One-based attempt number for evaluation retries sharing the same evaluation identifier. </param>
+        /// <param name="requestBinding"> Binding to the exact API version, AgentContext and admitted selector values evaluated in this attempt. </param>
+        /// <param name="evaluatedPolicyLayers"> Exact policy layers evaluated and composed into the aggregate Verdict. </param>
+        /// <param name="evaluatedInterventionPoint"> The single intervention point evaluated by this receipt. </param>
+        /// <param name="requiredInterventionPoints"> Intervention points required by every applicable policy layer. This states policy requirements, not host support and not points executed in this evaluation. </param>
+        /// <param name="hostProfileVersion"> AACS host-profile version included in executable artifact identity. </param>
+        /// <param name="authenticatedProducerResourceId"> Authenticated producer resource ID established by the service transport. This value is service-derived and never accepted from the request body or a customer-settable identity header. </param>
+        /// <param name="harmResults"> Optional public classifier summaries keyed by harm category. numericSeverity preserves the existing ordinal 0–7 result; raw model scores and internal diagnostics are not exposed. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentPolicyEvaluationReceipt"/> instance for mocking. </returns>
+        public static AgentPolicyEvaluationReceipt AgentPolicyEvaluationReceipt(string profile = default, string evaluationId = default, long attempt = default, AgentEvaluationRequestBinding requestBinding = default, IEnumerable<AgentEvaluatedPolicyLayer> evaluatedPolicyLayers = default, AgentInterceptionPoint evaluatedInterventionPoint = default, IEnumerable<AgentInterceptionPoint> requiredInterventionPoints = default, string hostProfileVersion = default, string authenticatedProducerResourceId = default, IDictionary<string, AgentHarmResult> harmResults = default)
+        {
+            evaluatedPolicyLayers ??= new ChangeTrackingList<AgentEvaluatedPolicyLayer>();
+            requiredInterventionPoints ??= new ChangeTrackingList<AgentInterceptionPoint>();
+            harmResults ??= new ChangeTrackingDictionary<string, AgentHarmResult>();
+
+            return new UnknownAgentPolicyEvaluationReceipt(
+                "2026-10-15-preview",
+                profile.ToAgentEvaluationProfile(),
+                evaluationId,
+                attempt,
+                requestBinding,
+                evaluatedPolicyLayers.ToList(),
+                evaluatedInterventionPoint,
+                requiredInterventionPoints.ToList(),
+                hostProfileVersion,
+                authenticatedProducerResourceId,
                 harmResults,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Approval metadata returned by an ACS deny decision. Unified Moderate does not invoke an approval workflow. </summary>
-        /// <param name="type"> The type of approval required by the policy. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsApproval"/> instance for mocking. </returns>
-        public static AcsApproval AcsApproval(string @type = default)
+        /// <summary> Cryptographic binding between this receipt and the exact Unified Moderate request. The host recomputes the digest before trusting receipt metadata. </summary>
+        /// <param name="digest"> Lowercase SHA-256 digest of the RFC 8785 canonical UTF-8 JSON object whose properties are apiVersion, context and selectors, prefixed with sha256:. context is the exact decoded AgentContext request body. For foundryProject, selectors contains targetResourceId, selectedPolicyId, selectedPolicyRevision and selectedPolicySemanticDigest. For namedPolicy, selectors contains policyId. The service derives this value from the accepted request; it is never copied from request metadata. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentEvaluationRequestBinding"/> instance for mocking. </returns>
+        public static AgentEvaluationRequestBinding AgentEvaluationRequestBinding(string digest = default)
         {
-            return new AcsApproval(@type, additionalBinaryDataProperties: null);
+            return new AgentEvaluationRequestBinding("sha256", "rfc8785", digest, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A canonical ACS transform applied by Unified Moderate. </summary>
-        /// <param name="path"> The transformation target path. For input and output sources, the allowed path is `$target.content`. For tool sources, `$target` replaces the complete value and a path rooted at `$target` replaces an individual member. </param>
-        /// <param name="value"> A string containing the JSON-encoded replacement value applied at the target path. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsTransform"/> instance for mocking. </returns>
-        public static AcsTransform AcsTransform(string path = default, string value = default)
+        /// <summary> One exact policy artifact evaluated during this attempt. The resource ID, revision and semantic digest identify the admitted policy; the artifact digest identifies the activated manifest, Rego and immutable dependencies under the declared host profile. </summary>
+        /// <param name="kind"> Layer role in the evaluation. </param>
+        /// <param name="policyResourceId"> Full policy resource ID. Service-owned built-ins use their stable service identifier. </param>
+        /// <param name="policyRevision"> Exact opaque policy revision. For current RP/PMS resources this is the RP-assigned ETag, preserved verbatim. </param>
+        /// <param name="policySemanticDigest"> SHA-256 digest of the admitted semantic policy closure. This prevents a mutable policy name from resolving to different content during an admitted or resumed operation. </param>
+        /// <param name="activatedArtifactDigest"> SHA-256 digest of the exact activated executable policy artifact, including the manifest, Rego and immutable runtime dependencies under the declared host profile. </param>
+        /// <param name="decision"> Decision returned by this layer before aggregate composition. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentEvaluatedPolicyLayer"/> instance for mocking. </returns>
+        public static AgentEvaluatedPolicyLayer AgentEvaluatedPolicyLayer(AgentPolicyLayerKind kind = default, string policyResourceId = default, string policyRevision = default, string policySemanticDigest = default, string activatedArtifactDigest = default, AgentDecision decision = default)
         {
-            return new AcsTransform(path, value, additionalBinaryDataProperties: null);
+            return new AgentEvaluatedPolicyLayer(
+                kind,
+                policyResourceId,
+                policyRevision,
+                policySemanticDigest,
+                activatedArtifactDigest,
+                decision,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Evidence or a verification pointer returned by policy evaluation. </summary>
-        /// <param name="id"> An optional evidence identifier. </param>
-        /// <param name="type"> An optional evidence type. </param>
-        /// <param name="uri"> An optional location containing or describing the evidence. </param>
-        /// <param name="description"> An optional human-readable evidence description. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsEvidence"/> instance for mocking. </returns>
-        public static AcsEvidence AcsEvidence(string id = default, string @type = default, Uri uri = default, string description = default)
+        /// <summary> Public classifier summary preserved from Unified Moderate. This excludes model family/version, thresholds, private configuration and raw confidence or probability scores. </summary>
+        /// <param name="blocked"> Whether this category contributed to a blocking policy result. </param>
+        /// <param name="detected"> Whether the classifier detected this category. </param>
+        /// <param name="severity"> Optional public risk label. </param>
+        /// <param name="numericSeverity"> Optional ordinal public severity on the existing 0–7 Content Safety scale. This is not a confidence or probability. Detection-only categories omit it. </param>
+        /// <param name="details"> Optional public detection details. </param>
+        /// <param name="url"> Optional public result URL. </param>
+        /// <param name="license"> Optional public result license. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentHarmResult"/> instance for mocking. </returns>
+        public static AgentHarmResult AgentHarmResult(bool blocked = default, bool detected = default, string severity = default, int? numericSeverity = default, IEnumerable<AgentHarmDetail> details = default, Uri url = default, string license = default)
         {
-            return new AcsEvidence(id, @type, uri, description, additionalBinaryDataProperties: null);
-        }
+            details ??= new ChangeTrackingList<AgentHarmDetail>();
 
-        /// <summary> The moderation and policy-attribution result for one harm category. The category name is the key in the harmResults map and is not restricted to a predefined set. </summary>
-        /// <param name="blocked"> Whether this harm contributed to the overall ACS verdict blocking the content. </param>
-        /// <param name="detected"> Whether this harm was detected, regardless of whether it caused the overall verdict to block. </param>
-        /// <param name="severity"> An optional harm-specific severity value. The value is defined by the moderation model or policy that produced the result. </param>
-        /// <param name="details"> Optional blocklist results. Each item identifies one evaluated blocklist and whether it was detected. </param>
-        /// <param name="url"> An optional internet location associated with detected protected material. </param>
-        /// <param name="license"> An optional license description associated with detected protected material. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsHarmResult"/> instance for mocking. </returns>
-        public static AcsHarmResult AcsHarmResult(bool blocked = default, bool detected = default, string severity = default, IEnumerable<AcsHarmDetail> details = default, Uri url = default, string license = default)
-        {
-            details ??= new ChangeTrackingList<AcsHarmDetail>();
-
-            return new AcsHarmResult(
+            return new AgentHarmResult(
                 blocked,
                 detected,
                 severity,
+                numericSeverity,
                 details.ToList(),
                 url,
                 license,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The detection result for one blocklist evaluated as part of a harm result. </summary>
-        /// <param name="detected"> Whether the blocklist was detected. </param>
-        /// <param name="id"> The identifier of the evaluated blocklist. </param>
-        /// <returns> A new <see cref="ContentSafety.AcsHarmDetail"/> instance for mocking. </returns>
-        public static AcsHarmDetail AcsHarmDetail(bool detected = default, string id = default)
+        /// <summary> One detection detail associated with a public harm summary. </summary>
+        /// <param name="detected"> Whether this detail was detected. </param>
+        /// <param name="id"> Stable public detail identifier, such as a configured blocklist or provider name. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentHarmDetail"/> instance for mocking. </returns>
+        public static AgentHarmDetail AgentHarmDetail(bool detected = default, string id = default)
         {
-            return new AcsHarmDetail(detected, id, additionalBinaryDataProperties: null);
+            return new AgentHarmDetail(detected, id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Receipt for a governed Foundry project. The selected Guardrail and every explicit administrator hierarchy policy are identified independently in evaluatedPolicyLayers. The project fields identify the exact RP project incarnation used for this attempt; they do not describe a generated project policy or assert host readiness. </summary>
+        /// <param name="evaluationId"> Stable evaluation identifier used to join AACS evaluation evidence to a separate host action or release attestation. </param>
+        /// <param name="attempt"> One-based attempt number for evaluation retries sharing the same evaluation identifier. </param>
+        /// <param name="requestBinding"> Binding to the exact API version, AgentContext and admitted selector values evaluated in this attempt. </param>
+        /// <param name="evaluatedPolicyLayers"> Exact policy layers evaluated and composed into the aggregate Verdict. </param>
+        /// <param name="evaluatedInterventionPoint"> The single intervention point evaluated by this receipt. </param>
+        /// <param name="requiredInterventionPoints"> Intervention points required by every applicable policy layer. This states policy requirements, not host support and not points executed in this evaluation. </param>
+        /// <param name="hostProfileVersion"> AACS host-profile version included in executable artifact identity. </param>
+        /// <param name="authenticatedProducerResourceId"> Authenticated producer resource ID established by the service transport. This value is service-derived and never accepted from the request body or a customer-settable identity header. </param>
+        /// <param name="harmResults"> Optional public classifier summaries keyed by harm category. numericSeverity preserves the existing ordinal 0–7 result; raw model scores and internal diagnostics are not exposed. </param>
+        /// <param name="targetResourceId"> Governed project selected by targetResourceId. </param>
+        /// <param name="targetIncarnation"> RP-owned project incarnation that changes when the target is deleted, recreated or moved. The runtime obtains it from an authenticated current-project projection; it is not caller metadata. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentFoundryProjectReceipt"/> instance for mocking. </returns>
+        public static AgentFoundryProjectReceipt AgentFoundryProjectReceipt(string evaluationId = default, long attempt = default, AgentEvaluationRequestBinding requestBinding = default, IEnumerable<AgentEvaluatedPolicyLayer> evaluatedPolicyLayers = default, AgentInterceptionPoint evaluatedInterventionPoint = default, IEnumerable<AgentInterceptionPoint> requiredInterventionPoints = default, string hostProfileVersion = default, string authenticatedProducerResourceId = default, IDictionary<string, AgentHarmResult> harmResults = default, string targetResourceId = default, string targetIncarnation = default)
+        {
+            evaluatedPolicyLayers ??= new ChangeTrackingList<AgentEvaluatedPolicyLayer>();
+            requiredInterventionPoints ??= new ChangeTrackingList<AgentInterceptionPoint>();
+            harmResults ??= new ChangeTrackingDictionary<string, AgentHarmResult>();
+
+            return new AgentFoundryProjectReceipt(
+                "2026-10-15-preview",
+                AgentEvaluationProfile.FoundryProject,
+                evaluationId,
+                attempt,
+                requestBinding,
+                evaluatedPolicyLayers.ToList(),
+                evaluatedInterventionPoint,
+                requiredInterventionPoints.ToList(),
+                hostProfileVersion,
+                authenticatedProducerResourceId,
+                harmResults,
+                additionalBinaryDataProperties: null,
+                targetResourceId,
+                targetIncarnation);
+        }
+
+        /// <summary> Receipt for an authorized named-policy gateway evaluation. This profile has no Foundry project identity or hierarchy state. </summary>
+        /// <param name="evaluationId"> Stable evaluation identifier used to join AACS evaluation evidence to a separate host action or release attestation. </param>
+        /// <param name="attempt"> One-based attempt number for evaluation retries sharing the same evaluation identifier. </param>
+        /// <param name="requestBinding"> Binding to the exact API version, AgentContext and admitted selector values evaluated in this attempt. </param>
+        /// <param name="evaluatedPolicyLayers"> Exact policy layers evaluated and composed into the aggregate Verdict. </param>
+        /// <param name="evaluatedInterventionPoint"> The single intervention point evaluated by this receipt. </param>
+        /// <param name="requiredInterventionPoints"> Intervention points required by every applicable policy layer. This states policy requirements, not host support and not points executed in this evaluation. </param>
+        /// <param name="hostProfileVersion"> AACS host-profile version included in executable artifact identity. </param>
+        /// <param name="authenticatedProducerResourceId"> Authenticated producer resource ID established by the service transport. This value is service-derived and never accepted from the request body or a customer-settable identity header. </param>
+        /// <param name="harmResults"> Optional public classifier summaries keyed by harm category. numericSeverity preserves the existing ordinal 0–7 result; raw model scores and internal diagnostics are not exposed. </param>
+        /// <returns> A new <see cref="ContentSafety.AgentNamedPolicyReceipt"/> instance for mocking. </returns>
+        public static AgentNamedPolicyReceipt AgentNamedPolicyReceipt(string evaluationId = default, long attempt = default, AgentEvaluationRequestBinding requestBinding = default, IEnumerable<AgentEvaluatedPolicyLayer> evaluatedPolicyLayers = default, AgentInterceptionPoint evaluatedInterventionPoint = default, IEnumerable<AgentInterceptionPoint> requiredInterventionPoints = default, string hostProfileVersion = default, string authenticatedProducerResourceId = default, IDictionary<string, AgentHarmResult> harmResults = default)
+        {
+            evaluatedPolicyLayers ??= new ChangeTrackingList<AgentEvaluatedPolicyLayer>();
+            requiredInterventionPoints ??= new ChangeTrackingList<AgentInterceptionPoint>();
+            harmResults ??= new ChangeTrackingDictionary<string, AgentHarmResult>();
+
+            return new AgentNamedPolicyReceipt(
+                "2026-10-15-preview",
+                AgentEvaluationProfile.NamedPolicy,
+                evaluationId,
+                attempt,
+                requestBinding,
+                evaluatedPolicyLayers.ToList(),
+                evaluatedInterventionPoint,
+                requiredInterventionPoints.ToList(),
+                hostProfileVersion,
+                authenticatedProducerResourceId,
+                harmResults,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input describing the media to inspect using Content Provenance Detection. </summary>

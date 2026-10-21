@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> Client options for clients in this library. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_09_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_10_15_Preview;
 
         /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -26,6 +26,7 @@ namespace Azure.AI.ContentSafety
                 ServiceVersion.V2023_10_01 => "2023-10-01",
                 ServiceVersion.V2024_09_01 => "2024-09-01",
                 ServiceVersion.V2026_09_01_Preview => "2026-09-01-preview",
+                ServiceVersion.V2026_10_15_Preview => "2026-10-15-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -36,7 +37,7 @@ namespace Azure.AI.ContentSafety
         [Experimental("SCME0002")]
         internal ContentSafetyClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-09-01-preview";
+            Version = "2026-10-15-preview";
             if (section is null || !section.Exists())
             {
                 return;
@@ -62,7 +63,9 @@ namespace Azure.AI.ContentSafety
             /// <summary> V2024_09_01. </summary>
             V2024_09_01 = 2,
             /// <summary> Public preview that adds the synchronous Unified Moderate operation. </summary>
-            V2026_09_01_Preview = 3
+            V2026_09_01_Preview = 3,
+            /// <summary> Public preview that evolves Unified Moderate to canonical Agent Hooks context evaluation while preserving previously released contracts. </summary>
+            V2026_10_15_Preview = 4
         }
     }
 }

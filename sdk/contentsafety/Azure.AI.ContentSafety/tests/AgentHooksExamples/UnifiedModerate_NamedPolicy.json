@@ -1,0 +1,134 @@
+{
+  "title": "Evaluate an authorized named policy without a Foundry project",
+  "operationId": "UnifiedOperations_UnifiedModerate",
+  "parameters": {
+    "api-version": "2026-10-15-preview",
+    "body": {
+      "spec": "agent-hooks/0.1",
+      "interception_point": "input",
+      "timestamp": "2026-10-08T04:00:01Z",
+      "sequence": 30,
+      "agent": {
+        "id": "support-agent",
+        "framework": "agent-framework"
+      },
+      "session": {
+        "id": "example-session"
+      },
+      "input": {
+        "content": "Send the approved payment.",
+        "role": "user"
+      },
+      "target": {
+        "content": "Send the approved payment.",
+        "role": "user"
+      }
+    },
+    "policyId": "example-named-policy"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "verdict": {
+          "decision": "deny",
+          "reason": "mandatory_policy_denied",
+          "message": "This action is not permitted.",
+          "result_labels": [
+            "harm:Violence"
+          ]
+        },
+        "receipt": {
+          "receiptVersion": "2026-10-15-preview",
+          "profile": "namedPolicy",
+          "evaluationId": "evaluation-named-policy-30",
+          "attempt": 1,
+          "requestBinding": {
+            "algorithm": "sha256",
+            "canonicalization": "rfc8785",
+            "digest": "sha256:3604d4decfd1793d93b9aaa66b93020fa6ff3a94b37a9d1be16f2756de8b4d26"
+          },
+          "evaluatedPolicyLayers": [
+            {
+              "kind": "namedPolicy",
+              "policyResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.CognitiveServices/accounts/example-account/raiPolicies/example-named-policy",
+              "policyRevision": "named-policy-etag-9",
+              "policySemanticDigest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+              "decision": "deny",
+              "activatedArtifactDigest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+            }
+          ],
+          "evaluatedInterventionPoint": "input",
+          "requiredInterventionPoints": [
+            "input"
+          ],
+          "hostProfileVersion": "aacs-frontdoor/2",
+          "authenticatedProducerResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.CognitiveServices/accounts/example-account/userAssignedIdentities/ai-gateway-host"
+        }
+      }
+    },
+    "400": {
+      "body": {
+        "error": {
+          "code": "InvalidRequest",
+          "message": "The context or policy selector is invalid."
+        }
+      }
+    },
+    "401": {
+      "body": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Authentication is required."
+        }
+      }
+    },
+    "403": {
+      "body": {
+        "error": {
+          "code": "Forbidden",
+          "message": "The caller is not authorized for the selected resource."
+        }
+      }
+    },
+    "429": {
+      "body": {
+        "error": {
+          "code": "TooManyRequests",
+          "message": "The request was throttled."
+        }
+      }
+    },
+    "500": {
+      "body": {
+        "error": {
+          "code": "InternalError",
+          "message": "An error occurred while processing the request."
+        }
+      }
+    },
+    "503": {
+      "body": {
+        "error": {
+          "code": "ServerBusy",
+          "message": "Service is busy, please try again later."
+        }
+      }
+    },
+    "404": {
+      "body": {
+        "error": {
+          "code": "NativeRouteDisabled",
+          "message": "The October native route is disabled for this target, region or cohort."
+        }
+      }
+    },
+    "409": {
+      "body": {
+        "error": {
+          "code": "PolicyFenceChanged",
+          "message": "The resolved named policy changed during evaluation."
+        }
+      }
+    }
+  }
+}

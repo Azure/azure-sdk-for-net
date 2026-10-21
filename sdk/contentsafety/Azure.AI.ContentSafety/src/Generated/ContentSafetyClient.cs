@@ -451,7 +451,7 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary>
-        /// [Protocol Method] A synchronous API that evaluates input, output, a proposed tool call, or a completed tool result against an applicable Agent Control Specification policy and returns the enforced content and policy verdict.
+        /// [Protocol Method] Synchronously evaluate a canonical Agent Hooks 0.1 context and return a closed canonical Verdict plus a separate evaluation receipt. The hosted API supports two selector profiles. The Foundry-project profile requires targetResourceId plus one exact selected Guardrail through the all-or-none selectedPolicyId/revision/digest tuple. AACS may additionally resolve zero or more explicit administrator policies bound to the target or its ancestors; no binding is required for the selected-Guardrail-only case. The named-policy profile uses policyId without requiring a Foundry project. Exactly one profile is selected; targetResourceId and policyId cannot be combined. Local Copilot and WorkIQ integrations use in-process Agent Hooks/ACS rather than this hosted protocol. The receipt binds its policy metadata to the exact API version, AgentContext and admitted selectors through an RFC 8785 SHA-256 request digest. The calling host recomputes that binding and owns transform application, final enforcement, approvals, timeouts, audit and any separate host-action attestation. The receipt proves evaluation evidence, not host enforcement or feature activation. Body identity metadata and customer-settable headers are not authorization. Request and response limits are 1,048,576 decoded UTF-8 JSON bytes and container depth 64 including the root. Duplicate members, ambiguous selectors and over-limit requests are errors, not truncated successful responses.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -459,11 +459,16 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="targetResourceId"> Full Azure resource ID of the governed Foundry project used to resolve explicit administrator hierarchy bindings. It is not the selected Guardrail or binding resource ID. The target must be under the authenticated serving account and requires a verified producer. Required with the selectedPolicyId/revision/digest tuple for the Foundry-project profile and forbidden when policyId is present. </param>
+        /// <param name="policyId"> Authorized named policy selector for the named-policy gateway profile. It may be a supported policy name or full policy resource ID according to the serving account's existing selector grammar. Required when targetResourceId is absent and forbidden when targetResourceId or selectedPolicyId is present. </param>
+        /// <param name="selectedPolicyId"> Full resource ID of the Guardrail selected by the Foundry agent version. Required with targetResourceId for the Foundry-project profile. selectedPolicyRevision and selectedPolicySemanticDigest are required. The exact tuple must match the policy admitted for the agent operation; missing, stale, mismatched or deleted revisions fail closed and never follow mutable policy content. </param>
+        /// <param name="selectedPolicyRevision"> Opaque exact selected Guardrail revision admitted for the operation. Current RP/PMS resources use the RP-assigned ETag preserved verbatim. Required exactly when selectedPolicyId is present. </param>
+        /// <param name="selectedPolicySemanticDigest"> SHA-256 digest of the admitted selected Guardrail semantic closure. Required exactly when selectedPolicyId is present and verified with selectedPolicyRevision before evaluation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UnifiedModerate(RequestContent content, RequestContext context = null)
+        public virtual Response UnifiedModerate(RequestContent content, string targetResourceId = default, string policyId = default, string selectedPolicyId = default, string selectedPolicyRevision = default, string selectedPolicySemanticDigest = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.UnifiedModerate");
             scope.Start();
@@ -471,7 +476,7 @@ namespace Azure.AI.ContentSafety
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUnifiedModerateRequest(content, context);
+                using HttpMessage message = CreateUnifiedModerateRequest(content, targetResourceId, policyId, selectedPolicyId, selectedPolicyRevision, selectedPolicySemanticDigest, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -482,7 +487,7 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary>
-        /// [Protocol Method] A synchronous API that evaluates input, output, a proposed tool call, or a completed tool result against an applicable Agent Control Specification policy and returns the enforced content and policy verdict.
+        /// [Protocol Method] Synchronously evaluate a canonical Agent Hooks 0.1 context and return a closed canonical Verdict plus a separate evaluation receipt. The hosted API supports two selector profiles. The Foundry-project profile requires targetResourceId plus one exact selected Guardrail through the all-or-none selectedPolicyId/revision/digest tuple. AACS may additionally resolve zero or more explicit administrator policies bound to the target or its ancestors; no binding is required for the selected-Guardrail-only case. The named-policy profile uses policyId without requiring a Foundry project. Exactly one profile is selected; targetResourceId and policyId cannot be combined. Local Copilot and WorkIQ integrations use in-process Agent Hooks/ACS rather than this hosted protocol. The receipt binds its policy metadata to the exact API version, AgentContext and admitted selectors through an RFC 8785 SHA-256 request digest. The calling host recomputes that binding and owns transform application, final enforcement, approvals, timeouts, audit and any separate host-action attestation. The receipt proves evaluation evidence, not host enforcement or feature activation. Body identity metadata and customer-settable headers are not authorization. Request and response limits are 1,048,576 decoded UTF-8 JSON bytes and container depth 64 including the root. Duplicate members, ambiguous selectors and over-limit requests are errors, not truncated successful responses.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -490,11 +495,16 @@ namespace Azure.AI.ContentSafety
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="targetResourceId"> Full Azure resource ID of the governed Foundry project used to resolve explicit administrator hierarchy bindings. It is not the selected Guardrail or binding resource ID. The target must be under the authenticated serving account and requires a verified producer. Required with the selectedPolicyId/revision/digest tuple for the Foundry-project profile and forbidden when policyId is present. </param>
+        /// <param name="policyId"> Authorized named policy selector for the named-policy gateway profile. It may be a supported policy name or full policy resource ID according to the serving account's existing selector grammar. Required when targetResourceId is absent and forbidden when targetResourceId or selectedPolicyId is present. </param>
+        /// <param name="selectedPolicyId"> Full resource ID of the Guardrail selected by the Foundry agent version. Required with targetResourceId for the Foundry-project profile. selectedPolicyRevision and selectedPolicySemanticDigest are required. The exact tuple must match the policy admitted for the agent operation; missing, stale, mismatched or deleted revisions fail closed and never follow mutable policy content. </param>
+        /// <param name="selectedPolicyRevision"> Opaque exact selected Guardrail revision admitted for the operation. Current RP/PMS resources use the RP-assigned ETag preserved verbatim. Required exactly when selectedPolicyId is present. </param>
+        /// <param name="selectedPolicySemanticDigest"> SHA-256 digest of the admitted selected Guardrail semantic closure. Required exactly when selectedPolicyId is present and verified with selectedPolicyRevision before evaluation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UnifiedModerateAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UnifiedModerateAsync(RequestContent content, string targetResourceId = default, string policyId = default, string selectedPolicyId = default, string selectedPolicyRevision = default, string selectedPolicySemanticDigest = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContentSafetyClient.UnifiedModerate");
             scope.Start();
@@ -502,7 +512,7 @@ namespace Azure.AI.ContentSafety
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUnifiedModerateRequest(content, context);
+                using HttpMessage message = CreateUnifiedModerateRequest(content, targetResourceId, policyId, selectedPolicyId, selectedPolicyRevision, selectedPolicySemanticDigest, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -512,30 +522,40 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        /// <summary> A synchronous API that evaluates input, output, a proposed tool call, or a completed tool result against an applicable Agent Control Specification policy and returns the enforced content and policy verdict. </summary>
-        /// <param name="options"> The unified moderation request. </param>
+        /// <summary> Synchronously evaluate a canonical Agent Hooks 0.1 context and return a closed canonical Verdict plus a separate evaluation receipt. The hosted API supports two selector profiles. The Foundry-project profile requires targetResourceId plus one exact selected Guardrail through the all-or-none selectedPolicyId/revision/digest tuple. AACS may additionally resolve zero or more explicit administrator policies bound to the target or its ancestors; no binding is required for the selected-Guardrail-only case. The named-policy profile uses policyId without requiring a Foundry project. Exactly one profile is selected; targetResourceId and policyId cannot be combined. Local Copilot and WorkIQ integrations use in-process Agent Hooks/ACS rather than this hosted protocol. The receipt binds its policy metadata to the exact API version, AgentContext and admitted selectors through an RFC 8785 SHA-256 request digest. The calling host recomputes that binding and owns transform application, final enforcement, approvals, timeouts, audit and any separate host-action attestation. The receipt proves evaluation evidence, not host enforcement or feature activation. Body identity metadata and customer-settable headers are not authorization. Request and response limits are 1,048,576 decoded UTF-8 JSON bytes and container depth 64 including the root. Duplicate members, ambiguous selectors and over-limit requests are errors, not truncated successful responses. </summary>
+        /// <param name="options"> Canonical Agent Hooks context with native JSON point payloads. Azure AI Content Safety (AACS) classifier role metadata, when needed by a non-Hooks caller, belongs in extensions.aacs.role. </param>
+        /// <param name="targetResourceId"> Full Azure resource ID of the governed Foundry project used to resolve explicit administrator hierarchy bindings. It is not the selected Guardrail or binding resource ID. The target must be under the authenticated serving account and requires a verified producer. Required with the selectedPolicyId/revision/digest tuple for the Foundry-project profile and forbidden when policyId is present. </param>
+        /// <param name="policyId"> Authorized named policy selector for the named-policy gateway profile. It may be a supported policy name or full policy resource ID according to the serving account's existing selector grammar. Required when targetResourceId is absent and forbidden when targetResourceId or selectedPolicyId is present. </param>
+        /// <param name="selectedPolicyId"> Full resource ID of the Guardrail selected by the Foundry agent version. Required with targetResourceId for the Foundry-project profile. selectedPolicyRevision and selectedPolicySemanticDigest are required. The exact tuple must match the policy admitted for the agent operation; missing, stale, mismatched or deleted revisions fail closed and never follow mutable policy content. </param>
+        /// <param name="selectedPolicyRevision"> Opaque exact selected Guardrail revision admitted for the operation. Current RP/PMS resources use the RP-assigned ETag preserved verbatim. Required exactly when selectedPolicyId is present. </param>
+        /// <param name="selectedPolicySemanticDigest"> SHA-256 digest of the admitted selected Guardrail semantic closure. Required exactly when selectedPolicyId is present and verified with selectedPolicyRevision before evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UnifiedModerateResult> UnifiedModerate(UnifiedModerateConfig options, CancellationToken cancellationToken = default)
+        public virtual Response<AgentEvaluationResult> UnifiedModerate(AgentContext options, string targetResourceId = default, string policyId = default, string selectedPolicyId = default, string selectedPolicyRevision = default, string selectedPolicySemanticDigest = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            Response result = UnifiedModerate(options, cancellationToken.ToRequestContext());
-            return Response.FromValue((UnifiedModerateResult)result, result);
+            Response result = UnifiedModerate(options, targetResourceId, policyId, selectedPolicyId, selectedPolicyRevision, selectedPolicySemanticDigest, cancellationToken.ToRequestContext());
+            return Response.FromValue((AgentEvaluationResult)result, result);
         }
 
-        /// <summary> A synchronous API that evaluates input, output, a proposed tool call, or a completed tool result against an applicable Agent Control Specification policy and returns the enforced content and policy verdict. </summary>
-        /// <param name="options"> The unified moderation request. </param>
+        /// <summary> Synchronously evaluate a canonical Agent Hooks 0.1 context and return a closed canonical Verdict plus a separate evaluation receipt. The hosted API supports two selector profiles. The Foundry-project profile requires targetResourceId plus one exact selected Guardrail through the all-or-none selectedPolicyId/revision/digest tuple. AACS may additionally resolve zero or more explicit administrator policies bound to the target or its ancestors; no binding is required for the selected-Guardrail-only case. The named-policy profile uses policyId without requiring a Foundry project. Exactly one profile is selected; targetResourceId and policyId cannot be combined. Local Copilot and WorkIQ integrations use in-process Agent Hooks/ACS rather than this hosted protocol. The receipt binds its policy metadata to the exact API version, AgentContext and admitted selectors through an RFC 8785 SHA-256 request digest. The calling host recomputes that binding and owns transform application, final enforcement, approvals, timeouts, audit and any separate host-action attestation. The receipt proves evaluation evidence, not host enforcement or feature activation. Body identity metadata and customer-settable headers are not authorization. Request and response limits are 1,048,576 decoded UTF-8 JSON bytes and container depth 64 including the root. Duplicate members, ambiguous selectors and over-limit requests are errors, not truncated successful responses. </summary>
+        /// <param name="options"> Canonical Agent Hooks context with native JSON point payloads. Azure AI Content Safety (AACS) classifier role metadata, when needed by a non-Hooks caller, belongs in extensions.aacs.role. </param>
+        /// <param name="targetResourceId"> Full Azure resource ID of the governed Foundry project used to resolve explicit administrator hierarchy bindings. It is not the selected Guardrail or binding resource ID. The target must be under the authenticated serving account and requires a verified producer. Required with the selectedPolicyId/revision/digest tuple for the Foundry-project profile and forbidden when policyId is present. </param>
+        /// <param name="policyId"> Authorized named policy selector for the named-policy gateway profile. It may be a supported policy name or full policy resource ID according to the serving account's existing selector grammar. Required when targetResourceId is absent and forbidden when targetResourceId or selectedPolicyId is present. </param>
+        /// <param name="selectedPolicyId"> Full resource ID of the Guardrail selected by the Foundry agent version. Required with targetResourceId for the Foundry-project profile. selectedPolicyRevision and selectedPolicySemanticDigest are required. The exact tuple must match the policy admitted for the agent operation; missing, stale, mismatched or deleted revisions fail closed and never follow mutable policy content. </param>
+        /// <param name="selectedPolicyRevision"> Opaque exact selected Guardrail revision admitted for the operation. Current RP/PMS resources use the RP-assigned ETag preserved verbatim. Required exactly when selectedPolicyId is present. </param>
+        /// <param name="selectedPolicySemanticDigest"> SHA-256 digest of the admitted selected Guardrail semantic closure. Required exactly when selectedPolicyId is present and verified with selectedPolicyRevision before evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UnifiedModerateResult>> UnifiedModerateAsync(UnifiedModerateConfig options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentEvaluationResult>> UnifiedModerateAsync(AgentContext options, string targetResourceId = default, string policyId = default, string selectedPolicyId = default, string selectedPolicyRevision = default, string selectedPolicySemanticDigest = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await UnifiedModerateAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UnifiedModerateResult)result, result);
+            Response result = await UnifiedModerateAsync(options, targetResourceId, policyId, selectedPolicyId, selectedPolicyRevision, selectedPolicySemanticDigest, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AgentEvaluationResult)result, result);
         }
     }
 }
