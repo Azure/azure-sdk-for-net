@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private BatchPublicNetworkAccess? _publicNetworkAccess;
-        internal bool _publicNetworkAccessIsDefined;
+        private bool _publicNetworkAccessIsDefined;
         private BatchNetworkProfile _networkProfile;
-        internal bool _networkProfileIsDefined;
+        private bool _networkProfileIsDefined;
         private int? _dedicatedCoreQuota;
-        internal bool _dedicatedCoreQuotaIsDefined;
+        private bool _dedicatedCoreQuotaIsDefined;
         private int? _lowPriorityCoreQuota;
-        internal bool _lowPriorityCoreQuotaIsDefined;
+        private bool _lowPriorityCoreQuotaIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountProperties"/>. </summary>
         public BatchAccountProperties()

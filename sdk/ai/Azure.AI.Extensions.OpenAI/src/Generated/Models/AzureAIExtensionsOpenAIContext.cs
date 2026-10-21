@@ -131,6 +131,15 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotToolsetConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotToolsetDefaultConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotToolsetPreview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MicrosoftFabricPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool is experimental and may change in future versions.

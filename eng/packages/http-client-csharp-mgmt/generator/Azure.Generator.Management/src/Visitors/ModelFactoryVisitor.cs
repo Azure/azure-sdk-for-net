@@ -96,6 +96,12 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
+                    // Hidden compatibility overloads require every argument (TypeSpec #11832).
+                    // Preserve defaults only for the visible-primary replacement above.
+                    foreach (var parameter in restoredMethod.Signature.Parameters)
+                    {
+                        parameter.DefaultValue = null;
+                    }
                     updatedMethods.Add(restoredMethod);
                 }
             }

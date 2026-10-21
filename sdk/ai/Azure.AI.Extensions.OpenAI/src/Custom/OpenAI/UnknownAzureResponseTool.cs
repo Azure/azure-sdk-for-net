@@ -45,6 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharePointPreviewTool), SharePointPreviewTool.DeserializeSharePointPreviewTool),
             [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
             [ResponseToolKind.GitHubCopilotToolsetPreviewValue] = (typeof(GitHubCopilotToolsetPreview), GitHubCopilotToolsetPreview.DeserializeGitHubCopilotToolsetPreview),
+            [ResponseToolKind.MicrosoftCopilotToolsetPreview] = (typeof(MicrosoftCopilotToolsetPreview), MicrosoftCopilotToolsetPreview.DeserializeMicrosoftCopilotToolsetPreview),
         };
 #pragma warning restore AAIP001
 

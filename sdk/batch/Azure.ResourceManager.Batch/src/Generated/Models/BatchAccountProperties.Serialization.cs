@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference, options);
             }
-            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                     writer.WriteNull("publicNetworkAccess"u8);
                 }
             }
-            if (_networkProfileIsDefined || Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile, _networkProfileIsDefined))
             {
                 if (NetworkProfile != null)
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && (_dedicatedCoreQuotaIsDefined || Optional.IsDefined(DedicatedCoreQuota)))
+            if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota, _dedicatedCoreQuotaIsDefined))
             {
                 if (DedicatedCoreQuota != null)
                 {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch.Models
                     writer.WriteNull("dedicatedCoreQuota"u8);
                 }
             }
-            if (options.Format != "W" && (_lowPriorityCoreQuotaIsDefined || Optional.IsDefined(LowPriorityCoreQuota)))
+            if (options.Format != "W" && Optional.IsDefined(LowPriorityCoreQuota, _lowPriorityCoreQuotaIsDefined))
             {
                 if (LowPriorityCoreQuota != null)
                 {

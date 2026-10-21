@@ -13,7 +13,7 @@ namespace Encode.Numeric
     {
         public static SafeintAsStringProperty SafeintAsStringProperty(long value = default) => throw null;
 
-        public static Uint32AsStringProperty Uint32AsStringProperty(object value = default) => throw null;
+        public static Uint32AsStringProperty Uint32AsStringProperty(uint? value = default) => throw null;
 
         public static Uint8AsStringProperty Uint8AsStringProperty(byte value = default) => throw null;
     }

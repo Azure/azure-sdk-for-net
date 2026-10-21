@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (_appliedByIsDefined || Optional.IsDefined(AppliedBy))
+            if (Optional.IsDefined(AppliedBy, _appliedByIsDefined))
             {
                 if (AppliedBy != null)
                 {

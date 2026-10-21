@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesTrafficRoutingRule)} does not support writing '{format}' format.");
             }
-            if (_ruleIdIsDefined || Optional.IsDefined(RuleId))
+            if (Optional.IsDefined(RuleId, _ruleIdIsDefined))
             {
                 if (RuleId != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("ruleId"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_deploymentIdIsDefined || Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentId, _deploymentIdIsDefined))
             {
                 if (DeploymentId != null)
                 {

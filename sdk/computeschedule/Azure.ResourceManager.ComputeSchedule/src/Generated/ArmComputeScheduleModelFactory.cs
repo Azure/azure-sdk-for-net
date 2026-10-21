@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile, IEnumerable<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix)
+        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default)
         {
             virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 
@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile = default, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = default, int resourceCount = 0, string resourcePrefix = default)
+        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix)
         {
             return new ResourceProvisionPayload(default, default, resourceCount, resourcePrefix, default);
         }

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (_schemaTransformationVersionIsDefined || Optional.IsDefined(SchemaTransformationVersion))
+            if (Optional.IsDefined(SchemaTransformationVersion, _schemaTransformationVersionIsDefined))
             {
                 if (SchemaTransformationVersion != null)
                 {

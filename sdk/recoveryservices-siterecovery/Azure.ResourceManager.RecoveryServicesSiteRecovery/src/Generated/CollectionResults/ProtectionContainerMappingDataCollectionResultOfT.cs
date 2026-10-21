@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
+        private readonly string _fabricName;
+        private readonly string _protectionContainerName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,15 +29,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="client"> The ReplicationProtectionContainerMappings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="protectionContainerName"> Protection container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProtectionContainerMappingDataCollectionResultOfT(ReplicationProtectionContainerMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ProtectionContainerMappingDataCollectionResultOfT(ReplicationProtectionContainerMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
+            _fabricName = fabricName;
+            _protectionContainerName = protectionContainerName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetProtectionContainerMappingsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetProtectionContainerMappingsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByReplicationProtectionContainersRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _fabricName, _protectionContainerName, _context) : _client.CreateGetByReplicationProtectionContainersRequest(_subscriptionId, _resourceGroupName, _resourceName, _fabricName, _protectionContainerName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

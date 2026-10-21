@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _name;
-        internal bool _nameIsDefined;
+        private bool _nameIsDefined;
         private string _id;
-        internal bool _idIsDefined;
+        private bool _idIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         public DatasetReference()

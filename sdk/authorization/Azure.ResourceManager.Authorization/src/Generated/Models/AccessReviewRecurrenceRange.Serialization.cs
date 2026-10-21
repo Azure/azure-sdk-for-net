@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("numberOfOccurrences"u8);
                 writer.WriteNumberValue(NumberOfOccurrences.Value);
             }
-            if (_startsOnIsDefined || Optional.IsDefined(StartsOn))
+            if (Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
                 if (StartsOn != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("startDate"u8);
                 }
             }
-            if (_endsOnIsDefined || Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {

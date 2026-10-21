@@ -361,7 +361,6 @@
                 "$id": "37",
                 "name": "getAvatarAsPng",
                 "isExactName": false,
-                "resourceName": "SameBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -466,7 +465,6 @@
                 "$id": "42",
                 "name": "getAvatarAsJpeg",
                 "isExactName": false,
-                "resourceName": "SameBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -621,7 +619,6 @@
                 "$id": "51",
                 "name": "getAvatarAsPng",
                 "isExactName": false,
-                "resourceName": "DifferentBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -726,7 +723,6 @@
                 "$id": "56",
                 "name": "getAvatarAsJson",
                 "isExactName": false,
-                "resourceName": "DifferentBody",
                 "accessibility": "public",
                 "parameters": [
                   {

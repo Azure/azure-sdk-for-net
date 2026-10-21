@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningManagedIdentity : MachineLearningIdentityConfiguration
     {
         private Guid? _clientId;
-        internal bool _clientIdIsDefined;
+        private bool _clientIdIsDefined;
         private Guid? _objectId;
-        internal bool _objectIdIsDefined;
+        private bool _objectIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningManagedIdentity"/>. </summary>
         public MachineLearningManagedIdentity() : base(IdentityConfigurationType.Managed)

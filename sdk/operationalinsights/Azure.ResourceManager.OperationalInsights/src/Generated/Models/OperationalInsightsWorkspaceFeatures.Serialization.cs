@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{format}' format.");
             }
-            if (_isDataExportEnabledIsDefined || Optional.IsDefined(IsDataExportEnabled))
+            if (Optional.IsDefined(IsDataExportEnabled, _isDataExportEnabledIsDefined))
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableDataExport"u8);
                 }
             }
-            if (_immediatePurgeDataOn30DaysIsDefined || Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (Optional.IsDefined(ImmediatePurgeDataOn30Days, _immediatePurgeDataOn30DaysIsDefined))
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("immediatePurgeDataOn30Days"u8);
                 }
             }
-            if (_isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined || Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
+            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled, _isLogAccessUsingOnlyResourcePermissionsEnabledIsDefined))
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (_isLocalAuthDisabledIsDefined || Optional.IsDefined(IsLocalAuthDisabled))
+            if (Optional.IsDefined(IsLocalAuthDisabled, _isLocalAuthDisabledIsDefined))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("disableLocalAuth"u8);
                 }
             }
-            if (options.Format != "W" && (_isUnifiedSentinelBillingOnlyIsDefined || Optional.IsDefined(IsUnifiedSentinelBillingOnly)))
+            if (options.Format != "W" && Optional.IsDefined(IsUnifiedSentinelBillingOnly, _isUnifiedSentinelBillingOnlyIsDefined))
             {
                 if (IsUnifiedSentinelBillingOnly != null)
                 {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_isDataAuthorizationModeIsDefined || Optional.IsDefined(IsDataAuthorizationMode))
+            if (Optional.IsDefined(IsDataAuthorizationMode, _isDataAuthorizationModeIsDefined))
             {
                 if (IsDataAuthorizationMode != null)
                 {

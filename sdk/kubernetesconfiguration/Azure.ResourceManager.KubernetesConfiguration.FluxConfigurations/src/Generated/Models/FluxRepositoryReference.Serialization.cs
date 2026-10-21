@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxRepositoryReference)} does not support writing '{format}' format.");
             }
-            if (_branchIsDefined || Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Branch, _branchIsDefined))
             {
                 if (Branch != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("branch"u8);
                 }
             }
-            if (_tagIsDefined || Optional.IsDefined(Tag))
+            if (Optional.IsDefined(Tag, _tagIsDefined))
             {
                 if (Tag != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("tag"u8);
                 }
             }
-            if (_semverIsDefined || Optional.IsDefined(Semver))
+            if (Optional.IsDefined(Semver, _semverIsDefined))
             {
                 if (Semver != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("semver"u8);
                 }
             }
-            if (_commitIsDefined || Optional.IsDefined(Commit))
+            if (Optional.IsDefined(Commit, _commitIsDefined))
             {
                 if (Commit != null)
                 {

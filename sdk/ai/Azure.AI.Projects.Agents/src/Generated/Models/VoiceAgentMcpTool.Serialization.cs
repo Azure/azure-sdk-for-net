@@ -288,12 +288,7 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("allowed_tools"u8))
                 {
                     allowedToolsIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        allowedTools = null;
-                        continue;
-                    }
-                    allowedTools = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    DeserializeAllowedToolsValue(prop, ref allowedTools, options);
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))

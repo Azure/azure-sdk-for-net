@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors/", false);
             uri.AppendPath(publicCloudConnector, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors/", false);
             uri.AppendPath(publicCloudConnector, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors/", false);
             uri.AppendPath(publicCloudConnector, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors/", false);
             uri.AppendPath(publicCloudConnector, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2024-12-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2027-01-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2024-12-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2027-01-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/publicCloudConnectors/", false);
             uri.AppendPath(publicCloudConnector, true);
             uri.AppendPath("/testPermissions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-12-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2027-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
