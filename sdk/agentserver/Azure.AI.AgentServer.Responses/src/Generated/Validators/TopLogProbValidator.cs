@@ -45,6 +45,8 @@ internal static partial class TopLogProbValidator
             errors.Add(new ValidationError("$.logprob", "Required property 'logprob' is missing"));
         else
         {
+            if (logprobProp.ValueKind != JsonValueKind.Number)
+                errors.Add(new ValidationError("$.logprob", $"Expected number, got {logprobProp.ValueKind}"));
         }
 
         // Required: token
