@@ -93,8 +93,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var identifierParameter = identifier.Signature.Parameters.Single(p => p.WireInfo.SerializedName == wireName);
             Assert.That(identifierParameter.Name, Is.EqualTo(expectedName));
             Assert.That(identifier.BodyStatements!.ToDisplayString(), Does.Contain($"{{{expectedName}}}"));
-            var renderedIdentifier = new TypeProviderWriter(new TestTypeProvider(
-                name: resource.Name, ns: resource.Type.Namespace, methods: [identifier])).Write().Content;
+            var renderedIdentifier = RenderIdentifier(identifier);
             Assert.That(renderedIdentifier, Does.Contain($"string {expectedName}"));
 
             var collection = providers.OfType<ResourceCollectionClientProvider>().Single(p => p.Name == "ChildTypeCollection");
@@ -168,8 +167,7 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(identifier.Signature.Parameters[3].Name, Is.EqualTo(expectedName));
             Assert.That(identifier.Signature.Parameters[3].WireInfo.SerializedName, Is.EqualTo("IPv4Name"));
             Assert.That(identifier.BodyStatements!.ToDisplayString(), Does.Contain($"{{{expectedName}}}"));
-            var renderedIdentifier = new TypeProviderWriter(new TestTypeProvider(
-                name: resource.Name, ns: resource.Type.Namespace, methods: [identifier])).Write().Content;
+            var renderedIdentifier = RenderIdentifier(identifier);
             Assert.That(renderedIdentifier, Does.Contain($"string {expectedName}"));
             Assert.That(SynthesizedParameterNameHelper.GetExistingParameterName(resource, "CreateResourceIdentifier", identifier.Signature.Parameters, 3),
                 Is.EqualTo(exactInputName ? null : existingName));
@@ -263,6 +261,14 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(identifier.Signature.Parameters[3].Name, Is.EqualTo("ipv4Name"));
             var collection = providers.OfType<ResourceCollectionClientProvider>().Single(p => p.Name == "ChildTypeCollection");
             Assert.That(collection.PathParameters.Single().Name, Is.EqualTo("ipv4Name"));
+        }
+
+        private static string RenderIdentifier(MethodProvider identifier)
+        {
+            var enclosingType = new TestTypeProvider(name: "IdentifierRendering", ns: "Samples");
+            var method = new MethodProvider(identifier.Signature, identifier.BodyStatements!, enclosingType);
+            return new TypeProviderWriter(new TestTypeProvider(
+                name: enclosingType.Name, ns: enclosingType.Type.Namespace, methods: [method])).Write().Content;
         }
     }
 }
