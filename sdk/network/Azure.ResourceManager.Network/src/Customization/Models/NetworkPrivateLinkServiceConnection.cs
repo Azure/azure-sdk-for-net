@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkPrivateLinkServiceConnection
+    public partial class NetworkPrivateLinkServiceConnection : NetworkResourceData
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
         /// <inheritdoc cref="PrivateLinkServiceConnectionState"/>

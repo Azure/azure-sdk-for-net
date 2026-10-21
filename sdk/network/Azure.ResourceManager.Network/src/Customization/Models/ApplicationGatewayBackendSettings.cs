@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendSettings
+    public partial class ApplicationGatewayBackendSettings : NetworkResourceData
     {
         // Preserve the previous acronym spelling as an alias of the preferred generated property.
         /// <inheritdoc cref="IsL4ClientIPPreservationEnabled"/>

@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayHttpListener
+    public partial class ApplicationGatewayHttpListener : NetworkResourceData
     {
         // The following three references were internal in 1.15.0 and unnecessarily exposed publicly
         // during the 1.16.0 TypeSpec migration. Retained for released 1.16/1.17 API compatibility;

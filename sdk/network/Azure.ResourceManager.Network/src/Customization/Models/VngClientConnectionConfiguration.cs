@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VngClientConnectionConfiguration
+    public partial class VngClientConnectionConfiguration : NetworkResourceData
     {
         // Lazily restore the supported flattened facade using the native change-tracking list.
         /// <summary> Gets the VPN client address prefixes. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerInboundNatPool
+    public partial class LoadBalancerInboundNatPool : NetworkResourceData
     {
         /// <summary> Gets or sets the transport protocol. </summary>
         /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.Protocol"/> instead. </remarks>

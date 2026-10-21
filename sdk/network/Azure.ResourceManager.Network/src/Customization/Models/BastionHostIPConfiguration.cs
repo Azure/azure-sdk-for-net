@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostIPConfiguration
+    public partial class BastionHostIPConfiguration : NetworkResourceData
     {
         // The following two references were internal in 1.15.0 and unnecessarily exposed publicly
         // during the 1.16.0 TypeSpec migration. Retained for released 1.16/1.17 API compatibility;

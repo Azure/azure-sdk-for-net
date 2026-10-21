@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbe
+    public partial class ApplicationGatewayProbe : NetworkResourceData
     {
         // Preserve the TypeSpec-generated property name because it maps to the same wire property as the preferred member.
         /// <inheritdoc cref="IntervalInSeconds"/>

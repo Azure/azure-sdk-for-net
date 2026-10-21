@@ -12,5 +12,9 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostIPConfiguration : NetworkResourceData { }
+    public partial class NetworkIPConfiguration : NetworkResourceData
+    {
+        /// <summary> Initializes a new instance of the NetworkIPConfiguration class. </summary>
+        protected NetworkIPConfiguration(bool _) { }
+    }
 }
