@@ -61,6 +61,24 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Url to redirect the request to. </summary>
+        [WirePath("properties.targetUrl")]
+        public Uri TargetUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                Properties.TargetUri = value;
+            }
+        }
+
         /// <summary> Include path in the redirected url. </summary>
         [WirePath("properties.includePath")]
         public bool? IncludePath

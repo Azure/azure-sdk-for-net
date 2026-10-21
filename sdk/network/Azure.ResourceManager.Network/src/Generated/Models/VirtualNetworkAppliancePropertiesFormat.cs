@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthGbps = bandwidthGbps;
             IPConfigurations = ipConfigurations;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
         [WirePath("privateIPAddressVersion")]
-        public VirtualNetworkApplianceIpVersionType? PrivateIPAddressVersion { get; set; }
+        public VirtualNetworkApplianceIPVersionType? PrivateIPAddressVersion { get; set; }
 
         /// <summary> The provisioning state of the virtual network appliance resource. </summary>
         [WirePath("provisioningState")]

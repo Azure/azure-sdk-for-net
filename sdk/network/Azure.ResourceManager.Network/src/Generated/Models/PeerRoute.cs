@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
+        internal PeerRoute()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
         /// <param name="localAddress"> The peer's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
         /// <param name="nextHop"> The route's next hop. </param>
@@ -36,11 +41,6 @@ namespace Azure.ResourceManager.Network.Models
             AsPath = asPath;
             Weight = weight;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
-        public PeerRoute()
-        {
         }
 
         /// <summary> The peer's local address. </summary>

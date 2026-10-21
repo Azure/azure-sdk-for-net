@@ -42,6 +42,24 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Certificate public data. </summary>
+        [WirePath("properties.data")]
+        public BinaryData Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayAuthenticationCertificatePropertiesFormat();
+                }
+                Properties.Data = value;
+            }
+        }
+
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

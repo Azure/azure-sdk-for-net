@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
         [WirePath("properties.privateIPAddressVersion")]
-        public VirtualNetworkApplianceIpVersionType? PrivateIPAddressVersion
+        public VirtualNetworkApplianceIPVersionType? PrivateIPAddressVersion
         {
             get
             {

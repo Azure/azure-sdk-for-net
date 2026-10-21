@@ -42,6 +42,24 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Base-64 encoded pfx certificate. Only applicable in PUT Request. </summary>
+        [WirePath("properties.data")]
+        public BinaryData Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslCertificatePropertiesFormat();
+                }
+                Properties.Data = value;
+            }
+        }
+
         /// <summary> Password for the pfx file specified in data. Only applicable in PUT request. </summary>
         [WirePath("properties.password")]
         public string Password
@@ -57,6 +75,16 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewaySslCertificatePropertiesFormat();
                 }
                 Properties.Password = value;
+            }
+        }
+
+        /// <summary> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </summary>
+        [WirePath("properties.publicCertData")]
+        public BinaryData PublicCertData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicCertData;
             }
         }
 

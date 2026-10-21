@@ -3757,11 +3757,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> SwapPublicIpAddressesAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapPublicIPAddressesAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIpAddresses");
+            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddresses");
             scope.Start();
             try
             {
@@ -3807,11 +3807,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation SwapPublicIpAddresses(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapPublicIPAddresses(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIpAddresses");
+            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddresses");
             scope.Start();
             try
             {

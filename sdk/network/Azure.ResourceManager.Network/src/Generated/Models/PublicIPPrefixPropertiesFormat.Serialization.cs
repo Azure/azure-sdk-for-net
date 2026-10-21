@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ReferencedPublicIpAddress item in PublicIPAddresses)
+                foreach (ReferencedPublicIPAddress item in PublicIPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<IPTag> ipTags = default;
             int? prefixLength = default;
             string ipPrefix = default;
-            IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses = default;
+            IReadOnlyList<ReferencedPublicIPAddress> publicIPAddresses = default;
             NetworkSubResource loadBalancerFrontendIPConfiguration = default;
             NetworkSubResource customIPPrefix = default;
             Guid? resourceGuid = default;
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ReferencedPublicIpAddress> array = new List<ReferencedPublicIpAddress>();
+                    List<ReferencedPublicIPAddress> array = new List<ReferencedPublicIPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReferencedPublicIpAddress.DeserializeReferencedPublicIpAddress(item, options));
+                        array.Add(ReferencedPublicIPAddress.DeserializeReferencedPublicIPAddress(item, options));
                     }
                     publicIPAddresses = array;
                     continue;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network.Models
                 ipTags ?? new ChangeTrackingList<IPTag>(),
                 prefixLength,
                 ipPrefix,
-                publicIPAddresses ?? new ChangeTrackingList<ReferencedPublicIpAddress>(),
+                publicIPAddresses ?? new ChangeTrackingList<ReferencedPublicIPAddress>(),
                 loadBalancerFrontendIPConfiguration,
                 customIPPrefix,
                 resourceGuid,

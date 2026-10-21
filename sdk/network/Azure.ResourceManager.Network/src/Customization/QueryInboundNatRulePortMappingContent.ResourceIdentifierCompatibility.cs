@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("ipConfiguration")]
         public ResourceIdentifier IPConfigurationId
         {
-            get => IpConfiguration;
+            get => IPConfiguration;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
     }

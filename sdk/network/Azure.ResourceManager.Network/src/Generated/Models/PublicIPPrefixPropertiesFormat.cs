@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public PublicIPPrefixPropertiesFormat()
         {
             IPTags = new ChangeTrackingList<IPTag>();
-            PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
+            PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixPropertiesFormat"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
         /// <param name="isUpgradedToV2"> Whether the public IP prefix SKU has been upgraded from Standard to StandardV2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIPConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, bool? isUpgradedToV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIPAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIPConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, bool? isUpgradedToV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IPTags = ipTags;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
         [WirePath("publicIPAddresses")]
-        public IReadOnlyList<ReferencedPublicIpAddress> PublicIPAddresses { get; } = new ChangeTrackingList<ReferencedPublicIpAddress>();
+        public IReadOnlyList<ReferencedPublicIPAddress> PublicIPAddresses { get; } = new ChangeTrackingList<ReferencedPublicIPAddress>();
 
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         [WirePath("loadBalancerFrontendIpConfiguration")]

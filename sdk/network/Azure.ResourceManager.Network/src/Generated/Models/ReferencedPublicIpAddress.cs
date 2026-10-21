@@ -12,20 +12,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to a public IP address. </summary>
-    public partial class ReferencedPublicIpAddress
+    internal partial class ReferencedPublicIPAddress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReferencedPublicIpAddress"/>. </summary>
-        internal ReferencedPublicIpAddress()
+        /// <summary> Initializes a new instance of <see cref="ReferencedPublicIPAddress"/>. </summary>
+        internal ReferencedPublicIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReferencedPublicIpAddress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferencedPublicIPAddress"/>. </summary>
         /// <param name="id"> The PublicIPAddress Reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReferencedPublicIpAddress(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReferencedPublicIPAddress(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -5,25 +5,26 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     public partial class ConnectionMonitorCollection
     {
-        /// <summary>
-        /// Create or update a connection monitor.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if the method should return after starting the operation. </param>
-        /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="content"> Parameters that define the operation to create a connection monitor. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An <see cref="ArmOperation{T}"/> that can be used to wait for completion and retrieve the created or updated resource. </returns>
-        public virtual async Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            return await CreateOrUpdateAsync(waitUntil, connectionMonitorName, new ConnectionMonitorContent(content, default), default, cancellationToken).ConfigureAwait(false);
-        }
+        /// <summary> Creates or updates a connection monitor without requesting migration. </summary>
+        public virtual Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content) =>
+            CreateOrUpdateAsync(waitUntil, connectionMonitorName, content, default(string), default);
+
+        /// <summary> Creates or updates a connection monitor without requesting migration. </summary>
+        public virtual Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, CancellationToken cancellationToken = default) =>
+            CreateOrUpdateAsync(waitUntil, connectionMonitorName, content, default(string), cancellationToken);
+
+        /// <summary> Creates or updates a connection monitor using its compatibility request name. </summary>
+        public virtual Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorContent content, string migrate = default, CancellationToken cancellationToken = default) =>
+            CreateOrUpdateAsync(waitUntil, connectionMonitorName, (ConnectionMonitorCreateOrUpdateContent)content, migrate, cancellationToken);
+
+        /// <summary> Creates or updates a connection monitor using its compatibility request name. </summary>
+        public virtual ArmOperation<ConnectionMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorContent content, string migrate = default, CancellationToken cancellationToken = default) =>
+            CreateOrUpdate(waitUntil, connectionMonitorName, (ConnectionMonitorCreateOrUpdateContent)content, migrate, cancellationToken);
     }
 }

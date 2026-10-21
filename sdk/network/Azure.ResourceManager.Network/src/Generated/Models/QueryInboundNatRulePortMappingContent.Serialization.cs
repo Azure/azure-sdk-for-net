@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpConfiguration))
+            if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteStringValue(IpConfiguration);
+                writer.WriteStringValue(IPConfiguration);
             }
             if (Optional.IsDefined(IPAddress))
             {

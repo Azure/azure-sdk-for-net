@@ -42,6 +42,34 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Certificate public data. </summary>
+        [WirePath("properties.data")]
+        public BinaryData Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayTrustedClientCertificatePropertiesFormat();
+                }
+                Properties.Data = value;
+            }
+        }
+
+        /// <summary> Validated certificate data. </summary>
+        [WirePath("properties.validatedCertData")]
+        public BinaryData ValidatedCertData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidatedCertData;
+            }
+        }
+
         /// <summary> Distinguished name of client certificate issuer. </summary>
         [WirePath("properties.clientCertIssuerDN")]
         public string ClientCertIssuerDN

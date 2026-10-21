@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             double? bandwidthGbps = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
-            VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default;
+            VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             SubnetData subnet = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new VirtualNetworkApplianceIpVersionType(prop.Value.GetString());
+                    privateIPAddressVersion = new VirtualNetworkApplianceIPVersionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

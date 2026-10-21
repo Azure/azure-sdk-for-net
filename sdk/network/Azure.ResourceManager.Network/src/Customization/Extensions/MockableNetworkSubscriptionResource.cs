@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Mocking
     {
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
         public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
-            => SwapPublicIpAddresses(waitUntil, location, content, cancellationToken);
+            => SwapPublicIPAddresses(waitUntil, location, content, cancellationToken);
 
         // Keep the released historical names for binary compatibility.
         // The PrivateLinkService suffix is redundant; these aliases forward to the preferred shorter generated names.
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
         public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
-            => SwapPublicIpAddressesAsync(waitUntil, location, content, cancellationToken);
+            => SwapPublicIPAddressesAsync(waitUntil, location, content, cancellationToken);
 
         /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

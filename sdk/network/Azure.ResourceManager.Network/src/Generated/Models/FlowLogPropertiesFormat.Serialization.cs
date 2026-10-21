@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the configuration of flow log. </summary>
-    public partial class FlowLogPropertiesFormat : IJsonModel<FlowLogPropertiesFormat>
+    internal partial class FlowLogPropertiesFormat : IJsonModel<FlowLogPropertiesFormat>
     {
         /// <summary> Initializes a new instance of <see cref="FlowLogPropertiesFormat"/> for deserialization. </summary>
         internal FlowLogPropertiesFormat()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP address version. </summary>
-    public readonly partial struct VirtualNetworkApplianceIpVersionType : IEquatable<VirtualNetworkApplianceIpVersionType>
+    public readonly partial struct VirtualNetworkApplianceIPVersionType : IEquatable<VirtualNetworkApplianceIPVersionType>
     {
         private readonly string _value;
         /// <summary> IPv4 version. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Dual Stack version. </summary>
         private const string DualStackValue = "DualStack";
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpVersionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualNetworkApplianceIpVersionType(string value)
+        public VirtualNetworkApplianceIPVersionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IPv4 version. </summary>
-        public static VirtualNetworkApplianceIpVersionType IPv4 { get; } = new VirtualNetworkApplianceIpVersionType(IPv4Value);
+        public static VirtualNetworkApplianceIPVersionType IPv4 { get; } = new VirtualNetworkApplianceIPVersionType(IPv4Value);
 
         /// <summary> Dual Stack version. </summary>
-        public static VirtualNetworkApplianceIpVersionType DualStack { get; } = new VirtualNetworkApplianceIpVersionType(DualStackValue);
+        public static VirtualNetworkApplianceIPVersionType DualStack { get; } = new VirtualNetworkApplianceIPVersionType(DualStackValue);
 
-        /// <summary> Determines if two <see cref="VirtualNetworkApplianceIpVersionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualNetworkApplianceIPVersionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VirtualNetworkApplianceIpVersionType left, VirtualNetworkApplianceIpVersionType right) => left.Equals(right);
+        public static bool operator ==(VirtualNetworkApplianceIPVersionType left, VirtualNetworkApplianceIPVersionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VirtualNetworkApplianceIpVersionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualNetworkApplianceIPVersionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VirtualNetworkApplianceIpVersionType left, VirtualNetworkApplianceIpVersionType right) => !left.Equals(right);
+        public static bool operator !=(VirtualNetworkApplianceIPVersionType left, VirtualNetworkApplianceIPVersionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceIpVersionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceIPVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkApplianceIpVersionType(string value) => new VirtualNetworkApplianceIpVersionType(value);
+        public static implicit operator VirtualNetworkApplianceIPVersionType(string value) => new VirtualNetworkApplianceIPVersionType(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceIpVersionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualNetworkApplianceIPVersionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualNetworkApplianceIpVersionType?(string value) => value == null ? null : new VirtualNetworkApplianceIpVersionType(value);
+        public static implicit operator VirtualNetworkApplianceIPVersionType?(string value) => value == null ? null : new VirtualNetworkApplianceIPVersionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VirtualNetworkApplianceIpVersionType other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualNetworkApplianceIPVersionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VirtualNetworkApplianceIpVersionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualNetworkApplianceIPVersionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

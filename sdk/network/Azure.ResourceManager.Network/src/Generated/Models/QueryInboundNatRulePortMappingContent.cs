@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal QueryInboundNatRulePortMappingContent(ResourceIdentifier ipConfiguration, string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfiguration = ipConfiguration;
+            IPConfiguration = ipConfiguration;
             IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>
         [WirePath("ipConfiguration")]
-        public ResourceIdentifier IpConfiguration { get; set; }
+        public ResourceIdentifier IPConfiguration { get; set; }
 
         /// <summary> IP address set in load balancer backend address. </summary>
         [WirePath("ipAddress")]

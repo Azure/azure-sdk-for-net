@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
-        /// <param name="type"> Destination type. </param>
+        /// <param name="destinationType"> Destination type. </param>
         /// <param name="destinationAddress"> Destination address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destinationAddress"/> is null. </exception>
-        public RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress)
+        public RoutingRuleRouteDestination(RoutingRuleDestinationType destinationType, string destinationAddress)
         {
             Argument.AssertNotNull(destinationAddress, nameof(destinationAddress));
 
-            DestinationType = @type;
+            DestinationType = destinationType;
             DestinationAddress = destinationAddress;
         }
 

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the configuration of flow log. </summary>
-    public partial class FlowLogPropertiesFormat
+    internal partial class FlowLogPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

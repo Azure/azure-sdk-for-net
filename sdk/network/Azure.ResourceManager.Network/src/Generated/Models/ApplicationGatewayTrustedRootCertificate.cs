@@ -42,6 +42,24 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Certificate public data. </summary>
+        [WirePath("properties.data")]
+        public BinaryData Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayTrustedRootCertificatePropertiesFormat();
+                }
+                Properties.Data = value;
+            }
+        }
+
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </summary>
         [WirePath("properties.keyVaultSecretId")]
         public string KeyVaultSecretId

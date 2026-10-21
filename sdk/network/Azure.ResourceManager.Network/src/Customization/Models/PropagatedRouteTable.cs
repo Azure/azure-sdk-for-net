@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility alias for propagated route table. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This model is obsolete. Please use PropagatedRouteTableNfv instead.")]
     public partial class PropagatedRouteTable : PropagatedRouteTableNfv, IJsonModel<PropagatedRouteTable>, IPersistableModel<PropagatedRouteTable>
     {
         /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>

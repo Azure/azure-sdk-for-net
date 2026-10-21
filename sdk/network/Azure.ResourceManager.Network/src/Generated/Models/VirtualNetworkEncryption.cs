@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
-        public VirtualNetworkEncryption(bool enabled)
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
+        public VirtualNetworkEncryption(bool isEnabled)
         {
-            IsEnabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>

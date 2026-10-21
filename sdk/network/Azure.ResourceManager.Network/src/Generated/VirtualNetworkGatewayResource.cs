@@ -429,12 +429,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil waitUntil, P2SVpnConnectionRequest content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual async Task<ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil waitUntil, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(request, nameof(request));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(request), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -482,12 +482,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(WaitUntil waitUntil, P2SVpnConnectionRequest content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(WaitUntil waitUntil, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(request, nameof(request));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(request), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2709,12 +2709,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public virtual async Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(WaitUntil waitUntil, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.SetVpnclientIPsecParameters");
             scope.Start();
@@ -2724,7 +2724,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(vpnclientIPsecParams), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnClientIPsecParameters> operation = new NetworkArmOperation<VpnClientIPsecParameters>(
                     new VpnClientIPsecParametersOperationSource(),
@@ -2768,12 +2768,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(WaitUntil waitUntil, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.SetVpnclientIPsecParameters");
             scope.Start();
@@ -2783,7 +2783,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(vpnclientIPsecParams), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnClientIPsecParameters> operation = new NetworkArmOperation<VpnClientIPsecParameters>(
                     new VpnClientIPsecParametersOperationSource(),

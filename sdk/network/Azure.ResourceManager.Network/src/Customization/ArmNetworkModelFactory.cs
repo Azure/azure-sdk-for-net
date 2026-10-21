@@ -25,19 +25,11 @@ namespace Azure.ResourceManager.Network.Models
 #pragma warning disable CS0618 // The compatibility overload must reference the obsolete endpoint type.
     [CodeGenSuppress("ConnectionMonitorEndpoint", typeof(string), typeof(EndpointType?), typeof(ResourceIdentifier), typeof(string), typeof(ConnectionMonitorEndpointFilter), typeof(ConnectionMonitorEndpointScope), typeof(CoverageLevel?), typeof(string), typeof(Guid?))]
 #pragma warning restore CS0618
-    // The backing property's CLR name is now MonitorType, but these published factory
-    // signatures must retain their parameter names, ordering, and historical enum types.
-    // Generated compatibility overloads otherwise discard connectionMonitorType when
-    // matching it to the renamed constructor parameter. Route every old signature through
-    // the canonical constructor so a factory result agrees with a deserialized response.
-    [CodeGenSuppress("ConnectionMonitorData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorType?), typeof(ETag?), typeof(AzureLocation?), typeof(IReadOnlyDictionary<string, string>))]
-    [CodeGenSuppress("ConnectionMonitorData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorEndpointType?), typeof(ETag?), typeof(AzureLocation?), typeof(IReadOnlyDictionary<string, string>))]
-    [CodeGenSuppress("ConnectionMonitorData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ETag?), typeof(AzureLocation?), typeof(IReadOnlyDictionary<string, string>), typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorType?))]
-    [CodeGenSuppress("ConnectionMonitorData", typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorEndpointType?), typeof(string))]
-    [CodeGenSuppress("ConnectionMonitorResultProperties", typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorEndpointType?))]
-    [CodeGenSuppress("ConnectionMonitorResultProperties", typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string), typeof(NetworkProvisioningState?), typeof(DateTimeOffset?), typeof(string), typeof(ConnectionMonitorType?))]
+    // Retain the shipped factory signature while constructing the complete request, not its settings.
+    [CodeGenSuppress("ConnectionMonitorCreateOrUpdateContent", typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string))]
+    [CodeGenSuppress("ConnectionMonitorCreateOrUpdateContent", typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string))]
     // Preserve both bandwidth factory signatures and populate the renamed numeric property.
-    [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(double?), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(VirtualNetworkApplianceIpVersionType?), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData), typeof(ETag?))]
+    [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(double?), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(VirtualNetworkApplianceIPVersionType?), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData), typeof(ETag?))]
     [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(string), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData))]
     [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(VirtualNetworkAddressSpace), typeof(RoutingConfigurationNfv), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?), typeof(ETag?))]
     [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(ETag?), typeof(IEnumerable<string>), typeof(RoutingConfiguration), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?))]
@@ -45,6 +37,8 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
     // TODO: Remove this suppression when https://github.com/microsoft/typespec/issues/11846 is fixed.
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(NetworkSubResource), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
+    // Keep the internal reference helper out of the public factory signature.
+    [CodeGenSuppress("PublicIPPrefixData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(NetworkIPVersion?), typeof(IEnumerable<IPTag>), typeof(int?), typeof(string), typeof(IEnumerable<ReferencedPublicIPAddress>), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(NatGatewayData), typeof(bool?), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ExtendedLocation), typeof(PublicIPPrefixSku), typeof(ETag?), typeof(IEnumerable<string>))]
     // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
     // which would make a public method less accessible than one of its parameters.
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
@@ -53,6 +47,25 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a complete connection monitor request for mocking. </summary>
+        public static ConnectionMonitorCreateOrUpdateContent ConnectionMonitorCreateOrUpdateContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default)
+        {
+            var properties = new ConnectionMonitorParameters(
+                source, destination, autoStart, monitoringIntervalInSeconds,
+                endpoints is null ? new ChangeTrackingList<ConnectionMonitorEndpoint>() : endpoints.ToList(),
+                testConfigurations is null ? new ChangeTrackingList<ConnectionMonitorTestConfiguration>() : testConfigurations.ToList(),
+                testGroups is null ? new ChangeTrackingList<ConnectionMonitorTestGroup>() : testGroups.ToList(),
+                outputs is null ? new ChangeTrackingList<ConnectionMonitorOutput>() : outputs.ToList(), notes, default);
+            return new ConnectionMonitorCreateOrUpdateContent(default, new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> Initializes the compatibility name of a complete connection monitor request for mocking. </summary>
+        public static ConnectionMonitorContent ConnectionMonitorContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        {
+            var result = ConnectionMonitorCreateOrUpdateContent(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes);
+            return new ConnectionMonitorContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), result.Properties, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayOnDemandProbe"/> for mocking. </summary>
         /// <param name="protocol"> The protocol used for the probe. </param>
         /// <param name="host"> Host name to send the probe to. </param>
@@ -130,89 +143,6 @@ namespace Azure.ResourceManager.Network.Models
         public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = default, IEnumerable<string> rules = default)
             => new ManagedRuleSetRuleGroup(ruleGroupName, (rules ?? new ChangeTrackingList<string>()).ToList());
 
-        /// <summary> Initializes a new instance of <see cref="Network.ConnectionMonitorData"/>. </summary>
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
-        {
-            return new ConnectionMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
-                    source,
-                    destination,
-                    autoStart,
-                    monitoringIntervalInSeconds,
-                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                    notes,
-                    default,
-                    provisioningState,
-                    startOn,
-                    monitoringStatus,
-                    connectionMonitorType),
-                eTag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.ConnectionMonitorData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorEndpointType? connectionMonitorType, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
-            => ConnectionMonitorData(id, name, resourceType, systemData, source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startOn, monitoringStatus, ToConnectionMonitorType(connectionMonitorType), eTag, location, tags);
-
-        /// <summary> Initializes a new instance of <see cref="Network.ConnectionMonitorData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorType? connectionMonitorType = default)
-            => ConnectionMonitorData(id, name, resourceType, systemData, source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startOn, monitoringStatus, connectionMonitorType, etag, location, tags);
-
-        /// <summary> Initializes a new instance of <see cref="Network.ConnectionMonitorData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorData ConnectionMonitorData(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default, string name = default)
-            => ConnectionMonitorData(default, name, default, default, source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startOn, monitoringStatus, ToConnectionMonitorType(connectionMonitorType), default, location, new ChangeTrackingDictionary<string, string>(tags ?? new ChangeTrackingDictionary<string, string>()));
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorResultProperties"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorResultProperties ConnectionMonitorResultProperties(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default)
-            => ConnectionMonitorResultProperties(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startOn, monitoringStatus, ToConnectionMonitorType(connectionMonitorType));
-
-        // Keep the new overload's arguments required: otherwise two all-optional overloads
-        // make previously valid calls such as ConnectionMonitorResultProperties() ambiguous.
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorResultProperties"/>. </summary>
-        public static ConnectionMonitorResultProperties ConnectionMonitorResultProperties(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? monitorType)
-        {
-            return new ConnectionMonitorResultProperties(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                notes,
-                default,
-                provisioningState,
-                startOn,
-                monitoringStatus,
-                monitorType);
-        }
-
-        // Both structs are extensible string enums. Preserve arbitrary future values and distinguish
-        // an absent nullable value from a present default struct when adapting historical factories.
-        private static ConnectionMonitorType? ToConnectionMonitorType(ConnectionMonitorEndpointType? value)
-        {
-            if (value is not { } endpointType)
-            {
-                return null;
-            }
-
-            return endpointType.ToString() is string text ? new ConnectionMonitorType(text) : default(ConnectionMonitorType);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorEndpoint"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is deprecated and it will be removed in a future version. Please use the overload accepting ConnectionMonitorEndpointType instead.")]
@@ -234,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
         // The legacy string parameter must populate the native typed constructor rather than be discarded.
         // Cast the null branch to ResourceType? so implicit string conversion cannot create a present default struct.
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkApplianceData"/>. </summary>
-        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
+        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
         {
             return new VirtualNetworkApplianceData(
                 id,

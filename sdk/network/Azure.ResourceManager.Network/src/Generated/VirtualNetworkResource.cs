@@ -719,11 +719,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MoveIpConfigurationsAsync(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MoveIPConfigurationsAsync(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIpConfigurations");
+            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIPConfigurations");
             scope.Start();
             try
             {
@@ -772,11 +772,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation MoveIpConfigurations(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MoveIPConfigurations(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIpConfigurations");
+            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIPConfigurations");
             scope.Start();
             try
             {

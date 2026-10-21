@@ -498,17 +498,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIPAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
-            return await GetPublicIPAddresses().GetAsync(publicIpAddressName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -528,17 +528,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIPAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
-            return GetPublicIPAddresses().Get(publicIpAddressName, expand, cancellationToken);
+            return GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -1822,17 +1822,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
 
-            return await GetPublicIPPrefixes().GetAsync(publicIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1852,17 +1852,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
 
-            return GetPublicIPPrefixes().Get(publicIpPrefixName, expand, cancellationToken);
+            return GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteFilters in the <see cref="ResourceGroupResource"/>. </summary>
@@ -2549,16 +2549,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
-            return await GetVirtualWans().GetAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2578,16 +2578,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
-            return GetVirtualWans().Get(virtualWANName, cancellationToken);
+            return GetVirtualWans().Get(virtualWanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnSites in the <see cref="ResourceGroupResource"/>. </summary>
@@ -3264,17 +3264,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
-            return await GetCustomIPPrefixes().GetAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3294,17 +3294,17 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
-            return GetCustomIPPrefixes().Get(customIpPrefixName, expand, cancellationToken);
+            return GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DscpConfigurations in the <see cref="ResourceGroupResource"/>. </summary>

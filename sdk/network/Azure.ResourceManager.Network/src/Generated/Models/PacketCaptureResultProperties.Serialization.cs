@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The properties of a packet capture session. </summary>
-    public partial class PacketCaptureResultProperties : PacketCaptureCreateOrUpdateContent, IJsonModel<PacketCaptureResultProperties>
+    internal partial class PacketCaptureResultProperties : PacketCaptureCreateOrUpdateContent, IJsonModel<PacketCaptureResultProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PacketCaptureResultProperties"/> for deserialization. </summary>
         internal PacketCaptureResultProperties()
