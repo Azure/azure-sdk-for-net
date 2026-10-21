@@ -4,18 +4,21 @@
 #nullable disable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     public partial class CloudServiceSwapCollection : IEnumerable<CloudServiceSwapResource>, IAsyncEnumerable<CloudServiceSwapResource>
     {
         IEnumerator<CloudServiceSwapResource> IEnumerable<CloudServiceSwapResource>.GetEnumerator() => ((IEnumerable<CloudServiceSwapResource>)Array.Empty<CloudServiceSwapResource>()).GetEnumerator();
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => Array.Empty<CloudServiceSwapResource>().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Array.Empty<CloudServiceSwapResource>().GetEnumerator();
         IAsyncEnumerator<CloudServiceSwapResource> IAsyncEnumerable<CloudServiceSwapResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => new EmptyAsyncEnumerator<CloudServiceSwapResource>();
+
+        /// <summary> Invokes the GetAllAsync compatibility operation. </summary>
+        public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        /// <summary> Invokes the GetAll compatibility operation. </summary>
+        public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }
