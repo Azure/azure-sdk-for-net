@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier NetworkSecurityGroupId
+        public virtual ResourceIdentifier NetworkSecurityGroupId
         {
             get
             {

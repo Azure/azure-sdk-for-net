@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeActionResource.ResourceType, out string edgeActionApiVersion);
             _edgeActionsMgmtClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionsMgmtClientRestClient = new EdgeActionsMgmtClient(_edgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionApiVersion ?? "2025-12-01-preview");
+            _edgeActionsMgmtClientRestClient = new EdgeActionsMgmtClient(_edgeActionsMgmtClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cdn/edgeActions", out string edgeActionsMgmtClientApiVersionOverride) ? edgeActionsMgmtClientApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitoringThreshold)} does not support writing '{format}' format.");
             }
-            if (_valueIsDefined || Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
                 if (Value != null)
                 {

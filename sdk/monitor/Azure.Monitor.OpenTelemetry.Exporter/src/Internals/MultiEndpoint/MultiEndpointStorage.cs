@@ -73,11 +73,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
         private readonly ConcurrentDictionary<(string IngestionEndpoint, bool IsAad), EndpointStorage> _partitions = new();
         private readonly ApplicationInsightsRestClient _restClient;
+        private readonly ApplicationInsightsRestClient? _aadRestClient;
         private readonly ConnectionVars _connectionVars;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
         private readonly string _rootDirectory;
         private readonly long _maxSizeBytes;
-        private readonly bool _isAadEnabled;
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
@@ -85,17 +85,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private long _lastRecountMilliseconds;
         private volatile bool _disposed;
 
+        /// <remarks><paramref name="aadRestClient"/> is null without a credential; no AAD partition is then created.</remarks>
         internal MultiEndpointStorage(
             ApplicationInsightsRestClient restClient,
+            ApplicationInsightsRestClient? aadRestClient,
             ConnectionVars connectionVars,
-            bool isAadEnabled,
             string rootDirectory,
             long maxSizeBytes,
             NetworkSdkStatsManager? networkSdkStatsManager)
         {
             _restClient = restClient;
+            _aadRestClient = aadRestClient;
             _connectionVars = connectionVars;
-            _isAadEnabled = isAadEnabled;
             _rootDirectory = rootDirectory;
             _maxSizeBytes = maxSizeBytes;
             _networkSdkStatsManager = networkSdkStatsManager;
@@ -485,6 +486,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
+            // Nothing could drain an AAD partition without a token, so one is never created.
+            var restClient = isAad ? _aadRestClient : _restClient;
+            if (restClient == null)
+            {
+                return null;
+            }
+
             var key = (ingestionEndpoint, isAad);
 
             if (_partitions.TryGetValue(key, out var existing))
@@ -527,7 +535,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                         innerProvider,
                         blobProvider,
                         transmissionStateManager,
-                        new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri));
+                        new TransmitFromStorageHandler(restClient, blobProvider, transmissionStateManager, _connectionVars, isAad, _networkSdkStatsManager, directory, trackUri, route));
 
                     _partitions[key] = created;
 

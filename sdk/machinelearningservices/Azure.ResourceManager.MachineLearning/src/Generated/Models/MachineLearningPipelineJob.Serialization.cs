@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs"u8);
                 }
             }
-            if (_settingsIsDefined || Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings, _settingsIsDefined))
             {
                 if (Settings != null)
                 {

@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-30");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/clusters", out string apiVersion) ? apiVersion : "2026-04-30");
 
         /// <summary> Gets a collection of ValidatedSolutionRecipes in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of ValidatedSolutionRecipes and their operations over a ValidatedSolutionRecipeResource. </returns>
         public virtual ValidatedSolutionRecipeCollection GetValidatedSolutionRecipes(AzureLocation location)
         {
-            return GetCachedClient(client => new ValidatedSolutionRecipeCollection(client, Id, location));
+            return new ValidatedSolutionRecipeCollection(Client, Id, location);
         }
 
         /// <summary>

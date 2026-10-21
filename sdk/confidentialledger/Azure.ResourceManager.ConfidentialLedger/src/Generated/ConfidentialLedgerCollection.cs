@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfidentialLedgerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfidentialLedgerResource.ResourceType, out string confidentialLedgerApiVersion);
             _ledgerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConfidentialLedger", ConfidentialLedgerResource.ResourceType.Namespace, Diagnostics);
-            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confidentialLedgerApiVersion ?? "2026-02-23");
+            _ledgerRestClient = new Ledger(_ledgerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConfidentialLedger/ledgers", out string ledgerApiVersionOverride) ? ledgerApiVersionOverride : "2026-02-23");
             ValidateResourceId(id);
         }
 

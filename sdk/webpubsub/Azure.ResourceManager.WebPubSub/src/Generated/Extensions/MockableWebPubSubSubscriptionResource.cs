@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
 
         private ClientDiagnostics WebPubSubResourcesClientDiagnostics => _webPubSubResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/webPubSub", out string apiVersion) ? apiVersion : "2025-08-01-preview");
 
         private ClientDiagnostics WebPubSubOperationGroupClientDiagnostics => _webPubSubOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

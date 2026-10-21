@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_trainingCropSizeIsDefined || Optional.IsDefined(TrainingCropSize))
+            if (Optional.IsDefined(TrainingCropSize, _trainingCropSizeIsDefined))
             {
                 if (TrainingCropSize != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingCropSize"u8);
                 }
             }
-            if (_validationCropSizeIsDefined || Optional.IsDefined(ValidationCropSize))
+            if (Optional.IsDefined(ValidationCropSize, _validationCropSizeIsDefined))
             {
                 if (ValidationCropSize != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationCropSize"u8);
                 }
             }
-            if (_validationResizeSizeIsDefined || Optional.IsDefined(ValidationResizeSize))
+            if (Optional.IsDefined(ValidationResizeSize, _validationResizeSizeIsDefined))
             {
                 if (ValidationResizeSize != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationResizeSize"u8);
                 }
             }
-            if (_weightedLossIsDefined || Optional.IsDefined(WeightedLoss))
+            if (Optional.IsDefined(WeightedLoss, _weightedLossIsDefined))
             {
                 if (WeightedLoss != null)
                 {

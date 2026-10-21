@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepValue<bool> _isEnabled;
         private ManagedClusterMonitorProfileKubeStateMetrics _kubeStateMetrics;
+        private ManagedClusterAzureMonitorProfileMetricsControlPlane _isControlPlane;
 
         /// <summary> Creates a new ManagedClusterMonitorProfileMetrics. </summary>
         public ManagedClusterMonitorProfileMetrics()
@@ -51,12 +52,45 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the IsControlPlane. </summary>
+        internal ManagedClusterAzureMonitorProfileMetricsControlPlane IsControlPlane
+        {
+            get
+            {
+                Initialize();
+                return _isControlPlane;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _isControlPlane, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> IsControlPlaneEnabled
+        {
+            get
+            {
+                return IsControlPlane is null ? default : IsControlPlane.Enabled;
+            }
+            set
+            {
+                if (IsControlPlane is null)
+                {
+                    IsControlPlane = new ManagedClusterAzureMonitorProfileMetricsControlPlane();
+                }
+                IsControlPlane.Enabled = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterMonitorProfileMetrics. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" }, isRequired: true);
             _kubeStateMetrics = DefineModelProperty<ManagedClusterMonitorProfileKubeStateMetrics>(nameof(KubeStateMetrics), new string[] { "kubeStateMetrics" });
+            _isControlPlane = DefineModelProperty<ManagedClusterAzureMonitorProfileMetricsControlPlane>(nameof(IsControlPlane), new string[] { "controlPlane" });
             DefineAdditionalProperties();
         }
 

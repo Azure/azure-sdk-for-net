@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("spilloverDeploymentName"u8);
                 writer.WriteStringValue(SpilloverDeploymentName);
             }
-            if (_serviceTierIsDefined || Optional.IsDefined(ServiceTier))
+            if (Optional.IsDefined(ServiceTier, _serviceTierIsDefined))
             {
                 if (ServiceTier != null)
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("serviceTier"u8);
                 }
             }
-            if (_deploymentStateIsDefined || Optional.IsDefined(DeploymentState))
+            if (Optional.IsDefined(DeploymentState, _deploymentStateIsDefined))
             {
                 if (DeploymentState != null)
                 {

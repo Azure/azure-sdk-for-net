@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MetricAlertResource.ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

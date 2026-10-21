@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added a standalone `/conversation_engine` WebSocket route for typed Voice
+  handlers registered with `AddVoice<THandler>()`. It reuses the existing Bridge
+  Protocol 1.0 relay alongside `/invocations_ws`, without new registration options
+  or changes to generic Invocations handlers.
+
 ### Breaking Changes
 
 ### Bugs Fixed

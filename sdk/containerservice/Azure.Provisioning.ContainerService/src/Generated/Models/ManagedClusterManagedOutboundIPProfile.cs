@@ -11,9 +11,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
-    internal partial class ManagedClusterManagedOutboundIPProfile : ProvisionableConstruct
+    public partial class ManagedClusterManagedOutboundIPProfile : ProvisionableConstruct
     {
         private BicepValue<int> _count;
+        private BicepValue<int> _countIPv6;
 
         /// <summary> Creates a new ManagedClusterManagedOutboundIPProfile. </summary>
         public ManagedClusterManagedOutboundIPProfile()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the CountIPv6. </summary>
+        public BicepValue<int> CountIPv6
+        {
+            get
+            {
+                Initialize();
+                return _countIPv6;
+            }
+            set
+            {
+                Initialize();
+                _countIPv6.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterManagedOutboundIPProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" });
+            _countIPv6 = DefineProperty<int>(nameof(CountIPv6), new string[] { "countIPv6" });
             DefineAdditionalProperties();
         }
 

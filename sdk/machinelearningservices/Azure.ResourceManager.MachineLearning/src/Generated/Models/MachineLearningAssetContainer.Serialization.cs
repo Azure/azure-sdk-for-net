@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (options.Format != "W" && (_latestVersionIsDefined || Optional.IsDefined(LatestVersion)))
+            if (options.Format != "W" && Optional.IsDefined(LatestVersion, _latestVersionIsDefined))
             {
                 if (LatestVersion != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("latestVersion"u8);
                 }
             }
-            if (options.Format != "W" && (_nextVersionIsDefined || Optional.IsDefined(NextVersion)))
+            if (options.Format != "W" && Optional.IsDefined(NextVersion, _nextVersionIsDefined))
             {
                 if (NextVersion != null)
                 {

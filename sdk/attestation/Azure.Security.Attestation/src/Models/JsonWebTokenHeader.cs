@@ -20,12 +20,6 @@ namespace Azure.Security.Attestation
         /// <summary>
         ///
         /// </summary>
-        [JsonPropertyName("jwk")]
-        internal JsonWebKey JsonWebKey { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
         [JsonPropertyName("typ")]
         public string Type { get; set; }
 

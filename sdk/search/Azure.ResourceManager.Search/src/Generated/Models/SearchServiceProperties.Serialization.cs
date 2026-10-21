@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("encryptionWithCmk"u8);
                 writer.WriteObjectValue(EncryptionWithCmk, options);
             }
-            if (_isLocalAuthDisabledIsDefined || Optional.IsDefined(IsLocalAuthDisabled))
+            if (Optional.IsDefined(IsLocalAuthDisabled, _isLocalAuthDisabledIsDefined))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions, options);
             }
-            if (_semanticSearchIsDefined || Optional.IsDefined(SemanticSearch))
+            if (Optional.IsDefined(SemanticSearch, _semanticSearchIsDefined))
             {
                 if (SemanticSearch != null)
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("semanticSearch"u8);
                 }
             }
-            if (_knowledgeRetrievalIsDefined || Optional.IsDefined(KnowledgeRetrieval))
+            if (Optional.IsDefined(KnowledgeRetrieval, _knowledgeRetrievalIsDefined))
             {
                 if (KnowledgeRetrieval != null)
                 {

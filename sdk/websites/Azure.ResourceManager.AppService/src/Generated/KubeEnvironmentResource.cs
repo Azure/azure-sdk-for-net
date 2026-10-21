@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubeEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
+            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/kubeEnvironments", out string kubeEnvironmentsApiVersionOverride) ? kubeEnvironmentsApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 

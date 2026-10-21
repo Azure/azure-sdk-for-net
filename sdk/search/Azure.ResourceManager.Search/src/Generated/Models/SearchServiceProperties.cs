@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isLocalAuthDisabled;
-        internal bool _isLocalAuthDisabledIsDefined;
+        private bool _isLocalAuthDisabledIsDefined;
         private SearchSemanticSearch? _semanticSearch;
-        internal bool _semanticSearchIsDefined;
+        private bool _semanticSearchIsDefined;
         private SearchKnowledgeRetrieval? _knowledgeRetrieval;
-        internal bool _knowledgeRetrievalIsDefined;
+        private bool _knowledgeRetrievalIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceProperties"/>. </summary>
         public SearchServiceProperties()

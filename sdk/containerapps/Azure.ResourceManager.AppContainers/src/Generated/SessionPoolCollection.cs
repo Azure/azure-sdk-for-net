@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SessionPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SessionPoolResource.ResourceType, out string sessionPoolApiVersion);
             _containerAppsSessionPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", SessionPoolResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsSessionPoolsRestClient = new ContainerAppsSessionPools(_containerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sessionPoolApiVersion ?? "2026-07-01");
+            _containerAppsSessionPoolsRestClient = new ContainerAppsSessionPools(_containerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/sessionPools", out string containerAppsSessionPoolsApiVersionOverride) ? containerAppsSessionPoolsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

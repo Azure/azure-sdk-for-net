@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
 
         private ClientDiagnostics ObservabilityAgentsClientDiagnostics => _observabilityAgentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Agents.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ObservabilityAgents ObservabilityAgentsRestClient => _observabilityAgentsRestClient ??= new ObservabilityAgents(ObservabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private ObservabilityAgents ObservabilityAgentsRestClient => _observabilityAgentsRestClient ??= new ObservabilityAgents(ObservabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/observabilityAgents", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         /// <summary>
         /// Lists observability agents in the specified subscription.

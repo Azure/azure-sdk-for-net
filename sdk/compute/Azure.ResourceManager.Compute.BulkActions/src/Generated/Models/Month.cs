@@ -11,33 +11,33 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A month in which the scheduled action can run. </summary>
+    /// <summary> A month in which the recurring bulk action can run. </summary>
     public readonly partial struct Month : IEquatable<Month>
     {
         private readonly string _value;
-        /// <summary> The scheduled action can run in January. </summary>
+        /// <summary> The recurring bulk action can run in January. </summary>
         private const string JanuaryValue = "January";
-        /// <summary> The scheduled action can run in February. </summary>
+        /// <summary> The recurring bulk action can run in February. </summary>
         private const string FebruaryValue = "February";
-        /// <summary> The scheduled action can run in March. </summary>
+        /// <summary> The recurring bulk action can run in March. </summary>
         private const string MarchValue = "March";
-        /// <summary> The scheduled action can run in April. </summary>
+        /// <summary> The recurring bulk action can run in April. </summary>
         private const string AprilValue = "April";
-        /// <summary> The scheduled action can run in May. </summary>
+        /// <summary> The recurring bulk action can run in May. </summary>
         private const string MayValue = "May";
-        /// <summary> The scheduled action can run in June. </summary>
+        /// <summary> The recurring bulk action can run in June. </summary>
         private const string JuneValue = "June";
-        /// <summary> The scheduled action can run in July. </summary>
+        /// <summary> The recurring bulk action can run in July. </summary>
         private const string JulyValue = "July";
-        /// <summary> The scheduled action can run in August. </summary>
+        /// <summary> The recurring bulk action can run in August. </summary>
         private const string AugustValue = "August";
-        /// <summary> The scheduled action can run in September. </summary>
+        /// <summary> The recurring bulk action can run in September. </summary>
         private const string SeptemberValue = "September";
-        /// <summary> The scheduled action can run in October. </summary>
+        /// <summary> The recurring bulk action can run in October. </summary>
         private const string OctoberValue = "October";
-        /// <summary> The scheduled action can run in November. </summary>
+        /// <summary> The recurring bulk action can run in November. </summary>
         private const string NovemberValue = "November";
-        /// <summary> The scheduled action can run in December. </summary>
+        /// <summary> The recurring bulk action can run in December. </summary>
         private const string DecemberValue = "December";
         /// <summary> Every month. </summary>
         private const string AllValue = "All";
@@ -52,40 +52,40 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The scheduled action can run in January. </summary>
+        /// <summary> The recurring bulk action can run in January. </summary>
         public static Month January { get; } = new Month(JanuaryValue);
 
-        /// <summary> The scheduled action can run in February. </summary>
+        /// <summary> The recurring bulk action can run in February. </summary>
         public static Month February { get; } = new Month(FebruaryValue);
 
-        /// <summary> The scheduled action can run in March. </summary>
+        /// <summary> The recurring bulk action can run in March. </summary>
         public static Month March { get; } = new Month(MarchValue);
 
-        /// <summary> The scheduled action can run in April. </summary>
+        /// <summary> The recurring bulk action can run in April. </summary>
         public static Month April { get; } = new Month(AprilValue);
 
-        /// <summary> The scheduled action can run in May. </summary>
+        /// <summary> The recurring bulk action can run in May. </summary>
         public static Month May { get; } = new Month(MayValue);
 
-        /// <summary> The scheduled action can run in June. </summary>
+        /// <summary> The recurring bulk action can run in June. </summary>
         public static Month June { get; } = new Month(JuneValue);
 
-        /// <summary> The scheduled action can run in July. </summary>
+        /// <summary> The recurring bulk action can run in July. </summary>
         public static Month July { get; } = new Month(JulyValue);
 
-        /// <summary> The scheduled action can run in August. </summary>
+        /// <summary> The recurring bulk action can run in August. </summary>
         public static Month August { get; } = new Month(AugustValue);
 
-        /// <summary> The scheduled action can run in September. </summary>
+        /// <summary> The recurring bulk action can run in September. </summary>
         public static Month September { get; } = new Month(SeptemberValue);
 
-        /// <summary> The scheduled action can run in October. </summary>
+        /// <summary> The recurring bulk action can run in October. </summary>
         public static Month October { get; } = new Month(OctoberValue);
 
-        /// <summary> The scheduled action can run in November. </summary>
+        /// <summary> The recurring bulk action can run in November. </summary>
         public static Month November { get; } = new Month(NovemberValue);
 
-        /// <summary> The scheduled action can run in December. </summary>
+        /// <summary> The recurring bulk action can run in December. </summary>
         public static Month December { get; } = new Month(DecemberValue);
 
         /// <summary> Every month. </summary>

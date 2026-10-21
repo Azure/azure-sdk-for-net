@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("archives"u8);
                 }
             }
-            if (_argsIsDefined || Optional.IsDefined(Args))
+            if (Optional.IsDefined(Args, _argsIsDefined))
             {
                 if (Args != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("entry"u8);
             writer.WriteObjectValue(Entry, options);
-            if (_environmentIdIsDefined || Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId, _environmentIdIsDefined))
             {
                 if (EnvironmentId != null)
                 {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pyFiles"u8);
                 }
             }
-            if (_queueSettingsIsDefined || Optional.IsDefined(QueueSettings))
+            if (Optional.IsDefined(QueueSettings, _queueSettingsIsDefined))
             {
                 if (QueueSettings != null)
                 {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("queueSettings"u8);
                 }
             }
-            if (_resourcesIsDefined || Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources, _resourcesIsDefined))
             {
                 if (Resources != null)
                 {

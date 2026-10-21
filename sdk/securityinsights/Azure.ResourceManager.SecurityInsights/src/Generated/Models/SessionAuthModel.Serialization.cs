@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (_isPostPayloadJsonIsDefined || Optional.IsDefined(IsPostPayloadJson))
+            if (Optional.IsDefined(IsPostPayloadJson, _isPostPayloadJsonIsDefined))
             {
                 if (IsPostPayloadJson != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (_sessionTimeoutInMinutesIsDefined || Optional.IsDefined(SessionTimeoutInMinutes))
+            if (Optional.IsDefined(SessionTimeoutInMinutes, _sessionTimeoutInMinutesIsDefined))
             {
                 if (SessionTimeoutInMinutes != null)
                 {
