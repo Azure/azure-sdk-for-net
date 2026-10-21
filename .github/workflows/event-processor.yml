@@ -60,10 +60,6 @@ jobs:
           echo "::add-mask::$APP_CONFIG_ENDPOINT"
           echo "APP_CONFIG_ENDPOINT=$APP_CONFIG_ENDPOINT" >> "$GITHUB_ENV"
 
-      # To run github-event-processor built from source, for testing purposes, uncomment everything
-      # in between the Start/End-Build From Source comments and comment everything in between the
-      # Start/End-Install comments
-      # Start-Install
       - name: Install GitHub Event Processor
         run: >
           dotnet tool install
@@ -72,28 +68,6 @@ jobs:
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
-      # End-Install
-
-      # Testing checkout of sources from the Azure/azure-sdk-tools repository
-      # The ref: is the SHA from the pull request in that repository or the
-      # refs/pull/<PRNumber>/merge for the latest on any given PR. If the repository
-      # is a fork eg. <User>/azure-sdk-tools then the repository down below will
-      # need to point to that fork
-      # Start-Build
-      # - name: Checkout tools repo for GitHub Event Processor sources
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: Azure/azure-sdk-tools
-      #     path: azure-sdk-tools
-      #     ref: <refs/pull/<PRNumber>/merge> or <sha>
-
-      # - name: Build and install GitHubEventProcessor from sources
-      #   run: |
-      #     dotnet pack
-      #     dotnet tool install --global --prerelease --add-source ../../../artifacts/packages/Debug Azure.Sdk.Tools.GitHubEventProcessor
-      #   shell: bash
-      #   working-directory: azure-sdk-tools/tools/github-event-processor/Azure.Sdk.Tools.GitHubEventProcessor
-      # End-Build
 
       - name: Process Action Event
         run: |
