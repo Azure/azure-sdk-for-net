@@ -129,6 +129,23 @@ test("coverage rejects the same whitespace path as the actual pipeline collector
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
+test("reporter unit tests do not write fixture summaries or workflow commands in Actions", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "skill-coverage-test-output-"));
+  try {
+    const summary = path.join(root, "summary.md");
+    const original = "Real workflow summary must remain unchanged.\n";
+    fs.writeFileSync(summary, original);
+    const env: NodeJS.ProcessEnv = { ...process.env, GITHUB_ACTIONS: "true", GITHUB_STEP_SUMMARY: summary };
+    delete env.NODE_TEST_CONTEXT;
+    const result = spawnSync(process.execPath, ["--test", "--test-reporter=tap", path.join(packageRoot, "test/github.test.ts")], {
+      env, encoding: "utf8", timeout: 30000,
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(fs.readFileSync(summary, "utf8"), original);
+    assert.doesNotMatch(result.stdout + result.stderr, /::(?:warning|error|notice)::/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
 test("read-only workflow preserves the exact blocking lint job", () => {
   const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/skill-eval.yml"), "utf8"));
   assert.deepEqual(workflow.permissions, { contents: "read" });

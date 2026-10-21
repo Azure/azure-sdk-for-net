@@ -33,7 +33,9 @@ mock-handler coverage enforcement.
 5. After that workflow completes, **Skill Eval coverage comment** recomputes the
    result with trusted default-branch code and updates one bot-owned PR comment.
    **Both coverage-present and coverage-missing comments contain the Eval
-   dashboard, authoring-guide and source-run links.** An unreadable report is
+   dashboard, authoring-guide and source-run links.** The comment also records the
+   coverage/lint build result, attempt and exact skill revision. This build is not
+   a model-backed Eval run. An unreadable report is
    labeled unknown, never passing. Creating a new comment requires confirmed
    relevant changes. If changed-file scope is unavailable or exceeds the supported
    limit, only an existing coverage comment can be updated to unknown; otherwise
@@ -95,6 +97,8 @@ node eng/common/scripts/skill-eval-coverage/check.ts --all --json
 head tree using a three-dot Git diff and needs the base's history available locally;
 missing history is an error. Neither command posts a comment. The Node tests use
 temporary Git repositories and fully fake API transport; they make no live writes.
+Reporter unit tests isolate Actions reporting variables so synthetic scenarios
+cannot add annotations or fixture reports to the real workflow summary.
 
 Keep the existing local Vally lint step as documented in
 [eng/skill-eval](../../../skill-eval/README.md). The coverage checker does not

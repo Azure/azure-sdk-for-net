@@ -227,7 +227,8 @@ export async function reportCompletedRun(
   catch { console.warn("Coverage could not be determined; the PR comment will not claim a pass."); }
   const sourceUrl = `${serverUrl}/${repo}/blob/${run.head_sha}`;
   const runUrl = `${serverUrl}/${repo}/actions/runs/${run.id}/attempts/${run.run_attempt}`;
-  const body = renderReport(report, { config, sourceUrl, runUrl });
+  const body = renderReport(report, { config, sourceUrl, runUrl,
+    build: { id: run.id, attempt: run.run_attempt, result: run.conclusion, headSha: run.head_sha } });
   writeSummary(report, body);
   // Check again after all reads: an old run cannot overwrite a comment for a newer PR head.
   const current = await pull(api, repo, pr.number);

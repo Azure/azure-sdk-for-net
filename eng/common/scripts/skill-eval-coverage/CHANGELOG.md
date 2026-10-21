@@ -11,3 +11,6 @@
 - Reject collector-incompatible whitespace paths before counting Eval coverage.
 - Require confirmed PR relevance before creating a comment; unknown scope can
   update an existing coverage comment but cannot create a new one.
+- Isolate reporter unit tests from Actions annotations and the real job summary.
+- Include the coverage/lint build result, attempt and skill revision in PR comments,
+  separately from the coverage outcome and historical dashboard results.
