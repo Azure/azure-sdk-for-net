@@ -39,6 +39,15 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)coordinat'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:architectur)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:architectur))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:coordinat)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:coordinat))'
 
   - name: allow-approved-management-major-release
     prompt: >-
@@ -54,7 +63,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: management-patch-wrapper-needs-patch-name
     prompt: >-
@@ -74,7 +83,10 @@ stimuli:
           pattern: 'VirtualMachine(?:Update)?Patch'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:VirtualMachine(?:Update)?Patch)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:VirtualMachine(?:Update)?Patch))'
 
   - name: apply-management-body-names-per-library-in-mixed-pr
     prompt: >-
@@ -92,7 +104,7 @@ stimuli:
           disallowed: ["azure-sdk-mgmt-pr-review", "mpg-migration-pr-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: preserve-resource-data-request-model-role
     prompt: >-
@@ -108,7 +120,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: do-not-rename-reusable-domain-model-by-http-verb
     prompt: >-
@@ -124,7 +136,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: numeric-duration-unit-rule-also-applies-to-data-plane
     prompt: >-
@@ -144,6 +156,15 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)name|naming|rename'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:millisecond)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:millisecond))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:name|naming|rename)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:name|naming|rename))'
 
   - name: no-unit-suffix-for-timespan-or-selectable-units
     prompt: >-
@@ -159,7 +180,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: use-guid-for-contractually-guaranteed-uuid
     prompt: >-
@@ -175,6 +196,12 @@ stimuli:
       - type: output-contains
         config:
           substring: "Guid"
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Guid)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Guid))'
 
   - name: semantic-arm-types-also-apply-to-data-plane
     prompt: >-
@@ -201,6 +228,21 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)(type|struct|abstraction|use|prefer).*ETag|ETag.*(type|struct|abstraction)'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ResourceIdentifier)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ResourceIdentifier))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:\bResourceType\b)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:\bResourceType\b))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:AzureLocation)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:AzureLocation))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ETag)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ETag))'
 
   - name: do-not-infer-semantic-types-from-property-names
     prompt: >-
@@ -217,7 +259,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: do-not-coerce-calendar-duration-to-timespan
     prompt: >-
@@ -233,7 +275,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: allow-id-vm-and-a-singular-flags-name
     prompt: >-
@@ -249,7 +291,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: power-of-two-values-do-not-establish-flags-semantics
     prompt: >-
@@ -268,6 +310,15 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)singular|plural'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:StorageAccessMode)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:StorageAccessMode))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:singular|plural)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:singular|plural))'
 
   - name: retain-resource-when-it-is-part-of-the-domain
     prompt: >-
@@ -283,7 +334,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: prefer-targetable-typespec-customization-in-data-plane
     prompt: >-
@@ -303,6 +354,15 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)csharp|C#.*scop|scop.*C#'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:client\.tsp)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:client\.tsp))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:C#)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:C#))'
 
   - name: allow-csharp-customization-for-untargetable-symbol
     prompt: >-
@@ -318,7 +378,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: arm-common-type-redefinition-is-flagged
     prompt: >-
@@ -337,7 +397,10 @@ stimuli:
           pattern: '(?i)SystemData'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)SystemData[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*SystemData'
 
   - name: pre-existing-arm-common-type-redefinition-out-of-scope
     prompt: >-
@@ -354,7 +417,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: checknameavailability-naming-pattern-enforced
     prompt: >-
@@ -373,7 +436,10 @@ stimuli:
           pattern: '(?i)NameAvailability'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:NameAvailability)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:NameAvailability))'
 
   - name: definition-and-operation-suffix-are-reserved
     prompt: >-
@@ -395,7 +461,13 @@ stimuli:
           pattern: '(?i)Operation'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Definition)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Definition))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Operation)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Operation))'
 
   - name: data-and-collection-suffix-reserved-for-resource-trio
     prompt: >-
@@ -413,7 +485,10 @@ stimuli:
           pattern: '(?i)DiagnosticsSettingsData'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:DiagnosticsSettingsData)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:DiagnosticsSettingsData))'
 
   - name: domain-collection-exception-is-not-flagged
     prompt: >-
@@ -429,7 +504,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: new-listoperations-method-is-flagged
     prompt: >-
@@ -448,7 +523,10 @@ stimuli:
           pattern: '(?i)ListOperations'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ListOperations)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ListOperations))'
 
   - name: pre-existing-listoperations-method-out-of-scope
     prompt: >-
@@ -464,7 +542,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: new-put-patch-body-must-be-required
     prompt: >-
@@ -483,7 +561,10 @@ stimuli:
           pattern: '(?i)required'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:required)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:required))'
 
   - name: existing-shipped-optional-body-not-retrofitted
     prompt: >-
@@ -500,7 +581,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: new-discriminated-hierarchy-base-must-be-abstract
     prompt: >-
@@ -519,7 +600,10 @@ stimuli:
           pattern: '(?i)abstract'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:abstract)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:abstract))'
 
   - name: existing-concrete-discriminator-base-not-retroactively-flagged
     prompt: >-
@@ -536,7 +620,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: waituntil-first-parameter-lro-is-not-flagged
     prompt: >-
@@ -554,4 +638,4 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'

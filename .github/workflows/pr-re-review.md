@@ -3,6 +3,10 @@ run-name: "Re-review PR #${{ github.event.pull_request.number }} at ${{ github.e
 on:
   pull_request:
     types: [synchronize]
+  # GitHub Apps aren't repo collaborators, so they report permission "none" and fail the
+  # default [admin, maintainer, write] role check even though they're trusted automation —
+  # e.g. azure-sdk-automation[bot] pushing a synchronize commit to a PR branch.
+  bots: ["azure-sdk", "azure-sdk-automation[bot]"]
 if: github.event.pull_request.draft == false
 description: "Verify prior review threads and catch missed issues after each new commit, using the shared code-review rules"
 imports:

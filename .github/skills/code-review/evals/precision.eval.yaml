@@ -34,6 +34,12 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)IndexOutOfRangeException|ArgumentOutOfRangeException|one past'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:IndexOutOfRangeException|ArgumentOutOfRangeException|one past)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:IndexOutOfRangeException|ArgumentOutOfRangeException|one past))'
 
   - name: report-test-project-suppression
     prompt: >-
@@ -50,6 +56,15 @@ stimuli:
       - type: output-contains
         config:
           substring: "suppression"
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:CA2000)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:CA2000))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:suppression)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:suppression))'
 
   - name: allow-prerelease-dependency-in-prerelease-library
     prompt: >-
@@ -63,7 +78,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -83,7 +98,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: same-type-different-concept-parameters-are-not-flagged
     prompt: >-
@@ -100,7 +115,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
 
   - name: flag-missing-cancellationtoken-on-scm-stack-convenience-method
     prompt: >-
@@ -116,6 +131,12 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)CancellationToken'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:CancellationToken)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:CancellationToken))'
 
   - name: ignore-unrelated-unchanged-code
     prompt: >-
@@ -129,7 +150,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -146,7 +167,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -166,6 +187,15 @@ stimuli:
       - type: output-contains
         config:
           substring: "suppression"
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:DisableEnhancedAnalysis)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:DisableEnhancedAnalysis))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:suppression)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:suppression))'
 
   - name: report-missing-client-settings-schema
     prompt: >-
@@ -180,6 +210,12 @@ stimuli:
       - type: output-contains
         config:
           substring: "ConfigurationSchema.json"
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ConfigurationSchema\.json)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ConfigurationSchema\.json))'
 
   - name: allow-preview-only-member-rename-on-ga-type
     prompt: >-
@@ -197,7 +233,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -239,7 +275,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -260,7 +296,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -281,7 +317,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -302,7 +338,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -327,7 +363,13 @@ stimuli:
           pattern: '(?i)compatib|break|existing'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:Endpoint)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:Endpoint))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:compatib|break|existing)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:compatib|break|existing))'
 
   - name: review-never-shipped-api-for-independent-design-violations
     prompt: >-
@@ -346,7 +388,10 @@ stimuli:
           pattern: '(?i)virtual|mock'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:virtual|mock)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:virtual|mock))'
 
   - name: detect-additive-change-that-breaks-ga-callers
     prompt: >-
@@ -366,7 +411,10 @@ stimuli:
           pattern: '(?i)ambig|overload resolution'
       - type: output-not-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ambig|overload resolution)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ambig|overload resolution))'
 
   - name: allow-experimental-api-change-in-ga-package
     prompt: >-
@@ -384,7 +432,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
@@ -403,7 +451,7 @@ stimuli:
           required: ["code-review"]
       - type: output-matches
         config:
-          pattern: '(?m)^No findings\.$'
+          pattern: '^\s*No findings\.\s*$'
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'

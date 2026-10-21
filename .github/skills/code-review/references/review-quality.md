@@ -116,8 +116,11 @@ listed here.
 - Properties for logical data, methods for actions. Properties must not throw for simple
   gets, must not be order-dependent, and must be cheap
 - No `ref`/`out` in public APIs unless implementing `Try*`
-- Do not overload on parameters that differ only by optionality; do not add default parameter
-  values to a GA-shipped signature
+- Do not add a new overload that differs from an existing one only by optionality — it's an
+  ambiguous, confusing overload set for callers. Giving an already-shipped parameter a default
+  value is not this (it's an additive change, not a new overload) and is not a finding by
+  itself; flag it only under H1, and only with concrete evidence that it breaks overload
+  resolution at an existing call site
 - Validate all public/protected inputs and throw the right exception:
   `ArgumentNullException` / `ArgumentException` / `ArgumentOutOfRangeException` with the
   correct `paramName`
