@@ -71,7 +71,7 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
-            ResourceName = resourceName.ToIdentifierName();
+            ResourceName = ResolveResourceName(resourceName, resourceMetadata);
             var resourceTypeName = ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
             TagPatchHookMethodName = ManagementClientGenerator.Instance.TagPatchHookCustomizationResolver.GetMethodName(resourceTypeName);
 
@@ -102,6 +102,35 @@ namespace Azure.Generator.Management.Providers
         private readonly CSharpType _originalResourceDataType;
         internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
+        internal bool UsesDerivedResourceName { get; private set; }
+        internal string PluralResourceName => ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false, preserveCasing: UsesDerivedResourceName);
+
+        private string ResolveResourceName(string resourceName, ArmResourceMetadata metadata)
+        {
+            var name = resourceName.ToIdentifierName();
+            if (metadata.ResourceNameIsExplicit)
+            {
+                return name;
+            }
+
+            var generator = ManagementClientGenerator.Instance;
+            var ns = generator.TypeFactory.PrimaryNamespace;
+            var resourceTypeName = name.EndsWith("Resource") ? name : $"{name}Resource";
+            // Resolve identities before normalization so customizations and published names remain discoverable.
+            if (HasPreservedIdentity(resourceTypeName) ||
+                (metadata.SingletonResourceName is null && HasPreservedIdentity($"{name}Collection")))
+            {
+                return name;
+            }
+
+            UsesDerivedResourceName = true;
+            var normalizedTypeName = NormalizeTypeNameForNewContract(resourceTypeName);
+            return name.EndsWith("Resource") ? normalizedTypeName : normalizedTypeName[..^"Resource".Length];
+
+            bool HasPreservedIdentity(string typeName)
+                => generator.SourceInputModel.FindForTypeInCurrentCompilation(ns, typeName, null, false) is not null ||
+                   generator.SourceInputModel.FindForTypeInLastContract(ns, typeName, null) is not null;
+        }
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
@@ -215,11 +244,11 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var methodName = ResourceName.GetCollectionMethodName();
+                var methodName = ResourceName.GetCollectionMethodName(preserveCasing: UsesDerivedResourceName);
                 // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
                 // are treated by Humanizer as already plural (from Latin), and we want to preserve
                 // them unchanged rather than incorrectly pluralizing them.
-                var pluralOfResourceName = ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
+                var pluralOfResourceName = PluralResourceName;
                 return new MethodSignature(
                     methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",

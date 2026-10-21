@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -91,7 +91,7 @@ namespace Azure.Generator.Management.Tests.Common
                 clientMethods.Add(checkExistenceMethod);
             }
 
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, resourceName);
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", singletonResourceName, ResourceScope.ResourceGroup, resourceName, resourceNameIsExplicit);
 
             var client = InputFactory.Client(
                 TestClientName,
@@ -828,7 +828,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// Child:  .../parents/{parentName}/nestedTypes/{nestedTypeName}/children/{childName}
         /// The child has one extra path parameter (nestedTypeName) between parent and child.
         /// </summary>
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource()
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource(string childResourceName = "ChildType", bool? resourceNameIsExplicit = null)
         {
             const string ParentClientName = "ParentClient";
             const string ChildClientName = "ChildClient";
@@ -924,7 +924,7 @@ namespace Azure.Generator.Management.Tests.Common
                     new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
-                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, "ChildType", parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup))
+                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, childResourceName, parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
 
             var parentClient = InputFactory.Client(
@@ -1476,10 +1476,10 @@ namespace Azure.Generator.Management.Tests.Common
                     .. hasName ? new[] { InputFactory.MethodParameter("resourceName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true) } : []];
         }
 
-        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName, bool? resourceNameIsExplicit = null)
         {
             return BuildArmProviderSchemaMultiResource([
-                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope))
+                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
         }
 
@@ -1511,6 +1511,10 @@ namespace Azure.Generator.Management.Tests.Common
                 if (r.ParentResourceId is not null)
                 {
                     schema["parentResourceId"] = r.ParentResourceId;
+                }
+                if (r.ResourceNameIsExplicit is not null)
+                {
+                    schema["resourceNameIsExplicit"] = r.ResourceNameIsExplicit;
                 }
                 return schema;
             }).ToArray();
@@ -1561,6 +1565,7 @@ namespace Azure.Generator.Management.Tests.Common
             string? ResourceName,
             string? ParentResourceId,
             string ScopeIdPattern,
-            string? ScopeResourceType = null);
+            string? ScopeResourceType = null,
+            bool? ResourceNameIsExplicit = null);
     }
 }

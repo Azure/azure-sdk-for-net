@@ -1,0 +1,218 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Tests.Common;
+using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.Primitives;
+using NUnit.Framework;
+using System.Reflection;
+using Generated = Azure.Generator.MgmtTypeSpec.Tests;
+
+namespace Azure.Generator.Management.Tests.Providers;
+
+internal class ResourceNameTests
+{
+    [TestCase("IpAddress", "IPAddress", "GetIPAddresses")]
+    [TestCase("DbCluster", "DBCluster", "GetDBClusters")]
+    [TestCase("OsImage", "OSImage", "GetOSImages")]
+    [TestCase("Ipv4Address", "IPv4Address", "GetIPv4Addresses")]
+    [TestCase("Ipv6Address", "IPv6Address", "GetIPv6Addresses")]
+    [TestCase("IpAddressIp", "IPAddressIP", "GetIPAddressIPs")]
+    [TestCase("DbClusterDb", "DBClusterDB", "GetDBClusterDBs")]
+    [TestCase("OsImageOs", "OSImageOS", "GetAllOSImageOS")]
+    [TestCase("Ipv4ToIpv4Address", "IPv4ToIPv4Address", "GetIPv4ToIPv4Addresses")]
+    [TestCase("Ipv6ToIpv6Address", "IPv6ToIPv6Address", "GetIPv6ToIPv6Addresses")]
+    [TestCase("IpAddresses", "IPAddresses", "GetAllIPAddresses")]
+    [TestCase("IpAddressResource", "IPAddressResource", "GetIPAddressResources")]
+    [TestCase("ShippingDepot", "ShippingDepot", "GetShippingDepots")]
+    [TestCase("Dbase", "Dbase", "GetDbases")]
+    [TestCase("Oslo", "Oslo", "GetOslos")]
+    [TestCase("Ipam", "Ipam", "GetIpams")]
+    [TestCase("IpDbOsIpv4Ipv6", "IPDBOSIPv4IPv6", "GetIPDBOSIPv4IPv6s")]
+    [TestCase("IPV4Address", "IPV4Address", "GetIPV4Addresses")]
+    [TestCase("IPV6Address", "IPV6Address", "GetIPV6Addresses")]
+    public void DerivedNamesUseSharedAcronymRules(string input, string expected, string getter)
+    {
+        var resource = CreateResource(input, false);
+        Assert.That(resource.ResourceName, Is.EqualTo(expected));
+        Assert.That(resource.Name, Is.EqualTo(expected.EndsWith("Resource") ? expected : $"{expected}Resource"));
+        Assert.That(resource.RelativeFilePath, Does.EndWith($"{resource.Name}.cs"));
+        Assert.That(resource.ResourceCollection!.Name, Is.EqualTo($"{expected}Collection"));
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+        Assert.That(resource.FactoryMethodSignature.ReturnType, Is.EqualTo(resource.ResourceCollection.Type));
+        Assert.That(resource.ResourceTypeValue, Is.EqualTo("Microsoft.Tests/tests"));
+        Assert.That(resource.ResourceIdPattern.SerializedPath, Does.EndWith("/providers/Microsoft.Tests/tests/{testName}"));
+
+        var rendered = new TypeProviderWriter(resource).Write().Content;
+        Assert.That(rendered, Does.Contain($"partial class {resource.Name}"));
+        Assert.That(rendered, Does.Contain($"internal {resource.Name}("));
+    }
+
+    [TestCase("Os", "OS", "GetAllOS")]
+    [TestCase("IP", "IP", "GetIPs")]
+    [TestCase("DB", "DB", "GetDBs")]
+    public void TerminalAcronymsKeepCollectionAccessorCasing(string input, string expected, string getter)
+    {
+        var resource = CreateResource(input, false);
+        Assert.That(resource.ResourceName, Is.EqualTo(expected));
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+        Assert.That(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.List, resource.ResourceName, false,
+            resource.PluralResourceName), Is.EqualTo($"Get{resource.PluralResourceName}"));
+    }
+
+    [Test]
+    public void PublishedTerminalAcronymKeepsLegacyAccessor()
+    {
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: "OS", resourceNameIsExplicit: false);
+        var compilation = Helpers.BuildCompilation([("Contract.cs", "namespace Samples { public class OSResource { } }")]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
+            lastContractCompilation: () => compilation);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo("GetOs"));
+    }
+
+    [TestCase("IpAddress")]
+    [TestCase("DbCluster")]
+    [TestCase("OsImage")]
+    [TestCase("Ipv4Address")]
+    [TestCase("Ipv6Address")]
+    [TestCase("IPV4Address")]
+    [TestCase("IPV6Address")]
+    public void ExplicitAndLegacyNamesAreNotNormalized(string name)
+    {
+        Assert.That(CreateResource(name, true).ResourceName, Is.EqualTo(name));
+        Assert.That(CreateResource(name, null).ResourceName, Is.EqualTo(name));
+    }
+
+    [TestCase("IpAddress", "IPAddress")]
+    [TestCase("DbCluster", "DBCluster")]
+    [TestCase("OsImage", "OSImage")]
+    [TestCase("Ipv4Address", "IPv4Address")]
+    [TestCase("Ipv6Address", "IPv6Address")]
+    public void SingletonAndExtensionGettersUseFinalStem(string input, string expected)
+    {
+        var resource = CreateResource(input, false, singleton: true);
+        Assert.That(resource.ResourceCollection, Is.Null);
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo($"Get{expected}"));
+        Assert.That(resource.FactoryMethodSignature.ReturnType, Is.EqualTo(resource.Type));
+        foreach (var kind in new[] { ResourceOperationKind.Read, ResourceOperationKind.Create, ResourceOperationKind.Update, ResourceOperationKind.Delete, ResourceOperationKind.List })
+        {
+            var prefix = kind switch
+            {
+                ResourceOperationKind.Create => "CreateOrUpdate",
+                ResourceOperationKind.Update => "Update",
+                ResourceOperationKind.Delete => "Delete",
+                _ => "Get"
+            };
+            var stem = kind == ResourceOperationKind.List ? $"{expected}s" : expected;
+            // Address pluralizes to Addresses rather than Addresss.
+            if (kind == ResourceOperationKind.List && expected.EndsWith("Address"))
+            {
+                stem = $"{expected}es";
+            }
+            Assert.That(ResourceHelpers.GetExtensionOperationMethodName(kind, resource.ResourceName, false), Is.EqualTo($"{prefix}{stem}"));
+            Assert.That(ResourceHelpers.GetExtensionOperationMethodName(kind, resource.ResourceName, true), Is.EqualTo($"{prefix}{stem}Async"));
+        }
+    }
+
+    [TestCase("IpAddress", "GetIPAddresses")]
+    [TestCase("DbCluster", "GetDBClusters")]
+    [TestCase("OsImage", "GetOSImages")]
+    [TestCase("Ipv4Address", "GetIPv4Addresses")]
+    [TestCase("Ipv6Address", "GetIPv6Addresses")]
+    public void ChildGettersUseFinalStem(string input, string getter)
+    {
+        var (parent, child, models) = InputResourceData.ClientWithNestedChildResource(input, false);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parent, child]);
+        var parentResource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>()
+            .Single(r => r.ResourceName == "ParentType");
+        var method = parentResource.Methods.Single(m => m.Signature.Name == getter);
+        Assert.That(method.Signature.ReturnType, Is.EqualTo(parentResource.ChildResources.Single().ResourceCollection!.Type));
+    }
+
+    private static IEnumerable<TestCaseData> PreservedIdentities()
+    {
+        foreach (var name in new[] { "IpAddress", "DbCluster", "OsImage", "Ipv4Address", "Ipv6Address", "IPV4Address", "IPV6Address" })
+        {
+            foreach (var suffix in new[] { "Resource", "Collection" })
+            {
+                foreach (var lastContract in new[] { false, true })
+                {
+                    yield return new TestCaseData(name, suffix, lastContract);
+                }
+            }
+        }
+    }
+
+    [TestCaseSource(nameof(PreservedIdentities))]
+    public void CustomAndPublishedIdentitiesPreserveStem(string name, string suffix, bool lastContract)
+    {
+        var typeName = $"{name}{suffix}";
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: name, resourceNameIsExplicit: false);
+        var compilation = Helpers.BuildCompilation([("Preserved.cs", $"namespace Samples {{ public partial class {typeName} {{ }} }}")]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(
+            inputModels: () => models,
+            clients: () => [client],
+            customizationCompilation: lastContract ? null : () => compilation,
+            lastContractCompilation: lastContract ? () => compilation : null);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+        Assert.That(resource.ResourceName, Is.EqualTo(name));
+        Assert.That(resource.Name, Is.EqualTo($"{name}Resource"));
+        Assert.That(resource.ResourceCollection!.Name, Is.EqualTo($"{name}Collection"));
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(name.GetCollectionMethodName()));
+        Assert.That(lastContract ? (typeName.EndsWith("Resource") ? resource.LastContractView : resource.ResourceCollection.LastContractView)
+            : (typeName.EndsWith("Resource") ? resource.CustomCodeView : resource.ResourceCollection.CustomCodeView), Is.Not.Null);
+    }
+
+    [Test]
+    public void GeneratedAcronymResourceUsesConsistentTypesAndAccessors()
+    {
+        var resource = typeof(Generated.IPAddressResource);
+        var collection = typeof(Generated.IPAddressCollection);
+        Assert.That(resource.GetProperty("Data")!.PropertyType, Is.EqualTo(typeof(Generated.IPAddressData)));
+        Assert.That(resource.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+            .Any(c => c.GetParameters().Any(p => p.ParameterType == typeof(Generated.IPAddressData))), Is.True);
+        Assert.That(collection.GetMethod("GetAll")!.ReturnType, Is.EqualTo(typeof(Pageable<Generated.IPAddressResource>)));
+        Assert.That(typeof(Generated.AzureGeneratorMgmtTypeSpecTestsExtensions).GetMethod("GetIPAddresses")!.ReturnType, Is.EqualTo(collection));
+        Assert.That(typeof(Generated.AzureGeneratorMgmtTypeSpecTestsExtensions).GetMethod("GetIPAddressResource")!.ReturnType, Is.EqualTo(resource));
+        Assert.That(resource.Assembly.GetType("Azure.Generator.MgmtTypeSpec.Tests.IpAddressResource"), Is.Null);
+        Assert.That(Generated.IPAddressResource.ResourceType.ToString(), Is.EqualTo("MgmtTypeSpec/ipAddresses"));
+    }
+
+    [Test]
+    public void CodeGenTypeIdentityIsFoundBeforeNormalization()
+    {
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: "IpAddress", resourceNameIsExplicit: false);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(
+            inputModels: () => models,
+            clients: () => [client],
+            customizationSources: ["""
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    internal class CodeGenTypeAttribute : System.Attribute
+                    {
+                        public CodeGenTypeAttribute(string originalName) { }
+                    }
+                }
+                namespace Samples
+                {
+                    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("IpAddressResource")]
+                    public partial class CustomIPResource { }
+                }
+                """]);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+        Assert.That(resource.ResourceName, Is.EqualTo("IpAddress"));
+        Assert.That(resource.CustomCodeView!.Name, Is.EqualTo("CustomIPResource"));
+    }
+
+    private static ResourceClientProvider CreateResource(string name, bool? isExplicit, bool singleton = false)
+    {
+        var (client, models) = InputResourceData.ClientWithResource(
+            resourceName: name, resourceNameIsExplicit: isExplicit, singletonResourceName: singleton ? "default" : null);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+        return plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+    }
+}
