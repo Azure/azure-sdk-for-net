@@ -74,16 +74,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal async Task InitializeAsync()
         {
-            var destinations = await Task.WhenAll(
-                ResolveDestinationAsync(isEu: false),
-                ResolveDestinationAsync(isEu: true)).ConfigureAwait(false);
-            Publish(destinations[0], destinations[1]);
+            // The collector has no EU deployment. Share its configuration while preserving
+            // the regional envelope keys and the existing regional Breeze fallback.
+            var result = await SdkStatsConfigFetcher.FetchAsync(
+                StatsbeatConstants.SdkStatsConfigUrl_NonEU, _configHandler).ConfigureAwait(false);
+            Publish(ResolveDestination(result, isEu: false), ResolveDestination(result, isEu: true));
         }
 
-        private async Task<Destination?> ResolveDestinationAsync(bool isEu)
+        private static Destination? ResolveDestination(SdkStatsConfigResult result, bool isEu)
         {
-            var configUrl = isEu ? StatsbeatConstants.SdkStatsConfigUrl_EU : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
-            var result = await SdkStatsConfigFetcher.FetchAsync(configUrl, _configHandler).ConfigureAwait(false);
             if (result.Status == SdkStatsConfigStatus.Disabled)
             {
                 return null;

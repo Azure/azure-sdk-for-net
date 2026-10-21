@@ -12,6 +12,7 @@
 
 ### Bugs Fixed
 
+- Microsoft OpenTelemetry SDK statistics use the standard collector endpoint for all customer regions while retaining each item's EU/non-EU SDK statistics instrumentation key and customer key. Non-distro Breeze routing is unchanged.
 - Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
   ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
 

@@ -165,7 +165,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 // The only no-emission case is an explicit remote kill switch
                 // (`enabled: false`). The constructor must NOT throw because that would
                 // break the customer's exporter pin path.
-                var configUrl = GetSdkStatsConfigUrl(connectionStringVars.IngestionEndpoint);
+                var configUrl = StatsbeatConstants.SdkStatsConfigUrl_NonEU;
                 var ingestionEndpoint = connectionStringVars.IngestionEndpoint;
                 _configInitializationTask = Task.Run(() =>
                     InitializeFromConfigAsync(configUrl, ingestionEndpoint, sdkStatsConfigHttpHandler));
@@ -290,9 +290,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         }
 
         /// <summary>
-        /// Returns the SDK statistics instrumentation key for the customer's region. Selected
-        /// with the same rule as <see cref="GetSdkStatsConfigUrl"/>, so an EU customer's
-        /// statistics carry the EU key to the EU host; unknown regions default to non-EU.
+        /// Returns the SDK statistics instrumentation key for the customer's region.
+        /// The distro collector uses one host for both keys; unknown regions default to non-EU.
         /// </summary>
         internal static string GetSdkStatsInstrumentationKey(string ingestionEndpoint)
             => IsEuRegion(ingestionEndpoint)
@@ -432,7 +431,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // Legacy path: maps the customer's ingestion region to the internal Application
             // Insights resource hosting Statsbeat. Returns null for unknown regions so the
             // caller can throw and leave Statsbeat disabled. (The distro path uses
-            // GetSdkStatsConfigUrl + the runtime config endpoint instead of this.)
+            // the runtime collector configuration instead of this.)
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             if (!patternMatch.Success)
             {
@@ -451,15 +450,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
 
             return null;
-        }
-
-        internal static string GetSdkStatsConfigUrl(string ingestionEndpoint)
-        {
-            // Distro path: pick the EU or non-EU configuration endpoint based on the
-            // customer's ingestion region. Unknown regions default to non-EU.
-            return IsEuRegion(ingestionEndpoint)
-                ? StatsbeatConstants.SdkStatsConfigUrl_EU
-                : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
         }
 
         internal static bool IsEuRegion(string ingestionEndpoint)

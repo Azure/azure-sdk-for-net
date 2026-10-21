@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -42,7 +43,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             TransmitterFactory.Instance._transmitters.TryGetValue(connectionString, out var previous);
             _previousTransmitters.Add(connectionString, previous);
-            TransmitterFactory.Instance.Set(connectionString, new MockTransmitter(TelemetryItems));
+            TransmitterFactory.Instance.Set(connectionString,
+                new MockTransmitter(TelemetryItems, ConnectionStringParser.GetValues(connectionString).InstrumentationKey));
         }
 
         public void AddEndpoint(string endpoint)
