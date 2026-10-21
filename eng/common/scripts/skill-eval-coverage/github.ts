@@ -158,10 +158,10 @@ async function getChangedPaths(api: GitHubApi, repo: string, pr: PullRequest): P
     [repositoryPath(file.filename), repositoryPath(file.previous_filename)] : [repositoryPath(file.filename)]);
 }
 
-export function shouldRunLint(paths: string[], config: CoverageConfig): boolean {
-  // Preserve the original workflow's PR path scope, independently of coverage results.
-  return paths.some((file) => file.startsWith(config.skillsRoot + "/") ||
-    file.startsWith("eng/skill-eval/") || file === config.workflow);
+export function shouldRunLint(paths: string[]): boolean {
+  // The original blocking lint scope must not depend on PR-editable coverage configuration.
+  return paths.some((file) => file.startsWith(".github/skills/") ||
+    file.startsWith("eng/skill-eval/") || file === ".github/workflows/skill-eval.yml");
 }
 
 function affectsCoverage(paths: string[], config: CoverageConfig): boolean {
@@ -256,7 +256,7 @@ export async function main(argv: string[]): Promise<void> {
     if (pr.head.sha !== event.pull_request?.head?.sha || pr.state !== "open") return;
     const changedPaths = await getChangedPaths(api, repo, pr);
     if (process.env.GITHUB_OUTPUT) {
-      fs.appendFileSync(process.env.GITHUB_OUTPUT, `run_lint=${shouldRunLint(changedPaths, config)}\n`);
+      fs.appendFileSync(process.env.GITHUB_OUTPUT, `run_lint=${shouldRunLint(changedPaths)}\n`);
     }
     const report = await checkPullRequest(api, repo, pr, config, changedPaths);
     const current = await pull(api, repo, pr.number);
