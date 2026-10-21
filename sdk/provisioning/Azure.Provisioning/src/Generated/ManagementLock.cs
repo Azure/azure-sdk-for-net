@@ -108,7 +108,10 @@ public partial class ManagementLock : ProvisionableResource
         _owners = DefineListProperty<ManagementLockOwner>("Owners", ["properties", "owners"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported ManagementLock resource versions.

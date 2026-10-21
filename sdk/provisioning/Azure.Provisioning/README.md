@@ -187,6 +187,40 @@ ProvisioningOutput primaryBlobEndpoint = new(nameof(primaryBlobEndpoint), typeof
 };
 ```
 
+### Resource-scoped management locks
+
+Set `ManagementLock.Scope` to a resource to protect that resource rather than the
+deployment scope. Add both the target resource and the lock to the same
+infrastructure module:
+
+```C# Snippet:ProvisioningManagementLock
+Infrastructure infra = new();
+StorageAccount storage = new("storage", "2023-05-01")
+{
+    Name = "lockedstorage",
+    Location = AzureLocation.EastUS,
+    Kind = StorageKind.StorageV2,
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+infra.Add(storage);
+
+ManagementLock storageLock = new("storageLock")
+{
+    Name = "protect-storage",
+    Scope = storage,
+    Level = ManagementLockLevel.CanNotDelete,
+    Notes = "Protect the storage account from accidental deletion."
+};
+infra.Add(storageLock);
+```
+
+The lock emits `scope: storage`, which also establishes an implicit deployment
+dependency. An explicit `DependsOn` is not needed.
+
+Leaving `Scope` unset, or assigning `null` to clear it, uses the deployment scope.
+In a resource-group deployment, this applies the lock to the whole resource group.
+Adding a resource to `DependsOn` alone does not scope the lock to that resource.
+
 ### `ToBicepExpression` Method
 
 The `ToBicepExpression()` extension method allows you to create references to resource properties and values for use in Bicep expressions. This is essential when you need to reference one resource's properties in another resource or build dynamic configuration strings.
@@ -476,4 +510,3 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.AppContainers;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ContainerRegistry;
@@ -304,6 +305,155 @@ internal class SampleTests
             output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = cae.id
 
             output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = cae.properties.defaultDomain
+            """);
+    }
+
+    [Test]
+    public async Task ManagementLockResourceScope()
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    #region Snippet:ProvisioningManagementLock
+                    Infrastructure infra = new();
+                    StorageAccount storage = new("storage", "2023-05-01")
+                    {
+                        Name = "lockedstorage",
+                        Location = AzureLocation.EastUS,
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+                    };
+                    infra.Add(storage);
+
+                    ManagementLock storageLock = new("storageLock")
+                    {
+                        Name = "protect-storage",
+                        Scope = storage,
+                        Level = ManagementLockLevel.CanNotDelete,
+                        Notes = "Protect the storage account from accidental deletion."
+                    };
+                    infra.Add(storageLock);
+                    #endregion
+
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+              name: 'lockedstorage'
+              location: 'eastus'
+              kind: 'StorageV2'
+              sku: {
+                name: 'Standard_LRS'
+              }
+            }
+
+            resource storageLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-storage'
+              scope: storage
+              properties: {
+                level: 'CanNotDelete'
+                notes: 'Protect the storage account from accidental deletion.'
+              }
+            }
+            """);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ManagementLockExistingResourceScope(bool explicitDependency)
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    UserAssignedIdentity identity = UserAssignedIdentity.FromExisting("identity", "2023-01-31");
+                    identity.Name = "existing-identity";
+                    infra.Add(identity);
+
+                    UserAssignedIdentity previous = new("previous");
+                    ManagementLock identityLock = new("identityLock")
+                    {
+                        Name = "protect-identity",
+                        Level = ManagementLockLevel.CanNotDelete,
+                        Scope = previous
+                    };
+                    identityLock.Scope = identity;
+                    Assert.That(identityLock.Scope, Is.SameAs(identity));
+                    identityLock.Scope = null;
+                    Assert.That(identityLock.Scope, Is.Null);
+                    identityLock.Scope = identity;
+                    if (explicitDependency)
+                    {
+                        identityLock.DependsOn.Add(identity);
+                    }
+                    infra.Add(identityLock);
+                    return infra;
+                });
+
+        string dependencies = explicitDependency ? "\n  dependsOn: [\n    identity\n  ]" : "";
+        test.Compare(
+            $$"""
+            resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+              name: 'existing-identity'
+            }
+
+            resource identityLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-identity'
+              scope: identity
+              properties: {
+                level: 'CanNotDelete'
+              }{{dependencies}}
+            }
+            """);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ManagementLockWithoutResourceScope(bool clearScope)
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    UserAssignedIdentity identity = UserAssignedIdentity.FromExisting("identity", "2023-01-31");
+                    identity.Name = "existing-identity";
+                    infra.Add(identity);
+
+                    ManagementLock identityLock = new("identityLock")
+                    {
+                        Name = "protect-deployment",
+                        Level = ManagementLockLevel.ReadOnly
+                    };
+                    if (clearScope)
+                    {
+                        identityLock.Scope = identity;
+                        identityLock.Scope = null;
+                    }
+                    identityLock.DependsOn.Add(identity);
+                    infra.Add(identityLock);
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+              name: 'existing-identity'
+            }
+
+            resource identityLock 'Microsoft.Authorization/locks@2020-05-01' = {
+              name: 'protect-deployment'
+              properties: {
+                level: 'ReadOnly'
+              }
+              dependsOn: [
+                identity
+              ]
+            }
             """);
     }
 

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added a typed `ManagementLock.Scope` property to apply a lock to an individual resource. Leaving it unset or assigning `null` preserves deployment-scope locking. ([#63624](https://github.com/Azure/azure-sdk-for-net/issues/63624))
+
 ### Breaking Changes
 
 ### Bugs Fixed

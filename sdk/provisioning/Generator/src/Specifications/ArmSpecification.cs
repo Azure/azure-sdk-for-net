@@ -3,8 +3,6 @@
 
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -47,6 +45,7 @@ public class ArmSpecification : Specification
         CustomizeResource<ResourceGroupResource>(r => r.FromExpression = true);
         CustomizeResource<SubscriptionResource>(r => r.FromExpression = true);
         CustomizeResource<TenantResource>(r => r.FromExpression = true);
+        CustomizeResource<ManagementLockResource>(r => r.GeneratePartialPropertyDefinition = true);
         CustomizeProperty<ManagedServiceIdentity>("PrincipalId", p => p.Path = ["principalId"]);
         CustomizeProperty<ManagedServiceIdentity>("TenantId", p => p.Path = ["tenantId"]);
         CustomizeProperty<ManagedServiceIdentity>("ManagedServiceIdentityType", p => p.Path = ["type"]);
