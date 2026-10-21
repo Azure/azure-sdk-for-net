@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -111,6 +112,34 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
                 Properties.RequestTimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> Array of references to application gateway authentication certificates. </summary>
+        [WirePath("properties.authenticationCertificates")]
+        public IList<WritableSubResource> AuthenticationCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.AuthenticationCertificates;
+            }
+        }
+
+        /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IList<WritableSubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
             }
         }
 

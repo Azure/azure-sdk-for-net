@@ -485,6 +485,7 @@
       "$id": "57",
       "kind": "model",
       "name": "InnerModel",
+      "apiVersions": [],
       "namespace": "Type.Array",
       "crossLanguageDefinitionId": "Type.Array.InnerModel",
       "usage": "Input,Output,Json",
@@ -501,6 +502,7 @@
           "$id": "58",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Required string property",
           "type": {
@@ -528,6 +530,7 @@
           "$id": "60",
           "kind": "property",
           "name": "children",
+          "apiVersions": [],
           "serializedName": "children",
           "type": {
             "$id": "61",
@@ -622,7 +625,6 @@
                 "$id": "68",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Int32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -730,7 +732,6 @@
                 "$id": "74",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Int32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -917,7 +918,6 @@
                 "$id": "84",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Int64Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1025,7 +1025,6 @@
                 "$id": "90",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Int64Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1212,7 +1211,6 @@
                 "$id": "100",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BooleanValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1320,7 +1318,6 @@
                 "$id": "106",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "BooleanValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1507,7 +1504,6 @@
                 "$id": "116",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1615,7 +1611,6 @@
                 "$id": "122",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "StringValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1802,7 +1797,6 @@
                 "$id": "132",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Float32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1910,7 +1904,6 @@
                 "$id": "138",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Float32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2097,7 +2090,6 @@
                 "$id": "148",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DatetimeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2213,7 +2205,6 @@
                 "$id": "155",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "DatetimeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2400,7 +2391,6 @@
                 "$id": "165",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DurationValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2516,7 +2506,6 @@
                 "$id": "172",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "DurationValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2703,7 +2692,6 @@
                 "$id": "182",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "UnknownValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2811,7 +2799,6 @@
                 "$id": "188",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "UnknownValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2998,7 +2985,6 @@
                 "$id": "198",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3095,7 +3081,6 @@
                 "$id": "202",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3282,7 +3267,6 @@
                 "$id": "212",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NullableFloatValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3395,7 +3379,6 @@
                 "$id": "219",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "NullableFloatValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3582,7 +3565,6 @@
                 "$id": "229",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NullableInt32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3695,7 +3677,6 @@
                 "$id": "236",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "NullableInt32Value",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3882,7 +3863,6 @@
                 "$id": "246",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NullableBooleanValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3995,7 +3975,6 @@
                 "$id": "253",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "NullableBooleanValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4182,7 +4161,6 @@
                 "$id": "263",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NullableStringValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4295,7 +4273,6 @@
                 "$id": "270",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "NullableStringValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4482,7 +4459,6 @@
                 "$id": "280",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NullableModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4591,7 +4567,6 @@
                 "$id": "286",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "NullableModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {

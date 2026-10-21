@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
         }
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects.Agents
             IList<ExportedDataTypes> exportedDataTypes = default;
             TelemetryEndpointAuthentication authentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string endpoint = default;
+            Uri endpoint = default;
             TelemetryTransportProtocol protocol = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = prop.Value.GetString();
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))
@@ -151,12 +151,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OtlpTelemetryEndpoint(
                 kind,
-                exportedDataTypes,
+                exportedDataTypes ?? new ChangeTrackingList<ExportedDataTypes>(),
                 authentication,
                 additionalBinaryDataProperties,
                 endpoint,

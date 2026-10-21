@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, RequestContext context)
+        internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (startOn != null)
+            if (startsOn != null)
             {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startOn, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (endOn != null)
+            if (endsOn != null)
             {
-                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endOn, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (timeGrain != null)
             {

@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningServicePrincipalDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret, _clientSecretIsDefined))
             {
-                writer.WritePropertyName("clientSecret"u8);
-                writer.WriteStringValue(ClientSecret);
+                if (ClientSecret != null)
+                {
+                    writer.WritePropertyName("clientSecret"u8);
+                    writer.WriteStringValue(ClientSecret);
+                }
+                else
+                {
+                    writer.WriteNull("clientSecret"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool clientSecretIsDefined = false;
             string clientSecret = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("clientSecret"u8))
                 {
+                    clientSecretIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientSecret = null;
@@ -129,10 +138,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningServicePrincipalDatastoreSecrets(secretsType, additionalBinaryDataProperties, clientSecret);
+            return new MachineLearningServicePrincipalDatastoreSecrets(secretsType, additionalBinaryDataProperties, clientSecret)
+            {
+                _clientSecretIsDefined = clientSecretIsDefined
+            };
         }
     }
 }

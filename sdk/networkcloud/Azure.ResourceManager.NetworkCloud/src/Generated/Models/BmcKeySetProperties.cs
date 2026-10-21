@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetProperties"/>. </summary>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
         /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureGroupId"/> or <paramref name="userList"/> is null. </exception>
-        public BmcKeySetProperties(string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
+        public BmcKeySetProperties(string azureGroupId, DateTimeOffset expiresOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
         {
             Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
             Argument.AssertNotNull(userList, nameof(userList));
 
             AzureGroupId = azureGroupId;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             PrivilegeLevel = privilegeLevel;
             UserList = userList.ToList();
             UserListStatus = new ChangeTrackingList<KeySetUserStatus>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetProperties"/>. </summary>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
         /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="detailedStatus"> The more detailed status of the key set. </param>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="userListStatus"> The status evaluation of each user. </param>
         /// <param name="provisioningState"> The provisioning state of the baseboard management controller key set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BmcKeySetProperties(string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IList<KeySetUser> userList, BmcKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset? lastValidatedOn, IReadOnlyList<KeySetUserStatus> userListStatus, BmcKeySetProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BmcKeySetProperties(string azureGroupId, DateTimeOffset expiresOn, BmcKeySetPrivilegeLevel privilegeLevel, IList<KeySetUser> userList, BmcKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset? lastValidatedOn, IReadOnlyList<KeySetUserStatus> userListStatus, BmcKeySetProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureGroupId = azureGroupId;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             PrivilegeLevel = privilegeLevel;
             UserList = userList;
             DetailedStatus = detailedStatus;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string AzureGroupId { get; set; }
 
         /// <summary> The date and time after which the users in this key set will be removed from the baseboard management controllers. </summary>
-        public DateTimeOffset ExpireOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> The access level allowed for the users in this key set. </summary>
         public BmcKeySetPrivilegeLevel PrivilegeLevel { get; set; }

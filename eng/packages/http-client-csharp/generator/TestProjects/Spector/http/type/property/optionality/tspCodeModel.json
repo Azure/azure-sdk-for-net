@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "StringLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "2",
@@ -46,6 +47,7 @@
       "$id": "5",
       "kind": "enum",
       "name": "IntLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "6",
@@ -86,6 +88,7 @@
       "$id": "9",
       "kind": "enum",
       "name": "FloatLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "10",
@@ -126,6 +129,7 @@
       "$id": "13",
       "kind": "enum",
       "name": "UnionStringLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "14",
@@ -175,6 +179,7 @@
       "$id": "17",
       "kind": "enum",
       "name": "UnionIntLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "18",
@@ -224,6 +229,7 @@
       "$id": "21",
       "kind": "enum",
       "name": "UnionFloatLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "22",
@@ -1382,6 +1388,7 @@
       "$id": "155",
       "kind": "model",
       "name": "StringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.StringProperty",
       "usage": "Input,Output,Json",
@@ -1398,6 +1405,7 @@
           "$id": "156",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1427,6 +1435,7 @@
       "$id": "158",
       "kind": "model",
       "name": "BytesProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.BytesProperty",
       "usage": "Input,Output,Json",
@@ -1443,6 +1452,7 @@
           "$id": "159",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1473,6 +1483,7 @@
       "$id": "161",
       "kind": "model",
       "name": "DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.DatetimeProperty",
       "usage": "Input,Output,Json",
@@ -1489,6 +1500,7 @@
           "$id": "162",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1526,6 +1538,7 @@
       "$id": "165",
       "kind": "model",
       "name": "DurationProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.DurationProperty",
       "usage": "Input,Output,Json",
@@ -1542,6 +1555,7 @@
           "$id": "166",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1579,6 +1593,7 @@
       "$id": "169",
       "kind": "model",
       "name": "PlainDateProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.PlainDateProperty",
       "usage": "Input,Output,Json",
@@ -1595,6 +1610,7 @@
           "$id": "170",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1624,6 +1640,7 @@
       "$id": "172",
       "kind": "model",
       "name": "PlainTimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.PlainTimeProperty",
       "usage": "Input,Output,Json",
@@ -1640,6 +1657,7 @@
           "$id": "173",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1669,6 +1687,7 @@
       "$id": "175",
       "kind": "model",
       "name": "CollectionsByteProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByteProperty",
       "usage": "Input,Output,Json",
@@ -1685,6 +1704,7 @@
           "$id": "176",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1722,6 +1742,7 @@
       "$id": "179",
       "kind": "model",
       "name": "CollectionsModelProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModelProperty",
       "usage": "Input,Output,Json",
@@ -1738,6 +1759,7 @@
           "$id": "180",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1770,6 +1792,7 @@
       "$id": "182",
       "kind": "model",
       "name": "StringLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1786,6 +1809,7 @@
           "$id": "183",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1811,6 +1835,7 @@
       "$id": "184",
       "kind": "model",
       "name": "IntLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1827,6 +1852,7 @@
           "$id": "185",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1852,6 +1878,7 @@
       "$id": "186",
       "kind": "model",
       "name": "FloatLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1868,6 +1895,7 @@
           "$id": "187",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1893,6 +1921,7 @@
       "$id": "188",
       "kind": "model",
       "name": "BooleanLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1909,6 +1938,7 @@
           "$id": "189",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1934,6 +1964,7 @@
       "$id": "190",
       "kind": "model",
       "name": "UnionStringLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1950,6 +1981,7 @@
           "$id": "191",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1975,6 +2007,7 @@
       "$id": "192",
       "kind": "model",
       "name": "UnionIntLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1991,6 +2024,7 @@
           "$id": "193",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -2016,6 +2050,7 @@
       "$id": "194",
       "kind": "model",
       "name": "UnionFloatLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteralProperty",
       "usage": "Input,Output,Json",
@@ -2032,6 +2067,7 @@
           "$id": "195",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -2057,6 +2093,7 @@
       "$id": "196",
       "kind": "model",
       "name": "RequiredAndOptionalProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptionalProperty",
       "usage": "Input,Output,Json",
@@ -2073,6 +2110,7 @@
           "$id": "197",
           "kind": "property",
           "name": "optionalProperty",
+          "apiVersions": [],
           "serializedName": "optionalProperty",
           "doc": "optional string property",
           "type": {
@@ -2100,6 +2138,7 @@
           "$id": "199",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "required int property",
           "type": {
@@ -2192,7 +2231,6 @@
                 "$id": "207",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -2291,7 +2329,6 @@
                 "$id": "211",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -2390,7 +2427,6 @@
                 "$id": "215",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -2528,7 +2564,6 @@
                 "$id": "221",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -2716,7 +2751,6 @@
                 "$id": "231",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -2815,7 +2849,6 @@
                 "$id": "235",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -2914,7 +2947,6 @@
                 "$id": "239",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -3052,7 +3084,6 @@
                 "$id": "245",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -3240,7 +3271,6 @@
                 "$id": "255",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -3339,7 +3369,6 @@
                 "$id": "259",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -3438,7 +3467,6 @@
                 "$id": "263",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -3576,7 +3604,6 @@
                 "$id": "269",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -3764,7 +3791,6 @@
                 "$id": "279",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -3863,7 +3889,6 @@
                 "$id": "283",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -3962,7 +3987,6 @@
                 "$id": "287",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -4100,7 +4124,6 @@
                 "$id": "293",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -4288,7 +4311,6 @@
                 "$id": "303",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "PlainDate",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -4387,7 +4409,6 @@
                 "$id": "307",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "PlainDate",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -4486,7 +4507,6 @@
                 "$id": "311",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "PlainDate",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -4624,7 +4644,6 @@
                 "$id": "317",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "PlainDate",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -4812,7 +4831,6 @@
                 "$id": "327",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "PlainTime",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -4911,7 +4929,6 @@
                 "$id": "331",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "PlainTime",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -5010,7 +5027,6 @@
                 "$id": "335",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "PlainTime",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -5148,7 +5164,6 @@
                 "$id": "341",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "PlainTime",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -5336,7 +5351,6 @@
                 "$id": "351",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -5435,7 +5449,6 @@
                 "$id": "355",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -5534,7 +5547,6 @@
                 "$id": "359",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -5672,7 +5684,6 @@
                 "$id": "365",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -5860,7 +5871,6 @@
                 "$id": "375",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -5959,7 +5969,6 @@
                 "$id": "379",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -6058,7 +6067,6 @@
                 "$id": "383",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -6196,7 +6204,6 @@
                 "$id": "389",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -6384,7 +6391,6 @@
                 "$id": "399",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -6483,7 +6489,6 @@
                 "$id": "403",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -6582,7 +6587,6 @@
                 "$id": "407",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -6720,7 +6724,6 @@
                 "$id": "413",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "StringLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -6908,7 +6911,6 @@
                 "$id": "423",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -7007,7 +7009,6 @@
                 "$id": "427",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -7106,7 +7107,6 @@
                 "$id": "431",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -7244,7 +7244,6 @@
                 "$id": "437",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "IntLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -7432,7 +7431,6 @@
                 "$id": "447",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -7531,7 +7529,6 @@
                 "$id": "451",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -7630,7 +7627,6 @@
                 "$id": "455",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -7768,7 +7764,6 @@
                 "$id": "461",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "FloatLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -7956,7 +7951,6 @@
                 "$id": "471",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -8055,7 +8049,6 @@
                 "$id": "475",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -8154,7 +8147,6 @@
                 "$id": "479",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -8292,7 +8284,6 @@
                 "$id": "485",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "BooleanLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -8480,7 +8471,6 @@
                 "$id": "495",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -8579,7 +8569,6 @@
                 "$id": "499",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -8678,7 +8667,6 @@
                 "$id": "503",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -8816,7 +8804,6 @@
                 "$id": "509",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "UnionStringLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -9004,7 +8991,6 @@
                 "$id": "519",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -9103,7 +9089,6 @@
                 "$id": "523",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -9202,7 +9187,6 @@
                 "$id": "527",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -9340,7 +9324,6 @@
                 "$id": "533",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "UnionIntLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -9528,7 +9511,6 @@
                 "$id": "543",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -9627,7 +9609,6 @@
                 "$id": "547",
                 "name": "getDefault",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -9726,7 +9707,6 @@
                 "$id": "551",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -9864,7 +9844,6 @@
                 "$id": "557",
                 "name": "putDefault",
                 "isExactName": false,
-                "resourceName": "UnionFloatLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -10053,7 +10032,6 @@
                 "$id": "567",
                 "name": "getAll",
                 "isExactName": false,
-                "resourceName": "RequiredAndOptional",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -10152,7 +10130,6 @@
                 "$id": "571",
                 "name": "getRequiredOnly",
                 "isExactName": false,
-                "resourceName": "RequiredAndOptional",
                 "doc": "Get models that will return only the required properties",
                 "accessibility": "public",
                 "parameters": [
@@ -10251,7 +10228,6 @@
                 "$id": "575",
                 "name": "putAll",
                 "isExactName": false,
-                "resourceName": "RequiredAndOptional",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -10389,7 +10365,6 @@
                 "$id": "581",
                 "name": "putRequiredOnly",
                 "isExactName": false,
-                "resourceName": "RequiredAndOptional",
                 "doc": "Put a body with only required properties.",
                 "accessibility": "public",
                 "parameters": [

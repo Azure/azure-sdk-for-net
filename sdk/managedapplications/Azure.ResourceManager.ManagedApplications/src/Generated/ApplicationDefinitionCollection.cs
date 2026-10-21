@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ApplicationDefinitionResource.ResourceType, out string applicationDefinitionApiVersion);
             _applicationDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ApplicationDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _applicationDefinitionsRestClient = new ApplicationDefinitions(_applicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationDefinitionApiVersion ?? "2023-12-01-preview");
+            _applicationDefinitionsRestClient = new ApplicationDefinitions(_applicationDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Solutions/applicationDefinitions", out string applicationDefinitionsApiVersionOverride) ? applicationDefinitionsApiVersionOverride : "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetByResourceGroupAsyncCollectionResultOfT(_applicationDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationDefinitionCollection.GetAll"), data => new ApplicationDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionDataAsyncCollectionResultOfT(_applicationDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationDefinitionCollection.GetAll"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetByResourceGroupCollectionResultOfT(_applicationDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationDefinitionCollection.GetAll"), data => new ApplicationDefinitionResource(Client, data));
+            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionDataCollectionResultOfT(_applicationDefinitionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationDefinitionCollection.GetAll"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>

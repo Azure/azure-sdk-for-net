@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ClientType",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Structure.Service.ClientType",
       "valueType": {
         "$id": "2",
@@ -115,7 +116,6 @@
             "$id": "10",
             "name": "renamedOne",
             "isExactName": false,
-            "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -156,7 +156,6 @@
             "$id": "12",
             "name": "renamedThree",
             "isExactName": false,
-            "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -197,7 +196,6 @@
             "$id": "14",
             "name": "renamedFive",
             "isExactName": false,
-            "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -294,7 +292,6 @@
                 "$id": "20",
                 "name": "renamedTwo",
                 "isExactName": false,
-                "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -335,7 +332,6 @@
                 "$id": "22",
                 "name": "renamedFour",
                 "isExactName": false,
-                "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -376,7 +372,6 @@
                 "$id": "24",
                 "name": "renamedSix",
                 "isExactName": false,
-                "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

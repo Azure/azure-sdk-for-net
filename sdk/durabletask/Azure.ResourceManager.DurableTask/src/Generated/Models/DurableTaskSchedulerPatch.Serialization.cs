@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DurableTask;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -106,6 +108,11 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -150,6 +157,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
             DurableTaskSchedulerPatchProperties properties = default;
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,12 +191,21 @@ namespace Azure.ResourceManager.DurableTask.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerDurableTaskContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DurableTaskSchedulerPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new DurableTaskSchedulerPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

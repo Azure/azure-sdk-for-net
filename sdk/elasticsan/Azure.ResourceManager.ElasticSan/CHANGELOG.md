@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2026-10-14)
+
+### Features Added
+
+- Upgraded api-version to `2026-05-01-preview`.
+    - Added Elastic SAN V2 support: `ElasticSanData.Version` (`ElasticSanVersion`), new SKU `ElasticSanSkuName.ElasticSanLrs`, and settable `TotalIops`, `TotalMbps` and `TotalSizeTiB` on `ElasticSanData` and `ElasticSanPatch`.
+    - Added `TotalReservedIops`, `TotalReservedMBps` and `UsedCapacityGiB` to `ElasticSanData`.
+    - Added `QualityOfService` (`ElasticSanQualityOfService`), `ReservedIops`, `ReservedMBps` and `IsEncryptionInTransitEnabled` to `ElasticSanVolumeGroupData`, and `ReservedIops`/`ReservedMBps` to `ElasticSanVolumeGroupPatch`.
+    - Added `ElasticSanStorageTargetType.DirectAttach`.
+    - Added `ManagedBy` (a list of `ElasticSanManagedByInfo`) to `ElasticSanVolumeData` and `ElasticSanVolumePatch`, so a volume can be managed by multiple resources. The existing `ManagedByResourceId` property is kept for backward compatibility and maps to a single `ManagedBy` entry.
+    - Added `SnapshotAccessState` and `CompletionPercent` to `ElasticSanSnapshotData`.
+    - Added `ZoneDetails` (`ElasticSanSkuZoneDetails`) to `ElasticSanSkuLocationInfo`.
+    - Added an optional `accessSoftDeletedResources` parameter to `ElasticSanVolumeCollection.GetAll` and `ElasticSanVolumeGroupCollection.GetAll` for listing soft-deleted resources.
+
+### Bugs Fixed
+
+- Fixed `ElasticSanVolumeResource.RestoreVolume` so it uses the resource's API version instead of always sending `2024-07-01-preview`.
+- `ElasticSanVolumeData` and `ElasticSanVolumePatch` now deserialize both the legacy `managedBy` object (`{ "resourceId": "..." }`) and the new array shape, so responses from older API versions and models persisted by earlier library versions continue to load.
+- Fixed `ElasticSanVolumeCollection.GetAll` and `ElasticSanVolumeGroupCollection.GetAll` so the `accessSoftDeletedResources` filter is also sent on continuation pages.
+- Fixed `ElasticSanVolumeGroupData.DeleteRetentionPolicy`, `ElasticSanVolumeGroupPatch.DeleteRetentionPolicy` and `ElasticSanSnapshotData.CreationDataSourceId`, which were not serialized or populated from service responses.
 
 ## 1.2.1 (2026-06-06)
 

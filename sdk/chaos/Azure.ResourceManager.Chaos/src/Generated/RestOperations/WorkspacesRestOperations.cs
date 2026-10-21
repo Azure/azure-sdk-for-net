@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +178,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             if (continuationToken != null)
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
@@ -224,10 +203,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -237,7 +213,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateRefreshRecommendationsRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateDiscoverRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -247,11 +223,28 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
             uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/refreshRecommendations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendPath("/discover", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        internal HttpMessage CreateEvaluateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/evaluate", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

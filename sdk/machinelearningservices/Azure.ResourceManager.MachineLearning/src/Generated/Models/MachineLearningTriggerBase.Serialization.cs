@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MachineLearningTriggerBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTriggerBase))]
     public abstract partial class MachineLearningTriggerBase : IJsonModel<MachineLearningTriggerBase>
@@ -77,15 +77,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime, _endTimeIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime);
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime, _startTimeIsDefined))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime);
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -140,10 +154,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Recurrence":
-                        return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                     case "Cron":
                         return CronTrigger.DeserializeCronTrigger(element, options);
+                    case "Recurrence":
+                        return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                 }
             }
             return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);

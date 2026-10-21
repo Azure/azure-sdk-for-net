@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     resourceGroupFilter = array;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     resourceFilter = array;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     meterFilter = array;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tagFilter = BinaryData.FromString(prop.Value.GetRawText());
+                    tagFilter = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("threshold"u8))
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AlertPropertiesDetails(

@@ -27,7 +27,7 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientGenerator.Instance.Configuration.PackageName} client library for developing .NET applications with rich experience.",
+                Description = $"The {AzureClientGenerator.Instance.Configuration.PackageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.",
                 AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.Configuration.PackageName}",
                 Version = "1.0.0-beta.1",
                 PackageTags = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace,
@@ -45,6 +45,33 @@ namespace Azure.Generator.Primitives
             }
 
             return builder.Write();
+        }
+
+        /// <inheritdoc/>
+        protected override string GetTestProjectFileContent()
+        {
+            string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+
+            return $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                    <IsTestProject>true</IsTestProject>
+                  </PropertyGroup>
+
+                  <ItemGroup>
+                    <ProjectReference Include="$(AzureCoreTestFramework)" />
+                    <ProjectReference Include="..\src\{packageName}.csproj" />
+                  </ItemGroup>
+
+                  <ItemGroup>
+                    <PackageReference Include="NUnit" />
+                    <PackageReference Include="NUnit3TestAdapter" />
+                    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+                    <PackageReference Include="Moq" />
+                  </ItemGroup>
+                </Project>
+                """ + "\n";
         }
 
         private static readonly IReadOnlyList<string> _operationSharedFiles =
@@ -308,7 +335,7 @@ namespace Azure.Generator.Primitives
             return $"""
                 # {packageName} client library for .NET
 
-                {packageName} is a client library for developing .NET applications with rich experience.
+                The {packageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.
 
                 ## Getting started
 

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JobModelListResult(value, nextLink, additionalBinaryDataProperties);
+            return new JobModelListResult(value ?? new ChangeTrackingList<DataReplicationJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

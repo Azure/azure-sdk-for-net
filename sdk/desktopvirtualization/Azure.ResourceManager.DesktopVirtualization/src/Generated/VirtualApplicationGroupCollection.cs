@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualApplicationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualApplicationGroupResource.ResourceType, out string virtualApplicationGroupApiVersion);
             _applicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroupResource.ResourceType.Namespace, Diagnostics);
-            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
+            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DesktopVirtualization/applicationGroups", out string applicationGroupsApiVersionOverride) ? applicationGroupsApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new VirtualApplicationGroupDataAsyncCollectionResultOfT(
                 _applicationGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new VirtualApplicationGroupDataCollectionResultOfT(
                 _applicationGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

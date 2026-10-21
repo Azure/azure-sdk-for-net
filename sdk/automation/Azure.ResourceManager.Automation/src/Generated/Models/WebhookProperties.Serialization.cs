@@ -84,15 +84,22 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(LastInvokedOn))
+            if (Optional.IsDefined(LastInvokedOn, _lastInvokedOnIsDefined))
             {
-                writer.WritePropertyName("lastInvokedTime"u8);
-                writer.WriteStringValue(LastInvokedOn.Value, "O");
+                if (LastInvokedOn != null)
+                {
+                    writer.WritePropertyName("lastInvokedTime"u8);
+                    writer.WriteStringValue(LastInvokedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastInvokedTime"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -184,7 +191,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             bool? isEnabled = default;
             Uri uri = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
+            bool lastInvokedOnIsDefined = false;
             DateTimeOffset? lastInvokedOn = default;
             IDictionary<string, string> parameters = default;
             RunbookAssociationProperty runbook = default;
@@ -220,11 +228,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastInvokedTime"u8))
                 {
+                    lastInvokedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastInvokedOn = null;
@@ -298,13 +307,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebhookProperties(
                 isEnabled,
                 uri,
-                expireOn,
+                expiresOn,
                 lastInvokedOn,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 runbook,
@@ -313,7 +322,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 lastModifiedBy,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _lastInvokedOnIsDefined = lastInvokedOnIsDefined
+            };
         }
     }
 }

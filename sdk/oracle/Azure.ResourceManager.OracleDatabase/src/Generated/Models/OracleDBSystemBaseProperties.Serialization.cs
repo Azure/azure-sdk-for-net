@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DbSystemOptions))
+            if (Optional.IsDefined(DBSystemOptions))
             {
                 writer.WritePropertyName("dbSystemOptions"u8);
-                writer.WriteObjectValue(DbSystemOptions, options);
+                writer.WriteObjectValue(DBSystemOptions, options);
             }
             if (Optional.IsDefined(DiskRedundancy))
             {
@@ -236,6 +236,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("computeCount"u8);
                 writer.WriteNumberValue(ComputeCount.Value);
+            }
+            if (Optional.IsDefined(DataCollectionOptions))
+            {
+                writer.WritePropertyName("dataCollectionOptions"u8);
+                writer.WriteObjectValue(DataCollectionOptions, options);
+            }
+            if (Optional.IsDefined(CharacterSet))
+            {
+                writer.WritePropertyName("characterSet"u8);
+                writer.WriteStringValue(CharacterSet);
+            }
+            if (Optional.IsDefined(NcharacterSet))
+            {
+                writer.WritePropertyName("ncharacterSet"u8);
+                writer.WriteStringValue(NcharacterSet);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

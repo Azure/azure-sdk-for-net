@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(IstioServiceMesh))]
     [ModelReaderWriterBuildable(typeof(KubeletConfig))]
     [ModelReaderWriterBuildable(typeof(KubernetesPatchVersion))]
+    [ModelReaderWriterBuildable(typeof(KubernetesResourceObjectEncryptionProfile))]
     [ModelReaderWriterBuildable(typeof(KubernetesVersion))]
     [ModelReaderWriterBuildable(typeof(KubernetesVersionCapabilities))]
     [ModelReaderWriterBuildable(typeof(KubernetesVersionListResult))]

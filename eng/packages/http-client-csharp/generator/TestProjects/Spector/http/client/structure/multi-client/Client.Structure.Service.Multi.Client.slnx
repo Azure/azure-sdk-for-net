@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Client.Structure.Service.Multi.Client.csproj" />
+  <Project Path="tests/Client.Structure.Service.Multi.Client.Tests.csproj" />
 </Solution>

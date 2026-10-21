@@ -80,15 +80,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
+            if (options.Format != "W" && Optional.IsDefined(LatestVersion, _latestVersionIsDefined))
             {
-                writer.WritePropertyName("latestVersion"u8);
-                writer.WriteStringValue(LatestVersion);
+                if (LatestVersion != null)
+                {
+                    writer.WritePropertyName("latestVersion"u8);
+                    writer.WriteStringValue(LatestVersion);
+                }
+                else
+                {
+                    writer.WriteNull("latestVersion"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(NextVersion))
+            if (options.Format != "W" && Optional.IsDefined(NextVersion, _nextVersionIsDefined))
             {
-                writer.WritePropertyName("nextVersion"u8);
-                writer.WriteStringValue(NextVersion);
+                if (NextVersion != null)
+                {
+                    writer.WritePropertyName("nextVersion"u8);
+                    writer.WriteStringValue(NextVersion);
+                }
+                else
+                {
+                    writer.WriteNull("nextVersion"u8);
+                }
             }
         }
 
@@ -117,17 +131,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isArchived = default;
+            bool latestVersionIsDefined = false;
             string latestVersion = default;
+            bool nextVersionIsDefined = false;
             string nextVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -140,6 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -161,6 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -189,6 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("latestVersion"u8))
                 {
+                    latestVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         latestVersion = null;
@@ -199,6 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nextVersion"u8))
                 {
+                    nextVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextVersion = null;
@@ -209,17 +231,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningAssetContainer(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isArchived,
                 latestVersion,
-                nextVersion);
+                nextVersion)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _latestVersionIsDefined = latestVersionIsDefined,
+                _nextVersionIsDefined = nextVersionIsDefined
+            };
         }
     }
 }

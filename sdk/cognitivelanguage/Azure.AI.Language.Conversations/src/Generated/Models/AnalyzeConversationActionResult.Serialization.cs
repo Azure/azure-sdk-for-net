@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The base class of a conversation input task result.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITaskResult"/> and <see cref="ConversationActionResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationActionResult"/> and <see cref="ConversationalAITaskResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeConversationActionResult))]
     public abstract partial class AnalyzeConversationActionResult : IJsonModel<AnalyzeConversationActionResult>
@@ -138,10 +138,10 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ConversationalAIResult":
-                        return ConversationalAITaskResult.DeserializeConversationalAITaskResult(element, options);
                     case "ConversationResult":
                         return ConversationActionResult.DeserializeConversationActionResult(element, options);
+                    case "ConversationalAIResult":
+                        return ConversationalAITaskResult.DeserializeConversationalAITaskResult(element, options);
                 }
             }
             return UnknownAnalyzeConversationActionResult.DeserializeUnknownAnalyzeConversationActionResult(element, options);

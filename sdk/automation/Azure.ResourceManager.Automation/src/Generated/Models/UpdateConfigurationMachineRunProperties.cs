@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endsOn;
+        private bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="UpdateConfigurationMachineRunProperties"/>. </summary>
         internal UpdateConfigurationMachineRunProperties()
@@ -30,8 +32,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
         /// <param name="correlationId"> correlation id of the software update configuration machine run. </param>
         /// <param name="sourceComputerId"> source computer id of the software update configuration machine run. </param>
-        /// <param name="startOn"> Start time of the software update configuration machine run. </param>
-        /// <param name="endOn"> End time of the software update configuration machine run. </param>
+        /// <param name="startsOn"> Start time of the software update configuration machine run. </param>
+        /// <param name="endsOn"> End time of the software update configuration machine run. </param>
         /// <param name="configuredDuration"> configured duration for the software update configuration run. </param>
         /// <param name="job"> Job associated with the software update configuration machine run. </param>
         /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateConfigurationMachineRunProperties(ResourceIdentifier targetComputerId, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateConfigurationMachineRunProperties(ResourceIdentifier targetComputerId, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetComputerId = targetComputerId;
             TargetComputerType = targetComputerType;
@@ -49,8 +51,8 @@ namespace Azure.ResourceManager.Automation.Models
             OSType = osType;
             CorrelationId = correlationId;
             SourceComputerId = sourceComputerId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            _endsOn = endsOn;
             ConfiguredDuration = configuredDuration;
             Job = job;
             CreatedOn = createdOn;
@@ -83,10 +85,16 @@ namespace Azure.ResourceManager.Automation.Models
         public Guid? SourceComputerId { get; }
 
         /// <summary> Start time of the software update configuration machine run. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the software update configuration machine run. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> configured duration for the software update configuration run. </summary>
         public TimeSpan? ConfiguredDuration { get; }

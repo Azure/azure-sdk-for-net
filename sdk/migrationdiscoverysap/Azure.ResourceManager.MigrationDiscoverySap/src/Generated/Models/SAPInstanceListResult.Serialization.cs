@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SAPInstanceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SAPInstanceListResult(value ?? new ChangeTrackingList<SapInstanceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

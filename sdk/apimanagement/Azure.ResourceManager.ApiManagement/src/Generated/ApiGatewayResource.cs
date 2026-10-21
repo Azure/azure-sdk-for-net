@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiGatewayApiVersion);
             _apiGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayApiVersion ?? "2025-09-01-preview");
+            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiManagement/gateways", out string apiGatewayApiVersionOverride) ? apiGatewayApiVersionOverride : "2025-09-01-preview");
             _apiManagementGatewaySkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _apiManagementGatewaySkusRestClient = new ApiManagementGatewaySkus(_apiManagementGatewaySkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementGatewaySkusGetAvailableSkusApiManagementGatewaySkusAsyncCollectionResultOfT(
+            return new GatewayResourceSkuResultAsyncCollectionResultOfT(
                 _apiManagementGatewaySkusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -378,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementGatewaySkusGetAvailableSkusApiManagementGatewaySkusCollectionResultOfT(
+            return new GatewayResourceSkuResultCollectionResultOfT(
                 _apiManagementGatewaySkusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,10 +498,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<Resources.TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Resources.Models.Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -540,10 +540,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<Resources.TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Resources.Models.Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

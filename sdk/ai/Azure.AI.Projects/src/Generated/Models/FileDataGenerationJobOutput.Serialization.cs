@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Azure OpenAI file output for a data generation job. </summary>
+    /// <summary> Azure OpenAI file output for a data generation job. This is a preview feature. </summary>
     public partial class FileDataGenerationJobOutput : DataGenerationJobOutput, IJsonModel<FileDataGenerationJobOutput>
     {
         /// <param name="data"> The data to parse. </param>
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileDataGenerationJobOutput(@type, additionalBinaryDataProperties, id, filename);

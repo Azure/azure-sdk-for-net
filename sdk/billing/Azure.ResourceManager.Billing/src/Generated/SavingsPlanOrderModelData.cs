@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
         }
 

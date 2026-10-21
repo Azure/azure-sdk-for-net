@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
         {
             get
             {
-                return Properties is null ? default : Properties.IsEnabled;
+                return Properties is null ? (bool?)default : Properties.IsEnabled;
             }
             set
             {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="MabProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, and <see cref="VmWorkloadProtectionPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectionPolicy))]
     public abstract partial class BackupGenericProtectionPolicy : IJsonModel<BackupGenericProtectionPolicy>
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureWorkload":
-                        return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element, options);
                     case "AzureStorage":
                         return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element, options);
-                    case "AzureIaasVM":
-                        return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element, options);
-                    case "AzureSql":
-                        return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
                     case "GenericProtectionPolicy":
                         return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element, options);
+                    case "AzureIaasVM":
+                        return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element, options);
                     case "MAB":
                         return MabProtectionPolicy.DeserializeMabProtectionPolicy(element, options);
+                    case "AzureSql":
+                        return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
+                    case "AzureWorkload":
+                        return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element, options);
                 }
             }
             return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element, options);

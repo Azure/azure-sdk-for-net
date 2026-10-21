@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningTritonModelJobOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AssetName))
+            if (Optional.IsDefined(AssetName, _assetNameIsDefined))
             {
-                writer.WritePropertyName("assetName"u8);
-                writer.WriteStringValue(AssetName);
+                if (AssetName != null)
+                {
+                    writer.WritePropertyName("assetName"u8);
+                    writer.WriteStringValue(AssetName);
+                }
+                else
+                {
+                    writer.WriteNull("assetName"u8);
+                }
             }
             if (Optional.IsDefined(Mode))
             {
@@ -117,9 +124,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
             JobOutputType jobOutputType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool assetNameIsDefined = false;
             string assetName = default;
             MachineLearningOutputDeliveryMode? mode = default;
             Uri uri = default;
@@ -127,6 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -142,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("assetName"u8))
                 {
+                    assetNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         assetName = null;
@@ -170,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningTritonModelJobOutput(
@@ -179,7 +190,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalBinaryDataProperties,
                 assetName,
                 mode,
-                uri);
+                uri)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _assetNameIsDefined = assetNameIsDefined
+            };
         }
     }
 }

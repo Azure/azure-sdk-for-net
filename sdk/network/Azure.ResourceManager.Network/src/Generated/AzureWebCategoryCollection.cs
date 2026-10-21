@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(AzureWebCategoryResource.ResourceType, out string azureWebCategoryApiVersion);
             _webCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategoryResource.ResourceType.Namespace, Diagnostics);
-            _webCategoriesRestClient = new WebCategories(_webCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureWebCategoryApiVersion ?? "2025-09-01");
+            _webCategoriesRestClient = new WebCategories(_webCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureWebCategoryApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new WebCategoriesGetBySubscriptionAsyncCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
+            return new AsyncPageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new AzureWebCategoryDataAsyncCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new WebCategoriesGetBySubscriptionCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
+            return new PageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new AzureWebCategoryDataCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

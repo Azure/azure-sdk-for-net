@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary>
     /// The request parameters for scheduling a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, <see cref="ContainerRegistryTaskRunContent"/>, and <see cref="ContainerRegistryEncodedTaskRunContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, and <see cref="ContainerRegistryTaskRunContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerRegistryRunContent))]
     public abstract partial class ContainerRegistryRunContent : IJsonModel<ContainerRegistryRunContent>
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 {
                     case "DockerBuildRequest":
                         return ContainerRegistryDockerBuildContent.DeserializeContainerRegistryDockerBuildContent(element, options);
+                    case "EncodedTaskRunRequest":
+                        return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element, options);
                     case "FileTaskRunRequest":
                         return ContainerRegistryFileTaskRunContent.DeserializeContainerRegistryFileTaskRunContent(element, options);
                     case "TaskRunRequest":
                         return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element, options);
-                    case "EncodedTaskRunRequest":
-                        return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element, options);
                 }
             }
             return UnknownContainerRegistryRunContent.DeserializeUnknownContainerRegistryRunContent(element, options);

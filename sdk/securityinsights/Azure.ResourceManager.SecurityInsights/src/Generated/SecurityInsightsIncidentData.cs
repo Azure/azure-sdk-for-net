@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.Severity;
+                return Properties is null ? (SecurityInsightsIncidentSeverity?)default : Properties.Severity;
             }
             set
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
+                return Properties is null ? (SecurityInsightsIncidentStatus?)default : Properties.Status;
             }
             set
             {

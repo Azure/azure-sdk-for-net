@@ -1,0 +1,39 @@
+# Prevent changes to files synced from azure-sdk-tools by authors without repo access.
+# This workflow is synced to target repos via eng/pipelines/sync-.github.yml.
+#
+# The paths filter exactly enumerates the synced files, so if this workflow
+# triggers at all, protected files were changed — no diff check needed.
+
+name: Protected Files
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      # Workflows synced from azure-sdk-tools
+      - '.github/workflows/*event*'
+      - '.github/workflows/post-apiview.yml'
+      - '.github/workflows/protected-files.yml'
+      # Skills synced from azure-sdk-tools
+      - '.github/skills/azsdk-common-*/**'
+
+permissions:
+  contents: read
+
+jobs:
+  protected-files:
+    name: Protected Files
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.pull_request.author_association != 'OWNER'
+      && github.event.pull_request.author_association != 'MEMBER'
+      && github.event.pull_request.author_association != 'COLLABORATOR'
+
+    steps:
+      - name: "[reminder] Manually run sync pipeline!"
+        run: |
+          echo "::error::Protected files were modified by '${{ github.event.pull_request.user.login }}' (association: ${{ github.event.pull_request.author_association }}). Run the sync pipeline (https://dev.azure.com/azure-sdk/internal/_build?definitionId=6130) before merging this PR!"
+          exit 1

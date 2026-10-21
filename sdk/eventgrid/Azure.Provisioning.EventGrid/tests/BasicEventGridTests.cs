@@ -11,6 +11,47 @@ namespace Azure.Provisioning.EventGrid.Tests;
 
 public class BasicEventGridTests
 {
+    internal static Trycep CreatePartnerEventSubscriptionTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                EventSubscription subscription =
+                    new(nameof(subscription))
+                    {
+                        Destination = new PartnerEventSubscriptionDestination
+                        {
+                            ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.EventGrid/partnerDestinations/destination"
+                        }
+                    };
+                infra.Add(subscription);
+
+                return infra;
+            });
+    }
+
+    [Test]
+    public async Task CreatePartnerEventSubscription()
+    {
+        await using Trycep test = CreatePartnerEventSubscriptionTest();
+        test.Compare(
+            """
+            resource subscription 'Microsoft.EventGrid/eventSubscriptions@2025-11-15-preview' = {
+              name: take('subscription${uniqueString(resourceGroup().id)}', 24)
+              properties: {
+                destination: {
+                  endpointType: 'PartnerDestination'
+                  properties: {
+                    resourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.EventGrid/partnerDestinations/destination'
+                  }
+                }
+              }
+            }
+            """);
+    }
+
     internal static Trycep CreateEventGridForBlobsTest()
     {
         return new Trycep().Define(

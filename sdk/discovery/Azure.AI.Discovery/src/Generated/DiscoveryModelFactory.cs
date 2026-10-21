@@ -595,16 +595,16 @@ namespace Azure.AI.Discovery
 
         /// <summary>
         /// Response indicating the KnowledgeBase operation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Discovery.KnowledgeBaseIndexingOperationResponse"/> and <see cref="Discovery.KnowledgeBaseSearchOperationResponse"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Discovery.KnowledgeBaseIndexingOperationResult"/> and <see cref="Discovery.KnowledgeBaseSearchOperationResult"/>.
         /// </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="operationType"> The type of operation. </param>
-        /// <returns> A new <see cref="Discovery.KnowledgeBaseOperationResponse"/> instance for mocking. </returns>
-        public static KnowledgeBaseOperationResponse KnowledgeBaseOperationResponse(string id = default, OperationState status = default, ResponseError error = default, string operationType = default)
+        /// <returns> A new <see cref="Discovery.KnowledgeBaseOperationResult"/> instance for mocking. </returns>
+        public static KnowledgeBaseOperationResult KnowledgeBaseOperationResult(string id = default, OperationState status = default, ResponseError error = default, string operationType = default)
         {
-            return new UnknownKnowledgeBaseOperationResponse(id, status, error, new KnowledgeBaseOperationType(operationType), additionalBinaryDataProperties: null);
+            return new UnknownKnowledgeBaseOperationResult(id, status, error, new KnowledgeBaseOperationType(operationType), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response for indexing operations. </summary>
@@ -612,10 +612,10 @@ namespace Azure.AI.Discovery
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="indexingResult"> Result details for indexing operations. </param>
-        /// <returns> A new <see cref="Discovery.KnowledgeBaseIndexingOperationResponse"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexingOperationResponse KnowledgeBaseIndexingOperationResponse(string id = default, OperationState status = default, ResponseError error = default, IndexingOperationResult indexingResult = default)
+        /// <returns> A new <see cref="Discovery.KnowledgeBaseIndexingOperationResult"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexingOperationResult KnowledgeBaseIndexingOperationResult(string id = default, OperationState status = default, ResponseError error = default, IndexingOperationResult indexingResult = default)
         {
-            return new KnowledgeBaseIndexingOperationResponse(
+            return new KnowledgeBaseIndexingOperationResult(
                 id,
                 status,
                 error,
@@ -638,10 +638,10 @@ namespace Azure.AI.Discovery
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="searchResult"> Result details for search operations. </param>
-        /// <returns> A new <see cref="Discovery.KnowledgeBaseSearchOperationResponse"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchOperationResponse KnowledgeBaseSearchOperationResponse(string id = default, OperationState status = default, ResponseError error = default, SearchResponse searchResult = default)
+        /// <returns> A new <see cref="Discovery.KnowledgeBaseSearchOperationResult"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchOperationResult KnowledgeBaseSearchOperationResult(string id = default, OperationState status = default, ResponseError error = default, SearchResult searchResult = default)
         {
-            return new KnowledgeBaseSearchOperationResponse(
+            return new KnowledgeBaseSearchOperationResult(
                 id,
                 status,
                 error,
@@ -652,12 +652,12 @@ namespace Azure.AI.Discovery
 
         /// <summary> Results of a knowledge base search. </summary>
         /// <param name="searchResults"> The search results. </param>
-        /// <returns> A new <see cref="Discovery.SearchResponse"/> instance for mocking. </returns>
-        public static SearchResponse SearchResponse(IEnumerable<SearchResultItem> searchResults = default)
+        /// <returns> A new <see cref="Discovery.SearchResult"/> instance for mocking. </returns>
+        public static SearchResult SearchResult(IEnumerable<SearchResultItem> searchResults = default)
         {
             searchResults ??= new ChangeTrackingList<SearchResultItem>();
 
-            return new SearchResponse(searchResults.ToList(), additionalBinaryDataProperties: null);
+            return new SearchResult(searchResults.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A single search result item. </summary>

@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "DurationModel",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.Encode.Duration",
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.DurationModel",
       "usage": "Input,Json",
@@ -41,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "input",
+          "apiVersions": [],
           "serializedName": "input",
           "type": {
             "$id": "5",
@@ -95,7 +97,6 @@
             "$id": "9",
             "name": "durationConstant",
             "isExactName": false,
-            "resourceName": "Duration",
             "doc": "Test duration with azure specific encoding.",
             "accessibility": "public",
             "parameters": [

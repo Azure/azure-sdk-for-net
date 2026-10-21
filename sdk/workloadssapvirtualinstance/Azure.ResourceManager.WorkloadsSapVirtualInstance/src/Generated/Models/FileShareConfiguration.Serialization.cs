@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// File Share configuration details, populated with information on storage configuration mounted on the VIS. The createAndMount option is selected in case of missing input.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkipFileShareConfiguration"/>, <see cref="CreateAndMountFileShareConfiguration"/>, and <see cref="MountFileShareConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/>, and <see cref="SkipFileShareConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFileShareConfiguration))]
     public abstract partial class FileShareConfiguration : IJsonModel<FileShareConfiguration>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Skip":
-                        return SkipFileShareConfiguration.DeserializeSkipFileShareConfiguration(element, options);
                     case "CreateAndMount":
                         return CreateAndMountFileShareConfiguration.DeserializeCreateAndMountFileShareConfiguration(element, options);
                     case "Mount":
                         return MountFileShareConfiguration.DeserializeMountFileShareConfiguration(element, options);
+                    case "Skip":
+                        return SkipFileShareConfiguration.DeserializeSkipFileShareConfiguration(element, options);
                 }
             }
             return UnknownFileShareConfiguration.DeserializeUnknownFileShareConfiguration(element, options);

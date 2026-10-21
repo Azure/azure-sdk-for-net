@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EnterprisePolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EnterprisePolicyResource.ResourceType, out string enterprisePolicyApiVersion);
             _enterprisePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", EnterprisePolicyResource.ResourceType.Namespace, Diagnostics);
-            _enterprisePoliciesRestClient = new EnterprisePolicies(_enterprisePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterprisePolicyApiVersion ?? "2020-10-30-preview");
+            _enterprisePoliciesRestClient = new EnterprisePolicies(_enterprisePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerPlatform/enterprisePolicies", out string enterprisePoliciesApiVersionOverride) ? enterprisePoliciesApiVersionOverride : "2020-10-30-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetByResourceGroupAsyncCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
+            return new AsyncPageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyDataAsyncCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePoliciesGetByResourceGroupCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
+            return new PageableWrapper<EnterprisePolicyData, EnterprisePolicyResource>(new EnterprisePolicyDataCollectionResultOfT(_enterprisePoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "EnterprisePolicyCollection.GetAll"), data => new EnterprisePolicyResource(Client, data));
         }
 
         /// <summary>

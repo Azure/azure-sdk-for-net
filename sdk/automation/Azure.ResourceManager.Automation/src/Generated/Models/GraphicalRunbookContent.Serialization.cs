@@ -93,15 +93,29 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RawContent))
+            if (Optional.IsDefined(RawContent, _rawContentIsDefined))
             {
-                writer.WritePropertyName("rawContent"u8);
-                writer.WriteObjectValue(RawContent, options);
+                if (RawContent != null)
+                {
+                    writer.WritePropertyName("rawContent"u8);
+                    writer.WriteObjectValue(RawContent, options);
+                }
+                else
+                {
+                    writer.WriteNull("rawContent"u8);
+                }
             }
-            if (Optional.IsDefined(GraphRunbookJson))
+            if (Optional.IsDefined(GraphRunbookJson, _graphRunbookJsonIsDefined))
             {
-                writer.WritePropertyName("graphRunbookJson"u8);
-                writer.WriteStringValue(GraphRunbookJson);
+                if (GraphRunbookJson != null)
+                {
+                    writer.WritePropertyName("graphRunbookJson"u8);
+                    writer.WriteStringValue(GraphRunbookJson);
+                }
+                else
+                {
+                    writer.WriteNull("graphRunbookJson"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,13 +159,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
+            bool rawContentIsDefined = false;
             RawGraphicalRunbookContent rawContent = default;
+            bool graphRunbookJsonIsDefined = false;
             string graphRunbookJson = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("rawContent"u8))
                 {
+                    rawContentIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         rawContent = null;
@@ -162,6 +179,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("graphRunbookJson"u8))
                 {
+                    graphRunbookJsonIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         graphRunbookJson = null;
@@ -172,10 +190,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GraphicalRunbookContent(rawContent, graphRunbookJson, additionalBinaryDataProperties);
+            return new GraphicalRunbookContent(rawContent, graphRunbookJson, additionalBinaryDataProperties)
+            {
+                _rawContentIsDefined = rawContentIsDefined,
+                _graphRunbookJsonIsDefined = graphRunbookJsonIsDefined
+            };
         }
     }
 }

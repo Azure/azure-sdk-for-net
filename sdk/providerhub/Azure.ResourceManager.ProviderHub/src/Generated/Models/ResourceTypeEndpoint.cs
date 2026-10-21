@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="endpointUri"> The endpoint uri. </param>
         /// <param name="apiVersion"> Api version. </param>
         /// <param name="zones"> List of zones. </param>
-        /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="dataBoundary"> The data boundary. </param>
+        /// <param name="dstsConfiguration"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ProviderDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ResourceTypeDataBoundary? dataBoundary, ProviderDstsConfiguration dstsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             IsEnabled = isEnabled;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             EndpointUri = endpointUri;
             ApiVersion = apiVersion;
             Zones = zones;
-            DstsConfiguration = dstsConfiguration;
             DataBoundary = dataBoundary;
+            DstsConfiguration = dstsConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -109,9 +109,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> List of zones. </summary>
         public IList<string> Zones { get; }
 
-        /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
-
         /// <summary> The data boundary. </summary>
         public ResourceTypeDataBoundary? DataBoundary { get; set; }
 
@@ -120,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
+                return FeaturesRule is null ? (FeaturesPolicy?)default : FeaturesRule.RequiredFeaturesPolicy;
             }
             set
             {

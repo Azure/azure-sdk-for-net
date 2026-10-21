@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BatchAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string batchAccountApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountApiVersion ?? "2025-06-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new BatchAccountOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new BatchAccountOutboundEnvironmentEndpointCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -863,10 +863,9 @@ namespace Azure.ResourceManager.Batch
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -906,10 +905,9 @@ namespace Azure.ResourceManager.Batch
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

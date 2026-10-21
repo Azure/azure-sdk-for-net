@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SessionHostAgentUpdatePatchProperties(updateType, doesUseSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>(), additionalBinaryDataProperties);

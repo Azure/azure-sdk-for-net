@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the project which implements the Microsoft Azure Attestation client API and package</Description>
-    <AssemblyTitle>Azure SDK Template</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <AssemblyTitle>Microsoft Azure Attestation client library</AssemblyTitle>
+    <Version>1.1.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
-    <PackageTags>Azure Template</PackageTags>
+    <PackageTags>Azure;Attestation;Security;Microsoft Azure Attestation</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
@@ -22,6 +21,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Azure.Security.Attestation.Designer.cs">

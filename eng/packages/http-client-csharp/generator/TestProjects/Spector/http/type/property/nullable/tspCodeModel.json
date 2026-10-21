@@ -723,6 +723,7 @@
       "$id": "85",
       "kind": "model",
       "name": "StringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -739,6 +740,7 @@
           "$id": "86",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -766,6 +768,7 @@
           "$id": "88",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -800,6 +803,7 @@
       "$id": "91",
       "kind": "model",
       "name": "BytesProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -816,6 +820,7 @@
           "$id": "92",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -843,6 +848,7 @@
           "$id": "94",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -878,6 +884,7 @@
       "$id": "97",
       "kind": "model",
       "name": "DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -894,6 +901,7 @@
           "$id": "98",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -921,6 +929,7 @@
           "$id": "100",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -963,6 +972,7 @@
       "$id": "104",
       "kind": "model",
       "name": "DurationProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -979,6 +989,7 @@
           "$id": "105",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1006,6 +1017,7 @@
           "$id": "107",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1048,6 +1060,7 @@
       "$id": "111",
       "kind": "model",
       "name": "CollectionsByteProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1064,6 +1077,7 @@
           "$id": "112",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1091,6 +1105,7 @@
           "$id": "114",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1133,6 +1148,7 @@
       "$id": "118",
       "kind": "model",
       "name": "CollectionsModelProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1149,6 +1165,7 @@
           "$id": "119",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1176,6 +1193,7 @@
           "$id": "121",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1189,6 +1207,7 @@
                 "$id": "124",
                 "kind": "model",
                 "name": "InnerModel",
+                "apiVersions": [],
                 "namespace": "Type.Property.Nullable",
                 "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
                 "usage": "Input,Output,JsonMergePatch,Json",
@@ -1205,6 +1224,7 @@
                     "$id": "125",
                     "kind": "property",
                     "name": "property",
+                    "apiVersions": [],
                     "serializedName": "property",
                     "doc": "Inner model property",
                     "type": {
@@ -1258,6 +1278,7 @@
       "$id": "127",
       "kind": "model",
       "name": "CollectionsStringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1274,6 +1295,7 @@
           "$id": "128",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1301,6 +1323,7 @@
           "$id": "130",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1405,7 +1428,6 @@
                 "$id": "140",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -1504,7 +1526,6 @@
                 "$id": "144",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -1603,7 +1624,6 @@
                 "$id": "148",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -1741,7 +1761,6 @@
                 "$id": "154",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -1929,7 +1948,6 @@
                 "$id": "164",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -2028,7 +2046,6 @@
                 "$id": "168",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -2127,7 +2144,6 @@
                 "$id": "172",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -2265,7 +2281,6 @@
                 "$id": "178",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "Bytes",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -2453,7 +2468,6 @@
                 "$id": "188",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -2552,7 +2566,6 @@
                 "$id": "192",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -2651,7 +2664,6 @@
                 "$id": "196",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -2789,7 +2801,6 @@
                 "$id": "202",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "Datetime",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -2977,7 +2988,6 @@
                 "$id": "212",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -3076,7 +3086,6 @@
                 "$id": "216",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -3175,7 +3184,6 @@
                 "$id": "220",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -3313,7 +3321,6 @@
                 "$id": "226",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "Duration",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -3501,7 +3508,6 @@
                 "$id": "236",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -3600,7 +3606,6 @@
                 "$id": "240",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -3699,7 +3704,6 @@
                 "$id": "244",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -3837,7 +3841,6 @@
                 "$id": "250",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "CollectionsByte",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -4025,7 +4028,6 @@
                 "$id": "260",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -4124,7 +4126,6 @@
                 "$id": "264",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -4223,7 +4224,6 @@
                 "$id": "268",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -4361,7 +4361,6 @@
                 "$id": "274",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "CollectionsModel",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [
@@ -4549,7 +4548,6 @@
                 "$id": "284",
                 "name": "getNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
                 "parameters": [
@@ -4648,7 +4646,6 @@
                 "$id": "288",
                 "name": "getNull",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
                 "parameters": [
@@ -4747,7 +4744,6 @@
                 "$id": "292",
                 "name": "patchNonNull",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
                 "parameters": [
@@ -4885,7 +4881,6 @@
                 "$id": "298",
                 "name": "patchNull",
                 "isExactName": false,
-                "resourceName": "CollectionsString",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
                 "parameters": [

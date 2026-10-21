@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualNetworkGatewayResource.ResourceType, out string virtualNetworkGatewayApiVersion);
             _virtualNetworkGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGatewayResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkGatewaysRestClient = new VirtualNetworkGateways(_virtualNetworkGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayApiVersion ?? "2025-09-01");
+            _virtualNetworkGatewaysRestClient = new VirtualNetworkGateways(_virtualNetworkGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkGatewayData, VirtualNetworkGatewayResource>(new VirtualNetworkGatewaysGetAllAsyncCollectionResultOfT(_virtualNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayCollection.GetAll"), data => new VirtualNetworkGatewayResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkGatewayData, VirtualNetworkGatewayResource>(new VirtualNetworkGatewayDataAsyncCollectionResultOfT(_virtualNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayCollection.GetAll"), data => new VirtualNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkGatewayData, VirtualNetworkGatewayResource>(new VirtualNetworkGatewaysGetAllCollectionResultOfT(_virtualNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayCollection.GetAll"), data => new VirtualNetworkGatewayResource(Client, data));
+            return new PageableWrapper<VirtualNetworkGatewayData, VirtualNetworkGatewayResource>(new VirtualNetworkGatewayDataCollectionResultOfT(_virtualNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayCollection.GetAll"), data => new VirtualNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

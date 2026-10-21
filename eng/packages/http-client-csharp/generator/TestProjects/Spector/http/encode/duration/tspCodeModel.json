@@ -485,6 +485,7 @@
       "$id": "57",
       "kind": "model",
       "name": "DefaultDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.DefaultDurationProperty",
       "usage": "Input,Output,Json",
@@ -500,6 +501,7 @@
           "$id": "58",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "59",
@@ -536,6 +538,7 @@
       "$id": "61",
       "kind": "model",
       "name": "ISO8601DurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.ISO8601DurationProperty",
       "usage": "Input,Output,Json",
@@ -551,6 +554,7 @@
           "$id": "62",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "63",
@@ -587,6 +591,7 @@
       "$id": "65",
       "kind": "model",
       "name": "Int32SecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -602,6 +607,7 @@
           "$id": "66",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "67",
@@ -638,6 +644,7 @@
       "$id": "69",
       "kind": "model",
       "name": "FloatSecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -653,6 +660,7 @@
           "$id": "70",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "71",
@@ -689,6 +697,7 @@
       "$id": "73",
       "kind": "model",
       "name": "Float64SecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64SecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -704,6 +713,7 @@
           "$id": "74",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "75",
@@ -740,6 +750,7 @@
       "$id": "77",
       "kind": "model",
       "name": "Int32MillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -755,6 +766,7 @@
           "$id": "78",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "79",
@@ -791,6 +803,7 @@
       "$id": "81",
       "kind": "model",
       "name": "FloatMillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -806,6 +819,7 @@
           "$id": "82",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "83",
@@ -842,6 +856,7 @@
       "$id": "85",
       "kind": "model",
       "name": "Float64MillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -857,6 +872,7 @@
           "$id": "86",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "87",
@@ -893,6 +909,7 @@
       "$id": "89",
       "kind": "model",
       "name": "FloatSecondsDurationArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
@@ -908,6 +925,7 @@
           "$id": "90",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "91",
@@ -966,6 +984,7 @@
       "$id": "96",
       "kind": "model",
       "name": "FloatMillisecondsDurationArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
@@ -981,6 +1000,7 @@
           "$id": "97",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "98",
@@ -1039,6 +1059,7 @@
       "$id": "103",
       "kind": "model",
       "name": "Int32SecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1054,6 +1075,7 @@
           "$id": "104",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "105",
@@ -1090,6 +1112,7 @@
       "$id": "107",
       "kind": "model",
       "name": "FloatSecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1105,6 +1128,7 @@
           "$id": "108",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "109",
@@ -1141,6 +1165,7 @@
       "$id": "111",
       "kind": "model",
       "name": "Int32MillisecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1156,6 +1181,7 @@
           "$id": "112",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "113",
@@ -1192,6 +1218,7 @@
       "$id": "115",
       "kind": "model",
       "name": "FloatMillisecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1207,6 +1234,7 @@
           "$id": "116",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "117",
@@ -1305,7 +1333,6 @@
                 "$id": "125",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1412,7 +1439,6 @@
                 "$id": "133",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1519,7 +1545,6 @@
                 "$id": "141",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1626,7 +1651,6 @@
                 "$id": "149",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1733,7 +1757,6 @@
                 "$id": "157",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1840,7 +1863,6 @@
                 "$id": "165",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1947,7 +1969,6 @@
                 "$id": "173",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2054,7 +2075,6 @@
                 "$id": "181",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2161,7 +2181,6 @@
                 "$id": "189",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2268,7 +2287,6 @@
                 "$id": "197",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2375,7 +2393,6 @@
                 "$id": "205",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2482,7 +2499,6 @@
                 "$id": "213",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2589,7 +2605,6 @@
                 "$id": "221",
                 "name": "int32SecondsArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2707,7 +2722,6 @@
                 "$id": "230",
                 "name": "int32MillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2875,7 +2889,6 @@
                 "$id": "243",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3065,7 +3078,6 @@
                 "$id": "251",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3255,7 +3267,6 @@
                 "$id": "259",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3445,7 +3456,6 @@
                 "$id": "267",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3635,7 +3645,6 @@
                 "$id": "275",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3825,7 +3834,6 @@
                 "$id": "283",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4015,7 +4023,6 @@
                 "$id": "291",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4205,7 +4212,6 @@
                 "$id": "299",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4395,7 +4401,6 @@
                 "$id": "307",
                 "name": "floatSecondsArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4585,7 +4590,6 @@
                 "$id": "315",
                 "name": "floatMillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4775,7 +4779,6 @@
                 "$id": "323",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4965,7 +4968,6 @@
                 "$id": "331",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5155,7 +5157,6 @@
                 "$id": "339",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5345,7 +5346,6 @@
                 "$id": "347",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5585,7 +5585,6 @@
                 "$id": "359",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5692,7 +5691,6 @@
                 "$id": "367",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5799,7 +5797,6 @@
                 "$id": "375",
                 "name": "iso8601Array",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5918,7 +5915,6 @@
                 "$id": "384",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6025,7 +6021,6 @@
                 "$id": "392",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6132,7 +6127,6 @@
                 "$id": "400",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6239,7 +6233,6 @@
                 "$id": "408",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6346,7 +6339,6 @@
                 "$id": "416",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6453,7 +6445,6 @@
                 "$id": "424",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6560,7 +6551,6 @@
                 "$id": "432",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6667,7 +6657,6 @@
                 "$id": "440",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6774,7 +6763,6 @@
                 "$id": "448",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6881,7 +6869,6 @@
                 "$id": "456",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6988,7 +6975,6 @@
                 "$id": "464",
                 "name": "int32MillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7158,7 +7144,6 @@
                 "$id": "477",
                 "name": "intSeconds",
                 "isExactName": false,
-                "resourceName": "Lossy",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7265,7 +7250,6 @@
                 "$id": "485",
                 "name": "intMilliseconds",
                 "isExactName": false,
-                "resourceName": "Lossy",
                 "accessibility": "public",
                 "parameters": [
                   {

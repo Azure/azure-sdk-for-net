@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScriptActionsList(value, nextLink, additionalBinaryDataProperties);
+            return new ScriptActionsList(value ?? new ChangeTrackingList<RuntimeScriptActionDetail>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

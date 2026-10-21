@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServiceSourceControlListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppServiceSourceControlListResult(value ?? new ChangeTrackingList<AppServiceSourceControlData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

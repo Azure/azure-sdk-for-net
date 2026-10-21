@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,10 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -110,10 +104,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -135,10 +126,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(machineName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -156,10 +144,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -184,10 +169,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -204,10 +186,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,10 +207,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -252,10 +228,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/assessPatches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -276,10 +249,7 @@ namespace Azure.ResourceManager.HybridCompute
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/installPatches", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

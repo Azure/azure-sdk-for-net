@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceType, out string deletedDataProtectionBackupInstanceApiVersion);
             _deletedBackupInstanceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _deletedBackupInstanceResourcesRestClient = new DeletedBackupInstanceResources(_deletedBackupInstanceResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedDataProtectionBackupInstanceApiVersion ?? "2026-03-01");
+            _deletedBackupInstanceResourcesRestClient = new DeletedBackupInstanceResources(_deletedBackupInstanceResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedDataProtectionBackupInstanceApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Undelete
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Undelete
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

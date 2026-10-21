@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiscountList(value, nextLink, additionalBinaryDataProperties);
+            return new DiscountList(value ?? new ChangeTrackingList<DiscountData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

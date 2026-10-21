@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.Redis
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Cache/redis", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +195,7 @@ namespace Azure.ResourceManager.Redis
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +216,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/listUpgradeNotifications", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             uri.AppendQuery("history", TypeFormatters.ConvertToString(history), true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -265,10 +238,7 @@ namespace Azure.ResourceManager.Redis
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -289,10 +259,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/listKeys", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -313,10 +280,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/regenerateKey", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -339,10 +303,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/forceReboot", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -365,10 +326,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/import", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -390,10 +348,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/export", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -415,10 +370,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/flush", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -439,10 +391,7 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/privateLinkResources", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2025-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -463,10 +412,7 @@ namespace Azure.ResourceManager.Redis
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2025-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

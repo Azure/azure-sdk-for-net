@@ -84,15 +84,29 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("numberOfOccurrences"u8);
                 writer.WriteNumberValue(NumberOfOccurrences.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
-                writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartsOn != null)
+                {
+                    writer.WritePropertyName("startDate"u8);
+                    writer.WriteStringValue(StartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startDate"u8);
+                }
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endDate"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endDate"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +152,10 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             AccessReviewRecurrenceRangeType? @type = default;
             int? numberOfOccurrences = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            bool startsOnIsDefined = false;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,30 +179,36 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("startDate"u8))
                 {
+                    startsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccessReviewRecurrenceRange(@type, numberOfOccurrences, startOn, endOn, additionalBinaryDataProperties);
+            return new AccessReviewRecurrenceRange(@type, numberOfOccurrences, startsOn, endsOn, additionalBinaryDataProperties)
+            {
+                _startsOnIsDefined = startsOnIsDefined,
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

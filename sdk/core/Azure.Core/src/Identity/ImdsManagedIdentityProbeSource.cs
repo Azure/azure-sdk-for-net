@@ -99,7 +99,10 @@ namespace Azure.Identity
             return message;
         }
 
-        public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        public override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken) =>
+            AuthenticateAsync(async, context, isKeyGuardAvailable: false, cancellationToken);
+
+        internal async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, bool isKeyGuardAvailable, CancellationToken cancellationToken)
         {
             bool continueIMDSRequestAfterProbe;
             try
@@ -141,7 +144,7 @@ namespace Azure.Identity
                 try
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    var authResult = await _client.AcquireTokenForManagedIdentityAsync(context, false, cancellationToken).ConfigureAwait(false);
+                    var authResult = await _client.AcquireTokenForManagedIdentityAsync(context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     return authResult.ToAccessToken();
                 }

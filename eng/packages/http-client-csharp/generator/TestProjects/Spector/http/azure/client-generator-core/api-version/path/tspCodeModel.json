@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "ApiVersions",
+      "apiVersions": [
+        "2025-01-01"
+      ],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.ApiVersions",
       "valueType": {
         "$id": "2",
@@ -66,7 +69,6 @@
             "$id": "6",
             "name": "pathApiVersion",
             "isExactName": false,
-            "resourceName": "Path",
             "doc": "Path api version parameter.",
             "accessibility": "public",
             "parameters": [

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryResource.ResourceType, out string dataFactoryApiVersion);
             _factoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _factoriesRestClient = new Factories(
+                _factoriesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataFactoryApiVersion ?? "2018-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -292,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetByResourceGroupAsyncCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
+            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataAsyncCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetByResourceGroupCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
+            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataCollectionResultOfT(_factoriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataFactoryCollection.GetAll"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>

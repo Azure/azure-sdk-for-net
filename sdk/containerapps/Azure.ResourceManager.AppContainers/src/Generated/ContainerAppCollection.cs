@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppResource.ResourceType, out string containerAppApiVersion);
             _containerAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2025-10-02-preview");
+            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/containerApps", out string containerAppsApiVersionOverride) ? containerAppsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupAsyncCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppDataAsyncCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppDataCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

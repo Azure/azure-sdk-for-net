@@ -12,16 +12,16 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a reimage request. </summary>
+    /// <summary> The result of a bulk reimage action. </summary>
     public partial class BulkActionsReimageResourceOperationResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/>. </summary>
-        /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceTypeName"> The type of resources used in the reimage request eg virtual machines. </param>
-        /// <param name="location"> The location of the reimage request eg westus. </param>
+        /// <param name="description"> A description of the bulk action result. </param>
+        /// <param name="resourceTypeName"> The type of resources targeted by the bulk action. </param>
+        /// <param name="location"> The Azure region where Bulk Actions processes the request. </param>
         internal BulkActionsReimageResourceOperationResponseResult(string description, string resourceTypeName, AzureLocation location)
         {
             Description = description;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/>. </summary>
-        /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceTypeName"> The type of resources used in the reimage request eg virtual machines. </param>
-        /// <param name="location"> The location of the reimage request eg westus. </param>
-        /// <param name="results"> The results from the reimage request if no errors exist. </param>
+        /// <param name="description"> A description of the bulk action result. </param>
+        /// <param name="resourceTypeName"> The type of resources targeted by the bulk action. </param>
+        /// <param name="location"> The Azure region where Bulk Actions processes the request. </param>
+        /// <param name="results"> The result for each virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BulkActionsReimageResourceOperationResponseResult(string description, string resourceTypeName, AzureLocation location, IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The description of the operation response. </summary>
+        /// <summary> A description of the bulk action result. </summary>
         public string Description { get; }
 
-        /// <summary> The type of resources used in the reimage request eg virtual machines. </summary>
+        /// <summary> The type of resources targeted by the bulk action. </summary>
         public string ResourceTypeName { get; }
 
-        /// <summary> The location of the reimage request eg westus. </summary>
+        /// <summary> The Azure region where Bulk Actions processes the request. </summary>
         public AzureLocation Location { get; }
 
-        /// <summary> The results from the reimage request if no errors exist. </summary>
+        /// <summary> The result for each virtual machine. </summary>
         public IList<ComputeBulkOperationResult> Results { get; }
     }
 }

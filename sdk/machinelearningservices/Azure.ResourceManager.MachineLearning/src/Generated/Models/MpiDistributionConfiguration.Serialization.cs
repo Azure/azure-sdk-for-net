@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ProcessCountPerInstance))
+            if (Optional.IsDefined(ProcessCountPerInstance, _processCountPerInstanceIsDefined))
             {
-                writer.WritePropertyName("processCountPerInstance"u8);
-                writer.WriteNumberValue(ProcessCountPerInstance.Value);
+                if (ProcessCountPerInstance != null)
+                {
+                    writer.WritePropertyName("processCountPerInstance"u8);
+                    writer.WriteNumberValue(ProcessCountPerInstance.Value);
+                }
+                else
+                {
+                    writer.WriteNull("processCountPerInstance"u8);
+                }
             }
         }
 
@@ -109,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool processCountPerInstanceIsDefined = false;
             int? processCountPerInstance = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("processCountPerInstance"u8))
                 {
+                    processCountPerInstanceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         processCountPerInstance = null;
@@ -129,10 +138,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MpiDistributionConfiguration(distributionType, additionalBinaryDataProperties, processCountPerInstance);
+            return new MpiDistributionConfiguration(distributionType, additionalBinaryDataProperties, processCountPerInstance)
+            {
+                _processCountPerInstanceIsDefined = processCountPerInstanceIsDefined
+            };
         }
     }
 }

@@ -1,10 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -12,6 +18,62 @@ namespace Azure.Generator.Mgmt.Tests
     internal class NameVisitorTests
     {
         private const string TestClientName = "TestClient";
+
+        [Test]
+        public void ArmResourceTypePropertyUsesSharedProjection()
+        {
+            var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
+            var inputProperty = InputFactory.Property("type", resourceType, isReadOnly: true);
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(ResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo(nameof(ResourceData.ResourceType)));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(ResourceType))));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo("type"));
+            });
+        }
+
+        [TestCase("id")]
+        [TestCase("type")]
+        [TestCase("location")]
+        public void ArmFrameworkStringPropertyIsNotBroadlyProjected(string wireName)
+        {
+            var inputProperty = InputFactory.Property("currentProperty", InputPrimitiveType.String, serializedName: wireName, isReadOnly: wireName != "location");
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(TrackedResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("CurrentProperty"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo(wireName));
+            });
+        }
+
+        [Test]
+        public void OrdinaryModelPropertyIsNotArmProjected()
+        {
+            var inputProperty = InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true);
+            var model = InputFactory.Model("CurrentResource", properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("Type"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+            });
+        }
 
         [Test]
         public void TestTransformUrlToUri()
@@ -38,6 +100,64 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Url", "Uri")));
         }
 
+        [TestCase("StartTime", true)]
+        [TestCase("EndTime", true)]
+        [TestCase("ExpirationTime", true)]
+        [TestCase("AccessTierChangeTime", true)]
+        [TestCase("LastSyncTimestamp", true)]
+        [TestCase("ExpireOn", true)]
+        [TestCase("TestTime", false)]
+        [TestCase("FromStartTime", false)]
+        [TestCase("StatusTimestamp", false)]
+        public void IdentifiesPropertiesWhoseMtgNameDiffersFromTheGaPattern(string propertyName, bool expected)
+        {
+            var dateTime = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                properties: [InputFactory.Property(propertyName, dateTime, isRequired: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
+
+            Assert.That(plugin.Object.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void SourcePropertyRegistrationDoesNotFreezeParameterType()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
+
+            property.Update(type: typeof(int));
+
+            Assert.That(property.AsParameter.Type, Is.EqualTo(new CSharpType(typeof(int))));
+        }
+
+        [Test]
+        public void DateTimePropertyRenamingIsOwnedByMtg()
+        {
+            var dateTime = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputProperty = InputFactory.Property("StartTime", dateTime, isRequired: true);
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!
+                .SetValue(inputProperty, true);
+            var inputModel = InputFactory.Model("TestModel", properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
+
+            Assert.That(property.Name, Is.EqualTo("StartTime"));
+        }
+
         [TestCase("StartTime", "StartsOn")]
         [TestCase("EndTime", "EndsOn")]
         [TestCase("CreationTime", "CreatedOn")]
@@ -48,16 +168,16 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase("FirstSeenTime", "FirstSeenOn")]
         [TestCase("TestDate", "TestOn")]
         [TestCase("TestDateTime", "TestOn")]
-        // Names that must be preserved: the From/To prefixes and the PointInTime suffix are
-        // excluded by the visitor, and bare "Time"/"Date" are too short to carry a prefix.
+        // Names that must be preserved: MTG excludes the From/To prefixes and the PointInTime suffix,
+        // and bare "Time"/"Date" are too short to carry a prefix.
         [TestCase("FromTime", "FromTime")]
         [TestCase("ToTime", "ToTime")]
         [TestCase("RestorePointInTime", "RestorePointInTime")]
         [TestCase("Time", "Time")]
         [TestCase("Date", "Date")]
-        public void TestTransformTimePropertyName(string testPropertyName, string expectedPropertyName)
+        public void DateTimePropertyUsesMtgName(string testPropertyName, string expectedPropertyName)
         {
-            Assert.That(TransformDateTimePropertyName(testPropertyName, InputPrimitiveType.PlainDate), Is.EqualTo(expectedPropertyName));
+            Assert.That(GetGeneratedDateTimePropertyName(testPropertyName, InputPrimitiveType.PlainDate), Is.EqualTo(expectedPropertyName));
         }
 
         // The rename keys off the input type rather than the mapped C# type, so utcDateTime must
@@ -67,19 +187,19 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase("CreationTime", "CreatedOn")]
         [TestCase("ExpirationTime", "ExpiresOn")]
         [TestCase("RestorePointInTime", "RestorePointInTime")]
-        public void TestTransformTimePropertyNameForUtcDateTime(string testPropertyName, string expectedPropertyName)
+        public void UtcDateTimePropertyUsesMtgName(string testPropertyName, string expectedPropertyName)
         {
             var utcDateTime = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
-            Assert.That(TransformDateTimePropertyName(testPropertyName, utcDateTime), Is.EqualTo(expectedPropertyName));
+            Assert.That(GetGeneratedDateTimePropertyName(testPropertyName, utcDateTime), Is.EqualTo(expectedPropertyName));
         }
 
         [Test]
         public void TestNonDateTimePropertyNameIsNotTransformed()
         {
-            Assert.That(TransformDateTimePropertyName("StartTime", InputPrimitiveType.String), Is.EqualTo("StartTime"));
+            Assert.That(GetGeneratedDateTimePropertyName("StartTime", InputPrimitiveType.String), Is.EqualTo("StartTime"));
         }
 
-        private static string? TransformDateTimePropertyName(string testPropertyName, InputType propertyType)
+        private static string? GetGeneratedDateTimePropertyName(string testPropertyName, InputType propertyType)
         {
             const string testModelName = "TestModel";
             var modelProperty = InputFactory.Property(testPropertyName, propertyType, serializedName: "testName", isRequired: true);

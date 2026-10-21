@@ -145,6 +145,7 @@
       "$id": "17",
       "kind": "model",
       "name": "BoolAsStringProperty",
+      "apiVersions": [],
       "namespace": "Encode.Boolean.Property",
       "crossLanguageDefinitionId": "Encode.Boolean.Property.BoolAsStringProperty",
       "usage": "Input,Output,Json",
@@ -160,6 +161,7 @@
           "$id": "18",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "19",
@@ -251,7 +253,6 @@
                 "$id": "26",
                 "name": "trueLower",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -441,7 +442,6 @@
                 "$id": "34",
                 "name": "falseLower",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -631,7 +631,6 @@
                 "$id": "42",
                 "name": "trueUpper",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -821,7 +820,6 @@
                 "$id": "50",
                 "name": "falseMixed",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {

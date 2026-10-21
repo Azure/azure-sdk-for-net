@@ -74,20 +74,27 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(StartInMinutes))
             {
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn, _expiresOnIsDefined))
             {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                if (ExpiresOn != null)
+                {
+                    writer.WritePropertyName("expiryTime"u8);
+                    writer.WriteStringValue(ExpiresOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expiryTime"u8);
+                }
             }
             if (Optional.IsDefined(ExpireInMinutes))
             {
@@ -99,10 +106,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NextRunOn))
+            if (Optional.IsDefined(NextRunOn, _nextRunOnIsDefined))
             {
-                writer.WritePropertyName("nextRun"u8);
-                writer.WriteStringValue(NextRunOn.Value, "O");
+                if (NextRunOn != null)
+                {
+                    writer.WritePropertyName("nextRun"u8);
+                    writer.WriteStringValue(NextRunOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("nextRun"u8);
+                }
             }
             if (Optional.IsDefined(NextRunInMinutes))
             {
@@ -193,11 +207,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             double? startInMinutes = default;
-            DateTimeOffset? expireOn = default;
+            bool expiresOnIsDefined = false;
+            DateTimeOffset? expiresOn = default;
             double? expireInMinutes = default;
             bool? isEnabled = default;
+            bool nextRunOnIsDefined = false;
             DateTimeOffset? nextRunOn = default;
             double? nextRunInMinutes = default;
             BinaryData interval = default;
@@ -216,7 +232,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeOffsetMinutes"u8))
@@ -230,12 +246,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("expiryTime"u8))
                 {
+                    expiresOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expireOn = null;
+                        expiresOn = null;
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTimeOffsetMinutes"u8))
@@ -258,6 +275,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("nextRun"u8))
                 {
+                    nextRunOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextRunOn = null;
@@ -281,7 +299,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    interval = BinaryData.FromString(prop.Value.GetRawText());
+                    interval = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("frequency"u8))
@@ -332,13 +350,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduleProperties(
-                startOn,
+                startsOn,
                 startInMinutes,
-                expireOn,
+                expiresOn,
                 expireInMinutes,
                 isEnabled,
                 nextRunOn,
@@ -350,7 +368,11 @@ namespace Azure.ResourceManager.Automation.Models
                 createdOn,
                 lastModifiedOn,
                 description,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _expiresOnIsDefined = expiresOnIsDefined,
+                _nextRunOnIsDefined = nextRunOnIsDefined
+            };
         }
     }
 }

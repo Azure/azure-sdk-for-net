@@ -74,15 +74,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxLayerSelector)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MediaType))
+            if (Optional.IsDefined(MediaType, _mediaTypeIsDefined))
             {
-                writer.WritePropertyName("mediaType"u8);
-                writer.WriteStringValue(MediaType);
+                if (MediaType != null)
+                {
+                    writer.WritePropertyName("mediaType"u8);
+                    writer.WriteStringValue(MediaType);
+                }
+                else
+                {
+                    writer.WriteNull("mediaType"u8);
+                }
             }
-            if (Optional.IsDefined(Operation))
+            if (Optional.IsDefined(Operation, _operationIsDefined))
             {
-                writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                if (Operation != null)
+                {
+                    writer.WritePropertyName("operation"u8);
+                    writer.WriteStringValue(Operation.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("operation"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,13 +140,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool mediaTypeIsDefined = false;
             string mediaType = default;
+            bool operationIsDefined = false;
             FluxConfigurationOperationType? operation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mediaType"u8))
                 {
+                    mediaTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         mediaType = null;
@@ -143,6 +160,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("operation"u8))
                 {
+                    operationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         operation = null;
@@ -153,10 +171,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxLayerSelector(mediaType, operation, additionalBinaryDataProperties);
+            return new FluxLayerSelector(mediaType, operation, additionalBinaryDataProperties)
+            {
+                _mediaTypeIsDefined = mediaTypeIsDefined,
+                _operationIsDefined = operationIsDefined
+            };
         }
     }
 }

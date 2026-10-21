@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (ProbeProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Port;
+                return Properties is null ? (int?)default : Properties.Port;
             }
             set
             {

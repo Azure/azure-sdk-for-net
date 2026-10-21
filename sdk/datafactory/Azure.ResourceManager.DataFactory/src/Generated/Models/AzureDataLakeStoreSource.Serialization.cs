@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadRecursive(prop, ref recursive);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new AzureDataLakeStoreSource(
                 copySourceType,

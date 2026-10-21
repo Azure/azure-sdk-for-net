@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <param name="useLocalFileRules"> When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(HostEndpointSettingsMode? mode, string inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostEndpointSettings(HostEndpointSettingsMode? mode, string inVmAccessControlProfileReferenceId, bool? useLocalFileRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
+            UseLocalFileRules = useLocalFileRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
         public string InVmAccessControlProfileReferenceId { get; set; }
+
+        /// <summary> When set to true, instructs the GuestProxyAgent inside the VM to load additional access control rules defined in a local file on the VM. </summary>
+        public bool? UseLocalFileRules { get; set; }
     }
 }

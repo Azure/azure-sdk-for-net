@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VaultList(value, nextLink, additionalBinaryDataProperties);
+            return new VaultList(value ?? new ChangeTrackingList<RecoveryServicesVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ExtensibleString",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.ExtensibleString",
       "valueType": {
         "$id": "2",
@@ -1191,6 +1192,7 @@
       "$id": "118",
       "kind": "model",
       "name": "and",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.and",
       "usage": "Input,Json",
@@ -1206,6 +1208,7 @@
           "$id": "119",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "120",
@@ -1234,6 +1237,7 @@
       "$id": "121",
       "kind": "model",
       "name": "as",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.as",
       "usage": "Input,Json",
@@ -1249,6 +1253,7 @@
           "$id": "122",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "123",
@@ -1277,6 +1282,7 @@
       "$id": "124",
       "kind": "model",
       "name": "assert",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.assert",
       "usage": "Input,Json",
@@ -1292,6 +1298,7 @@
           "$id": "125",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "126",
@@ -1320,6 +1327,7 @@
       "$id": "127",
       "kind": "model",
       "name": "async",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.async",
       "usage": "Input,Json",
@@ -1335,6 +1343,7 @@
           "$id": "128",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "129",
@@ -1363,6 +1372,7 @@
       "$id": "130",
       "kind": "model",
       "name": "await",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.await",
       "usage": "Input,Json",
@@ -1378,6 +1388,7 @@
           "$id": "131",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "132",
@@ -1406,6 +1417,7 @@
       "$id": "133",
       "kind": "model",
       "name": "break",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.break",
       "usage": "Input,Json",
@@ -1421,6 +1433,7 @@
           "$id": "134",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "135",
@@ -1449,6 +1462,7 @@
       "$id": "136",
       "kind": "model",
       "name": "class",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.class",
       "usage": "Input,Json",
@@ -1464,6 +1478,7 @@
           "$id": "137",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "138",
@@ -1492,6 +1507,7 @@
       "$id": "139",
       "kind": "model",
       "name": "constructor",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.constructor",
       "usage": "Input,Json",
@@ -1507,6 +1523,7 @@
           "$id": "140",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "141",
@@ -1535,6 +1552,7 @@
       "$id": "142",
       "kind": "model",
       "name": "continue",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.continue",
       "usage": "Input,Json",
@@ -1550,6 +1568,7 @@
           "$id": "143",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "144",
@@ -1578,6 +1597,7 @@
       "$id": "145",
       "kind": "model",
       "name": "def",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.def",
       "usage": "Input,Json",
@@ -1593,6 +1613,7 @@
           "$id": "146",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "147",
@@ -1621,6 +1642,7 @@
       "$id": "148",
       "kind": "model",
       "name": "del",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.del",
       "usage": "Input,Json",
@@ -1636,6 +1658,7 @@
           "$id": "149",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "150",
@@ -1664,6 +1687,7 @@
       "$id": "151",
       "kind": "model",
       "name": "elif",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.elif",
       "usage": "Input,Json",
@@ -1679,6 +1703,7 @@
           "$id": "152",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "153",
@@ -1707,6 +1732,7 @@
       "$id": "154",
       "kind": "model",
       "name": "else",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.else",
       "usage": "Input,Json",
@@ -1722,6 +1748,7 @@
           "$id": "155",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "156",
@@ -1750,6 +1777,7 @@
       "$id": "157",
       "kind": "model",
       "name": "except",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.except",
       "usage": "Input,Json",
@@ -1765,6 +1793,7 @@
           "$id": "158",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "159",
@@ -1793,6 +1822,7 @@
       "$id": "160",
       "kind": "model",
       "name": "exec",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.exec",
       "usage": "Input,Json",
@@ -1808,6 +1838,7 @@
           "$id": "161",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "162",
@@ -1836,6 +1867,7 @@
       "$id": "163",
       "kind": "model",
       "name": "finally",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.finally",
       "usage": "Input,Json",
@@ -1851,6 +1883,7 @@
           "$id": "164",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "165",
@@ -1879,6 +1912,7 @@
       "$id": "166",
       "kind": "model",
       "name": "for",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.for",
       "usage": "Input,Json",
@@ -1894,6 +1928,7 @@
           "$id": "167",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "168",
@@ -1922,6 +1957,7 @@
       "$id": "169",
       "kind": "model",
       "name": "from",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.from",
       "usage": "Input,Json",
@@ -1937,6 +1973,7 @@
           "$id": "170",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "171",
@@ -1965,6 +2002,7 @@
       "$id": "172",
       "kind": "model",
       "name": "global",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.global",
       "usage": "Input,Json",
@@ -1980,6 +2018,7 @@
           "$id": "173",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "174",
@@ -2008,6 +2047,7 @@
       "$id": "175",
       "kind": "model",
       "name": "if",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.if",
       "usage": "Input,Json",
@@ -2023,6 +2063,7 @@
           "$id": "176",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "177",
@@ -2051,6 +2092,7 @@
       "$id": "178",
       "kind": "model",
       "name": "import",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.import",
       "usage": "Input,Json",
@@ -2066,6 +2108,7 @@
           "$id": "179",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "180",
@@ -2094,6 +2137,7 @@
       "$id": "181",
       "kind": "model",
       "name": "in",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.in",
       "usage": "Input,Json",
@@ -2109,6 +2153,7 @@
           "$id": "182",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "183",
@@ -2137,6 +2182,7 @@
       "$id": "184",
       "kind": "model",
       "name": "is",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.is",
       "usage": "Input,Json",
@@ -2152,6 +2198,7 @@
           "$id": "185",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "186",
@@ -2180,6 +2227,7 @@
       "$id": "187",
       "kind": "model",
       "name": "lambda",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.lambda",
       "usage": "Input,Json",
@@ -2195,6 +2243,7 @@
           "$id": "188",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "189",
@@ -2223,6 +2272,7 @@
       "$id": "190",
       "kind": "model",
       "name": "not",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.not",
       "usage": "Input,Json",
@@ -2238,6 +2288,7 @@
           "$id": "191",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "192",
@@ -2266,6 +2317,7 @@
       "$id": "193",
       "kind": "model",
       "name": "or",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.or",
       "usage": "Input,Json",
@@ -2281,6 +2333,7 @@
           "$id": "194",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "195",
@@ -2309,6 +2362,7 @@
       "$id": "196",
       "kind": "model",
       "name": "pass",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.pass",
       "usage": "Input,Json",
@@ -2324,6 +2378,7 @@
           "$id": "197",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "198",
@@ -2352,6 +2407,7 @@
       "$id": "199",
       "kind": "model",
       "name": "raise",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.raise",
       "usage": "Input,Json",
@@ -2367,6 +2423,7 @@
           "$id": "200",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "201",
@@ -2395,6 +2452,7 @@
       "$id": "202",
       "kind": "model",
       "name": "return",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.return",
       "usage": "Input,Json",
@@ -2410,6 +2468,7 @@
           "$id": "203",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "204",
@@ -2438,6 +2497,7 @@
       "$id": "205",
       "kind": "model",
       "name": "try",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.try",
       "usage": "Input,Json",
@@ -2453,6 +2513,7 @@
           "$id": "206",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "207",
@@ -2481,6 +2542,7 @@
       "$id": "208",
       "kind": "model",
       "name": "while",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.while",
       "usage": "Input,Json",
@@ -2496,6 +2558,7 @@
           "$id": "209",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "210",
@@ -2524,6 +2587,7 @@
       "$id": "211",
       "kind": "model",
       "name": "with",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.with",
       "usage": "Input,Json",
@@ -2539,6 +2603,7 @@
           "$id": "212",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "213",
@@ -2567,6 +2632,7 @@
       "$id": "214",
       "kind": "model",
       "name": "yield",
+      "apiVersions": [],
       "namespace": "SpecialWords.Models",
       "crossLanguageDefinitionId": "SpecialWords.Models.yield",
       "usage": "Input,Json",
@@ -2582,6 +2648,7 @@
           "$id": "215",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "216",
@@ -2610,6 +2677,7 @@
       "$id": "217",
       "kind": "model",
       "name": "SameAsModel",
+      "apiVersions": [],
       "namespace": "SpecialWords.ModelProperties",
       "crossLanguageDefinitionId": "SpecialWords.ModelProperties.SameAsModel",
       "usage": "Input,Json",
@@ -2625,6 +2693,7 @@
           "$id": "218",
           "kind": "property",
           "name": "SameAsModel",
+          "apiVersions": [],
           "serializedName": "SameAsModel",
           "type": {
             "$id": "219",
@@ -2653,6 +2722,7 @@
       "$id": "220",
       "kind": "model",
       "name": "DictMethods",
+      "apiVersions": [],
       "namespace": "SpecialWords.ModelProperties",
       "crossLanguageDefinitionId": "SpecialWords.ModelProperties.DictMethods",
       "usage": "Input,Json",
@@ -2668,6 +2738,7 @@
           "$id": "221",
           "kind": "property",
           "name": "keys",
+          "apiVersions": [],
           "serializedName": "keys",
           "type": {
             "$id": "222",
@@ -2694,6 +2765,7 @@
           "$id": "223",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "type": {
             "$id": "224",
@@ -2720,6 +2792,7 @@
           "$id": "225",
           "kind": "property",
           "name": "values",
+          "apiVersions": [],
           "serializedName": "values",
           "type": {
             "$id": "226",
@@ -2746,6 +2819,7 @@
           "$id": "227",
           "kind": "property",
           "name": "popitem",
+          "apiVersions": [],
           "serializedName": "popitem",
           "type": {
             "$id": "228",
@@ -2772,6 +2846,7 @@
           "$id": "229",
           "kind": "property",
           "name": "clear",
+          "apiVersions": [],
           "serializedName": "clear",
           "type": {
             "$id": "230",
@@ -2798,6 +2873,7 @@
           "$id": "231",
           "kind": "property",
           "name": "update",
+          "apiVersions": [],
           "serializedName": "update",
           "type": {
             "$id": "232",
@@ -2824,6 +2900,7 @@
           "$id": "233",
           "kind": "property",
           "name": "setdefault",
+          "apiVersions": [],
           "serializedName": "setdefault",
           "type": {
             "$id": "234",
@@ -2850,6 +2927,7 @@
           "$id": "235",
           "kind": "property",
           "name": "pop",
+          "apiVersions": [],
           "serializedName": "pop",
           "type": {
             "$id": "236",
@@ -2876,6 +2954,7 @@
           "$id": "237",
           "kind": "property",
           "name": "get",
+          "apiVersions": [],
           "serializedName": "get",
           "type": {
             "$id": "238",
@@ -2902,6 +2981,7 @@
           "$id": "239",
           "kind": "property",
           "name": "copy",
+          "apiVersions": [],
           "serializedName": "copy",
           "type": {
             "$id": "240",
@@ -2930,6 +3010,7 @@
       "$id": "241",
       "kind": "model",
       "name": "ModelWithList",
+      "apiVersions": [],
       "namespace": "SpecialWords.ModelProperties",
       "crossLanguageDefinitionId": "SpecialWords.ModelProperties.ModelWithList",
       "usage": "Input,Json",
@@ -2945,6 +3026,7 @@
           "$id": "242",
           "kind": "property",
           "name": "list",
+          "apiVersions": [],
           "serializedName": "list",
           "type": {
             "$id": "243",
@@ -2973,6 +3055,7 @@
       "$id": "244",
       "kind": "model",
       "name": "WithItemsRequest",
+      "apiVersions": [],
       "namespace": "SpecialWords.ReservedOperationBodyParams",
       "crossLanguageDefinitionId": "SpecialWords.ReservedOperationBodyParams.withItems.Request.anonymous",
       "usage": "Spread,Json",
@@ -2988,6 +3071,7 @@
           "$id": "245",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "type": {
             "$id": "246",
@@ -3086,7 +3170,6 @@
                 "$id": "254",
                 "name": "withAnd",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3222,7 +3305,6 @@
                 "$id": "260",
                 "name": "withAs",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3358,7 +3440,6 @@
                 "$id": "266",
                 "name": "withAssert",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3494,7 +3575,6 @@
                 "$id": "272",
                 "name": "withAsync",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3630,7 +3710,6 @@
                 "$id": "278",
                 "name": "withAwait",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3766,7 +3845,6 @@
                 "$id": "284",
                 "name": "withBreak",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3902,7 +3980,6 @@
                 "$id": "290",
                 "name": "withClass",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4038,7 +4115,6 @@
                 "$id": "296",
                 "name": "withConstructor",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4174,7 +4250,6 @@
                 "$id": "302",
                 "name": "withContinue",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4310,7 +4385,6 @@
                 "$id": "308",
                 "name": "withDef",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4446,7 +4520,6 @@
                 "$id": "314",
                 "name": "withDel",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4582,7 +4655,6 @@
                 "$id": "320",
                 "name": "withElif",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4718,7 +4790,6 @@
                 "$id": "326",
                 "name": "withElse",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4854,7 +4925,6 @@
                 "$id": "332",
                 "name": "withExcept",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4990,7 +5060,6 @@
                 "$id": "338",
                 "name": "withExec",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5126,7 +5195,6 @@
                 "$id": "344",
                 "name": "withFinally",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5262,7 +5330,6 @@
                 "$id": "350",
                 "name": "withFor",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5398,7 +5465,6 @@
                 "$id": "356",
                 "name": "withFrom",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5534,7 +5600,6 @@
                 "$id": "362",
                 "name": "withGlobal",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5670,7 +5735,6 @@
                 "$id": "368",
                 "name": "withIf",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5806,7 +5870,6 @@
                 "$id": "374",
                 "name": "withImport",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5942,7 +6005,6 @@
                 "$id": "380",
                 "name": "withIn",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6078,7 +6140,6 @@
                 "$id": "386",
                 "name": "withIs",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6214,7 +6275,6 @@
                 "$id": "392",
                 "name": "withLambda",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6350,7 +6410,6 @@
                 "$id": "398",
                 "name": "withNot",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6486,7 +6545,6 @@
                 "$id": "404",
                 "name": "withOr",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6622,7 +6680,6 @@
                 "$id": "410",
                 "name": "withPass",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6758,7 +6815,6 @@
                 "$id": "416",
                 "name": "withRaise",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6894,7 +6950,6 @@
                 "$id": "422",
                 "name": "withReturn",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7030,7 +7085,6 @@
                 "$id": "428",
                 "name": "withTry",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7166,7 +7220,6 @@
                 "$id": "434",
                 "name": "withWhile",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7302,7 +7355,6 @@
                 "$id": "440",
                 "name": "withWith",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7438,7 +7490,6 @@
                 "$id": "446",
                 "name": "withYield",
                 "isExactName": false,
-                "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7625,7 +7676,6 @@
                 "$id": "456",
                 "name": "sameAsModel",
                 "isExactName": false,
-                "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7761,7 +7811,6 @@
                 "$id": "462",
                 "name": "dictMethods",
                 "isExactName": false,
-                "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7897,7 +7946,6 @@
                 "$id": "468",
                 "name": "withList",
                 "isExactName": false,
-                "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8084,7 +8132,6 @@
                 "$id": "478",
                 "name": "withItems",
                 "isExactName": false,
-                "resourceName": "ReservedOperationBodyParams",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8271,7 +8318,6 @@
                 "$id": "488",
                 "name": "putExtensibleStringValue",
                 "isExactName": false,
-                "resourceName": "ExtensibleStrings",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8518,7 +8564,6 @@
                 "$id": "500",
                 "name": "and",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8559,7 +8604,6 @@
                 "$id": "502",
                 "name": "as",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8600,7 +8644,6 @@
                 "$id": "504",
                 "name": "assert",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8641,7 +8684,6 @@
                 "$id": "506",
                 "name": "async",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8682,7 +8724,6 @@
                 "$id": "508",
                 "name": "await",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8723,7 +8764,6 @@
                 "$id": "510",
                 "name": "break",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8764,7 +8804,6 @@
                 "$id": "512",
                 "name": "class",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8805,7 +8844,6 @@
                 "$id": "514",
                 "name": "constructor",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8846,7 +8884,6 @@
                 "$id": "516",
                 "name": "continue",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8887,7 +8924,6 @@
                 "$id": "518",
                 "name": "def",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8928,7 +8964,6 @@
                 "$id": "520",
                 "name": "del",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -8969,7 +9004,6 @@
                 "$id": "522",
                 "name": "elif",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9010,7 +9044,6 @@
                 "$id": "524",
                 "name": "else",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9051,7 +9084,6 @@
                 "$id": "526",
                 "name": "except",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9092,7 +9124,6 @@
                 "$id": "528",
                 "name": "exec",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9133,7 +9164,6 @@
                 "$id": "530",
                 "name": "finally",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9174,7 +9204,6 @@
                 "$id": "532",
                 "name": "for",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9215,7 +9244,6 @@
                 "$id": "534",
                 "name": "from",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9256,7 +9284,6 @@
                 "$id": "536",
                 "name": "global",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9297,7 +9324,6 @@
                 "$id": "538",
                 "name": "if",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9338,7 +9364,6 @@
                 "$id": "540",
                 "name": "import",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9379,7 +9404,6 @@
                 "$id": "542",
                 "name": "in",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9420,7 +9444,6 @@
                 "$id": "544",
                 "name": "is",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9461,7 +9484,6 @@
                 "$id": "546",
                 "name": "lambda",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9502,7 +9524,6 @@
                 "$id": "548",
                 "name": "not",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9543,7 +9564,6 @@
                 "$id": "550",
                 "name": "or",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9584,7 +9604,6 @@
                 "$id": "552",
                 "name": "pass",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9625,7 +9644,6 @@
                 "$id": "554",
                 "name": "raise",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9666,7 +9684,6 @@
                 "$id": "556",
                 "name": "return",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9707,7 +9724,6 @@
                 "$id": "558",
                 "name": "try",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9748,7 +9764,6 @@
                 "$id": "560",
                 "name": "while",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9789,7 +9804,6 @@
                 "$id": "562",
                 "name": "with",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9830,7 +9844,6 @@
                 "$id": "564",
                 "name": "yield",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -9922,7 +9935,6 @@
                 "$id": "570",
                 "name": "withAnd",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10013,7 +10025,6 @@
                 "$id": "576",
                 "name": "withAs",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10104,7 +10115,6 @@
                 "$id": "582",
                 "name": "withAssert",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10195,7 +10205,6 @@
                 "$id": "588",
                 "name": "withAsync",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10286,7 +10295,6 @@
                 "$id": "594",
                 "name": "withAwait",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10377,7 +10385,6 @@
                 "$id": "600",
                 "name": "withBreak",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10468,7 +10475,6 @@
                 "$id": "606",
                 "name": "withClass",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10559,7 +10565,6 @@
                 "$id": "612",
                 "name": "withConstructor",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10650,7 +10655,6 @@
                 "$id": "618",
                 "name": "withContinue",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10741,7 +10745,6 @@
                 "$id": "624",
                 "name": "withDef",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10832,7 +10835,6 @@
                 "$id": "630",
                 "name": "withDel",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10923,7 +10925,6 @@
                 "$id": "636",
                 "name": "withElif",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11014,7 +11015,6 @@
                 "$id": "642",
                 "name": "withElse",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11105,7 +11105,6 @@
                 "$id": "648",
                 "name": "withExcept",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11196,7 +11195,6 @@
                 "$id": "654",
                 "name": "withExec",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11287,7 +11285,6 @@
                 "$id": "660",
                 "name": "withFinally",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11378,7 +11375,6 @@
                 "$id": "666",
                 "name": "withFor",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11469,7 +11465,6 @@
                 "$id": "672",
                 "name": "withFrom",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11560,7 +11555,6 @@
                 "$id": "678",
                 "name": "withGlobal",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11651,7 +11645,6 @@
                 "$id": "684",
                 "name": "withIf",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11742,7 +11735,6 @@
                 "$id": "690",
                 "name": "withImport",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11833,7 +11825,6 @@
                 "$id": "696",
                 "name": "withIn",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11924,7 +11915,6 @@
                 "$id": "702",
                 "name": "withIs",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12015,7 +12005,6 @@
                 "$id": "708",
                 "name": "withLambda",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12106,7 +12095,6 @@
                 "$id": "714",
                 "name": "withNot",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12197,7 +12185,6 @@
                 "$id": "720",
                 "name": "withOr",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12288,7 +12275,6 @@
                 "$id": "726",
                 "name": "withPass",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12379,7 +12365,6 @@
                 "$id": "732",
                 "name": "withRaise",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12470,7 +12455,6 @@
                 "$id": "738",
                 "name": "withReturn",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12561,7 +12545,6 @@
                 "$id": "744",
                 "name": "withTry",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12652,7 +12635,6 @@
                 "$id": "750",
                 "name": "withWhile",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12743,7 +12725,6 @@
                 "$id": "756",
                 "name": "withWith",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12834,7 +12815,6 @@
                 "$id": "762",
                 "name": "withYield",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -12925,7 +12905,6 @@
                 "$id": "768",
                 "name": "withCancellationToken",
                 "isExactName": false,
-                "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
                   {

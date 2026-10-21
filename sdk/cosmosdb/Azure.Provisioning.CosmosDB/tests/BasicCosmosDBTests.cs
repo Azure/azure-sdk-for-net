@@ -93,7 +93,7 @@ public class BasicCosmosDBTests
             param location string = resourceGroup().location
 
             resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
-              name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
+              name: take('cosmos-${uniqueString(resourceGroup().id)}', 50)
               location: location
               properties: {
                 consistencyPolicy: {

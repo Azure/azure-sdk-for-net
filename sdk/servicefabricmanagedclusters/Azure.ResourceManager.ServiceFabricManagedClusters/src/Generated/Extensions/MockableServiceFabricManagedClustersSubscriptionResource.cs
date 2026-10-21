@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceFabric/managedClusters", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         private ClientDiagnostics ManagedClusterVersionClientDiagnostics => _managedClusterVersionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusterVersion ManagedClusterVersionRestClient => _managedClusterVersionRestClient ??= new ManagedClusterVersion(ManagedClusterVersionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
+        private ManagedClusterVersion ManagedClusterVersionRestClient => _managedClusterVersionRestClient ??= new ManagedClusterVersion(ManagedClusterVersionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics ManagedUnsupportedVMSizesClientDiagnostics => _managedUnsupportedVMSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedUnsupportedVMSizes ManagedUnsupportedVMSizesRestClient => _managedUnsupportedVMSizesRestClient ??= new ManagedUnsupportedVMSizes(ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
+        private ManagedUnsupportedVMSizes ManagedUnsupportedVMSizesRestClient => _managedUnsupportedVMSizesRestClient ??= new ManagedUnsupportedVMSizes(ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetBySubscriptionAsyncCollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataAsync0CollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetBySubscriptionCollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterData0CollectionResultOfT(ManagedClustersRestClient, Id.SubscriptionId, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetServiceFabricManagedClusters"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
+            return new ServiceFabricManagedUnsupportedVmSizeAsyncCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
+            return new ServiceFabricManagedUnsupportedVmSizeCollectionResultOfT(ManagedUnsupportedVMSizesRestClient, Id.SubscriptionId, location, context, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes");
         }
     }
 }

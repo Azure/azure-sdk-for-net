@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectionType;
+                return Properties is null ? (ServerConnectionType?)default : Properties.ConnectionType;
             }
             set
             {

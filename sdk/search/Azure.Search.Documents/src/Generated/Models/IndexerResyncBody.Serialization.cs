@@ -87,13 +87,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Options))
             {
-                writer.WritePropertyName("options"u8);
-                writer.WriteStartArray();
-                foreach (IndexerResyncOption item in Options)
+                if (Options != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("options"u8);
+                    writer.WriteStartArray();
+                    foreach (IndexerResyncOption item in Options)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("options"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,7 +144,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IList<IndexerResyncOption> options0 = default;
+            IList<IndexerResyncOption> options0 = new ChangeTrackingList<IndexerResyncOption>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,6 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        options0 = null;
                         continue;
                     }
                     List<IndexerResyncOption> array = new List<IndexerResyncOption>();
@@ -157,10 +165,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IndexerResyncBody(options0 ?? new ChangeTrackingList<IndexerResyncOption>(), additionalBinaryDataProperties);
+            return new IndexerResyncBody(options0, additionalBinaryDataProperties);
         }
     }
 }

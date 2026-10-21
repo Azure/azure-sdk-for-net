@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ImmediateSuccessResponseRepeatabilityResult",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.ResponseRepeatabilityResult.anonymous",
       "valueType": {
         "$id": "2",
@@ -75,7 +76,6 @@
             "$id": "7",
             "name": "immediateSuccess",
             "isExactName": false,
-            "resourceName": "Repeatability",
             "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
             "accessibility": "public",
             "parameters": [

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.CanOverwrite;
+                return Properties is null ? (bool?)default : Properties.CanOverwrite;
             }
             set
             {

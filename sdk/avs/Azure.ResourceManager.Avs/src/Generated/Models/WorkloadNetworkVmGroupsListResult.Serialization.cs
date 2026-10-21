@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkVmGroupsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkVmGroupsListResult(value ?? new ChangeTrackingList<WorkloadNetworkVmGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

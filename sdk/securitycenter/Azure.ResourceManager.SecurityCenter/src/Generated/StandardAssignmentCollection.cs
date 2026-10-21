@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandardAssignmentData, StandardAssignmentResource>(new StandardAssignmentsGetAllAsyncCollectionResultOfT(_standardAssignmentsRestClient, Id.ToString(), context, "StandardAssignmentCollection.GetAll"), data => new StandardAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<StandardAssignmentData, StandardAssignmentResource>(new StandardAssignmentDataAsyncCollectionResultOfT(_standardAssignmentsRestClient, Id.ToString(), context, "StandardAssignmentCollection.GetAll"), data => new StandardAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandardAssignmentData, StandardAssignmentResource>(new StandardAssignmentsGetAllCollectionResultOfT(_standardAssignmentsRestClient, Id.ToString(), context, "StandardAssignmentCollection.GetAll"), data => new StandardAssignmentResource(Client, data));
+            return new PageableWrapper<StandardAssignmentData, StandardAssignmentResource>(new StandardAssignmentDataCollectionResultOfT(_standardAssignmentsRestClient, Id.ToString(), context, "StandardAssignmentCollection.GetAll"), data => new StandardAssignmentResource(Client, data));
         }
 
         /// <summary>

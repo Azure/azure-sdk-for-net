@@ -39,11 +39,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default);
         }
 
+        /// <summary>
+        /// The parameters of the dryrun
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateOrUpdateDryrunContent"/>.
+        /// </summary>
         /// <param name="actionName"> The name of action for you dryrun job. </param>
         /// <returns> A new <see cref="Models.DryrunContent"/> instance for mocking. </returns>
         public static DryrunContent DryrunContent(string actionName = default)
         {
-            return new UnknownDryrunContent(default, default);
+            return new UnknownDryrunContent(actionName is null ? default : new DryrunActionName(actionName), default);
         }
 
         /// <param name="targetService"> The target service properties. </param>
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static CreateOrUpdateDryrunContent CreateOrUpdateDryrunContent(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default)
         {
             return new CreateOrUpdateDryrunContent(
-                default,
+                DryrunActionName.CreateOrUpdate,
                 default,
                 targetService,
                 authInfo,
@@ -74,78 +78,98 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 configurationInfo);
         }
 
+        /// <summary>
+        /// The target service properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceInfo"/>, <see cref="Models.ConfluentBootstrapServerInfo"/>, <see cref="Models.ConfluentSchemaRegistryInfo"/>, <see cref="Models.FabricPlatformTargetService"/>, and <see cref="Models.SelfHostedServerTargetService"/>.
+        /// </summary>
         /// <param name="type"> The target service type. </param>
         /// <returns> A new <see cref="Models.TargetServiceBaseInfo"/> instance for mocking. </returns>
         public static TargetServiceBaseInfo TargetServiceBaseInfo(string @type = default)
         {
-            return new UnknownTargetServiceBase(default, default);
+            return new UnknownTargetServiceBase(@type is null ? default : new TargetServiceType(@type), default);
         }
 
+        /// <summary> The azure resource info when target service type is AzureResource. </summary>
         /// <param name="id"> The Id of azure resource. </param>
         /// <param name="resourceProperties"> The azure resource connection related properties. </param>
         /// <returns> A new <see cref="Models.AzureResourceInfo"/> instance for mocking. </returns>
         public static AzureResourceInfo AzureResourceInfo(ResourceIdentifier id = default, AzureResourceBaseProperties resourceProperties = default)
         {
-            return new AzureResourceInfo(default, default, id, resourceProperties);
+            return new AzureResourceInfo(TargetServiceType.AzureResource, default, id, resourceProperties);
         }
 
+        /// <summary>
+        /// The azure resource properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureAppConfigProperties"/> and <see cref="Models.AzureKeyVaultProperties"/>.
+        /// </summary>
         /// <param name="type"> The azure resource type. </param>
         /// <returns> A new <see cref="Models.AzureResourceBaseProperties"/> instance for mocking. </returns>
         public static AzureResourceBaseProperties AzureResourceBaseProperties(string @type = default)
         {
-            return new UnknownAzureResourcePropertiesBase(default, default);
+            return new UnknownAzureResourcePropertiesBase(@type is null ? default : new AzureResourceType(@type), default);
         }
 
+        /// <summary> The resource properties when type is Azure Key Vault. </summary>
         /// <param name="doesConnectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
         /// <returns> A new <see cref="Models.AzureKeyVaultProperties"/> instance for mocking. </returns>
         public static AzureKeyVaultProperties AzureKeyVaultProperties(bool? doesConnectAsKubernetesCsiDriver = default)
         {
-            return new AzureKeyVaultProperties(default, default, doesConnectAsKubernetesCsiDriver);
+            return new AzureKeyVaultProperties(AzureResourceType.KeyVault, default, doesConnectAsKubernetesCsiDriver);
         }
 
+        /// <summary> The resource properties when type is Azure App Configuration. </summary>
         /// <param name="isConnectedWithKubernetesExtension"> True if connection enables app configuration kubernetes extension. </param>
         /// <returns> A new <see cref="Models.AzureAppConfigProperties"/> instance for mocking. </returns>
         public static AzureAppConfigProperties AzureAppConfigProperties(bool? isConnectedWithKubernetesExtension = default)
         {
-            return new AzureAppConfigProperties(default, default, isConnectedWithKubernetesExtension);
+            return new AzureAppConfigProperties(AzureResourceType.AppConfig, default, isConnectedWithKubernetesExtension);
         }
 
+        /// <summary> The service properties when target service type is ConfluentBootstrapServer. </summary>
         /// <param name="endpoint"> The endpoint of service. </param>
         /// <returns> A new <see cref="Models.ConfluentBootstrapServerInfo"/> instance for mocking. </returns>
         public static ConfluentBootstrapServerInfo ConfluentBootstrapServerInfo(string endpoint = default)
         {
-            return new ConfluentBootstrapServerInfo(default, default, endpoint);
+            return new ConfluentBootstrapServerInfo(TargetServiceType.ConfluentBootstrapServer, default, endpoint);
         }
 
+        /// <summary> The service properties when target service type is FabricPlatform. </summary>
         /// <param name="endpoint"> The endpoint of service. </param>
         /// <returns> A new <see cref="Models.FabricPlatformTargetService"/> instance for mocking. </returns>
         public static FabricPlatformTargetService FabricPlatformTargetService(string endpoint = default)
         {
-            return new FabricPlatformTargetService(default, default, endpoint);
+            return new FabricPlatformTargetService(TargetServiceType.FabricPlatform, default, endpoint);
         }
 
+        /// <summary> The service properties when target service type is SelfHostedServer. </summary>
         /// <param name="endpoint"> The endpoint of service. </param>
         /// <returns> A new <see cref="Models.SelfHostedServerTargetService"/> instance for mocking. </returns>
         public static SelfHostedServerTargetService SelfHostedServerTargetService(string endpoint = default)
         {
-            return new SelfHostedServerTargetService(default, default, endpoint);
+            return new SelfHostedServerTargetService(TargetServiceType.SelfHostedServer, default, endpoint);
         }
 
+        /// <summary> The service properties when target service type is ConfluentSchemaRegistry. </summary>
         /// <param name="endpoint"> The endpoint of service. </param>
         /// <returns> A new <see cref="Models.ConfluentSchemaRegistryInfo"/> instance for mocking. </returns>
         public static ConfluentSchemaRegistryInfo ConfluentSchemaRegistryInfo(string endpoint = default)
         {
-            return new ConfluentSchemaRegistryInfo(default, default, endpoint);
+            return new ConfluentSchemaRegistryInfo(TargetServiceType.ConfluentSchemaRegistry, default, endpoint);
         }
 
+        /// <summary>
+        /// The authentication info
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessKeyInfoBase"/>, <see cref="Models.EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="Models.SecretAuthInfo"/>, <see cref="Models.ServicePrincipalCertificateAuthInfo"/>, <see cref="Models.ServicePrincipalSecretAuthInfo"/>, <see cref="Models.SystemAssignedIdentityAuthInfo"/>, <see cref="Models.UserAccountAuthInfo"/>, and <see cref="Models.UserAssignedIdentityAuthInfo"/>.
+        /// </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <returns> A new <see cref="Models.AuthBaseInfo"/> instance for mocking. </returns>
         public static AuthBaseInfo AuthBaseInfo(string authType = default, LinkerAuthMode? authMode = default)
         {
-            return new UnknownAuthInfoBase(default, authMode, default);
+            return new UnknownAuthInfoBase(authType is null ? default : new LinkerAuthType(authType), authMode, default);
         }
 
+        /// <summary> The access key directly from target resource properties, which target service is Azure Resource, such as Microsoft.Storage. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="permissions"> Permissions of the accessKey. `Read` and `Write` are for Azure Cosmos DB and Azure App Configuration, `Listen`, `Send` and `Manage` are for Azure Event Hub and Azure Service Bus. </param>
         /// <returns> A new <see cref="Models.AccessKeyInfoBase"/> instance for mocking. </returns>
@@ -153,47 +177,56 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             permissions ??= new ChangeTrackingList<AccessKeyPermissions>();
 
-            return new AccessKeyInfoBase(default, authMode, default, (permissions ?? new ChangeTrackingList<AccessKeyPermissions>()).ToList());
+            return new AccessKeyInfoBase(LinkerAuthType.AccessKey, authMode, default, (permissions ?? new ChangeTrackingList<AccessKeyPermissions>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is secret. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="name"> Username or account name for secret auth. </param>
         /// <param name="secretInfo"> Password or key vault secret for secret auth. </param>
         /// <returns> A new <see cref="Models.SecretAuthInfo"/> instance for mocking. </returns>
         public static SecretAuthInfo SecretAuthInfo(LinkerAuthMode? authMode = default, string name = default, SecretBaseInfo secretInfo = default)
         {
-            return new SecretAuthInfo(default, authMode, default, name, secretInfo);
+            return new SecretAuthInfo(LinkerAuthType.Secret, authMode, default, name, secretInfo);
         }
 
+        /// <summary>
+        /// The secret info
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KeyVaultSecretReferenceSecretInfo"/>, <see cref="Models.KeyVaultSecretUriSecretInfo"/>, and <see cref="Models.RawValueSecretInfo"/>.
+        /// </summary>
         /// <param name="secretType"> The secret type. </param>
         /// <returns> A new <see cref="Models.SecretBaseInfo"/> instance for mocking. </returns>
         public static SecretBaseInfo SecretBaseInfo(string secretType = default)
         {
-            return new UnknownSecretInfoBase(default, default);
+            return new UnknownSecretInfoBase(secretType is null ? default : new LinkerSecretType(secretType), default);
         }
 
+        /// <summary> The secret info when type is rawValue. It's for scenarios that user input the secret. </summary>
         /// <param name="value"> The actual value of the secret. </param>
         /// <returns> A new <see cref="Models.RawValueSecretInfo"/> instance for mocking. </returns>
         public static RawValueSecretInfo RawValueSecretInfo(string value = default)
         {
-            return new RawValueSecretInfo(default, default, value);
+            return new RawValueSecretInfo(LinkerSecretType.RawValue, default, value);
         }
 
+        /// <summary> The secret info when type is keyVaultSecretReference. It's for scenario that user provides a secret stored in user's keyvault and source is Azure Kubernetes. The key Vault's resource id is linked to secretStore.keyVaultId. </summary>
         /// <param name="name"> Name of the Key Vault secret. </param>
         /// <param name="version"> Version of the Key Vault secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretReferenceSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretReferenceSecretInfo KeyVaultSecretReferenceSecretInfo(string name = default, string version = default)
         {
-            return new KeyVaultSecretReferenceSecretInfo(default, default, name, version);
+            return new KeyVaultSecretReferenceSecretInfo(LinkerSecretType.KeyVaultSecretReference, default, name, version);
         }
 
+        /// <summary> The secret info when type is keyVaultSecretUri. It's for scenario that user provides a secret stored in user's keyvault and source is Web App, Spring Cloud or Container App. </summary>
         /// <param name="value"> URI to the keyvault secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretUriSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretUriSecretInfo KeyVaultSecretUriSecretInfo(string value = default)
         {
-            return new KeyVaultSecretUriSecretInfo(default, default, value);
+            return new KeyVaultSecretUriSecretInfo(LinkerSecretType.KeyVaultSecretUri, default, value);
         }
 
+        /// <summary> The authentication info when authType is userAssignedIdentity. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="clientId"> Client Id for userAssignedIdentity. </param>
@@ -206,7 +239,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new UserAssignedIdentityAuthInfo(
-                default,
+                LinkerAuthType.UserAssignedIdentity,
                 authMode,
                 default,
                 userName,
@@ -216,6 +249,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 (roles ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is systemAssignedIdentity. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
@@ -226,7 +260,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new SystemAssignedIdentityAuthInfo(
-                default,
+                LinkerAuthType.SystemAssignedIdentity,
                 authMode,
                 default,
                 userName,
@@ -234,6 +268,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 (roles ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
@@ -247,7 +282,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalSecretAuthInfo(
-                default,
+                LinkerAuthType.ServicePrincipalSecret,
                 authMode,
                 default,
                 userName,
@@ -258,6 +293,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 (roles ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is servicePrincipal certificate. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
@@ -270,7 +306,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new ServicePrincipalCertificateAuthInfo(
-                default,
+                LinkerAuthType.ServicePrincipalCertificate,
                 authMode,
                 default,
                 clientId,
@@ -280,6 +316,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 (roles ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is user account. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="principalId"> Principal Id for user account. </param>
@@ -291,7 +328,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             roles ??= new ChangeTrackingList<string>();
 
             return new UserAccountAuthInfo(
-                default,
+                LinkerAuthType.UserAccount,
                 authMode,
                 default,
                 userName,
@@ -300,6 +337,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 (roles ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The authentication info when authType is EasyAuth Microsoft Entra ID. </summary>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="clientId"> Application clientId for EasyAuth Microsoft Entra ID. </param>
         /// <param name="secret"> Application Secret for EasyAuth Microsoft Entra ID. </param>
@@ -308,7 +346,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static EasyAuthMicrosoftEntraIdAuthInfo EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthMode? authMode = default, string clientId = default, string secret = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default)
         {
             return new EasyAuthMicrosoftEntraIdAuthInfo(
-                default,
+                LinkerAuthType.EasyAuthMicrosoftEntraID,
                 authMode,
                 default,
                 clientId,
@@ -316,6 +354,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 deleteOrUpdateBehavior);
         }
 
+        /// <summary> Indicates public network solution, include firewall rules. </summary>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation(such as firewall rules) when Linker is updating or deleting. </param>
         /// <param name="action"> Indicates how to apply the connector operations, such as opt out network configuration, opt in configuration. </param>
         /// <param name="firewallRules"> Describe firewall rules of target service to make sure source application could connect to the target. </param>
@@ -325,6 +364,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerPublicNetworkSolution(deleteOrUpdateBehavior, action, firewallRules, default);
         }
 
+        /// <summary> Target service's firewall rules. to allow connections from source service. </summary>
         /// <param name="ipRanges"> This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. </param>
         /// <param name="azureServices"> Allow Azure services to access the target service if true. </param>
         /// <param name="callerClientIP"> Allow caller client IP to access the target service if true. the property is used when connecting local application to target service. </param>
@@ -361,6 +401,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default);
         }
 
+        /// <summary> Indicates some additional properties for dapr client type. </summary>
         /// <param name="version"> The dapr component version. </param>
         /// <param name="componentType"> The dapr component type. </param>
         /// <param name="secretStoreComponent"> The name of a secret store dapr to retrieve secret. </param>
@@ -385,6 +426,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default);
         }
 
+        /// <summary> The dapr component metadata. </summary>
         /// <param name="name"> Metadata property name. </param>
         /// <param name="value"> Metadata property value. </param>
         /// <param name="secretRef"> The secret name where dapr could get value. </param>
@@ -402,21 +444,27 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default);
         }
 
+        /// <summary>
+        /// A result of dryrun
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BasicErrorDryrunPrerequisiteResult"/> and <see cref="Models.PermissionsMissingDryrunPrerequisiteResult"/>.
+        /// </summary>
         /// <param name="type"> The type of dryrun result. </param>
         /// <returns> A new <see cref="Models.DryrunPrerequisiteResult"/> instance for mocking. </returns>
         public static DryrunPrerequisiteResult DryrunPrerequisiteResult(string @type = default)
         {
-            return new UnknownDryrunPrerequisiteResult(default, default);
+            return new UnknownDryrunPrerequisiteResult(@type is null ? default : new DryrunPrerequisiteResultType(@type), default);
         }
 
+        /// <summary> The represent of basic error. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.BasicErrorDryrunPrerequisiteResult"/> instance for mocking. </returns>
         public static BasicErrorDryrunPrerequisiteResult BasicErrorDryrunPrerequisiteResult(string code = default, string message = default)
         {
-            return new BasicErrorDryrunPrerequisiteResult(default, default, code, message);
+            return new BasicErrorDryrunPrerequisiteResult(DryrunPrerequisiteResultType.BasicError, default, code, message);
         }
 
+        /// <summary> The represent of missing permissions. </summary>
         /// <param name="scope"> The permission scope. </param>
         /// <param name="permissions"> The permission list. </param>
         /// <param name="recommendedRole"> The recommended role to resolve permissions missing. </param>
@@ -425,9 +473,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             permissions ??= new ChangeTrackingList<string>();
 
-            return new PermissionsMissingDryrunPrerequisiteResult(default, default, scope, (permissions ?? new ChangeTrackingList<string>()).ToList(), recommendedRole);
+            return new PermissionsMissingDryrunPrerequisiteResult(DryrunPrerequisiteResultType.PermissionsMissing, default, scope, (permissions ?? new ChangeTrackingList<string>()).ToList(), recommendedRole);
         }
 
+        /// <summary> The preview of the operations for creation. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="operationType"> The operation type. </param>
         /// <param name="description"> The description of the operation. </param>
@@ -455,6 +504,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new DryrunPatch(parameters is null && prerequisiteResults is null && operationPreviews is null && provisioningState is null ? default : new DryrunProperties(parameters, (prerequisiteResults ?? new ChangeTrackingList<DryrunPrerequisiteResult>()).ToList(), (operationPreviews ?? new ChangeTrackingList<DryrunOperationPreview>()).ToList(), provisioningState, default), default);
         }
 
+        /// <summary> Configurations for source resource, include appSettings, connectionString and serviceBindings. </summary>
         /// <param name="configurations"> The configuration properties for source resource. </param>
         /// <returns> A new <see cref="Models.SourceConfigurationResult"/> instance for mocking. </returns>
         public static SourceConfigurationResult SourceConfigurationResult(IEnumerable<SourceConfiguration> configurations = default)
@@ -464,6 +514,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new SourceConfigurationResult((configurations ?? new ChangeTrackingList<SourceConfiguration>()).ToList(), default);
         }
 
+        /// <summary> A configuration item for source resource. </summary>
         /// <param name="name"> The name of setting. </param>
         /// <param name="value"> The value of setting. </param>
         /// <param name="configType"> The type of setting. </param>
@@ -513,16 +564,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 name,
                 resourceType,
                 systemData,
-                solutionType is null && secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    new VnetSolution(solutionType, default, default),
-                    new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
-                    default,
-                    default,
-                    default,
+                targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && deleteOrUpdateBehavior is null && secretStoreKeyVaultId is null && keyVaultSecretName is null && scope is null && publicNetworkSolution is null && configurationInfo is null ? default : new LinkerProperties(
+                    targetService,
+                    authInfo,
+                    clientType,
+                    provisioningState,
+                    solutionType is null && deleteOrUpdateBehavior is null ? default : new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
+                    secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
+                    scope,
+                    publicNetworkSolution,
+                    configurationInfo,
                     default),
                 default);
         }
@@ -546,14 +597,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 authInfo,
                 clientType,
                 provisioningState,
-                new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
-                new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
+                solutionType is null && deleteOrUpdateBehavior is null ? default : new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
+                secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
                 scope,
                 publicNetworkSolution,
                 configurationInfo,
                 default), default);
         }
 
+        /// <summary> The validation item for a Linker. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
@@ -590,6 +642,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default), default);
         }
 
+        /// <summary> The configuration names. </summary>
         /// <param name="value"></param>
         /// <param name="description"> Description for the configuration name. </param>
         /// <param name="isRequired"> Represent the configuration is required or not. </param>
@@ -599,29 +652,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerConfigurationName(value, description, isRequired, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceLinker.LinkerResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetService">
-        /// The target service properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
-        /// </param>
-        /// <param name="authInfo">
-        /// The authentication type.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , ,  and .
-        /// </param>
+        /// <summary> Linker of source and target resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="targetService"> The target service properties. </param>
+        /// <param name="authInfo"> The authentication type. </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="solutionType"> The VNet solution. </param>
-        /// <param name="secretStoreKeyVaultId"> An option to store secret value in secure place. </param>
+        /// <param name="solutionType"> Type of VNet solution. </param>
+        /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, ResourceIdentifier secretStoreKeyVaultId = default, string scope = default)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId, string scope)
         {
             return new LinkerResourceData(
                 id,
@@ -633,8 +678,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     authInfo,
                     clientType,
                     provisioningState,
-                    new VnetSolution(solutionType, default, default),
-                    new LinkerSecretStore(secretStoreKeyVaultId, default, default),
+                    solutionType is null ? default : new VnetSolution(solutionType, default, default),
+                    secretStoreKeyVaultId is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, default, default),
                     scope,
                     default,
                     default,
@@ -642,45 +687,37 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LinkerResourcePatch"/>. </summary>
-        /// <param name="targetService">
-        /// The target service properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
-        /// </param>
-        /// <param name="authInfo">
-        /// The authentication type.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , ,  and .
-        /// </param>
+        /// <summary> A Linker to be updated. </summary>
+        /// <param name="targetService"> The target service properties. </param>
+        /// <param name="authInfo"> The authentication type. </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="solutionType"> The VNet solution. </param>
-        /// <param name="secretStoreKeyVaultId"> An option to store secret value in secure place. </param>
+        /// <param name="solutionType"> Type of VNet solution. </param>
+        /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, ResourceIdentifier secretStoreKeyVaultId = default, string scope = default)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId, string scope)
         {
             return new LinkerResourcePatch(targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && secretStoreKeyVaultId is null && scope is null ? default : new LinkerProperties(
                 targetService,
                 authInfo,
                 clientType,
                 provisioningState,
-                new VnetSolution(solutionType, default, default),
-                new LinkerSecretStore(secretStoreKeyVaultId, default, default),
+                solutionType is null ? default : new VnetSolution(solutionType, default, default),
+                secretStoreKeyVaultId is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, default, default),
                 scope,
                 default,
                 default,
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SourceConfiguration"/>. </summary>
+        /// <summary> A configuration item for source resource. </summary>
         /// <param name="name"> The name of setting. </param>
         /// <param name="value"> The value of setting. </param>
         /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SourceConfiguration SourceConfiguration(string name = default, string value = default)
+        public static SourceConfiguration SourceConfiguration(string name, string value)
         {
             return new SourceConfiguration(
                 name,

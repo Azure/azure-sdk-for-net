@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricRoutePolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricRoutePolicyResource.ResourceType, out string networkFabricRoutePolicyApiVersion);
             _routePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricRoutePolicyResource.ResourceType.Namespace, Diagnostics);
-            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricRoutePolicyApiVersion ?? "2025-07-15");
+            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/routePolicies", out string routePoliciesApiVersionOverride) ? routePoliciesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupAsyncCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyDataAsyncCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyDataCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>

@@ -277,6 +277,7 @@ public class BasicKustoTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kusto/kusto-cosmos-db/main.bicep")]
+    [Ignore("Temporarily disabled until a Cosmos DB provisioning package with settable SQL role assignment names is released.")]
     public async Task KustoCosmosDB()
     {
         await using Trycep test = CreateKustoCosmosDBTest();
@@ -368,6 +369,7 @@ public class BasicKustoTests
             }
 
             resource clusterCosmosDbDataAuthorization 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2024-08-15' = {
+              name: take('clustercosmosdbdataauthorization${uniqueString(resourceGroup().id)}', 24)
               parent: cosmosDbAccount
               properties: {
                 principalId: cluster.identity.principalId

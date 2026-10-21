@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskEncryptionSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiskEncryptionSetResource.ResourceType, out string diskEncryptionSetApiVersion);
             _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
-            _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diskEncryptionSetApiVersion ?? "2026-03-02");
+            _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupAsyncCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
+            return new AsyncPageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetDataAsyncCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetsGetByResourceGroupCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
+            return new PageableWrapper<DiskEncryptionSetData, DiskEncryptionSetResource>(new DiskEncryptionSetDataCollectionResultOfT(_diskEncryptionSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DiskEncryptionSetCollection.GetAll"), data => new DiskEncryptionSetResource(Client, data));
         }
 
         /// <summary>

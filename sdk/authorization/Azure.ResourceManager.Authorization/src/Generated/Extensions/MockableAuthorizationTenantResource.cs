@@ -46,11 +46,23 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(
+            DenyAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(
+            RoleAssignmentsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2022-04-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics RoleDefinitionsClientDiagnostics => _roleDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -134,7 +146,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An object representing collection of AccessReviewInstancesAssignedForMyApprovals and their operations over a AccessReviewInstancesAssignedForMyApprovalResource. </returns>
         public virtual AccessReviewInstancesAssignedForMyApprovalCollection GetAccessReviewInstancesAssignedForMyApprovals(string scheduleDefinitionId)
         {
-            return GetCachedClient(client => new AccessReviewInstancesAssignedForMyApprovalCollection(client, Id, scheduleDefinitionId));
+            return new AccessReviewInstancesAssignedForMyApprovalCollection(Client, Id, scheduleDefinitionId);
         }
 
         /// <summary>
@@ -746,7 +758,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllAsyncCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
         }
 
         /// <summary>
@@ -775,7 +787,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
         }
 
         /// <summary>

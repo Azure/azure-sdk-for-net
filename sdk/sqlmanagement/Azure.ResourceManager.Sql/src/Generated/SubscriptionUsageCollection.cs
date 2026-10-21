@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(SubscriptionUsageResource.ResourceType, out string subscriptionUsageApiVersion);
             _locationName = locationName;
             _subscriptionUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsageResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionUsagesRestClient = new SubscriptionUsages(_subscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUsageApiVersion ?? "2025-02-01-preview");
+            _subscriptionUsagesRestClient = new SubscriptionUsages(_subscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUsageApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsagesGetByLocationAsyncCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
+            return new AsyncPageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsageDataAsyncCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsagesGetByLocationCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
+            return new PageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsageDataCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ClientType",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Structure.Service.ClientType",
       "valueType": {
         "$id": "2",
@@ -115,7 +116,6 @@
             "$id": "10",
             "name": "one",
             "isExactName": false,
-            "resourceName": "ClientOperationGroup",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -212,7 +212,6 @@
                 "$id": "16",
                 "name": "two",
                 "isExactName": false,
-                "resourceName": "Group3",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -253,7 +252,6 @@
                 "$id": "18",
                 "name": "three",
                 "isExactName": false,
-                "resourceName": "Group3",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -354,7 +352,6 @@
                 "$id": "24",
                 "name": "four",
                 "isExactName": false,
-                "resourceName": "Group4",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -458,7 +455,6 @@
             "$id": "30",
             "name": "five",
             "isExactName": false,
-            "resourceName": "AnotherClientOperationGroup",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -555,7 +551,6 @@
                 "$id": "36",
                 "name": "six",
                 "isExactName": false,
-                "resourceName": "Group5",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

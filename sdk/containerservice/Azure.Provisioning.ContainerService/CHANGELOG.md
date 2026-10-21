@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-10-19)
+
+### Features Added
+
+- First stable release of Azure.Provisioning.ContainerService for declarative provisioning of Azure Kubernetes Service resources, using API version `2026-07-01` by default.
+
+## 1.0.0-beta.7 (2026-10-15)
+
+### Features Added
+
+- Updated the default resource API version to `2026-07-01` to align with `Azure.ResourceManager.ContainerService`.
+- Added `ManagedClusterIdentityBinding` resources and support for the associated monitoring, ingress, security, and agent pool features.
+
+### Breaking Changes
+
+- Replaced `ContainerServiceManagedCluster.IngressWebAppRouting` and `AzureMonitorMetrics` with `IngressProfile.WebAppRouting` and `AzureMonitorProfile.Metrics`.
+- Replaced `VirtualMachinesScaleManual` on `ContainerServiceAgentPool` and `ManagedClusterAgentPoolProfileProperties` with `VirtualMachinesScale.Manual`, and `VirtualMachinesProfile.ScaleManual` with `Scale.Manual`.
+- Replaced `ManagedClusterNatGatewayProfile.ManagedOutboundIPCount` with `ManagedOutboundIPProfile.Count`.
+- Changed the numeric value of `ContainerServiceOSSku.Ubuntu2404` from `7` to `8` as `Windows2025` was added.
+
+### Bugs Fixed
+
+- Corrected `ManagedClusterDelegatedIdentity.ResourceId` and `ReferralResource` to be optional.
 
 ## 1.0.0-beta.6 (2026-04-02)
 

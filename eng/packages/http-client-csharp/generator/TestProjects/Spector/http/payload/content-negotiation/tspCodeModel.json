@@ -230,6 +230,7 @@
       "$id": "27",
       "kind": "model",
       "name": "PngImageAsJson",
+      "apiVersions": [],
       "namespace": "Payload.ContentNegotiation.DifferentBody",
       "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
       "usage": "Output,Json",
@@ -245,6 +246,7 @@
           "$id": "28",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [],
           "serializedName": "contentType",
           "type": {
             "$ref": "1"
@@ -267,6 +269,7 @@
           "$id": "29",
           "kind": "property",
           "name": "content",
+          "apiVersions": [],
           "serializedName": "content",
           "type": {
             "$id": "30",
@@ -358,7 +361,6 @@
                 "$id": "37",
                 "name": "getAvatarAsPng",
                 "isExactName": false,
-                "resourceName": "SameBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -463,7 +465,6 @@
                 "$id": "42",
                 "name": "getAvatarAsJpeg",
                 "isExactName": false,
-                "resourceName": "SameBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -618,7 +619,6 @@
                 "$id": "51",
                 "name": "getAvatarAsPng",
                 "isExactName": false,
-                "resourceName": "DifferentBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -723,7 +723,6 @@
                 "$id": "56",
                 "name": "getAvatarAsJson",
                 "isExactName": false,
-                "resourceName": "DifferentBody",
                 "accessibility": "public",
                 "parameters": [
                   {

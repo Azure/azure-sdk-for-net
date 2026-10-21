@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new ContainersGetByStorageAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerDataAsyncCollectionResultOfT(
                 _containersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new ContainersGetByStorageAccountCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerDataCollectionResultOfT(
                 _containersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

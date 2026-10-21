@@ -91,10 +91,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location, _locationIsDefined))
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                if (Location != null)
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+                else
+                {
+                    writer.WriteNull("location"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             ResourceType resourceType = default;
             SystemData systemData = default;
             ReplicationProtectionIntentProperties properties = default;
+            bool locationIsDefined = false;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,6 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
                 if (prop.NameEquals("location"u8))
                 {
+                    locationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         location = null;
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ReplicationProtectionIntentData(
@@ -210,7 +219,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 systemData,
                 properties,
                 location,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _locationIsDefined = locationIsDefined
+            };
         }
     }
 }

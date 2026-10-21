@@ -191,6 +191,7 @@ internal class SampleTests
     }
 
     [Test]
+    [Ignore("Ignored until Azure.Provisioning.AppContainers is released with the current resource name behavior.")]
     public async Task SimpleContainerApp()
     {
         await using Trycep test = CreateSimpleContainerAppTest();
@@ -246,7 +247,7 @@ internal class SampleTests
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('cae${uniqueString(resourceGroup().id)}', 24)
+              name: take('cae-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 appLogsConfiguration: {

@@ -11,7 +11,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
@@ -32,7 +31,15 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
-            throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
+            throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
+        }
+        else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
+        {
+            throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
+        }
+        else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+        {
+            throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
         }
     }
     #endregion
@@ -46,11 +53,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
+        var playwrightConnectionName = TestEnvironment.BROWSER_AUTOMATION_NAME;
 #endif
         AIProjectClientOptions options = new()
         {
@@ -61,7 +68,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
+        BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
@@ -78,7 +85,8 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+            new AgentReference(agentVersion.Name, agentVersion.Version));
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -112,11 +120,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+        var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var playwrightConnectionName = TestEnvironment.PLAYWRIGHT_CONNECTION_NAME;
+        var playwrightConnectionName = TestEnvironment.BROWSER_AUTOMATION_NAME;
 #endif
         AIProjectClientOptions options = new()
         {
@@ -125,7 +133,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
+        BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
@@ -142,7 +150,8 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+            new AgentReference(agentVersion.Name, agentVersion.Version));
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),

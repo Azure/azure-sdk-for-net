@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EnterpriseMccCacheNodeResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EnterpriseMccCacheNodeResourceListResult(value ?? new ChangeTrackingList<EnterpriseMccCacheNodeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

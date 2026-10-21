@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NGroupResource.ResourceType, out string nGroupApiVersion);
             _nGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
-            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nGroupApiVersion ?? "2025-09-01");
+            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerInstance/ngroups", out string nGroupsApiVersionOverride) ? nGroupsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupAsyncCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
+            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupDataAsyncCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
+            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupDataCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

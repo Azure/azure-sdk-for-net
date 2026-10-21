@@ -113,30 +113,58 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn, _startsOnIsDefined))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartsOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn, _lastModifiedOnIsDefined))
             {
-                writer.WritePropertyName("lastModifiedTime"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
+                if (LastModifiedOn != null)
+                {
+                    writer.WritePropertyName("lastModifiedTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastModifiedTime"u8);
+                }
             }
-            if (Optional.IsDefined(LastStatusModifiedOn))
+            if (Optional.IsDefined(LastStatusModifiedOn, _lastStatusModifiedOnIsDefined))
             {
-                writer.WritePropertyName("lastStatusModifiedTime"u8);
-                writer.WriteStringValue(LastStatusModifiedOn.Value, "O");
+                if (LastStatusModifiedOn != null)
+                {
+                    writer.WritePropertyName("lastStatusModifiedTime"u8);
+                    writer.WriteStringValue(LastStatusModifiedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastStatusModifiedTime"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -209,10 +237,14 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? createdOn = default;
             AutomationJobStatus? status = default;
             string statusDetails = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            bool startsOnIsDefined = false;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             string exception = default;
+            bool lastModifiedOnIsDefined = false;
             DateTimeOffset? lastModifiedOn = default;
+            bool lastStatusModifiedOnIsDefined = false;
             DateTimeOffset? lastStatusModifiedOn = default;
             IDictionary<string, string> parameters = default;
             JobProvisioningState? provisioningState = default;
@@ -281,22 +313,24 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("exception"u8))
@@ -306,6 +340,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
                 {
+                    lastModifiedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastModifiedOn = null;
@@ -316,6 +351,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("lastStatusModifiedTime"u8))
                 {
+                    lastStatusModifiedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastStatusModifiedOn = null;
@@ -356,7 +392,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JobProperties(
@@ -368,14 +404,20 @@ namespace Azure.ResourceManager.Automation.Models
                 createdOn,
                 status,
                 statusDetails,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 exception,
                 lastModifiedOn,
                 lastStatusModifiedOn,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startsOnIsDefined = startsOnIsDefined,
+                _endsOnIsDefined = endsOnIsDefined,
+                _lastModifiedOnIsDefined = lastModifiedOnIsDefined,
+                _lastStatusModifiedOnIsDefined = lastStatusModifiedOnIsDefined
+            };
         }
     }
 }

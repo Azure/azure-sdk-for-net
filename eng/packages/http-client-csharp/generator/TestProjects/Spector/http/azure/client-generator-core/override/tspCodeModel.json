@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "model",
       "name": "GroupParametersOptions",
+      "apiVersions": [],
       "namespace": "Customization",
       "crossLanguageDefinitionId": "Customization.GroupParametersOptions",
       "usage": "Input",
@@ -19,6 +20,7 @@
           "$id": "2",
           "kind": "property",
           "name": "param1",
+          "apiVersions": [],
           "type": {
             "$id": "3",
             "kind": "string",
@@ -40,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "param2",
+          "apiVersions": [],
           "type": {
             "$id": "5",
             "kind": "string",
@@ -125,7 +128,6 @@
                 "$id": "12",
                 "name": "reorder",
                 "isExactName": false,
-                "resourceName": "ReorderParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -167,7 +169,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param2",
+                        "crossLanguageDefinitionId": "param2",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -215,7 +217,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param1",
+                        "crossLanguageDefinitionId": "param1",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -320,7 +322,6 @@
                 "$id": "26",
                 "name": "group",
                 "isExactName": false,
-                "resourceName": "GroupParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -519,7 +520,6 @@
                 "$id": "39",
                 "name": "requireOptional",
                 "isExactName": false,
-                "resourceName": "RequireOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -561,7 +561,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param1",
+                        "crossLanguageDefinitionId": "param1",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -609,7 +609,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param2",
+                        "crossLanguageDefinitionId": "param2",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -714,7 +714,6 @@
                 "$id": "53",
                 "name": "removeOptional",
                 "isExactName": false,
-                "resourceName": "RemoveOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -756,7 +755,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param1",
+                        "crossLanguageDefinitionId": "param1",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -801,7 +800,7 @@
                         "isApiVersion": false,
                         "optional": true,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Customization..anonymous.param2",
+                        "crossLanguageDefinitionId": "param2",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],

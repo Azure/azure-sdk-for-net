@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportDataAsyncCollectionResultOfT(
                 _ransomwareReportsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportsGetAllCollectionResultOfT(
+            return new PageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportDataCollectionResultOfT(
                 _ransomwareReportsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -142,6 +142,12 @@ namespace Microsoft.Extensions.Hosting
             // Since there can be more than one instance of ServiceBusScalerProvider, we have to store a reference to the created instance to filter it out later.
             ServiceBusScalerProvider serviceBusScalerProvider = null;
             builder.Services.AddSingleton(serviceProvider => {
+                // Force construction of CleanupService so MS.DI disposes it on host teardown;
+                // CleanupService.Dispose() then calls MessagingProvider.DisposeAsync(). Scale-only
+                // hosts don't build any IExtensionConfigProvider, which is the binding path's only
+                // route into CleanupService.
+                serviceProvider.GetRequiredService<CleanupService>();
+
                 serviceBusScalerProvider = new ServiceBusScalerProvider(serviceProvider, triggerMetadata);
                 return serviceBusScalerProvider;
             });

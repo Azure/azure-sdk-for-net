@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DataMigration
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Services for mocking. </summary>
         protected Services()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Services(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Services(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Services).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +121,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             if (deleteRunningTasks != null)
             {
                 uri.AppendQuery("deleteRunningTasks", TypeFormatters.ConvertToString(deleteRunningTasks), true);
@@ -152,10 +143,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(groupName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -176,10 +164,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,10 +181,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DataMigration/services", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -220,10 +202,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -244,10 +223,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/checkStatus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -268,10 +244,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/start", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -291,10 +264,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/stop", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -314,10 +284,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/skus", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -338,10 +305,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -362,10 +326,7 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/checkNameAvailability", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DataMigration/services") ?? "2025-09-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

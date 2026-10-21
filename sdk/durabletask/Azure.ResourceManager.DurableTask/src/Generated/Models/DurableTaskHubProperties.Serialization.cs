@@ -84,6 +84,21 @@ namespace Azure.ResourceManager.DurableTask.Models
                 writer.WritePropertyName("dashboardUrl"u8);
                 writer.WriteStringValue(DashboardUri.AbsoluteUri);
             }
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (string item in Capabilities)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +143,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
             DurableTaskProvisioningState? provisioningState = default;
             Uri dashboardUri = default;
+            IList<string> capabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +165,33 @@ namespace Azure.ResourceManager.DurableTask.Models
                     dashboardUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("capabilities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    capabilities = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DurableTaskHubProperties(provisioningState, dashboardUri, additionalBinaryDataProperties);
+            return new DurableTaskHubProperties(provisioningState, dashboardUri, capabilities ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

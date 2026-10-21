@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.VerifiedId.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Authority. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VerifiedIdAuthorityPatch"/> instance for mocking. </returns>
         public static VerifiedIdAuthorityPatch VerifiedIdAuthorityPatch(IDictionary<string, string> tags = default)

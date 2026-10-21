@@ -1,14 +1,20 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
+## 12.30.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values (e.g. `AccountSasBuilder`). Times are now converted to UTC before formatting/signing to prevent unintended validity windows in st/se and related delegation key time fields.
 
 ### Other Changes
+
+## 12.29.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.29.0-beta.1
 
 ## 12.29.0-beta.1 (2026-07-21)
 

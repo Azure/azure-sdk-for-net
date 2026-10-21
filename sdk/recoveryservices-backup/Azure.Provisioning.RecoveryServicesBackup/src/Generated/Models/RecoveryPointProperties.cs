@@ -14,7 +14,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// <summary> Properties of Recovery Point. </summary>
     public partial class RecoveryPointProperties : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _ruleName;
         private BicepValue<bool> _isSoftDeleted;
 
@@ -23,13 +23,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiryTime" }, format: "O");
             _ruleName = DefineProperty<string>(nameof(RuleName), new string[] { "ruleName" });
             _isSoftDeleted = DefineProperty<bool>(nameof(IsSoftDeleted), new string[] { "isSoftDeleted" });
             DefineAdditionalProperties();

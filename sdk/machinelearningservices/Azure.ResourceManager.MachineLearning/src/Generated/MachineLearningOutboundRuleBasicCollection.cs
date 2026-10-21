@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningOutboundRuleBasicResource.ResourceType, out string machineLearningOutboundRuleBasicApiVersion);
             _managedNetworkSettingsRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningOutboundRuleBasicResource.ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsRuleRestClient = new ManagedNetworkSettingsRule(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
+            _managedNetworkSettingsRuleRestClient = new ManagedNetworkSettingsRule(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningOutboundRuleBasicApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new ManagedNetworkSettingsRuleGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new MachineLearningOutboundRuleBasicDataAsyncCollectionResultOfT(
                 _managedNetworkSettingsRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new ManagedNetworkSettingsRuleGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new MachineLearningOutboundRuleBasicDataCollectionResultOfT(
                 _managedNetworkSettingsRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

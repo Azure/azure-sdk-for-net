@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanList(value, nextLink, additionalBinaryDataProperties);
+            return new ElasticSanList(value ?? new ChangeTrackingList<ElasticSanData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
@@ -116,6 +117,16 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -191,6 +202,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
             BulkCreateCustomProperties properties = default;
             AzureLocation location = default;
             IList<string> zones = default;
+            ExtendedLocation extendedLocation = default;
+            BulkActionsVirtualMachinePlacement placement = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
@@ -259,6 +272,24 @@ namespace Azure.ResourceManager.Compute.BulkActions
                     zones = array;
                     continue;
                 }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("placement"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = BulkActionsVirtualMachinePlacement.DeserializeBulkActionsVirtualMachinePlacement(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -300,7 +331,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LocationBasedBulkCreateCustomData(
@@ -311,6 +342,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 properties,
                 location,
                 zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                placement,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 plan,

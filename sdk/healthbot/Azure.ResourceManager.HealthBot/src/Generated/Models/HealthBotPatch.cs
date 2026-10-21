@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         {
             get
             {
-                return Sku is null ? default : Sku.Name;
+                return Sku is null ? (HealthBotSkuName?)default : Sku.Name;
             }
             set
             {
