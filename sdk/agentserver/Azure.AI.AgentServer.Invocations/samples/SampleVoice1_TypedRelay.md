@@ -1,7 +1,7 @@
 # Sample Voice 1: Typed Voice relay
 
 This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay
-over `/conversation_engine` and the existing `/invocations_ws` endpoint. The
+over `/voice_conversation_engine` and the existing `/invocations_ws` endpoint. The
 handler explicitly acknowledges startup, creates every response and output ID,
 and owns cancellation for its response tasks.
 
@@ -34,7 +34,7 @@ code, and declare the following in the hosted agent definition instead:
 
 ```json
 "protocol_versions": [
-  { "protocol": "conversation_engine", "version": "1.0.0" }
+  { "protocol": "voice_conversation_engine", "version": "1.0.0" }
 ]
 ```
 

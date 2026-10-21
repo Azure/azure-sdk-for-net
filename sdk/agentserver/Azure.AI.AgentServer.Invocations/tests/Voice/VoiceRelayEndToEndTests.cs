@@ -22,8 +22,8 @@ public class VoiceRelayEndToEndTests
 {
     [TestCase(false, "invocations_ws")]
     [TestCase(true, "invocations_ws")]
-    [TestCase(false, "conversation_engine")]
-    [TestCase(true, "conversation_engine")]
+    [TestCase(false, "voice_conversation_engine")]
+    [TestCase(true, "voice_conversation_engine")]
     public async Task DataAndSilentCompletionAreRelayed(bool silent, string path)
     {
         await using var app = BuildApp(new DataHandler(silent));
@@ -102,7 +102,7 @@ public class VoiceRelayEndToEndTests
     }
 
     [TestCase("invocations_ws")]
-    [TestCase("conversation_engine")]
+    [TestCase("voice_conversation_engine")]
     public async Task SelectedInboundEventsAreDispatchedInWireOrderOnOneSession(string path)
     {
         var handler = new OrderedDispatchHandler();

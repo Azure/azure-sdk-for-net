@@ -154,19 +154,22 @@ For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request s
 ### Typed Voice relay
 
 `VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over
-`/conversation_engine` and the existing `/invocations_ws` transport. Registering
+`/voice_conversation_engine` and the existing `/invocations_ws` transport. Registering
 with `AddVoice<THandler>()` exposes both routes; existing Voice applications keep
 the same startup code and legacy WS registration. Generic `AddInvocations()` raw
 WebSocket handlers do not expose CE. The application explicitly sends readiness,
 responses, output, completion, control, and error messages.
 
-To use standalone CE, declare `conversation_engine` version `1.0.0` in the hosted
+To use standalone CE, declare `voice_conversation_engine` version `1.0.0` in the hosted
 agent definition. New-schema definitions use `protocol_versions`; legacy
 definitions use `container_protocol_versions`. The library does not create or
 modify these declarations, and registering the container route alone does not
 enable the public Foundry endpoint. CE does not require `invocations_ws`,
 `voiceLiveCompatible`, or `bridgeProtocolVersion` declarations. Existing legacy
 Agent manifests and metadata can remain unchanged.
+
+The Voice Agent configuration field `conversation_engine` is separate from the
+Hosted Agent protocol name and remains unchanged.
 
 Both routes reuse the same callbacks, transport limits, tracing, and cleanup;
 neither redirects to or falls back to the other. The Bridge message handshake
