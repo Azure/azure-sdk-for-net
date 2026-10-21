@@ -2,9 +2,9 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { after, before, test } from "node:test";
-import { COMMENT_MARKER } from "../coverage.ts";
+import { COMMENT_MARKER, parseConfig } from "../coverage.ts";
 import type { CoverageConfig } from "../coverage.ts";
-import { GitHubApi, remoteSnapshot, reportCompletedRun, shouldRunLint, upsertComment } from "../github.ts";
+import { GitHubApi, checkPullRequest, remoteSnapshot, reportCompletedRun, shouldRunLint, upsertComment } from "../github.ts";
 
 const reportingEnvironment = {
   GITHUB_ACTIONS: process.env.GITHUB_ACTIONS,
@@ -160,12 +160,25 @@ for (const empty of [false, true]) {
 test("lint selection preserves original paths even when skill coverage is missing", () => {
   for (const file of [skillFile, evalFile, ".github/skills/example/references/guide.md",
     "eng/skill-eval/package-lock.json", config.workflow]) {
-    assert.equal(shouldRunLint([file], config), true, file);
+    assert.equal(shouldRunLint([file]), true, file);
   }
   for (const file of ["README.md", "tools/example/file.ts", "eng/common/scripts/skill-eval-coverage/check.ts"]) {
-    assert.equal(shouldRunLint([file], config), false, file);
+    assert.equal(shouldRunLint([file]), false, file);
   }
-  assert.equal(shouldRunLint([], config), false);
+  assert.equal(shouldRunLint([]), false);
+});
+
+test("nondefault coverage configuration cannot disable the original blocking lint selectors", async () => {
+  const alternate = parseConfig(JSON.stringify({ ...config,
+    skillsRoot: ".github/other-skills", workflow: ".github/workflows/other-coverage.yml" }));
+  const f = fixture();
+  const originalPaths = [skillFile, "eng/skill-eval/package-lock.json", ".github/workflows/skill-eval.yml"];
+  assert.deepEqual((await checkPullRequest(f.api, repo, f.pr, alternate, [skillFile])).skills, []);
+  for (const file of originalPaths) {
+    assert.equal(shouldRunLint([file, ".github/skill-eval-coverage.json"]), true, file);
+  }
+  assert.equal(shouldRunLint([".github/other-skills/example/SKILL.md"]), false);
+  assert.equal(shouldRunLint([alternate.workflow]), false);
 });
 
 test("human and unrelated bot comments with a copied marker are not overwritten", async () => {

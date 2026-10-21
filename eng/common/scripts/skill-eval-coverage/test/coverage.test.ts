@@ -129,10 +129,28 @@ for (const [label, text] of Object.entries({
 }
 
 test("YAML anchors and multi-turn stimuli are accepted without running commands", async () => {
-  const text = "shared: &shared {prompt: 'hello'}\nstimuli:\n  - name: turns\n    turns: [*shared, *shared]\n";
+  const text = "shared: &shared 'hello'\nstimuli:\n  - name: turns\n    turns: [*shared, *shared]\n";
   const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [evaluation("example")]: text }), config, [skill("example")]);
   assert.equal(report.skills[0].status, "present");
 });
+
+test("a discoverable Eval with nonempty string turns provides coverage without a prompt", async () => {
+  const text = "stimuli: [{name: conversation, turns: ['Inspect the input', 'Now continue']}]\n";
+  const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [evaluation("example")]: text }), config, [skill("example")]);
+  assert.equal(report.skills[0].status, "present");
+  assert.deepEqual(report.skills[0].evals, [evaluation("example")]);
+});
+
+for (const turns of ["[{prompt: first}, {prompt: second}]", "['first', {prompt: second}]", "['first', ' ']", "[]", "first"]) {
+  for (const prompt of ["", "prompt: 'A standalone prompt cannot repair invalid turns', "]) {
+    test(`invalid multi-turn shape cannot provide coverage: ${prompt}${turns}`, async () => {
+      const text = `stimuli: [{name: conversation, ${prompt}turns: ${turns}}]\n`;
+      const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [evaluation("example")]: text }), config, [skill("example")]);
+      assert.equal(report.skills[0].status, "missing");
+      assert.deepEqual(report.skills[0].evals, []);
+    });
+  }
+}
 
 test("normal repeated grading aliases do not falsely invalidate an Eval", async () => {
   const text = "grader: &g {type: output-contains, config: {value: yes}}\nstimuli:\n" +

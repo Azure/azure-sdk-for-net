@@ -14,18 +14,20 @@ mock-handler coverage enforcement.
    changed files on every PR update, including updates that revert all skill
    changes. Unrelated diffs skip skill-tree reads and do not create comments.
    Vally lint runs for changes to skills, its dependency project or the source
-   workflow, regardless of coverage warnings. If scope detection fails, lint
+   workflow, regardless of coverage warnings. These original lint selectors are
+   fixed independently of the PR's coverage configuration. If scope detection fails, lint
    still runs rather than being silently skipped.
 2. Changes anywhere inside a skill, including its references and Evals, select
    that skill. Renames select both paths. Removing the last Eval warns; removing
    the whole skill skips it. An existing Eval need not change in the same PR.
 3. The checker inventories the PR's immutable head tree and parses candidate
    Eval YAML. Coverage needs at least one named stimulus with a nonempty prompt
-   or nonempty prompt-based turns, and a match in a configured pipeline's literal
+   or a nonempty `turns` array of nonempty strings, and a match in a configured pipeline's literal
    `vallyRoot`/`evalGlobs`. Arbitrary fixture YAML, placeholders, invalid YAML,
    symlinks, oversized files and collector-relative paths containing whitespace
    do not count. This is a minimum presence check,
    **not** full Vally schema validation, routing quality, or behavioral grading.
+   When `turns` is provided, a standalone `prompt` does not repair invalid turns.
 4. The check summary and warning annotations explain uncovered skills. Coverage
    gaps exit successfully; unreadable data, failed requests and broken tooling
    fail the checker rather than produce a false coverage pass. There is no

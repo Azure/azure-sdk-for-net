@@ -119,8 +119,9 @@ function nonempty(value: unknown): value is string {
 function hasStimulus(value: unknown): boolean {
   if (!record(value) || !Array.isArray(value.stimuli)) return false;
   return value.stimuli.some((stimulus: unknown) => record(stimulus) && nonempty(stimulus.name) &&
-    (nonempty(stimulus.prompt) || (Array.isArray(stimulus.turns) && stimulus.turns.length > 0 &&
-      stimulus.turns.every((turn: unknown) => record(turn) && nonempty(turn.prompt)))));
+    (stimulus.turns === undefined ? nonempty(stimulus.prompt) :
+      Array.isArray(stimulus.turns) && stimulus.turns.length > 0 && stimulus.turns.every(nonempty) &&
+      (stimulus.prompt === undefined || typeof stimulus.prompt === "string")));
 }
 
 export async function checkCoverage(
