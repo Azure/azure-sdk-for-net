@@ -1,5 +1,22 @@
 # Release History
 
+## 3.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
+- Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+### Sample Updates
+
+- Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
+
 ## 3.0.0-beta.5 (2026-10-16)
 
 ### Features Added

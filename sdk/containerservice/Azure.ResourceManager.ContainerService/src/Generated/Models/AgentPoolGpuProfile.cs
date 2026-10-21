@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> GPU settings for the Agent Pool. </summary>
-    internal partial class AgentPoolGpuProfile
+    public partial class AgentPoolGpuProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,39 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuProfile"/>. </summary>
         /// <param name="driver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
+        /// <param name="nvidia"> NVIDIA-specific GPU settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, AgentPoolNvidiaGpuProfile nvidia, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Driver = driver;
+            Nvidia = nvidia;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
         [WirePath("driver")]
         public AgentPoolGpuDriver? Driver { get; set; }
+
+        /// <summary> NVIDIA-specific GPU settings. </summary>
+        [WirePath("nvidia")]
+        internal AgentPoolNvidiaGpuProfile Nvidia { get; set; }
+
+        /// <summary> The Managed GPU experience installs additional components, such as the Data Center GPU Manager (DCGM) metrics for monitoring, on top of the GPU driver for you. For more details of what is installed, check out aka.ms/aks/managed-gpu. </summary>
+        [WirePath("nvidia.managementMode")]
+        public GpuManagementMode? NvidiaManagementMode
+        {
+            get
+            {
+                return Nvidia is null ? default : Nvidia.ManagementMode;
+            }
+            set
+            {
+                if (Nvidia is null)
+                {
+                    Nvidia = new AgentPoolNvidiaGpuProfile();
+                }
+                Nvidia.ManagementMode = value;
+            }
+        }
     }
 }

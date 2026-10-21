@@ -495,7 +495,6 @@
                 "$id": "57",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "get string value",
                 "accessibility": "public",
                 "parameters": [
@@ -606,7 +605,6 @@
                 "$id": "62",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "put string value",
                 "accessibility": "public",
                 "parameters": [
@@ -802,7 +800,6 @@
                 "$id": "74",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Boolean",
                 "doc": "get boolean value",
                 "accessibility": "public",
                 "parameters": [
@@ -913,7 +910,6 @@
                 "$id": "79",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Boolean",
                 "doc": "put boolean value",
                 "accessibility": "public",
                 "parameters": [
@@ -1109,7 +1105,6 @@
                 "$id": "91",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Unknown",
                 "doc": "get unknown value",
                 "accessibility": "public",
                 "parameters": [
@@ -1220,7 +1215,6 @@
                 "$id": "96",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "Unknown",
                 "doc": "put unknown value",
                 "accessibility": "public",
                 "parameters": [
@@ -1416,7 +1410,6 @@
                 "$id": "108",
                 "name": "responseBody",
                 "isExactName": false,
-                "resourceName": "DecimalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1525,7 +1518,6 @@
                 "$id": "113",
                 "name": "requestBody",
                 "isExactName": false,
-                "resourceName": "DecimalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1667,7 +1659,6 @@
                 "$id": "121",
                 "name": "requestParameter",
                 "isExactName": false,
-                "resourceName": "DecimalType",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1809,7 +1800,6 @@
                 "$id": "131",
                 "name": "responseBody",
                 "isExactName": false,
-                "resourceName": "Decimal128Type",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1918,7 +1908,6 @@
                 "$id": "136",
                 "name": "requestBody",
                 "isExactName": false,
-                "resourceName": "Decimal128Type",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2060,7 +2049,6 @@
                 "$id": "144",
                 "name": "requestParameter",
                 "isExactName": false,
-                "resourceName": "Decimal128Type",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2202,7 +2190,6 @@
                 "$id": "154",
                 "name": "prepareVerify",
                 "isExactName": false,
-                "resourceName": "DecimalVerify",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2310,7 +2297,6 @@
                 "$id": "160",
                 "name": "verify",
                 "isExactName": false,
-                "resourceName": "DecimalVerify",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2503,7 +2489,6 @@
                 "$id": "172",
                 "name": "prepareVerify",
                 "isExactName": false,
-                "resourceName": "Decimal128Verify",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2600,7 +2585,6 @@
                 "$id": "176",
                 "name": "verify",
                 "isExactName": false,
-                "resourceName": "Decimal128Verify",
                 "accessibility": "public",
                 "parameters": [
                   {

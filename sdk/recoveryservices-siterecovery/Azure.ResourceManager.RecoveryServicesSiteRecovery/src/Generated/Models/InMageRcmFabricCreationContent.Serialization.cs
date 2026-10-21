@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string instanceType = "InMageRcm";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier vMwareSiteId = default;
             ResourceIdentifier physicalSiteId = default;
             IdentityProviderContent sourceAgentIdentity = default;
             foreach (var prop in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (prop.NameEquals("vmwareSiteId"u8))
                 {
-                    vmwareSiteId = new ResourceIdentifier(prop.Value.GetString());
+                    vMwareSiteId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("physicalSiteId"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InMageRcmFabricCreationContent(instanceType, additionalBinaryDataProperties, vmwareSiteId, physicalSiteId, sourceAgentIdentity);
+            return new InMageRcmFabricCreationContent(instanceType, additionalBinaryDataProperties, vMwareSiteId, physicalSiteId, sourceAgentIdentity);
         }
     }
 }

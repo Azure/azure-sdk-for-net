@@ -528,7 +528,6 @@
                 "$id": "50",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -635,7 +634,6 @@
                 "$id": "58",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -742,7 +740,6 @@
                 "$id": "66",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -849,7 +846,6 @@
                 "$id": "74",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -956,7 +952,6 @@
                 "$id": "82",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1090,7 +1085,6 @@
                 "$id": "90",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1280,7 +1274,6 @@
                 "$id": "98",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1470,7 +1463,6 @@
                 "$id": "106",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1660,7 +1652,6 @@
                 "$id": "114",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1850,7 +1841,6 @@
                 "$id": "122",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2090,7 +2080,6 @@
                 "$id": "134",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2197,7 +2186,6 @@
                 "$id": "142",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2304,7 +2292,6 @@
                 "$id": "150",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2411,7 +2398,6 @@
                 "$id": "158",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2518,7 +2504,6 @@
                 "$id": "166",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2653,7 +2638,6 @@
                 "$id": "174",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2714,7 +2698,6 @@
                 "$id": "178",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2775,7 +2758,6 @@
                 "$id": "182",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2836,7 +2818,6 @@
                 "$id": "186",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

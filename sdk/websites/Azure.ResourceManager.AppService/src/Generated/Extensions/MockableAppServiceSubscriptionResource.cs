@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of DeletedSiteAtLocations and their operations over a DeletedSiteAtLocationResource. </returns>
         public virtual DeletedSiteAtLocationCollection GetDeletedSiteAtLocations(AzureLocation location)
         {
-            return GetCachedClient(client => new DeletedSiteAtLocationCollection(client, Id, location));
+            return new DeletedSiteAtLocationCollection(Client, Id, location);
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> An object representing collection of ConnectorDryruns and their operations over a ConnectorDryrunResource. </returns>
         public virtual ConnectorDryrunCollection GetConnectorDryruns(string location)
         {
-            return GetCachedClient(client => new ConnectorDryrunCollection(client, Id, location));
+            return new ConnectorDryrunCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <returns> An object representing collection of LinkerConnectors and their operations over a LinkerConnectorResource. </returns>
         public virtual LinkerConnectorCollection GetLinkerConnectors(string location)
         {
-            return GetCachedClient(client => new LinkerConnectorCollection(client, Id, location));
+            return new LinkerConnectorCollection(Client, Id, location);
         }
 
         /// <summary>

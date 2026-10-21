@@ -40,6 +40,7 @@ namespace Azure.AI.Projects
         private ProjectOpenAIClient _cachedOpenAIClient;
         private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
+        private readonly AIProjectClientOptions _clientOptions;
         [Experimental("AAIP002")]
         private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
         private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview";
@@ -80,6 +81,7 @@ namespace Azure.AI.Projects
 
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
+            _clientOptions = options;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -109,6 +111,7 @@ namespace Azure.AI.Projects
             _apiVersion = options.Version;
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
+            _clientOptions = options;
             _telemetryDetails = new(typeof(AgentAdministrationClient).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicyIf(
@@ -173,7 +176,8 @@ namespace Azure.AI.Projects
 
         internal virtual AgentAdministrationClient GetCachedAgentsClient()
         {
-            return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient, this.GetProjectAgentsClient(), null) ?? _cachedAgentsClient;
+            return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient,
+                this.GetProjectAgentsClient(options: new AgentAdministrationClientOptions { EnableDistributedTracing = _clientOptions?.EnableDistributedTracing }), null) ?? _cachedAgentsClient;
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
@@ -263,7 +267,12 @@ namespace Azure.AI.Projects
                     "constructor to use Voice Agents realtime sessions.");
             }
 
-            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient,
+                new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders, options: new RealtimeClientOptions
+                {
+                    EnableDistributedTracing = _clientOptions?.EnableDistributedTracing,
+                    ClientLoggingOptions = _clientOptions?.ClientLoggingOptions
+                }), null) ?? _cachedProjectsRealtimeClient;
         }
 
         /// <summary>

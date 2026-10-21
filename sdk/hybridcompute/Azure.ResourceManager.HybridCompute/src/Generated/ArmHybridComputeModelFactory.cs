@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default)
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections)
         {
             return new HybridComputePrivateLinkScopeProperties(
                 publicNetworkAccess,
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = default, string licenseChannel = default, LicenseProfileMachineInstanceViewEsuProperties esuProfile = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, bool? isSoftwareAssuranceCustomer = default)
+        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IEnumerable<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer)
         {
             return new LicenseProfileMachineInstanceView(
                 licenseStatus,
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(IEnumerable<HybridComputeIPAddress> ipAddresses = default)
+        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(IEnumerable<HybridComputeIPAddress> ipAddresses)
         {
             return new HybridComputeNetworkInterface(default, default, default, (ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>()).ToList(), default);
         }
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default, bool? softwareAssuranceCustomer = default)
+        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IEnumerable<HybridComputeProductFeature> productFeatures, Guid? assignedLicenseImmutableId, IEnumerable<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, string assignedLicense, bool? softwareAssuranceCustomer)
         {
             return new HybridComputeLicenseProfileData(
                 id,
