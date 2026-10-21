@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,16 +25,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 ProtocolConfiguration.HttpConfiguration = value;
             }
-        }
-
-        // Retain the name shipped in 1.16.1/1.17 as an alias, not independent serialized storage.
-        /// <summary> HTTP configuration of the connectivity check. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version, please use `HttpProtocolConfiguration` instead", false)]
-        public NetworkHttpConfiguration ProtocolHTTPConfiguration
-        {
-            get => HttpProtocolConfiguration;
-            set => HttpProtocolConfiguration = value;
         }
     }
 }

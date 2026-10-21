@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,15 +14,5 @@ namespace Azure.ResourceManager.Network.Models
         [CodeGenMember("EnableProbeProxyProtocolHeader")]
         [WirePath("enableProbeProxyProtocolHeader")]
         public bool? IsProbeProxyProtocolHeaderEnabled { get; set; }
-
-        // Preserve the TypeSpec name shipped in 1.17.0 without independent serialized storage.
-        /// <inheritdoc cref="IsProbeProxyProtocolHeaderEnabled"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsProbeProxyProtocolHeaderEnabled instead.")]
-        public bool? EnableProbeProxyProtocolHeader
-        {
-            get => IsProbeProxyProtocolHeaderEnabled;
-            set => IsProbeProxyProtocolHeaderEnabled = value;
-        }
     }
 }

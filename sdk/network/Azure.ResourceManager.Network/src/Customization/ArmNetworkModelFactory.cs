@@ -14,21 +14,15 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    // The retained NAT pool factory must initialize extension storage, not pass null to its writer.
+    // Do not regenerate factory overloads that were absent from the 1.15 API.
     [CodeGenSuppress("LoadBalancerInboundNatPoolProperties", typeof(ResourceIdentifier), typeof(LoadBalancingTransportProtocol), typeof(int), typeof(int), typeof(int), typeof(int?), typeof(bool?), typeof(bool?), typeof(NetworkProvisioningState?))]
     // The renamed numeric wire property must not consume or discard the legacy string input.
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
-    // The released parameter name must feed the renamed canonical property rather than being discarded.
     [CodeGenSuppress("ApplicationGatewayOnDemandProbe", typeof(ApplicationGatewayProtocol?), typeof(string), typeof(string), typeof(int?), typeof(bool?), typeof(bool?), typeof(ApplicationGatewayProbeHealthResponseMatch), typeof(ResourceIdentifier), typeof(ResourceIdentifier))]
-    // Preserve the old endpoint factory signature without dropping its renamed type argument.
-#pragma warning disable CS0618 // The compatibility overload must reference the obsolete endpoint type.
-    [CodeGenSuppress("ConnectionMonitorEndpoint", typeof(string), typeof(EndpointType?), typeof(ResourceIdentifier), typeof(string), typeof(ConnectionMonitorEndpointFilter), typeof(ConnectionMonitorEndpointScope), typeof(CoverageLevel?), typeof(string), typeof(Guid?))]
-#pragma warning restore CS0618
-    // Retain the shipped factory signature while constructing the complete request, not its settings.
     [CodeGenSuppress("ConnectionMonitorCreateOrUpdateContent", typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string))]
     [CodeGenSuppress("ConnectionMonitorCreateOrUpdateContent", typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ConnectionMonitorSource), typeof(ConnectionMonitorDestination), typeof(bool?), typeof(int?), typeof(IEnumerable<ConnectionMonitorEndpoint>), typeof(IEnumerable<ConnectionMonitorTestConfiguration>), typeof(IEnumerable<ConnectionMonitorTestGroup>), typeof(IEnumerable<ConnectionMonitorOutput>), typeof(string))]
-    // Preserve both bandwidth factory signatures and populate the renamed numeric property.
+    // Preserve the released factory overloads and keep their implementation helpers nonpublic.
     [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(double?), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(VirtualNetworkApplianceIPVersionType?), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData), typeof(ETag?))]
     [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(string), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData))]
     [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(VirtualNetworkAddressSpace), typeof(RoutingConfigurationNfv), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?), typeof(ETag?))]
@@ -47,94 +41,6 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
-        /// <summary> Initializes a complete connection monitor request for mocking. </summary>
-        public static ConnectionMonitorCreateOrUpdateContent ConnectionMonitorCreateOrUpdateContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default)
-        {
-            var properties = new ConnectionMonitorParameters(
-                source, destination, autoStart, monitoringIntervalInSeconds,
-                endpoints is null ? new ChangeTrackingList<ConnectionMonitorEndpoint>() : endpoints.ToList(),
-                testConfigurations is null ? new ChangeTrackingList<ConnectionMonitorTestConfiguration>() : testConfigurations.ToList(),
-                testGroups is null ? new ChangeTrackingList<ConnectionMonitorTestGroup>() : testGroups.ToList(),
-                outputs is null ? new ChangeTrackingList<ConnectionMonitorOutput>() : outputs.ToList(), notes, default);
-            return new ConnectionMonitorCreateOrUpdateContent(default, new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> Initializes the compatibility name of a complete connection monitor request for mocking. </summary>
-        public static ConnectionMonitorContent ConnectionMonitorContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            var result = ConnectionMonitorCreateOrUpdateContent(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes);
-            return new ConnectionMonitorContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), result.Properties, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayOnDemandProbe"/> for mocking. </summary>
-        /// <param name="protocol"> The protocol used for the probe. </param>
-        /// <param name="host"> Host name to send the probe to. </param>
-        /// <param name="path"> Relative path of the probe. </param>
-        /// <param name="timeout"> The probe timeout in seconds. </param>
-        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header is picked from backend HTTP settings. </param>
-        /// <param name="enableProbeProxyProtocolHeader"> Whether to send a Proxy Protocol header with the probe. </param>
-        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="backendAddressPoolId"> The backend address pool resource ID. </param>
-        /// <param name="backendHttpSettingsId"> The backend HTTP settings resource ID. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayOnDemandProbe"/> instance for mocking. </returns>
-        public static ApplicationGatewayOnDemandProbe ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol = default, string host = default, string path = default, int? timeout = default, bool? pickHostNameFromBackendHttpSettings = default, bool? enableProbeProxyProtocolHeader = default, ApplicationGatewayProbeHealthResponseMatch match = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default)
-        {
-            return new ApplicationGatewayOnDemandProbe(
-                protocol,
-                host,
-                path,
-                timeout,
-                pickHostNameFromBackendHttpSettings,
-                enableProbeProxyProtocolHeader,
-                match,
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/> for mocking. </summary>
-        /// <param name="localAddress"> The peer's local address. </param>
-        /// <param name="network"> The route's network prefix. </param>
-        /// <param name="nextHop"> The route's next hop. </param>
-        /// <param name="sourcePeer"> The peer this route was learned from. </param>
-        /// <param name="origin"> The source this route was learned from. </param>
-        /// <param name="asPath"> The route's AS path sequence. </param>
-        /// <param name="weight"> The route's weight. </param>
-        /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
-        {
-            return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);
-        }
-
-        /// <summary> Creates inbound NAT pool properties for mocking. </summary>
-        /// <param name="frontendIPConfigurationId"> The frontend IP configuration resource ID. </param>
-        /// <param name="protocol"> The transport protocol. </param>
-        /// <param name="frontendPortRangeStart"> The first frontend port in the range. </param>
-        /// <param name="frontendPortRangeEnd"> The last frontend port in the range. </param>
-        /// <param name="backendPort"> The backend port. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout in minutes. </param>
-        /// <param name="enableFloatingIP"> Whether floating IP is enabled. </param>
-        /// <param name="enableTcpReset"> Whether TCP reset is enabled. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
-        {
-            return new LoadBalancerInboundNatPoolProperties(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                protocol,
-                frontendPortRangeStart,
-                frontendPortRangeEnd,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                provisioningState,
-                new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <summary> Defines a managed rule set rule group with legacy string rules. </summary>
         /// <param name="ruleGroupName"> Name of the rule group. </param>
         /// <param name="rules"> Legacy string rules retained for compatibility; these values are not serialized. </param>
@@ -143,28 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = default, IEnumerable<string> rules = default)
             => new ManagedRuleSetRuleGroup(ruleGroupName, (rules ?? new ChangeTrackingList<string>()).ToList());
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorEndpoint"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is deprecated and it will be removed in a future version. Please use the overload accepting ConnectionMonitorEndpointType instead.")]
-        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name = default, EndpointType? @type = default, ResourceIdentifier resourceId = default, string address = default, ConnectionMonitorEndpointFilter filter = default, ConnectionMonitorEndpointScope scope = default, CoverageLevel? coverageLevel = default, string locationDetailsRegion = default, Guid? subscriptionId = default)
-        {
-            return new ConnectionMonitorEndpoint(
-                name,
-                @type?.Value,
-                resourceId,
-                address,
-                filter,
-                scope,
-                coverageLevel,
-                locationDetailsRegion is null ? default : new ConnectionMonitorEndpointLocationDetails(locationDetailsRegion, default),
-                subscriptionId,
-                default);
-        }
-
-        // The legacy string parameter must populate the native typed constructor rather than be discarded.
-        // Cast the null branch to ResourceType? so implicit string conversion cannot create a present default struct.
-        /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkApplianceData"/>. </summary>
-        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
+        internal static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
         {
             return new VirtualNetworkApplianceData(
                 id,
@@ -204,10 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             return model;
         }
 
-        // Preserve the released parameter name while initializing the renamed generated collection.
-        // Convert its string type into native metadata; the explicitly nullable null branch avoids a default struct.
-        /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = default, string name = default, string @type = default, VirtualNetworkAddressSpace vpnClientAddressPool = default, RoutingConfigurationNfv routingConfiguration = default, bool? enableInternetSecurity = default, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = default, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        internal static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = default, string name = default, string @type = default, VirtualNetworkAddressSpace vpnClientAddressPool = default, RoutingConfigurationNfv routingConfiguration = default, bool? enableInternetSecurity = default, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = default, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             return new P2SConnectionConfiguration(
                 id,
@@ -241,33 +123,6 @@ namespace Azure.ResourceManager.Network.Models
                 previousConfigurationPolicyGroupAssociations: previousConfigurationPolicyGroupAssociations,
                 provisioningState: provisioningState,
                 eTag: etag);
-        }
-
-        // Restores the released enum-shaped factory overload and delegates it to the canonical overload that accepts
-        // the Boolean IsOnlyIPv6PeeringEnabled value.
-        // Preserve its string type in native metadata, using nullable null to avoid the implicit default-struct conversion.
-        /// <summary> Initializes a new instance of <see cref="Network.HubVirtualNetworkConnectionData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is deprecated and is no longer supported by the service.")]
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
-        {
-            bool? isOnlyIPv6PeeringEnabled = enableOnlyIPv6Peering.HasValue
-                ? enableOnlyIPv6Peering.Value == EnableOnlyIPv6PeeringState.Enabled
-                : default;
-
-            return HubVirtualNetworkConnectionData(
-                id,
-                name,
-                @type is null ? (ResourceType?)null : new ResourceType(@type),
-                allowHubToRemoteVnetTransit,
-                allowRemoteVnetToUseHubVnetGateways,
-                enableInternetSecurity,
-                routingConfiguration,
-                isOnlyIPv6PeeringEnabled,
-                provisioningState,
-                remoteVirtualNetworkId,
-                connectionPolicyId,
-                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveBaseSecurityAdminRule"/>. </summary>
@@ -354,33 +209,6 @@ namespace Azure.ResourceManager.Network.Models
         {
             var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
             return new NetworkManagerConnectionData(id, name, resourceType, systemData, properties, etag, default);
-        }
-
-        // Restores the released subscription-specific factory API over the canonical shared connection model.
-        /// <summary> Initializes a new instance of <see cref="Network.SubscriptionNetworkManagerConnectionData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete. Please use NetworkManagerConnectionData instead.")]
-        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
-        {
-            var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
-            return new SubscriptionNetworkManagerConnectionData(id, name, type, eTag, default, properties, systemData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EffectiveNetworkSecurityGroup"/>. </summary>
-        /// <param name="networkSecurityGroupId"> Resource ID. </param>
-        /// <param name="association"> Associated resources. </param>
-        /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
-        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = default, EffectiveNetworkSecurityGroupAssociation association = default, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = default, string tagMap = default)
-        {
-            // The 1.15 legacy string getter was unpopulated; initialize native dictionary storage without converting it.
-            return new EffectiveNetworkSecurityGroup(
-                networkSecurityGroupId is null ? default : new NetworkSubResource(networkSecurityGroupId, default),
-                association,
-                (effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>()).ToList(),
-                new ChangeTrackingDictionary<string, IList<string>>(),
-                default);
         }
     }
 }

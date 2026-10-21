@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
@@ -201,21 +200,21 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void ReleasedConnectionMonitorNameUsesCanonicalPersistence()
+        public void CanonicalConnectionMonitorRequestPreservesPersistence()
         {
-            ConnectionMonitorContent value = CreateConnectionMonitorContent().ToConnectionMonitorContent();
+            ConnectionMonitorCreateOrUpdateContent value = CreateConnectionMonitorContent();
             using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(value, new ModelReaderWriterOptions("W")));
             AssertConnectionMonitorRequest(wire.RootElement);
             using JsonDocument canonicalWire = JsonDocument.Parse(ModelReaderWriter.Write<ConnectionMonitorCreateOrUpdateContent>(value, new ModelReaderWriterOptions("W")));
             AssertConnectionMonitorRequest(canonicalWire.RootElement);
-            var restored = ModelReaderWriter.Read<ConnectionMonitorContent>(ModelReaderWriter.Write(value));
+            var restored = ModelReaderWriter.Read<ConnectionMonitorCreateOrUpdateContent>(ModelReaderWriter.Write(value));
             Assert.That(restored.Source.ResourceId, Is.EqualTo(value.Source.ResourceId));
             Assert.That(restored.Location, Is.EqualTo(value.Location));
             Assert.That(restored.Endpoints, Is.SameAs(restored.Properties.Endpoints));
             restored.Notes = "changed";
             Assert.That(restored.Properties.Notes, Is.EqualTo("changed"));
 
-            var unknown = ModelReaderWriter.Read<ConnectionMonitorContent>(BinaryData.FromString("""
+            var unknown = ModelReaderWriter.Read<ConnectionMonitorCreateOrUpdateContent>(BinaryData.FromString("""
                 {"location":"westus2","future":{"value":42},"properties":{"notes":"retained","futureSetting":true}}
                 """));
             using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(unknown));
@@ -224,33 +223,22 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(value, new ModelReaderWriterOptions("X")));
 
             var reader = new Utf8JsonReader(ModelReaderWriter.Write(value).ToMemory().Span);
-            ConnectionMonitorContent jsonRestored = ((IJsonModel<ConnectionMonitorContent>)value).Create(ref reader, ModelReaderWriterOptions.Json);
+            ConnectionMonitorCreateOrUpdateContent jsonRestored = ((IJsonModel<ConnectionMonitorCreateOrUpdateContent>)value).Create(ref reader, ModelReaderWriterOptions.Json);
             Assert.That(jsonRestored.Notes, Is.EqualTo(value.Notes));
-            Assert.That(new ConnectionMonitorContent().Tags, Is.Empty);
-            Assert.That(new ConnectionMonitorContent().Endpoints, Is.Empty);
+            Assert.That(new ConnectionMonitorCreateOrUpdateContent().Tags, Is.Empty);
+            Assert.That(new ConnectionMonitorCreateOrUpdateContent().Endpoints, Is.Empty);
         }
 
         [Test]
-        public void ReleasedConnectionMonitorFactoriesPopulateConnectedSettings()
+        public void ConnectionMonitorRequestNeedsNoCompatibilityFactory()
         {
             ConnectionMonitorCreateOrUpdateContent content = CreateConnectionMonitorContent();
-            ConnectionMonitorCreateOrUpdateContent canonical = ArmNetworkModelFactory.ConnectionMonitorCreateOrUpdateContent(
-                content.Source, content.Destination, content.AutoStart, content.MonitoringIntervalInSeconds,
-                content.Endpoints, content.TestConfigurations, content.TestGroups, content.Outputs, content.Notes);
-            canonical.Location = content.Location;
-            canonical.Tags.Add("environment", "test");
+            ConnectionMonitorCreateOrUpdateContent canonical = ModelReaderWriter.Read<ConnectionMonitorCreateOrUpdateContent>(ModelReaderWriter.Write(content));
             using JsonDocument canonicalWire = JsonDocument.Parse(ModelReaderWriter.Write(canonical, new ModelReaderWriterOptions("W")));
             AssertConnectionMonitorRequest(canonicalWire.RootElement);
-            var tags = new Dictionary<string, string> { ["environment"] = "test" };
-            ConnectionMonitorContent compatibility = ArmNetworkModelFactory.ConnectionMonitorContent(
-                content.Source, content.Destination, content.AutoStart, content.MonitoringIntervalInSeconds,
-                content.Endpoints, content.TestConfigurations, content.TestGroups, content.Outputs, content.Notes,
-                content.Location, tags);
-            Assert.That(compatibility.Tags, Is.SameAs(tags));
-            using JsonDocument compatibilityWire = JsonDocument.Parse(ModelReaderWriter.Write(compatibility, new ModelReaderWriterOptions("W")));
-            AssertConnectionMonitorRequest(compatibilityWire.RootElement);
-            Assert.That(ArmNetworkModelFactory.ConnectionMonitorCreateOrUpdateContent().Tags, Is.Empty);
-            Assert.That(ArmNetworkModelFactory.ConnectionMonitorContent().Endpoints, Is.Empty);
+            Assert.That(canonical.Endpoints, Is.SameAs(canonical.Properties.Endpoints));
+            Assert.That(Array.Exists(typeof(ArmNetworkModelFactory).GetMethods(BindingFlags.Public | BindingFlags.Static),
+                method => method.Name is "ConnectionMonitorContent" or "ConnectionMonitorCreateOrUpdateContent"), Is.False);
         }
 
         [TestCase(false, null, false)]
@@ -261,7 +249,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(false, "true", true)]
         [TestCase(true, null, true)]
         [TestCase(true, "true", true)]
-        public async Task NativeConnectionMonitorCreateUsesServiceOperation(bool asynchronous, string migrate, bool compatibilityName)
+        public async Task NativeConnectionMonitorCreateUsesServiceOperation(bool asynchronous, string migrate, bool roundTripRequest)
         {
             var transport = new MockTransport(new MockResponse(200).SetContent($$$"""
                 {"id":"{{{WatcherId}}}/connectionMonitors/monitor","name":"monitor","type":"Microsoft.Network/networkWatchers/connectionMonitors","location":"westus2","properties":{"provisioningState":"Succeeded"}}
@@ -269,20 +257,13 @@ namespace Azure.ResourceManager.Network.Tests
             var client = new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
             ConnectionMonitorCollection collection = client.GetNetworkWatcherResource(new ResourceIdentifier(WatcherId)).GetConnectionMonitors();
             ConnectionMonitorCreateOrUpdateContent content = CreateConnectionMonitorContent();
-            ArmOperation<ConnectionMonitorResource> operation;
-            if (compatibilityName)
+            if (roundTripRequest)
             {
-                ConnectionMonitorContent compatibility = content.ToConnectionMonitorContent();
-                operation = asynchronous
-                    ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", compatibility, migrate, CancellationToken.None)
-                    : collection.CreateOrUpdate(WaitUntil.Completed, "monitor", compatibility, migrate, CancellationToken.None);
+                content = ModelReaderWriter.Read<ConnectionMonitorCreateOrUpdateContent>(ModelReaderWriter.Write(content));
             }
-            else
-            {
-                operation = asynchronous
-                    ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, migrate, CancellationToken.None)
-                    : collection.CreateOrUpdate(WaitUntil.Completed, "monitor", content, migrate, CancellationToken.None);
-            }
+            ArmOperation<ConnectionMonitorResource> operation = asynchronous
+                ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, migrate, CancellationToken.None)
+                : collection.CreateOrUpdate(WaitUntil.Completed, "monitor", content, migrate, CancellationToken.None);
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Id.ToString(), Is.EqualTo(WatcherId + "/connectionMonitors/monitor"));
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Put));
@@ -299,7 +280,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase("three")]
         [TestCase("cancellation")]
         [TestCase("named-cancellation")]
-        public async Task ReleasedAsyncOverloadsForwardToNativeOperation(string overload)
+        public async Task NativeAsyncOptionalArgumentsUseServiceOperation(string overload)
         {
             var transport = new MockTransport(new MockResponse(200).SetContent($$$"""
                 {"id":"{{{WatcherId}}}/connectionMonitors/monitor","name":"monitor","type":"Microsoft.Network/networkWatchers/connectionMonitors","properties":{"provisioningState":"Succeeded"}}
@@ -310,7 +291,7 @@ namespace Azure.ResourceManager.Network.Tests
             ArmOperation<ConnectionMonitorResource> operation = overload switch
             {
                 "three" => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content),
-                "cancellation" => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, CancellationToken.None),
+                "cancellation" => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, null, CancellationToken.None),
                 _ => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, cancellationToken: CancellationToken.None)
             };
             Assert.That(operation.HasValue, Is.True);
@@ -319,6 +300,128 @@ namespace Azure.ResourceManager.Network.Tests
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);
             using JsonDocument wire = JsonDocument.Parse(stream.ToArray());
             AssertConnectionMonitorRequest(wire.RootElement);
+        }
+
+        [TestCase("ConnectionMonitorContent")]
+        [TestCase("EnableOnlyIPv6PeeringState")]
+        [TestCase("EndpointType")]
+        public void Post115CompatibilityTypesAreAbsent(string name)
+        {
+            Assert.That(typeof(ConnectionMonitorData).Assembly.GetType("Azure.ResourceManager.Network.Models." + name), Is.Null);
+        }
+
+        [TestCase(typeof(ConnectionMonitorEndpointType), "AzureVM")]
+        [TestCase(typeof(ConnectionMonitorEndpointType), "AzureArcVM")]
+        [TestCase(typeof(ConnectionMonitorEndpointType), "AzureVMSS")]
+        [TestCase(typeof(ConnectionMonitorEndpointType), "MultiEndpoint")]
+        [TestCase(typeof(ConnectionMonitorEndpointType), "SingleSourceDestination")]
+        [TestCase(typeof(ApplicationGatewaySslProtocol), "TLSv10")]
+        [TestCase(typeof(ApplicationGatewaySslProtocol), "TLSv11")]
+        [TestCase(typeof(ApplicationGatewaySslProtocol), "TLSv12")]
+        [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "BackendAddressPool")]
+        [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "BackendHttpSettings")]
+        [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "HttpListener")]
+        [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "RedirectConfiguration")]
+        [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "UrlPathMap")]
+        [TestCase(typeof(NetworkChildResource), "ETag")]
+        [TestCase(typeof(NetworkProxyResource), "ETag")]
+        public void Post115CustomPropertiesAreNotPublic(Type type, string name)
+        {
+            Assert.That(type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static), Is.Null);
+        }
+
+        [TestCase(typeof(EndpointServiceResult))]
+        [TestCase(typeof(NetworkResourceData))]
+        [TestCase(typeof(NetworkTrackedResourceData))]
+        public void ResourceTypeRetainsOnlyReleasedPublicGetter(Type type)
+        {
+            PropertyInfo property = type.GetProperty("ResourceType");
+            Assert.That(property.GetMethod.IsPublic, Is.True);
+            Assert.That(property.SetMethod?.IsPublic, Is.Not.True);
+        }
+
+        [TestCase(typeof(NetworkChildResource))]
+        [TestCase(typeof(NetworkProxyResource))]
+        public void NonpublicETagStorageStillPersists(Type type)
+        {
+            typeof(NetworkBatchFiveInvestigationTests)
+                .GetMethod(nameof(CheckNonpublicETagStorage), BindingFlags.NonPublic | BindingFlags.Static)
+                .MakeGenericMethod(type).Invoke(null, null);
+        }
+
+        private static void CheckNonpublicETagStorage<T>()
+        {
+            var value = ModelReaderWriter.Read<T>(BinaryData.FromString("""{"etag":"retained-etag"}"""));
+            PropertyInfo property = typeof(T).GetProperty("ETag", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(property.GetValue(value), Is.EqualTo("retained-etag"));
+            using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(value));
+            Assert.That(persisted.RootElement.GetProperty("etag").GetString(), Is.EqualTo("retained-etag"));
+        }
+
+        [TestCase(typeof(AdminRuleGroupData))]
+        [TestCase(typeof(BaseAdminRuleData))]
+        [TestCase(typeof(CloudServiceSwapData))]
+        [TestCase(typeof(ConnectivityConfigurationData))]
+        public void NativeDeserializationReplacesNonbaselineTypedCoreMethods(Type type)
+        {
+            typeof(NetworkBatchFiveInvestigationTests)
+                .GetMethod(nameof(CheckNativeDeserialization), BindingFlags.NonPublic | BindingFlags.Static)
+                .MakeGenericMethod(type).Invoke(null, null);
+        }
+
+        private static void CheckNativeDeserialization<T>()
+        {
+            var value = ModelReaderWriter.Read<T>(BinaryData.FromString("{}"));
+            Assert.That(value, Is.Not.Null);
+            var restored = ModelReaderWriter.Read<T>(ModelReaderWriter.Write(value));
+            Assert.That(restored.GetType(), Is.EqualTo(value.GetType()));
+        }
+
+        [Test]
+        public void UnknownAdminRuleUsesNativeCoreMethods()
+        {
+            var value = ModelReaderWriter.Read<BaseAdminRuleData>(BinaryData.FromString("""{"kind":"Future"}"""));
+            Assert.That(value.GetType().Name, Is.EqualTo("UnknownBaseAdminRule"));
+            using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(value));
+            Assert.That(persisted.RootElement.GetProperty("kind").GetString(), Is.EqualTo("Future"));
+        }
+
+        [Test]
+        public void ReleasedVirtualApplianceFactoryKeepsItsNonpublicSupport()
+        {
+            var resourceType = new ResourceType("Microsoft.Network/virtualNetworkAppliances");
+            var value = ArmNetworkModelFactory.VirtualNetworkApplianceData(resourceType: resourceType, bandwidthInGbps: "12.5");
+            Assert.That(value.ResourceType, Is.EqualTo(resourceType));
+            Assert.That(value.BandwidthInGbps, Is.EqualTo("12.5"));
+        }
+
+        [Test]
+        public void ReleasedP2SFactoryKeepsItsNonpublicSupport()
+        {
+            var id = new ResourceIdentifier("/subscriptions/" + SubscriptionId + "/resourceGroups/rg/providers/Microsoft.Network/p2sVpnGateways/gateway/p2sConnectionConfigurations/configuration");
+            var resourceType = new ResourceType("Microsoft.Network/p2sVpnGateways/p2sConnectionConfigurations");
+            var value = ArmNetworkModelFactory.P2SConnectionConfiguration(
+                id: id, name: "configuration", resourceType: resourceType, etag: null,
+                vpnClientAddressPrefixes: new[] { "10.0.0.0/24" }, routingConfiguration: null,
+                enableInternetSecurity: true, configurationPolicyGroupAssociations: null,
+                previousConfigurationPolicyGroupAssociations: null, provisioningState: null);
+            Assert.That(value.Id, Is.EqualTo(id));
+            Assert.That(value.Name, Is.EqualTo("configuration"));
+            Assert.That(value.ResourceType, Is.EqualTo(resourceType));
+        }
+
+        [Test]
+        public void ConnectionMonitorCollectionHasNoPost115CompatibilityOverloads()
+        {
+            foreach (MethodInfo method in typeof(ConnectionMonitorCollection).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            {
+                if (method.Name is "CreateOrUpdate" or "CreateOrUpdateAsync")
+                {
+                    Assert.That(method.GetParameters(), Has.Length.EqualTo(5));
+                    Assert.That(method.GetParameters()[2].ParameterType, Is.EqualTo(typeof(ConnectionMonitorCreateOrUpdateContent)));
+                    Assert.That(method.GetParameters()[3].ParameterType, Is.EqualTo(typeof(string)));
+                }
+            }
         }
 
         private static ConnectionMonitorCreateOrUpdateContent CreateConnectionMonitorContent()

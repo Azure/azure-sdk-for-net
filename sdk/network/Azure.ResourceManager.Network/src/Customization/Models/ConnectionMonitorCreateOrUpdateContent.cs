@@ -12,8 +12,5 @@ namespace Azure.ResourceManager.Network.Models
         // The required wrapper remains initialized while its flattened input members stay writable.
         [CodeGenMember("Properties")]
         internal ConnectionMonitorParameters Properties { get; set; } = new ConnectionMonitorParameters();
-
-        internal ConnectionMonitorContent ToConnectionMonitorContent() =>
-            new ConnectionMonitorContent(Location, Tags, Properties, _additionalBinaryDataProperties);
     }
 }

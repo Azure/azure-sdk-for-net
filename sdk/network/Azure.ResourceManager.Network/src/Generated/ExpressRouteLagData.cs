@@ -29,11 +29,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ExpressRouteLag properties. </param>
+        /// <param name="type"> The type of the resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
-        internal ExpressRouteLagData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagPropertiesFormat properties, string eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
+        internal ExpressRouteLagData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagPropertiesFormat properties, string @type, string eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
+            Type = @type;
             ETag = eTag;
             Identity = identity;
         }
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> ExpressRouteLag properties. </summary>
         [WirePath("properties")]
         public ExpressRouteLagPropertiesFormat Properties { get; set; }
+
+        /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

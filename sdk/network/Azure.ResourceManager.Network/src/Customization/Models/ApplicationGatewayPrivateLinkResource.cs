@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayPrivateLinkResource : NetworkResourceData
     {
-        // This protected overload shipped in 1.17.0; external subclasses can call it.
-        /// <summary> Initializes a new instance of the ApplicationGatewayPrivateLinkResource class. </summary>
-        protected ApplicationGatewayPrivateLinkResource(bool _) { }
     }
 }

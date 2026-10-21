@@ -18,9 +18,5 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionType = connectionType;
             LocalNetworkGateway2Id = localNetworkGateway2?.Id;
         }
-
-        // Retain the protected constructor shipped in 1.17; its argument is intentionally ignored.
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
-        protected VirtualNetworkGatewayConnectionListEntity(bool _) { }
     }
 }

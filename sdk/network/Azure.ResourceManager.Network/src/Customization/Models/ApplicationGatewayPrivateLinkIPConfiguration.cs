@@ -3,21 +3,9 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkResourceData
     {
-        // Preserve the TypeSpec-generated property name because it maps to the same wire property as the preferred member.
-        /// <inheritdoc cref="IsPrimary"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsPrimary instead.")]
-        public bool? Primary
-        {
-            get => IsPrimary;
-            set => IsPrimary = value;
-        }
     }
 }

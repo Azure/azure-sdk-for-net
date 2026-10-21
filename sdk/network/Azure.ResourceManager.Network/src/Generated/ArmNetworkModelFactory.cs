@@ -4453,10 +4453,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> ExpressRouteLag properties. </param>
+        /// <param name="type"> The type of the resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLagData"/> instance for mocking. </returns>
-        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string eTag = default, ManagedServiceIdentity identity = default)
+        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string @type = default, string eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4468,6 +4469,7 @@ namespace Azure.ResourceManager.Network.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 properties,
+                @type,
                 eTag,
                 identity);
         }
@@ -7967,8 +7969,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.TrackedResourceWithSettableIdOptionalLocation"/> instance for mocking. </returns>
-        public static TrackedResourceWithSettableIdOptionalLocation TrackedResourceWithSettableIdOptionalLocation(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        public static TrackedResourceWithSettableIdOptionalLocation TrackedResourceWithSettableIdOptionalLocation(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -7978,7 +7981,8 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
+                default,
+                @type);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -9362,6 +9366,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="disableVpnEncryption"> Vpn encryption to be disabled or not. </param>
         /// <param name="virtualHubs"> List of VirtualHubs in the VirtualWAN. </param>
         /// <param name="vpnSites"> List of VpnSites in the VirtualWAN. </param>
@@ -9372,7 +9377,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VirtualWanData"/> instance for mocking. </returns>
-        public static VirtualWanData VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, bool? disableVpnEncryption, IEnumerable<WritableSubResource> virtualHubs, IEnumerable<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType, ETag? eTag)
+        public static VirtualWanData VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string @type, bool? disableVpnEncryption, IEnumerable<WritableSubResource> virtualHubs, IEnumerable<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -9383,6 +9388,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
+                @type,
                 disableVpnEncryption is null && virtualHubs is null && vpnSites is null && allowBranchToBranchTraffic is null && allowVnetToVnetTraffic is null && office365LocalBreakoutCategory is null && provisioningState is null && virtualWanType is null ? default : new VirtualWanProperties(
                     disableVpnEncryption,
                     (virtualHubs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -10907,9 +10913,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of the first party service tag. </param>
+        /// <param name="type"> The type of the resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.FirstPartyServiceTagData"/> instance for mocking. </returns>
-        public static FirstPartyServiceTagData FirstPartyServiceTagData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, FirstPartyServiceTagPropertiesFormat properties = default, string eTag = default)
+        public static FirstPartyServiceTagData FirstPartyServiceTagData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, FirstPartyServiceTagPropertiesFormat properties = default, string @type = default, string eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -10921,6 +10928,7 @@ namespace Azure.ResourceManager.Network.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 properties,
+                @type,
                 eTag);
         }
 
@@ -10971,8 +10979,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkResource"/> instance for mocking. </returns>
-        public static ApplicationGatewayPrivateLinkResource ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ETag? eTag)
+        public static ApplicationGatewayPrivateLinkResource ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ETag? eTag, string @type)
         {
             return new ApplicationGatewayPrivateLinkResource(
                 id,
@@ -10980,7 +10989,8 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApplicationGatewayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                eTag);
+                eTag,
+                @type);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -12021,7 +12031,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="locationDetailsRegion"> Region for connection monitor endpoint. </param>
         /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
         /// <returns> A new <see cref="Models.ConnectionMonitorEndpoint"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, string locationDetailsRegion, Guid? subscriptionId)
+        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name = default, ConnectionMonitorEndpointType? endpointType = default, ResourceIdentifier resourceId = default, string address = default, ConnectionMonitorEndpointFilter filter = default, ConnectionMonitorEndpointScope scope = default, CoverageLevel? coverageLevel = default, string locationDetailsRegion = default, Guid? subscriptionId = default)
         {
             return new ConnectionMonitorEndpoint(
                 name,
@@ -12247,7 +12257,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionPolicyId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, bool? isOnlyIPv6PeeringEnabled, NetworkProvisioningState? provisioningState, ResourceIdentifier remoteVirtualNetworkId, ResourceIdentifier connectionPolicyId, ETag? eTag)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, bool? isOnlyIPv6PeeringEnabled, NetworkProvisioningState? provisioningState, ResourceIdentifier remoteVirtualNetworkId, ResourceIdentifier connectionPolicyId, ETag? eTag = default)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
@@ -15372,7 +15382,8 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApplicationGatewayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                etag);
+                etag,
+                default);
         }
 
         /// <summary> A web application firewall rule set. </summary>
@@ -18060,6 +18071,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 default,
                 disableVpnEncryption is null && virtualHubs is null && vpnSites is null && allowBranchToBranchTraffic is null && allowVnetToVnetTraffic is null && office365LocalBreakoutCategory is null && provisioningState is null && virtualWanType is null ? default : new VirtualWanProperties(
                     disableVpnEncryption,

@@ -5,12 +5,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    // Without this mapping, the resource-aware generator emits ETag? ETag. The custom member preserves the released
-    // virtual string ETag API and makes generated constructors, parsers, and writers use the string representation.
+    // Keep the mapped storage for generated constructors and serialization without exposing a post-1.15 API.
     public partial class NetworkProxyResource
     {
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [CodeGenMember("ETag")]
-        public virtual string ETag { get; }
+        internal virtual string ETag { get; }
     }
 }

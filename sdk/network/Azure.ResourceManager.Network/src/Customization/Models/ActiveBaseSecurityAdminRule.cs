@@ -11,9 +11,5 @@ namespace Azure.ResourceManager.Network.Models
         protected ActiveBaseSecurityAdminRule()
         {
         }
-
-        // This protected overload shipped in 1.17.0; external subclasses can call it.
-        /// <summary> Initializes a new instance of the ActiveBaseSecurityAdminRule class. </summary>
-        protected ActiveBaseSecurityAdminRule(bool _) { }
     }
 }

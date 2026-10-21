@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualNetworkApplianceIPConfiguration : NetworkResourceData
     {
-        // Retain the protected constructor shipped in 1.17; its argument is intentionally ignored.
-        /// <summary> Initializes a new instance of the VirtualNetworkApplianceIPConfiguration class. </summary>
-        protected VirtualNetworkApplianceIPConfiguration(bool _) { }
     }
 }

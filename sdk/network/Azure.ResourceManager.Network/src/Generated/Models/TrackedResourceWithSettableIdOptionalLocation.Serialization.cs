@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(TrackedResourceWithSettableIdOptionalLocation)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Network.Models
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,6 +170,11 @@ namespace Azure.ResourceManager.Network.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -175,7 +186,8 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                @type);
         }
     }
 }

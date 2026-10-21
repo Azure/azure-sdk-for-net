@@ -3,18 +3,9 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of the NetworkIPConfiguration class. </summary>
-        protected NetworkIPConfiguration(bool _) { }
     }
 }

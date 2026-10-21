@@ -28,9 +28,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the virtual WAN. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualWanProperties properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
+        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type, VirtualWanProperties properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties, @type)
         {
             Properties = properties;
             ETag = eTag;

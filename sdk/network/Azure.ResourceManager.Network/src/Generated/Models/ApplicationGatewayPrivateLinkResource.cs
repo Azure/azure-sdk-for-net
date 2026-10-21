@@ -28,10 +28,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway private link resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayPrivateLinkResourceProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayPrivateLinkResourceProperties properties, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
+            Type = @type;
         }
 
         /// <summary> Properties of the application gateway private link resource. </summary>
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
 
         /// <summary> Group identifier of private link resource. </summary>
         [WirePath("properties.groupId")]
