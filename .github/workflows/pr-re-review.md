@@ -151,6 +151,36 @@ safe-outputs:
                 return;
               }
 
+              async function findCommentOnLaterPage(threadId, cursor, commentId) {
+                // A thread's own comments connection is capped at 100 per page too; a thread
+                // with more than 100 comments needs its own continuation query by node ID,
+                // separate from the outer reviewThreads pagination above.
+                let commentsCursor = cursor;
+                let hasNextPage = true;
+                while (hasNextPage) {
+                  const result = await github.graphql(
+                    `query($threadId: ID!, $cursor: String) {
+                      node(id: $threadId) {
+                        ... on PullRequestReviewThread {
+                          comments(first: 100, after: $cursor) {
+                            pageInfo { hasNextPage endCursor }
+                            nodes { databaseId }
+                          }
+                        }
+                      }
+                    }`,
+                    { threadId, cursor: commentsCursor }
+                  );
+                  const comments = result.node.comments;
+                  if (comments.nodes.some(c => c.databaseId === commentId)) {
+                    return true;
+                  }
+                  hasNextPage = comments.pageInfo.hasNextPage;
+                  commentsCursor = comments.pageInfo.endCursor;
+                }
+                return false;
+              }
+
               async function findThread(commentId) {
                 let cursor = null;
                 let hasNextPage = true;
@@ -164,7 +194,10 @@ safe-outputs:
                             nodes {
                               id
                               isResolved
-                              comments(first: 100) { nodes { databaseId } }
+                              comments(first: 100) {
+                                pageInfo { hasNextPage endCursor }
+                                nodes { databaseId }
+                              }
                             }
                           }
                         }
@@ -173,9 +206,14 @@ safe-outputs:
                     { owner, repo, pr: prNumber, cursor }
                   );
                   const threads = result.repository.pullRequest.reviewThreads;
-                  const match = threads.nodes.find(t => t.comments.nodes.some(c => c.databaseId === commentId));
-                  if (match) {
-                    return match;
+                  for (const thread of threads.nodes) {
+                    if (thread.comments.nodes.some(c => c.databaseId === commentId)) {
+                      return thread;
+                    }
+                    if (thread.comments.pageInfo.hasNextPage &&
+                        await findCommentOnLaterPage(thread.id, thread.comments.pageInfo.endCursor, commentId)) {
+                      return thread;
+                    }
                   }
                   hasNextPage = threads.pageInfo.hasNextPage;
                   cursor = threads.pageInfo.endCursor;
@@ -277,7 +315,7 @@ on top of that shared foundation.
 Fetch:
 
 - The full current PR diff against its base branch, and the list of changed files.
-- All existing review threads and their comments, including resolved/unresolved state. REST does not expose thread resolution state, so use `gh api graphql`, paginating with `cursor` until `hasNextPage` is false:
+- All existing review threads and their comments, including resolved/unresolved state. REST does not expose thread resolution state, so use `gh api graphql`, paginating `reviewThreads` with `cursor` until `hasNextPage` is false:
 
   ```graphql
   query($owner: String!, $repo: String!, $pr: Int!, $cursor: String) {
@@ -290,6 +328,7 @@ Fetch:
             isResolved
             isOutdated
             comments(first: 100) {
+              pageInfo { hasNextPage endCursor }
               nodes { databaseId body path line author { login } }
             }
           }
@@ -298,6 +337,8 @@ Fetch:
     }
   }
   ```
+
+  A thread's `comments` connection is paginated independently of `reviewThreads`: if a thread's `comments.pageInfo.hasNextPage` is true, it has more than 100 comments, and you must keep fetching that thread's later pages with `node(id: $threadId) { ... on PullRequestReviewThread { comments(first: 100, after: $cursor) { pageInfo { hasNextPage endCursor } nodes { databaseId body path line author { login } } } } }` until its own `hasNextPage` is false — otherwise later replies on long, active threads are silently missing from the history you evaluate.
 
 - All prior reviews submitted on this PR, to see what earlier passes (the native Copilot reviewer, human reviewers, and this workflow's own earlier runs) already said.
 

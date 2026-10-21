@@ -149,7 +149,7 @@ test("reopens every item when multiple unresolve_review_thread entries survive i
         const nodes = [...threadsByCommentId.entries()].map(([commentId, threadId]) => ({
           id: threadId,
           isResolved: true,
-          comments: { nodes: [{ databaseId: commentId }] },
+          comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: commentId }] },
         }));
         return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes } } } };
       },
@@ -162,4 +162,69 @@ test("reopens every item when multiple unresolve_review_thread entries survive i
   vm.createContext(sandbox);
   await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
   assert.deepEqual(resolvedThreadIds.sort(), ["thread-0", "thread-1"], "both threads should have been reopened, not just the first");
+});
+
+// Regression for a 101-comment thread: the target comment is the 101st, so it is absent
+// from the thread's first (and, pre-fix, only) page of 100 comments. The outer
+// reviewThreads pagination is unaffected -- this is about the inner comments connection.
+test("finds a review thread when the target comment is beyond the thread's first page of 100 comments", async () => {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
+  const items = [{ type: "unresolve_review_thread", comment_id: "101", reason: "still open" }];
+  const firstPageComments = Array.from({ length: 100 }, (_, i) => ({ databaseId: i + 1 }));
+  let secondPageRequested = false;
+  const resolvedThreadIds = [];
+  const sandbox = {
+    process: {
+      env: {
+        GH_AW_DETECTION_CONCLUSION: "success",
+        GH_AW_DETECTION_REASON: "",
+        GH_AW_AGENT_OUTPUT: "fixture.json",
+      },
+    },
+    core: { warning: () => {}, info: () => {} },
+    context: {
+      repo: { owner: "octo", repo: "widgets" },
+      payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } },
+    },
+    github: {
+      rest: { pulls: { get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }) } },
+      graphql: async (query, vars) => {
+        if (query.includes("unresolveReviewThread")) {
+          resolvedThreadIds.push(vars.threadId);
+          return { unresolveReviewThread: { thread: { id: vars.threadId, isResolved: false } } };
+        }
+        if (query.includes("PullRequestReviewThread")) {
+          // Per-thread continuation query for a thread's comments connection alone.
+          secondPageRequested = true;
+          assert.equal(vars.threadId, "thread-0");
+          assert.equal(vars.cursor, "page1-end");
+          return { node: { comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: 101 }] } } };
+        }
+        return {
+          repository: {
+            pullRequest: {
+              reviewThreads: {
+                pageInfo: { hasNextPage: false, endCursor: null },
+                nodes: [
+                  {
+                    id: "thread-0",
+                    isResolved: true,
+                    comments: { pageInfo: { hasNextPage: true, endCursor: "page1-end" }, nodes: firstPageComments },
+                  },
+                ],
+              },
+            },
+          },
+        };
+      },
+    },
+    require: (name) => {
+      if (name === "fs") return { readFileSync: () => JSON.stringify({ items, errors: [] }) };
+      return require(name);
+    },
+  };
+  vm.createContext(sandbox);
+  await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
+  assert.ok(secondPageRequested, "expected the script to paginate a thread's comments beyond its first page of 100");
+  assert.deepEqual(resolvedThreadIds, ["thread-0"], "the thread containing comment 101 should have been reopened");
 });
