@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -97,16 +98,29 @@ internal class NameVisitor : ScmLibraryVisitor
             if (isAlsoUsedInCreate)
             {
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
             else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
             {
                 // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
-                type.Update(name: newName);
+                type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
         }
         return type;
+    }
+
+    private static string NormalizeRequestModelName(InputModelType model, ModelProvider type, string name)
+    {
+        var plugin = ManagementClientGenerator.Instance;
+        if (model.IsExactName ||
+            plugin.InputLibrary.ClientNameOverriddenModels.Contains(model) ||
+            plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
+        {
+            return name;
+        }
+
+        return type is ManagementModelProvider managementModel ? managementModel.NormalizeRequestModelName(name) : name;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
