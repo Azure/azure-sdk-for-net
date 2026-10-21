@@ -14,7 +14,11 @@ param (
     [string] $TestApplicationSecret,
 
     # Maximum time to wait for each storage readiness check (network ACL and RBAC propagation).
-    [int] $ReadinessTimeoutSeconds = 300
+    [int] $ReadinessTimeoutSeconds = 300,
+
+    # Minimum time after the network rule update before tests may start, to allow the DeID service
+    # managed identity's storage role assignment to propagate.
+    [int] $DeidIdentityMinimumWaitSeconds = 30
 )
 
 # Runs $ScriptBlock until it succeeds or $TimeoutSeconds elapses. Role assignments and network ACL changes
@@ -79,6 +83,7 @@ $networkRuleSet.DefaultAction = "Allow"
 Invoke-WithRetry -Name "Opening storage network ACL" -ScriptBlock {
     Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet -ErrorAction Stop | Out-Null
 }
+$propagationStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 # Wait for the network ACL change and the test principal's Storage Blob Data Contributor role to take effect.
 Invoke-WithRetry -Name "Storage container access check" -ScriptBlock {
@@ -112,3 +117,11 @@ Invoke-WithRetry -Name "Uploaded blob verification" -ScriptBlock {
 }
 
 Write-Host "Folder '$localFolderPath' uploaded to container '$containerName' successfully."
+
+# The checks above only prove the caller's storage access, not the DeID service managed identity's.
+# Keep at least the previous fixed propagation window (measured from the network rule update) for it.
+$remainingWaitSeconds = $DeidIdentityMinimumWaitSeconds - [int]$propagationStopwatch.Elapsed.TotalSeconds
+if ($remainingWaitSeconds -gt 0) {
+    Write-Host "Waiting $remainingWaitSeconds more seconds for the DeID service identity's storage access to propagate."
+    Start-Sleep -Seconds $remainingWaitSeconds
+}
