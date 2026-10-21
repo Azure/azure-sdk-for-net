@@ -1,10 +1,26 @@
 // Exercises the real API adapter and trusted comment lifecycle with fully fake HTTP transport.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { test } from "node:test";
+import { after, before, test } from "node:test";
 import { COMMENT_MARKER } from "../coverage.ts";
 import type { CoverageConfig } from "../coverage.ts";
 import { GitHubApi, remoteSnapshot, reportCompletedRun, shouldRunLint, upsertComment } from "../github.ts";
+
+const reportingEnvironment = {
+  GITHUB_ACTIONS: process.env.GITHUB_ACTIONS,
+  GITHUB_STEP_SUMMARY: process.env.GITHUB_STEP_SUMMARY,
+};
+before(() => {
+  // Fake API scenarios must never annotate or append reports to the real Actions job.
+  process.env.GITHUB_ACTIONS = "false";
+  delete process.env.GITHUB_STEP_SUMMARY;
+});
+after(() => {
+  for (const [name, value] of Object.entries(reportingEnvironment)) {
+    if (value === undefined) delete process.env[name];
+    else process.env[name] = value;
+  }
+});
 
 const repo = "test/repo";
 const head = "a".repeat(40);
@@ -92,6 +108,10 @@ for (const covered of [true, false]) {
     assert.match(body, covered ? /coverage present/ : /coverage missing/);
     assert.match(body, /published historical results/);
     assert.match(body, /actions\/runs\/42\/attempts\/1/);
+    assert.match(body, /Coverage\/lint build.*42/);
+    assert.match(body, /Build result.*success/);
+    assert.match(body, /Attempt.*1/);
+    assert.ok(body.includes(head));
     assert.ok(f.calls.some((route) => route.includes("/git/blobs/")));
   });
 }
@@ -101,6 +121,7 @@ test("a failing lint source run still gets the independent coverage comment", as
   f.run.conclusion = "failure";
   assert.equal(await reportCompletedRun(f.api, repo, 42, config, "https://github.com"), "posted");
   assert.equal(f.writes.length, 1);
+  assert.match(f.writes[0].body.body, /Build result.*failure/);
 });
 
 test("warning becomes covered by updating the same bot-owned comment", async () => {

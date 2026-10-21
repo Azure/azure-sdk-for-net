@@ -235,6 +235,7 @@ export interface ReportLinks {
   config: CoverageConfig;
   sourceUrl?: string;
   runUrl?: string;
+  build?: { id: number; attempt: number; result: string; headSha: string };
 }
 
 export function renderReport(report: CoverageReport | null, links: ReportLinks): string {
@@ -243,6 +244,12 @@ export function renderReport(report: CoverageReport | null, links: ReportLinks):
     hasCoverageWarnings(report) ? "⚠️ Skill Eval coverage missing" :
       active.length ? "✅ Skill Eval coverage present" : "ℹ️ No remaining affected skills to check";
   const lines = [COMMENT_MARKER, `## ${heading}`, ""];
+  if (links.build) {
+    const build = links.build;
+    lines.push(`**Coverage/lint build:** ${links.runUrl ? link(`#${build.id}`, links.runUrl) : `#${build.id}`} · ` +
+      `**Build result:** ${html(build.result)} · **Attempt:** ${build.attempt}`,
+      `**Skill revision:** <code>${html(build.headSha)}</code>`, "");
+  }
   if (!report) {
     lines.push("The coverage check could not read all required data. Do not treat this as a coverage pass.");
   } else {
