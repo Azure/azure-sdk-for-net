@@ -371,4 +371,22 @@ Describe 'CI failure analysis original behavior' -Tag 'Original' {
         { Complete-CiFailureAnalysis -Context $Fixture.Context -Prepared $prepared -JobResults $SuccessfulJobs } |
             Should -Throw '*Check update failed*'
     }
+
+    It '[G62] safe-output guard rejects nonempty or malformed ingestion errors alongside an otherwise valid add_comment' {
+        $prepared = New-CiPrepared $Fixture
+        foreach ($errors in @(
+            @(@{ message = 'ingestion failed' })
+            'not an array'
+            $null
+        )) {
+            $output = New-CiAgentOutput
+            $output['errors'] = $errors
+            { Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput $output } |
+                Should -Throw '*ingestion*errors*'
+        }
+        $output = New-CiAgentOutput
+        $output['errors'] = @()
+        (Protect-CiAnalysisOutput -Context $Fixture.Context -Prepared $prepared -AgentOutput $output).disposition |
+            Should -BeExactly 'publish'
+    }
 }

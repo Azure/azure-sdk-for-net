@@ -428,6 +428,9 @@ function Protect-CiAnalysisOutput {
         $AgentOutput.items -isnot [array] -or $AgentOutput.items.Count -eq 0) {
         throw 'Missing or malformed CI analysis output.'
     }
+    if ($AgentOutput.ContainsKey('errors') -and ($AgentOutput.errors -isnot [array] -or $AgentOutput.errors.Count -ne 0)) {
+        throw 'CI analysis output ingestion reported errors or an invalid result.'
+    }
     $allowed = @('add_comment', 'noop', 'report_incomplete', 'missing_data', 'missing_tool')
     foreach ($item in $AgentOutput.items) {
         if ($item -isnot [System.Collections.IDictionary] -or $item.type -isnot [string] -or $allowed -cnotcontains $item.type) {
