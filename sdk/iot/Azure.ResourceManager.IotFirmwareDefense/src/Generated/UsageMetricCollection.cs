@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsageMetricData, UsageMetricResource>(new UsageMetricsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UsageMetricData, UsageMetricResource>(new UsageMetricDataAsyncCollectionResultOfT(
                 _usageMetricsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsageMetricData, UsageMetricResource>(new UsageMetricsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<UsageMetricData, UsageMetricResource>(new UsageMetricDataCollectionResultOfT(
                 _usageMetricsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

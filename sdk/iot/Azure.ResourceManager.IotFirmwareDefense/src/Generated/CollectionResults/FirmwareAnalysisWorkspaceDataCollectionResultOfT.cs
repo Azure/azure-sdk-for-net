@@ -14,42 +14,36 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    internal partial class CryptoCertificatesGetCryptoCertificatesCollectionResultOfT : Pageable<CryptoCertificateResult>
+    internal partial class FirmwareAnalysisWorkspaceDataCollectionResultOfT : Pageable<FirmwareAnalysisWorkspaceData>
     {
-        private readonly CryptoCertificates _client;
+        private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _workspaceName;
-        private readonly string _firmwareId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CryptoCertificatesGetCryptoCertificatesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The CryptoCertificates client used to send requests. </param>
+        /// <summary> Initializes a new instance of FirmwareAnalysisWorkspaceDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Workspaces client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
-        /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CryptoCertificatesGetCryptoCertificatesCollectionResultOfT(CryptoCertificates client, Guid subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FirmwareAnalysisWorkspaceDataCollectionResultOfT(Workspaces client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _workspaceName = workspaceName;
-            _firmwareId = firmwareId;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CryptoCertificatesGetCryptoCertificatesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FirmwareAnalysisWorkspaceDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CryptoCertificatesGetCryptoCertificatesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CryptoCertificateResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of FirmwareAnalysisWorkspaceDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<FirmwareAnalysisWorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,9 +51,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 {
                     yield break;
                 }
-                CryptoCertificateResourceListResult result = CryptoCertificateResourceListResult.FromResponse(response);
+                WorkspaceListResult result = WorkspaceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<CryptoCertificateResult>.FromValues((IReadOnlyList<CryptoCertificateResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<FirmwareAnalysisWorkspaceData>.FromValues((IReadOnlyList<FirmwareAnalysisWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -72,7 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCryptoCertificatesRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _firmwareId, _context) : _client.CreateGetCryptoCertificatesRequest(_subscriptionId, _resourceGroupName, _workspaceName, _firmwareId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

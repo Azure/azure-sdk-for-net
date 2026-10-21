@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirmwareAnalysisWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FirmwareAnalysisWorkspaceResource.ResourceType, out string firmwareAnalysisWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareAnalysisWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisWorkspaceApiVersion ?? "2026-06-01-preview");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTFirmwareDefense/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new FirmwareAnalysisWorkspaceDataAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
+            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new FirmwareAnalysisWorkspaceDataCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>

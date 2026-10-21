@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirmwareAnalysisSummaryData, FirmwareAnalysisSummaryResource>(new SummariesGetByFirmwareAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FirmwareAnalysisSummaryData, FirmwareAnalysisSummaryResource>(new FirmwareAnalysisSummaryDataAsyncCollectionResultOfT(
                 _summariesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirmwareAnalysisSummaryData, FirmwareAnalysisSummaryResource>(new SummariesGetByFirmwareCollectionResultOfT(
+            return new PageableWrapper<FirmwareAnalysisSummaryData, FirmwareAnalysisSummaryResource>(new FirmwareAnalysisSummaryDataCollectionResultOfT(
                 _summariesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

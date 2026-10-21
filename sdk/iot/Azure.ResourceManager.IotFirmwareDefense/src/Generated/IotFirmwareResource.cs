@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new BinaryHardeningGetBinaryHardeningResultsAsyncCollectionResultOfT(
+            return new BinaryHardeningResultAsyncCollectionResultOfT(
                 _binaryHardeningRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new BinaryHardeningGetBinaryHardeningResultsCollectionResultOfT(
+            return new BinaryHardeningResultCollectionResultOfT(
                 _binaryHardeningRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CryptoCertificatesGetCryptoCertificatesAsyncCollectionResultOfT(
+            return new CryptoCertificateResultAsyncCollectionResultOfT(
                 _cryptoCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CryptoCertificatesGetCryptoCertificatesCollectionResultOfT(
+            return new CryptoCertificateResultCollectionResultOfT(
                 _cryptoCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CryptoKeysGetCryptoKeysAsyncCollectionResultOfT(
+            return new CryptoKeyResultAsyncCollectionResultOfT(
                 _cryptoKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CryptoKeysGetCryptoKeysCollectionResultOfT(
+            return new CryptoKeyResultCollectionResultOfT(
                 _cryptoKeysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CvesGetCvesAsyncCollectionResultOfT(
+            return new CveResultAsyncCollectionResultOfT(
                 _cvesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new CvesGetCvesCollectionResultOfT(
+            return new CveResultCollectionResultOfT(
                 _cvesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PasswordHashesGetPasswordHashesAsyncCollectionResultOfT(
+            return new PasswordHashResultAsyncCollectionResultOfT(
                 _passwordHashesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PasswordHashesGetPasswordHashesCollectionResultOfT(
+            return new PasswordHashResultCollectionResultOfT(
                 _passwordHashesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new SbomComponentsGetSbomComponentsAsyncCollectionResultOfT(
+            return new SbomComponentResultAsyncCollectionResultOfT(
                 _sbomComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new SbomComponentsGetSbomComponentsCollectionResultOfT(
+            return new SbomComponentResultCollectionResultOfT(
                 _sbomComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new UnsafeFunctionCallsGetUnsafeFunctionCallsAsyncCollectionResultOfT(
+            return new UnsafeFunctionCallsResultAsyncCollectionResultOfT(
                 _unsafeFunctionCallsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new UnsafeFunctionCallsGetUnsafeFunctionCallsCollectionResultOfT(
+            return new UnsafeFunctionCallsResultCollectionResultOfT(
                 _unsafeFunctionCallsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

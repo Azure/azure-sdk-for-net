@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("issuedDate"u8);
                 writer.WriteStringValue(IssuedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(CertificateRole))
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             CryptoCertificateEntity subject = default;
             CryptoCertificateEntity issuer = default;
             DateTimeOffset? issuedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string certificateRole = default;
             string signatureAlgorithm = default;
             long? certificateKeySize = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("certificateRole"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CryptoCertificate(
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 subject,
                 issuer,
                 issuedOn,
-                expireOn,
+                expiresOn,
                 certificateRole,
                 signatureAlgorithm,
                 certificateKeySize,

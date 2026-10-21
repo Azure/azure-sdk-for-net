@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTFirmwareDefense/workspaces", out string apiVersion) ? apiVersion : "2026-06-01-preview");
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new FirmwareAnalysisWorkspaceDataAsync0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
+            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new FirmwareAnalysisWorkspaceData0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareAnalysisWorkspaces"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
     }
 }

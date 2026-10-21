@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     Properties = new CryptoCertificate();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

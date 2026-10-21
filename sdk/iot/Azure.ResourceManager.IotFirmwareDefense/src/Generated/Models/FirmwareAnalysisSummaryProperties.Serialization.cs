@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary>
     /// Properties of an analysis summary.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FirmwareSummary"/>, <see cref="CveSummary"/>, <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummaryResource"/>, <see cref="SbomSummaryResource"/>, <see cref="PasswordHashSummaryResource"/>, and <see cref="UnsafeFunctionCallsSummaryResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummary"/>, <see cref="CveSummaryResource"/>, <see cref="FirmwareSummary"/>, <see cref="PasswordHashSummaryResource"/>, <see cref="SbomSummaryResource"/>, and <see cref="UnsafeFunctionCallsSummaryResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSummaryResourceProperties))]
     public abstract partial class FirmwareAnalysisSummaryProperties : IJsonModel<FirmwareAnalysisSummaryProperties>
@@ -130,22 +130,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Firmware":
-                        return FirmwareSummary.DeserializeFirmwareSummary(element, options);
-                    case "CommonVulnerabilitiesAndExposures":
-                        return CveSummary.DeserializeCveSummary(element, options);
                     case "BinaryHardening":
                         return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element, options);
                     case "CryptoCertificate":
                         return CryptoCertificateSummary.DeserializeCryptoCertificateSummary(element, options);
                     case "CryptoKey":
                         return CryptoKeySummary.DeserializeCryptoKeySummary(element, options);
+                    case "CommonVulnerabilitiesAndExposures":
+                        return CveSummary.DeserializeCveSummary(element, options);
                     case "CVE":
                         return CveSummaryResource.DeserializeCveSummaryResource(element, options);
-                    case "SBOM":
-                        return SbomSummaryResource.DeserializeSbomSummaryResource(element, options);
+                    case "Firmware":
+                        return FirmwareSummary.DeserializeFirmwareSummary(element, options);
                     case "PasswordHash":
                         return PasswordHashSummaryResource.DeserializePasswordHashSummaryResource(element, options);
+                    case "SBOM":
+                        return SbomSummaryResource.DeserializeSbomSummaryResource(element, options);
                     case "UnsafeFunctionCalls":
                         return UnsafeFunctionCallsSummaryResource.DeserializeUnsafeFunctionCallsSummaryResource(element, options);
                 }

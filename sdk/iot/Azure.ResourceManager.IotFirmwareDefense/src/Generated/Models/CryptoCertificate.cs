@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="subject"> Subject information of the certificate. </param>
         /// <param name="issuer"> Issuer information of the certificate. </param>
         /// <param name="issuedOn"> Issue date for the certificate. </param>
-        /// <param name="expireOn"> Expiration date for the certificate. </param>
+        /// <param name="expiresOn"> Expiration date for the certificate. </param>
         /// <param name="certificateRole"> Role of the certificate (Root CA, etc). </param>
         /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
         /// <param name="certificateKeySize"> Size of the certificate's key in bits. </param>
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoCertificate(string cryptoCertId, string certificateName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string certificateRole, string signatureAlgorithm, long? certificateKeySize, string certificateKeyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<CertificateUsage> certificateUsage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CryptoCertificate(string cryptoCertId, string certificateName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expiresOn, string certificateRole, string signatureAlgorithm, long? certificateKeySize, string certificateKeyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<CertificateUsage> certificateUsage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CryptoCertId = cryptoCertId;
             CertificateName = certificateName;
             Subject = subject;
             Issuer = issuer;
             IssuedOn = issuedOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             CertificateRole = certificateRole;
             SignatureAlgorithm = signatureAlgorithm;
             CertificateKeySize = certificateKeySize;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public DateTimeOffset? IssuedOn { get; set; }
 
         /// <summary> Expiration date for the certificate. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Role of the certificate (Root CA, etc). </summary>
         public string CertificateRole { get; set; }
