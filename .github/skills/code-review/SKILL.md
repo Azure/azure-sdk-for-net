@@ -21,7 +21,7 @@ or PR title alone does not establish ownership.
 Review shared tooling and configuration by their affected libraries rather than forcing a single
 package owner.
 
-Classify each library independently in a mixed PR. Associate tests and samples with their owning
+Classify each library independently. Associate tests and samples with their owning
 library, but review them in their own roles rather than as additional shipping API surfaces.
 For the `Azure.ResourceManager` framework package, judge the actual framework role rather than
 assuming every type is a service-specific resource or request model.
