@@ -39,6 +39,7 @@ import "./inherited-flatten-grandparent.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
 import "./routedoperations.tsp";
 import "./solutions.tsp";
+import "./acronymparameters.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

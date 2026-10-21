@@ -22,6 +22,11 @@ namespace Azure.Generator.Management.Utilities
                 return null;
             }
 
+            if (parameter.InputParameter?.IsExactName == true)
+            {
+                return parameter.Name;
+            }
+
             var typeName = parameter.Type.Name;
 
             // Check type name suffixes first - these are ARM conventions and take priority
@@ -52,11 +57,11 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
 
-            // Check if parameter name equals "parameters" - return type name with first char lowercase
+            // Check if parameter name equals "parameters" - return the camelCase type name
             // This is checked after type suffixes to ensure ARM conventions take priority
             if (parameter.Name.Equals("parameters", System.StringComparison.Ordinal))
             {
-                return typeName.FirstCharToLowerCase();
+                return SynthesizedParameterNameHelper.Normalize(typeName);
             }
 
             return parameter.Name;

@@ -31,8 +31,9 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ArmResourceMetadata _resourceMetadata;
-        private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
-        private readonly IReadOnlyList<FieldProvider> _extraFields;
+        private (IReadOnlyList<ParameterProvider> Parameters, IReadOnlyList<FieldProvider> Fields)? _extraConstructor;
+        private IReadOnlyList<ParameterProvider> _extraCtorParameters => (_extraConstructor ??= BuildExtraConstructorParametersAndFields()).Parameters;
+        private IReadOnlyList<FieldProvider> _extraFields => (_extraConstructor ??= BuildExtraConstructorParametersAndFields()).Fields;
         private readonly ResourceClientProvider _resource;
         private readonly IReadOnlyList<ResourceMethod> _getAlls;
         private readonly IReadOnlyList<ResourceMethod> _actions;
@@ -65,9 +66,6 @@ namespace Azure.Generator.Management.Providers
             var contextualPath = GetContextualPath(resourceMetadata);
             (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
             _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
-
-            // this depends on _getAlls being initialized
-            (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
@@ -123,18 +121,46 @@ namespace Azure.Generator.Management.Providers
             var extraParameters = new List<ParameterProvider>();
             var extraFields = new List<FieldProvider>();
             var secondaryContextualParameters = _operationContext.SecondaryContextualPathParameters;
-            foreach (var contextualParameter in secondaryContextualParameters)
+            var parameterTypes = secondaryContextualParameters
+                .Select(parameter => ResourceHelpers.GetRequestPathParameterType(parameter.VariableName, _getAlls[0].InputMethod)).ToArray();
+            for (var index = 0; index < secondaryContextualParameters.Count; index++)
             {
-                var parameter = new ParameterProvider(
-                    contextualParameter.VariableName,
-                    $"The {contextualParameter.VariableName} for the resource.",
-                    ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAlls[0].InputMethod));
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
+                var contextualParameter = secondaryContextualParameters[index];
+                var inputParameter = SynthesizedParameterNameHelper.GetPathParameter(contextualParameter.VariableName, _getAlls[0].InputMethod);
+                var parameterName = inputParameter?.IsExactName == true
+                    ? inputParameter.Name
+                    : GetExistingAccessorParameterName(parameterTypes, index)
+                        ?? SynthesizedParameterNameHelper.GetPathParameterName(contextualParameter.VariableName, _getAlls[0].InputMethod);
+                var parameter = SynthesizedParameterNameHelper.PreserveName(new ParameterProvider(
+                    parameterName,
+                    $"The {parameterName} for the resource.",
+                    parameterTypes[index],
+                    wireInfo: new WireInformation(SerializationFormat.Default, contextualParameter.VariableName),
+                    inputParameter: inputParameter));
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{parameterName}", this, description: $"The {parameterName}.");
                 parameter.Field = field;
                 extraParameters.Add(parameter);
                 extraFields.Add(field);
             }
             return (extraParameters, extraFields);
+        }
+
+        private string? GetExistingAccessorParameterName(IReadOnlyList<CSharpType> parameterTypes, int index)
+        {
+            var library = ManagementClientGenerator.Instance.OutputLibrary;
+            var methodName = ResourceName.GetCollectionMethodName();
+            if (_resourceMetadata.ParentResourceId is { } parentId)
+            {
+                return SynthesizedParameterNameHelper.GetExistingParameterName(library.GetResourceById(parentId), methodName, parameterTypes, index);
+            }
+
+            var mockable = _resourceMetadata.Scope.Kind == ResourceScope.Extension
+                ? library.MockableResourceProviders.OfType<MockableArmClientProvider>().Single()
+                : library.GetMockableResourceByScope(_resourceMetadata.Scope.Kind);
+            var offset = _resourceMetadata.Scope.Kind == ResourceScope.Extension ? 1 : 0;
+            CSharpType[] prefixTypes = offset > 0 ? [typeof(ResourceIdentifier)] : [];
+            return SynthesizedParameterNameHelper.GetExistingParameterName(mockable, methodName, parameterTypes, index, offset, prefixTypes)
+                ?? SynthesizedParameterNameHelper.GetExistingParameterName(library.ExtensionProvider, methodName, parameterTypes, index, offset + 1, [mockable.ArmCoreType, .. prefixTypes]);
         }
 
         private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(

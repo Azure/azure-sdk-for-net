@@ -821,6 +821,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SolutionsApplicationDefinitionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AcronymWidgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AcronymWidgetResource"/> object. </returns>
+        public virtual AcronymWidgetResource GetAcronymWidgetResource(ResourceIdentifier id)
+        {
+            AcronymWidgetResource.ValidateResourceId(id);
+            return new AcronymWidgetResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
