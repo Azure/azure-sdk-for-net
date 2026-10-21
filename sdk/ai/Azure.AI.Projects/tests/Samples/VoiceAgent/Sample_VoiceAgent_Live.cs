@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -22,6 +23,56 @@ public static class Sample_VoiceAgent_Live
 {
     private const int MaximumToolContinuations = 8;
 
+    #region Snippet:Sample_VoiceAgent_Live_Options
+    public static async Task ConnectionOptionsAsync(
+        string projectEndpoint, string liveDeployment, CancellationToken cancellationToken)
+    {
+        AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string agentName = NewName();
+        VoiceAgentLiveDefinition definition = CreateDefinition(liveDeployment);
+        definition.Instructions = "Answer briefly in {{language}}.";
+        definition.StructuredInputs["language"] = new StructuredInputDefinition
+        {
+            Description = "Language used for spoken answers.",
+            DefaultValue = BinaryData.FromObjectAsJson("English")
+        };
+        ProjectsAgentVersion version = await project.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        try
+        {
+            ProjectsLiveClient live = project.ProjectsLiveClient;
+            Console.WriteLine($"Live endpoint: {live.Endpoint}; shares project pipeline: {ReferenceEquals(live.Pipeline, project.Pipeline)}");
+            ProjectsLiveSessionClientOptions options = CreateConnectionOptions(version.Version);
+            ProjectsLiveSessionClient session = await live.StartSessionAsync(agentName, options, cancellationToken);
+            await using (session)
+            {
+                Console.WriteLine($"State: {session.State}; model: {session.SessionStarted.Session.Model}");
+            }
+            // DisposeAsync confirms native finalization before releasing the connection.
+            Console.WriteLine($"Closed: {session.State}; final usage: {session.SessionClosed.Usage.Seconds} seconds");
+        }
+        finally
+        {
+            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_OptionsValues
+    internal static ProjectsLiveSessionClientOptions CreateConnectionOptions(string version)
+    {
+        ProjectsLiveSessionClientOptions options = new()
+        {
+            AgentVersion = version,
+            // Store is used by the other examples; this shows its raw-query alternative.
+            QueryString = "store=false"
+        };
+        options.StructuredInputs["language"] = BinaryData.FromObjectAsJson("English");
+        options.Headers["x-correlation-id"] = Guid.NewGuid().ToString();
+        return options;
+    }
+    #endregion
+
     #region Snippet:Sample_VoiceAgent_Live_Connect
     public static async Task ConnectAsync(string projectEndpoint, string liveDeployment, CancellationToken cancellationToken)
     {
@@ -37,6 +88,244 @@ public static class Sample_VoiceAgent_Live
             // Foundry already started the session. Do not send another session.start event.
             await session.CloseAsync(cancellationToken);
             Console.WriteLine($"Final Live usage: {session.SessionClosed.Usage.Seconds} seconds");
+        }
+        finally
+        {
+            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_Controls
+    public static async Task SessionControlsAsync(
+        string projectEndpoint, string liveDeployment, string backendDeployment, CancellationToken cancellationToken)
+    {
+        AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string agentName = NewName();
+        await project.AgentAdministrationClient.CreateAgentVersionAsync(agentName,
+            new ProjectsAgentVersionCreationOptions(CreateResponsesDefinition(liveDeployment, backendDeployment, tools: false)),
+            cancellationToken: cancellationToken);
+        try
+        {
+            using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
+                agentName, new ProjectsLiveSessionClientOptions { Store = false }, cancellationToken);
+            await RunSessionControlsAsync(session, Console.Out, cancellationToken);
+            await session.SendEventAsync(new LiveClientEventLiveSessionCloseParam { EventId = "sample-close" }, cancellationToken);
+            await session.CloseAsync(cancellationToken);
+        }
+        finally
+        {
+            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_ControlEvents
+    internal static async Task RunSessionControlsAsync(
+        ProjectsLiveSessionClient session, TextWriter output, CancellationToken cancellationToken)
+    {
+        LiveResponsesDelegationUpdateParam delegation = new()
+        {
+            Responses = new LiveResponsesDelegationSettingsUpdateInputParam
+            {
+                Instructions = "Answer briefly using only verified context."
+            }
+        };
+        await session.SendEventAsync(new LiveClientEventLiveSessionUpdateParam(new LiveSessionUpdateParams
+        {
+            Delegation = ModelReaderWriter.Write(delegation, new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default)
+        }) { EventId = "sample-update" }, cancellationToken);
+        await session.SendEventAsync(new LiveClientEventLiveInputAudioMuteParam { EventId = "sample-mute" }, cancellationToken);
+        await session.SendEventAsync(new LiveClientEventLiveInputAudioUnmuteParam { EventId = "sample-unmute" }, cancellationToken);
+        await session.SendEventAsync(new LiveClientEventLiveThinkingAppendParam(null,
+            "The verified demonstration value is seven.") { EventId = "sample-thinking" }, cancellationToken);
+        await session.SendEventAsync(new LiveClientEventLiveCommentaryAppendParam(null,
+            "The test lookup is complete.") { EventId = "sample-commentary" }, cancellationToken);
+        await session.SendEventAsync(new LiveClientEventLiveInstructionsAppendParam(null,
+            "Keep spoken answers brief.") { EventId = "sample-instructions" }, cancellationToken);
+        await session.SendCommandAsync(BinaryData.FromString("""
+            {"type":"session.thinking.append","event_id":"sample-raw","delegation_id":null,
+             "content":"This command demonstrates the raw JSON escape hatch."}
+            """), cancellationToken);
+
+        HashSet<string> pending = new(StringComparer.Ordinal)
+        {
+            "sample-update", "sample-mute", "sample-unmute", "sample-thinking",
+            "sample-commentary", "sample-instructions", "sample-raw"
+        };
+        using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        Task audio = FeedSilenceAsync(session, flow.Token, cancellationToken);
+        Task acknowledgments = ReceiveAcknowledgmentsAsync();
+        await Task.WhenAny(audio, acknowledgments);
+        flow.Cancel();
+        try
+        {
+            await acknowledgments;
+        }
+        finally
+        {
+            try
+            {
+                await audio;
+            }
+            catch (OperationCanceledException exception) when (
+                exception.CancellationToken == flow.Token && !cancellationToken.IsCancellationRequested)
+            {
+                // Stop the producer after acknowledgments without canceling an in-flight socket send.
+            }
+        }
+
+        async Task ReceiveAcknowledgmentsAsync()
+        {
+            await foreach (LiveServerEvent serverEvent in session.ReceiveEventsAsync(flow.Token))
+            {
+                ThrowIfServiceFailure(serverEvent);
+                string acknowledged = serverEvent switch
+                {
+                    LiveServerEventLiveSessionUpdated value => value.ClientEventId,
+                    LiveServerEventLiveInputAudioMuted value => value.ClientEventId,
+                    LiveServerEventLiveInputAudioUnmuted value => value.ClientEventId,
+                    LiveServerEventLiveThinkingAppended value => value.ClientEventId,
+                    LiveServerEventLiveCommentaryAppended value => value.ClientEventId,
+                    LiveServerEventLiveInstructionsAppended value => value.ClientEventId,
+                    _ => null
+                };
+                if (acknowledged != null && pending.Remove(acknowledged))
+                {
+                    await output.WriteLineAsync("Acknowledged: " + acknowledged);
+                }
+                if (serverEvent is LiveServerEventLiveSessionClosed)
+                {
+                    throw new InvalidOperationException("Live closed before acknowledging all session controls.");
+                }
+                if (pending.Count == 0)
+                {
+                    return;
+                }
+            }
+            throw new InvalidOperationException("Live disconnected before acknowledging all session controls.");
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_StreamAudio
+    public static async Task StreamAudioAsync(string projectEndpoint, string liveDeployment,
+        string speechWavePath, string outputWavePath, CancellationToken cancellationToken)
+    {
+        AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string agentName = NewName();
+        await project.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        try
+        {
+            using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
+                agentName, new ProjectsLiveSessionClientOptions { Store = false }, cancellationToken);
+            using Stream speechFile = File.OpenRead(speechWavePath);
+            using MemoryStream output = new();
+            await RunAudioConversationAsync(session, ReadPcmWave(speechFile), output, Console.Out, cancellationToken, streamAudio: true);
+            if (output.Length == 0)
+            {
+                throw new InvalidOperationException("No speech audio was returned.");
+            }
+            using Stream waveFile = File.Create(outputWavePath);
+            WritePcmWave(waveFile, output.ToArray());
+        }
+        finally
+        {
+            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_Cancellation
+    public static async Task CancelReceiveAsync(string projectEndpoint, string liveDeployment, CancellationToken cancellationToken)
+    {
+        AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string agentName = NewName();
+        await project.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        try
+        {
+            using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
+                agentName, new ProjectsLiveSessionClientOptions { Store = false }, cancellationToken);
+            using CancellationTokenSource receiving = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            receiving.CancelAfter(TimeSpan.FromMilliseconds(250));
+            try
+            {
+                await foreach (LiveServerEvent serverEvent in session.ReceiveEventsAsync(receiving.Token))
+                {
+                    ThrowIfServiceFailure(serverEvent);
+                }
+                throw new InvalidOperationException("The session ended before the cancellation example ran.");
+            }
+            catch (OperationCanceledException) when (receiving.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Receive canceled; native finalization has not been confirmed. Create a new session to continue.");
+            }
+            session.Dispose();
+        }
+        finally
+        {
+            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_Stored
+    public static async Task StoredConversationAsync(string projectEndpoint, string liveDeployment, string speechWavePath,
+        string outputDirectory, bool synchronous, bool protocol, CancellationToken cancellationToken)
+    {
+        AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        string agentName = NewName();
+        VoiceAgentLiveDefinition definition = CreateDefinition(liveDeployment);
+        definition.Store = true;
+        await project.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        try
+        {
+            string conversationId;
+            using (ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
+                agentName, new ProjectsLiveSessionClientOptions { Store = true }, cancellationToken))
+            {
+                conversationId = session.SessionStarted.ConversationId;
+                if (string.IsNullOrEmpty(conversationId))
+                {
+                    throw new InvalidOperationException("The service did not return a Foundry conversation ID.");
+                }
+                using Stream speechFile = File.OpenRead(speechWavePath);
+                using MemoryStream output = new();
+                await RunAudioConversationAsync(session, ReadPcmWave(speechFile), output, Console.Out, cancellationToken);
+                if (output.Length == 0 || session.SessionClosed == null || session.State != WebSocketState.Closed)
+                {
+                    throw new InvalidOperationException("The stored audio conversation did not finish successfully.");
+                }
+            }
+            BetaVoiceAgentsLiveConversations history = project.AgentAdministrationClient.GetBetaVoiceAgentEndpointLiveConversations();
+            Console.WriteLine($"History shares agent pipeline: {ReferenceEquals(history.Pipeline, project.AgentAdministrationClient.Pipeline)}");
+            Console.WriteLine($"Reading stored Live conversation {conversationId} using the {(protocol ? "protocol" : "typed")} {(synchronous ? "sync" : "async")} APIs.");
+            if (synchronous)
+            {
+                if (protocol)
+                {
+                    Sample_VoiceAgent_Live_Conversations.ReadProtocol(history, agentName, conversationId, outputDirectory,
+                        deleteConversation: true, cancellationToken);
+                }
+                else
+                {
+                    Sample_VoiceAgent_Live_Conversations.Read(history, agentName, conversationId, outputDirectory,
+                        deleteConversation: true, cancellationToken);
+                }
+            }
+            else if (protocol)
+            {
+                await Sample_VoiceAgent_Live_Conversations.ReadProtocolAsync(history, agentName, conversationId, outputDirectory,
+                    deleteConversation: true, cancellationToken);
+            }
+            else
+            {
+                await Sample_VoiceAgent_Live_Conversations.ReadAsync(history, agentName, conversationId, outputDirectory,
+                    deleteConversation: true, cancellationToken);
+            }
         }
         finally
         {
@@ -222,11 +511,11 @@ public static class Sample_VoiceAgent_Live
 
     #region Snippet:Sample_VoiceAgent_Live_AudioTasks
     internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient session, byte[] speech, Stream output,
-        TextWriter transcript, CancellationToken cancellationToken)
+        TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false)
     {
         using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         Task receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
-        Task feeding = FeedAudioAsync(session, speech, flow.Token);
+        Task feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
         Task closing = CloseAfterAudioAsync(session, feeding, flow.Token);
         Task first = await Task.WhenAny(receiving, closing);
         if (first.IsFaulted || first.IsCanceled)
@@ -253,6 +542,16 @@ public static class Sample_VoiceAgent_Live
                 speaker = name;
             }
             await transcript.WriteAsync(delta);
+        }
+
+        async Task WriteNoticeAsync(string message)
+        {
+            if (speaker != null)
+            {
+                await transcript.WriteLineAsync();
+                speaker = null;
+            }
+            await transcript.WriteLineAsync(message);
         }
 
         await foreach (LiveServerEvent serverEvent in session.ReceiveEventsAsync(cancellationToken))
@@ -284,6 +583,25 @@ public static class Sample_VoiceAgent_Live
                         await transcript.WriteLineAsync();
                     }
                     return;
+                case LiveServerEventLiveSessionUsageUpdated usage:
+                    await WriteNoticeAsync($"Cumulative Live audio usage: {usage.Usage.Seconds} seconds");
+                    break;
+                case LiveServerEventLiveInfoEvent notice:
+                    await WriteNoticeAsync($"Live notice ({notice.Code}): {notice.Message}");
+                    break;
+                case LiveInputAudioAppend:
+                    // Reflected input is not assistant output; do not play it back.
+                    break;
+                case LiveServerEventLiveResponseEvent:
+                    // Backend text is not a spoken transcript.
+                    break;
+                default:
+                    using (JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
+                        serverEvent, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default)))
+                    {
+                        await WriteNoticeAsync("Live event: " + document.RootElement.GetProperty("type").GetString());
+                    }
+                    break;
             }
         }
         throw new InvalidOperationException("Live disconnected before native session finalization.");
@@ -415,6 +733,61 @@ public static class Sample_VoiceAgent_Live
             {
                 await Task.Delay(delay, cancellationToken);
             }
+        }
+    }
+
+    #region Snippet:Sample_VoiceAgent_Live_StreamSend
+    private static async Task FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+    {
+        using Stream audio = new PacedPcmStream(speech);
+        // The SDK reads until EOF and leaves this stream open; the caller supplies real-time pacing.
+        await session.SendInputAudioAsync(audio, cancellationToken);
+    }
+    #endregion
+
+    private static async Task FeedSilenceAsync(
+        ProjectsLiveSessionClient session, CancellationToken stopToken, CancellationToken cancellationToken)
+    {
+        BinaryData silence = BinaryData.FromBytes(new byte[960]);
+        while (true)
+        {
+            stopToken.ThrowIfCancellationRequested();
+            await session.SendInputAudioAsync(silence, cancellationToken);
+            await Task.Delay(TimeSpan.FromMilliseconds(20), stopToken);
+        }
+    }
+
+    private sealed class PacedPcmStream : MemoryStream
+    {
+        private readonly Stopwatch _clock = Stopwatch.StartNew();
+        private TimeSpan _nextRead;
+
+        public PacedPcmStream(byte[] speech) : base(WithSilenceTail(speech), writable: false)
+        {
+        }
+
+        public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (Position == Length)
+            {
+                return 0;
+            }
+            TimeSpan delay = _nextRead - _clock.Elapsed;
+            if (delay > TimeSpan.Zero)
+            {
+                await Task.Delay(delay, cancellationToken);
+            }
+            int read = await base.ReadAsync(buffer, offset, Math.Min(count, 960), cancellationToken);
+            _nextRead = _clock.Elapsed + TimeSpan.FromSeconds(read / 48000.0);
+            return read;
+        }
+
+        private static byte[] WithSilenceTail(byte[] speech)
+        {
+            byte[] bytes = new byte[checked(speech.Length + 48000 * 8)];
+            Buffer.BlockCopy(speech, 0, bytes, 0, speech.Length);
+            return bytes;
         }
     }
 

@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Tests.Samples;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
@@ -29,6 +30,92 @@ public class ProjectsLiveTests : ProjectsClientTestBase
     public ProjectsLiveTests(bool isAsync) : base(isAsync)
     {
         TestTimeoutInSeconds = 180;
+    }
+
+    [TestCase("connect")]
+    [TestCase("options")]
+    [TestCase("text")]
+    [TestCase("function")]
+    [TestCase("audio")]
+    [TestCase("stream")]
+    [TestCase("controls")]
+    [TestCase("cancel")]
+    [AsyncOnly]
+    public async Task PublicWebSocketSampleRunsAgainstService(string sample)
+    {
+        string endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string deployment = Environment.GetEnvironmentVariable("FOUNDRY_LIVE_MODEL_NAME")
+            ?? throw new InvalidOperationException("Set FOUNDRY_LIVE_MODEL_NAME.");
+        string directory = Path.Combine(Path.GetTempPath(), "dotnet-live-sample-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        try
+        {
+            using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
+            string output = Path.Combine(directory, "output.wav");
+            switch (sample)
+            {
+                case "connect":
+                    await Sample_VoiceAgent_Live.ConnectAsync(endpoint, deployment, timeout.Token);
+                    break;
+                case "options":
+                    await Sample_VoiceAgent_Live.ConnectionOptionsAsync(endpoint, deployment, timeout.Token);
+                    break;
+                case "text":
+                    string marker = "LIVE_" + Guid.NewGuid().ToString("N");
+                    await Sample_VoiceAgent_Live.TextConversationAsync(endpoint, deployment, Backend(),
+                        [$"Remember the marker {marker}.", "Repeat the marker from the previous message."], timeout.Token);
+                    break;
+                case "function":
+                    await Sample_VoiceAgent_Live.FunctionAsync(endpoint, deployment, Backend(), timeout.Token);
+                    break;
+                case "audio":
+                    await Sample_VoiceAgent_Live.ConversationAsync(endpoint, deployment, SpeechWavePath(), output, timeout.Token);
+                    Assert.That(new FileInfo(output).Length, Is.GreaterThan(44));
+                    break;
+                case "stream":
+                    await Sample_VoiceAgent_Live.StreamAudioAsync(endpoint, deployment, SpeechWavePath(), output, timeout.Token);
+                    Assert.That(new FileInfo(output).Length, Is.GreaterThan(44));
+                    break;
+                case "controls":
+                    await Sample_VoiceAgent_Live.SessionControlsAsync(endpoint, deployment, Backend(), timeout.Token);
+                    break;
+                case "cancel":
+                    await Sample_VoiceAgent_Live.CancelReceiveAsync(endpoint, deployment, timeout.Token);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sample));
+            }
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+
+        static string Backend() => Environment.GetEnvironmentVariable("FOUNDRY_LIVE_BACKEND_MODEL_NAME")
+            ?? throw new InvalidOperationException("Set FOUNDRY_LIVE_BACKEND_MODEL_NAME.");
+    }
+
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    [AsyncOnly]
+    public async Task PublicStoredConversationSampleRunsAgainstService(bool synchronous, bool protocol)
+    {
+        string deployment = Environment.GetEnvironmentVariable("FOUNDRY_LIVE_MODEL_NAME")
+            ?? throw new InvalidOperationException("Set FOUNDRY_LIVE_MODEL_NAME.");
+        string directory = Path.Combine(Path.GetTempPath(), "dotnet-live-history-sample-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        try
+        {
+            using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
+            await Sample_VoiceAgent_Live.StoredConversationAsync(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT,
+                deployment, SpeechWavePath(), directory, synchronous, protocol, timeout.Token);
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
     }
 
     [Test]
@@ -534,10 +621,7 @@ public class ProjectsLiveTests : ProjectsClientTestBase
 
     private static byte[] ReadSpeechPcm()
     {
-        string path = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory,
-            "..", "..", "..", "..", "..", "sdk", "openai", "Azure.AI.OpenAI", "tests", "Assets",
-            "whats_the_weather_pcm16_24khz_mono.wav"));
-        using BinaryReader reader = new(File.OpenRead(path), Encoding.ASCII);
+        using BinaryReader reader = new(File.OpenRead(SpeechWavePath()), Encoding.ASCII);
         Assert.That(new string(reader.ReadChars(4)), Is.EqualTo("RIFF"));
         reader.ReadUInt32();
         Assert.That(new string(reader.ReadChars(4)), Is.EqualTo("WAVE"));
@@ -568,4 +652,8 @@ public class ProjectsLiveTests : ProjectsClientTestBase
         }
         throw new InvalidDataException("The existing speech fixture has no PCM data chunk.");
     }
+
+    private static string SpeechWavePath() => Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory,
+            "..", "..", "..", "..", "..", "sdk", "openai", "Azure.AI.OpenAI", "tests", "Assets",
+            "whats_the_weather_pcm16_24khz_mono.wav"));
 }

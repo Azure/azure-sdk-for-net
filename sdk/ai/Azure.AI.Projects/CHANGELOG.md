@@ -18,6 +18,7 @@
 
 ### Sample Updates
 
+- Added complete Live REST operation samples for all synchronous/asynchronous typed/protocol overloads, stored-conversation capture, and WebSocket options, controls, stream audio, cancellation, and asynchronous disposal.
 - Fixed Live audio pacing to send all input speech before its silence tail, and surfaced delegated backend errors without waiting for cancellation.
 - Added native Live connection, real-speech WAV, text-guidance, and Responses function-calling samples.
 - Added scripted multi-turn Live text and strengthened sample tool-result batching, error reporting, premature-disconnect checks, and audio-task cancellation.

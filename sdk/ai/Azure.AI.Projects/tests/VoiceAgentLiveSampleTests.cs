@@ -356,6 +356,152 @@ public class VoiceAgentLiveSampleTests
         });
     }
 
+    [Test]
+    public void ConnectionOptionsUseVersionStructuredInputsCustomHeadersAndRawStoreQuery()
+    {
+        ProjectsLiveSessionClientOptions options = Sample_VoiceAgent_Live.CreateConnectionOptions("7");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(options.AgentVersion, Is.EqualTo("7"));
+            Assert.That(options.Store, Is.Null, "The raw store query must not conflict with a managed Store option.");
+            Assert.That(options.QueryString, Is.EqualTo("store=false"));
+            Assert.That(options.StructuredInputs["language"].ToObjectFromJson<string>(), Is.EqualTo("English"));
+            Assert.That(Guid.TryParse(options.Headers["x-correlation-id"], out _), Is.True);
+            Assert.That(options.Headers.ContainsKey("Authorization"), Is.False);
+            Assert.That(options.Headers.ContainsKey("Foundry-Features"), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task ControlsSendTypedAndRawCommandsAndWaitForEveryAcknowledgment()
+    {
+        using ScriptedSession session = new(ControlAcknowledgments()) { WaitAfterEvents = true };
+        using StringWriter output = new();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+
+        await Sample_VoiceAgent_Live.RunSessionControlsAsync(session, output, timeout.Token);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.Commands.Select(EventType), Is.EqualTo(new[]
+            {
+                "session.update", "session.input_audio.mute", "session.input_audio.unmute",
+                "session.thinking.append", "session.commentary.append", "session.instructions.append", "session.thinking.append"
+            }));
+            Assert.That(session.Receivers, Is.EqualTo(1));
+            Assert.That(session.ReceiverEnded, Is.True);
+            Assert.That(output.ToString().Split(new[] { "Acknowledged:" }, StringSplitOptions.None).Length - 1, Is.EqualTo(7));
+            Assert.That(session.AudioToken.IsCancellationRequested, Is.False,
+                "Stopping silence after acknowledgments must not cancel an active WebSocket send.");
+            Assert.That(timeout.IsCancellationRequested, Is.False);
+        });
+        using JsonDocument update = JsonDocument.Parse(session.Commands[0]);
+        Assert.That(update.RootElement.GetProperty("session").GetProperty("delegation").GetProperty("responses")
+            .GetProperty("instructions").GetString(), Does.Contain("verified context"));
+        using JsonDocument instructions = JsonDocument.Parse(session.Commands[5]);
+        Assert.That(instructions.RootElement.GetProperty("delegation_id").ValueKind, Is.EqualTo(JsonValueKind.Null));
+    }
+
+    [Test]
+    public void MissingControlAcknowledgmentsAreNotReportedAsSuccess()
+    {
+        using ScriptedSession session = new(ControlAcknowledgments().Take(6).ToArray());
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.RunSessionControlsAsync(session, TextWriter.Null, timeout.Token));
+
+        Assert.That(error.Message, Does.Contain("before acknowledging all session controls"));
+        Assert.That(session.ReceiverEnded, Is.True);
+    }
+
+    [Test]
+    public void ControlsRetainNativeErrorsAndStopTheirProducer()
+    {
+        using ScriptedSession session = new(Error(null));
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.RunSessionControlsAsync(session, TextWriter.Null, timeout.Token));
+
+        Assert.That(error.Message, Does.Contain("invalid_request_error").And.Contain("The service rejected the example."));
+        Assert.That(session.AudioEnded, Is.True);
+        Assert.That(session.ReceiverEnded, Is.True);
+    }
+
+    [Test]
+    public void ControlsAudioFailureInterruptsItsReceiver()
+    {
+        using ScriptedSession session = new() { AudioFailure = new IOException("Control audio failed."), WaitAfterEvents = true };
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+
+        IOException error = Assert.ThrowsAsync<IOException>(() =>
+            Sample_VoiceAgent_Live.RunSessionControlsAsync(session, TextWriter.Null, timeout.Token));
+
+        Assert.That(error.Message, Is.EqualTo("Control audio failed."));
+        Assert.That(session.ReceiverEnded, Is.True);
+        Assert.That(timeout.IsCancellationRequested, Is.False);
+    }
+
+    [Test]
+    public async Task StreamSampleSendsAllPcmAndSilenceThroughTheStreamOverload()
+    {
+        using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}""")) { WaitForClose = true };
+        byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
+        using MemoryStream output = new();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+
+        await Sample_VoiceAgent_Live.RunAudioConversationAsync(
+            session, speech, output, TextWriter.Null, timeout.Token, streamAudio: true);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.AudioStreamCalls, Is.EqualTo(1));
+            Assert.That(session.AudioChunks.Take(2).SelectMany(chunk => chunk.ToArray()), Is.EqualTo(speech));
+            Assert.That(session.AudioChunks.Skip(2).Count(), Is.EqualTo(400));
+            Assert.That(session.AudioChunks.Skip(2).All(chunk => chunk.ToArray().All(value => value == 0)), Is.True);
+            Assert.That(session.ReceiverEnded, Is.True);
+            Assert.That(output.Length, Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public async Task AudioEventsReportUsageAndNoticesWithoutPlayingReflectedInput()
+    {
+        using ScriptedSession session = new(
+            Transcript("session.output_transcript.delta", "Before."),
+            Read("""{"type":"session.usage.updated","usage":{"seconds":7}}"""),
+            Read("""{"type":"info","code":"notice","message":"A session notice."}"""),
+            Read("""{"type":"session.input_audio.append","audio":"AQABAA=="}"""),
+            Read("""{"type":"future.event","detail":"Not a transcript."}"""),
+            Transcript("session.output_transcript.delta", "After."), Closed());
+        using MemoryStream audio = new();
+        using StringWriter output = new();
+
+        await Sample_VoiceAgent_Live.ReceiveAudioAsync(session, audio, output, default);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(output.ToString(), Does.Contain("7 seconds").And.Contain("A session notice.").And.Contain("future.event"));
+            Assert.That(output.ToString(), Does.Contain("Assistant: Before." + Environment.NewLine + "Cumulative")
+                .And.Contain("Assistant: After."));
+            Assert.That(output.ToString(), Does.Not.Contain("Not a transcript."));
+            Assert.That(audio.Length, Is.Zero);
+        });
+    }
+
+    private static LiveServerEvent[] ControlAcknowledgments() =>
+    [
+        Read("""{"type":"session.updated","client_event_id":"sample-update","session":{"id":"session","model":"gpt-live-1","expires_at":2000000000}}"""),
+        Read("""{"type":"session.input_audio.muted","client_event_id":"sample-mute"}"""),
+        Read("""{"type":"session.input_audio.unmuted","client_event_id":"sample-unmute"}"""),
+        Read("""{"type":"session.thinking.appended","client_event_id":"sample-thinking","start_ms":0,"end_ms":0}"""),
+        Read("""{"type":"session.commentary.appended","client_event_id":"sample-commentary","start_ms":0,"end_ms":0}"""),
+        Read("""{"type":"session.instructions.appended","client_event_id":"sample-instructions","start_ms":0,"end_ms":0}"""),
+        Read("""{"type":"session.thinking.appended","client_event_id":"sample-raw","start_ms":0,"end_ms":0}""")
+    ];
+
     private static Task Run(ScriptedSession session, IEnumerable<string> prompts = null, bool tools = false)
         => Sample_VoiceAgent_Live.RunResponsesConversationAsync(session, prompts ?? new[] { "Prompt" }, TextWriter.Null, tools, default);
 
@@ -410,6 +556,7 @@ public class VoiceAgentLiveSampleTests
 
         public List<BinaryData> Commands { get; } = new();
         public List<BinaryData> AudioChunks { get; } = new();
+        public int AudioStreamCalls { get; private set; }
         public int Receivers { get; private set; }
         public bool ReceiverEnded { get; private set; }
         public bool AudioEnded { get; private set; }
@@ -427,6 +574,24 @@ public class VoiceAgentLiveSampleTests
             cancellationToken.ThrowIfCancellationRequested();
             Commands.Add(ModelReaderWriter.Write(clientEvent, new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default));
             return Task.CompletedTask;
+        }
+
+        public override Task SendCommandAsync(BinaryData command, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Commands.Add(command);
+            return Task.CompletedTask;
+        }
+
+        public override async Task SendInputAudioAsync(Stream audio, CancellationToken cancellationToken = default)
+        {
+            AudioStreamCalls++;
+            byte[] buffer = new byte[960];
+            int read;
+            while ((read = await audio.ReadAsync(buffer, 0, buffer.Length, cancellationToken)) != 0)
+            {
+                await SendInputAudioAsync(BinaryData.FromBytes(buffer.AsMemory(0, read)), cancellationToken);
+            }
         }
 
         public override async Task SendInputAudioAsync(BinaryData audio, CancellationToken cancellationToken = default)
