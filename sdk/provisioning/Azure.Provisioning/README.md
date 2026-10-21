@@ -187,40 +187,6 @@ ProvisioningOutput primaryBlobEndpoint = new(nameof(primaryBlobEndpoint), typeof
 };
 ```
 
-### Resource-scoped management locks
-
-Set `ManagementLock.Scope` to a resource to protect that resource rather than the
-deployment scope. Add both the target resource and the lock to the same
-infrastructure module:
-
-```C# Snippet:ProvisioningManagementLock
-Infrastructure infra = new();
-StorageAccount storage = new("storage", "2023-05-01")
-{
-    Name = "lockedstorage",
-    Location = AzureLocation.EastUS,
-    Kind = StorageKind.StorageV2,
-    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
-};
-infra.Add(storage);
-
-ManagementLock storageLock = new("storageLock")
-{
-    Name = "protect-storage",
-    Scope = storage,
-    Level = ManagementLockLevel.CanNotDelete,
-    Notes = "Protect the storage account from accidental deletion."
-};
-infra.Add(storageLock);
-```
-
-The lock emits `scope: storage`, which also establishes an implicit deployment
-dependency. An explicit `DependsOn` is not needed.
-
-Leaving `Scope` unset, or assigning `null` to clear it, uses the deployment scope.
-In a resource-group deployment, this applies the lock to the whole resource group.
-Adding a resource to `DependsOn` alone does not scope the lock to that resource.
-
 ### `ToBicepExpression` Method
 
 The `ToBicepExpression()` extension method allows you to create references to resource properties and values for use in Bicep expressions. This is essential when you need to reference one resource's properties in another resource or build dynamic configuration strings.
@@ -478,6 +444,37 @@ Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 ResourceGroup rg = new("rg_test", "2024-03-01");
 infra.Add(rg);
 ```
+
+### Lock A Single Resource
+
+This example demonstrates how to protect a single storage account from deletion with a management lock, instead of locking the whole deployment scope.
+
+```C# Snippet:ProvisioningManagementLock
+Infrastructure infra = new();
+StorageAccount storage = new("storage", "2023-05-01")
+{
+    Name = "lockedstorage",
+    Location = AzureLocation.EastUS,
+    Kind = StorageKind.StorageV2,
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+infra.Add(storage);
+
+ManagementLock storageLock = new("storageLock")
+{
+    Name = "protect-storage",
+    Scope = storage,
+    Level = ManagementLockLevel.CanNotDelete,
+    Notes = "Protect the storage account from accidental deletion."
+};
+infra.Add(storageLock);
+```
+
+Setting `Scope` emits `scope: storage` on the lock. Because the storage account is deployed by the same infrastructure, the reference also establishes an implicit deployment dependency, so `DependsOn` is not needed. To lock a resource that already exists, declare it with `FromExisting` (for example, `StorageAccount.FromExisting`) and add it to the same infrastructure.
+
+Leaving `Scope` unset, or assigning `null` to clear it, applies the lock to the deployment scope; in a resource group deployment, that is the whole resource group. Adding a resource to `DependsOn` alone does not scope the lock to that resource.
+
+`Scope` cannot change the deployment scope. With `TargetScope = DeploymentScope.Subscription`, assigning a `ResourceGroup` produces Bicep that fails to compile (BCP139). To lock a resource group, deploy the lock at resource group scope and leave `Scope` unset.
 
 ## Troubleshooting
 

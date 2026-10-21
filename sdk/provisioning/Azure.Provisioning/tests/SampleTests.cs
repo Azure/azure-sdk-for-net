@@ -363,7 +363,7 @@ internal class SampleTests
 
     [TestCase(false)]
     [TestCase(true)]
-    public async Task ManagementLockExistingResourceScope(bool explicitDependency)
+    public async Task ManagementLockExistingTargetScope(bool explicitDependency)
     {
         await using Trycep test = new Trycep()
             .Define(
@@ -429,6 +429,7 @@ internal class SampleTests
                         Name = "protect-deployment",
                         Level = ManagementLockLevel.ReadOnly
                     };
+                    Assert.That(identityLock.Scope, Is.Null);
                     if (clearScope)
                     {
                         identityLock.Scope = identity;
@@ -454,6 +455,42 @@ internal class SampleTests
                 identity
               ]
             }
+            """);
+    }
+
+    [Test]
+    public async Task ManagementLockExistingLockScope()
+    {
+        await using Trycep test = new Trycep()
+            .Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    StorageAccount storage = StorageAccount.FromExisting("storage", "2023-05-01");
+                    storage.Name = "lockedstorage";
+                    infra.Add(storage);
+
+                    ManagementLock storageLock = ManagementLock.FromExisting("storageLock");
+                    storageLock.Name = "protect-storage";
+                    storageLock.Scope = storage;
+                    infra.Add(storageLock);
+
+                    infra.Add(new ProvisioningOutput("lockId", typeof(string)) { Value = storageLock.Id });
+                    return infra;
+                });
+
+        test.Compare(
+            """
+            resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' existing = {
+              name: 'lockedstorage'
+            }
+
+            resource storageLock 'Microsoft.Authorization/locks@2020-05-01' existing = {
+              name: 'protect-storage'
+              scope: storage
+            }
+
+            output lockId string = storageLock.id
             """);
     }
 
