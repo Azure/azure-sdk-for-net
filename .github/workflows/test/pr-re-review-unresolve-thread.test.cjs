@@ -8,6 +8,17 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const workflowPath = path.resolve(__dirname, "../pr-re-review.md");
+const lockPath = path.resolve(__dirname, "../pr-re-review.lock.yml");
+
+// GH_AW_SAFE_OUTPUTS_CONFIG is a JSON object embedded as a single-line YAML double-quoted
+// scalar in the compiled lock file. Wrapping the captured text in real quotes and running it
+// through JSON.parse once unescapes the YAML/JSON-string escaping; a second parse yields the
+// actual config object, so this needs no YAML parser dependency.
+function extractSafeOutputsConfig(lockYmlSource) {
+  const match = /^ +GH_AW_SAFE_OUTPUTS_CONFIG: "(.*)"\r?$/m.exec(lockYmlSource);
+  assert.ok(match, "could not find GH_AW_SAFE_OUTPUTS_CONFIG in the compiled lock file");
+  return JSON.parse(JSON.parse(`"${match[1]}"`));
+}
 
 // The workflow markdown has exactly one `script: |` block (the unresolve-review-thread
 // custom safe-output job), indented 12 spaces with a 14-space body. Extracted with a
@@ -90,4 +101,65 @@ test("allows the reopen to proceed once threat detection concludes success", asy
   assert.ok(!warnings.some((message) => guardMessage.test(message)), "the guard should not warn once detection succeeded");
   assert.ok(warnings.some((message) => /no terminal safe output/.test(message)),
     "execution should reach the next (empty-items) check, proving it got past the guard");
+});
+
+test("compiled safe-outputs config gives unresolve-review-thread room for more than one reopening per run", () => {
+  const config = extractSafeOutputsConfig(fs.readFileSync(lockPath, "utf8"));
+  const jobConfig = config["unresolve-review-thread"];
+  assert.ok(jobConfig, "unresolve-review-thread should be present in the compiled safe-outputs config");
+  // Absence of a 'max' key here means gh-aw's ingestion collector defaults this custom
+  // job to a cardinality of 1, silently truncating a multi-thread reopen and recording an
+  // ingestion error that our own error-guard then correctly treats as unsafe to act on.
+  assert.ok(typeof jobConfig.max === "number" && jobConfig.max >= 2,
+    "unresolve-review-thread needs an explicit max >= 2 so ingestion doesn't truncate multi-thread reopen runs to a single item");
+});
+
+// This test documents already-correct behavior rather than a red/green bug fix: the job
+// script's loop was never capped at one item -- only the ingestion-side cardinality was.
+// It guards against a future regression in the script itself once ingestion is fixed to
+// actually deliver more than one item.
+test("reopens every item when multiple unresolve_review_thread entries survive ingestion", async () => {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
+  const items = [
+    { type: "unresolve_review_thread", comment_id: "101", reason: "still open" },
+    { type: "unresolve_review_thread", comment_id: "202", reason: "still open" },
+  ];
+  const threadsByCommentId = new Map(items.map((item, i) => [Number(item.comment_id), `thread-${i}`]));
+  const resolvedThreadIds = [];
+  const sandbox = {
+    process: {
+      env: {
+        GH_AW_DETECTION_CONCLUSION: "success",
+        GH_AW_DETECTION_REASON: "",
+        GH_AW_AGENT_OUTPUT: "fixture.json",
+      },
+    },
+    core: { warning: () => {}, info: () => {} },
+    context: {
+      repo: { owner: "octo", repo: "widgets" },
+      payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } },
+    },
+    github: {
+      rest: { pulls: { get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }) } },
+      graphql: async (query, vars) => {
+        if (query.includes("unresolveReviewThread")) {
+          resolvedThreadIds.push(vars.threadId);
+          return { unresolveReviewThread: { thread: { id: vars.threadId, isResolved: false } } };
+        }
+        const nodes = [...threadsByCommentId.entries()].map(([commentId, threadId]) => ({
+          id: threadId,
+          isResolved: true,
+          comments: { nodes: [{ databaseId: commentId }] },
+        }));
+        return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes } } } };
+      },
+    },
+    require: (name) => {
+      if (name === "fs") return { readFileSync: () => JSON.stringify({ items, errors: [] }) };
+      return require(name);
+    },
+  };
+  vm.createContext(sandbox);
+  await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
+  assert.deepEqual(resolvedThreadIds.sort(), ["thread-0", "thread-1"], "both threads should have been reopened, not just the first");
 });

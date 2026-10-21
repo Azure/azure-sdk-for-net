@@ -57,6 +57,10 @@ safe-outputs:
       runs-on: ubuntu-latest
       needs: safe_outputs
       if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
+      # Matches resolve-pull-request-review-thread's max below; without this, gh-aw's
+      # ingestion collector defaults custom safe-jobs to a cardinality of 1 and truncates
+      # a multi-thread reopen run.
+      max: 50
       output: "Review thread(s) reopened"
       inputs:
         comment_id:
