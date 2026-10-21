@@ -5,7 +5,7 @@ over `/voice_conversation_engine` and the existing `/invocations_ws` endpoint. T
 handler explicitly acknowledges startup, creates every response and output ID,
 and owns cancellation for its response tasks.
 
-Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. The former event/model/callback names are not supported. Update the Voice Live sender together with the library; interruption cancellation and the `heard_text` snapshot are unchanged.
+Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. Voice Live senders must use the same event contract. Interruption cancellation and the `heard_text` snapshot are unchanged.
 
 ## Prerequisites
 

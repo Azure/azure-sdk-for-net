@@ -9,11 +9,7 @@
   handlers registered with `AddVoice<THandler>()`. It reuses the existing Bridge
   Protocol 1.0 relay alongside `/invocations_ws`, without new registration options
   or changes to generic Invocations handlers.
-
-### Breaking Changes
-
-- Renamed the standalone Hosted Agent protocol and route from `conversation_engine` / `/conversation_engine` to `voice_conversation_engine` / `/voice_conversation_engine`, with no old-name alias. The independent `/invocations_ws` route and Bridge message version `1.0` are unchanged.
-- Renamed the experimental Voice interruption event to `user.barge_in`, `VoiceBargeInEvent` to `VoiceUserBargeInEvent`, and `OnBargeInAsync` to `OnUserBargeInAsync`. The former event and API names are no longer supported. The typed Voice relay requires the renamed event and a matching Voice Live sender; generic raw WebSocket handlers are unchanged.
+- Aligned the experimental Voice caller-interruption contract with `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`, preserving playback snapshots and application-owned cancellation/history. Voice Live senders must use the same event contract. Generic raw WebSocket handlers are unchanged.
 
 ### Bugs Fixed
 
