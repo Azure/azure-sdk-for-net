@@ -75,6 +75,23 @@ safe-outputs:
           with:
             script: |
               const fs = require('fs');
+
+              // Custom safe-outputs.jobs.* jobs are not covered by the built-in handler
+              // manager's warn-mode abort policy (THREAT_WARNING_ABORT_TYPES), which blocks
+              // non-reviewable mutations like resolve_pull_request_review_thread unless threat
+              // detection cleanly concluded "success". This job performs the mirror-image
+              // mutation (reopening a thread), so it must apply the same gate itself. Mirrors
+              // gh-aw's getEffectiveDetectionConclusion: a tooling failure (agent_failure or
+              // parse_error) is treated the same as "warning", not as a clean success.
+              const detectionReason = (process.env.GH_AW_DETECTION_REASON || '').trim();
+              const isToolingFailure = detectionReason === 'agent_failure' || detectionReason === 'parse_error';
+              const rawConclusion = (process.env.GH_AW_DETECTION_CONCLUSION || '').trim();
+              const effectiveConclusion = (rawConclusion === 'failure' && isToolingFailure) ? 'warning' : rawConclusion;
+              if (effectiveConclusion !== 'success') {
+                core.warning(`Threat detection did not conclude "success" (conclusion=${rawConclusion || '(missing)'}, reason=${detectionReason || '(none)'}); skipping unresolve request(s) to avoid acting on an unvalidated result.`);
+                return;
+              }
+
               const output = JSON.parse(fs.readFileSync(process.env.GH_AW_AGENT_OUTPUT, 'utf8'));
 
               // safe-outputs.jobs.* custom jobs cannot declare `needs: validate_agent_output`
