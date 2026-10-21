@@ -9,8 +9,17 @@ Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsyn
 
 ## Prerequisites
 
+This sample requires `Azure.AI.AgentServer.Invocations` version `1.0.0-beta.8`
+or a compatible later version containing `VoiceUserBargeInEvent` and
+`OnUserBargeInAsync`. Older preview packages do not contain these APIs.
+
+Until a release containing these APIs and the CE route is published, use a
+matching local library build, including its companion Core package, from the
+same SDK checkout. An older package selected by `--prerelease` is not sufficient.
+After a matching release is available, install it explicitly:
+
 ```dotnetcli
-dotnet add package Azure.AI.AgentServer.Invocations --prerelease
+dotnet add package Azure.AI.AgentServer.Invocations --version 1.0.0-beta.8
 ```
 
 ## Declare Voice support
