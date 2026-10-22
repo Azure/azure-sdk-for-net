@@ -10,10 +10,13 @@ using System.Text;
 using Azure.AI.AgentServer.Core.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenTelemetry;
 using NUnit.Framework;
 using OpenTelemetry;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -30,6 +33,7 @@ public class OpenTelemetryExtensionsTests
     public void TearDown()
     {
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_PROTOCOL", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
         Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
         Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
@@ -46,6 +50,51 @@ public class OpenTelemetryExtensionsTests
     public void AgentHostTelemetry_HasDefaultMeterName()
     {
         Assert.That(AgentHostTelemetry.ResponsesMeterName, Is.Not.Null.And.Not.Empty);
+    }
+
+    [TestCase(ExportProcessorType.Simple)]
+    [TestCase(ExportProcessorType.Batch)]
+    public void DefaultTelemetry_ExportsFoundryMarkerOnFrameworkSpansAndLogs(ExportProcessorType processorType)
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318");
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_PROTOCOL", "http/protobuf");
+        FoundryEnvironment.Reload();
+
+        using var source = new ActivitySource($"Test.Framework.{Guid.NewGuid():N}");
+        using var handler = new CapturingOtlpHandler();
+        var services = new ServiceCollection();
+        services.AddAgentHostTelemetry(tracing => tracing.AddSource(source.Name));
+        services.ConfigureAll<OtlpExporterOptions>(options =>
+        {
+            options.Protocol = OtlpExportProtocol.HttpProtobuf;
+            options.ExportProcessorType = processorType;
+            options.HttpClientFactory = () => new HttpClient(handler, disposeHandler: false);
+        });
+        services.ConfigureAll<LogRecordExportProcessorOptions>(options => options.ExportProcessorType = processorType);
+        using var provider = services.BuildServiceProvider();
+        var tracerProvider = provider.GetRequiredService<TracerProvider>();
+        var logger = provider.GetRequiredService<ILoggerFactory>().CreateLogger("framework");
+
+        logger.LogInformation("Log outside an activity");
+        using (var parent = source.StartActivity("parent")!)
+        {
+            Assert.That(parent.GetTagItem("microsoft.foundry"), Is.EqualTo("True"));
+            parent.SetTag("microsoft.foundry", "framework-value");
+            parent.SetTag("gen_ai.provider.name", "other-provider");
+            parent.SetBaggage("microsoft.foundry", "baggage-value");
+            using (var child = source.StartActivity("child")!)
+            {
+                child.SetTag("microsoft.foundry", "framework-value");
+                logger.LogInformation("Conflicting marker {microsoft.foundry}", "framework-value");
+            }
+        }
+
+        Assert.That(tracerProvider.ForceFlush(), Is.True);
+        var loggerProvider = provider.GetRequiredService<LoggerProvider>();
+        Assert.That(loggerProvider.ForceFlush(), Is.True);
+
+        AssertExportedFoundryMarkers(handler, "/v1/traces", attributeField: 9);
+        AssertExportedFoundryMarkers(handler, "/v1/logs", attributeField: 6);
     }
 
     [Test]
@@ -279,5 +328,73 @@ public class OpenTelemetryExtensionsTests
         {
             Activities.Enqueue(data);
         }
+    }
+
+    private static void AssertExportedFoundryMarkers(CapturingOtlpHandler handler, string path, int attributeField)
+    {
+        // Both signals nest records inside resource (field 1) and scope (field 2) messages.
+        var records = handler.Requests.Where(request => request.Path == path)
+            .SelectMany(request => ReadMessages(request.Body, 1))
+            .SelectMany(resource => ReadMessages(resource, 2))
+            .SelectMany(scope => ReadMessages(scope, 2))
+            .ToList();
+        Assert.That(records, Has.Count.EqualTo(2),
+            $"{path}; captured requests: {string.Join(", ", handler.Requests.Select(request => request.Path))}");
+
+        foreach (var record in records)
+        {
+            var markers = ReadMessages(record, attributeField)
+                .Where(attribute => Encoding.UTF8.GetString(ReadMessages(attribute, 1).Single()) == "microsoft.foundry")
+                .ToList();
+            Assert.That(markers, Has.Count.EqualTo(1), path);
+            var value = ReadMessages(markers[0], 2).Single();
+            Assert.That(Encoding.UTF8.GetString(ReadMessages(value, 1).Single()), Is.EqualTo("True"), path);
+        }
+    }
+
+    private static IEnumerable<byte[]> ReadMessages(byte[] message, int fieldNumber)
+    {
+        using var reader = new BinaryReader(new MemoryStream(message));
+        while (reader.BaseStream.Position < reader.BaseStream.Length)
+        {
+            var tag = reader.Read7BitEncodedInt();
+            switch (tag & 7)
+            {
+                case 0:
+                    reader.Read7BitEncodedInt64();
+                    break;
+                case 1:
+                    reader.ReadBytes(8);
+                    break;
+                case 2:
+                    var bytes = reader.ReadBytes(reader.Read7BitEncodedInt());
+                    if (tag >> 3 == fieldNumber)
+                    {
+                        yield return bytes;
+                    }
+                    break;
+                case 5:
+                    reader.ReadBytes(4);
+                    break;
+                default:
+                    throw new InvalidDataException($"Unsupported protobuf wire type {tag & 7}.");
+            }
+        }
+    }
+
+    private sealed class CapturingOtlpHandler : HttpMessageHandler
+    {
+        public ConcurrentQueue<(string Path, byte[] Body)> Requests { get; } = new();
+
+        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            using var body = new MemoryStream();
+            request.Content!.CopyTo(body, null, cancellationToken);
+            Requests.Enqueue((request.RequestUri!.AbsolutePath, body.ToArray()));
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(Array.Empty<byte>()) };
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+            Task.FromResult(Send(request, cancellationToken));
     }
 }
