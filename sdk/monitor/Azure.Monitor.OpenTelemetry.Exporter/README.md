@@ -191,6 +191,18 @@ Some key concepts for OpenTelemetry include:
 
 For more information on the OpenTelemetry project, please review the [OpenTelemetry Specifications](https://github.com/open-telemetry/opentelemetry-specification).
 
+### Custom property truncation
+
+Span, span event, log record, and log scope attributes are exported as custom properties. Keys longer than 150 characters are dropped, and values are truncated to the following lengths (in characters):
+
+| Attributes | Max length |
+| --- | --- |
+| `gen_ai.input.messages`, `gen_ai.output.messages` | 4 MiB (`4 * 1024 * 1024`) |
+| `gen_ai.system_instructions`, `gen_ai.tool.definitions`, `gen_ai.tool.call.arguments`, `gen_ai.tool.call.result`, `gen_ai.evaluation.explanation` | 256 KiB (`256 * 1024`) |
+| All other attributes | 8 KiB (`8 * 1024`) |
+
+GenAI messages with multimodal content (for example, base64-encoded images or audio) can produce large telemetry items. Telemetry is sent uncompressed, up to 512 items per request, and the offline storage cap (50 MiB) is not configurable. If you capture such content, consider limiting content capture in your GenAI instrumentation, or increasing `AzureMonitorExporterOptions.Retry.NetworkTimeout` for slow networks. Values truncated at these limits are cut at the character boundary and are no longer valid JSON.
+
 ## Telemetry delivery on shutdown
 
 Uploading telemetry takes an ingestion round trip, which can take several seconds. A process that

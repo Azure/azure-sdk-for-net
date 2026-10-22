@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -136,24 +137,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiUserAccountId_MaxLength = 1024;
 
         /// <summary>
-        /// Maximum value length for GenAI semantic convention properties (256 KB).
+        /// Maximum value length for GenAI semantic convention properties (256 KiB).
         /// These properties may carry large payloads (e.g. full prompt/completion content)
         /// and are truncated to a higher limit than standard properties.
         /// </summary>
         public const int GenAi_Properties_MaxValueLength = 256 * 1024;
 
         /// <summary>
-        /// GenAI semantic convention property keys that receive a higher truncation limit.
+        /// Maximum value length for <c>gen_ai.input.messages</c> and <c>gen_ai.output.messages</c> (4 MiB).
+        /// These properties may carry multimodal content (e.g. base64-encoded images or audio).
         /// </summary>
-        public static readonly HashSet<string> GenAiProperties = new HashSet<string>(StringComparer.Ordinal)
+        public const int GenAi_Messages_MaxValueLength = 4 * 1024 * 1024;
+
+        /// <summary>
+        /// GenAI semantic convention property keys that receive a higher truncation limit, mapped to their limit.
+        /// </summary>
+        public static readonly Dictionary<string, int> GenAiPropertyMaxValueLengths = new Dictionary<string, int>(StringComparer.Ordinal)
         {
-            "gen_ai.input.messages",
-            "gen_ai.output.messages",
-            "gen_ai.system_instructions",
-            "gen_ai.tool.definitions",
-            "gen_ai.tool.call.arguments",
-            "gen_ai.tool.call.result",
-            "gen_ai.evaluation.explanation",
+            ["gen_ai.input.messages"] = GenAi_Messages_MaxValueLength,
+            ["gen_ai.output.messages"] = GenAi_Messages_MaxValueLength,
+            ["gen_ai.system_instructions"] = GenAi_Properties_MaxValueLength,
+            ["gen_ai.tool.definitions"] = GenAi_Properties_MaxValueLength,
+            ["gen_ai.tool.call.arguments"] = GenAi_Properties_MaxValueLength,
+            ["gen_ai.tool.call.result"] = GenAi_Properties_MaxValueLength,
+            ["gen_ai.evaluation.explanation"] = GenAi_Properties_MaxValueLength,
         };
+
+        /// <summary>
+        /// Returns the maximum value length for a custom property key.
+        /// </summary>
+        /// <param name="key">The property key.</param>
+        /// <param name="defaultMaxValueLength">The limit to use when the key has no override.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetPropertyMaxValueLength(string key, int defaultMaxValueLength)
+            => GenAiPropertyMaxValueLengths.TryGetValue(key, out var maxValueLength) ? maxValueLength : defaultMaxValueLength;
     }
 }
