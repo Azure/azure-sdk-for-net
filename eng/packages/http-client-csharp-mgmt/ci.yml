@@ -91,14 +91,15 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      RegenerationJobCount: 18
       OnlyGenerateTypespec: true
       ${{ if eq(parameters.RegenerateAllServices, true) }}:
         # Preserve the full ARM + provisioning scope and batching when requested.
+        RegenerationJobCount: 18
         MinimumPerJob: 10
         DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
       ${{ if eq(parameters.RegenerateAllServices, false) }}:
-        # Keep the short priority list parallelized rather than creating only two jobs.
+        # Split the priority list across up to 10 jobs.
+        RegenerationJobCount: 10
         MinimumPerJob: 1
         # Source: https://gist.github.com/live1206/26f6c34be35efe04d35e8377c0962a03
         # Resources is retained in the list but skipped until it has a tsp-location.yaml.
