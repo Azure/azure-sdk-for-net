@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.StorageActions --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using .NET. You can then use Azure Developer CLI (`azd`) to deploy your infrastructure to Azure without writing or maintaining Bicep or ARM templates.

@@ -4,4 +4,4 @@
 
 ### Features Added
 
-- Initial release of Azure.Provisioning.StorageActions with support for declaratively provisioning Azure Storage Actions storage tasks.
+- Initial release of Azure.Provisioning.StorageActions.
