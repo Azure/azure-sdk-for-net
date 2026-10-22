@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -77,17 +79,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -96,7 +98,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -142,10 +149,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            CognitiveServicesComputeIdentityType? @type = default;
-            string tenantId = default;
-            string principalId = default;
-            IDictionary<string, CognitiveServicesUserAssignedIdentity> userAssignedIdentities = default;
+            ManagedServiceIdentityType? @type = default;
+            Guid? tenantId = default;
+            Guid? principalId = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,17 +162,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToCognitiveServicesComputeIdentityType();
+                    @type = new ManagedServiceIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))
@@ -174,10 +189,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    Dictionary<string, CognitiveServicesUserAssignedIdentity> dictionary = new Dictionary<string, CognitiveServicesUserAssignedIdentity>();
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, CognitiveServicesUserAssignedIdentity.DeserializeCognitiveServicesUserAssignedIdentity(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCognitiveServicesContext.Default));
+                        }
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -187,7 +209,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesComputeIdentity(@type, tenantId, principalId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, CognitiveServicesUserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new CognitiveServicesComputeIdentity(@type, tenantId, principalId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scopeType"> The scope type of the quota usage. </param>
         /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUsage(ResourceIdentifier id, string @type, ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountUsage(ResourceIdentifier id, ResourceType? @type, ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The type of the usage resource. E.g. "Microsoft.CognitiveServices/locations/usages". </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? Type { get; }
 
         /// <summary> The unit of the metric. </summary>
         [WirePath("unit")]

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -141,8 +142,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string deploymentId = default;
-            string projectId = default;
+            ResourceIdentifier deploymentId = default;
+            ResourceIdentifier projectId = default;
             string modelId = default;
             long? acceleratorCount = default;
             int? instanceCount = default;
@@ -151,12 +152,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("deploymentId"u8))
                 {
-                    deploymentId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("projectId"u8))
                 {
-                    projectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    projectId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("modelId"u8))

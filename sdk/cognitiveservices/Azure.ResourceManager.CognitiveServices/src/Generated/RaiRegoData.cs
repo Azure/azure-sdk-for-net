@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="eTag"> Resource ETag. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiRegoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiRegoProperties properties, string eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RaiRegoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiRegoProperties properties, ETag? eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> Resource ETag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]

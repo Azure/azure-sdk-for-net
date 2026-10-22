@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<CognitiveServicesComputePool> pools = default;
-            string subnetArmId = default;
+            ResourceIdentifier subnetArmId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("computeType"u8))
@@ -193,7 +193,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("subnetArmId"u8))
                 {
-                    subnetArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

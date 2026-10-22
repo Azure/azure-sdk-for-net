@@ -15,51 +15,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Extensible agent capability configuration. Carries the Azure resource IDs of the agent storage dependencies. Modeled as an object so future capability-backed resources can be added without changing the account or project contract. </summary>
-    public partial class CapabilitySettings : IJsonModel<CapabilitySettings>
+    public partial class CognitiveServicesAgentCapabilitySettings : IJsonModel<CognitiveServicesAgentCapabilitySettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CapabilitySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesAgentCapabilitySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAgentCapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCapabilitySettings(document.RootElement, options);
+                        return DeserializeCognitiveServicesAgentCapabilitySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitySettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAgentCapabilitySettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAgentCapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitySettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAgentCapabilitySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CapabilitySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesAgentCapabilitySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CapabilitySettings IPersistableModel<CapabilitySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesAgentCapabilitySettings IPersistableModel<CognitiveServicesAgentCapabilitySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CapabilitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesAgentCapabilitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CapabilitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesAgentCapabilitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAgentCapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitySettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAgentCapabilitySettings)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DocumentStore))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CapabilitySettings IJsonModel<CapabilitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesAgentCapabilitySettings IJsonModel<CognitiveServicesAgentCapabilitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CapabilitySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesAgentCapabilitySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAgentCapabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitySettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAgentCapabilitySettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapabilitySettings(document.RootElement, options);
+            return DeserializeCognitiveServicesAgentCapabilitySettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CapabilitySettings DeserializeCapabilitySettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesAgentCapabilitySettings DeserializeCognitiveServicesAgentCapabilitySettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CapabilitySettings(documentStore, vectorStore, blobStore, additionalBinaryDataProperties);
+            return new CognitiveServicesAgentCapabilitySettings(documentStore, vectorStore, blobStore, additionalBinaryDataProperties);
         }
     }
 }

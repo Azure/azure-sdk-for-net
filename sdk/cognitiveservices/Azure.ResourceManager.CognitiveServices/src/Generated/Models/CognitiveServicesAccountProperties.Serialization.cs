@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CapabilitySettings capabilitySettings = default;
+            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             IList<AgentHostingConfiguration> agentHostingConfigurations = default;
             IList<ResourceIdentifier> costControlIds = default;
             CostControlConnections costControlConnections = default;
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
+                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentHostingConfigurations"u8))

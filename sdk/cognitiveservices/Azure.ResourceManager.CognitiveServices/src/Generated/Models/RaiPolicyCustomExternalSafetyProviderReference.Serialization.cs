@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Optional.IsDefined(Blocking))
+            if (Optional.IsDefined(IsBlocking))
             {
                 writer.WritePropertyName("blocking"u8);
-                writer.WriteBooleanValue(Blocking.Value);
+                writer.WriteBooleanValue(IsBlocking.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string externalSafetyProviderName = default;
             ResourceIdentifier managedIdentityResourceId = default;
             RaiPolicyContentSource source = default;
-            bool? blocking = default;
+            bool? isBlocking = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    blocking = prop.Value.GetBoolean();
+                    isBlocking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiPolicyCustomExternalSafetyProviderReference(externalSafetyProviderName, managedIdentityResourceId, source, blocking, additionalBinaryDataProperties);
+            return new RaiPolicyCustomExternalSafetyProviderReference(externalSafetyProviderName, managedIdentityResourceId, source, isBlocking, additionalBinaryDataProperties);
         }
     }
 }

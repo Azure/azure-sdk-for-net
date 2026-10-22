@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            ResourceType? @type = default;
             ServiceAccountUsageUnitType? unit = default;
             ServiceAccountUsageMetricName name = default;
             string quotaPeriod = default;
@@ -197,7 +197,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("unit"u8))
