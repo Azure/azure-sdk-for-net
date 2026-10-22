@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ProviderHub
     {
         private readonly ClientDiagnostics _nestedResourceTypeThirdSkuClientDiagnostics;
         private readonly NestedResourceTypeThirdSku _nestedResourceTypeThirdSkuRestClient;
-        /// <summary> The nestedResourceTypeFirst. </summary>
-        private readonly string _nestedResourceTypeFirst;
         /// <summary> The nestedResourceTypeSecond. </summary>
         private readonly string _nestedResourceTypeSecond;
         /// <summary> The nestedResourceTypeThird. </summary>
@@ -42,17 +40,15 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Initializes a new instance of <see cref="NestedResourceTypeThirdSkuCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="nestedResourceTypeFirst"> The nestedResourceTypeFirst for the resource. </param>
         /// <param name="nestedResourceTypeSecond"> The nestedResourceTypeSecond for the resource. </param>
         /// <param name="nestedResourceTypeThird"> The nestedResourceTypeThird for the resource. </param>
-        internal NestedResourceTypeThirdSkuCollection(ArmClient client, ResourceIdentifier id, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird) : base(client, id)
+        internal NestedResourceTypeThirdSkuCollection(ArmClient client, ResourceIdentifier id, string nestedResourceTypeSecond, string nestedResourceTypeThird) : base(client, id)
         {
             TryGetApiVersion(NestedResourceTypeThirdSkuResource.ResourceType, out string nestedResourceTypeThirdSkuApiVersion);
-            _nestedResourceTypeFirst = nestedResourceTypeFirst;
             _nestedResourceTypeSecond = nestedResourceTypeSecond;
             _nestedResourceTypeThird = nestedResourceTypeThird;
             _nestedResourceTypeThirdSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", NestedResourceTypeThirdSkuResource.ResourceType.Namespace, Diagnostics);
-            _nestedResourceTypeThirdSkuRestClient = new NestedResourceTypeThirdSku(_nestedResourceTypeThirdSkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedResourceTypeThirdSkuApiVersion ?? "2025-10-01");
+            _nestedResourceTypeThirdSkuRestClient = new NestedResourceTypeThirdSku(_nestedResourceTypeThirdSkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedResourceTypeThirdSkuApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -79,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,7 +98,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -134,7 +130,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +185,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +205,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +283,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,9 +298,9 @@ namespace Azure.ResourceManager.ProviderHub
             return new AsyncPageableWrapper<ResourceTypeSkuData, NestedResourceTypeThirdSkuResource>(new ResourceTypeSkuDataAsync2CollectionResultOfT(
                 _nestedResourceTypeThirdSkuRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
                 _nestedResourceTypeThird,
                 context,
@@ -324,7 +320,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,9 +335,9 @@ namespace Azure.ResourceManager.ProviderHub
             return new PageableWrapper<ResourceTypeSkuData, NestedResourceTypeThirdSkuResource>(new ResourceTypeSkuData2CollectionResultOfT(
                 _nestedResourceTypeThirdSkuRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                _nestedResourceTypeFirst,
                 _nestedResourceTypeSecond,
                 _nestedResourceTypeThird,
                 context,
@@ -361,7 +357,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +377,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -418,7 +414,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +434,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -475,7 +471,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +491,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -536,7 +532,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +552,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
+                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;

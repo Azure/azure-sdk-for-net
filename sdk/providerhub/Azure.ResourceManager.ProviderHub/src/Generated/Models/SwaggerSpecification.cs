@@ -26,11 +26,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
         /// <param name="apiVersions"> The api versions. </param>
         /// <param name="swaggerSpecFolderUri"> The swagger spec folder uri. </param>
+        /// <param name="lifecycleInfo"> The swagger specification lifecycle information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri, SwaggerSpecificationLifecycleInfo lifecycleInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiVersions = apiVersions;
             SwaggerSpecFolderUri = swaggerSpecFolderUri;
+            LifecycleInfo = lifecycleInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,5 +41,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The swagger spec folder uri. </summary>
         public Uri SwaggerSpecFolderUri { get; set; }
+
+        /// <summary> The swagger specification lifecycle information. </summary>
+        internal SwaggerSpecificationLifecycleInfo LifecycleInfo { get; set; }
+
+        /// <summary> The lifecycle stage. </summary>
+        public LifecycleStage? LifecycleStage
+        {
+            get
+            {
+                return LifecycleInfo is null ? default : LifecycleInfo.LifecycleStage;
+            }
+            set
+            {
+                if (LifecycleInfo is null)
+                {
+                    LifecycleInfo = new SwaggerSpecificationLifecycleInfo();
+                }
+                LifecycleInfo.LifecycleStage = value;
+            }
+        }
     }
 }

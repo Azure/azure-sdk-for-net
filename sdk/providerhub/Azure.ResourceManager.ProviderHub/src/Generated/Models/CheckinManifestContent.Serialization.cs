@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Environment);
             writer.WritePropertyName("baselineArmManifestLocation"u8);
             writer.WriteStringValue(BaselineArmManifestLocation);
+            if (Optional.IsDefined(SwaggerUri))
+            {
+                writer.WritePropertyName("swaggerUri"u8);
+                writer.WriteStringValue(SwaggerUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(CheckinComment))
+            {
+                writer.WritePropertyName("checkinComment"u8);
+                writer.WriteStringValue(CheckinComment);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +148,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string environment = default;
             AzureLocation baselineArmManifestLocation = default;
+            Uri swaggerUri = default;
+            string checkinComment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,12 +163,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     baselineArmManifestLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("swaggerUri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    swaggerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("checkinComment"u8))
+                {
+                    checkinComment = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CheckinManifestContent(environment, baselineArmManifestLocation, additionalBinaryDataProperties);
+            return new CheckinManifestContent(environment, baselineArmManifestLocation, swaggerUri, checkinComment, additionalBinaryDataProperties);
         }
     }
 }

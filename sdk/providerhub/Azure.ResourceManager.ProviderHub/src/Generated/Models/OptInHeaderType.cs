@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ResourceGroupLocationValue = "ResourceGroupLocation";
         private const string ClientPrincipalNameEncodedValue = "ClientPrincipalNameEncoded";
         private const string MSIResourceIdEncodedValue = "MSIResourceIdEncoded";
+        /// <summary> Includes user context information from the incoming token. </summary>
+        private const string UserContextValue = "UserContext";
+        /// <summary> Includes user context information from incoming auxiliary tokens. </summary>
+        private const string AuxiliaryUserContextValue = "AuxiliaryUserContext";
 
         /// <summary> Initializes a new instance of <see cref="OptInHeaderType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -73,6 +77,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the MSIResourceIdEncoded. </summary>
         public static OptInHeaderType MSIResourceIdEncoded { get; } = new OptInHeaderType(MSIResourceIdEncodedValue);
+
+        /// <summary> Includes user context information from the incoming token. </summary>
+        public static OptInHeaderType UserContext { get; } = new OptInHeaderType(UserContextValue);
+
+        /// <summary> Includes user context information from incoming auxiliary tokens. </summary>
+        public static OptInHeaderType AuxiliaryUserContext { get; } = new OptInHeaderType(AuxiliaryUserContextValue);
 
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
