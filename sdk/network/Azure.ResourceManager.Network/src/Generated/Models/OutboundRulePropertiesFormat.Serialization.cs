@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new OutboundRulePropertiesFormat(
                 allocatedOutboundPorts,
-                frontendIPConfigurations,
+                frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
                 backendAddressPool,
                 provisioningState,
                 protocol,

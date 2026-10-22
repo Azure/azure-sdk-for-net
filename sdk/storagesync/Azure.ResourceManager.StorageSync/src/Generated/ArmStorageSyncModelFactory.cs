@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="changeEnumerationStatus"> Cloud endpoint change enumeration status. </param>
         /// <returns> A new <see cref="StorageSync.CloudEndpointData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CloudEndpointData CloudEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountResourceId = default, string azureFileShareName = default, Guid? storageAccountTenantId = default, string partnershipId = default, string friendlyName = default, string isBackupEnabled = default, string provisioningState = default, string lastWorkflowId = default, string lastOperationName = default, CloudEndpointChangeEnumerationStatus changeEnumerationStatus = default)
+        public static CloudEndpointData CloudEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string partnershipId, string friendlyName, string isBackupEnabled, string provisioningState, string lastWorkflowId, string lastOperationName, CloudEndpointChangeEnumerationStatus changeEnumerationStatus)
         {
             return new CloudEndpointData(
                 id,
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="friendlyName"> Friendly Name. </param>
         /// <returns> A new <see cref="Models.CloudEndpointCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CloudEndpointCreateOrUpdateContent CloudEndpointCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountResourceId = default, string azureFileShareName = default, Guid? storageAccountTenantId = default, string friendlyName = default)
+        public static CloudEndpointCreateOrUpdateContent CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName)
         {
             return new CloudEndpointCreateOrUpdateContent(
                 id,
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="sessionMinutesRemaining"> Session minutes remaining (if available). </param>
         /// <returns> A new <see cref="Models.ServerEndpointSyncActivityStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServerEndpointSyncActivityStatus ServerEndpointSyncActivityStatus(DateTimeOffset? timestamp = default, long? perItemErrorCount = default, long? appliedItemCount = default, long? totalItemCount = default, long? appliedBytes = default, long? totalBytes = default, ServerEndpointSyncMode? syncMode = default, int? sessionMinutesRemaining = default)
+        public static ServerEndpointSyncActivityStatus ServerEndpointSyncActivityStatus(DateTimeOffset? timestamp, long? perItemErrorCount, long? appliedItemCount, long? totalItemCount, long? appliedBytes, long? totalBytes, ServerEndpointSyncMode? syncMode, int? sessionMinutesRemaining)
         {
             return new ServerEndpointSyncActivityStatus(
                 timestamp,

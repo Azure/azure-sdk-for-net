@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryStorageContainerResource.ResourceType, out string discoveryStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryStorageContainerApiVersion ?? "2026-06-01");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/storageContainers", out string storageContainersApiVersionOverride) ? storageContainersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new DiscoveryStorageContainerDataAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
+            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new DiscoveryStorageContainerDataCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>

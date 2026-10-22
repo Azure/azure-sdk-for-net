@@ -81,35 +81,49 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
             if (Optional.IsCollectionDefined(Settings))
             {
-                writer.WritePropertyName("settings"u8);
-                writer.WriteStartObject();
-                foreach (var item in Settings)
+                if (Settings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("settings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Settings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("settings"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in ProtectedSettings)
+                if (ProtectedSettings != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("protectedSettings"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ProtectedSettings)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("protectedSettings"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,8 +168,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 return null;
             }
             string feature = default;
-            IDictionary<string, string> settings = default;
-            IDictionary<string, string> protectedSettings = default;
+            IDictionary<string, string> settings = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> protectedSettings = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,6 +182,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        settings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -189,6 +204,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        protectedSettings = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -211,7 +227,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectedClusterArcAgentryConfiguration(feature, settings ?? new ChangeTrackingDictionary<string, string>(), protectedSettings ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ConnectedClusterArcAgentryConfiguration(feature, settings, protectedSettings, additionalBinaryDataProperties);
         }
     }
 }

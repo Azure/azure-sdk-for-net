@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IdentityIntegrationAuthenticationPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IdentityIntegrationAuthenticationPolicyResource.ResourceType, out string identityIntegrationAuthenticationPolicyApiVersion);
             _authenticationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IdentityIntegrationAuthenticationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, identityIntegrationAuthenticationPolicyApiVersion ?? "2026-01-01");
+            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyDataAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
+            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyDataCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>

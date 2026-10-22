@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2026-10-22)
 
 ### Features Added
 
+- Updated the default service API version from `2025-12-01-preview` to `2026-10-01`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- `EdgeActionVersionResource.DeployVersionCode` and `DeployVersionCodeAsync` now return operations with an `EdgeActionVersionResource` result instead of `EdgeActionVersionProperties`. Access the deployed version's properties through `operation.Value.Data.Properties` instead of `operation.Value`.
 
 ### Other Changes
+
+- Clarified documentation for PATCH tag replacement and clearing, rejected SKU updates, version deployment-type restrictions, and default-version changes through `SwapDefault`.
 
 ## 1.0.0-beta.3 (2026-06-06)
 

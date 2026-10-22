@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterGetConfigurationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterGetConfigurationsCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

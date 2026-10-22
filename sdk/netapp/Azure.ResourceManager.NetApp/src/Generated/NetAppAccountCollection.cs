@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetAppAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetAppAccountResource.ResourceType, out string netAppAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-06-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetApp/netAppAccounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
+            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>

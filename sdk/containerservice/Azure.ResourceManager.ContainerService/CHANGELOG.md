@@ -1,5 +1,12 @@
 # Release History
 
+## 1.9.0 (2026-10-19)
+
+### Features Added
+
+- Upgraded api-version to 2026-08-01.
+- Added NVIDIA GPU management settings to agent pool GPU profiles.
+
 ## 1.8.0 (2026-10-08)
 
 ### Features Added

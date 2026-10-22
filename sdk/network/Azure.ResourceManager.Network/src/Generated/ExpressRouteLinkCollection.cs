@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteLinkData, ExpressRouteLinkResource>(new ExpressRouteLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExpressRouteLinkData, ExpressRouteLinkResource>(new ExpressRouteLinkDataAsyncCollectionResultOfT(
                 _expressRouteLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteLinkData, ExpressRouteLinkResource>(new ExpressRouteLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<ExpressRouteLinkData, ExpressRouteLinkResource>(new ExpressRouteLinkDataCollectionResultOfT(
                 _expressRouteLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

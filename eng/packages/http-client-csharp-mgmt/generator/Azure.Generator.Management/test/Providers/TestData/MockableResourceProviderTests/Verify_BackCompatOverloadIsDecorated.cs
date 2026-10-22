@@ -23,7 +23,7 @@ namespace Samples.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new global::Samples.AsyncPageableWrapper<global::Samples.EventData, global::Samples.EventResource>(new global::Samples.TestClientGetBySingleResourceAsyncCollectionResultOfT(TestClientRestClient, scope.ToString(), filter, context, "MockableSamplesArmClient.GetEvents"), data => new global::Samples.EventResource(this.Client, data));
+            return new global::Samples.AsyncPageableWrapper<global::Samples.EventData, global::Samples.EventResource>(new global::Samples.EventDataAsyncCollectionResultOfT(TestClientRestClient, scope.ToString(), filter, context, "MockableSamplesArmClient.GetEvents"), data => new global::Samples.EventResource(this.Client, data));
         }
 
         public virtual global::Azure.Pageable<global::Samples.EventResource> GetEvents(global::Azure.Core.ResourceIdentifier scope, string filter = default, global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default))
@@ -34,7 +34,7 @@ namespace Samples.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new global::Samples.PageableWrapper<global::Samples.EventData, global::Samples.EventResource>(new global::Samples.TestClientGetBySingleResourceCollectionResultOfT(TestClientRestClient, scope.ToString(), filter, context, "MockableSamplesArmClient.GetEvents"), data => new global::Samples.EventResource(this.Client, data));
+            return new global::Samples.PageableWrapper<global::Samples.EventData, global::Samples.EventResource>(new global::Samples.EventDataCollectionResultOfT(TestClientRestClient, scope.ToString(), filter, context, "MockableSamplesArmClient.GetEvents"), data => new global::Samples.EventResource(this.Client, data));
         }
 
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.

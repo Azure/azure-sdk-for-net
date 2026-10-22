@@ -56,6 +56,8 @@ Blobs are scanned in groups of 10,000 at a time with a continuation token used b
 
 This strategy is not recommended for high-scale applications or scenarios that require low latency.
 
+For contributor-facing implementation details, scan invariants, and regression history, see [Blob trigger polling architecture](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/docs/BlobTriggerPolling.md).
+
 #### Event grid
 
 [Blob storage events](https://learn.microsoft.com/azure/storage/blobs/storage-blob-event-overview) can be used to listen for changes. This strategy requires [additional setup](https://learn.microsoft.com/azure/event-grid/blob-event-quickstart-portal?toc=/azure/storage/blobs/toc.json).

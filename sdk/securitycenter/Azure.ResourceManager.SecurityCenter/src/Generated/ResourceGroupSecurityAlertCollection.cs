@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new SecurityAlertDataAsync0CollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new SecurityAlertData0CollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

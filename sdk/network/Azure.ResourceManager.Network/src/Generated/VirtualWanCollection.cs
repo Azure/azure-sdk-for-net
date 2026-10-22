@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualWanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualWanResource.ResourceType, out string virtualWanApiVersion);
             _virtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWanResource.ResourceType.Namespace, Diagnostics);
-            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion ?? "2026-01-01");
+            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetByResourceGroupAsyncCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanDataAsyncCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetByResourceGroupCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
+            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanDataCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor.Agents
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ObservabilityAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ObservabilityAgentResource.ResourceType, out string observabilityAgentApiVersion);
             _observabilityAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Agents", ObservabilityAgentResource.ResourceType.Namespace, Diagnostics);
-            _observabilityAgentsRestClient = new ObservabilityAgents(_observabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, observabilityAgentApiVersion ?? "2026-05-01-preview");
+            _observabilityAgentsRestClient = new ObservabilityAgents(_observabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/observabilityAgents", out string observabilityAgentsApiVersionOverride) ? observabilityAgentsApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetByResourceGroupAsyncCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
+            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataAsyncCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor.Agents
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetByResourceGroupCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
+            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataCollectionResultOfT(_observabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ObservabilityAgentCollection.GetAll"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>

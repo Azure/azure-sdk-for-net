@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkTapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkTapResource.ResourceType, out string networkTapApiVersion);
             _networkTapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapResource.ResourceType.Namespace, Diagnostics);
-            _networkTapsRestClient = new NetworkTaps(_networkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapApiVersion ?? "2025-07-15");
+            _networkTapsRestClient = new NetworkTaps(_networkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTaps", out string networkTapsApiVersionOverride) ? networkTapsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupAsyncCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapDataAsyncCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
+            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapDataCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>

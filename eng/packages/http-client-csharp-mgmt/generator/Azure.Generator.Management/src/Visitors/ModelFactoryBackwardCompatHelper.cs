@@ -164,14 +164,14 @@ namespace Azure.Generator.Management.Visitors
                     constructorParameters,
                     newInstanceExpression.Parameters,
                     excludedArgumentIndex: FindOriginalArgumentIndex(method, constructorParameter, newInstanceExpression.Parameters));
-                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                ValueExpression rebuiltArgument;
+                if (TryBuildDiscriminatorArgument(method, modelProvider, constructorParameter, out var discriminatorArgument))
                 {
-                    arguments.Add(argument.Argument);
-                    var index = arguments.Count - 1;
-                    if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
-                    {
-                        changed = true;
-                    }
+                    rebuiltArgument = discriminatorArgument;
+                }
+                else if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                {
+                    rebuiltArgument = argument.Argument;
                 }
                 else
                 {
@@ -181,10 +181,68 @@ namespace Azure.Generator.Management.Visitors
                     {
                         changed = true;
                     }
+                    continue;
+                }
+
+                arguments.Add(rebuiltArgument);
+                if (!changed && !ReferenceEquals(rebuiltArgument, newInstanceExpression.Parameters[arguments.Count - 1]))
+                {
+                    changed = true;
                 }
             }
             updatedArguments = changed ? arguments : null;
             return changed;
+        }
+
+        private static bool TryBuildDiscriminatorArgument(
+            MethodProvider method,
+            ModelProvider model,
+            ParameterProvider constructorParameter,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            argument = null;
+            if (constructorParameter.Property is not { IsDiscriminator: true } property)
+            {
+                return false;
+            }
+
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, property, out var parameter))
+            {
+                argument = BuildParameterArgument(parameter, constructorParameter.Type);
+                return true;
+            }
+
+            // Factories expose an enum discriminator's underlying type, not the internal enum itself.
+            if (constructorParameter.Type.IsEnum
+                && TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type.UnderlyingEnumType, property, out parameter))
+            {
+                var convertedArgument = constructorParameter.Type.ToEnum(parameter);
+                // Preserve omitted/null inputs, including a null nullable enum rather than an empty enum value.
+                argument = parameter.Type.IsValueType && !parameter.Type.IsNullable
+                    ? convertedArgument
+                    : new TernaryConditionalExpression(parameter.Is(Null), Default.CastTo(constructorParameter.Type), convertedArgument);
+                return true;
+            }
+
+            // Match the upstream factory's initializer/known-discriminator behavior when no input is exposed.
+            if (property.Body is AutoPropertyBody { InitializationExpression: not null } autoProperty)
+            {
+                argument = autoProperty.InitializationExpression;
+                return true;
+            }
+
+            // Different hierarchy levels can have different discriminators. Use the value belonging to
+            // this property's declaring base model, rather than always using the most-derived value.
+            for (var current = model; current.BaseModelProvider is { } baseModel; current = baseModel)
+            {
+                if (baseModel.Properties.Any(p => ReferenceEquals(p, property)))
+                {
+                    argument = current.DiscriminatorValueExpression;
+                    return argument is not null;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -255,12 +313,28 @@ namespace Azure.Generator.Management.Visitors
                     ? signature.Attributes
                     : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
 
-            foreach (var parameter in signature.Parameters)
+            // Restored methods own their mutable parameters. Updating descriptions or defaults
+            // must not change the published contract used by later compatibility processing.
+            var parameters = signature.Parameters.Select(parameter => new ParameterProvider(
+                parameter.Name,
+                parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription) ? currentDescription : $"",
+                parameter.Type,
+                defaultValue: parameter.DefaultValue,
+                isRef: parameter.IsRef,
+                isOut: parameter.IsOut,
+                isIn: parameter.IsIn,
+                isParams: parameter.IsParams,
+                attributes: parameter.Attributes,
+                property: parameter.Property,
+                field: parameter.Field,
+                initializationValue: parameter.InitializationValue,
+                location: parameter.Location,
+                wireInfo: parameter.WireInfo,
+                validation: parameter.Validation,
+                inputParameter: parameter.InputParameter)
             {
-                parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
-                    ? currentDescription
-                    : $"");
-            }
+                SpreadSource = parameter.SpreadSource
+            }).ToArray();
 
             return new MethodSignature(
                 signature.Name,
@@ -268,7 +342,7 @@ namespace Azure.Generator.Management.Visitors
                 signature.Modifiers,
                 signature.ReturnType,
                 $"A new {signature.ReturnType:C} instance for mocking.",
-                signature.Parameters,
+                parameters,
                 attributes,
                 signature.GenericArguments,
                 signature.GenericParameterConstraints,

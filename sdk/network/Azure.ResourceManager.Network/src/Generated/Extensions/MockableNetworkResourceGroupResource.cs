@@ -50,7 +50,13 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(
+            PrivateLinkServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -58,13 +64,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(
-            PublicIPAddressesOperationGroupClientDiagnostics,
-            Pipeline,
-            Diagnostics.ApplicationId,
-            Endpoint,
-            "2026-01-01",
-            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -3443,7 +3443,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaces and their operations over a VirtualMachineScaleSetNetworkInterfaceResource. </returns>
         public virtual VirtualMachineScaleSetNetworkInterfaceCollection GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, string virtualmachineIndex)
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetNetworkInterfaceCollection(client, Id, virtualMachineScaleSetName, virtualmachineIndex));
+            return new VirtualMachineScaleSetNetworkInterfaceCollection(Client, Id, virtualMachineScaleSetName, virtualmachineIndex);
         }
 
         /// <summary>
@@ -3652,7 +3652,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupAsyncCollectionResultOfT(
+            return new AutoApprovedPrivateLinkServiceAsync0CollectionResultOfT(
                 PrivateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3691,7 +3691,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupCollectionResultOfT(
+            return new AutoApprovedPrivateLinkService0CollectionResultOfT(
                 PrivateLinkServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3818,7 +3818,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressesOperationGroupGetVirtualMachineScaleSetPublicIPAddressesAsyncCollectionResultOfT(
+            return new PublicIPAddressDataAsync2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3857,7 +3857,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PublicIPAddressesOperationGroupGetVirtualMachineScaleSetPublicIPAddressesCollectionResultOfT(
+            return new PublicIPAddressData2CollectionResultOfT(
                 PublicIPAddressesOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3896,7 +3896,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsAsyncCollectionResultOfT(
+            return new AvailableDelegationAsyncCollectionResultOfT(
                 AvailableResourceGroupDelegationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3935,7 +3935,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsCollectionResultOfT(
+            return new AvailableDelegationCollectionResultOfT(
                 AvailableResourceGroupDelegationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3974,7 +3974,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableServiceAliasesGetAvailableServiceAliasesByResourceGroupAsyncCollectionResultOfT(
+            return new AvailableServiceAliasAsync0CollectionResultOfT(
                 AvailableServiceAliasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4013,7 +4013,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableServiceAliasesGetAvailableServiceAliasesByResourceGroupCollectionResultOfT(
+            return new AvailableServiceAlias0CollectionResultOfT(
                 AvailableServiceAliasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4052,7 +4052,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesByResourceGroupAsyncCollectionResultOfT(
+            return new AvailablePrivateEndpointTypeAsync0CollectionResultOfT(
                 AvailablePrivateEndpointTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4091,7 +4091,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesByResourceGroupCollectionResultOfT(
+            return new AvailablePrivateEndpointType0CollectionResultOfT(
                 AvailablePrivateEndpointTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4130,7 +4130,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesAsyncCollectionResultOfT(
+            return new NetworkInterfaceDataAsync2CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4169,7 +4169,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesCollectionResultOfT(
+            return new NetworkInterfaceData2CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 @operator,
                 threshold,
                 frequency,
-                contactEmails,
+                contactEmails ?? new ChangeTrackingList<string>(),
                 contactRoles ?? new ChangeTrackingList<string>(),
                 contactGroups ?? new ChangeTrackingList<string>(),
                 thresholdType,

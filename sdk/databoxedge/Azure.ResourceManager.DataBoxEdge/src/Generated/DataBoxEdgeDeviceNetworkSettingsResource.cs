@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxEdgeDeviceNetworkSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceNetworkSettingsApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceNetworkSettingsApiVersion ?? "2023-12-01");
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

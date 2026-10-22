@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 displayName,
                 order,
                 triggeringLogic,
-                actions,
+                actions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleAction>(),
                 lastModifiedOn,
                 createdOn,
                 lastModifiedBy,

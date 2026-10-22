@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
 
         private ClientDiagnostics OpenShiftClustersClientDiagnostics => _openShiftClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OpenShiftClusters OpenShiftClustersRestClient => _openShiftClustersRestClient ??= new OpenShiftClusters(OpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-25");
+        private OpenShiftClusters OpenShiftClustersRestClient => _openShiftClustersRestClient ??= new OpenShiftClusters(OpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RedHatOpenShift/openShiftClusters", out string apiVersion) ? apiVersion : "2025-07-25");
 
         /// <summary> Gets a collection of OpenShiftVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of OpenShiftVersions and their operations over a OpenShiftVersionResource. </returns>
         public virtual OpenShiftVersionCollection GetOpenShiftVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new OpenShiftVersionCollection(client, Id, location));
+            return new OpenShiftVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
         /// <returns> An object representing collection of OpenShiftPlatformWorkloadIdentityRoleSets and their operations over a OpenShiftPlatformWorkloadIdentityRoleSetResource. </returns>
         public virtual OpenShiftPlatformWorkloadIdentityRoleSetCollection GetOpenShiftPlatformWorkloadIdentityRoleSets(AzureLocation location)
         {
-            return GetCachedClient(client => new OpenShiftPlatformWorkloadIdentityRoleSetCollection(client, Id, location));
+            return new OpenShiftPlatformWorkloadIdentityRoleSetCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetAllAsyncCollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
+            return new AsyncPageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClusterDataAsync0CollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClustersGetAllCollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
+            return new PageableWrapper<OpenShiftClusterData, OpenShiftClusterResource>(new OpenShiftClusterData0CollectionResultOfT(OpenShiftClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableRedHatOpenShiftSubscriptionResource.GetOpenShiftClusters"), data => new OpenShiftClusterResource(Client, data));
         }
     }
 }

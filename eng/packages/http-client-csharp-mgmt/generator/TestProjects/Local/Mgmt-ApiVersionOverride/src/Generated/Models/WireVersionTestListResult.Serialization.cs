@@ -170,7 +170,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WireVersionTestListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WireVersionTestListResult(value ?? new ChangeTrackingList<WireVersionTestData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

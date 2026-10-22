@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantLevelAccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(_tenantLevelAccessReviewInstanceContactedReviewersRestClient, Id.Parent.Name, Id.Name, context, "AccessReviewInstancesAssignedForMyApprovalResource.GetAll");
+            return new AccessReviewContactedReviewerAsync1CollectionResultOfT(_tenantLevelAccessReviewInstanceContactedReviewersRestClient, Id.Parent.Name, Id.Name, context, "AccessReviewInstancesAssignedForMyApprovalResource.GetAll");
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantLevelAccessReviewInstanceContactedReviewersGetAllCollectionResultOfT(_tenantLevelAccessReviewInstanceContactedReviewersRestClient, Id.Parent.Name, Id.Name, context, "AccessReviewInstancesAssignedForMyApprovalResource.GetAll");
+            return new AccessReviewContactedReviewer1CollectionResultOfT(_tenantLevelAccessReviewInstanceContactedReviewersRestClient, Id.Parent.Name, Id.Name, context, "AccessReviewInstancesAssignedForMyApprovalResource.GetAll");
         }
 
         /// <summary> Gets a collection of AccessReviewDecisions in the <see cref="AccessReviewInstancesAssignedForMyApprovalResource"/>. </summary>

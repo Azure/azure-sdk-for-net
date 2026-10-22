@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDnsPrivateViewResource.ResourceType, out string oracleDnsPrivateViewApiVersion);
             _location = location;
             _dnsPrivateViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDnsPrivateViewResource.ResourceType.Namespace, Diagnostics);
-            _dnsPrivateViewsRestClient = new DnsPrivateViews(_dnsPrivateViewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDnsPrivateViewApiVersion ?? "2025-09-01");
+            _dnsPrivateViewsRestClient = new DnsPrivateViews(_dnsPrivateViewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDnsPrivateViewApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationAsyncCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
+            return new AsyncPageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new OracleDnsPrivateViewDataAsyncCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new DnsPrivateViewsGetByLocationCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
+            return new PageableWrapper<OracleDnsPrivateViewData, OracleDnsPrivateViewResource>(new OracleDnsPrivateViewDataCollectionResultOfT(_dnsPrivateViewsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleDnsPrivateViewCollection.GetAll"), data => new OracleDnsPrivateViewResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

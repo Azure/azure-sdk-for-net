@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceEndpointPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceEndpointPolicyResource.ResourceType, out string serviceEndpointPolicyApiVersion);
             _serviceEndpointPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyResource.ResourceType.Namespace, Diagnostics);
-            _serviceEndpointPoliciesRestClient = new ServiceEndpointPolicies(_serviceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion ?? "2026-01-01");
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPolicies(_serviceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>

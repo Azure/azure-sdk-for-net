@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new DeviceProvisioningServicesCertificateDataAsyncCollectionResultOfT(
                 _certificateResponsesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllCollectionResultOfT(
+            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new DeviceProvisioningServicesCertificateDataCollectionResultOfT(
                 _certificateResponsesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

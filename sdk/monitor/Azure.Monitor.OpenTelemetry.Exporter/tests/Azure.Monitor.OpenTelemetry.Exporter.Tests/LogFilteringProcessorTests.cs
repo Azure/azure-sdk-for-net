@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Create an activity that IS sampled
             using var activity = new Activity("TestActivity");
-            activity.ActivityTraceFlags = ActivityTraceFlags.Recorded; // Sampled
+            activity.ActivityTraceFlags = ActivityTraceFlags.Recorded + 256; // Sampled + extra unused values in enum
             activity.Start();
 
             // Act
