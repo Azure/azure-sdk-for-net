@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isDiskCsiDriverEnabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
         /// <param name="quickAttachDetach"> Quick Attach Detach settings for the AzureDisk CSI driver. Quick Attach Detach enables faster, higher-scale Azure Disk attach and detach operations for stateful AKS workloads by bypassing ARM/CRP control-plane bottlenecks. For more information, see https://aka.ms/aks/qad. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isDiskCsiDriverEnabled, ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach quickAttachDetach, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isDiskCsiDriverEnabled, ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach quickAttachDetach, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDiskCsiDriverEnabled = isDiskCsiDriverEnabled;
             QuickAttachDetach = quickAttachDetach;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Quick Attach Detach settings for the AzureDisk CSI driver. Quick Attach Detach enables faster, higher-scale Azure Disk attach and detach operations for stateful AKS workloads by bypassing ARM/CRP control-plane bottlenecks. For more information, see https://aka.ms/aks/qad. </summary>
         [WirePath("quickAttachDetach")]
-        public ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach QuickAttachDetach { get; set; }
+        public ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach QuickAttachDetach { get; set; }
     }
 }

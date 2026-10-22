@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BootstrapKubeletConfig"/>. </summary>
-        /// <param name="clusterFQDN"> FQDN of the Kubernetes API server. </param>
+        /// <param name="clusterFqdn"> FQDN of the Kubernetes API server. </param>
         /// <param name="caCertData"> Base64-encoded PEM certificate of the cluster CA. Do not cache or log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapKubeletConfig(string clusterFQDN, string caCertData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootstrapKubeletConfig(string clusterFqdn, string caCertData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterFQDN = clusterFQDN;
+            ClusterFqdn = clusterFqdn;
             CaCertData = caCertData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> FQDN of the Kubernetes API server. </summary>
         [WirePath("clusterFQDN")]
-        public string ClusterFQDN { get; }
+        public string ClusterFqdn { get; }
 
         /// <summary> Base64-encoded PEM certificate of the cluster CA. Do not cache or log. </summary>
         [WirePath("caCertData")]

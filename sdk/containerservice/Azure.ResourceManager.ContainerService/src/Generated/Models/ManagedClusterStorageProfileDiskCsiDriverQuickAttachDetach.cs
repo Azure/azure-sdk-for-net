@@ -12,21 +12,21 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Quick Attach Detach settings for the AzureDisk CSI driver. </summary>
-    public partial class ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach
+    public partial class ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach"/>. </summary>
-        public ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach"/>. </summary>
+        public ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach"/>. </summary>
         /// <param name="enabled"> Whether to enable Quick Attach Detach for the AzureDisk CSI driver. The default value is false. </param>
         /// <param name="identity"> Identity used by Quick Attach Detach. This property is returned by GET and cannot be set by clients. The Quick Attach Detach feature uses a managed identity that is automatically created and managed by the AKS resource provider. In most scenarios, no user action is required. An exception applies when using customer-managed disks that are located outside of the AKS node resource group (Bring Your Own Disk scenario). In this case, users must grant the Quick Attach Detach managed identity the required permissions on the resource group containing the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach(bool? enabled, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(bool? enabled, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Identity = identity;

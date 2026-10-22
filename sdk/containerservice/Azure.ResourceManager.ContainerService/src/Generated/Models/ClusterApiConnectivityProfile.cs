@@ -12,17 +12,17 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Configuration for accessing the managed cluster API through Bastion or Cloud Shell. </summary>
-    public partial class ClusterAPIConnectivityProfile
+    public partial class ClusterApiConnectivityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterAPIConnectivityProfile"/>. </summary>
-        public ClusterAPIConnectivityProfile()
+        /// <summary> Initializes a new instance of <see cref="ClusterApiConnectivityProfile"/>. </summary>
+        public ClusterApiConnectivityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterAPIConnectivityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterApiConnectivityProfile"/>. </summary>
         /// <param name="bastion">
         /// Azure Bastion connectivity settings.
         /// See https://aka.ms/aks/BastionConnect for more details.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// For more information, see https://aka.ms/aks/CloudShellConnect.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterAPIConnectivityProfile(ManagedClusterBastionProfile bastion, CloudShellProfile cloudShell, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterApiConnectivityProfile(ManagedClusterBastionProfile bastion, CloudShellProfile cloudShell, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bastion = bastion;
             CloudShell = cloudShell;

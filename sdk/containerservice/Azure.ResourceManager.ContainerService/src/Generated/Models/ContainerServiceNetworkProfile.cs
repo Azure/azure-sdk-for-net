@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="outboundType"> The outbound (egress) routing method. This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </param>
         /// <param name="loadBalancerSku"> The load balancer sku for the managed cluster. The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </param>
         /// <param name="loadBalancerProfile"> Profile of the cluster load balancer. </param>
-        /// <param name="clusterAPIConnectivityProfile"> Configuration for accessing the managed cluster API through Bastion or Cloud Shell. </param>
+        /// <param name="clusterApiConnectivityProfile"> Configuration for accessing the managed cluster API through Bastion or Cloud Shell. </param>
         /// <param name="natGatewayProfile"> Profile of the cluster NAT gateway. </param>
         /// <param name="natGatewayId"> The Azure resource ID of the NAT gateway to use for egress at cluster startup when outboundType is 'userAssignedNATGateway' using StandardV2 Public IP, backend pool type is podIP, and load balancer type is service SKU. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}'. When using managed NATGateway this field is auto populated. For more information, see https://aka.ms/aks/container-native-slb. </param>
         /// <param name="staticEgressGatewayProfile"> The profile for Static Egress Gateway addon. For more details about Static Egress Gateway, see https://aka.ms/aks/static-egress-gateway. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
         /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ClusterAPIConnectivityProfile clusterAPIConnectivityProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ResourceIdentifier natGatewayId, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ClusterApiConnectivityProfile clusterApiConnectivityProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ResourceIdentifier natGatewayId, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             OutboundType = outboundType;
             LoadBalancerSku = loadBalancerSku;
             LoadBalancerProfile = loadBalancerProfile;
-            ClusterAPIConnectivityProfile = clusterAPIConnectivityProfile;
+            ClusterApiConnectivityProfile = clusterApiConnectivityProfile;
             NatGatewayProfile = natGatewayProfile;
             NatGatewayId = natGatewayId;
             StaticEgressGatewayProfile = staticEgressGatewayProfile;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Configuration for accessing the managed cluster API through Bastion or Cloud Shell. </summary>
         [WirePath("clusterAPIConnectivityProfile")]
-        public ClusterAPIConnectivityProfile ClusterAPIConnectivityProfile { get; set; }
+        public ClusterApiConnectivityProfile ClusterApiConnectivityProfile { get; set; }
 
         /// <summary> Profile of the cluster NAT gateway. </summary>
         [WirePath("natGatewayProfile")]

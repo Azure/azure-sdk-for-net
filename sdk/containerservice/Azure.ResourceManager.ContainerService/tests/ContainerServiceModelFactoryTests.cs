@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using Azure.ResourceManager.ContainerService.Models;
 using NUnit.Framework;
 
@@ -112,6 +114,37 @@ namespace Azure.ResourceManager.ContainerService.Tests
 
             Assert.IsNull(profile.VerticalPodAutoscaler);
             Assert.IsNull(profile.IsVpaEnabled);
+        }
+
+        [Test]
+        public void CSharpNamingOverridesPreserveWireNames()
+        {
+            var costs = ArmContainerServiceModelFactory.ContainerServiceVmSkuCosts(meterId: "meter");
+            using var costsJson = JsonDocument.Parse(ModelReaderWriter.Write(costs).ToString());
+            Assert.AreEqual("meter", costs.MeterId);
+            Assert.AreEqual("meter", costsJson.RootElement.GetProperty("meterID").GetString());
+
+            var kubelet = ArmContainerServiceModelFactory.BootstrapKubeletConfig(clusterFqdn: "cluster.example.test");
+            using var kubeletJson = JsonDocument.Parse(ModelReaderWriter.Write(kubelet).ToString());
+            Assert.AreEqual("cluster.example.test", kubelet.ClusterFqdn);
+            Assert.AreEqual("cluster.example.test", kubeletJson.RootElement.GetProperty("clusterFQDN").GetString());
+
+            var network = new ContainerServiceNetworkProfile
+            {
+                ClusterApiConnectivityProfile = new ClusterApiConnectivityProfile()
+            };
+            using var networkJson = JsonDocument.Parse(ModelReaderWriter.Write(network).ToString());
+            Assert.IsTrue(networkJson.RootElement.TryGetProperty("clusterAPIConnectivityProfile", out _));
+
+            var disk = new ManagedClusterStorageProfileDiskCsiDriver
+            {
+                QuickAttachDetach = new ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach
+                {
+                    Enabled = true
+                }
+            };
+            using var diskJson = JsonDocument.Parse(ModelReaderWriter.Write(disk).ToString());
+            Assert.IsTrue(diskJson.RootElement.GetProperty("quickAttachDetach").GetProperty("enabled").GetBoolean());
         }
     }
 }

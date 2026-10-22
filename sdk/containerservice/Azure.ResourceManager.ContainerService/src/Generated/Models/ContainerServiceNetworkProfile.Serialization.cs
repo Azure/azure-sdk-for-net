@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile, options);
             }
-            if (Optional.IsDefined(ClusterAPIConnectivityProfile))
+            if (Optional.IsDefined(ClusterApiConnectivityProfile))
             {
                 writer.WritePropertyName("clusterAPIConnectivityProfile"u8);
-                writer.WriteObjectValue(ClusterAPIConnectivityProfile, options);
+                writer.WriteObjectValue(ClusterApiConnectivityProfile, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOutboundType? outboundType = default;
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
-            ClusterAPIConnectivityProfile clusterAPIConnectivityProfile = default;
+            ClusterApiConnectivityProfile clusterApiConnectivityProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
             ResourceIdentifier natGatewayId = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    clusterAPIConnectivityProfile = ClusterAPIConnectivityProfile.DeserializeClusterAPIConnectivityProfile(prop.Value, options);
+                    clusterApiConnectivityProfile = ClusterApiConnectivityProfile.DeserializeClusterApiConnectivityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("natGatewayProfile"u8))
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 outboundType,
                 loadBalancerSku,
                 loadBalancerProfile,
-                clusterAPIConnectivityProfile,
+                clusterApiConnectivityProfile,
                 natGatewayProfile,
                 natGatewayId,
                 staticEgressGatewayProfile,

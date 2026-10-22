@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isDiskCsiDriverEnabled = default;
-            ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach quickAttachDetach = default;
+            ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach quickAttachDetach = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    quickAttachDetach = ManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach.DeserializeManagedClusterStorageProfileDiskCSIDriverQuickAttachDetach(prop.Value, options);
+                    quickAttachDetach = ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach.DeserializeManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

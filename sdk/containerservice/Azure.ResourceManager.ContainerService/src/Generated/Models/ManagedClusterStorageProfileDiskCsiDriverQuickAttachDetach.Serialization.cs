@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Configuration for accessing the managed cluster API through Bastion or Cloud Shell. </summary>
-    public partial class ClusterAPIConnectivityProfile : IJsonModel<ClusterAPIConnectivityProfile>
+    /// <summary> Quick Attach Detach settings for the AzureDisk CSI driver. </summary>
+    public partial class ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach : IJsonModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterAPIConnectivityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterAPIConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterAPIConnectivityProfile(document.RootElement, options);
+                        return DeserializeManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAPIConnectivityProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterAPIConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAPIConnectivityProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterAPIConnectivityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterAPIConnectivityProfile IPersistableModel<ClusterAPIConnectivityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterAPIConnectivityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterAPIConnectivityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterAPIConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAPIConnectivityProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Bastion))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("bastion"u8);
-                writer.WriteObjectValue(Bastion, options);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(CloudShell))
+            if (options.Format != "W" && Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("cloudShell"u8);
-                writer.WriteObjectValue(CloudShell, options);
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,50 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterAPIConnectivityProfile IJsonModel<ClusterAPIConnectivityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach IJsonModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterAPIConnectivityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterAPIConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAPIConnectivityProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterAPIConnectivityProfile(document.RootElement, options);
+            return DeserializeManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterAPIConnectivityProfile DeserializeClusterAPIConnectivityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach DeserializeManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedClusterBastionProfile bastion = default;
-            CloudShellProfile cloudShell = default;
+            bool? enabled = default;
+            ContainerServiceUserAssignedIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("bastion"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bastion = ManagedClusterBastionProfile.DeserializeManagedClusterBastionProfile(prop.Value, options);
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("cloudShell"u8))
+                if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudShell = CloudShellProfile.DeserializeCloudShellProfile(prop.Value, options);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterAPIConnectivityProfile(bastion, cloudShell, additionalBinaryDataProperties);
+            return new ManagedClusterStorageProfileDiskCsiDriverQuickAttachDetach(enabled, identity, additionalBinaryDataProperties);
         }
     }
 }
