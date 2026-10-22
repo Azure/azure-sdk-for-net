@@ -3,8 +3,10 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,8 +21,14 @@ namespace Azure.ResourceManager.Network
     public partial class BackendAddressPoolResource
     {
         /// <summary> Invokes the GetInboundNatRulePortMappingsLoadBalancerAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<BackendAddressInboundNatRulePortMappings>> GetInboundNatRulePortMappingsLoadBalancerAsync(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use GetInboundNatRulePortMappingsAsync instead.")]
+        public virtual Task<ArmOperation<BackendAddressInboundNatRulePortMappings>> GetInboundNatRulePortMappingsLoadBalancerAsync(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
+            => GetInboundNatRulePortMappingsAsync(waitUntil, content, cancellationToken);
         /// <summary> Invokes the GetInboundNatRulePortMappingsLoadBalancer compatibility operation. </summary>
-        public virtual ArmOperation<BackendAddressInboundNatRulePortMappings> GetInboundNatRulePortMappingsLoadBalancer(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use GetInboundNatRulePortMappings instead.")]
+        public virtual ArmOperation<BackendAddressInboundNatRulePortMappings> GetInboundNatRulePortMappingsLoadBalancer(WaitUntil waitUntil, QueryInboundNatRulePortMappingContent content, CancellationToken cancellationToken = default)
+            => GetInboundNatRulePortMappings(waitUntil, content, cancellationToken);
     }
 }

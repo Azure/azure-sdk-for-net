@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(typeof(FirewallPolicyIntrusionDetectionProfileType), nameof(FirewallPolicyIntrusionDetectionProfileType.Basic))]
         [TestCase(typeof(FirewallPolicyIntrusionDetectionProfileType), nameof(FirewallPolicyIntrusionDetectionProfileType.Standard))]
         [TestCase(typeof(FirewallPolicyIntrusionDetectionProfileType), nameof(FirewallPolicyIntrusionDetectionProfileType.Advanced))]
-        [TestCase(typeof(IPsecIntegrity), nameof(IPsecIntegrity.Sha384))]
         [TestCase(typeof(LoadBalancerBackendAddressAdminState), nameof(LoadBalancerBackendAddressAdminState.Drain))]
         [TestCase(typeof(ManagedRuleSensitivityType), nameof(ManagedRuleSensitivityType.None))]
         [TestCase(typeof(VpnAuthenticationType), nameof(VpnAuthenticationType.AAD))]

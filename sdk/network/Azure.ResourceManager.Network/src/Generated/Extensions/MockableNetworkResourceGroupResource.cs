@@ -3532,11 +3532,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3544,7 +3544,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3588,11 +3588,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3600,7 +3600,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),

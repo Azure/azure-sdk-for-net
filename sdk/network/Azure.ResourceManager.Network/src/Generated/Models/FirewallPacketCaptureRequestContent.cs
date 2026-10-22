@@ -7,24 +7,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall Packet Capture Parameters. </summary>
-    public partial class FirewallPacketCaptureContent : NetworkSubResource
+    public partial class FirewallPacketCaptureRequestContent
     {
-        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
-        public FirewallPacketCaptureContent()
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestContent"/>. </summary>
+        public FirewallPacketCaptureRequestContent()
         {
             Flags = new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
             Filters = new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureRequestContent"/>. </summary>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. If the field is not provided, the default value is 60. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. If the field is not provided, the default value is 1000. </param>
         /// <param name="sasUri"> Upload capture location. </param>
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flags"> The tcp-flag type to be captured. Used with protocol TCP. </param>
         /// <param name="filters"> Rules to filter packet captures. </param>
         /// <param name="operation"> The packet capture operation to perform. If the Start operation is selected, please provide all the fields in the firewallPacketCaptureParameters to successfully initiate the packet capture. If the Status or Stop operation is selected, only the operation field is required; all other fields in the firewallPacketCaptureParameters can be omitted to successfully retrieve the capture status or stop the capture. </param>
-        internal FirewallPacketCaptureContent(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, AzureFirewallPacketCaptureOperationType? operation) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPacketCaptureRequestContent(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, AzureFirewallPacketCaptureOperationType? operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DurationInSeconds = durationInSeconds;
             NumberOfPacketsToCapture = numberOfPacketsToCapture;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             Flags = flags;
             Filters = filters;
             Operation = operation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Duration of packet capture in seconds. If the field is not provided, the default value is 60. </summary>

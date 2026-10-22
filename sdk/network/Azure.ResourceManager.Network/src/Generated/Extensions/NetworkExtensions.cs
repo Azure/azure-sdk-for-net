@@ -5642,7 +5642,7 @@ namespace Azure.ResourceManager.Network
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityAsync(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5651,18 +5651,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5671,11 +5671,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroup(waitUntil, location, content, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibility(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>

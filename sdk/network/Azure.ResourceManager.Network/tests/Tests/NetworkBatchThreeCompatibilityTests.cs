@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Network.Tests
             {"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/networkVirtualAppliances/nva/inboundSecurityRules/rule","name":"rule","type":"Microsoft.Network/networkVirtualAppliances/inboundSecurityRules","etag":"etag-value","futureEnvelope":17,"properties":{"ruleType":"Permanent","rules":[{"name":"allow","protocol":"TCP","sourceAddressPrefix":"10.0.0.0/24","destinationPortRange":443,"destinationPortRanges":["443-444"],"appliesOn":["public-ip"]}],"provisioningState":"Succeeded","futureProperty":true}}
             """;
 
-        [TestCase(typeof(FirewallPacketCaptureRequestContent))]
         [TestCase(typeof(InboundSecurityRule))]
         [TestCase(typeof(NetworkConnectionState))]
         [TestCase(typeof(PropagatedRouteTable))]
@@ -63,10 +62,6 @@ namespace Azure.ResourceManager.Network.Tests
                 AssertDeprecated(method);
             }
             foreach (MethodInfo method in typeof(NetworkVirtualApplianceResource).GetMethods().Where(m => m.Name.StartsWith("CreateOrUpdateInboundSecurityRule", StringComparison.Ordinal)))
-            {
-                AssertDeprecated(method);
-            }
-            foreach (MethodInfo method in typeof(AzureFirewallResource).GetMethods().Where(m => m.GetParameters().Any(p => p.ParameterType == typeof(FirewallPacketCaptureRequestContent))))
             {
                 AssertDeprecated(method);
             }
@@ -156,46 +151,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(native.ETag.ToString(), Is.EqualTo(value));
             var restored = ModelReaderWriter.Read<InboundSecurityRule>(ModelReaderWriter.Write(legacy));
             Assert.That(restored.ETag.ToString(), Is.EqualTo(value));
-        }
-
-        [Test]
-        public void FirewallRequestAliasRoundTripsWithoutRecursiveWriting()
-        {
-            const string json = """{"durationInSeconds":12,"numberOfPacketsToCapture":3,"sasUrl":"https://example.com/capture","fileName":"capture.pcap","protocol":"TCP","flags":[{"type":"syn"}],"filters":[{"sources":["10.0.0.1"],"destinations":["10.0.0.2"],"destinationPorts":["443"]}],"operation":"Start","futureField":42}""";
-            var reader = new Utf8JsonReader(BinaryData.FromString(json).ToMemory().Span);
-            var request = ((IJsonModel<FirewallPacketCaptureRequestContent>)new FirewallPacketCaptureRequestContent()).Create(ref reader, ModelReaderWriterOptions.Json);
-            Assert.That(reader.TokenType, Is.EqualTo(JsonTokenType.EndObject));
-            Assert.That(request.DurationInSeconds, Is.EqualTo(12));
-            Assert.That(request.NumberOfPacketsToCapture, Is.EqualTo(3));
-            Assert.That(request.FileName, Is.EqualTo("capture.pcap"));
-            Assert.That(request.Flags.Count, Is.EqualTo(1));
-            Assert.That(request.Filters.Count, Is.EqualTo(1));
-            Assert.That(request.Filters.Single().Sources.Single(), Is.EqualTo("10.0.0.1"));
-            Assert.That(request.Filters.Single().Destinations.Single(), Is.EqualTo("10.0.0.2"));
-            Assert.That(request.Filters.Single().DestinationPorts.Single(), Is.EqualTo("443"));
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                ((IJsonModel<FirewallPacketCaptureRequestContent>)request).Write(writer, ModelReaderWriterOptions.Json);
-            }
-            foreach (BinaryData persisted in new[]
-            {
-                BinaryData.FromBytes(stream.ToArray()),
-                ModelReaderWriter.Write(request),
-                ((IPersistableModel<FirewallPacketCaptureRequestContent>)request).Write(ModelReaderWriterOptions.Json),
-                ModelReaderWriter.Write<FirewallPacketCaptureContent>(request)
-            })
-            {
-                using JsonDocument document = JsonDocument.Parse(persisted);
-                Assert.That(document.RootElement.GetProperty("futureField").GetInt32(), Is.EqualTo(42));
-                var restored = ModelReaderWriter.Read<FirewallPacketCaptureRequestContent>(persisted);
-                Assert.That(restored.DurationInSeconds, Is.EqualTo(request.DurationInSeconds));
-                Assert.That(restored.SasUri, Is.EqualTo(request.SasUri));
-                Assert.That(restored.Protocol, Is.EqualTo(request.Protocol));
-                Assert.That(restored.Operation, Is.EqualTo(request.Operation));
-                Assert.That(restored.Flags.Select(flag => flag.FlagsType), Is.EqualTo(request.Flags.Select(flag => flag.FlagsType)));
-                Assert.That(restored.Filters.Single().Sources, Is.EqualTo(request.Filters.Single().Sources));
-            }
         }
 
         [Test]

@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -12,9 +12,10 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayWafDynamicManifestData
     {
-        // Preserve the released read-only shape while exposing the actual deserialized rule sets.
+        // Native flattening exposes IList<T>; 1.15 requires a read-only view of the same deserialized rule sets.
         /// <summary> The available rulesets. </summary>
         [CodeGenMember("AvailableRuleSets")]
+        [WirePath("properties.availableRuleSets")]
         public IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> AvailableRuleSets
         {
             get

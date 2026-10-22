@@ -73,18 +73,22 @@ namespace Azure.ResourceManager.Network.Models
             return slashIndex >= 0 ? value.Substring(slashIndex + 1) : value;
         }
 
+        // This legacy model has no generated partial; its adapter converts native policy IDs to released resource references.
         /// <summary> Predefined policies. </summary>
         [WirePath("properties.predefinedPolicies")]
         public IList<WritableSubResource> PredefinedPolicies { get; }
 
+        // The generated DefaultPolicy belongs to the replacement *Data model, not this retained legacy contract.
         /// <summary> Default policy. </summary>
         [WirePath("properties.defaultPolicy")]
         public ApplicationGatewaySslPolicyName? DefaultPolicy { get; set; }
 
+        // Keep the legacy factory/adapter's cipher suite storage; only the replacement *Data model is generated.
         /// <summary> Available cipher suites. </summary>
         [WirePath("properties.availableCipherSuites")]
         public IList<ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get; }
 
+        // Keep the legacy factory/adapter's protocol storage; only the replacement *Data model is generated.
         /// <summary> Available protocols. </summary>
         [WirePath("properties.availableProtocols")]
         public IList<ApplicationGatewaySslProtocol> AvailableProtocols { get; }

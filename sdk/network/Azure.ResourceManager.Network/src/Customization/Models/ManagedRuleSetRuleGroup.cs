@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             _rules = rules;
         }
 
+        // Native RuleIds contains integers; the released string collection must retain arbitrary factory-supplied strings without serialization.
         /// <summary> Gets the legacy string rule collection supplied to the model factory. </summary>
         /// <remarks>
         /// This collection is independent of <see cref="RuleIds"/> and is not serialized.

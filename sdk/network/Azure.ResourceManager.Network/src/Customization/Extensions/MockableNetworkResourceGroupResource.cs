@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Mocking
         // The PrivateLinkService suffix is redundant; these aliases forward to the preferred shorter generated names.
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroup instead.")]
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
-            => CheckPrivateLinkServiceVisibilityByResourceGroup(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the GetCloudServiceSwaps compatibility operation. </summary>
         public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string cloudServiceName)
             => Client.GetCloudServiceSwaps(new ResourceIdentifier($"{Id}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"));
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Network.Mocking
             => GetCloudServiceSwaps(cloudServiceName).Get(cancellationToken);
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroupAsync instead.")]
-        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
-            => CheckPrivateLinkServiceVisibilityByResourceGroupAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
+        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the GetCloudServiceSwapAsync compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(string cloudServiceName, CancellationToken cancellationToken)

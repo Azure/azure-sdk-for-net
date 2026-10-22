@@ -17,8 +17,10 @@ namespace Azure.ResourceManager.Network
     public static partial class NetworkExtensions
     {
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
-        public static ArmOperation SwapPublicIPAddressesLoadBalancer(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).SwapPublicIPAddressesLoadBalancer(waitUntil, location, content, cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddresses instead.")]
+        public static ArmOperation SwapPublicIPAddressesLoadBalancer(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).SwapPublicIPAddresses(waitUntil, location, content, cancellationToken);
         /// <summary> Invokes the GetCloudServiceSwaps compatibility operation. </summary>
         public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string cloudServiceName)
             => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwaps(cloudServiceName);
@@ -41,8 +43,10 @@ namespace Azure.ResourceManager.Network
         public static Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken)
             => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
-        public static Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).SwapPublicIPAddressesLoadBalancerAsync(waitUntil, location, content, cancellationToken);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddressesAsync instead.")]
+        public static Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).SwapPublicIPAddressesAsync(waitUntil, location, content, cancellationToken);
         /// <summary> Invokes the GetCloudServiceSwapAsync compatibility operation. </summary>
         [ForwardsClientCalls]
         public static Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)
@@ -89,40 +93,40 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets service endpoint policies. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use GetServiceEndpointPoliciesAsync instead.")]
-        public static AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
+        public static AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPoliciesAsync(cancellationToken);
 
         /// <summary> Gets service endpoint policies. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use GetServiceEndpointPolicies instead.")]
-        public static Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
+        public static Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceEndpointPolicies(cancellationToken);
 
         // Keep the released historical names for binary compatibility.
         // The PrivateLinkService suffix repeats what is already in the name; prefer the shorter generated names for the same operations.
         /// <summary> Checks private link service visibility by resource group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroupAsync instead.")]
-        public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
-            => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, content, cancellationToken);
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
+        public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         /// <summary> Checks private link service visibility by resource group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityByResourceGroup instead.")]
-        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
-            => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, content, cancellationToken);
+        [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         /// <summary> Checks private link service visibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
-        public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, content, cancellationToken);
+        public static Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         /// <summary> Checks private link service visibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
-        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken)
-            => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, content, cancellationToken);
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         // Preserve the released regional facade; native subscription access does not retain a location.
         // The collection still performs true listing, for which no equivalent native public API exists.

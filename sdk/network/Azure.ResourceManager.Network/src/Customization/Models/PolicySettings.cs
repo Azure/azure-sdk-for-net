@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PolicySettings
     {
-        // The service replaced the old wire property in API version 2025-07-01.
+        // API version 2025-07-01 replaced the cookie-specific wire field; keep the released name connected to the native replacement.
         /// <inheritdoc cref="CaptchaExpirationInMins"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use CaptchaExpirationInMins instead.")]

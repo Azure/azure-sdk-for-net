@@ -5,36 +5,34 @@
 
 using System;
 using System.ComponentModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
     public partial class AzureFirewallResource
     {
-        /// <summary> Invokes the PacketCaptureAsync compatibility operation. </summary>
+        /// <summary> Runs a packet capture on AzureFirewall. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait for completion; <see cref="WaitUntil.Started"/> to return after starting the operation. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
-        public virtual Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the PacketCapture compatibility operation. </summary>
+        public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        {
+            return await PacketCaptureAsync(waitUntil, content.ToNewRequestContent(), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Runs a packet capture on AzureFirewall. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait for completion; <see cref="WaitUntil.Started"/> to return after starting the operation. </param>
+        /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
-        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the PacketCaptureOperationAsync compatibility operation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
-        public virtual Task<ArmOperation<AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the PacketCaptureOperation compatibility operation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This overload is obsolete. Please use the overload accepting FirewallPacketCaptureContent instead.")]
-        public virtual ArmOperation<AzureFirewallPacketCaptureResult> PacketCaptureOperation(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        {
+            return PacketCapture(waitUntil, content.ToNewRequestContent(), cancellationToken);
+        }
     }
 }

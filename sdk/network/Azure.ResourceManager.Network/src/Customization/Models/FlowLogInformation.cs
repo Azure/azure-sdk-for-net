@@ -3,21 +3,27 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class FlowLogInformation
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="NetworkWatcherFlowAnalyticsConfiguration"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use NetworkWatcherFlowAnalyticsConfiguration instead.")]
+        // Bind the safe-flattened member to its active 1.15 name without renaming the shared nested model.
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        [CodeGenMember("NetworkWatcherFlowAnalyticsConfiguration")]
+        [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
-            get => NetworkWatcherFlowAnalyticsConfiguration;
-            set => NetworkWatcherFlowAnalyticsConfiguration = value;
+            get => FlowAnalyticsConfiguration?.NetworkWatcherFlowAnalyticsConfiguration;
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                {
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                }
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
         }
     }
 }

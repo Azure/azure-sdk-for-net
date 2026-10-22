@@ -153,23 +153,5 @@ namespace Azure.ResourceManager.Network.Models
                 Properties.RetentionPolicy = value;
             }
         }
-
-        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
-        {
-            get
-            {
-                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
-            }
-            set
-            {
-                if (FlowAnalyticsConfiguration is null)
-                {
-                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                }
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
-            }
-        }
     }
 }

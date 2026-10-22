@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkTrackedResourceData
     {
-        // Generated constructors and deserializers still need to populate the released read-only metadata.
+        // The legacy SSL factory and persistence adapter must populate native metadata without exposing a public setter.
         /// <summary> Gets the resource type. </summary>
         [CodeGenMember("ResourceType")]
         public ResourceType? ResourceType { get; internal set; }

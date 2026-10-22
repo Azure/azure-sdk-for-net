@@ -18,7 +18,9 @@ namespace Azure.ResourceManager.Network.Mocking
     public partial class MockableNetworkSubscriptionResource
     {
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
-        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddresses instead.")]
+        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
             => SwapPublicIPAddresses(waitUntil, location, content, cancellationToken);
 
         // Keep the released historical names for binary compatibility.
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkService compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibility instead.")]
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
             => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         // Keep the released regional facade and its virtual mocking surface.
@@ -88,11 +90,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use CheckPrivateLinkServiceVisibilityAsync instead.")]
-        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
+        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
             => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
 
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddressesAsync instead.")]
+        public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
             => SwapPublicIPAddressesAsync(waitUntil, location, content, cancellationToken);
 
         /// <summary> Gets the regional application gateway WAF singleton manifest. </summary>
@@ -158,13 +162,13 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <summary> Invokes the GetServiceEndpointPoliciesByServiceEndpointPolicyAsync compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use GetServiceEndpointPoliciesAsync instead.")]
-        public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken)
+        public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken = default)
             => GetServiceEndpointPoliciesAsync(cancellationToken);
 
         /// <summary> Invokes the GetServiceEndpointPoliciesByServiceEndpointPolicy compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated. Please use GetServiceEndpointPolicies instead.")]
-        public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken)
+        public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken = default)
             => GetServiceEndpointPolicies(cancellationToken);
     }
 }

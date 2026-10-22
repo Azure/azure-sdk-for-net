@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ExpressRouteServiceProviderListResult))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FailoverConnectionDetails))]
-    [ModelReaderWriterBuildable(typeof(FirewallPacketCaptureContent))]
+    [ModelReaderWriterBuildable(typeof(FirewallPacketCaptureRequestContent))]
     [ModelReaderWriterBuildable(typeof(FirewallPolicyCertificateAuthority))]
     [ModelReaderWriterBuildable(typeof(FirewallPolicyData))]
     [ModelReaderWriterBuildable(typeof(FirewallPolicyDraftData))]

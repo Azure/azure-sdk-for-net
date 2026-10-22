@@ -3070,7 +3070,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Azure Firewall Packet Capture Parameters. </summary>
-        /// <param name="id"> Resource ID. </param>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. If the field is not provided, the default value is 60. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. If the field is not provided, the default value is 1000. </param>
         /// <param name="sasUri"> Upload capture location. </param>
@@ -3079,15 +3078,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flags"> The tcp-flag type to be captured. Used with protocol TCP. </param>
         /// <param name="filters"> Rules to filter packet captures. </param>
         /// <param name="operation"> The packet capture operation to perform. If the Start operation is selected, please provide all the fields in the firewallPacketCaptureParameters to successfully initiate the packet capture. If the Status or Stop operation is selected, only the operation field is required; all other fields in the firewallPacketCaptureParameters can be omitted to successfully retrieve the capture status or stop the capture. </param>
-        /// <returns> A new <see cref="Models.FirewallPacketCaptureContent"/> instance for mocking. </returns>
-        public static FirewallPacketCaptureContent FirewallPacketCaptureContent(ResourceIdentifier id = default, int? durationInSeconds = default, int? numberOfPacketsToCapture = default, Uri sasUri = default, string fileName = default, AzureFirewallNetworkRuleProtocol? protocol = default, IEnumerable<AzureFirewallPacketCaptureFlags> flags = default, IEnumerable<AzureFirewallPacketCaptureRule> filters = default, AzureFirewallPacketCaptureOperationType? operation = default)
+        /// <returns> A new <see cref="Models.FirewallPacketCaptureRequestContent"/> instance for mocking. </returns>
+        public static FirewallPacketCaptureRequestContent FirewallPacketCaptureRequestContent(int? durationInSeconds = default, int? numberOfPacketsToCapture = default, Uri sasUri = default, string fileName = default, AzureFirewallNetworkRuleProtocol? protocol = default, IEnumerable<AzureFirewallPacketCaptureFlags> flags = default, IEnumerable<AzureFirewallPacketCaptureRule> filters = default, AzureFirewallPacketCaptureOperationType? operation = default)
         {
             flags ??= new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
             filters ??= new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
 
-            return new FirewallPacketCaptureContent(
-                id,
-                default,
+            return new FirewallPacketCaptureRequestContent(
                 durationInSeconds,
                 numberOfPacketsToCapture,
                 sasUri,
@@ -3095,7 +3092,8 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 (flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>()).ToList(),
                 (filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>()).ToList(),
-                operation);
+                operation,
+                default);
         }
 
         /// <summary> Properties of the AzureFirewallRCAction. </summary>

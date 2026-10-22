@@ -15,61 +15,61 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall Packet Capture Parameters. </summary>
-    public partial class FirewallPacketCaptureContent : NetworkSubResource, IJsonModel<FirewallPacketCaptureContent>
+    public partial class FirewallPacketCaptureRequestContent : IJsonModel<FirewallPacketCaptureRequestContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FirewallPacketCaptureRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFirewallPacketCaptureContent(document.RootElement, options);
+                        return DeserializeFirewallPacketCaptureRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPacketCaptureRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPacketCaptureRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FirewallPacketCaptureContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FirewallPacketCaptureRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FirewallPacketCaptureContent IPersistableModel<FirewallPacketCaptureContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (FirewallPacketCaptureContent)PersistableModelCreateCore(data, options);
+        FirewallPacketCaptureRequestContent IPersistableModel<FirewallPacketCaptureRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FirewallPacketCaptureContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirewallPacketCaptureRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="firewallPacketCaptureContent"> The <see cref="FirewallPacketCaptureContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FirewallPacketCaptureContent firewallPacketCaptureContent)
+        /// <param name="firewallPacketCaptureRequestContent"> The <see cref="FirewallPacketCaptureRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FirewallPacketCaptureRequestContent firewallPacketCaptureRequestContent)
         {
-            if (firewallPacketCaptureContent == null)
+            if (firewallPacketCaptureRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(firewallPacketCaptureContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(firewallPacketCaptureRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FirewallPacketCaptureContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirewallPacketCaptureRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,14 +78,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPacketCaptureRequestContent)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
@@ -136,35 +135,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FirewallPacketCaptureContent IJsonModel<FirewallPacketCaptureContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FirewallPacketCaptureContent)JsonModelCreateCore(ref reader, options);
+        FirewallPacketCaptureRequestContent IJsonModel<FirewallPacketCaptureRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FirewallPacketCaptureRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPacketCaptureRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirewallPacketCaptureContent(document.RootElement, options);
+            return DeserializeFirewallPacketCaptureRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FirewallPacketCaptureContent DeserializeFirewallPacketCaptureContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static FirewallPacketCaptureRequestContent DeserializeFirewallPacketCaptureRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? durationInSeconds = default;
             int? numberOfPacketsToCapture = default;
             Uri sasUri = default;
@@ -173,17 +185,9 @@ namespace Azure.ResourceManager.Network.Models
             IList<AzureFirewallPacketCaptureFlags> flags = default;
             IList<AzureFirewallPacketCaptureRule> filters = default;
             AzureFirewallPacketCaptureOperationType? operation = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("durationInSeconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -267,9 +271,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FirewallPacketCaptureContent(
-                id,
-                additionalBinaryDataProperties,
+            return new FirewallPacketCaptureRequestContent(
                 durationInSeconds,
                 numberOfPacketsToCapture,
                 sasUri,
@@ -277,7 +279,8 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
                 filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>(),
-                operation);
+                operation,
+                additionalBinaryDataProperties);
         }
     }
 }
