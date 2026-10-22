@@ -7,12 +7,6 @@
 - Upgraded API version to `2026-10-01` (stable).
 - Added support for cluster jobs and edge-machine management, including deployment settings, disks, network adapters, security settings, volumes, and associated job operations.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0 (2026-08-20)
 
 ### Features Added
