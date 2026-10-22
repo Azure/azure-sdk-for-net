@@ -490,9 +490,18 @@ default severity. Three consequences:
   banned-API checks, and this repo's pinned analyzer package versions don't apply — but the
   SDK-bundled analyzers and StyleCop still run and still fail the build. Check the specific
   rule's own gate before treating a test-project diagnostic as something CI won't already catch.
-- **`CA` diagnostics are real diagnostics here.** The default set fires and is widely suppressed
-  in this repo. A `#pragma warning disable CA…` is a suppression and takes the same ladder above
-  as an `AZC` code — including `CA5351`/`CA5394`, which do fire.
+- **`CA` diagnostics are real here, but a given ID's effective severity decides whether CI
+  catches it — analyzer presence alone does not.** Plenty of `CA` codes genuinely are warnings
+  at their stock default severity, and a `#pragma warning disable CA…` against one of those is a
+  suppression and takes the same ladder above as an `AZC` code. But some rules that sound like
+  they'd be on are not: `CA5351` (broken crypto, e.g. `MD5`) defaults to **Hidden** severity, and
+  `CA5394` (insecure randomness, e.g. `new Random().Next()`) is **disabled by default** — with
+  the pinned `Microsoft.CodeAnalysis.NetAnalyzers` version and this repo's unmodified
+  `.editorconfig`, both compile clean with zero warnings. Don't cite "the analyzer covers this"
+  as a reason to skip a finding without checking that specific rule's actual default severity
+  (its docs page, or a scratch build) — this is exactly why the Security section in
+  `review-quality.md` flags weak crypto and insecure randomness unconditionally rather than
+  deferring to CI.
 - **Taint/dataflow rules never run.** `CA3003` (file-path injection) and its `CA3xxx` siblings
   are not enabled by default, nothing here opts them in, and the repo contains zero references
   to them. CodeQL would cover some of this but is wired only to the internal build, never to
