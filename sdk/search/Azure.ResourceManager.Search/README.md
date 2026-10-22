@@ -46,9 +46,7 @@ Documentation is available to help you learn how to use this package:
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
-- [Serverless and knowledge-retrieval samples](tests/Samples/Sample_ServerlessAndKnowledgeRetrieval.cs):
-  create a serverless service, configure knowledge-retrieval billing,
-  and read serverless quota usage.
+- [Serverless and knowledge-retrieval samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/tests/Samples/Sample_ServerlessAndKnowledgeRetrieval.cs): create a serverless service, configure knowledge-retrieval billing, and read serverless quota usage.
 
 ## Troubleshooting
 

@@ -4,9 +4,9 @@
 
 ### Features Added
 
-- Upgraded the default API version from `2026-09-01-preview` to `2026-11-01`.
+- Upgraded the default API version to `2026-11-01`.
 
-Compared with the previous GA release (`1.3.0`), this release also includes the following capabilities introduced in the `1.4.0` previews:
+Compared with the previous GA SDK release (`1.3.0`, API version `2025-05-01`), this release includes the following capabilities introduced in the `1.4.0` previews:
 
 - Create serverless search services with `SearchServiceSkuName.Serverless`.
 - Configure knowledge-retrieval billing through `SearchServiceData.KnowledgeRetrieval` and `SearchServicePatch.KnowledgeRetrieval`, using `SearchKnowledgeRetrieval.Free` or `SearchKnowledgeRetrieval.Standard`.
@@ -14,7 +14,7 @@ Compared with the previous GA release (`1.3.0`), this release also includes the 
 
 ### Breaking Changes
 
-The following removals affect upgrades from the previous preview (`1.4.0-beta.3`) to the `2026-11-01` GA API contract. These preview-only members were not part of the previous GA release (`1.3.0`).
+The following removals affect upgrades from the previous preview SDK release (`1.4.0-beta.3`, API version `2026-09-01-preview`) to the `2026-11-01` GA API contract. These preview-only members were not part of the previous GA SDK release (`1.3.0`).
 
 - Removed tenant-level `GetOfferings` operations and the `SearchFeatureOffering`, `SearchOfferingsByRegion`, `SearchOfferingsResult`, `SearchSkuOffering`, and `SearchSkuLimits` models.
 - Removed `SearchEncryptionWithCmk.ServiceLevelEncryptionKey`, the `SearchResourceEncryptionKey` and `SearchAadApplicationCredentials` models, and the `SearchDataIdentity` type hierarchy. Existing GA customer-managed-key configuration remains available.
