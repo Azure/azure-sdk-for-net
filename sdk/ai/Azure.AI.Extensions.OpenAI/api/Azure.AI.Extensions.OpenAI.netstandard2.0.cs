@@ -704,7 +704,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig GitHubCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool name = Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool.FilesystemRead, bool? enabled = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig GitHubCopilotToolsetDefaultConfig(bool? enabled = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetPreview GitHubCopilotToolsetPreview(Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig defaultConfig = null, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig> configs = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.MemoryCommandToolCall MemoryCommandToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress, string responseIdInternal = null, Azure.AI.Extensions.OpenAI.AgentReference agentReferenceInternal = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.MemoryCommandToolCall MemoryCommandToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MemoryCommandToolCallOutput MemoryCommandToolCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress, string responseIdInternal = null, Azure.AI.Extensions.OpenAI.AgentReference agentReferenceInternal = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MemoryOutputItem MemoryOutputItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Extensions.OpenAI.MemorySearchResultOptions searchOptions = null, int? updateDelayInSeconds = default(int?)) { throw null; }
@@ -826,7 +826,7 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class GitHubCopilotToolsetConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig>
     {
-        public GitHubCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool name) { }
+        public GitHubCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool name, bool? enabled = default(bool?)) { }
         public bool? Enabled { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool Name { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -972,7 +972,7 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class MicrosoftCopilotToolsetConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>
     {
-        public MicrosoftCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool name) { }
+        public MicrosoftCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool name, bool? enabled = default(bool?)) { }
         public bool? Enabled { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool Name { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

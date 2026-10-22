@@ -17,6 +17,13 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftCopilotToolsetConfig"/>. </summary>
         /// <param name="name"> The built-in tool to configure. </param>
+        internal MicrosoftCopilotToolsetConfig(MicrosoftCopilotBuiltInTool name)
+        {
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftCopilotToolsetConfig"/>. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
         /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MicrosoftCopilotToolsetConfig(MicrosoftCopilotBuiltInTool name, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)

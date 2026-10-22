@@ -695,33 +695,6 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A memory command tool call. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="callId"></param>
-        /// <param name="arguments"></param>
-        /// <param name="status"></param>
-        /// <param name="responseIdInternal"></param>
-        /// <param name="agentReferenceInternal"></param>
-        /// <returns> A new <see cref="OpenAI.MemoryCommandToolCall"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MemoryCommandToolCall MemoryCommandToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default, string responseIdInternal = default, AgentReference agentReferenceInternal = default)
-        {
-            return new MemoryCommandToolCall(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                callId,
-                arguments,
-                status,
-                responseIdInternal,
-                agentReferenceInternal,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The output of a memory command tool call. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>

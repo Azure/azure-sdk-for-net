@@ -6,8 +6,12 @@ public partial class GitHubCopilotToolsetConfig
 {
     /// <summary> Initializes a new instance of <see cref="GitHubCopilotToolsetConfig"/>. </summary>
     /// <param name="name"> The built-in tool to configure. </param>
-    public GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name)
+    /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+    public GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name, bool? enabled = null) :this(
+        name: name,
+        enabled: enabled,
+        additionalBinaryDataProperties: null
+        )
     {
-        Name = name;
     }
 }

@@ -15,6 +15,13 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="GitHubCopilotToolsetConfig"/>. </summary>
         /// <param name="name"> The built-in tool to configure. </param>
+        internal GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name)
+        {
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubCopilotToolsetConfig"/>. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
         /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)

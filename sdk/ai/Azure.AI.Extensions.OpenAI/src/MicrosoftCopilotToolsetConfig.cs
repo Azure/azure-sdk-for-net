@@ -7,8 +7,12 @@ public partial class MicrosoftCopilotToolsetConfig
 {
     /// <summary> Initializes a new instance of <see cref="MicrosoftCopilotToolsetConfig"/>. </summary>
     /// <param name="name"> The built-in tool to configure. </param>
-    public MicrosoftCopilotToolsetConfig(MicrosoftCopilotBuiltInTool name)
+    /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+    public MicrosoftCopilotToolsetConfig(MicrosoftCopilotBuiltInTool name, bool? enabled = null) : this(
+        name: name,
+        enabled: enabled,
+        additionalBinaryDataProperties: null
+        )
     {
-        Name = name;
     }
 }

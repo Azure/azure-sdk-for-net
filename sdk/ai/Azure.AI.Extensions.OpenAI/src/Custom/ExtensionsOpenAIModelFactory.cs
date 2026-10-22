@@ -1069,4 +1069,51 @@ public static partial class ExtensionsOpenAIModelFactory
             agentReference,
             additionalBinaryDataProperties: null);
     }
+
+    /// <summary> A memory command tool call. </summary>
+    /// <param name="type"></param>
+    /// <param name="id_"></param>
+    /// <param name="agentReference"></param>
+    /// <param name="responseId"></param>
+    /// <param name="callId"></param>
+    /// <param name="arguments"></param>
+    /// <param name="status"></param>
+    /// <param name="responseIdInternal"></param>
+    /// <param name="agentReferenceInternal"></param>
+    /// <returns> A new <see cref="OpenAI.MemoryCommandToolCall"/> instance for mocking. </returns>
+    [Experimental("AAIP001")]
+    internal static MemoryCommandToolCall MemoryCommandToolCall(ResponseItemKind @type = default, string id_ = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default, string responseIdInternal = default, AgentReference agentReferenceInternal = default)
+    {
+        return MemoryCommandToolCall(
+            id_,
+            agentReference,
+            responseId,
+            callId,
+            arguments,
+            status);
+    }
+
+    /// <summary> A memory command tool call. </summary>
+    /// <param name="id"></param>
+    /// <param name="agentReference"></param>
+    /// <param name="responseId"></param>
+    /// <param name="callId"></param>
+    /// <param name="arguments"></param>
+    /// <param name="status"></param>
+    /// <returns> A new <see cref="OpenAI.MemoryCommandToolCall"/> instance for mocking. </returns>
+    [Experimental("AAIP001")]
+    public static MemoryCommandToolCall MemoryCommandToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+    {
+        return new MemoryCommandToolCall(
+            ResponseItemKind.MemoryCommandPreviewCall,
+            id,
+            agentReference,
+            responseId,
+            callId,
+            arguments,
+            status,
+            responseId,
+            agentReference,
+            additionalBinaryDataProperties: null);
+    }
 }
