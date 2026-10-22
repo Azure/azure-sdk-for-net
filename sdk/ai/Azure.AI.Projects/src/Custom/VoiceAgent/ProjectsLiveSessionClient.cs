@@ -28,9 +28,12 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
     private readonly SemaphoreSlim _receiveLock = new(1, 1);
     private readonly SemaphoreSlim _closeLock = new(1, 1);
     private readonly CancellationTokenSource _lifetime = new();
+    private readonly Queue<(LiveServerEvent Event, int Bytes)> _deferredEvents = new();
     private LiveServerEvent _startupEvent;
     private volatile bool _closeRequested;
     private int _disposed;
+    private int _enumerationActive;
+    private int _deferredBytes;
 
     /// <summary> Initializes a new instance for mocking. </summary>
     protected ProjectsLiveSessionClient()
@@ -205,36 +208,60 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
     {
         ThrowIfDisposed();
         cancellationToken.ThrowIfCancellationRequested();
-        if (!_receiveLock.Wait(0))
+        if (Interlocked.CompareExchange(ref _enumerationActive, 1, 0) != 0)
         {
             throw new InvalidOperationException("Only one Live event receiver may be active at a time.");
         }
         try
         {
+            using CancellationTokenSource linked = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token);
             if (_startupEvent != null)
             {
                 LiveServerEvent started = _startupEvent;
                 _startupEvent = null;
                 yield return started;
             }
-            while (SessionClosed == null && (_socket.State is WebSocketState.Open or WebSocketState.CloseSent))
+            while (true)
             {
-                cancellationToken.ThrowIfCancellationRequested();
-                BinaryData data = await ReceiveMessageAsync(cancellationToken).ConfigureAwait(false);
-                if (data == null)
+                LiveServerEvent serverEvent;
+                await _receiveLock.WaitAsync(linked.Token).ConfigureAwait(false);
+                try
                 {
-                    yield break;
+                    ThrowIfDisposed();
+                    if (_deferredEvents.Count > 0)
+                    {
+                        (LiveServerEvent Event, int Bytes) deferred = _deferredEvents.Dequeue();
+                        serverEvent = deferred.Event;
+                        _deferredBytes -= deferred.Bytes;
+                    }
+                    else
+                    {
+                        if (SessionClosed != null || _socket.State is not (WebSocketState.Open or WebSocketState.CloseSent))
+                        {
+                            yield break;
+                        }
+                        BinaryData data = await ReceiveMessageAsync(linked.Token).ConfigureAwait(false);
+                        if (data == null)
+                        {
+                            yield break;
+                        }
+                        serverEvent = ReadEvent(data);
+                    }
                 }
-                yield return ReadEvent(data);
+                finally
+                {
+                    _receiveLock.Release();
+                }
+                yield return serverEvent;
             }
         }
         finally
         {
-            _receiveLock.Release();
+            Volatile.Write(ref _enumerationActive, 0);
         }
     }
 
-    /// <summary> Requests native session closure and completes the WebSocket closing handshake. </summary>
+    /// <summary> Requests native session closure and completes the WebSocket closing handshake. May be called from the event-consumer loop; events read during shutdown remain available to that receiver. </summary>
     /// <param name="cancellationToken"> Cancels shutdown. The default shutdown budget is ten seconds. </param>
     public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
     {
@@ -256,7 +283,7 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
                     {
                         break;
                     }
-                    ReadEvent(data);
+                    ReadShutdownEvent(data);
                 }
                 if (SessionClosed == null)
                 {
@@ -281,7 +308,7 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
                     {
                         break;
                     }
-                    ReadEvent(data);
+                    ReadShutdownEvent(data);
                 }
             }
             finally
@@ -295,6 +322,22 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         }
     }
 #pragma warning restore AZC0004
+
+    private void ReadShutdownEvent(BinaryData data)
+    {
+        LiveServerEvent serverEvent = ReadEvent(data);
+        if (Volatile.Read(ref _enumerationActive) != 0)
+        {
+            int bytes = data.ToMemory().Length;
+            if (_deferredBytes + bytes > MaximumMessageBytes)
+            {
+                throw new InvalidDataException("Live shutdown events exceeded the 16 MiB receive buffer limit.");
+            }
+            // Shutdown may own the socket while an exclusive event consumer is suspended at a yield.
+            _deferredEvents.Enqueue((serverEvent, bytes));
+            _deferredBytes += bytes;
+        }
+    }
 
     private LiveServerEvent ReadEvent(BinaryData data)
     {

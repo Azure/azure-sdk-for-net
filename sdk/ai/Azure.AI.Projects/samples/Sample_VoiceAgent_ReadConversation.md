@@ -4,7 +4,7 @@ This sample holds a realtime session with `Store = true`, so the Foundry service
 conversation the session produces, then reads that conversation back afterward through the
 REST-only `BetaVoiceAgentsConversations` surface -- no realtime connection needed for the read.
 
-Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_MODEL_NAME` to a
+Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME` to a
 realtime-capable model deployment name before running this sample.
 
 1. Create the client and a temporary text-modality voice agent.

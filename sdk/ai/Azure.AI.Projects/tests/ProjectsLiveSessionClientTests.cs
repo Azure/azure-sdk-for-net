@@ -913,6 +913,107 @@ public class ProjectsLiveSessionClientTests
         Assert.That(session.State, Is.EqualTo(WebSocketState.Closed));
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task CloseInsideEventConsumerCompletesAndPreservesRemainingEvents(bool terminalAlreadyObserved)
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(2));
+        socket.QueueText(terminalAlreadyObserved ? LiveTestHelpers.SessionClosedJson : LiveTestHelpers.SessionStartedJson);
+        List<string> events = new();
+        await using IAsyncEnumerator<LiveServerEvent> receiving = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator();
+        Assert.That(await receiving.MoveNextAsync(), Is.True);
+        events.Add(LiveTestHelpers.EventType(receiving.Current));
+        if (!terminalAlreadyObserved)
+        {
+            socket.QueueText("""{"type":"session.output_audio.delta","delta":"AQABAA=="}""");
+            socket.QueueText("""{"type":"session.usage.updated","usage":{"seconds":1}}""");
+            socket.QueueText(LiveTestHelpers.SessionClosedJson);
+        }
+        socket.QueueClose(WebSocketCloseStatus.NormalClosure);
+
+        await session.CloseAsync(timeout.Token);
+
+        await using (IAsyncEnumerator<LiveServerEvent> competing = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator())
+        {
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await competing.MoveNextAsync());
+        }
+        while (await receiving.MoveNextAsync())
+        {
+            events.Add(LiveTestHelpers.EventType(receiving.Current));
+        }
+        Assert.Multiple(() =>
+        {
+            Assert.That(events, Is.EqualTo(terminalAlreadyObserved
+                ? new[] { "session.closed" }
+                : new[] { "session.started", "session.output_audio.delta", "session.usage.updated", "session.closed" }));
+            Assert.That(session.State, Is.EqualTo(WebSocketState.Closed));
+            Assert.That(session.SessionClosed, Is.Not.Null);
+            Assert.That(timeout.IsCancellationRequested, Is.False);
+        });
+    }
+
+    [Test]
+    public async Task CloseCannotBufferUnboundedEventsForASuspendedConsumer()
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+        socket.QueueText(LiveTestHelpers.SessionStartedJson);
+        await using IAsyncEnumerator<LiveServerEvent> receiving = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator();
+        Assert.That(await receiving.MoveNextAsync(), Is.True);
+        string largeEvent = "{\"type\":\"session.output_transcript.delta\",\"delta\":\"" +
+            new string('x', 9 * 1024 * 1024) + "\"}";
+        byte[] bytes = Encoding.UTF8.GetBytes(largeEvent);
+        for (int message = 0; message < 2; message++)
+        {
+            for (int offset = 0; offset < bytes.Length; offset += 8192)
+            {
+                int count = Math.Min(8192, bytes.Length - offset);
+                socket.QueueFrame(bytes.AsSpan(offset, count).ToArray(), WebSocketMessageType.Text, offset + count == bytes.Length);
+            }
+        }
+
+        InvalidDataException error = Assert.ThrowsAsync<InvalidDataException>(() => session.CloseAsync(timeout.Token));
+
+        Assert.That(error.Message, Does.Contain("buffer").And.Contain("16 MiB"));
+        Assert.That(timeout.IsCancellationRequested, Is.False);
+        Assert.That(await receiving.MoveNextAsync(), Is.True, "Overflow must leave previously queued events available.");
+        Assert.That(receiving.Current, Is.TypeOf<LiveServerEventLiveOutputTranscriptDelta>());
+    }
+
+    [Test]
+    public async Task CloseAcceptsAnExactlyFullDeferredBuffer()
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        socket.QueueText(LiveTestHelpers.SessionStartedJson);
+        await using IAsyncEnumerator<LiveServerEvent> receiving = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator();
+        Assert.That(await receiving.MoveNextAsync(), Is.True);
+        const string prefix = "{\"type\":\"session.output_transcript.delta\",\"delta\":\"";
+        const string suffix = "\"}";
+        int messageBytes = 16 * 1024 * 1024 - Encoding.UTF8.GetByteCount(LiveTestHelpers.SessionClosedJson);
+        byte[] bytes = Encoding.UTF8.GetBytes(prefix + new string('x', messageBytes - prefix.Length - suffix.Length) + suffix);
+        for (int offset = 0; offset < bytes.Length; offset += 8192)
+        {
+            int count = Math.Min(8192, bytes.Length - offset);
+            socket.QueueFrame(bytes.AsSpan(offset, count).ToArray(), WebSocketMessageType.Text, offset + count == bytes.Length);
+        }
+        socket.QueueText(LiveTestHelpers.SessionClosedJson);
+        socket.QueueClose(WebSocketCloseStatus.NormalClosure);
+
+        await session.CloseAsync(timeout.Token);
+
+        Assert.That(await receiving.MoveNextAsync(), Is.True);
+        Assert.That(receiving.Current, Is.TypeOf<LiveServerEventLiveOutputTranscriptDelta>());
+        Assert.That(await receiving.MoveNextAsync(), Is.True);
+        Assert.That(receiving.Current, Is.SameAs(session.SessionClosed));
+        Assert.That(await receiving.MoveNextAsync(), Is.False);
+        Assert.That(session.State, Is.EqualTo(WebSocketState.Closed));
+    }
+
     [Test]
     public async Task CloseAfterIteratorBreakDrainsRemainingFramesAndPeerClose()
     {
@@ -931,8 +1032,8 @@ public class ProjectsLiveSessionClientTests
             socket.QueueText(LiveTestHelpers.SessionClosedJson);
             Assert.Multiple(() =>
             {
-                Assert.That(closing.IsCompleted, Is.False, "Closing must wait for the enumeration to release receive ownership.");
-                Assert.That(socket.ReceiveCalls, Is.EqualTo(1), "Only the enumeration may receive until its iterator is disposed.");
+                Assert.That(closing.IsCompleted, Is.False, "Closing must still wait for native finalization and the peer handshake.");
+                Assert.That(socket.MaximumConcurrentReceives, Is.EqualTo(1), "A suspended consumer must not cause concurrent socket receives.");
             });
             break;
         }
@@ -989,7 +1090,7 @@ public class ProjectsLiveSessionClientTests
     }
 
     [Test]
-    public async Task DisposeCancelsCloseWaitingForActiveIteratorOwnership()
+    public async Task DisposeCancelsCloseDrainingWhileConsumerIsSuspended()
     {
         using ControlledLiveWebSocket socket = new();
         using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
@@ -998,14 +1099,14 @@ public class ProjectsLiveSessionClientTests
         Assert.That(await LiveTestHelpers.AwaitAsync(events.MoveNextAsync().AsTask()), Is.True);
         Task closing = session.CloseAsync();
         await LiveTestHelpers.AwaitAsync(socket.SendEntered.Task);
-        Assert.That(socket.ReceiveCalls, Is.EqualTo(1));
+        Assert.That(socket.ReceiveCalls, Is.EqualTo(2));
 
         session.Dispose();
 
         Assert.CatchAsync<OperationCanceledException>(async () => await LiveTestHelpers.AwaitAsync(closing));
         Assert.Multiple(() =>
         {
-            Assert.That(socket.ReceiveCalls, Is.EqualTo(1), "Disposal must cancel the waiting close without starting a competing receive.");
+            Assert.That(socket.MaximumConcurrentReceives, Is.EqualTo(1), "Disposal must cancel shutdown without concurrent socket receives.");
             Assert.That(socket.DisposeCalls, Is.EqualTo(1));
             Assert.That(session.State, Is.EqualTo(WebSocketState.Closed));
         });
@@ -1182,7 +1283,9 @@ public class ProjectsLiveSessionClientTests
         private int _sendCalls;
         private int _receiveCalls;
         private int _activeSends;
+        private int _activeReceives;
         private int _maximumConcurrentSends;
+        private int _maximumConcurrentReceives;
         private int _disposeCalls;
 
         public ControlledLiveWebSocket(WebSocketState state = WebSocketState.Open)
@@ -1194,6 +1297,7 @@ public class ProjectsLiveSessionClientTests
         public int SendCalls => Volatile.Read(ref _sendCalls);
         public int ReceiveCalls => Volatile.Read(ref _receiveCalls);
         public int MaximumConcurrentSends => Volatile.Read(ref _maximumConcurrentSends);
+        public int MaximumConcurrentReceives => Volatile.Read(ref _maximumConcurrentReceives);
         public int DisposeCalls => Volatile.Read(ref _disposeCalls);
         public int CloseOutputCalls { get; private set; }
         public WebSocketCloseStatus? OutputCloseStatus { get; private set; }
@@ -1286,30 +1390,44 @@ public class ProjectsLiveSessionClientTests
         public override async Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken)
         {
             Interlocked.Increment(ref _receiveCalls);
-            lock (Operations)
+            int active = Interlocked.Increment(ref _activeReceives);
+            int maximum;
+            do
             {
-                Operations.Add("receive");
+                maximum = Volatile.Read(ref _maximumConcurrentReceives);
             }
-            ReceiveEntered.TrySetResult(true);
-            await _availableFrames.WaitAsync(cancellationToken);
-            ReceiveFrame frame;
-            lock (_frames)
+            while (active > maximum && Interlocked.CompareExchange(ref _maximumConcurrentReceives, active, maximum) != maximum);
+            try
             {
-                frame = _frames.Dequeue();
+                lock (Operations)
+                {
+                    Operations.Add("receive");
+                }
+                ReceiveEntered.TrySetResult(true);
+                await _availableFrames.WaitAsync(cancellationToken);
+                ReceiveFrame frame;
+                lock (_frames)
+                {
+                    frame = _frames.Dequeue();
+                }
+                if (frame.Failure != null)
+                {
+                    _state = WebSocketState.Aborted;
+                    throw frame.Failure;
+                }
+                Assert.That(frame.Bytes.Length, Is.LessThanOrEqualTo(buffer.Count), "The controlled test frame must fit in the receive buffer.");
+                Array.Copy(frame.Bytes, 0, buffer.Array, buffer.Offset, frame.Bytes.Length);
+                if (frame.MessageType == WebSocketMessageType.Close)
+                {
+                    _closeStatus = frame.CloseStatus;
+                    _state = _state == WebSocketState.CloseSent ? WebSocketState.Closed : WebSocketState.CloseReceived;
+                }
+                return new WebSocketReceiveResult(frame.Bytes.Length, frame.MessageType, frame.EndOfMessage, frame.CloseStatus, null);
             }
-            if (frame.Failure != null)
+            finally
             {
-                _state = WebSocketState.Aborted;
-                throw frame.Failure;
+                Interlocked.Decrement(ref _activeReceives);
             }
-            Assert.That(frame.Bytes.Length, Is.LessThanOrEqualTo(buffer.Count), "The controlled test frame must fit in the receive buffer.");
-            Array.Copy(frame.Bytes, 0, buffer.Array, buffer.Offset, frame.Bytes.Length);
-            if (frame.MessageType == WebSocketMessageType.Close)
-            {
-                _closeStatus = frame.CloseStatus;
-                _state = _state == WebSocketState.CloseSent ? WebSocketState.Closed : WebSocketState.CloseReceived;
-            }
-            return new WebSocketReceiveResult(frame.Bytes.Length, frame.MessageType, frame.EndOfMessage, frame.CloseStatus, null);
         }
 
         public override Task CloseOutputAsync(WebSocketCloseStatus closeStatus, string statusDescription, CancellationToken cancellationToken)

@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Tests.Samples;
+using Azure.AI.Projects.Tests.Utils;
 using NUnit.Framework;
 
 #pragma warning disable AAIP001, AAIP002, OPENAI001
@@ -339,9 +340,9 @@ public class VoiceAgentLiveSampleTests
         };
         byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
         using MemoryStream output = new();
+        using StringWriter transcript = new();
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(30));
-
-        await Sample_VoiceAgent_Live.RunAudioConversationAsync(session, speech, output, TextWriter.Null, timeout.Token);
+        await Sample_VoiceAgent_Live.RunAudioConversationAsync(session, speech, output, transcript, timeout.Token);
 
         Assert.Multiple(() =>
         {
@@ -353,6 +354,8 @@ public class VoiceAgentLiveSampleTests
             Assert.That(output.Length, Is.GreaterThan(0));
             Assert.That(session.ReceiverEnded, Is.True);
             Assert.That(timeout.IsCancellationRequested, Is.False);
+            Assert.That(transcript.ToString(), Does.Contain("Input audio sent: 385920 bytes")
+                .And.Contain("Output audio received: 4 bytes").And.Contain("Total audio transferred: 385924 bytes"));
         });
     }
 
@@ -450,10 +453,10 @@ public class VoiceAgentLiveSampleTests
         using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}""")) { WaitForClose = true };
         byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
         using MemoryStream output = new();
+        using StringWriter transcript = new();
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
-
         await Sample_VoiceAgent_Live.RunAudioConversationAsync(
-            session, speech, output, TextWriter.Null, timeout.Token, streamAudio: true);
+            session, speech, output, transcript, timeout.Token, streamAudio: true);
 
         Assert.Multiple(() =>
         {
@@ -463,6 +466,31 @@ public class VoiceAgentLiveSampleTests
             Assert.That(session.AudioChunks.Skip(2).All(chunk => chunk.ToArray().All(value => value == 0)), Is.True);
             Assert.That(session.ReceiverEnded, Is.True);
             Assert.That(output.Length, Is.GreaterThan(0));
+            Assert.That(transcript.ToString(), Does.Contain("Input audio sent: 385920 bytes")
+                .And.Contain("Output audio received: 4 bytes").And.Contain("Total audio transferred: 385924 bytes"));
+        });
+    }
+
+    [Test]
+    public void AudioTransferTotalsIncludeSilenceAndSeparateReflectedInput()
+    {
+        VoiceAgentE2EDiagnostics.AudioTransfer transfer = new();
+        transfer.Sent(960);
+        transfer.Sent(1920);
+        transfer.Received(4800);
+        transfer.Reflected(960);
+        using StringWriter output = new();
+
+        transfer.Report(output);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(transfer.InputBytes, Is.EqualTo(2880));
+            Assert.That(transfer.OutputBytes, Is.EqualTo(4800));
+            Assert.That(transfer.ReflectedBytes, Is.EqualTo(960));
+            Assert.That(output.ToString(), Does.Contain("Input audio transferred: 2880 bytes")
+                .And.Contain("Output audio transferred: 4800 bytes").And.Contain("Total audio transferred: 8640 bytes")
+                .And.Contain("KiB").And.Contain("MiB").And.Contain("PCM16LE / 24000 Hz / mono"));
         });
     }
 

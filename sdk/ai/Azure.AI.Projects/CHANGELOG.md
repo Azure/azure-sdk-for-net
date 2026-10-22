@@ -12,16 +12,12 @@
 
 ### Bugs Fixed
 
-- Preserved native Live startup error types, codes, and messages instead of returning only a generic startup failure.
-
 ### Other Changes
 
 ### Sample Updates
 
-- Added complete Live REST operation samples for all synchronous/asynchronous typed/protocol overloads, stored-conversation capture, and WebSocket options, controls, stream audio, cancellation, and asynchronous disposal.
-- Fixed Live audio pacing to send all input speech before its silence tail, and surfaced delegated backend errors without waiting for cancellation.
-- Added native Live connection, real-speech WAV, text-guidance, and Responses function-calling samples.
-- Added scripted multi-turn Live text and strengthened sample tool-result batching, error reporting, premature-disconnect checks, and audio-task cancellation.
+- Added Realtime function-calling and recorded-speech audio samples.
+- Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs with synchronous/asynchronous typed/protocol overloads.
 - Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
 
 ## 3.0.0-beta.5 (2026-10-16)

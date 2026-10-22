@@ -162,6 +162,10 @@ Live is continuous speech, not a Realtime-style request/response text chat:
 
 This sample sends real recorded speech, continues with silence to advance the timeline,
 captures generated PCM audio, and writes a valid WAV file. It also sends typed text guidance.
+Like the Realtime audio example, it prints received event types and the actual input, output,
+and total audio bytes with KB, sample rate, channels, and PCM duration. Input totals include
+the silence that was actually sent. Unlike Realtime, Live sends and receives concurrently and
+uses native session closure instead of committing an input buffer or starting a frontend response.
 The WAV reader, writer, and pacing helpers are in the linked sample source.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Audio
@@ -205,8 +209,8 @@ internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient s
     TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false)
 {
     using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-    Task receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
-    Task feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
+    Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
+    Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
     Task closing = CloseAfterAudioAsync(session, feeding, flow.Token);
     Task first = await Task.WhenAny(receiving, closing);
     if (first.IsFaulted || first.IsCanceled)
@@ -214,6 +218,14 @@ internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient s
         flow.Cancel();
     }
     await Task.WhenAll(receiving, closing);
+    long inputBytes = await feeding;
+    long outputBytes = await receiving;
+    await transcript.WriteLineAsync($"Input audio sent: {inputBytes} bytes ({inputBytes / 1024.0:F1} KB), " +
+        $"{inputBytes / 48000.0:F2}s PCM16LE / 24000 Hz / 1 channel");
+    await transcript.WriteLineAsync($"Output audio received: {outputBytes} bytes ({outputBytes / 1024.0:F1} KB), " +
+        $"{outputBytes / 48000.0:F2}s PCM16LE / 24000 Hz / 1 channel");
+    await transcript.WriteLineAsync($"Total audio transferred: {inputBytes + outputBytes} bytes " +
+        $"({(inputBytes + outputBytes) / 1024.0:F1} KB)");
 }
 ```
 
@@ -224,8 +236,8 @@ unusually long answers. Silent PCM advances the Live timeline and **voice usage 
 while waiting. Always supply a bounded cancellation token.
 
 Only one event enumeration can receive from a session at a time. Sends may run concurrently
-and are serialized internally. A receive loop can run concurrently with `CloseAsync`; finish
-or dispose that enumeration so shutdown can drain remaining frames. Canceling a WebSocket
+and are serialized internally. `CloseAsync` can also be awaited inside the event-consumer loop.
+Continue iterating afterward if final audio or usage events are needed. Canceling a WebSocket
 I/O operation may abort its transport; create a new session rather than reconnecting the
 disposed session object.
 
@@ -475,6 +487,8 @@ internal static async Task RunSessionControlsAsync(
 and does not pace a file automatically. This runnable WAV example uses a sample-only
 `PacedPcmStream` to provide 20 ms reads, followed by the same eight-second silence tail as the
 chunked example. It sends no WAV header over the socket and writes returned PCM as a WAV.
+Its input count comes from the bytes read by the completed stream send, not the WAV file size
+or a duration estimate.
 
 ```C# Snippet:Sample_VoiceAgent_Live_StreamAudio
 public static async Task StreamAudioAsync(string projectEndpoint, string liveDeployment,
@@ -506,11 +520,12 @@ public static async Task StreamAudioAsync(string projectEndpoint, string liveDep
 ```
 
 ```C# Snippet:Sample_VoiceAgent_Live_StreamSend
-private static async Task FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
 {
-    using Stream audio = new PacedPcmStream(speech);
+    using PacedPcmStream audio = new(speech);
     // The SDK reads until EOF and leaves this stream open; the caller supplies real-time pacing.
     await session.SendInputAudioAsync(audio, cancellationToken);
+    return audio.BytesRead;
 }
 ```
 

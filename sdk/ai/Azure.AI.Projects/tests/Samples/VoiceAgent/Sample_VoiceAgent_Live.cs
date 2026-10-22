@@ -514,8 +514,8 @@ public static class Sample_VoiceAgent_Live
         TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false)
     {
         using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        Task receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
-        Task feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
+        Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
+        Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
         Task closing = CloseAfterAudioAsync(session, feeding, flow.Token);
         Task first = await Task.WhenAny(receiving, closing);
         if (first.IsFaulted || first.IsCanceled)
@@ -523,12 +523,21 @@ public static class Sample_VoiceAgent_Live
             flow.Cancel();
         }
         await Task.WhenAll(receiving, closing);
+        long inputBytes = await feeding;
+        long outputBytes = await receiving;
+        await transcript.WriteLineAsync($"Input audio sent: {inputBytes} bytes ({inputBytes / 1024.0:F1} KB), " +
+            $"{inputBytes / 48000.0:F2}s PCM16LE / 24000 Hz / 1 channel");
+        await transcript.WriteLineAsync($"Output audio received: {outputBytes} bytes ({outputBytes / 1024.0:F1} KB), " +
+            $"{outputBytes / 48000.0:F2}s PCM16LE / 24000 Hz / 1 channel");
+        await transcript.WriteLineAsync($"Total audio transferred: {inputBytes + outputBytes} bytes " +
+            $"({(inputBytes + outputBytes) / 1024.0:F1} KB)");
     }
     #endregion
 
-    internal static async Task ReceiveAudioAsync(ProjectsLiveSessionClient session, Stream output, TextWriter transcript,
+    internal static async Task<long> ReceiveAudioAsync(ProjectsLiveSessionClient session, Stream output, TextWriter transcript,
         CancellationToken cancellationToken)
     {
+        long receivedBytes = 0;
         string speaker = null;
         async Task WriteCaptionAsync(string name, string delta)
         {
@@ -556,6 +565,7 @@ public static class Sample_VoiceAgent_Live
 
         await foreach (LiveServerEvent serverEvent in session.ReceiveEventsAsync(cancellationToken))
         {
+            Console.WriteLine($"\nReceived event: {serverEvent.GetType().Name}");
             ThrowIfServiceFailure(serverEvent);
             switch (serverEvent)
             {
@@ -566,6 +576,7 @@ public static class Sample_VoiceAgent_Live
                         throw new InvalidDataException("Live PCM16 output ended in the middle of a sample.");
                     }
                     await output.WriteAsync(pcm, 0, pcm.Length, cancellationToken);
+                    receivedBytes += pcm.Length;
                     break;
                 case LiveServerEventLiveInputTranscriptDelta input:
                     await WriteCaptionAsync("You", input.Delta);
@@ -582,7 +593,7 @@ public static class Sample_VoiceAgent_Live
                     {
                         await transcript.WriteLineAsync();
                     }
-                    return;
+                    return receivedBytes;
                 case LiveServerEventLiveSessionUsageUpdated usage:
                     await WriteNoticeAsync($"Cumulative Live audio usage: {usage.Usage.Seconds} seconds");
                     break;
@@ -709,12 +720,13 @@ public static class Sample_VoiceAgent_Live
         await session.CloseAsync(cancellationToken);
     }
 
-    private static async Task FeedAudioAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+    private static async Task<long> FeedAudioAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
     {
         const int chunkSize = 960;
         const int chunkMilliseconds = 20;
         byte[] silence = new byte[chunkSize];
         int offset = 0;
+        long sentBytes = 0;
         int silenceChunksRemaining = 8000 / chunkMilliseconds;
         Stopwatch clock = Stopwatch.StartNew();
         while (offset < speech.Length || silenceChunksRemaining > 0)
@@ -723,6 +735,7 @@ public static class Sample_VoiceAgent_Live
             int count = Math.Min(chunkSize, speech.Length - offset);
             BinaryData audio = count > 0 ? BinaryData.FromBytes(speech.AsMemory(offset, count)) : BinaryData.FromBytes(silence);
             await session.SendInputAudioAsync(audio, cancellationToken);
+            sentBytes += audio.ToMemory().Length;
             offset += count;
             if (count == 0)
             {
@@ -734,14 +747,16 @@ public static class Sample_VoiceAgent_Live
                 await Task.Delay(delay, cancellationToken);
             }
         }
+        return sentBytes;
     }
 
     #region Snippet:Sample_VoiceAgent_Live_StreamSend
-    private static async Task FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+    private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
     {
-        using Stream audio = new PacedPcmStream(speech);
+        using PacedPcmStream audio = new(speech);
         // The SDK reads until EOF and leaves this stream open; the caller supplies real-time pacing.
         await session.SendInputAudioAsync(audio, cancellationToken);
+        return audio.BytesRead;
     }
     #endregion
 
@@ -761,6 +776,7 @@ public static class Sample_VoiceAgent_Live
     {
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private TimeSpan _nextRead;
+        public long BytesRead { get; private set; }
 
         public PacedPcmStream(byte[] speech) : base(WithSilenceTail(speech), writable: false)
         {
@@ -779,6 +795,7 @@ public static class Sample_VoiceAgent_Live
                 await Task.Delay(delay, cancellationToken);
             }
             int read = await base.ReadAsync(buffer, offset, Math.Min(count, 960), cancellationToken);
+            BytesRead += read;
             _nextRead = _clock.Elapsed + TimeSpan.FromSeconds(read / 48000.0);
             return read;
         }
