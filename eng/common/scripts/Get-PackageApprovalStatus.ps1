@@ -8,7 +8,6 @@ Approval summary headings include the package name and version to distinguish pa
 
 .PARAMETER PackageInfoFiles
 Package-info JSON files containing the package name, version, and optional API hash.
-Missing or blank hashes are sent as "dummy" so API Review Hub can decide whether review is required.
 
 .PARAMETER RepoOwner
 The optional GitHub repository owner to query in API Review Hub.
@@ -85,22 +84,25 @@ function Write-ApprovalSummary([object] $Response, [string] $PackageName, [strin
 }
 
 function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [string] $ApiHash) {
-    $ApiHash = if ([string]::IsNullOrWhiteSpace($ApiHash)) { "dummy" } else { $ApiHash }
     $arguments = @(
         "package",
         "get-approval-status",
         "--language", $LanguageShort,
         "--package-name", $PackageName,
         "--package-version", $PackageVersion,
-        "--output", "json",
-        "--api-hash", $ApiHash
+        "--output", "json"
     )
+
+    if (-not [string]::IsNullOrWhiteSpace($ApiHash)) {
+        $arguments += @("--api-hash", $ApiHash)
+    }
 
     if (-not [string]::IsNullOrWhiteSpace($RepoOwner)) {
         $arguments += @("--repo-owner", $RepoOwner)
     }
 
-    Write-Host "Checking package approval: language=$LanguageShort, package=$PackageName, version=$PackageVersion, apiHash=$ApiHash"
+    $hashDescription = if ([string]::IsNullOrWhiteSpace($ApiHash)) { "not provided" } else { $ApiHash }
+    Write-Host "Checking package approval: language=$LanguageShort, package=$PackageName, version=$PackageVersion, apiHash=$hashDescription"
     $formattedArguments = @($arguments | ForEach-Object { Format-CommandArgument $_ })
     Write-Host "Command: azsdk $($formattedArguments -join ' ')"
 
