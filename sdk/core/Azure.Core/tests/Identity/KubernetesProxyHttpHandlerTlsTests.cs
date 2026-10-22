@@ -15,19 +15,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     /// <summary>
-    /// Linux-specific tests for KubernetesProxyHttpHandler to verify the X509Chain fix
-    /// for OpenSSL. These tests use real HTTPS connections to trigger the SSL validation
-    /// callback where the original bug manifested as a NullReferenceException in
-    /// OpenSslX509ChainProcessor.FindFirstChain when reusing the passed-in chain object.
+    /// Tests for KubernetesProxyHttpHandler using real HTTPS connections, including
+    /// CA rotation and the X509Chain validation callback on Linux/OpenSSL.
     /// </summary>
-    [RunOnlyOnPlatforms(Linux = true)]
-    public class KubernetesProxyHttpHandlerLinuxTests
+    public class KubernetesProxyHttpHandlerTlsTests
     {
         private TestTempFileHandler _tempFiles;
         private static X509Certificate2 s_caCertificate;
@@ -63,15 +59,134 @@ namespace Azure.Core.Tests.Identity
             _httpsServer = null;
         }
 
+        [TestCase(1)]
+        [TestCase(5)]
+        public async Task SendAsync_ReloadsCaAfterRealRequests(int concurrentRequests)
+        {
+            var (newCa, newServerCertificate) = GenerateTestCertificates();
+            using (newCa)
+            using (newServerCertificate)
+            {
+                _httpsServer = new SimpleHttpsServer(s_serverCertificate);
+                int port = await _httpsServer.StartAsync();
+                string caFilePath = WriteCaToPemFile(s_caCertificate);
+                using var client = new HttpClient(new KubernetesProxyHttpHandler(new KubernetesProxyConfig
+                {
+                    ProxyUrl = new Uri($"https://localhost:{port}"),
+                    SniName = "localhost",
+                    CaFilePath = caFilePath
+                }))
+                {
+                    Timeout = TimeSpan.FromSeconds(10)
+                };
+
+                using (HttpResponseMessage response = await client.GetAsync("https://login.microsoftonline.com/token"))
+                {
+                    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                }
+
+                File.WriteAllText(caFilePath, ExportCertificateToPem(newCa));
+
+                // Reject the retired CA on both the reload request and subsequent requests.
+                for (int i = 0; i < 2; i++)
+                {
+                    Assert.ThrowsAsync<HttpRequestException>(async () =>
+                    {
+                        using HttpResponseMessage response = await client.GetAsync("https://login.microsoftonline.com/token");
+                    });
+                }
+
+                _httpsServer.SetCertificate(newServerCertificate);
+                var requests = new Task<HttpResponseMessage>[concurrentRequests];
+                for (int i = 0; i < requests.Length; i++)
+                {
+                    requests[i] = client.GetAsync("https://login.microsoftonline.com/token");
+                }
+
+                foreach (HttpResponseMessage response in await Task.WhenAll(requests))
+                {
+                    using (response)
+                    {
+                        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                    }
+                }
+
+                // Rotate again while requests race to select the next transport.
+                File.WriteAllText(caFilePath, ExportCertificateToPem(s_caCertificate));
+                _httpsServer.SetCertificate(s_serverCertificate);
+                for (int i = 0; i < requests.Length; i++)
+                {
+                    requests[i] = client.GetAsync("https://login.microsoftonline.com/token");
+                }
+
+                foreach (HttpResponseMessage response in await Task.WhenAll(requests))
+                {
+                    using (response)
+                    {
+                        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public async Task SendAsync_CaReloadLetsInFlightRequestComplete()
+        {
+            var (newCa, newServerCertificate) = GenerateTestCertificates();
+            using (newCa)
+            using (newServerCertificate)
+            using (var newServer = new SimpleHttpsServer(newServerCertificate))
+            {
+                var releaseResponse = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                _httpsServer = new SimpleHttpsServer(s_serverCertificate, releaseResponse.Task);
+                int oldPort = await _httpsServer.StartAsync();
+                int newPort = await newServer.StartAsync();
+                string caFilePath = WriteCaToPemFile(s_caCertificate);
+                var config = new KubernetesProxyConfig
+                {
+                    ProxyUrl = new Uri($"https://localhost:{oldPort}"),
+                    SniName = "localhost",
+                    CaFilePath = caFilePath
+                };
+                using var handler = new KubernetesProxyHttpHandler(config);
+                using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(10) };
+                var originalHandler = handler.InnerHandler;
+                Task<HttpResponseMessage> inFlightRequest = client.GetAsync("https://login.microsoftonline.com/token");
+                try
+                {
+                    await _httpsServer.RequestReceived.WaitAsync(TimeSpan.FromSeconds(10));
+                    File.WriteAllText(caFilePath, ExportCertificateToPem(newCa));
+                    config.ProxyUrl = new Uri($"https://localhost:{newPort}");
+                    using HttpResponseMessage response = await client.GetAsync("https://login.microsoftonline.com/token");
+                    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                    Assert.IsFalse(inFlightRequest.IsCompleted, "The old request should still be waiting for its response.");
+                    Assert.AreNotSame(originalHandler, handler.InnerHandler);
+                }
+                finally
+                {
+                    releaseResponse.TrySetResult(true);
+                }
+
+                using HttpResponseMessage oldResponse = await inFlightRequest;
+                Assert.AreEqual(HttpStatusCode.OK, oldResponse.StatusCode);
+                using var retiredInvoker = new HttpMessageInvoker(originalHandler, disposeHandler: false);
+                using var request = new HttpRequestMessage(HttpMethod.Get, config.ProxyUrl);
+                Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                {
+                    using HttpResponseMessage response = await retiredInvoker.SendAsync(request, CancellationToken.None);
+                });
+            }
+        }
+
         /// <summary>
-        /// Verifies that HTTPS requests with a custom CA certificate succeed on Linux.
+        /// Verifies that HTTPS requests with a custom CA certificate succeed.
         /// This is the primary regression test for the X509Chain fix.
         /// Bug: Reusing the passed-in X509Chain and calling Build() caused NullReferenceException
         /// in OpenSslX509ChainProcessor.FindFirstChain on Linux with OpenSSL.
         /// Fix: Create a new X509Chain instance in the validation callback.
         /// </summary>
         [Test]
-        public async Task SendAsync_WithCustomCa_SucceedsOnLinux()
+        public async Task SendAsync_WithCustomCa_Succeeds()
         {
             // Arrange
             _httpsServer = new SimpleHttpsServer(s_serverCertificate);
@@ -100,7 +215,7 @@ namespace Azure.Core.Tests.Identity
         /// Verifies that inline CA data (CaData property) works correctly on Linux.
         /// </summary>
         [Test]
-        public async Task SendAsync_WithInlineCaData_SucceedsOnLinux()
+        public async Task SendAsync_WithInlineCaData_Succeeds()
         {
             // Arrange
             _httpsServer = new SimpleHttpsServer(s_serverCertificate);
@@ -130,7 +245,7 @@ namespace Azure.Core.Tests.Identity
         /// Ensures the fix handles concurrent chain validation properly without race conditions.
         /// </summary>
         [Test]
-        public async Task SendAsync_WithCustomCa_ConcurrentRequestsSucceedOnLinux()
+        public async Task SendAsync_WithCustomCa_ConcurrentRequestsSucceed()
         {
             // Arrange
             _httpsServer = new SimpleHttpsServer(s_serverCertificate);
@@ -173,7 +288,7 @@ namespace Azure.Core.Tests.Identity
         /// This tests the pattern used in the fix directly without network calls.
         /// </summary>
         [Test]
-        public void X509Chain_NewInstance_BuildSucceedsOnLinux()
+        public void X509Chain_NewInstance_BuildSucceeds()
         {
             // Act - Using a NEW X509Chain instance (the fix pattern)
             using var chain = new X509Chain();
@@ -194,6 +309,7 @@ namespace Azure.Core.Tests.Identity
         /// This test demonstrates why we must create a new chain instance for each validation.
         /// </summary>
         [Test]
+        [RunOnlyOnPlatforms(Linux = true)]
         [Explicit("Diagnostic-only test. Behavior varies across runtime/OpenSSL versions and is documented via test output.")]
         public void X509Chain_ReusedInstance_MayFailOnLinux()
         {
@@ -336,15 +452,26 @@ namespace Azure.Core.Tests.Identity
         /// </summary>
         private sealed class SimpleHttpsServer : IDisposable
         {
-            private readonly X509Certificate2 _certificate;
+            private X509Certificate2 _certificate;
+            private readonly Task _responseGate;
+            private readonly TaskCompletionSource<bool> _requestReceived =
+                new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             private TcpListener _listener;
             private CancellationTokenSource _cts;
             private Task _serverTask;
             private bool _disposed;
 
-            public SimpleHttpsServer(X509Certificate2 certificate)
+            public Task RequestReceived => _requestReceived.Task;
+
+            public SimpleHttpsServer(X509Certificate2 certificate, Task responseGate = null)
             {
                 _certificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
+                _responseGate = responseGate;
+            }
+
+            public void SetCertificate(X509Certificate2 certificate)
+            {
+                Volatile.Write(ref _certificate, certificate);
             }
 
             public async Task<int> StartAsync()
@@ -393,7 +520,7 @@ namespace Azure.Core.Tests.Identity
                     using (var sslStream = new SslStream(client.GetStream(), false))
                     {
                         await sslStream.AuthenticateAsServerAsync(
-                            _certificate,
+                            Volatile.Read(ref _certificate),
                             clientCertificateRequired: false,
                             enabledSslProtocols: SslProtocols.Tls12 | SslProtocols.Tls13,
                             checkCertificateRevocation: false);
@@ -401,6 +528,11 @@ namespace Azure.Core.Tests.Identity
                         // Read HTTP request headers (simplified - we just need to consume the request)
                         var buffer = new byte[4096];
                         _ = await sslStream.ReadAsync(buffer.AsMemory(), cancellationToken);
+                        _requestReceived.TrySetResult(true);
+                        if (_responseGate != null)
+                        {
+                            await _responseGate.WaitAsync(cancellationToken);
+                        }
 
                         // Send HTTP response
                         const string jsonBody = "{\"status\":\"ok\"}";

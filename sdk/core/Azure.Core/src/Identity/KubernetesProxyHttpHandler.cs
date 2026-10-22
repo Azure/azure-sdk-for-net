@@ -19,18 +19,23 @@ namespace Azure.Identity
     /// Handles custom CA certificates and monitors CA file changes for automatic reloading.
     /// </summary>
     [UnsupportedOSPlatform("browser")]
-    internal class KubernetesProxyHttpHandler : DelegatingHandler
+    internal class KubernetesProxyHttpHandler : HttpMessageHandler
     {
         private readonly KubernetesProxyConfig _config;
         private byte[] _lastCaData;
         private readonly object _lock = new object();
         private HttpPipeline _pipeline;
+        private HandlerState _handler;
+        private bool _disposed;
+
+        internal HttpMessageHandler InnerHandler => _handler.Handler;
 
         public KubernetesProxyHttpHandler(KubernetesProxyConfig config)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
 
-            InnerHandler = CreateHandler();
+            _lastCaData = GetCaCertificateData();
+            _handler = CreateHandler(_lastCaData);
             if (_config.Transport != null)
             {
                 // Use mock transport for testing
@@ -40,28 +45,30 @@ namespace Azure.Identity
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            using (((DisposingHttpClientHandler)InnerHandler).StartSend())
+            HandlerState handler;
+            lock (_lock)
             {
-                // Reload handler if CA certificate file has changed
-                if (ShouldReloadHandler())
+                if (_disposed)
                 {
-                    lock (_lock)
-                    {
-                        if (ShouldReloadHandler())
-                        {
-                            var oldHandler = InnerHandler as DisposingHttpClientHandler;
-                            InnerHandler = CreateHandler();
-
-                            // Dispose old handler after in-flight requests complete
-                            Task.Run(async () =>
-                            {
-                                await oldHandler.WaitForOutstandingRequests().ConfigureAwait(false);
-                                oldHandler.Dispose();
-                            });
-                        }
-                    }
+                    throw new ObjectDisposedException(nameof(KubernetesProxyHttpHandler));
                 }
 
+                byte[] caData = GetCaCertificateData();
+                if (ShouldReloadHandler(caData))
+                {
+                    HandlerState replacement = CreateHandler(caData);
+                    RetireHandler(_handler);
+                    _handler = replacement;
+                    _lastCaData = caData;
+                    AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
+                }
+
+                handler = _handler;
+                handler.OutstandingRequests++;
+            }
+
+            try
+            {
                 RewriteRequestUrl(request);
 
                 if (_pipeline != null)
@@ -69,7 +76,44 @@ namespace Azure.Identity
                     return await SendMockRequest(request, cancellationToken).ConfigureAwait(false);
                 }
 
-                return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                return await handler.Invoker.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                lock (_lock)
+                {
+                    handler.OutstandingRequests--;
+                    if (handler.Retired && handler.OutstandingRequests == 0)
+                    {
+                        handler.Dispose();
+                    }
+                }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                lock (_lock)
+                {
+                    if (!_disposed)
+                    {
+                        _disposed = true;
+                        RetireHandler(_handler);
+                    }
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private static void RetireHandler(HandlerState handler)
+        {
+            handler.Retired = true;
+            if (handler.OutstandingRequests == 0)
+            {
+                handler.Dispose();
             }
         }
 
@@ -159,10 +203,8 @@ namespace Azure.Identity
             request.Headers.Host = _config.SniName;
         }
 
-        private bool ShouldReloadHandler()
+        private bool ShouldReloadHandler(byte[] currentCaData)
         {
-            byte[] currentCaData = GetCaCertificateData();
-
             // Keep using current handler during rotation gaps (empty or missing file)
             if (currentCaData == null || currentCaData.Length == 0)
             {
@@ -172,7 +214,6 @@ namespace Azure.Identity
 
             if (_lastCaData == null || !currentCaData.AsSpan().SequenceEqual(_lastCaData))
             {
-                AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
                 return true;
             }
 
@@ -198,23 +239,29 @@ namespace Azure.Identity
             }
         }
 
-        private DisposingHttpClientHandler CreateHandler()
+        private HandlerState CreateHandler(byte[] caData)
         {
-            var handler = new DisposingHttpClientHandler();
+            var handler = new HttpClientHandler();
+            X509Certificate2 caCertificate = null;
 
-            byte[] caData = GetCaCertificateData();
-            _lastCaData = caData;
-
-            // Configure TLS/SSL settings if custom CA is provided
-            if (caData != null && caData.Length > 0)
+            try
             {
-                ConfigureCustomCertificates(handler, caData);
-            }
+                if (caData != null && caData.Length > 0)
+                {
+                    caCertificate = ConfigureCustomCertificates(handler, caData);
+                }
 
-            return handler;
+                return new HandlerState(handler, caCertificate);
+            }
+            catch
+            {
+                caCertificate?.Dispose();
+                handler.Dispose();
+                throw;
+            }
         }
 
-        private void ConfigureCustomCertificates(HttpClientHandler handler, byte[] caData)
+        private X509Certificate2 ConfigureCustomCertificates(HttpClientHandler handler, byte[] caData)
         {
             try
             {
@@ -265,11 +312,36 @@ namespace Azure.Identity
                         return false;
                     }
                 };
+
+                return caCertificate;
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
                     "Failed to configure custom CA certificate for Kubernetes token proxy.", ex);
+            }
+        }
+
+        private sealed class HandlerState : IDisposable
+        {
+            private readonly X509Certificate2 _caCertificate;
+
+            public HttpClientHandler Handler { get; }
+            public HttpMessageInvoker Invoker { get; }
+            public int OutstandingRequests { get; set; }
+            public bool Retired { get; set; }
+
+            public HandlerState(HttpClientHandler handler, X509Certificate2 caCertificate)
+            {
+                Handler = handler;
+                Invoker = new HttpMessageInvoker(handler);
+                _caCertificate = caCertificate;
+            }
+
+            public void Dispose()
+            {
+                Invoker.Dispose();
+                _caCertificate?.Dispose();
             }
         }
     }

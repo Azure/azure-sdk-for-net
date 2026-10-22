@@ -15,9 +15,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class KubernetesProxyHttpHandlerTests
@@ -287,6 +286,39 @@ namespace Azure.Core.Tests.Identity
             // Verify the new handler has certificate validation configured
             var finalCallback = (finalInnerHandler as HttpClientHandler)?.ServerCertificateCustomValidationCallback;
             Assert.IsNotNull(finalCallback, "Reloaded handler should have certificate validation callback");
+        }
+
+        [Test]
+        public async Task SendAsync_RetriesInvalidCaWithoutChangingActiveHandler()
+        {
+            var caFilePath = _tempFiles.GetTempFilePath();
+            var originalCa = GetTestCertificatePem();
+            File.WriteAllText(caFilePath, originalCa);
+            using var handler = new KubernetesProxyHttpHandler(CreateTestConfig(
+                caFilePath: caFilePath, transport: CreateMockTransport()));
+            using var client = new HttpClient(handler);
+            using var initialResponse = await client.GetAsync(DefaultTargetUrl);
+            var initialHandler = handler.InnerHandler;
+
+            File.WriteAllText(caFilePath, "invalid CA certificate");
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                {
+                    using var response = await client.GetAsync(DefaultTargetUrl);
+                });
+                Assert.AreSame(initialHandler, handler.InnerHandler);
+            }
+
+            File.WriteAllText(caFilePath, originalCa);
+            using var recoveredResponse = await client.GetAsync(DefaultTargetUrl);
+            Assert.AreEqual(HttpStatusCode.OK, recoveredResponse.StatusCode);
+            Assert.AreSame(initialHandler, handler.InnerHandler);
+
+            File.WriteAllText(caFilePath, GetDifferentTestCertificatePem());
+            using var reloadedResponse = await client.GetAsync(DefaultTargetUrl);
+            Assert.AreEqual(HttpStatusCode.OK, reloadedResponse.StatusCode);
+            Assert.AreNotSame(initialHandler, handler.InnerHandler);
         }
 
         [Test]

@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed CA certificate reloads for an already-used Kubernetes token proxy in `WorkloadIdentityCredential`, so subsequent requests use the new CA without throwing or retaining the old trust configuration.
+
 ### Other Changes
 
 ## 1.63.0 (2026-09-25)
