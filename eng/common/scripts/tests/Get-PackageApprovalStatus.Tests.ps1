@@ -57,11 +57,36 @@ Describe "Get-PackageApprovalStatus.ps1" {
         ) -join "|")
     }
 
-    It "omits the API hash when it is unavailable" {
+    It "uses dummy when the API hash is unavailable" {
         & $scriptPath -PackageInfoFiles $packageInfoPath
 
-        ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--api-hash"
+        ($global:CapturedAzSdkArguments -join "|") | Should Match "--api-hash\|dummy"
         ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--repo-owner"
+    }
+
+    It "uses dummy for null, empty, and whitespace API hashes" {
+        foreach ($hash in @($null, "", "   ")) {
+            $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
+            $packageInfo | Add-Member -NotePropertyName ApiHash -NotePropertyValue $hash -Force
+            $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
+
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+
+            ($global:CapturedAzSdkArguments -join "|") | Should Match "--api-hash\|dummy"
+        }
+    }
+
+    It "checks management packages without a hash and accepts reviewNotRequired" {
+        $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
+        $packageInfo.Name = "azure-mgmt-test"
+        $packageInfo | Add-Member -NotePropertyName SdkType -NotePropertyValue mgmt
+        $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
+        $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":true,"finalSource":"reviewHub","reason":"reviewNotRequired"}}'
+
+        & $scriptPath -PackageInfoFiles $packageInfoPath
+
+        ($global:CapturedAzSdkArguments -join "|") | Should Match "--package-name\|azure-mgmt-test"
+        ($global:CapturedAzSdkArguments -join "|") | Should Match "--api-hash\|dummy"
     }
 
     It "fails without prompting when the azsdk executable is unavailable" {
