@@ -20,19 +20,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal sealed class MultiEndpointStatsbeatExporter : BaseExporter<Metric>
     {
+        private static readonly Destinations s_disposed = new(null, null);
+
         private readonly string? _connectionStringOverride;
         private readonly bool _defaultIsEu;
         private readonly HttpMessageHandler? _configHandler;
         private readonly Func<string, Measurement<int>> _createMeasurement;
         private readonly long _intervalTicks;
-        private readonly object _destinationGate = new();
-        private Destination? _nonEu;
-        private Destination? _eu;
+        private Destinations? _destinations;
+        private IReadOnlyDictionary<string, bool>? _reportRegions;
         private KeyValuePair<string, object?>[]? _tags;
         private int _keyIndex;
         private AzureMonitorResource? _resource;
-        private bool _disposed;
-        private bool _initialized;
 
         internal MultiEndpointStatsbeatExporter(
             string? connectionStringOverride,
@@ -50,20 +49,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal AttachStatsbeatRegistry Registry { get; } = new();
 
-        internal bool HasDestination => _nonEu != null || _eu != null;
+        internal bool HasDestination => Volatile.Read(ref _destinations)?.HasDestination == true;
 
-        internal string? DefaultConnectionString => (_defaultIsEu ? _eu : _nonEu)?.ConnectionString;
+        internal string? DefaultConnectionString => Volatile.Read(ref _destinations)?.Get(_defaultIsEu)?.ConnectionString;
 
         internal void Observe(EndpointRouteBatch batch, long now)
-        {
-            lock (_destinationGate)
-            {
-                if (!_disposed)
-                {
-                    Registry.Observe(batch, now, !_initialized || _nonEu != null, !_initialized || _eu != null);
-                }
-            }
-        }
+            => Registry.Observe(batch, now);
 
         internal void Initialize()
         {
@@ -112,15 +103,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private void Publish(Destination? nonEu, Destination? eu)
         {
-            lock (_destinationGate)
+            var destinations = new Destinations(nonEu, eu);
+            // Disposal replaces the pending state, so late configuration cannot publish.
+            if (Interlocked.CompareExchange(ref _destinations, destinations, null) == null)
             {
-                if (!_disposed)
-                {
-                    _nonEu = nonEu;
-                    _eu = eu;
-                    _initialized = true;
-                    return;
-                }
+                Registry.SetEnabledRegions(nonEu != null, eu != null);
+                return;
             }
 
             nonEu?.Transmitter.Dispose();
@@ -132,6 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal IEnumerable<Measurement<int>> GetMeasurements(long now)
         {
+            _reportRegions = null;
             if (Registry.Count == 0)
             {
                 return Array.Empty<Measurement<int>>();
@@ -152,14 +141,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     _tags = tags;
                 }
 
-                var keys = Registry.Collect(now, _intervalTicks, _nonEu != null, _eu != null);
-                var measurements = new List<Measurement<int>>(keys.Count);
-                foreach (var key in keys)
+                // The reader serializes collection and export. Observations cannot mutate
+                // this collection's region snapshot while its metrics are being exported.
+                var regions = Registry.Collect(now, _intervalTicks);
+                var measurements = new List<Measurement<int>>(regions.Count);
+                foreach (var key in regions.Keys)
                 {
                     var tags = (KeyValuePair<string, object?>[])_tags.Clone();
                     tags[_keyIndex] = new KeyValuePair<string, object?>("cikey", key);
                     measurements.Add(new Measurement<int>(1, tags));
                 }
+                _reportRegions = regions;
 
                 return measurements;
             }
@@ -177,6 +169,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             {
                 _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(string.Empty);
                 var (items, _) = MetricHelper.OtelToAzureMonitorMetrics(batch, _resource, string.Empty);
+                var destinations = Volatile.Read(ref _destinations);
+                var reportRegions = _reportRegions;
                 var nonEuItems = new List<TelemetryItem>();
                 var euItems = new List<TelemetryItem>();
 
@@ -188,13 +182,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         && data.Metrics[0].Name == StatsbeatConstants.AttachStatsbeatMetricName)
                     {
                         if (!data.Properties.TryGetValue("cikey", out var key)
-                            || !Registry.TryGetReportRegion(key, out isEu))
+                            || reportRegions == null
+                            || !reportRegions.TryGetValue(key, out isEu))
                         {
                             continue;
                         }
                     }
 
-                    var destination = isEu ? _eu : _nonEu;
+                    var destination = destinations?.Get(isEu);
                     if (destination != null)
                     {
                         item.InstrumentationKey = destination.InstrumentationKey;
@@ -202,8 +197,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     }
                 }
 
-                var nonEuResult = Send(_nonEu, nonEuItems);
-                var euResult = Send(_eu, euItems);
+                var nonEuResult = Send(destinations?.NonEu, nonEuItems);
+                var euResult = Send(destinations?.Eu, euItems);
                 return nonEuResult == ExportResult.Success && euResult == ExportResult.Success
                     ? ExportResult.Success : ExportResult.Failure;
             }
@@ -242,23 +237,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             if (disposing)
             {
-                Destination? nonEu;
-                Destination? eu;
-                lock (_destinationGate)
-                {
-                    _disposed = true;
-                    nonEu = _nonEu;
-                    eu = _eu;
-                    _nonEu = null;
-                    _eu = null;
-                }
-
-                nonEu?.Transmitter.Dispose();
-                eu?.Transmitter.Dispose();
-                Registry.Clear();
+                Registry.Close();
+                var destinations = Interlocked.Exchange(ref _destinations, s_disposed);
+                destinations?.NonEu?.Transmitter.Dispose();
+                destinations?.Eu?.Transmitter.Dispose();
             }
 
             base.Dispose(disposing);
+        }
+
+        private sealed class Destinations
+        {
+            internal Destinations(Destination? nonEu, Destination? eu)
+            {
+                NonEu = nonEu;
+                Eu = eu;
+            }
+
+            internal Destination? NonEu { get; }
+            internal Destination? Eu { get; }
+            internal bool HasDestination => NonEu != null || Eu != null;
+            internal Destination? Get(bool isEu) => isEu ? Eu : NonEu;
         }
 
         private sealed class Destination

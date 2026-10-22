@@ -212,10 +212,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
 
             _statsbeat_ConnectionString = _multiEndpointExporter!.DefaultConnectionString;
-            if (!_multiEndpointExporter.HasDestination)
-            {
-                _multiEndpointExporter.Registry.Clear();
-            }
             if (_multiEndpointExporter.HasDestination)
             {
                 try

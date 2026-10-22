@@ -18,6 +18,8 @@
 
 ### Other Changes
 
+- Reduced locking in multi-endpoint Attach SDK statistics observation and export.
+
 ## 1.10.0 (2026-10-05)
 
 ### Features Added
