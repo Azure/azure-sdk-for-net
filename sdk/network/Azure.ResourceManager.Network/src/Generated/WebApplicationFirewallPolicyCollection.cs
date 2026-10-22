@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebApplicationFirewallPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WebApplicationFirewallPolicyResource.ResourceType, out string webApplicationFirewallPolicyApiVersion);
             _webApplicationFirewallPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPolicies(_webApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webApplicationFirewallPolicyApiVersion ?? "2026-01-01");
+            _webApplicationFirewallPoliciesRestClient = new WebApplicationFirewallPolicies(_webApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> The pages of SCEnvironmentRecordDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SCEnvironmentRecordData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     yield break;
                 }
-                GetEnvironmentsResponse result = GetEnvironmentsResponse.FromResponse(response);
+                GetEnvironmentsResult result = GetEnvironmentsResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<SCEnvironmentRecordData>.FromValues((IReadOnlyList<SCEnvironmentRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

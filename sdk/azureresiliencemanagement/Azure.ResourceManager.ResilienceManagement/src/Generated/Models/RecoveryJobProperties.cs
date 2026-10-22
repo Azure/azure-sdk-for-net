@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of recovery job associated with Recovery Orchestration Plan. </summary>
-    public partial class RecoveryJobProperties : JobProperties
+    public partial class RecoveryJobProperties : ResilienceManagementJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryJobProperties"/>. </summary>
         internal RecoveryJobProperties()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the recovery job. </param>
-        internal RecoveryJobProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        internal RecoveryJobProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, ResilienceManagementJobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<ResilienceManagementJobRetryDetails> retryDetails, ResilienceManagementJobExtendedInfo jobExtendedInfo, IReadOnlyList<ResilienceManagementJobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, ResilienceManagementJobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

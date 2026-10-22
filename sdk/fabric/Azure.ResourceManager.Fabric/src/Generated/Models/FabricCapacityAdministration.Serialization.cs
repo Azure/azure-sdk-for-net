@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FabricCapacityAdministration(members, additionalBinaryDataProperties);
+            return new FabricCapacityAdministration(members ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

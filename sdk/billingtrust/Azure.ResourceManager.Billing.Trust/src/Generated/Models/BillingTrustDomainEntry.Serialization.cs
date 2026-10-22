@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BillingTrustDomainEntry(domainNames, tenantId, state, error, additionalBinaryDataProperties);
+            return new BillingTrustDomainEntry(domainNames ?? new ChangeTrackingList<string>(), tenantId, state, error, additionalBinaryDataProperties);
         }
     }
 }

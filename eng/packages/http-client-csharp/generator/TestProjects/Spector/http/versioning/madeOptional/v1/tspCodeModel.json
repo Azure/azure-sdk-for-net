@@ -183,7 +183,6 @@
             "$id": "15",
             "name": "test",
             "isExactName": false,
-            "resourceName": "MadeOptional",
             "accessibility": "public",
             "parameters": [
               {

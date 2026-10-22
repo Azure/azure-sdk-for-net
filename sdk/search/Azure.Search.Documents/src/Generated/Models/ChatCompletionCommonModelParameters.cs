@@ -17,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _modelName;
-        internal bool _modelNameIsDefined;
+        private bool _modelNameIsDefined;
         private double? _frequencyPenalty;
-        internal bool _frequencyPenaltyIsDefined;
+        private bool _frequencyPenaltyIsDefined;
         private double? _presencePenalty;
-        internal bool _presencePenaltyIsDefined;
+        private bool _presencePenaltyIsDefined;
         private int? _maxTokens;
-        internal bool _maxTokensIsDefined;
+        private bool _maxTokensIsDefined;
         private double? _temperature;
-        internal bool _temperatureIsDefined;
+        private bool _temperatureIsDefined;
         private int? _seed;
-        internal bool _seedIsDefined;
+        private bool _seedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionCommonModelParameters"/>. </summary>
         public ChatCompletionCommonModelParameters()

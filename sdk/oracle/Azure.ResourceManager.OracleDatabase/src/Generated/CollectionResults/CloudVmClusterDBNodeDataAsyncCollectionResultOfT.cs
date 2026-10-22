@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class CloudVmClusterDBNodeDataAsyncCollectionResultOfT : AsyncPageable<CloudVmClusterDBNodeData>
     {
-        private readonly DbNodes _client;
+        private readonly DBNodes _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _cloudvmclustername;
@@ -25,13 +27,13 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CloudVmClusterDBNodeDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DbNodes client used to send requests. </param>
+        /// <param name="client"> The DBNodes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CloudVmClusterDBNodeDataAsyncCollectionResultOfT(DbNodes client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CloudVmClusterDBNodeDataAsyncCollectionResultOfT(DBNodes client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,12 +47,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CloudVmClusterDBNodeDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CloudVmClusterDBNodeData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<CloudVmClusterDBNodeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<CloudVmClusterDBNodeData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -68,14 +78,23 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _subscriptionId, _resourceGroupName, _cloudvmclustername, _context) : _client.CreateGetByParentRequest(_subscriptionId, _resourceGroupName, _cloudvmclustername, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

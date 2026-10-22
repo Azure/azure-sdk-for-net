@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityCenterStandardResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string securityCenterStandardApiVersion);
             _standardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterStandardApiVersion ?? "2021-08-01-preview");
+            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -43,6 +43,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         // Allowed values are: Playback, Live, Record.
         // Uncomment this line to debug the connection to locally running test-proxy (the connection will be made to default port 5000).
         // UseLocalDebugProxy = true;
+        TestTimeoutInSeconds = 30;
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
@@ -317,15 +318,14 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "browser-automation",
                 Description = "Test browser automation"
             },
-            // TODO: Uncomment this code when the BrowserAutomation will be available on the service side.
-            //ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
-            //new BrowserAutomationToolOptions(
-            //    new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            //))
-            //{
-            //    Name = "browser-automation",
-            //    Description = "Test browser automation"
-            //},
+            ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
+            new BrowserAutomationToolOptions(
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)
+            ))
+            {
+                Name = "browser-automation",
+                Description = "Test browser automation"
+            },
             ToolType.A2A => new A2APreviewToolboxTool()
             {
                 Name = "a2a-preview",
@@ -428,7 +428,22 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).Select(x => x.Id).ToListAsync();
         foreach (string record in records)
         {
-            await jobsClient.DeleteAsync(record, cancellationToken: default);
+            DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
+                    break;
+                }
+                catch (ClientResultException e) {
+                    if (e.Status != 409)
+                    {
+                        throw;
+                    }
+                    await Task.Delay(500);
+                }
+            }
         }
     }
     #endregion

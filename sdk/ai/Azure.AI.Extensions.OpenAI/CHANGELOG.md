@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-beta.4 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Breaking Changes
+- The `MicrosoftCopilotToolsetPreview` tool was added as a replacement for `GitHubCopilotToolsetPreview`.
+- `GitHubCopilotToolsetPreview` was marked as legacy and will be removed in the future releases.
+
+## 3.0.0-beta.4 (2026-10-12)
+
+### Features Added
+- Added `BrowserAutomationTool` for browser automation through an MCP project connection.
+
+### Sample Updates
+- Added sample for `BrowserAutomationTool`.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

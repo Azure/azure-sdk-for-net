@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciVmStorageContainerResource.ResourceType, out string hciVmStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmStorageContainerApiVersion ?? "2025-09-01-preview");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/storageContainers", out string storageContainersApiVersionOverride) ? storageContainersApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

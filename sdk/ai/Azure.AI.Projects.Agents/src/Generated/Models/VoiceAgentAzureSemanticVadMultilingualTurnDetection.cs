@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentAzureSemanticVadMultilingualTurnDetection : VoiceAgentTurnDetectionConfig
     {
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
-        internal bool _endOfUtteranceDetectionIsDefined;
+        private bool _endOfUtteranceDetectionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>. </summary>
         public VoiceAgentAzureSemanticVadMultilingualTurnDetection() : base(VoiceAgentTurnDetectionType.AzureSemanticVadMultilingual)
@@ -28,19 +28,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
         /// <param name="createResponse"> Whether a response is created automatically when speech stops. </param>
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
-        internal VoiceAgentAzureSemanticVadMultilingualTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeoutMs, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse, IList<string> languages) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentAzureSemanticVadMultilingualTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, TimeSpan? prefixPaddingMs, TimeSpan? silenceDurationMs, TimeSpan? idleTimeout, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection, TimeSpan? speechDurationMs, bool? removeFillerWords, bool? createResponse, bool? interruptResponse, IList<string> languages) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
-            IdleTimeoutMs = idleTimeoutMs;
+            IdleTimeout = idleTimeout;
             _endOfUtteranceDetection = endOfUtteranceDetection;
             SpeechDurationMs = speechDurationMs;
             RemoveFillerWords = removeFillerWords;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Agents
         public TimeSpan? SilenceDurationMs { get; set; }
 
         /// <summary> Maximum idle time before the detector ends the turn, in milliseconds. </summary>
-        public TimeSpan? IdleTimeoutMs { get; set; }
+        public TimeSpan? IdleTimeout { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
         public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection

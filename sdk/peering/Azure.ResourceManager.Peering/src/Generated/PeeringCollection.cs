@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PeeringResource.ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", PeeringResource.ResourceType.Namespace, Diagnostics);
-            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Peering/peerings", out string peeringsApiVersionOverride) ? peeringsApiVersionOverride : "2025-05-01");
             ValidateResourceId(id);
         }
 

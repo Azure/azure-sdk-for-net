@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EncryptionProtectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EncryptionProtectorListResult(value ?? new ChangeTrackingList<EncryptionProtectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

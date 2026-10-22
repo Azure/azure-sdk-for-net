@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebApplicationFirewallPolicyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WebApplicationFirewallPolicyListResult(value ?? new ChangeTrackingList<WebApplicationFirewallPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
