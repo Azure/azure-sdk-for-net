@@ -29,6 +29,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Request validation now covers the `cloud_computer_use_preview` and
+  `microsoft_copilot_toolset_preview` tool types from the Foundry spec, so a malformed
+  `microsoft_copilot_toolset_preview` tool is rejected instead of passing through unvalidated.
 
 ## 1.0.0-beta.9 (2026-10-15)
 
