@@ -1,0 +1,537 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Quota.QuotaRequestDetails",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Quota/quotaRequests/{id}",
+      "resourceType": "Microsoft.Quota/quotaRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.QuotaRequestStatus.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotaRequests/{id}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Quota/quotaRequests/{id}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.QuotaRequestStatus.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotaRequests",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "QuotaRequestDetail",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.CurrentQuotaLimitBase",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
+      "resourceType": "Microsoft.Quota/quotas",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.update",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/quotas",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CurrentQuotaLimitBase",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.CurrentUsagesBase",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Quota/usages/{resourceName}",
+      "resourceType": "Microsoft.Quota/usages",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.CurrentUsagesBases.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/usages/{resourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Quota/usages/{resourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.CurrentUsagesBases.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Quota/usages",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CurrentUsagesBase",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.GroupQuotasEntity",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceType": "Microsoft.Quota/groupQuotas",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.groupQuotaLimitsRequestList",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEntities.groupQuotaUsagesList",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationUsages/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "resourceName": "GroupQuotaEntity",
+      "nameConstraints": {
+        "pattern": "^[a-z][a-z0-9]*$",
+        "minLength": 3,
+        "maxLength": 63
+      },
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.SubmittedResourceRequestStatus",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}",
+      "resourceType": "Microsoft.Quota/groupQuotas/groupQuotaRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.SubmittedResourceRequestStatuses.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceName": "GroupQuotaRequestStatus",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.GroupQuotaLimitList",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
+      "resourceType": "Microsoft.Quota/groupQuotas/resourceProviders/groupQuotaLimits",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaLimitLists.list",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaLimitLists.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceName": "GroupQuotaLimitList",
+      "nameConstraints": {
+        "minLength": 1
+      },
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.GroupQuotasEnforcementStatus",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+      "resourceType": "Microsoft.Quota/groupQuotas/resourceProviders/locationSettings",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEnforcementStatuses.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEnforcementStatuses.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotasEnforcementStatuses.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceName": "GroupQuotasEnforcementStatus",
+      "nameConstraints": {
+        "minLength": 1
+      },
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.GroupQuotaSubscriptionRequestStatus",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptionRequests/{requestId}",
+      "resourceType": "Microsoft.Quota/groupQuotas/subscriptionRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionRequestStatuses.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptionRequests/{requestId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptionRequests/{requestId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionRequestStatuses.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptionRequests",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceName": "GroupQuotaSubscriptionRequestStatus",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.GroupQuotaSubscriptionId",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+      "resourceType": "Microsoft.Quota/groupQuotas/subscriptions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionIds.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionIds.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionIds.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionIds.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.GroupQuotaSubscriptionIds.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}",
+      "resourceName": "GroupQuotaSubscription",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.QuotaAllocationRequestStatus",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}",
+      "resourceType": "Microsoft.Quota/groupQuotas/resourceProviders/quotaAllocationRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.QuotaAllocationRequestStatuses.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.QuotaAllocationRequestStatuses.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+      },
+      "resourceName": "QuotaAllocationRequestStatus",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Quota.SubscriptionQuotaAllocationsList",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
+      "resourceType": "Microsoft.Quota/groupQuotas/resourceProviders/quotaAllocations",
+      "methods": [
+        {
+          "methodId": "Microsoft.Quota.SubscriptionQuotaAllocationsLists.list",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Quota.SubscriptionQuotaAllocationsLists.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}",
+            "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
+      },
+      "resourceName": "SubscriptionQuotaAllocationsList",
+      "nameConstraints": {
+        "minLength": 1
+      },
+      "apiVersions": [
+        "2025-09-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.QuotaOperation.list",
+      "operationPath": "/providers/Microsoft.Quota/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

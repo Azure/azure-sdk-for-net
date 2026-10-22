@@ -1,0 +1,13 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.AlertsManagement.previewAlertRule",
+      "operationPath": "/{resourceId}/providers/Microsoft.AlertsManagement/previewAlertRule",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceId}"
+      }
+    }
+  ]
+}

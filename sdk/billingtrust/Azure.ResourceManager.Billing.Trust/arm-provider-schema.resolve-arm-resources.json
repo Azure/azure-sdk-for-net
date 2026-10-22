@@ -1,0 +1,136 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.BillingTrust.Assessment",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default",
+      "resourceType": "Microsoft.BillingTrust/assessments",
+      "methods": [
+        {
+          "methodId": "Microsoft.BillingTrust.Assessments.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Assessments.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Assessments.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Assessments.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Assessments.listUploadToken",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/listUploadToken",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "Assessment",
+      "nameConstraints": {
+        "pattern": "^default$"
+      },
+      "apiVersions": [
+        "2026-03-17-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.BillingTrust.Rule",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}",
+      "resourceType": "Microsoft.BillingTrust/assessments/rules",
+      "methods": [
+        {
+          "methodId": "Microsoft.BillingTrust.Rules.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Rules.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Rules.update",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules/{ruleName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.BillingTrust.Rules.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default/rules",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "parentResourceId": "/{resourceUri}/providers/Microsoft.BillingTrust/assessments/default",
+      "resourceName": "Rule",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,63}$"
+      },
+      "apiVersions": [
+        "2026-03-17-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.BillingTrust/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

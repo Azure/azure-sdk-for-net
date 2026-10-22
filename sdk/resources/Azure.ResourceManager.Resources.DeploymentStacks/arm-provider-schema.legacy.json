@@ -1,0 +1,148 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStack",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
+      "resourceType": "Microsoft.Resources/deploymentStacks",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.exportTemplate",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksAtScope.validateStack",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "DeploymentStack",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 90
+      },
+      "apiVersions": [
+        "2022-08-01-preview",
+        "2024-03-01",
+        "2025-07-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfResult",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
+      "resourceType": "Microsoft.Resources/deploymentStacksWhatIfResults",
+      "methods": [
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfAtScope.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfAtScope.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfAtScope.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfAtScope.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Resources.DeploymentStacks.DeploymentStacksWhatIfAtScope.whatIf",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}/whatIf",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Resources/deploymentStacksWhatIfResults/{deploymentStacksWhatIfResultName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "deploymentStackWhatIfResult",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$",
+        "minLength": 1,
+        "maxLength": 90
+      },
+      "apiVersions": [
+        "2025-07-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": []
+}
