@@ -41,3 +41,5 @@ extends:
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
+      # TEMP: keep #64072 A/B package selection identical despite B's eng/ changes.
+      - eng/

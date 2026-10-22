@@ -1,5 +1,7 @@
 # Release History
 
+<!-- TEMP: identical A/B measurement fixture for #64072; remove before merging. -->
+
 ## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
