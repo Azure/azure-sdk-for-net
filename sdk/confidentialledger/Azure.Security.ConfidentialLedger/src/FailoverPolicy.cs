@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,6 +27,11 @@ namespace Azure.Security.ConfidentialLedger
     /// the caller observes the primary error.
     /// </para>
     /// <para>
+    /// With an explicit nonempty collection id, a 404 also permits failover and traversal. A primary
+    /// historical-read 404 uses the legacy collection-based current-entry lookup on failovers, returning
+    /// that entry with state Ready and preserving its actual transaction id rather than the requested id.
+    /// </para>
+    /// <para>
     /// Only the explicitly marked <c>GetLedgerEntry</c> and <c>GetCurrentLedgerEntry</c> requests are
     /// failed over; every other request stays on the primary ledger.
     /// Each failover ledger is a distinct CCF network with its own identity TLS certificate, so before a
@@ -39,11 +46,18 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
+        private sealed class CollectionFallbackKey
+        {
+        }
+
         private readonly ConfidentialLedgerFailoverService _failoverService;
         private readonly TimeSpan? _failoverNetworkTimeout;
 
-        internal static void MarkEligible(HttpMessage message) =>
+        internal static void MarkEligible(HttpMessage message, string collectionId)
+        {
             message.SetProperty(typeof(FailoverEligibleKey), true);
+            message.SetProperty(typeof(CollectionFallbackKey), !string.IsNullOrEmpty(collectionId));
+        }
 
         private static bool IsEligible(HttpMessage message) =>
             message.TryGetProperty(typeof(FailoverEligibleKey), out object value) &&
@@ -100,20 +114,28 @@ namespace Azure.Security.ConfidentialLedger
                 primaryException = ExceptionDispatchInfo.Capture(exception);
             }
 
-            if (primaryException == null && !ShouldFailover(message.Response))
+            bool collectionFallback = message.TryGetProperty(typeof(CollectionFallbackKey), out object value) && value is true;
+            if (primaryException == null && !ShouldFailover(message.Response, collectionFallback))
             {
                 return;
             }
 
             // Preserve the primary response so the original error can be restored if every failover fails.
             Response primaryResponse = message.HasResponse ? message.Response : null;
+            // Transaction ids are local to a CCF network. Restore the legacy collection-based lookup
+            // only after a primary 404, not for transient failures of an otherwise historical read.
+            bool useCurrentEntry = primaryException == null && primaryResponse?.Status == 404 &&
+                !primaryEndpoint.AbsolutePath.EndsWith("/current", StringComparison.Ordinal);
 
+            message.CancellationToken.ThrowIfCancellationRequested();
             List<Uri> failoverEndpoints = async
                 ? await _failoverService.GetFailoverEndpointsAsync(primaryEndpoint, message.CancellationToken).ConfigureAwait(false)
                 : _failoverService.GetFailoverEndpoints(primaryEndpoint, message.CancellationToken);
+            message.CancellationToken.ThrowIfCancellationRequested();
 
             foreach (Uri endpoint in failoverEndpoints)
             {
+                message.CancellationToken.ThrowIfCancellationRequested();
                 HttpPipeline endpointPipeline;
                 try
                 {
@@ -126,6 +148,12 @@ namespace Azure.Security.ConfidentialLedger
                 }
 
                 RewriteRequestEndpoint(message.Request, endpoint);
+                if (useCurrentEntry)
+                {
+                    var current = new UriBuilder(message.Request.Uri.ToUri());
+                    current.Path = current.Path.Substring(0, current.Path.LastIndexOf('/') + 1) + "current";
+                    message.Request.Uri.Reset(current.Uri);
+                }
                 message.Response = null;
                 MessageProcessingContext processingContext = message.ProcessingContext;
                 processingContext.RetryNumber = 0;
@@ -153,9 +181,14 @@ namespace Azure.Security.ConfidentialLedger
                     continue;
                 }
 
-                if (!ShouldFailover(message.Response))
+                message.CancellationToken.ThrowIfCancellationRequested();
+                if (!ShouldFailover(message.Response, collectionFallback))
                 {
                     // This failover endpoint produced a usable response.
+                    if (useCurrentEntry && message.Response.Status == 200)
+                    {
+                        message.Response = new CurrentEntryResponse(message.Response);
+                    }
                     primaryResponse?.Dispose();
                     return;
                 }
@@ -183,10 +216,78 @@ namespace Azure.Security.ConfidentialLedger
             return message.ResponseClassifier.IsRetriable(message, exception);
         }
 
-        // Transient conditions that warrant trying the next endpoint. A 404 means the resource does not
-        // exist (its replicas would report the same), so it is intentionally not failed over.
-        private static bool ShouldFailover(Response response) =>
-            response != null && (response.Status == 408 || response.Status == 429 || response.Status >= 500);
+        // A collection can exist on a different CCF network even when this ledger returns 404.
+        private static bool ShouldFailover(Response response, bool collectionFallback) =>
+            response != null && (response.Status == 408 || response.Status == 429 || response.Status >= 500 ||
+                (collectionFallback && response.Status == 404));
+
+        // Preserve the whole entry (including tags and its actual transaction id), plus response
+        // metadata. Only the body and its length change to match the historical-read response shape.
+        private sealed class CurrentEntryResponse : Response
+        {
+            private readonly Response _original;
+            private Stream _content;
+            private readonly string _contentLength;
+
+            public CurrentEntryResponse(Response original)
+            {
+                _original = original;
+                using JsonDocument document = JsonDocument.Parse(original.Content);
+                var stream = new MemoryStream();
+                using (var writer = new Utf8JsonWriter(stream))
+                {
+                    writer.WriteStartObject();
+                    writer.WriteString("state", "Ready");
+                    writer.WritePropertyName("entry");
+                    document.RootElement.WriteTo(writer);
+                    writer.WriteEndObject();
+                }
+                stream.Position = 0;
+                _content = stream;
+                _contentLength = stream.Length.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            }
+
+            public override int Status => _original.Status;
+            public override string ReasonPhrase => _original.ReasonPhrase;
+            public override string ClientRequestId { get => _original.ClientRequestId; set => _original.ClientRequestId = value; }
+            public override Stream ContentStream { get => _content; set => _content = value; }
+            public override void Dispose()
+            {
+                _content?.Dispose();
+                _original.Dispose();
+            }
+            protected override bool ContainsHeader(string name) =>
+                string.Equals(name, "Content-Length", StringComparison.OrdinalIgnoreCase) || _original.Headers.Contains(name);
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                if (string.Equals(name, "Content-Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    value = _contentLength;
+                    return true;
+                }
+                return _original.Headers.TryGetValue(name, out value);
+            }
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                if (string.Equals(name, "Content-Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    values = new[] { _contentLength };
+                    return true;
+                }
+                return _original.Headers.TryGetValues(name, out values);
+            }
+            protected override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                foreach (HttpHeader header in _original.Headers)
+                {
+                    if (!string.Equals(header.Name, "Content-Length", StringComparison.OrdinalIgnoreCase))
+                    {
+                        yield return header;
+                    }
+                }
+                yield return new HttpHeader("Content-Length", _contentLength);
+            }
+        }
 
         private static void RewriteRequestEndpoint(Request request, Uri endpoint)
         {
