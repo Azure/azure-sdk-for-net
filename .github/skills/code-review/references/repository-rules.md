@@ -339,17 +339,22 @@ What they cover:
   reusable domain model merely because it is used as a request body.
 - **Do not redefine an ARM common type this PR is newly introducing on the public surface of an
   `Azure.ResourceManager.*` package.** Each of these names is reserved for the shared framework
-  type; a new declaration using one of them is a duplication bug, not a coincidence. An existing
-  redefinition already shipped pre-PR is not a new-code finding to raise — removing it is itself
-  a breaking change requiring the full GA-compatibility bar, not a quick fix in passing.
+  type; a new declaration using one of them is a duplication bug, not a coincidence. When the
+  service's wire contract matches, the fix is the framework type below. When it genuinely
+  differs, the fix is a service-specific model under an RP-prefixed name instead — e.g.
+  `BackupErrorDetail`, whose payload adds `Recommendations` — and that renamed variant is not
+  itself a finding. An existing redefinition already shipped pre-PR is not a new-code finding to
+  raise — removing it is itself a breaking change requiring the full GA-compatibility bar, not a
+  quick fix in passing.
 
   | Type name | Use instead |
   |---|---|
-  | `ManagedServiceIdentity`, `ManagedServiceIdentityType`, `ManagedServiceIdentityPatch` | `Azure.ResourceManager.Models` equivalents |
+  | `ManagedServiceIdentity`, `ManagedServiceIdentityType` | `Azure.ResourceManager.Models` equivalents |
+  | `ManagedServiceIdentityPatch` | `Azure.ResourceManager.Models.ManagedServiceIdentity` — ARM patch models reuse it for `Identity` |
   | `UserAssignedIdentity` | `Azure.ResourceManager.Models.UserAssignedIdentity` |
   | `SystemData` | Already exposed via `ResourceData.SystemData` — do not redefine |
-  | `ErrorResponse`, `ErrorDetail` | `Azure.ResponseError` / `Azure.ResourceManager.Models.ErrorDetail` |
-  | `OperationStatusResult` | The `ArmOperation`/`Operation<T>` pattern, not a redefined status model |
+  | `ErrorResponse`, `ErrorDetail` | `Azure.ResponseError` |
+  | `OperationStatusResult` | `Azure.ResourceManager.Models.OperationStatusResult`; for plain LRO polling state, the `ArmOperation`/`Operation<T>` pattern rather than a public status model |
   | `TrackedResource` | Inherit `TrackedResourceData` instead of defining a new base |
   | `TagsUpdate`, `TagsPatch` | The Tags-update pattern `Azure.ResourceManager` already provides, or a service-prefixed `*Patch` model that carries only `Tags` |
 - **`Resource` suffix is reserved for `ArmResource`-derived types.** A data model, options bag,

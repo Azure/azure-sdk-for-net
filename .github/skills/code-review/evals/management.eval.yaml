@@ -419,6 +419,51 @@ stimuli:
         config:
           pattern: '^\s*No findings\.\s*$'
 
+  - name: arm-common-error-detail-maps-to-response-error
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute's PR diff adds a brand-new public
+      model named ErrorDetail that copies the ARM common-types ErrorDetail contract (code,
+      message, target, details, additionalInfo); the service's error payload uses that common
+      contract unchanged. The new type's implementation, serialization, tests and
+      documentation are otherwise correct and no analyzer flags it.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)ErrorDetail[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*ErrorDetail'
+      - type: output-matches
+        config:
+          pattern: 'ResponseError'
+      - type: output-not-matches
+        config:
+          pattern: 'ResourceManager\.Models\.ErrorDetail'
+
+  - name: arm-common-type-wire-variant-gets-rp-prefixed-name
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute's PR diff adds a brand-new public
+      model named ErrorDetail with Code, Message and a service-specific Recommendations list.
+      The service's error payload really has this shape: it has no target, details or
+      additionalInfo fields, so it does not match the ARM common ErrorDetail contract. The new
+      type's implementation, serialization, tests and documentation are otherwise correct and
+      no analyzer flags it.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)ErrorDetail[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*ErrorDetail'
+      - type: output-matches
+        config:
+          pattern: '\b[A-Z][A-Za-z]+ErrorDetail\b'
+      - type: output-not-matches
+        config:
+          pattern: 'ResourceManager\.Models\.ErrorDetail'
+
   - name: checknameavailability-naming-pattern-enforced
     prompt: >-
       First invoke the code-review skill. Review this synthetic new API and
