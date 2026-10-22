@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Maintenance
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetApplyUpdatesByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsAcknowledgeErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsListAcknowledgeError))]
+    [ModelReaderWriterBuildable(typeof(ScheduledEventsListAcknowledgeErrorDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMaintenanceContext : ModelReaderWriterContext
     {

@@ -94,6 +94,52 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
+        protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
+            => currentModel.BaseModel is not null &&
+                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase)
+                    ? knownBase
+                    : null;
+
+        /// <inheritdoc/>
+        protected override bool IsLastContractModelBasePropertyCompatibleCore(
+            CSharpType mappedBase,
+            InputModelProperty currentProperty,
+            PropertyProvider lastContractProperty)
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(mappedBase, out _) ||
+                CreateCSharpType(currentProperty.Type) is not { } currentType)
+            {
+                return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+            }
+
+            var hasSetter = !currentProperty.IsReadOnly;
+            if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out var expectedName))
+            {
+                // The base check requires a CLR setter for writable input, but mutable lists and
+                // dictionaries can be modified through a getter. Check their accessors below instead
+                // of falling back; ReadOnlyMemory<T> still uses the normal base setter validation.
+                if (currentType is not { IsCollection: true, IsReadOnlyMemory: false })
+                {
+                    return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+                }
+
+                // Read-only input cannot reuse a mutable collection contract.
+                if (currentProperty.IsReadOnly)
+                {
+                    return false;
+                }
+                expectedName = currentProperty.IsExactName ? currentProperty.Name : currentProperty.Name.ToIdentifierName();
+                // Nullable collections need a setter so callers can assign null.
+                hasSetter = currentType.IsNullable;
+            }
+
+            return lastContractProperty.Name == expectedName &&
+                lastContractProperty.Type.WithNullable(false).Equals(currentType.WithNullable(false)) &&
+                (!currentType.IsValueType || lastContractProperty.Type.IsNullable == currentType.IsNullable) &&
+                lastContractProperty.Body.HasSetter == hasSetter;
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return new ManagementClientProvider(inputClient);

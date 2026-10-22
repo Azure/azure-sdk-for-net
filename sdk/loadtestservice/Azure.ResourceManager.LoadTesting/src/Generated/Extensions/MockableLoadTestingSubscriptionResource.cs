@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> An object representing collection of LoadTestingQuota and their operations over a LoadTestingQuotaResource. </returns>
         public virtual LoadTestingQuotaCollection GetAllLoadTestingQuota(AzureLocation location)
         {
-            return GetCachedClient(client => new LoadTestingQuotaCollection(client, Id, location));
+            return new LoadTestingQuotaCollection(Client, Id, location);
         }
 
         /// <summary>

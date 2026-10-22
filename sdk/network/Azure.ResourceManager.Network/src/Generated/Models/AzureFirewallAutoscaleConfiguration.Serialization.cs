@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(AzureFirewallAutoscaleConfiguration)} does not support writing '{format}' format.");
             }
-            if (_minCapacityIsDefined || Optional.IsDefined(MinCapacity))
+            if (Optional.IsDefined(MinCapacity, _minCapacityIsDefined))
             {
                 if (MinCapacity != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("minCapacity"u8);
                 }
             }
-            if (_maxCapacityIsDefined || Optional.IsDefined(MaxCapacity))
+            if (Optional.IsDefined(MaxCapacity, _maxCapacityIsDefined))
             {
                 if (MaxCapacity != null)
                 {

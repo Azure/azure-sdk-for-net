@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SmbAccessBasedEnumeration? _smbAccessBasedEnumeration;
-        internal bool _smbAccessBasedEnumerationIsDefined;
+        private bool _smbAccessBasedEnumerationIsDefined;
         private float? _throughputMibps;
-        internal bool _throughputMibpsIsDefined;
+        private bool _throughputMibpsIsDefined;
         private string _unixPermissions;
-        internal bool _unixPermissionsIsDefined;
+        private bool _unixPermissionsIsDefined;
         private int? _cloneProgress;
-        internal bool _cloneProgressIsDefined;
+        private bool _cloneProgressIsDefined;
         private string _provisionedAvailabilityZone;
-        internal bool _provisionedAvailabilityZoneIsDefined;
+        private bool _provisionedAvailabilityZoneIsDefined;
         private long? _inheritedSizeInBytes;
-        internal bool _inheritedSizeInBytesIsDefined;
+        private bool _inheritedSizeInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>

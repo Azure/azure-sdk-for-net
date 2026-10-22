@@ -35,6 +35,8 @@ public class ResponseToolDeserializationTests
         yield return Case(ResponseToolKind.OpenAPI, typeof(OpenApiTool));
         yield return Case(ResponseToolKind.SharePointGroundingPreview, typeof(SharePointPreviewTool));
         yield return Case(ResponseToolKind.WorkIQPreview, typeof(WorkIQPreviewTool));
+        yield return Case(ResponseToolKind.GitHubCopilotToolsetPreviewValue, typeof(GitHubCopilotToolsetPreview));
+        yield return Case(ResponseToolKind.MicrosoftCopilotToolsetPreview, typeof(MicrosoftCopilotToolsetPreview));
 
         static TestCaseData Case(ResponseToolKind discriminator, Type expectedType)
             => new TestCaseData(discriminator, expectedType).SetName($"{{m}}({discriminator} => {expectedType.Name})");

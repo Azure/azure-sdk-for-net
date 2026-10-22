@@ -141,6 +141,12 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
+#pragma warning disable OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(McpToolFilter))]
+#pragma warning restore OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelSamplingParams))]
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
@@ -444,9 +450,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResponseAudioOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(VoiceResponseBase))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.

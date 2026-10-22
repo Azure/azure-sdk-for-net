@@ -23,10 +23,10 @@ namespace TestProjects.Spector.Tests.Http.Encode.Numeric
         {
             var response = await new NumericClient(host, null).GetPropertyClient().Uint32AsStringOptionalAsync(new Uint32AsStringProperty()
             {
-                Value = "1"
+                Value = 1u
             });
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("1", response.Value.Value);
+            Assert.AreEqual(1u, response.Value.Value);
         });
 
         [SpectorTest]

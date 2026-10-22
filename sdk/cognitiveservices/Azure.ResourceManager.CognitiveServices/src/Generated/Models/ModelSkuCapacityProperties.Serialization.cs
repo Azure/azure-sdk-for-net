@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("availableFinetuneCapacity"u8);
                 writer.WriteNumberValue(AvailableFinetuneCapacity.Value);
             }
-            if (_scopeIdIsDefined || Optional.IsDefined(ScopeId))
+            if (Optional.IsDefined(ScopeId, _scopeIdIsDefined))
             {
                 if (ScopeId != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("scopeId"u8);
                 }
             }
-            if (_scopeTypeIsDefined || Optional.IsDefined(ScopeType))
+            if (Optional.IsDefined(ScopeType, _scopeTypeIsDefined))
             {
                 if (ScopeType != null)
                 {

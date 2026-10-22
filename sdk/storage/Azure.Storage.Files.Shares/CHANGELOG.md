@@ -7,6 +7,14 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `ShareClient.GenerateSasUri(...)`
+  - `ShareClient.GenerateUserDelegationSasUri(...)`
+  - `ShareDirectoryClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateSasUri(...)`
+  - `ShareFileClient.GenerateUserDelegationSasUri(...)`
+  - `ShareServiceClient.GenerateAccountSasUri(...)`
+  - `ShareSasBuilder`
 
 ### Other Changes
 

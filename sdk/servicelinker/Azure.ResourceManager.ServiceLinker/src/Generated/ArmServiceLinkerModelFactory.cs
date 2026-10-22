@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="keyVaultReferenceIdentity"> The identity for key vault reference, system or user-assigned managed identity ID. </param>
         /// <param name="description"> Descriptive information for the configuration. </param>
         /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>
-        public static SourceConfiguration SourceConfiguration(string name, string value, LinkerConfigurationType? configType, string keyVaultReferenceIdentity = default, string description = default)
+        public static SourceConfiguration SourceConfiguration(string name = default, string value = default, LinkerConfigurationType? configType = default, string keyVaultReferenceIdentity = default, string description = default)
         {
             return new SourceConfiguration(
                 name,
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="keyVaultSecretName"> The key vault secret name to store secret, only valid when storing one secret. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo, VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
         {
             return new LinkerResourceData(
                 id,
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="keyVaultSecretName"> The key vault secret name to store secret, only valid when storing one secret. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo, VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
         {
             return new LinkerResourcePatch(targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && deleteOrUpdateBehavior is null && secretStoreKeyVaultId is null && keyVaultSecretName is null && scope is null && publicNetworkSolution is null && configurationInfo is null ? default : new LinkerProperties(
                 targetService,
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, ResourceIdentifier secretStoreKeyVaultId = default, string scope = default)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId, string scope)
         {
             return new LinkerResourceData(
                 id,
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, VnetSolutionType? solutionType = default, ResourceIdentifier secretStoreKeyVaultId = default, string scope = default)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId, string scope)
         {
             return new LinkerResourcePatch(targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && secretStoreKeyVaultId is null && scope is null ? default : new LinkerProperties(
                 targetService,
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="value"> The value of setting. </param>
         /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SourceConfiguration SourceConfiguration(string name = default, string value = default)
+        public static SourceConfiguration SourceConfiguration(string name, string value)
         {
             return new SourceConfiguration(
                 name,
