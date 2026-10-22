@@ -98,8 +98,8 @@ extends:
         MinimumPerJob: 10
         DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
       ${{ if eq(parameters.RegenerateAllServices, false) }}:
-        # Split the priority list across up to 10 jobs.
-        RegenerationJobCount: 10
+        # Split the priority list across up to 18 jobs.
+        RegenerationJobCount: 18
         MinimumPerJob: 1
         # Source: https://gist.github.com/live1206/26f6c34be35efe04d35e8377c0962a03
         # Resources is retained in the list but skipped until it has a tsp-location.yaml.
