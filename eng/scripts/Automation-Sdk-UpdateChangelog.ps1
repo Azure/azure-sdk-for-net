@@ -65,12 +65,17 @@ try {
 
     $serviceName = Split-Path (Split-Path $packagePath -Parent) -Leaf
     $releaseDate = [DateTime]::UtcNow.ToString("yyyy-MM-dd")
+    $apiFilePath = Join-Path $packagePath "api/$packageName.netstandard2.0.cs"
+    if (-not (Test-Path $apiFilePath -PathType Leaf)) {
+        throw "API listing '$apiFilePath' was not found."
+    }
 
     Write-Host "Generating changelog for package '$packageName', service '$serviceName', version '$releaseVersion'."
     & (Join-Path $PSScriptRoot "Gen-Mgmt-Changelog.ps1") `
         -ServiceName $serviceName `
         -ReleaseVersion $releaseVersion `
-        -ReleaseDate $releaseDate
+        -ReleaseDate $releaseDate `
+        -ApiFilePath $apiFilePath
 
     if (-not $?) {
         throw "Gen-Mgmt-Changelog.ps1 failed for package '$packageName'."
