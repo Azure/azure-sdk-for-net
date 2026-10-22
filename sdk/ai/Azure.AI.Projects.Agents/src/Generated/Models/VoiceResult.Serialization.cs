@@ -99,7 +99,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (RealtimeOutputModality item in OutputModalities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    status = new RealtimeResponseStatus(element.GetProperty("status").GetString());
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -352,7 +352,7 @@ namespace Azure.AI.Projects.Agents
                     List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                        array.Add(new RealtimeOutputModality(item.GetString()));
                     }
                     outputModalities = array;
                     continue;
