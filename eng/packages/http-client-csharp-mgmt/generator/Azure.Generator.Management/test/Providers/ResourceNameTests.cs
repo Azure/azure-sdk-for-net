@@ -7,6 +7,7 @@ using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Reflection;
 using Generated = Azure.Generator.MgmtTypeSpec.Tests;
@@ -72,6 +73,78 @@ internal class ResourceNameTests
             lastContractCompilation: () => compilation);
         var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
         Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo("GetOs"));
+    }
+
+    [TestCase("OS", false, false)]
+    [TestCase("OS", true, false)]
+    [TestCase("OS", false, true)]
+    [TestCase("OS", true, true)]
+    [TestCase("OSImageOS", false, false)]
+    [TestCase("OSImageOS", true, false)]
+    [TestCase("OSImageOS", false, true)]
+    [TestCase("OSImageOS", true, true)]
+    public void PublishedCollectionAccessorSurvivesRegeneration(string name, bool legacy, bool child)
+    {
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: name, resourceNameIsExplicit: false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource(name, false);
+        var clients = child ? new[] { parentClient, childClient } : new[] { client };
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models, clients: () => clients);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == name);
+        var getter = legacy ? name.GetCollectionMethodName() : resource.FactoryMethodSignature.Name;
+        var parentDeclaration = child
+            ? $"namespace Samples {{ public class ParentTypeResource {{ public virtual {name}Collection {getter}() => throw null; }} }}"
+            : $"namespace Samples.Mocking {{ public class MockableSamplesResourceGroupResource {{ public virtual global::Samples.{name}Collection {getter}() => throw null; }} }}";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", $"namespace Samples {{ public class {name}Resource {{ }} public class {name}Collection {{ }} }}"),
+            ("Parent.cs", parentDeclaration)
+        ]);
+
+        for (var generation = 0; generation < 2; generation++)
+        {
+            plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
+                clients: () => clients, lastContractCompilation: () => contract);
+            resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == name);
+            Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+            var parentMethods = child
+                ? plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "ParentType").Methods
+                : plugin.Object.OutputLibrary.TypeProviders.OfType<MockableResourceProvider>()
+                    .Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.Resources.ResourceGroupResource))).Methods;
+            Assert.That(parentMethods.Any(m => m.Signature.Name == getter &&
+                m.Signature.ReturnType?.Equals(resource.ResourceCollection!.Type) == true), Is.True);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void PublishedAccessorCasingIsUsedInExtensionLists(bool legacy)
+    {
+        var (client, models) = InputResourceData.ClientWithExtensionScopedResourceList(resourceName: "OS", resourceNameIsExplicit: false);
+        var getter = legacy ? "GetOs" : "GetAllOS";
+        var listName = legacy ? "GetOs" : "GetOS";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSResource { } public class OSCollection { } }"),
+            ("Parent.cs", $$"""
+                namespace Samples.Mocking
+                {
+                    public class MockableSamplesSubscriptionResource
+                    {
+                        public virtual global::Samples.OSCollection {{getter}}() => throw null;
+                    }
+                }
+                """)
+        ]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client],
+            lastContractCompilation: () => contract);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+        var mockable = plugin.Object.OutputLibrary.TypeProviders.OfType<MockableResourceProvider>()
+            .Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.ArmClient)));
+        var extensions = plugin.Object.OutputLibrary.TypeProviders.OfType<ExtensionProvider>().Single();
+        foreach (var provider in new TypeProvider[] { mockable, extensions })
+        {
+            Assert.That(provider.Methods.Any(m => m.Signature.Name == listName), Is.True);
+            Assert.That(provider.Methods.Any(m => m.Signature.Name == $"{listName}Async"), Is.True);
+        }
     }
 
     [TestCase("IpAddress")]

@@ -339,7 +339,7 @@ namespace Azure.Generator.Management.Providers
         private static string? GetResourceMethodNameOverride(ResourceClientProvider resource, ResourceMethod method, bool isAsync)
         {
             var name = ResourceHelpers.GetExtensionOperationMethodName(method.Kind, resource.ResourceName, isAsync,
-                resource.UsesDerivedResourceName ? resource.PluralResourceName : null);
+                resource.PreserveResourceNameCasing ? resource.PluralResourceName : null);
             // Explicit List client names override the synthesized plural extension method name.
             return method.Kind == ResourceOperationKind.List &&
                 ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(method.InputMethod) ? null : name;

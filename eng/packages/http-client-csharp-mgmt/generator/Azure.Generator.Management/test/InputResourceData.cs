@@ -1106,7 +1106,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false, string resourceType = "Microsoft.Tests/events")
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false, string resourceType = "Microsoft.Tests/events", string resourceName = "Event", bool? resourceNameIsExplicit = null)
         {
             const string TestClientName = "TestClient";
             var eventModel = InputFactory.Model("EventData",
@@ -1173,7 +1173,8 @@ namespace Azure.Generator.Management.Tests.Common
                 resourceType,
                 null,
                 ResourceScope.Subscription,
-                "Event");
+                resourceName,
+                resourceNameIsExplicit);
 
             var client = InputFactory.Client(
                 TestClientName,

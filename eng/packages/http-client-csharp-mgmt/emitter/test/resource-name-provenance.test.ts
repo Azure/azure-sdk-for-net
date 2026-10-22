@@ -139,4 +139,68 @@ interface SubscriptionWidgets {
       }
     }
   );
+
+  it.each([
+    ["", "ResourceGroupWidget", false],
+    [
+      '@@clientName(ResourceGroupWidgets, "CustomWidgets", "csharp");',
+      "CustomWidget",
+      true
+    ],
+    [
+      '#suppress "@azure-tools/typespec-client-generator-core/client-option" "Testing path-specific resource-name override"\n@@clientOption(ResourceGroupWidgets.get, "resource-name", "NamedWidget", "csharp");',
+      "NamedWidget",
+      true
+    ]
+  ])(
+    "keeps shared-model stems path-specific: %s",
+    async (decorator, name, explicit) => {
+      const host = await createEmitterTestHost();
+      const program = await typeSpecCompile(
+        `
+@clientName("CustomWidget", "csharp")
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+model WidgetProperties { size?: int32; }
+@armResourceOperations
+interface ResourceGroupWidgets {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, Widget>;
+}
+@armResourceOperations
+interface SubscriptionWidgets {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.Subscription, Widget>;
+}
+${decorator}
+`,
+        host
+      );
+      expect(program.diagnostics.filter((d) => d.severity === "error")).toEqual(
+        []
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const [root] = createModel(sdkContext);
+      for (const schema of [
+        buildArmProviderSchema(sdkContext, root),
+        resolveArmResources(program, sdkContext)
+      ]) {
+        expect(schema.resources).toHaveLength(2);
+        expect(
+          schema.resources.map((r) => r.metadata.resourceName).sort()
+        ).toEqual([name, "SubscriptionWidget"].sort());
+        expect(
+          schema.resources.find(
+            (r) => r.metadata.scope.kind === "ResourceGroup"
+          )!.metadata.resourceNameIsExplicit
+        ).toBe(explicit);
+        expect(
+          schema.resources.find(
+            (r) => r.metadata.scope.kind === "Subscription"
+          )!.metadata.resourceNameIsExplicit
+        ).toBe(false);
+      }
+    }
+  );
 });

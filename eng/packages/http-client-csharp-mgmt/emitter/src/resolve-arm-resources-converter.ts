@@ -454,11 +454,9 @@ function convertResolvedResourceToMetadata(
   // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
   // The spec should always define unique resource names for extension resources targeting
   // different parent types — the emitter should not auto-generate disambiguated names.
-  const modelNameOverride = getClientNameOverride(
-    sdkContext,
-    resolvedResource.type,
-    "csharp"
-  );
+  const modelNameOverride = hasMultiplePaths
+    ? undefined
+    : getClientNameOverride(sdkContext, resolvedResource.type, "csharp");
   let resourceName = modelNameOverride ?? resolvedResource.resourceName;
   let resourceNameIsExplicit = modelNameOverride !== undefined;
   const readOperation =

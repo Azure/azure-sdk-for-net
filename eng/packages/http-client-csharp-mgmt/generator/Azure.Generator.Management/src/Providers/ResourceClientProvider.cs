@@ -103,7 +103,37 @@ namespace Azure.Generator.Management.Providers
         internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
         internal bool UsesDerivedResourceName { get; private set; }
-        internal string PluralResourceName => ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false, preserveCasing: UsesDerivedResourceName);
+        private bool? _preserveResourceNameCasing;
+        internal bool PreserveResourceNameCasing => _preserveResourceNameCasing ??= ResolveResourceNameCasing();
+        internal string PluralResourceName => ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false, preserveCasing: PreserveResourceNameCasing);
+
+        private bool ResolveResourceNameCasing()
+        {
+            if (ResourceCollection is null)
+            {
+                return UsesDerivedResourceName;
+            }
+
+            var derivedGetter = ResourceName.GetCollectionMethodName(preserveCasing: true);
+            var legacyGetter = ResourceName.GetCollectionMethodName();
+            if (derivedGetter == legacyGetter)
+            {
+                return UsesDerivedResourceName;
+            }
+
+            var library = ManagementClientGenerator.Instance.OutputLibrary;
+            var parentContract = ParentResourceIdPattern is { } parentId
+                ? library.GetResourceById(parentId).LastContractView
+                : library.MockableResourceProviders.FirstOrDefault(p => IsExtensionResource
+                    ? p.ArmCoreType.Equals(typeof(ArmClient))
+                    : p.ArmCoreType.Equals(TypeOfParentResource))?.LastContractView;
+            // A resource type alone cannot tell us which accessor casing was published.
+            var publishedGetter = parentContract?.Methods.FirstOrDefault(m =>
+                m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                m.Signature.ReturnType?.Equals(ResourceCollection.Type) == true &&
+                (m.Signature.Name == derivedGetter || m.Signature.Name == legacyGetter));
+            return publishedGetter is null ? UsesDerivedResourceName : publishedGetter.Signature.Name == derivedGetter;
+        }
 
         private string ResolveResourceName(string resourceName, ArmResourceMetadata metadata)
         {
@@ -244,7 +274,7 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var methodName = ResourceName.GetCollectionMethodName(preserveCasing: UsesDerivedResourceName);
+                var methodName = ResourceName.GetCollectionMethodName(preserveCasing: PreserveResourceNameCasing);
                 // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
                 // are treated by Humanizer as already plural (from Latin), and we want to preserve
                 // them unchanged rather than incorrectly pluralizing them.
