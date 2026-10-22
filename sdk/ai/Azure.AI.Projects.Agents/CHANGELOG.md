@@ -17,8 +17,7 @@
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 
 ### Bugs Fixed
-- Preserved typed Realtime/Live definition dispatch and existing Realtime model-factory signatures.
-- Fixed Live history pagination to honor `has_more` even when a terminal page retains `last_id`.
+- Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
 
 ### Other Changes
 
