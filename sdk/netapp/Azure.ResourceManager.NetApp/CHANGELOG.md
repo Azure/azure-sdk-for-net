@@ -1,14 +1,19 @@
 # Release History
 
-## 1.19.0-beta.3 (Unreleased)
+## 1.19.0 (2026-10-20)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version to `2026-08-01`.
+- Expanded `LdapConfiguration` and `LdapConfigurationPatch` with bind authentication, DNS servers, distinguished names, LDAP port, and Key Vault-backed bind password settings.
+- Added `BindPasswordKeyVaultConfig` and `BindPasswordKeyVaultConfigPatch` models.
+- Added `BindAuthenticationLevel` and `SecureLdapType` enums for LDAP authentication and secure LDAP configuration.
+- Added the `Canceled` member to `NetAppProvisioningState`.
+- Added `RefreshLdapBindPassword` and `RefreshLdapBindPasswordAsync` operations to `NetAppAccountResource`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Preserved the existing `NetAppAccountPatch.Encryption` and `NetAppAccountPatch.ActiveDirectories` property types and `NfsV4IdDomain` property name when generating from TypeSpec.
 
 ## 1.19.0-beta.2 (2026-08-27)
 

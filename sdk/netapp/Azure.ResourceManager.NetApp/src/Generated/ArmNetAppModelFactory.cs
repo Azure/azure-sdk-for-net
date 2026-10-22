@@ -1831,117 +1831,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new BindPasswordKeyVaultConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="nfsV4IDDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectoryPatch> activeDirectories, NetAppAccountEncryptionPatch encryption, string nfsV4IDDomain, LdapConfigurationPatch ldapConfiguration)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppAccountPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                identity,
-                activeDirectories is null && encryption is null && nfsV4IDDomain is null && ldapConfiguration is null ? default : new AccountPropertiesPatch((activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectoryPatch>()).ToList(), encryption, nfsV4IDDomain, ldapConfiguration, default),
-                default);
-        }
-
-        /// <summary> Active Directory settings for PATCH operations (no default values). </summary>
-        /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
-        /// <param name="username"> A domain user account with permission to create machine accounts. </param>
-        /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
-        /// <param name="domain"> Name of the Active Directory domain. </param>
-        /// <param name="dns"> Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain. </param>
-        /// <param name="smbServerName"> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </param>
-        /// <param name="organizationalUnit"> The Organizational Unit (OU) within the Windows Active Directory. </param>
-        /// <param name="site"> The Active Directory site the service will limit Domain Controller discovery to. </param>
-        /// <param name="backupOperators"> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </param>
-        /// <param name="administrators"> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </param>
-        /// <param name="kdcIP"> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
-        /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
-        /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
-        /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
-        /// <param name="isLdapSigningEnabled"> Specifies whether or not the LDAP traffic needs to be signed. </param>
-        /// <param name="securityOperators"> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
-        /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </param>
-        /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
-        /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
-        /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountActiveDirectoryPatch"/> instance for mocking. </returns>
-        public static NetAppAccountActiveDirectoryPatch NetAppAccountActiveDirectoryPatch(string activeDirectoryId = default, string username = default, string password = default, string domain = default, string dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IPAddress kdcIP = default, string adName = default, string serverRootCACertificate = default, bool? isAesEncryptionEnabled = default, bool? isLdapSigningEnabled = default, IEnumerable<string> securityOperators = default, bool? isLdapOverTlsEnabled = default, bool? allowLocalNfsUsersWithLdap = default, bool? encryptDCConnections = default, NetAppLdapSearchScopeConfiguration ldapSearchScope = default, string preferredServersForLdapClient = default)
-        {
-            backupOperators ??= new ChangeTrackingList<string>();
-            administrators ??= new ChangeTrackingList<string>();
-            securityOperators ??= new ChangeTrackingList<string>();
-
-            return new NetAppAccountActiveDirectoryPatch(
-                activeDirectoryId,
-                username,
-                password,
-                domain,
-                dns,
-                smbServerName,
-                organizationalUnit,
-                site,
-                (backupOperators ?? new ChangeTrackingList<string>()).ToList(),
-                (administrators ?? new ChangeTrackingList<string>()).ToList(),
-                kdcIP,
-                adName,
-                serverRootCACertificate,
-                isAesEncryptionEnabled,
-                isLdapSigningEnabled,
-                (securityOperators ?? new ChangeTrackingList<string>()).ToList(),
-                isLdapOverTlsEnabled,
-                allowLocalNfsUsersWithLdap,
-                encryptDCConnections,
-                ldapSearchScope,
-                preferredServersForLdapClient,
-                default);
-        }
-
-        /// <summary> Encryption settings for PATCH operations (no default values). </summary>
-        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
-        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
-        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountEncryptionPatch"/> instance for mocking. </returns>
-        public static NetAppAccountEncryptionPatch NetAppAccountEncryptionPatch(NetAppKeySource? keySource = default, NetAppKeyVaultPropertiesPatch keyVaultProperties = default, NetAppEncryptionIdentityPatch identity = default)
-        {
-            return new NetAppAccountEncryptionPatch(keySource, keyVaultProperties, identity, default);
-        }
-
-        /// <summary> Properties of key vault for PATCH operations (no required properties). </summary>
-        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultArmResourceId"> The resource ID of KeyVault. </param>
-        /// <returns> A new <see cref="Models.NetAppKeyVaultPropertiesPatch"/> instance for mocking. </returns>
-        public static NetAppKeyVaultPropertiesPatch NetAppKeyVaultPropertiesPatch(Uri keyVaultUri = default, string keyName = default, ResourceIdentifier keyVaultArmResourceId = default)
-        {
-            return new NetAppKeyVaultPropertiesPatch(keyVaultUri, keyName, keyVaultArmResourceId, default);
-        }
-
-        /// <summary> Identity used to authenticate with key vault for PATCH operations. </summary>
-        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
-        /// <param name="federatedClientId"> ClientId of the multi-tenant Entra ID Application. Used to access cross-tenant keyvaults. </param>
-        /// <returns> A new <see cref="Models.NetAppEncryptionIdentityPatch"/> instance for mocking. </returns>
-        public static NetAppEncryptionIdentityPatch NetAppEncryptionIdentityPatch(string userAssignedIdentity = default, string federatedClientId = default)
-        {
-            return new NetAppEncryptionIdentityPatch(userAssignedIdentity, federatedClientId, default);
-        }
-
         /// <summary> LDAP configuration for PATCH operations (no default values). </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
@@ -2476,8 +2365,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"></param>
-        /// <param name="activeDirectories"></param>
-        /// <param name="encryption"></param>
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"></param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"></param>
@@ -2494,7 +2383,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                nfsV4IdDomain is null ? default : new AccountPropertiesPatch(default, default, nfsV4IdDomain, default, default),
+                activeDirectories is null && encryption is null && nfsV4IdDomain is null ? default : new AccountPropertiesPatch((activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(), encryption, nfsV4IdDomain, default, default),
                 default);
         }
 

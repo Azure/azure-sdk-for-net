@@ -11,53 +11,30 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private string _nfsV4IDDomain;
-        private bool _nfsV4IDDomainIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccountPropertiesPatch"/>. </summary>
         public AccountPropertiesPatch()
         {
-            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectoryPatch>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountPropertiesPatch"/>. </summary>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="nfsV4IDDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectoryPatch> activeDirectories, NetAppAccountEncryptionPatch encryption, string nfsV4IDDomain, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
-            _nfsV4IDDomain = nfsV4IDDomain;
+            NfsV4IdDomain = nfsV4IdDomain;
             LdapConfiguration = ldapConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectoryPatch> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectoryPatch>();
-
-        /// <summary> Encryption settings. </summary>
-        public NetAppAccountEncryptionPatch Encryption { get; set; }
-
-        /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IDDomain
-        {
-            get
-            {
-                return _nfsV4IDDomain;
-            }
-            set
-            {
-                _nfsV4IDDomain = value;
-                _nfsV4IDDomainIsDefined = true;
-            }
         }
 
         /// <summary> LDAP Configuration for the account. </summary>
