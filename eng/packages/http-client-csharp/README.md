@@ -19,8 +19,6 @@ npm install @azure-typespec/http-client-csharp
 
 For detailed instructions on how to customize the generated C# code, see the [Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md).
 
-Client response overrides using `replaceResponseWithVoid` or `replaceResponseWithBytes` change convenience methods to return `Response` or `Response<BinaryData>`, respectively. The bytes replacement exposes the raw response content without deserializing it. Protocol methods and the HTTP response on the wire are unchanged.
-
 ## Emitter usage
 
 1. Via the command line
