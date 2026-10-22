@@ -8,11 +8,21 @@ This is the first stable release of this library.
 
 - Upgraded API version to 2026-11-01.
 
+### Breaking Changes
+
+- Renamed `SignalConfiguration` to `CloudHealthSignalConfiguration` and `ArmCloudHealthModelFactory.SignalConfiguration` to `ArmCloudHealthModelFactory.CloudHealthSignalConfiguration`.
+
 ## 1.0.0-beta.6 (2026-10-15)
 
 ### Features Added
 
 - Upgraded API version to 2026-10-01-preview
+
+### Breaking Changes
+
+- Removed `MetricNamespace`, `MetricName`, `AggregationType`, `TimeGrain`, and `DimensionFilter` from `SignalConfiguration`. Access these values through `Configuration` cast to `AzureResourceMetricRecommendationConfiguration`. For Log Analytics and Prometheus recommendations, use `LogAnalyticsQueryRecommendationConfiguration` and `PrometheusMetricsRecommendationConfiguration`, respectively.
+- Replaced `SignalConfiguration.Unit` with `SignalConfiguration.DataUnit`.
+- Changed `ArmCloudHealthModelFactory.SignalConfiguration` to accept kind-specific settings through the `configuration` parameter and the unit through the `dataUnit` parameter instead of the metric-specific parameters and `unit`. Create the configuration using the corresponding recommendation-configuration model factory.
 
 ## 1.0.0-beta.5 (2026-09-04)
 
