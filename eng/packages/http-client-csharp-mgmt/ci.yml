@@ -37,6 +37,10 @@ parameters:
     displayName: "Regenerate clients"
     type: boolean
     default: false
+  - name: RegenerateAllServices
+    displayName: "Regenerate all services (instead of the priority list)"
+    type: boolean
+    default: false
   - name: PublishNugetPackages
     displayName: "Publish NuGet package artifacts"
     type: boolean
@@ -87,15 +91,40 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      # Workaround: keep regen groups small enough to avoid the public release
-      # pipeline's 1-hour timeout. Azure.ResourceManager.Network takes much
-      # longer than most packages and should be optimized eventually; the shared
-      # matrix generator only supports count-based batching, not per-package
-      # isolation.
       RegenerationJobCount: 18
-      MinimumPerJob: 10
       OnlyGenerateTypespec: true
-      DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
+      ${{ if eq(parameters.RegenerateAllServices, true) }}:
+        # Preserve the full ARM + provisioning scope and batching when requested.
+        MinimumPerJob: 10
+        DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
+      ${{ if eq(parameters.RegenerateAllServices, false) }}:
+        # Keep the short priority list parallelized rather than creating only two jobs.
+        MinimumPerJob: 1
+        # Source: https://gist.github.com/live1206/26f6c34be35efe04d35e8377c0962a03
+        # Resources is retained in the list but skipped until it has a tsp-location.yaml.
+        DirectoryFilterPattern: >-
+          Azure.ResourceManager.Compute,
+          Azure.ResourceManager.Network,
+          Azure.ResourceManager.Storage,
+          Azure.ResourceManager.KeyVault,
+          Azure.ResourceManager.Sql,
+          Azure.ResourceManager.AppService,
+          Azure.ResourceManager.ContainerService,
+          Azure.ResourceManager.Resources,
+          Azure.ResourceManager.Monitor,
+          Azure.ResourceManager.OperationalInsights,
+          Azure.ResourceManager.ManagedServiceIdentities,
+          Azure.ResourceManager.Authorization,
+          Azure.ResourceManager.Dns,
+          Azure.ResourceManager.PrivateDns,
+          Azure.ResourceManager.TrafficManager,
+          Azure.ResourceManager.ContainerRegistry,
+          Azure.ResourceManager.CosmosDB,
+          Azure.ResourceManager.PostgreSql,
+          Azure.ResourceManager.MySql,
+          Azure.ResourceManager.Redis,
+          Azure.ResourceManager.EventHubs,
+          Azure.ResourceManager.ServiceBus
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
