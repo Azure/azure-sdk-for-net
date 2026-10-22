@@ -79,15 +79,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CostControlConnections)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AppInsightsConnectionId))
+            if (Optional.IsDefined(AppInsightsConnectionId, _appInsightsConnectionIdIsDefined))
             {
-                writer.WritePropertyName("appInsightsConnectionId"u8);
-                writer.WriteStringValue(AppInsightsConnectionId);
+                if (AppInsightsConnectionId != null)
+                {
+                    writer.WritePropertyName("appInsightsConnectionId"u8);
+                    writer.WriteStringValue(AppInsightsConnectionId);
+                }
+                else
+                {
+                    writer.WriteNull("appInsightsConnectionId"u8);
+                }
             }
-            if (Optional.IsDefined(EventGridConnectionId))
+            if (Optional.IsDefined(EventGridConnectionId, _eventGridConnectionIdIsDefined))
             {
-                writer.WritePropertyName("eventGridConnectionId"u8);
-                writer.WriteStringValue(EventGridConnectionId);
+                if (EventGridConnectionId != null)
+                {
+                    writer.WritePropertyName("eventGridConnectionId"u8);
+                    writer.WriteStringValue(EventGridConnectionId);
+                }
+                else
+                {
+                    writer.WriteNull("eventGridConnectionId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,13 +145,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool appInsightsConnectionIdIsDefined = false;
             ResourceIdentifier appInsightsConnectionId = default;
+            bool eventGridConnectionIdIsDefined = false;
             ResourceIdentifier eventGridConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("appInsightsConnectionId"u8))
                 {
+                    appInsightsConnectionIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         appInsightsConnectionId = null;
@@ -148,6 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("eventGridConnectionId"u8))
                 {
+                    eventGridConnectionIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         eventGridConnectionId = null;
@@ -161,7 +179,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlConnections(appInsightsConnectionId, eventGridConnectionId, additionalBinaryDataProperties);
+            return new CostControlConnections(appInsightsConnectionId, eventGridConnectionId, additionalBinaryDataProperties)
+            {
+                _appInsightsConnectionIdIsDefined = appInsightsConnectionIdIsDefined,
+                _eventGridConnectionIdIsDefined = eventGridConnectionIdIsDefined
+            };
         }
     }
 }

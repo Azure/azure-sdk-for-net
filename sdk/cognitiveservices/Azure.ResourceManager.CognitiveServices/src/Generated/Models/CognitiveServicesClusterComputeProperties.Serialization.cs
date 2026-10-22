@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 createdOn,
                 additionalBinaryDataProperties,
-                pools,
+                pools ?? new ChangeTrackingList<CognitiveServicesComputePool>(),
                 subnetArmId);
         }
     }

@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new RaiAcsManifest(
                 agentControlSpecificationVersion,
                 metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                policies,
+                policies ?? new ChangeTrackingDictionary<string, RaiAcsRegoPolicy>(),
                 interventionPoints,
                 tools ?? new ChangeTrackingDictionary<string, RaiAcsTool>(),
                 annotators,

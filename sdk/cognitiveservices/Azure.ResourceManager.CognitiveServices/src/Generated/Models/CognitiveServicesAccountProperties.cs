@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CostControlConnections _costControlConnections;
+        private bool _costControlConnectionsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
         public CognitiveServicesAccountProperties()
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CapabilitySettings = capabilitySettings;
             AgentHostingConfigurations = agentHostingConfigurations;
             CostControlIds = costControlIds;
-            CostControlConnections = costControlConnections;
+            _costControlConnections = costControlConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -284,6 +286,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The account-level connections used to publish cost control telemetry and events. Application Insights is optional for attachment, accounting, and enforcement and can be configured later. Event Grid must be configured before attaching a cost control with an alert threshold. </summary>
         [WirePath("costControlConnections")]
-        public CostControlConnections CostControlConnections { get; set; }
+        public CostControlConnections CostControlConnections
+        {
+            get
+            {
+                return _costControlConnections;
+            }
+            set
+            {
+                _costControlConnections = value;
+                _costControlConnectionsIsDefined = true;
+            }
+        }
     }
 }

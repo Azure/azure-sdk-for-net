@@ -341,10 +341,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CostControlConnections))
+            if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
             {
-                writer.WritePropertyName("costControlConnections"u8);
-                writer.WriteObjectValue(CostControlConnections, options);
+                if (CostControlConnections != null)
+                {
+                    writer.WritePropertyName("costControlConnections"u8);
+                    writer.WriteObjectValue(CostControlConnections, options);
+                }
+                else
+                {
+                    writer.WriteNull("costControlConnections"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -427,6 +434,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             IList<AgentHostingConfiguration> agentHostingConfigurations = default;
             IList<ResourceIdentifier> costControlIds = default;
+            bool costControlConnectionsIsDefined = false;
             CostControlConnections costControlConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -842,6 +850,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("costControlConnections"u8))
                 {
+                    costControlConnectionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         costControlConnections = null;
@@ -896,7 +905,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
                 costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 costControlConnections,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _costControlConnectionsIsDefined = costControlConnectionsIsDefined
+            };
         }
     }
 }

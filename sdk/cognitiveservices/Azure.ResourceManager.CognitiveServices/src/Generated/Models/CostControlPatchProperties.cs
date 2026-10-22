@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _displayName;
+        private bool _displayNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CostControlPatchProperties"/>. </summary>
         public CostControlPatchProperties()
@@ -29,14 +31,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CostControlPatchProperties(string displayName, IList<CostControlRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
+            _displayName = displayName;
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An optional human-readable name for the cost control. Set this property to null to clear it. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+                _displayNameIsDefined = true;
+            }
+        }
 
         /// <summary> The complete replacement set of cost control rules. </summary>
         [WirePath("rules")]

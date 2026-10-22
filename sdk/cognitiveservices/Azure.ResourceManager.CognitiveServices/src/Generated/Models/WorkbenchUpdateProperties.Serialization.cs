@@ -84,15 +84,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
                 writer.WriteStringValue(IdleTimeBeforeShutdown);
             }
-            if (Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType, _instanceTypeIsDefined))
             {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType"u8);
+                }
             }
-            if (Optional.IsDefined(GpuCount))
+            if (Optional.IsDefined(GpuCount, _gpuCountIsDefined))
             {
-                writer.WritePropertyName("gpuCount"u8);
-                writer.WriteNumberValue(GpuCount.Value);
+                if (GpuCount != null)
+                {
+                    writer.WritePropertyName("gpuCount"u8);
+                    writer.WriteNumberValue(GpuCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("gpuCount"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +152,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string targetClusterId = default;
             string idleTimeBeforeShutdown = default;
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
+            bool gpuCountIsDefined = false;
             int? gpuCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,6 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -165,6 +182,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("gpuCount"u8))
                 {
+                    gpuCountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         gpuCount = null;
@@ -178,7 +196,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkbenchUpdateProperties(targetClusterId, idleTimeBeforeShutdown, instanceType, gpuCount, additionalBinaryDataProperties);
+            return new WorkbenchUpdateProperties(targetClusterId, idleTimeBeforeShutdown, instanceType, gpuCount, additionalBinaryDataProperties)
+            {
+                _instanceTypeIsDefined = instanceTypeIsDefined,
+                _gpuCountIsDefined = gpuCountIsDefined
+            };
         }
     }
 }

@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ResourceIdentifier _appInsightsConnectionId;
+        private bool _appInsightsConnectionIdIsDefined;
+        private ResourceIdentifier _eventGridConnectionId;
+        private bool _eventGridConnectionIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CostControlConnections"/>. </summary>
         public CostControlConnections()
@@ -33,17 +37,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CostControlConnections(ResourceIdentifier appInsightsConnectionId, ResourceIdentifier eventGridConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AppInsightsConnectionId = appInsightsConnectionId;
-            EventGridConnectionId = eventGridConnectionId;
+            _appInsightsConnectionId = appInsightsConnectionId;
+            _eventGridConnectionId = eventGridConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the full resource ID of the optional Application Insights connection. </summary>
         [WirePath("appInsightsConnectionId")]
-        public ResourceIdentifier AppInsightsConnectionId { get; set; }
+        public ResourceIdentifier AppInsightsConnectionId
+        {
+            get
+            {
+                return _appInsightsConnectionId;
+            }
+            set
+            {
+                _appInsightsConnectionId = value;
+                _appInsightsConnectionIdIsDefined = true;
+            }
+        }
 
         /// <summary> The full resource ID of the Event Grid connection used for cost control alerts. This connection must be configured when an attached cost control contains an alert threshold action and cannot be removed while such an action remains attached. </summary>
         [WirePath("eventGridConnectionId")]
-        public ResourceIdentifier EventGridConnectionId { get; set; }
+        public ResourceIdentifier EventGridConnectionId
+        {
+            get
+            {
+                return _eventGridConnectionId;
+            }
+            set
+            {
+                _eventGridConnectionId = value;
+                _eventGridConnectionIdIsDefined = true;
+            }
+        }
     }
 }

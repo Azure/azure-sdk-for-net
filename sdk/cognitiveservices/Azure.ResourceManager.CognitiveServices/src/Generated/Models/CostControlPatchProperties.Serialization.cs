@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CostControlPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool displayNameIsDefined = false;
             string displayName = default;
             IList<CostControlRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,6 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -165,7 +174,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlPatchProperties(displayName, rules ?? new ChangeTrackingList<CostControlRule>(), additionalBinaryDataProperties);
+            return new CostControlPatchProperties(displayName, rules ?? new ChangeTrackingList<CostControlRule>(), additionalBinaryDataProperties)
+            {
+                _displayNameIsDefined = displayNameIsDefined
+            };
         }
     }
 }

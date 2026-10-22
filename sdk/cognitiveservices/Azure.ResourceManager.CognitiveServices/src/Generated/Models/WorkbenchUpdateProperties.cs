@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _instanceType;
+        private bool _instanceTypeIsDefined;
+        private int? _gpuCount;
+        private bool _gpuCountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WorkbenchUpdateProperties"/>. </summary>
         public WorkbenchUpdateProperties()
@@ -32,8 +36,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             TargetClusterId = targetClusterId;
             IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
-            InstanceType = instanceType;
-            GpuCount = gpuCount;
+            _instanceType = instanceType;
+            _gpuCount = gpuCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,10 +51,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. Omit to preserve the current value; null resets to the Singularity.D4_v3 fallback. Foundry Compute ignores this override and uses the pool configuration. An actual instance type change requires the workbench to be stopped. </summary>
         [WirePath("instanceType")]
-        public string InstanceType { get; set; }
+        public string InstanceType
+        {
+            get
+            {
+                return _instanceType;
+            }
+            set
+            {
+                _instanceType = value;
+                _instanceTypeIsDefined = true;
+            }
+        }
 
         /// <summary> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. Omit to preserve the current value; null clears the override to use the full node or the instance type's default count. Full-node Azure VM sizes permit partition selection. A supplied count must match an exact Singularity instance type; the Singularity.D4_v3 fallback accepts 4. </summary>
         [WirePath("gpuCount")]
-        public int? GpuCount { get; set; }
+        public int? GpuCount
+        {
+            get
+            {
+                return _gpuCount;
+            }
+            set
+            {
+                _gpuCount = value;
+                _gpuCountIsDefined = true;
+            }
+        }
     }
 }

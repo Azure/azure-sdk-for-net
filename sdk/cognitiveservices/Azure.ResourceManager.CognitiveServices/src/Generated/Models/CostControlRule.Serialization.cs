@@ -104,13 +104,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsCollectionDefined(Thresholds))
             {
-                writer.WritePropertyName("thresholds"u8);
-                writer.WriteStartArray();
-                foreach (CostControlThreshold item in Thresholds)
+                if (Thresholds != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("thresholds"u8);
+                    writer.WriteStartArray();
+                    foreach (CostControlThreshold item in Thresholds)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("thresholds"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CostControlPeriod? period = default;
             bool? recurring = default;
             CostControlMatch match = default;
-            IList<CostControlThreshold> thresholds = default;
+            IList<CostControlThreshold> thresholds = new ChangeTrackingList<CostControlThreshold>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        thresholds = null;
                         continue;
                     }
                     List<CostControlThreshold> array = new List<CostControlThreshold>();
@@ -239,7 +247,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 period,
                 recurring,
                 match,
-                thresholds ?? new ChangeTrackingList<CostControlThreshold>(),
+                thresholds,
                 additionalBinaryDataProperties);
         }
     }

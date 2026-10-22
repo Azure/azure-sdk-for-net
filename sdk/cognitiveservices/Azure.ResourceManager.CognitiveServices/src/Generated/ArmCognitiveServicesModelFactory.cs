@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="costControlConnections"> The account-level connections used to publish cost control telemetry and events. Application Insights is optional for attachment, accounting, and enforcement and can be configured later. Event Grid must be configured before attaching a cost control with an alert threshold. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? isStoredCompletionsDisabled, bool? isA365LoggingEnabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, FoundryAutoUpgrade foundryAutoUpgrade, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, IEnumerable<AgentHostingConfiguration> agentHostingConfigurations = default, IEnumerable<ResourceIdentifier> costControlIds = default, CostControlConnections costControlConnections = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, bool? isA365LoggingEnabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default, IEnumerable<AgentHostingConfiguration> agentHostingConfigurations = default, IEnumerable<ResourceIdentifier> costControlIds = default, CostControlConnections costControlConnections = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.AgentHostingConfiguration"/> instance for mocking. </returns>
         public static AgentHostingConfiguration AgentHostingConfiguration(string name = default, string hostingType = default)
         {
-            return new UnknownAgentHostingConfiguration(name, default, default);
+            return new UnknownAgentHostingConfiguration(name, hostingType is null ? default : new AgentHostingType(hostingType), default);
         }
 
         /// <summary> Configuration for hosting Foundry agents on an Azure Kubernetes Service managed cluster. </summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             return new ManagedClusterAgentHostingConfiguration(
                 name,
-                default,
+                AgentHostingType.ManagedCluster,
                 default,
                 hostingManagementIdentityResourceId,
                 workloadIdentityResourceId,
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scopeType"> The scope type of the quota usage. </param>
         /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ResourceIdentifier id, ResourceType? @type, ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId = default)
+        public static ServiceAccountUsage ServiceAccountUsage(ResourceIdentifier id = default, ResourceType? @type = default, ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default, CognitiveServicesQuotaScopeType? scopeType = default, string scopeId = default)
         {
             return new ServiceAccountUsage(
                 id,
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// At the moment the service only supports a single cost control. This will be expanded in future API versions.
         /// </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, string contextCacheContainerId, DeploymentSpeculativeDecoding speculativeDecoding, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing = default, IEnumerable<ResourceIdentifier> costControlIds = default)
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, string contextCacheContainerId = default, DeploymentSpeculativeDecoding speculativeDecoding = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default, IEnumerable<ResourceIdentifier> costControlIds = default)
         {
             capabilities ??= new ChangeTrackingDictionary<string, string>();
             rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
         /// </param>
         /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyFormat? format, RaiAcsManifest acs, IEnumerable<RaiRegoReference> acsRegos, RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders = default, IEnumerable<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders = default, RaiEgressPolicyConfig egressPolicy = default)
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyFormat? format = default, RaiAcsManifest acs = default, IEnumerable<RaiRegoReference> acsRegos = default, RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders = default, IEnumerable<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders = default, RaiEgressPolicyConfig egressPolicy = default)
         {
             acsRegos ??= new ChangeTrackingList<RaiRegoReference>();
             contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
         /// <param name="capabilitySettings"> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault, CognitiveServicesAgentCapabilitySettings capabilitySettings)
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = default, string displayName = default, string description = default, IReadOnlyDictionary<string, string> endpoints = default, bool? isDefault = default, CognitiveServicesAgentCapabilitySettings capabilitySettings = default)
         {
             endpoints ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3878,7 +3878,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new UnknownCognitiveServicesComputeProperties(
-                default,
+                computeType is null ? default : new ComputeType(computeType),
                 location,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
@@ -3900,7 +3900,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             pools ??= new ChangeTrackingList<CognitiveServicesComputePool>();
 
             return new CognitiveServicesClusterComputeProperties(
-                default,
+                ComputeType.Cluster,
                 location,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
@@ -3937,7 +3937,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new ContainerInstanceComputeProperties(
-                default,
+                ComputeType.ContainerInstance,
                 location,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
@@ -4474,7 +4474,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId = default)
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId)
         {
             return new ServiceAccountUsage(
                 default,
@@ -4510,7 +4510,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing)
         {
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
@@ -4569,7 +4569,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = default, string displayName = default, string description = default, IReadOnlyDictionary<string, string> endpoints = default, bool? isDefault = default)
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault)
         {
             return new CognitiveServicesProjectProperties(
                 provisioningState,

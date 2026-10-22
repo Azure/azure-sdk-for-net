@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiAcsModerationBindingExtension(subjectFormat, harmConfigs, additionalBinaryDataProperties);
+            return new RaiAcsModerationBindingExtension(subjectFormat, harmConfigs ?? new ChangeTrackingList<RaiAcsHarmConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

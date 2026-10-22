@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiBindingListResult(nextLink, value, additionalBinaryDataProperties);
+            return new RaiBindingListResult(nextLink, value ?? new ChangeTrackingList<RaiBindingData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlListResult(nextLink, value, additionalBinaryDataProperties);
+            return new CostControlListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesAccountCostControlData>(), additionalBinaryDataProperties);
         }
     }
 }

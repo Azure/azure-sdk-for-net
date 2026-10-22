@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlProperties(displayName, rules, additionalBinaryDataProperties);
+            return new CostControlProperties(displayName, rules ?? new ChangeTrackingList<CostControlRule>(), additionalBinaryDataProperties);
         }
     }
 }
