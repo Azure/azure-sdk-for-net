@@ -65,5 +65,53 @@ namespace Azure.ResourceManager.ContainerService.Tests
             cluster.UpgradeOverrideSettings = null;
             Assert.IsNull(cluster.UpgradeSettings.OverrideSettings);
         }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void LegacyVpaEnabledPreservesAddonAutoscaling(bool enabled)
+        {
+            var verticalPodAutoscaler = new ManagedClusterVerticalPodAutoscaler(true)
+            {
+                AddonAutoscaling = ManagedClusterAddonAutoscaling.Enabled
+            };
+            var profile = new ManagedClusterWorkloadAutoScalerProfile
+            {
+                VerticalPodAutoscaler = verticalPodAutoscaler
+            };
+
+            profile.IsVpaEnabled = enabled;
+
+            Assert.AreSame(verticalPodAutoscaler, profile.VerticalPodAutoscaler);
+            Assert.AreEqual(enabled, profile.VerticalPodAutoscaler.IsVpaEnabled);
+            Assert.AreEqual(ManagedClusterAddonAutoscaling.Enabled, profile.VerticalPodAutoscaler.AddonAutoscaling);
+        }
+
+        [Test]
+        public void LegacyVpaEnabledCreatesProfileWhenMissing()
+        {
+            var profile = new ManagedClusterWorkloadAutoScalerProfile();
+
+            profile.IsVpaEnabled = false;
+
+            Assert.IsNotNull(profile.VerticalPodAutoscaler);
+            Assert.IsFalse(profile.VerticalPodAutoscaler.IsVpaEnabled);
+        }
+
+        [Test]
+        public void LegacyVpaEnabledNullClearsProfile()
+        {
+            var profile = new ManagedClusterWorkloadAutoScalerProfile
+            {
+                VerticalPodAutoscaler = new ManagedClusterVerticalPodAutoscaler(true)
+                {
+                    AddonAutoscaling = ManagedClusterAddonAutoscaling.Enabled
+                }
+            };
+
+            profile.IsVpaEnabled = null;
+
+            Assert.IsNull(profile.VerticalPodAutoscaler);
+            Assert.IsNull(profile.IsVpaEnabled);
+        }
     }
 }
