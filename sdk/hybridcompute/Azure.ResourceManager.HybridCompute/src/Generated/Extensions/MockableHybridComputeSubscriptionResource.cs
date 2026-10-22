@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <returns> An object representing collection of HybridComputeExtensionValues and their operations over a HybridComputeExtensionValueResource. </returns>
         public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
-            return GetCachedClient(client => new HybridComputeExtensionValueCollection(client, Id, location, publisher, extensionType));
+            return new HybridComputeExtensionValueCollection(Client, Id, location, publisher, extensionType);
         }
 
         /// <summary>

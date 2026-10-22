@@ -86,10 +86,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("silence_duration_ms"u8);
                 writer.WriteNumberValue(Convert.ToInt32(Math.Round(SilenceDurationMs.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(IdleTimeoutMs))
+            if (Optional.IsDefined(IdleTimeout))
             {
                 writer.WritePropertyName("idle_timeout_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeout.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EndOfUtteranceDetection, _endOfUtteranceDetectionIsDefined))
             {
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
             float? threshold = default;
             TimeSpan? prefixPaddingMs = default;
             TimeSpan? silenceDurationMs = default;
-            TimeSpan? idleTimeoutMs = default;
+            TimeSpan? idleTimeout = default;
             bool endOfUtteranceDetectionIsDefined = false;
             VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default;
             TimeSpan? speechDurationMs = default;
@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    idleTimeoutMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    idleTimeout = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))
@@ -274,7 +274,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,

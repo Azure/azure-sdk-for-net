@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, AzureBlobStorageCapability azureBlobStorageCapabilities, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState)
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = default, string description = default, AzureBlobStorageCapability azureBlobStorageCapabilities = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, StorageDiscoveryProvisioningState? provisioningState = default)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration to update. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities)
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities = default)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, StorageDiscoveryProvisioningState? provisioningState = default)
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState)
         {
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default)
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes)
         {
             return new StorageDiscoveryWorkspacePatchProperties(
                 sku,
