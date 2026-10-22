@@ -1,0 +1,69 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.ResourceManager.ContainerService.Models;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.ContainerService.Tests
+{
+    public class ContainerServiceModelFactoryTests
+    {
+        [Test]
+        public void AgentPoolUpgradeProfileDataDefaults()
+        {
+            var profile = ArmContainerServiceModelFactory.AgentPoolUpgradeProfileData();
+
+            Assert.IsEmpty(profile.Upgrades);
+            Assert.IsEmpty(profile.ComponentsByReleases);
+            Assert.IsEmpty(profile.RecentlyUsedVersions);
+        }
+
+        [Test]
+        public void AgentPoolUpgradeProfileDataPreservesSuppliedVersions()
+        {
+            var upgrade = ArmContainerServiceModelFactory.AgentPoolUpgradeProfilePropertiesUpgradesItem("1.35.1");
+            var recentlyUsedVersion = ArmContainerServiceModelFactory.AgentPoolRecentlyUsedVersion("1.34.3");
+            var profile = ArmContainerServiceModelFactory.AgentPoolUpgradeProfileData(
+                kubernetesVersion: "1.35.0",
+                osType: ContainerServiceOSType.Linux,
+                upgrades: new[] { upgrade },
+                recentlyUsedVersions: new[] { recentlyUsedVersion },
+                latestNodeImageVersion: "AKSUbuntu-2204gen2containerd-202610.20.0");
+
+            Assert.AreEqual("1.35.0", profile.KubernetesVersion);
+            Assert.AreEqual(ContainerServiceOSType.Linux, profile.OSType);
+            CollectionAssert.AreEqual(new[] { upgrade }, profile.Upgrades);
+            CollectionAssert.AreEqual(new[] { recentlyUsedVersion }, profile.RecentlyUsedVersions);
+            Assert.IsEmpty(profile.ComponentsByReleases);
+            Assert.AreEqual("AKSUbuntu-2204gen2containerd-202610.20.0", profile.LatestNodeImageVersion);
+        }
+
+        [Test]
+        public void LegacyGpuManagementModeUsesPreviewProfile()
+        {
+            var profile = ArmContainerServiceModelFactory.AgentPoolGpuProfile(
+                AgentPoolGpuDriver.Install, GpuManagementMode.Managed);
+
+            Assert.AreEqual(GpuManagementMode.Managed, profile.Nvidia.ManagementMode);
+            Assert.AreEqual(GpuManagementMode.Managed, profile.NvidiaManagementMode);
+            profile.Nvidia.ManagementMode = GpuManagementMode.Unmanaged;
+            Assert.AreEqual(GpuManagementMode.Unmanaged, profile.NvidiaManagementMode);
+            profile.NvidiaManagementMode = null;
+            Assert.IsNull(profile.Nvidia.ManagementMode);
+        }
+
+        [Test]
+        public void LegacyUpgradeOverrideSettingsUsesPreviewUpgradeSettings()
+        {
+            var cluster = new ContainerServiceManagedClusterData(Azure.Core.AzureLocation.EastUS);
+            var settings = new UpgradeOverrideSettings();
+
+            Assert.IsNull(cluster.UpgradeOverrideSettings);
+            cluster.UpgradeOverrideSettings = settings;
+            Assert.AreSame(settings, cluster.UpgradeSettings.OverrideSettings);
+            Assert.AreSame(settings, cluster.UpgradeOverrideSettings);
+            cluster.UpgradeOverrideSettings = null;
+            Assert.IsNull(cluster.UpgradeSettings.OverrideSettings);
+        }
+    }
+}
