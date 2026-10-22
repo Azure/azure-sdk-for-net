@@ -142,6 +142,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SourceNetworkTapRuleId))
+            {
+                writer.WritePropertyName("sourceNetworkTapRuleId"u8);
+                writer.WriteStringValue(SourceNetworkTapRuleId);
+            }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
@@ -204,6 +209,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IReadOnlyList<ResourceIdentifier> sourceInterfaceIds = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             IReadOnlyList<ResourceIdentifier> neighborGroupIds = default;
+            ResourceIdentifier sourceNetworkTapRuleId = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -299,6 +305,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     neighborGroupIds = array;
                     continue;
                 }
+                if (prop.NameEquals("sourceNetworkTapRuleId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceNetworkTapRuleId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("lastOperation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -337,6 +352,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sourceNetworkTapRuleId,
                 lastOperation,
                 provisioningState,
                 configurationState,

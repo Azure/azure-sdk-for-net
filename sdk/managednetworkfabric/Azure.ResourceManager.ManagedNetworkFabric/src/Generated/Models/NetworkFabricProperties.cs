@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             FeatureFlags = new ChangeTrackingList<NetworkFabricFeatureFlag>();
             TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
             ActiveCommitBatches = new ChangeTrackingList<string>();
+            UpgradeProfile = new ChangeTrackingList<UpgradeProfileProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricProperties"/>. </summary>
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
         /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="networkBootstrapDeviceId"> Azure resource ID for the NetworkBootstrapDevice belonging to this Network Fabric. </param>
         /// <param name="terminalServerSettings"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
         /// <param name="racks"> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </param>
@@ -82,8 +84,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="operationalState"> Operational state of networkFabric indicating if the resources of the fabric are reachable and services are available. </param>
         /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
-        internal NetworkFabricProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, NetworkFabricTerminalServerConfiguration terminalServerSettings, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<NetworkFabricFeatureFlag> featureFlags, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, QosProperties qosConfiguration) : base(annotation, additionalBinaryDataProperties)
+        /// <param name="secretArchiveSettings"> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </param>
+        /// <param name="upgradeProfile"> The upgrade profile to be used by devices in the network fabric during device operations. </param>
+        internal NetworkFabricProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, ResourceIdentifier networkBootstrapDeviceId, NetworkFabricTerminalServerConfiguration terminalServerSettings, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<NetworkFabricFeatureFlag> featureFlags, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, OperationalState? operationalState, QosProperties qosConfiguration, SecretArchiveSettings secretArchiveSettings, IList<UpgradeProfileProperties> upgradeProfile) : base(annotation, additionalBinaryDataProperties)
         {
             NetworkFabricSku = networkFabricSku;
             FabricVersion = fabricVersion;
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPv4Prefix = ipv4Prefix;
             IPv6Prefix = ipv6Prefix;
             FabricAsn = fabricAsn;
+            NetworkBootstrapDeviceId = networkBootstrapDeviceId;
             TerminalServerSettings = terminalServerSettings;
             ManagementNetworkConfiguration = managementNetworkConfiguration;
             Racks = racks;
@@ -114,7 +120,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
+            OperationalState = operationalState;
             QosConfiguration = qosConfiguration;
+            SecretArchiveSettings = secretArchiveSettings;
+            UpgradeProfile = upgradeProfile;
         }
 
         /// <summary> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </summary>
@@ -149,6 +158,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
         public long FabricAsn { get; set; }
+
+        /// <summary> Azure resource ID for the NetworkBootstrapDevice belonging to this Network Fabric. </summary>
+        public ResourceIdentifier NetworkBootstrapDeviceId { get; }
 
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
         public NetworkFabricTerminalServerConfiguration TerminalServerSettings { get; set; }
@@ -204,8 +216,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Administrative state of the resource. </summary>
         public NetworkFabricAdministrativeState? AdministrativeState { get; }
 
+        /// <summary> Operational state of networkFabric indicating if the resources of the fabric are reachable and services are available. </summary>
+        public OperationalState? OperationalState { get; }
+
         /// <summary> NetworkFabric QoS Configuration. </summary>
         internal QosProperties QosConfiguration { get; set; }
+
+        /// <summary> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </summary>
+        public SecretArchiveSettings SecretArchiveSettings { get; set; }
+
+        /// <summary> The upgrade profile to be used by devices in the network fabric during device operations. </summary>
+        public IList<UpgradeProfileProperties> UpgradeProfile { get; } = new ChangeTrackingList<UpgradeProfileProperties>();
 
         /// <summary> The number of active password sets configured on the devices. </summary>
         public long? SecretRotationSummaryActivePasswordSetCount

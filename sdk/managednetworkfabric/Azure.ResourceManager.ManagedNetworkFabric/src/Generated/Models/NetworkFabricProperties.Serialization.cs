@@ -136,6 +136,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
+            if (options.Format != "W" && Optional.IsDefined(NetworkBootstrapDeviceId))
+            {
+                writer.WritePropertyName("networkBootstrapDeviceId"u8);
+                writer.WriteStringValue(NetworkBootstrapDeviceId);
+            }
             writer.WritePropertyName("terminalServerConfiguration"u8);
             writer.WriteObjectValue(TerminalServerSettings, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
@@ -285,10 +290,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
             if (Optional.IsDefined(QosConfiguration))
             {
                 writer.WritePropertyName("qosConfiguration"u8);
                 writer.WriteObjectValue(QosConfiguration, options);
+            }
+            if (Optional.IsDefined(SecretArchiveSettings))
+            {
+                writer.WritePropertyName("secretArchiveSettings"u8);
+                writer.WriteObjectValue(SecretArchiveSettings, options);
+            }
+            if (Optional.IsCollectionDefined(UpgradeProfile))
+            {
+                writer.WritePropertyName("upgradeProfile"u8);
+                writer.WriteStartArray();
+                foreach (UpgradeProfileProperties item in UpgradeProfile)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
         }
 
@@ -330,6 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string ipv4Prefix = default;
             string ipv6Prefix = default;
             long fabricAsn = default;
+            ResourceIdentifier networkBootstrapDeviceId = default;
             NetworkFabricTerminalServerConfiguration terminalServerSettings = default;
             ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
             IReadOnlyList<string> racks = default;
@@ -348,7 +374,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
+            OperationalState? operationalState = default;
             QosProperties qosConfiguration = default;
+            SecretArchiveSettings secretArchiveSettings = default;
+            IList<UpgradeProfileProperties> upgradeProfile = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -442,6 +471,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 if (prop.NameEquals("fabricASN"u8))
                 {
                     fabricAsn = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("networkBootstrapDeviceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkBootstrapDeviceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("terminalServerConfiguration"u8))
@@ -675,6 +713,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     administrativeState = new NetworkFabricAdministrativeState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("qosConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -682,6 +729,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     qosConfiguration = QosProperties.DeserializeQosProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("secretArchiveSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretArchiveSettings = SecretArchiveSettings.DeserializeSecretArchiveSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("upgradeProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UpgradeProfileProperties> array = new List<UpgradeProfileProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(UpgradeProfileProperties.DeserializeUpgradeProfileProperties(item, options));
+                    }
+                    upgradeProfile = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -703,6 +773,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 ipv4Prefix,
                 ipv6Prefix,
                 fabricAsn,
+                networkBootstrapDeviceId,
                 terminalServerSettings,
                 managementNetworkConfiguration,
                 racks ?? new ChangeTrackingList<string>(),
@@ -721,7 +792,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 configurationState,
                 provisioningState,
                 administrativeState,
-                qosConfiguration);
+                operationalState,
+                qosConfiguration,
+                secretArchiveSettings,
+                upgradeProfile ?? new ChangeTrackingList<UpgradeProfileProperties>());
         }
     }
 }

@@ -259,5 +259,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             NetworkBootstrapInterfaceResource.ValidateResourceId(id);
             return new NetworkBootstrapInterfaceResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="EdgeConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeConnectorResource"/> object. </returns>
+        public virtual EdgeConnectorResource GetEdgeConnectorResource(ResourceIdentifier id)
+        {
+            EdgeConnectorResource.ValidateResourceId(id);
+            return new EdgeConnectorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FabricResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FabricResource"/> object. </returns>
+        public virtual FabricResource GetFabricResource(ResourceIdentifier id)
+        {
+            FabricResource.ValidateResourceId(id);
+            return new FabricResource(Client, id);
+        }
     }
 }

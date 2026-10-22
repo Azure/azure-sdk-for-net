@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,12 +21,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceProperties"/>. </summary>
         public NetworkBootstrapDeviceProperties()
         {
+            ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
+            SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="controlPlaneAcls"> Control Plane Access Control List ARM resource IDs. </param>
         /// <param name="version"> Current version of the device as defined in SKU. </param>
         /// <param name="networkDeviceSku"> Network Bootstrap Device SKU name. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="operationalState"> Operational state of networkBootstrapDevice indicating if the device is reachable and services are available. </param>
+        /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDeviceProperties(string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkBootstrapDeviceProperties(string annotation, string hostName, string serialNumber, IList<ResourceIdentifier> controlPlaneAcls, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, OperationalState? operationalState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
+            ControlPlaneAcls = controlPlaneAcls;
             Version = version;
             NetworkDeviceSku = networkDeviceSku;
             NetworkFabricId = networkFabricId;
@@ -54,6 +61,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PrimaryManagementIPv4Address = primaryManagementIPv4Address;
             AdministrativeState = administrativeState;
             ConfigurationState = configurationState;
+            OperationalState = operationalState;
+            SecretRotationStatus = secretRotationStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,6 +74,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
+
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> Current version of the device as defined in SKU. </summary>
         public string Version { get; }
@@ -98,5 +110,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
+
+        /// <summary> Operational state of networkBootstrapDevice indicating if the device is reachable and services are available. </summary>
+        public OperationalState? OperationalState { get; }
+
+        /// <summary> Secret rotation status for the terminal server's secrets. </summary>
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; } = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
     }
 }

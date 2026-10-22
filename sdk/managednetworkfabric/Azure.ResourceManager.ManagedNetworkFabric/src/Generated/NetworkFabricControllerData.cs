@@ -230,12 +230,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Operational state of networkFabricController indicating if the resources of the controller are reachable and services are available. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails
         {
             get
             {
                 return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
+
+        /// <summary> The SKU that will be used for creating the VMS for AKS cluster. </summary>
+        public string VmSkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmSkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricControllerProperties();
+                }
+                Properties.VmSkuName = value;
             }
         }
     }

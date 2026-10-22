@@ -137,6 +137,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -178,6 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             NetworkFabricConfigurationState? configurationState = default;
+            OperationalState? operationalState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -273,6 +279,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     configurationState = new NetworkFabricConfigurationState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -292,7 +307,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkFabricId,
                 provisioningState,
                 administrativeState,
-                configurationState);
+                configurationState,
+                operationalState);
         }
     }
 }
