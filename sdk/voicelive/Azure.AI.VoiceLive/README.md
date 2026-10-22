@@ -305,6 +305,25 @@ await session.StartResponseAsync().ConfigureAwait(false);
 - Check that audio devices are accessible and functioning
 - Ensure proper audio codec configuration
 
+### .NET Framework and netstandard2.0 redirect limitation
+
+On `net8.0` and later targets, `VoiceLiveSession` establishes its WebSocket connection using a handshake that
+rejects HTTP redirects (301, 302, 303, 307, 308) instead of following them, so credentials (the `api-key` or
+`Authorization` header) and any custom headers are never forwarded to a redirect target.
+
+On the `netstandard2.0` target — which is what .NET Framework (for example, net462, net472, net48) and other
+legacy runtimes use — the underlying `ClientWebSocket` type has no supported public API to disable automatic
+redirect-following. If the configured endpoint (or a trusted proxy in front of it) returns a redirect response
+during the handshake, the connection can still follow it and forward those headers to the redirect target, even
+if it is a different host or port. This is a known, unresolved limitation of this target framework, not a bug
+that can be fixed from application code.
+
+To fully mitigate this:
+- Prefer targeting `net8.0` or later, where this is fixed.
+- If you must run on .NET Framework/netstandard2.0, ensure the configured VoiceLive endpoint is trusted and
+  cannot be redirected by a compromised or misconfigured intermediary (for example, avoid routing the endpoint
+  through a proxy that you do not fully control).
+
 ### Logging and diagnostics
 
 Enable logging to help diagnose issues:

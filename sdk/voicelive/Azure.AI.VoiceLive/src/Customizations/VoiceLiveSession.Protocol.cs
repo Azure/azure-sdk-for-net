@@ -67,7 +67,33 @@ namespace Azure.AI.VoiceLive
 
                 _contentLogger.LogConnectionOpening(_connectionId, $"{_endpoint}");
 
+#if NET7_0_OR_GREATER
+                // The opening WebSocket handshake carries the service credential (the "api-key" header or a
+                // bearer "Authorization" header) plus any custom headers configured via VoiceLiveClientOptions.
+                // ClientWebSocket's default ConnectAsync(Uri, CancellationToken) overload performs that handshake
+                // using an HTTP handler that follows 3xx redirects transparently and forwards those headers to the
+                // redirect target, even if it is a different host or port than the configured endpoint (for
+                // example, an attacker-controlled or compromised proxy sitting in front of the service). Use the
+                // ConnectAsync(Uri, HttpMessageInvoker, CancellationToken) overload with AllowAutoRedirect disabled
+                // so a redirect response causes the handshake to fail instead of silently leaking credentials to
+                // an unintended destination. The invoker is only used for the HTTP-level handshake request; it is
+                // safe to dispose immediately afterwards since the resulting WebSocket does not depend on it.
+                using (var handler = new System.Net.Http.SocketsHttpHandler { AllowAutoRedirect = false })
+                using (var invoker = new System.Net.Http.HttpMessageInvoker(handler))
+                {
+                    await clientWebSocket.ConnectAsync(_endpoint, invoker, cancellationToken).ConfigureAwait(false);
+                }
+#else
+                // NOTE (security): on netstandard2.0 (used by .NET Framework and other legacy targets),
+                // ClientWebSocketOptions exposes no way to disable automatic redirect-following, and the
+                // HttpMessageInvoker-based ConnectAsync overload used above to close this gap is unavailable on
+                // this target framework. As a result, on netstandard2.0 the WebSocket handshake can still follow a
+                // same- or cross-host/port redirect and forward the api-key/Authorization header (and any custom
+                // headers) to the redirect target. There is no supported public API on this target to prevent
+                // that. Consumers that need protection from this risk should target net8.0 or later. See the
+                // package CHANGELOG and README for details.
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
+#endif
 
                 WebSocket = clientWebSocket;
 

@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed a credential-disclosure issue where the WebSocket handshake performed by `VoiceLiveSession` could follow an HTTP redirect (301, 302, 303, 307, or 308) returned by the configured endpoint and forward the `api-key`/`Authorization` header, along with any custom headers, to the redirect target, even when that target was a different host or port. On `net8.0` and later targets, the handshake now uses a non-redirecting `HttpMessageInvoker` so a redirect response causes the connection attempt to fail with a `WebSocketException` instead of silently sending credentials to an unintended destination.
+  - **Known limitation**: on the `netstandard2.0` target (used by .NET Framework and other legacy runtimes), there is no supported public .NET API to disable automatic redirect-following for `ClientWebSocket`, so this target remains susceptible to the same redirect behavior described above. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/voicelive/Azure.AI.VoiceLive/README.md#net-framework-and-netstandard20-redirect-limitation) for details and mitigation guidance. Consumers who need full protection from this issue should target `net8.0` or later.
+
 ### Other Changes
 
 ## 1.2.0 (2026-08-06)
