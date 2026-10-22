@@ -22,8 +22,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [WirePath("registryUri")]
         public string RegistryAddress
         {
-            get => RegistryUri?.AbsoluteUri;
-            set => RegistryUri = value == null ? null : new Uri(value);
+            // Legacy factories accept registry addresses such as 'mcr.microsoft.com',
+            // not just absolute URIs. Keep the supplied text for compatibility.
+            get => RegistryUri?.OriginalString;
+            set => RegistryUri = value == null ? null : new Uri(value, UriKind.RelativeOrAbsolute);
         }
     }
 }
