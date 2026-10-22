@@ -455,3 +455,24 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: allow-required-to-optional-on-sole-ga-overload
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return
+      findings only. Azure.Widgets 1.0.0 GA ships WidgetClient.Create(string name) as the
+      type's only overload — no other Create overload exists, shipped or unshipped. The PR
+      changes the signature to Create(string name = null); the method body is unchanged, every
+      pre-existing caller already passes `name` explicitly and keeps compiling, binding, and
+      behaving identically, and no new overload is introduced. All other applicable
+      requirements are satisfied, and no CI diagnostic covers this change. If there is no
+      finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
