@@ -873,7 +873,6 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(SubnetResource))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionNetworkManagerConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(SwapResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TopologyAssociation))]
     [ModelReaderWriterBuildable(typeof(TopologyContent))]

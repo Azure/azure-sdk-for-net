@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task VmssPublicIPAddressCompatibilityPaging(bool async)
         {
             const string subscriptionId = "00000000-0000-0000-0000-000000000001";
-            string path = $"/subscriptions/{subscriptionId}/resourceGroups/rg/providers/Microsoft.Compute/virtualMachineScaleSets/vmss/virtualMachines/0/networkInterfaces/nic1/ipconfigurations/ip1/publicipaddresses";
+            string path = $"/subscriptions/{subscriptionId}/resourceGroups/rg/providers/Microsoft.Compute/virtualMachineScaleSets/vmss/virtualMachines/0/networkInterfaces/selectedNic/ipconfigurations/selectedIp/publicipaddresses";
             string nextLink = $"https://management.azure.com{path}?api-version=2018-10-01&$skiptoken=next";
             var transport = new MockTransport(
                 new MockResponse(200).SetContent($"{{\"value\":[{{\"id\":\"{path}/first\",\"name\":\"first\"}}],\"nextLink\":\"{nextLink}\"}}"),
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network.Tests
 
             if (async)
             {
-                await foreach (var item in resource.GetAllPublicIPAddressDataAsync("vmss", "0", CancellationToken.None))
+                await foreach (var item in resource.GetAllPublicIPAddressDataAsync("selectedNic", "selectedIp", CancellationToken.None))
                 {
                     ids.Add(item.Id.ToString());
                 }
             }
             else
             {
-                foreach (var item in resource.GetAllPublicIPAddressData("vmss", "0", CancellationToken.None))
+                foreach (var item in resource.GetAllPublicIPAddressData("selectedNic", "selectedIp", CancellationToken.None))
                 {
                     ids.Add(item.Id.ToString());
                 }

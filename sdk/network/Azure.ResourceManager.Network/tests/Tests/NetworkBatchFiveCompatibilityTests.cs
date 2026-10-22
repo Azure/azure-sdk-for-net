@@ -7,7 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
 
@@ -94,17 +96,39 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public async Task CloudServiceSwapCollectionRetainsEmptyEnumeration()
+        public async Task CloudServiceSwapCollectionEnumerationDelegatesToGetAll()
         {
             var value = new TestCloudServiceSwapCollection();
             Assert.That((IEnumerable<CloudServiceSwapResource>)value, Is.Empty);
             Assert.That((IEnumerable)value, Is.Empty);
             await using var enumerator = ((IAsyncEnumerable<CloudServiceSwapResource>)value).GetAsyncEnumerator();
             Assert.That(await enumerator.MoveNextAsync(), Is.False);
+            Assert.That(value.SyncCalls, Is.EqualTo(2));
+            Assert.That(value.AsyncCalls, Is.EqualTo(1));
         }
 
         private sealed class TestCloudServiceSwapCollection : CloudServiceSwapCollection
         {
+            public int SyncCalls { get; private set; }
+            public int AsyncCalls { get; private set; }
+
+            public override Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken = default)
+            {
+                SyncCalls++;
+                return Pageable<CloudServiceSwapResource>.FromPages(new[]
+                {
+                    Page<CloudServiceSwapResource>.FromValues(Array.Empty<CloudServiceSwapResource>(), null, new MockResponse(200))
+                });
+            }
+
+            public override AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken = default)
+            {
+                AsyncCalls++;
+                return AsyncPageable<CloudServiceSwapResource>.FromPages(new[]
+                {
+                    Page<CloudServiceSwapResource>.FromValues(Array.Empty<CloudServiceSwapResource>(), null, new MockResponse(200))
+                });
+            }
         }
     }
 }

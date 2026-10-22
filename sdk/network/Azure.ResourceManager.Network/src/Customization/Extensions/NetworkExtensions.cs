@@ -24,12 +24,31 @@ namespace Azure.ResourceManager.Network
         /// <summary> Invokes the GetCloudServiceSwaps compatibility operation. </summary>
         public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string cloudServiceName)
             => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwaps(cloudServiceName);
-        /// <summary> Invokes the GetVirtualMachineScaleSetNetworkResource compatibility operation. </summary>
+        // Preserve the 1.15 ArmClient accessor for the custom aggregate VMSS facade, not a generated child resource.
+        // Dispatch through MockableNetworkArmClient.GetVirtualMachineScaleSetNetworkResource; no HTTP is issued.
+        /// <summary> Gets an object representing a virtual machine scale set with its network operations but no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkResource"/> object. </returns>
         public static VirtualMachineScaleSetNetworkResource GetVirtualMachineScaleSetNetworkResource(this ArmClient client, ResourceIdentifier id)
-            => client.GetCachedClient(armClient => new MockableNetworkArmClient(armClient, id)).GetVirtualMachineScaleSetNetworkResource(id);
-        /// <summary> Invokes the GetVirtualMachineScaleSetVmNetworkResource compatibility operation. </summary>
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockableNetworkArmClient(client).GetVirtualMachineScaleSetNetworkResource(id);
+        }
+
+        // Preserve the 1.15 ArmClient accessor for the custom aggregate VM facade, not a generated child resource.
+        // Dispatch through MockableNetworkArmClient.GetVirtualMachineScaleSetVmNetworkResource; no HTTP is issued.
+        /// <summary> Gets an object representing a virtual machine scale set virtual machine with its network operations but no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmNetworkResource"/> object. </returns>
         public static VirtualMachineScaleSetVmNetworkResource GetVirtualMachineScaleSetVmNetworkResource(this ArmClient client, ResourceIdentifier id)
-            => client.GetCachedClient(armClient => new MockableNetworkArmClient(armClient, id)).GetVirtualMachineScaleSetVmNetworkResource(id);
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockableNetworkArmClient(client).GetVirtualMachineScaleSetVmNetworkResource(id);
+        }
         /// <summary> Invokes the GetCloudServiceSwap compatibility operation. </summary>
         [ForwardsClientCalls]
         public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)

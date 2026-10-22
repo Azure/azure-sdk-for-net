@@ -4098,7 +4098,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkInterfaceDataAsync2CollectionResultOfT(
+            return new NetworkInterfaceDataAsync3CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4137,7 +4137,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkInterfaceData2CollectionResultOfT(
+            return new NetworkInterfaceData3CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

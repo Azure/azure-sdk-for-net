@@ -11083,16 +11083,6 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <summary> SwapResource List with single entry to represent slot type on the specified cloud service. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.SwapResourceListResult"/> instance for mocking. </returns>
-        public static SwapResourceListResult SwapResourceListResult(IEnumerable<CloudServiceSwapData> value = default)
-        {
-            value ??= new ChangeTrackingList<CloudServiceSwapData>();
-
-            return new SwapResourceListResult((value ?? new ChangeTrackingList<CloudServiceSwapData>()).ToList(), default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

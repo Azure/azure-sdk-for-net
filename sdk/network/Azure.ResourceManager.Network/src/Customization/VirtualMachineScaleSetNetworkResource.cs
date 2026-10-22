@@ -5,18 +5,18 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    // Preserve the 1.15 aggregate Network facade over a Compute VMSS ID; the current generator no longer emits it.
+    // Its generated list operations now live on ResourceGroupResource extensions rather than this released type.
     /// <summary>
-    /// A class representing an AutoRest-era Network VMSS parent resource.
+    /// A class extending from the VirtualMachineScaleSetResource in Azure.ResourceManager.Compute along with the instance operations that can be performed on it.
+    /// You can only construct a <see cref="VirtualMachineScaleSetNetworkResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Compute/virtualMachineScaleSets.
     /// </summary>
     public partial class VirtualMachineScaleSetNetworkResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName. </param>
         /// <returns> A resource identifier for the virtual machine scale set. </returns>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        internal static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}";
             return new ResourceIdentifier(resourceId);
@@ -53,37 +53,38 @@ namespace Azure.ResourceManager.Network
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
-        /// <summary> Invokes the GetAllNetworkInterfaceDataAsync compatibility operation. </summary>
-
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
+        // Keep both released data-returning methods as direct forwards to the generated
+        // ResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces[Async] extensions.
+        /// <summary> Gets all network interfaces in a virtual machine scale set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken);
         }
-        /// <summary> Invokes the GetAllNetworkInterfaceData compatibility operation. </summary>
-
-        [ForwardsClientCalls]
-        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
+        /// <summary> Gets all network interfaces in a virtual machine scale set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken);
         }
-        /// <summary> Invokes the GetAllPublicIPAddressDataAsync compatibility operation. </summary>
-
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken)
+        // The 1.15 GetAllPublicIPAddressData[Async] methods predate the ResourceGroupResource
+        // GetVirtualMachineScaleSetPublicIPAddresses[Async] extensions, which were not exposed in 1.15.
+        // Preserve the released facade methods as direct forwards to those new generated extensions.
+        /// <summary> Gets all public IP addresses in a virtual machine scale set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetPublicIPAddressesAsync(Id.Name, cancellationToken);
         }
-        /// <summary> Invokes the GetAllPublicIPAddressData compatibility operation. </summary>
-
-        [ForwardsClientCalls]
-        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken)
+        /// <summary> Gets all public IP addresses in a virtual machine scale set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetPublicIPAddresses(Id.Name, cancellationToken);
