@@ -2,9 +2,9 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { randomBytes } from "node:crypto";
-import { mkdtemp, mkdir, readFile, rm, truncate, writeFile } from "node:fs/promises";
+import { cp, mkdtemp, mkdir, readFile, realpath, rm, truncate, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
@@ -271,25 +271,32 @@ test("the archive package pins Node 24/pnpm and one portable SHA512-locked depen
     assert.doesNotMatch(lock, /https?:|tarball:|sha1-|packageManagerDependencies/);
 });
 
-test("PR CI runs every lightweight Node suite and discovers tagged publisher PowerShell tests", async () => {
-    const root = resolve(import.meta.dirname, "../../../../..");
-    const ci = await readFile(join(root, "common-tests/ci.yml"), "utf8");
-    assert.match(ci, /TargetDirectory: eng\/common-tests/);
-    assert.match(ci, /TargetTags: UnitTest,IntegrationTest/);
-    assert.match(ci, /CustomTestSteps:[\s\S]*config.Filter.Tag = @\('UnitTest', 'IntegrationTest'\)/);
-    assert.match(ci, /if \(\$result.FailedCount -gt 0\) \{ throw/);
-    assert.match(ci, /node --experimental-strip-types --test test\/\*\.test\.ts publisher\/test\/\*\.test\.ts/);
-    assert.match(ci, /version: 24\.x/);
-    assert.match(ci, /npm install --prefix.*pnpm@12\.6\.0/);
-    assert.match(ci, /pnpm\/bin\/pnpm\.mjs.*--dir publisher --ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts/);
-    assert.match(ci, /NPM_CONFIG_USERCONFIG: \$\(Agent.TempDirectory\)\/eval-unit-tests\.npmrc/);
-    assert.doesNotMatch(ci, /vally eval|azureSubscription:|npm ci/);
-    const pester = await readFile(join(root, "common-tests/eval/Publish-EvalResults.Tests.ps1"), "utf8");
-    assert.match(pester, /Describe 'Azure CLI evaluation publication' -Tag 'UnitTest'/);
-    assert.match(pester, /Microsoft.PowerShell.Utility\\Invoke-WebRequest/);
-    assert.match(pester, /server\.listen\(0,'127\.0\.0\.1'/);
-    const publisher = JSON.parse(await readFile(resolve(import.meta.dirname, "../package.json"), "utf8"));
-    assert.match(publisher.scripts.test, /common-tests\/eval\/Publish-EvalResults.Tests.ps1/);
+test("shared publisher tests run without Tools-only files", async t => {
+    const f = await fixture(t), consumer = join(f.root, "consumer"), scripts = resolve(import.meta.dirname, "../..");
+    const copiedScripts = join(consumer, "eng/common/scripts/eval"), publisher = join(copiedScripts, "publisher");
+    await cp(scripts, copiedScripts, { recursive: true, filter: source => !source.split(sep).includes("node_modules") });
+    await cp(resolve(scripts, "../../pipelines"), join(consumer, "eng/common/pipelines"), { recursive: true });
+    // Copy only the already-restored archive dependency; no install, Git history or service is needed.
+    await cp(await realpath(resolve(import.meta.dirname, "../node_modules/fflate")), join(publisher, "node_modules/fflate"), { recursive: true });
+    for (const path of [".git", "eng/common-tests/ci.yml", "eng/common-tests/eval/Publish-EvalResults.Tests.ps1"]) {
+        await assert.rejects(readFile(join(consumer, path)), { code: "ENOENT" });
+    }
+    const command = JSON.parse(await readFile(join(publisher, "package.json"), "utf8")).scripts.test;
+    assert.equal(command, "node --experimental-strip-types --test test/*.test.ts");
+    for (const mode of ["without a redirect template", "with a consumer-owned redirect template"]) await t.test(mode, async () => {
+        if (mode.startsWith("with a")) {
+            const redirect = join(consumer, "eng/pipelines/templates/stages/1es-redirect.yml");
+            await mkdir(resolve(redirect, ".."), { recursive: true });
+            await writeFile(redirect, "parameters:\n- name: UseOfficial\n  type: boolean\n  default: true\n");
+        }
+        const environment = { ...process.env }; delete environment.NODE_TEST_CONTEXT;
+        const args = command.split(" ").slice(1);
+        // Exclude this copy-and-run regression itself, not any archive or pipeline checks.
+        args.splice(args.indexOf("--test") + 1, 0, "--test-skip-pattern=shared publisher tests run without Tools-only files");
+        const child = spawnSync(process.execPath, args, { cwd: publisher, env: environment, encoding: "utf8",
+            timeout: 120_000, maxBuffer: 2 * 1024 * 1024 });
+        assert.ifError(child.error); assert.equal(child.status, 0, child.stderr + child.stdout);
+    });
 });
 
 test("pipeline separates token-bearing attempt verification from rendering and uploads before the score gate", async () => {
@@ -353,11 +360,8 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
     for (const id of ["8255", "9999"]) assert.equal(evaluate(networkGate, { ...base, "System.DefinitionId": id }), true, "Definition IDs are archive identity, not shared policy");
 });
 
-test("redirect retains Default Deny/CFS and shared publication defaults stay off", async () => {
+test("shared publication defaults stay off", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
-    const redirect = await readFile(join(root, "../pipelines/templates/stages/1es-redirect.yml"), "utf8");
-    assert.match(redirect, /networkIsolationPolicy: DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage/);
-    assert.match(redirect, /parameters.AllowAzureStorage.*parameters.Use1ESOfficial.*System.TeamProject.*PullRequest.*refs\/pull\//);
     for (const path of ["templates/steps/eval-publish-results.yml", "templates/jobs/eval-summarize.yml", "templates/stages/archetype-eval.yml"]) {
         assert.match(await readFile(join(root, "pipelines", path), "utf8"), /name: publishDashboardResults\s+type: boolean\s+default: false/);
     }
@@ -370,7 +374,7 @@ for (const tier of ["workflow", "skill", "live"]) test(`${tier} forwards only th
     assert.doesNotMatch(content, /eval-dashboard\.yml|EvalDashboardPublicationEnabled|System.DefinitionId|autoPublishDashboardResults|allowAzureStorageNetworkAccess/);
     const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
     assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
-    assert.match(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
+    assert.doesNotMatch(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
     if (tier === "live") { assert.match(content, /UseAzSdkAuthentication: true/); assert.match(content, /failOnFailedTests: true/); }
     if (tier === "skill") assert.match(content, /vallyRoot: \.github\/skills/);
 });

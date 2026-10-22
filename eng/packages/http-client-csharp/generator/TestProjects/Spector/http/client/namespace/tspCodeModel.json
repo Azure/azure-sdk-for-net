@@ -182,7 +182,6 @@
             "$id": "15",
             "name": "getFirst",
             "isExactName": false,
-            "resourceName": "ClientNamespaceFirstClient",
             "accessibility": "public",
             "parameters": [
               {
@@ -326,7 +325,6 @@
             "$id": "23",
             "name": "getSecond",
             "isExactName": false,
-            "resourceName": "ClientNamespaceSecondClient",
             "accessibility": "public",
             "parameters": [
               {
