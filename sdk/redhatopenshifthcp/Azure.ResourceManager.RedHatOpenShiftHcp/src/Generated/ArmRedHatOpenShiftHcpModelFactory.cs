@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, HcpOpenShiftClusterDnsProfile dns = default, HcpOpenShiftClusterNetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, HcpOpenShiftClusterIngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, HcpOpenShiftClusterAutoscalingProfile autoscaling = default, HcpOpenShiftClusterEtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterImageRegistryState? clusterImageRegistryState = default, ClusterResourceStatus status = default, CryptoRestrictions? cryptoRestrictions = default)
+        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, HcpOpenShiftClusterDnsProfile dns = default, HcpOpenShiftClusterNetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, HcpOpenShiftClusterIngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, HcpOpenShiftClusterAutoscalingProfile autoscaling = default, HcpOpenShiftClusterEtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterImageRegistryState? clusterImageRegistryState = default, HcpOpenShiftClusterResourceStatus status = default, CryptoRestrictions? cryptoRestrictions = default)
         {
             imageDigestMirrors ??= new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>();
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="activeKey"> The details of the active key. </param>
         /// <param name="keyVaultType"> The type of keyvault used for KMS encryption. Defaults to KeyVault when absent. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterKmsEncryptionProfile"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterKmsEncryptionProfile HcpOpenShiftClusterKmsEncryptionProfile(string vaultName = default, HcpOpenShiftClusterKeyVaultVisibility visibility = default, HcpOpenShiftClusterKmsKey activeKey = default, KmsKeyVaultType? keyVaultType = default)
+        public static HcpOpenShiftClusterKmsEncryptionProfile HcpOpenShiftClusterKmsEncryptionProfile(string vaultName = default, HcpOpenShiftClusterKeyVaultVisibility visibility = default, HcpOpenShiftClusterKmsKey activeKey = default, HcpOpenShiftClusterKmsKeyVaultType? keyVaultType = default)
         {
             return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, keyVaultType, default);
         }
@@ -371,13 +371,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// array can contain more than one entry. The ordering of entries
         /// has no meaning.
         /// </param>
-        /// <returns> A new <see cref="Models.ClusterResourceStatus"/> instance for mocking. </returns>
-        public static ClusterResourceStatus ClusterResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<ClusterActiveVersion> activeVersions = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterResourceStatus"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterResourceStatus HcpOpenShiftClusterResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<HcpOpenShiftClusterActiveVersion> activeVersions = default)
         {
             conditions ??= new ChangeTrackingList<HcpOpenShiftClusterCondition>();
-            activeVersions ??= new ChangeTrackingList<ClusterActiveVersion>();
+            activeVersions ??= new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>();
 
-            return new ClusterResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<ClusterActiveVersion>()).ToList(), default);
+            return new HcpOpenShiftClusterResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>()).ToList(), default);
         }
 
         /// <summary> Condition represents an observation of a resource's state. </summary>
@@ -409,10 +409,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> ClusterActiveVersion represents a version of a resource. </summary>
         /// <param name="version"> The version of the resource. Specified in major.minor, same as the input. </param>
-        /// <returns> A new <see cref="Models.ClusterActiveVersion"/> instance for mocking. </returns>
-        public static ClusterActiveVersion ClusterActiveVersion(string version = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterActiveVersion"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterActiveVersion HcpOpenShiftClusterActiveVersion(string version = default)
         {
-            return new ClusterActiveVersion(version, default);
+            return new HcpOpenShiftClusterActiveVersion(version, default);
         }
 
         /// <summary> HCP cluster admin credential request body. </summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </param>
         /// <param name="status"> Status of the node pool resource. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterNodePoolProperties HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterNodePoolVersionProfile version = default, HcpOpenShiftClusterNodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, HcpOpenShiftClusterNodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<HcpOpenShiftClusterNodePoolTaint> taints = default, int? nodeDrainTimeoutMinutes = default, NodePoolResourceStatus status = default)
+        public static HcpOpenShiftClusterNodePoolProperties HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterNodePoolVersionProfile version = default, HcpOpenShiftClusterNodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, HcpOpenShiftClusterNodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<HcpOpenShiftClusterNodePoolTaint> taints = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterNodePoolResourceStatus status = default)
         {
             labels ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>();
             taints ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolTaint>();
@@ -631,21 +631,21 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// During upgrades, it is common for multiple versions to be active at the same time
         /// while old nodes are drained and replaced. The ordering of entries has no meaning.
         /// </param>
-        /// <returns> A new <see cref="Models.NodePoolResourceStatus"/> instance for mocking. </returns>
-        public static NodePoolResourceStatus NodePoolResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<NodePoolActiveVersion> activeVersions = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolResourceStatus"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolResourceStatus HcpOpenShiftClusterNodePoolResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<HcpOpenShiftClusterNodePoolActiveVersion> activeVersions = default)
         {
             conditions ??= new ChangeTrackingList<HcpOpenShiftClusterCondition>();
-            activeVersions ??= new ChangeTrackingList<NodePoolActiveVersion>();
+            activeVersions ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>();
 
-            return new NodePoolResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<NodePoolActiveVersion>()).ToList(), default);
+            return new HcpOpenShiftClusterNodePoolResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>()).ToList(), default);
         }
 
         /// <summary> NodePoolActiveVersion represents a version of a resource. </summary>
         /// <param name="version"> The version of the resource. Specified in major.minor.patch, same as the input. </param>
-        /// <returns> A new <see cref="Models.NodePoolActiveVersion"/> instance for mocking. </returns>
-        public static NodePoolActiveVersion NodePoolActiveVersion(string version = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolActiveVersion"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolActiveVersion HcpOpenShiftClusterNodePoolActiveVersion(string version = default)
         {
-            return new NodePoolActiveVersion(version, default);
+            return new HcpOpenShiftClusterNodePoolActiveVersion(version, default);
         }
 
         /// <summary> ExternalAuth resource. </summary>

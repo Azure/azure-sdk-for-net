@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> NodePoolActiveVersion represents a version of a resource. </summary>
-    public partial class NodePoolActiveVersion
+    public partial class HcpOpenShiftClusterNodePoolActiveVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolActiveVersion"/>. </summary>
-        internal NodePoolActiveVersion()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolActiveVersion"/>. </summary>
+        internal HcpOpenShiftClusterNodePoolActiveVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolActiveVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolActiveVersion"/>. </summary>
         /// <param name="version"> The version of the resource. Specified in major.minor.patch, same as the input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodePoolActiveVersion(string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterNodePoolActiveVersion(string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

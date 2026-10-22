@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default;
             int? nodeDrainTimeoutMinutes = default;
             HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry = default;
-            ClusterResourceStatus status = default;
+            HcpOpenShiftClusterResourceStatus status = default;
             CryptoRestrictions? cryptoRestrictions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    status = ClusterResourceStatus.DeserializeClusterResourceStatus(prop.Value, options);
+                    status = HcpOpenShiftClusterResourceStatus.DeserializeHcpOpenShiftClusterResourceStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cryptoRestrictions"u8))

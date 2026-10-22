@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> ClusterActiveVersion represents a version of a resource. </summary>
-    public partial class ClusterActiveVersion
+    public partial class HcpOpenShiftClusterActiveVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterActiveVersion"/>. </summary>
-        internal ClusterActiveVersion()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterActiveVersion"/>. </summary>
+        internal HcpOpenShiftClusterActiveVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterActiveVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterActiveVersion"/>. </summary>
         /// <param name="version"> The version of the resource. Specified in major.minor, same as the input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterActiveVersion(string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterActiveVersion(string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

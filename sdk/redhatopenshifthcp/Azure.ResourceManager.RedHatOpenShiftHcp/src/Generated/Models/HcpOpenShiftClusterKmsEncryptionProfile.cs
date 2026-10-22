@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="activeKey"> The details of the active key. </param>
         /// <param name="keyVaultType"> The type of keyvault used for KMS encryption. Defaults to KeyVault when absent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterKmsEncryptionProfile(string vaultName, HcpOpenShiftClusterKeyVaultVisibility visibility, HcpOpenShiftClusterKmsKey activeKey, KmsKeyVaultType? keyVaultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterKmsEncryptionProfile(string vaultName, HcpOpenShiftClusterKeyVaultVisibility visibility, HcpOpenShiftClusterKmsKey activeKey, HcpOpenShiftClusterKmsKeyVaultType? keyVaultType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultName = vaultName;
             Visibility = visibility;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public HcpOpenShiftClusterKmsKey ActiveKey { get; set; }
 
         /// <summary> The type of keyvault used for KMS encryption. Defaults to KeyVault when absent. </summary>
-        public KmsKeyVaultType? KeyVaultType { get; set; }
+        public HcpOpenShiftClusterKmsKeyVaultType? KeyVaultType { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </param>
         /// <param name="status"> Status of the node pool resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterNodePoolVersionProfile version, HcpOpenShiftClusterNodePoolPlatformProfile platform, int? replicas, bool? canAutoRepair, HcpOpenShiftClusterNodePoolAutoScaling autoScaling, IList<HcpOpenShiftClusterNodePoolLabel> labels, IList<HcpOpenShiftClusterNodePoolTaint> taints, int? nodeDrainTimeoutMinutes, NodePoolResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterNodePoolVersionProfile version, HcpOpenShiftClusterNodePoolPlatformProfile platform, int? replicas, bool? canAutoRepair, HcpOpenShiftClusterNodePoolAutoScaling autoScaling, IList<HcpOpenShiftClusterNodePoolLabel> labels, IList<HcpOpenShiftClusterNodePoolTaint> taints, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterNodePoolResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -132,6 +132,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public int? NodeDrainTimeoutMinutes { get; set; }
 
         /// <summary> Status of the node pool resource. </summary>
-        public NodePoolResourceStatus Status { get; }
+        public HcpOpenShiftClusterNodePoolResourceStatus Status { get; }
     }
 }

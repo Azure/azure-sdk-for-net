@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterDnsProfile dns, HcpOpenShiftClusterNetworkProfile network, HcpOpenShiftClusterConsoleProfile console, HcpOpenShiftClusterApiProfile api, HcpOpenShiftClusterIngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, HcpOpenShiftClusterAutoscalingProfile autoscaling, HcpOpenShiftClusterEtcdProfile etcd, IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry, ClusterResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterDnsProfile dns, HcpOpenShiftClusterNetworkProfile network, HcpOpenShiftClusterConsoleProfile console, HcpOpenShiftClusterApiProfile api, HcpOpenShiftClusterIngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, HcpOpenShiftClusterAutoscalingProfile autoscaling, HcpOpenShiftClusterEtcdProfile etcd, IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry, HcpOpenShiftClusterResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         internal HcpOpenShiftClusterImageRegistryProfile ClusterImageRegistry { get; set; }
 
         /// <summary> Status of the cluster resource. </summary>
-        public ClusterResourceStatus Status { get; }
+        public HcpOpenShiftClusterResourceStatus Status { get; }
 
         /// <summary> Cryptographic restrictions for kernel and userspace libraries. </summary>
         public CryptoRestrictions? CryptoRestrictions { get; set; }

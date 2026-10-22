@@ -12,19 +12,19 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> ClusterResourceStatus represents the observed status of the cluster resource. </summary>
-    public partial class ClusterResourceStatus
+    public partial class HcpOpenShiftClusterResourceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterResourceStatus"/>. </summary>
-        internal ClusterResourceStatus()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterResourceStatus"/>. </summary>
+        internal HcpOpenShiftClusterResourceStatus()
         {
             Conditions = new ChangeTrackingList<HcpOpenShiftClusterCondition>();
-            ActiveVersions = new ChangeTrackingList<ClusterActiveVersion>();
+            ActiveVersions = new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterResourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterResourceStatus"/>. </summary>
         /// <param name="conditions"> The conditions on the resource. </param>
         /// <param name="activeVersions">
         /// The observed active versions of the cluster.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// has no meaning.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IReadOnlyList<ClusterActiveVersion> activeVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IReadOnlyList<HcpOpenShiftClusterActiveVersion> activeVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conditions = conditions;
             ActiveVersions = activeVersions;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// array can contain more than one entry. The ordering of entries
         /// has no meaning.
         /// </summary>
-        public IReadOnlyList<ClusterActiveVersion> ActiveVersions { get; }
+        public IReadOnlyList<HcpOpenShiftClusterActiveVersion> ActiveVersions { get; }
     }
 }

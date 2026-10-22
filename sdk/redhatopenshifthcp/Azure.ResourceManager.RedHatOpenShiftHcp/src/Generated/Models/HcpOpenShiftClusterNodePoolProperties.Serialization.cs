@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             IList<HcpOpenShiftClusterNodePoolLabel> labels = default;
             IList<HcpOpenShiftClusterNodePoolTaint> taints = default;
             int? nodeDrainTimeoutMinutes = default;
-            NodePoolResourceStatus status = default;
+            HcpOpenShiftClusterNodePoolResourceStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    status = NodePoolResourceStatus.DeserializeNodePoolResourceStatus(prop.Value, options);
+                    status = HcpOpenShiftClusterNodePoolResourceStatus.DeserializeHcpOpenShiftClusterNodePoolResourceStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

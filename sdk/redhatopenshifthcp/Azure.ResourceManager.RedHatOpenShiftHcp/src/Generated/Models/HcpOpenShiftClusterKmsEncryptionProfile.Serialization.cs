@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             string vaultName = default;
             HcpOpenShiftClusterKeyVaultVisibility visibility = default;
             HcpOpenShiftClusterKmsKey activeKey = default;
-            KmsKeyVaultType? keyVaultType = default;
+            HcpOpenShiftClusterKmsKeyVaultType? keyVaultType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    keyVaultType = new KmsKeyVaultType(prop.Value.GetString());
+                    keyVaultType = new HcpOpenShiftClusterKmsKeyVaultType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

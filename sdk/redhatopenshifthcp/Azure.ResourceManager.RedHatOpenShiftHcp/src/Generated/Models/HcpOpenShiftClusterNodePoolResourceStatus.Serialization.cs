@@ -13,52 +13,52 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
-    /// <summary> ClusterResourceStatus represents the observed status of the cluster resource. </summary>
-    public partial class ClusterResourceStatus : IJsonModel<ClusterResourceStatus>
+    /// <summary> NodePoolResourceStatus represents the observed status of the nodepool resource. </summary>
+    public partial class HcpOpenShiftClusterNodePoolResourceStatus : IJsonModel<HcpOpenShiftClusterNodePoolResourceStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterResourceStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterNodePoolResourceStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterResourceStatus(document.RootElement, options);
+                        return DeserializeHcpOpenShiftClusterNodePoolResourceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterResourceStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterNodePoolResourceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedHatOpenShiftHcpContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterResourceStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HcpOpenShiftClusterNodePoolResourceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterResourceStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterResourceStatus IPersistableModel<ClusterResourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HcpOpenShiftClusterNodePoolResourceStatus IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterResourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterResourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HcpOpenShiftClusterNodePoolResourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterResourceStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterNodePoolResourceStatus)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 writer.WritePropertyName("activeVersions"u8);
                 writer.WriteStartArray();
-                foreach (ClusterActiveVersion item in ActiveVersions)
+                foreach (HcpOpenShiftClusterNodePoolActiveVersion item in ActiveVersions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,31 +113,31 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterResourceStatus IJsonModel<ClusterResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HcpOpenShiftClusterNodePoolResourceStatus IJsonModel<HcpOpenShiftClusterNodePoolResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterResourceStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HcpOpenShiftClusterNodePoolResourceStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HcpOpenShiftClusterNodePoolResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterResourceStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HcpOpenShiftClusterNodePoolResourceStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterResourceStatus(document.RootElement, options);
+            return DeserializeHcpOpenShiftClusterNodePoolResourceStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterResourceStatus DeserializeClusterResourceStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static HcpOpenShiftClusterNodePoolResourceStatus DeserializeHcpOpenShiftClusterNodePoolResourceStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<HcpOpenShiftClusterCondition> conditions = default;
-            IReadOnlyList<ClusterActiveVersion> activeVersions = default;
+            IReadOnlyList<HcpOpenShiftClusterNodePoolActiveVersion> activeVersions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    List<ClusterActiveVersion> array = new List<ClusterActiveVersion>();
+                    List<HcpOpenShiftClusterNodePoolActiveVersion> array = new List<HcpOpenShiftClusterNodePoolActiveVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ClusterActiveVersion.DeserializeClusterActiveVersion(item, options));
+                        array.Add(HcpOpenShiftClusterNodePoolActiveVersion.DeserializeHcpOpenShiftClusterNodePoolActiveVersion(item, options));
                     }
                     activeVersions = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterResourceStatus(conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>(), activeVersions ?? new ChangeTrackingList<ClusterActiveVersion>(), additionalBinaryDataProperties);
+            return new HcpOpenShiftClusterNodePoolResourceStatus(conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>(), activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>(), additionalBinaryDataProperties);
         }
     }
 }

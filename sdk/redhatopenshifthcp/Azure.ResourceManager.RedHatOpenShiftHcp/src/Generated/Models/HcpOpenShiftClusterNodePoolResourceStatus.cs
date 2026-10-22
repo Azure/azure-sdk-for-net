@@ -12,19 +12,19 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
     /// <summary> NodePoolResourceStatus represents the observed status of the nodepool resource. </summary>
-    public partial class NodePoolResourceStatus
+    public partial class HcpOpenShiftClusterNodePoolResourceStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolResourceStatus"/>. </summary>
-        internal NodePoolResourceStatus()
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolResourceStatus"/>. </summary>
+        internal HcpOpenShiftClusterNodePoolResourceStatus()
         {
             Conditions = new ChangeTrackingList<HcpOpenShiftClusterCondition>();
-            ActiveVersions = new ChangeTrackingList<NodePoolActiveVersion>();
+            ActiveVersions = new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolResourceStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolResourceStatus"/>. </summary>
         /// <param name="conditions"> The conditions on the resource. </param>
         /// <param name="activeVersions">
         /// The observed active versions of the node pool.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// while old nodes are drained and replaced. The ordering of entries has no meaning.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodePoolResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IReadOnlyList<NodePoolActiveVersion> activeVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterNodePoolResourceStatus(IReadOnlyList<HcpOpenShiftClusterCondition> conditions, IReadOnlyList<HcpOpenShiftClusterNodePoolActiveVersion> activeVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conditions = conditions;
             ActiveVersions = activeVersions;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// During upgrades, it is common for multiple versions to be active at the same time
         /// while old nodes are drained and replaced. The ordering of entries has no meaning.
         /// </summary>
-        public IReadOnlyList<NodePoolActiveVersion> ActiveVersions { get; }
+        public IReadOnlyList<HcpOpenShiftClusterNodePoolActiveVersion> ActiveVersions { get; }
     }
 }
