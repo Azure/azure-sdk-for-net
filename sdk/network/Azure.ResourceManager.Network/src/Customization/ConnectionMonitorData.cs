@@ -10,35 +10,57 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    [CodeGenSuppress("ConnectionMonitorType")]
-    [CodeGenSuppress("MonitorType")]
     public partial class ConnectionMonitorData
     {
+        // 1.15.0 generated IReadOnlyList<T> properties; the native flattened properties expose IList<T>.
+        // Preserve the released interface with read-only views of the deserializer's backing lists.
+
         /// <summary> List of connection monitor endpoints. </summary>
         [CodeGenMember("Endpoints")]
         [WirePath("properties.endpoints")]
-        public IReadOnlyList<ConnectionMonitorEndpoint> Endpoints =>
-            Properties is null ? default : new ReadOnlyCollection<ConnectionMonitorEndpoint>(Properties.Endpoints);
+        public IReadOnlyList<ConnectionMonitorEndpoint> Endpoints
+        {
+            get
+            {
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<ConnectionMonitorEndpoint>(properties.Endpoints);
+            }
+        }
 
         /// <summary> List of connection monitor outputs. </summary>
         [CodeGenMember("Outputs")]
         [WirePath("properties.outputs")]
-        public IReadOnlyList<ConnectionMonitorOutput> Outputs =>
-            Properties is null ? default : new ReadOnlyCollection<ConnectionMonitorOutput>(Properties.Outputs);
+        public IReadOnlyList<ConnectionMonitorOutput> Outputs
+        {
+            get
+            {
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<ConnectionMonitorOutput>(properties.Outputs);
+            }
+        }
 
         /// <summary> List of connection monitor test configurations. </summary>
         [CodeGenMember("TestConfigurations")]
         [WirePath("properties.testConfigurations")]
-        public IReadOnlyList<ConnectionMonitorTestConfiguration> TestConfigurations =>
-            Properties is null ? default : new ReadOnlyCollection<ConnectionMonitorTestConfiguration>(Properties.TestConfigurations);
+        public IReadOnlyList<ConnectionMonitorTestConfiguration> TestConfigurations
+        {
+            get
+            {
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<ConnectionMonitorTestConfiguration>(properties.TestConfigurations);
+            }
+        }
 
         /// <summary> List of connection monitor test groups. </summary>
         [CodeGenMember("TestGroups")]
         [WirePath("properties.testGroups")]
-        public IReadOnlyList<ConnectionMonitorTestGroup> TestGroups =>
-            Properties is null ? default : new ReadOnlyCollection<ConnectionMonitorTestGroup>(Properties.TestGroups);
-
-        /// <summary> Type of connection monitor. </summary>
-        public ConnectionMonitorType? ConnectionMonitorType => Properties?.ConnectionMonitorType;
+        public IReadOnlyList<ConnectionMonitorTestGroup> TestGroups
+        {
+            get
+            {
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<ConnectionMonitorTestGroup>(properties.TestGroups);
+            }
+        }
     }
 }

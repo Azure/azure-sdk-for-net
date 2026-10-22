@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("pickHostNameFromBackendHttpSettings")]
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
 
+        /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
+        [WirePath("enableProbeProxyProtocolHeader")]
+        public bool? IsProbeProxyProtocolHeaderEnabled { get; set; }
+
         /// <summary> Criterion for classifying a healthy probe response. </summary>
         [WirePath("match")]
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }

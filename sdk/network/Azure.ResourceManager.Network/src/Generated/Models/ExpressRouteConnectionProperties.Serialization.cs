@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableInternetSecurity = default;
             bool? expressRouteGatewayBypass = default;
             bool? enablePrivateLinkFastPath = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

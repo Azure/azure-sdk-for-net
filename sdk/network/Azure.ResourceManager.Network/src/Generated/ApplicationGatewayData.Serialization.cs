@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (string item in Zones)
+                foreach (string item in AvailabilityZones)
                 {
                     if (item == null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApplicationGatewayPropertiesFormat properties = default;
             ETag? eTag = default;
-            IList<string> zones = default;
+            IList<string> availabilityZones = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
                             array.Add(item.GetString());
                         }
                     }
-                    zones = array;
+                    availabilityZones = array;
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 additionalBinaryDataProperties,
                 properties,
                 eTag,
-                zones ?? new ChangeTrackingList<string>(),
+                availabilityZones ?? new ChangeTrackingList<string>(),
                 identity);
         }
     }

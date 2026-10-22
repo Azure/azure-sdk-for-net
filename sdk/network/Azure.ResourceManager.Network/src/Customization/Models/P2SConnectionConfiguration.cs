@@ -26,31 +26,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        // This was an active generated property in 1.15.0, typed as RoutingConfiguration rather than RoutingConfigurationNfv.
-        /// <summary> Gets or sets the routing configuration. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration
-        {
-            get
-            {
-                if (Properties?.RoutingConfiguration is null)
-                {
-                    return null;
-                }
-                if (Properties.RoutingConfiguration is not RoutingConfiguration routingConfiguration)
-                {
-                    routingConfiguration = new RoutingConfiguration(Properties.RoutingConfiguration);
-                    Properties.RoutingConfiguration = routingConfiguration;
-                }
-                return routingConfiguration;
-            }
-            set
-            {
-                Properties ??= new P2SConnectionConfigurationProperties();
-                Properties.RoutingConfiguration = value;
-            }
-        }
-
         /// <summary> Gets a read-only view of the configuration policy groups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]

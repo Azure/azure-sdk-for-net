@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public readonly partial struct ApplicationGatewaySslProtocol
     {
+        // Preserve the explicit obsolete compatibility alias metadata that native generation omits.
         /// <inheritdoc cref="Tls1_3"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use Tls1_3 instead.")]

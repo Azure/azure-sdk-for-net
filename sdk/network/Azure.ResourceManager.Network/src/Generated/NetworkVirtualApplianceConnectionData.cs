@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("properties.routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration ConnectionRoutingConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.RoutingConfiguration;
+                return Properties is null ? default : Properties.ConnectionRoutingConfiguration;
             }
             set
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new NetworkVirtualApplianceConnectionProperties();
                 }
-                Properties.RoutingConfiguration = value;
+                Properties.ConnectionRoutingConfiguration = value;
             }
         }
     }

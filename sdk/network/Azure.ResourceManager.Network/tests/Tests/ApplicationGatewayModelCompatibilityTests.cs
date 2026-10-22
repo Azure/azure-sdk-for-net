@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(true)]
         [TestCase(false)]
         [TestCase(null)]
-        public void ProbeProxyProtocolNamesShareWireStorage(bool? enabled)
+        public void ProbeProxyProtocolNamePreservesWireStorage(bool? enabled)
         {
             var poolId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/applicationGateways/gateway/backendAddressPools/pool");
             var settingsId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/applicationGateways/gateway/backendHttpSettingsCollection/settings");
@@ -44,11 +44,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(factoryProbe.BackendAddressPoolId, Is.EqualTo(poolId));
             Assert.That(factoryProbe.BackendHttpSettingsId, Is.EqualTo(settingsId));
             var probe = new ApplicationGatewayOnDemandProbe { IsProbeProxyProtocolHeaderEnabled = enabled };
-#pragma warning disable CS0618 // Exercise the released compatibility alias.
-            Assert.That(probe.EnableProbeProxyProtocolHeader, Is.EqualTo(enabled));
-            probe.EnableProbeProxyProtocolHeader = enabled.HasValue ? !enabled.Value : null;
-            Assert.That(probe.IsProbeProxyProtocolHeaderEnabled, Is.EqualTo(probe.EnableProbeProxyProtocolHeader));
-#pragma warning restore CS0618
+            Assert.That(probe.IsProbeProxyProtocolHeaderEnabled, Is.EqualTo(enabled));
 
             BinaryData data = ModelReaderWriter.Write(probe, ModelReaderWriterOptions.Json);
             using JsonDocument json = JsonDocument.Parse(data.ToString());
@@ -59,13 +55,11 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void OnlyTheOldProbeNameIsDeprecated()
+        public void ReleasedProbeNameNeedsNoDeprecatedAlias()
         {
             Type type = typeof(ApplicationGatewayOnDemandProbe);
             Assert.That(type.GetProperty(nameof(ApplicationGatewayOnDemandProbe.IsProbeProxyProtocolHeaderEnabled)).GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
-            PropertyInfo alias = type.GetProperty("EnableProbeProxyProtocolHeader");
-            Assert.That(alias.GetCustomAttribute<ObsoleteAttribute>(), Is.Not.Null);
-            Assert.That(alias.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+            Assert.That(type.GetProperty("EnableProbeProxyProtocolHeader"), Is.Null);
         }
 
         [Test]

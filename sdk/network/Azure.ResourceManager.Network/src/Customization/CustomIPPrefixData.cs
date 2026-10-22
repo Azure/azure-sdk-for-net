@@ -4,22 +4,58 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    [CodeGenSuppress("ChildCustomIPPrefixes")]
-    [CodeGenSuppress("PublicIPPrefixes")]
     public partial class CustomIPPrefixData
     {
-        /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> ChildCustomIPPrefixList { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Resources.Models.WritableSubResource>();
-        /// <summary> Compatibility member. </summary>
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.CustomIPPrefixData> ChildCustomIPPrefixes { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.CustomIPPrefixData>();
-        /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPPrefixes { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Resources.Models.WritableSubResource>();
+        // 1.15.0 exposed IReadOnlyList<WritableSubResource> references and an obsolete model-valued child alias.
+        // Project IDs from the native NetworkSubResource lists; Properties still owns deserialization and serialization.
+
+        /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
+        [WirePath("properties.childCustomIpPrefixes")]
+        public IReadOnlyList<WritableSubResource> ChildCustomIPPrefixList
+        {
+            get
+            {
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                return WritableSubResourceCollectionCompatibility.AsReadOnlyList(properties.ChildCustomIPPrefixes);
+            }
+        }
+
+        /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<CustomIPPrefixData> ChildCustomIPPrefixes
+        {
+            get
+            {
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                var children = properties.ChildCustomIPPrefixes;
+                var result = new CustomIPPrefixData[children.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = new CustomIPPrefixData { Id = children[i].Id };
+                }
+                return result;
+            }
+        }
+
+        /// <summary> The list of all referenced PublicIpPrefixes. </summary>
+        [WirePath("properties.publicIpPrefixes")]
+        public IReadOnlyList<WritableSubResource> PublicIPPrefixes
+        {
+            get
+            {
+                var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
+                return WritableSubResourceCollectionCompatibility.AsReadOnlyList(properties.PublicIPPrefixes);
+            }
+        }
 
         // Preserve the released model-valued alias while forwarding its resource identifier.
         /// <inheritdoc cref="ParentCustomIPPrefixId"/>

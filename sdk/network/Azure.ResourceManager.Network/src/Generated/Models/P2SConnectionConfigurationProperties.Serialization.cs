@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
             IList<WritableSubResource> configurationPolicyGroups = default;
             IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableInternetSecurity"u8))

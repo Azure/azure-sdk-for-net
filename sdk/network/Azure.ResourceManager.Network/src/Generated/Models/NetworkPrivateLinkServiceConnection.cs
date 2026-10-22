@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public NetworkPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new PrivateLinkServiceConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

@@ -11,9 +11,10 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceConnectionData
     {
-        /// <summary> Compatibility member. </summary>
+        // The released NFV compatibility model was independent of the native routing wire property.
+        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use RoutingConfiguration instead.")]
-        public RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
+        [Obsolete("This property is obsoleted and will be removed in a future version. Please use ConnectionRoutingConfiguration instead.")]
+        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
     }
 }

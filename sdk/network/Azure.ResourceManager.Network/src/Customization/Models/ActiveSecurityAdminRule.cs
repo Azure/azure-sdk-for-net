@@ -11,6 +11,9 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ActiveSecurityAdminRule
     {
+        // 1.15.0 generated IReadOnlyList<T> properties; the native flattened properties expose IList<T>.
+        // Preserve the released interface with read-only views of the deserializer's backing lists.
+
         /// <summary> The source address prefixes. CIDR or source IP ranges. </summary>
         [CodeGenMember("Sources")]
         [WirePath("properties.sources")]
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : new ReadOnlyCollection<AddressPrefixItem>(Properties.Sources);
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<AddressPrefixItem>(properties.Sources);
             }
         }
 
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : new ReadOnlyCollection<AddressPrefixItem>(Properties.Destinations);
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<AddressPrefixItem>(properties.Destinations);
             }
         }
 
@@ -40,7 +45,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : new ReadOnlyCollection<string>(Properties.SourcePortRanges);
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<string>(properties.SourcePortRanges);
             }
         }
 
@@ -51,7 +57,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : new ReadOnlyCollection<string>(Properties.DestinationPortRanges);
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<string>(properties.DestinationPortRanges);
             }
         }
     }

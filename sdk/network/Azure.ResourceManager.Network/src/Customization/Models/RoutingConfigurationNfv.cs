@@ -5,31 +5,53 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    [CodeGenType("RoutingConfiguration")]
+    /// <summary> NFV version of Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsoleted and will be removed in a future version. Please use RoutingConfiguration instead.")]
     public partial class RoutingConfigurationNfv
     {
-        // Let the legacy derived wrapper preserve native fields and unknown JSON when reading.
-        internal RoutingConfigurationNfv(RoutingConfigurationNfv original)
-            : this(original.AssociatedRouteTable, original.PropagatedRouteTables, original.VnetRoutes,
-                  original.InboundRouteMap, original.OutboundRouteMap, original._additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of RoutingConfigurationNfv. </summary>
+        public RoutingConfigurationNfv()
         {
         }
 
-        /// <summary> Compatibility member. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and no longer functions. Please use AssociatedRouteTableId instead.", false)]
-        public Uri AssociatedRouteTableResourceUri { get; set; }
-        /// <summary> Compatibility member. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and no longer functions. Please use InboundRouteMapId instead.", false)]
-        public Uri InboundRouteMapResourceUri { get; set; }
-        /// <summary> Compatibility member. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and no longer functions. Please use OutboundRouteMapId instead.", false)]
-        public Uri OutboundRouteMapResourceUri { get; set; }
+        internal RoutingConfigurationNfv(RoutingConfigurationNfvSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, RoutingConfigurationNfvSubResource inboundRouteMap, RoutingConfigurationNfvSubResource outboundRouteMap)
+        {
+            AssociatedRouteTable = associatedRouteTable;
+            PropagatedRouteTables = propagatedRouteTables;
+            InboundRouteMap = inboundRouteMap;
+            OutboundRouteMap = outboundRouteMap;
+        }
+
+        internal RoutingConfigurationNfvSubResource AssociatedRouteTable { get; set; }
+        internal RoutingConfigurationNfvSubResource InboundRouteMap { get; set; }
+        internal RoutingConfigurationNfvSubResource OutboundRouteMap { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        public Uri AssociatedRouteTableResourceUri
+        {
+            get => AssociatedRouteTable?.ResourceUri;
+            set => (AssociatedRouteTable ??= new RoutingConfigurationNfvSubResource()).ResourceUri = value;
+        }
+
+        /// <summary> The list of RouteTables to advertise the routes to. </summary>
+        public PropagatedRouteTableNfv PropagatedRouteTables { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        public Uri InboundRouteMapResourceUri
+        {
+            get => InboundRouteMap?.ResourceUri;
+            set => (InboundRouteMap ??= new RoutingConfigurationNfvSubResource()).ResourceUri = value;
+        }
+
+        /// <summary> Resource ID. </summary>
+        public Uri OutboundRouteMapResourceUri
+        {
+            get => OutboundRouteMap?.ResourceUri;
+            set => (OutboundRouteMap ??= new RoutingConfigurationNfvSubResource()).ResourceUri = value;
+        }
     }
 }

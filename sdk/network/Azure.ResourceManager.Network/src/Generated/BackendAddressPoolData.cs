@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -99,6 +100,48 @@ namespace Azure.ResourceManager.Network
                     Properties = new BackendAddressPoolPropertiesFormat();
                 }
                 return Properties.BackendIPConfigurations;
+            }
+        }
+
+        /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
+        [WirePath("properties.loadBalancingRules")]
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendAddressPoolPropertiesFormat();
+                }
+                return Properties.LoadBalancingRules;
+            }
+        }
+
+        /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
+        [WirePath("properties.outboundRules")]
+        public IReadOnlyList<WritableSubResource> OutboundRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendAddressPoolPropertiesFormat();
+                }
+                return Properties.OutboundRules;
+            }
+        }
+
+        /// <summary> An array of references to inbound NAT rules that use this backend address pool. </summary>
+        [WirePath("properties.inboundNatRules")]
+        public IReadOnlyList<WritableSubResource> InboundNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendAddressPoolPropertiesFormat();
+                }
+                return Properties.InboundNatRules;
             }
         }
 
