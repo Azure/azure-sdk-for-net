@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    internal partial class UnknownSignalInstanceProperties : SignalInstanceProperties
+    internal partial class UnknownCloudHealthSignalInstanceProperties : CloudHealthSignalInstanceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSignalInstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCloudHealthSignalInstanceProperties"/>. </summary>
         /// <param name="signalKind"> Kind of the signal instance. </param>
         /// <param name="name"> Unique name of the signal within the entity. </param>
         /// <param name="signalDefinitionName"> Optional reference to a signal definition that provides default values. </param>
         /// <param name="status"> Current status of the signal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSignalInstanceProperties(EntitySignalKind signalKind, string name, string signalDefinitionName, SignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(signalKind != default ? signalKind : "unknown", name, signalDefinitionName, status, additionalBinaryDataProperties)
+        internal UnknownCloudHealthSignalInstanceProperties(EntitySignalKind signalKind, string name, string signalDefinitionName, CloudHealthSignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(signalKind != default ? signalKind : "unknown", name, signalDefinitionName, status, additionalBinaryDataProperties)
         {
         }
     }

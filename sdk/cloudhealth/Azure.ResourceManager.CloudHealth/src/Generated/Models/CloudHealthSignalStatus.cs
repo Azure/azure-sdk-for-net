@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Status of a signal. </summary>
-    public partial class SignalStatus
+    public partial class CloudHealthSignalStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SignalStatus"/>. </summary>
-        internal SignalStatus()
+        /// <summary> Initializes a new instance of <see cref="CloudHealthSignalStatus"/>. </summary>
+        internal CloudHealthSignalStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealthSignalStatus"/>. </summary>
         /// <param name="healthState"> Health state of this signal. </param>
         /// <param name="value"> Reported value of the signal. </param>
         /// <param name="reportedOn"> Timestamp when the value was reported. </param>
         /// <param name="error"> Error message if the signal status cannot be retrieved. </param>
         /// <param name="additionalContext"> Additional context as provided by the submitter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalStatus(EntityHealthState? healthState, double? value, DateTimeOffset? reportedOn, string error, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudHealthSignalStatus(EntityHealthState? healthState, double? value, DateTimeOffset? reportedOn, string error, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthState = healthState;
             Value = value;

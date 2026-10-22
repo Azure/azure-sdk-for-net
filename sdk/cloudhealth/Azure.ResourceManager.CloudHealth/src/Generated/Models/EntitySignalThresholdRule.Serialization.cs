@@ -14,56 +14,56 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Threshold-based evaluation rule for a signal definition. </summary>
-    public partial class EntitySignalThresholdRuleV2 : IJsonModel<EntitySignalThresholdRuleV2>
+    public partial class EntitySignalThresholdRule : IJsonModel<EntitySignalThresholdRule>
     {
-        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRuleV2"/> for deserialization. </summary>
-        internal EntitySignalThresholdRuleV2()
+        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRule"/> for deserialization. </summary>
+        internal EntitySignalThresholdRule()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntitySignalThresholdRuleV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EntitySignalThresholdRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRuleV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntitySignalThresholdRuleV2(document.RootElement, options);
+                        return DeserializeEntitySignalThresholdRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntitySignalThresholdRuleV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntitySignalThresholdRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRuleV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntitySignalThresholdRuleV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntitySignalThresholdRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntitySignalThresholdRuleV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EntitySignalThresholdRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySignalThresholdRuleV2 IPersistableModel<EntitySignalThresholdRuleV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EntitySignalThresholdRule IPersistableModel<EntitySignalThresholdRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntitySignalThresholdRuleV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntitySignalThresholdRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntitySignalThresholdRuleV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntitySignalThresholdRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRuleV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitySignalThresholdRuleV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntitySignalThresholdRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(SignalOperator.ToString());
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySignalThresholdRuleV2 IJsonModel<EntitySignalThresholdRuleV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EntitySignalThresholdRule IJsonModel<EntitySignalThresholdRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntitySignalThresholdRuleV2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EntitySignalThresholdRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRuleV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalThresholdRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitySignalThresholdRuleV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntitySignalThresholdRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntitySignalThresholdRuleV2(document.RootElement, options);
+            return DeserializeEntitySignalThresholdRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntitySignalThresholdRuleV2 DeserializeEntitySignalThresholdRuleV2(JsonElement element, ModelReaderWriterOptions options)
+        internal static EntitySignalThresholdRule DeserializeEntitySignalThresholdRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, additionalBinaryDataProperties);
+            return new EntitySignalThresholdRule(signalOperator, threshold, sensitivity, additionalBinaryDataProperties);
         }
     }
 }

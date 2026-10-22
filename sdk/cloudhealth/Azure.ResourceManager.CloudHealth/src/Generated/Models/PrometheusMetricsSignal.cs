@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> A Prometheus Metrics Query signal instance assigned to an entity. </summary>
-    public partial class PrometheusMetricsSignal : SignalInstanceProperties
+    public partial class PrometheusMetricsSignal : CloudHealthSignalInstanceProperties
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusMetricsSignal"/>. </summary>
         /// <param name="name"> Unique name of the signal within the entity. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        internal PrometheusMetricsSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, SignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
+        internal PrometheusMetricsSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, CloudHealthSignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;

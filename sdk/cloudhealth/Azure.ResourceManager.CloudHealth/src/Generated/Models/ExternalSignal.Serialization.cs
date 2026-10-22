@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> An externally submitted signal instance assigned to an entity. </summary>
-    public partial class ExternalSignal : SignalInstanceProperties, IJsonModel<ExternalSignal>
+    public partial class ExternalSignal : CloudHealthSignalInstanceProperties, IJsonModel<ExternalSignal>
     {
         /// <summary> Initializes a new instance of <see cref="ExternalSignal"/> for deserialization. </summary>
         internal ExternalSignal()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CloudHealthSignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalSignal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CloudHealthSignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntitySignalKind signalKind = default;
             string name = default;
             string signalDefinitionName = default;
-            SignalStatus status = default;
+            CloudHealthSignalStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EntitySignalEvaluationRule evaluationRules = default;
             foreach (var prop in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    status = SignalStatus.DeserializeSignalStatus(prop.Value, options);
+                    status = CloudHealthSignalStatus.DeserializeCloudHealthSignalStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluationRules"u8))

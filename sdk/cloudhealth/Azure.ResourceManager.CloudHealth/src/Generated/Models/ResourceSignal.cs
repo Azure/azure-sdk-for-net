@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> An Azure Resource Metric signal instance assigned to an entity. </summary>
-    public partial class ResourceSignal : SignalInstanceProperties
+    public partial class ResourceSignal : CloudHealthSignalInstanceProperties
     {
         /// <summary> Initializes a new instance of <see cref="ResourceSignal"/>. </summary>
         /// <param name="name"> Unique name of the signal within the entity. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        internal ResourceSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, SignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, MetricAggregationType? aggregationType, string dimensionFilter, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
+        internal ResourceSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, CloudHealthSignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, CloudHealthMetricAggregationType? aggregationType, string dimensionFilter, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string TimeGrain { get; set; }
 
         /// <summary> Type of aggregation to apply to the metric. </summary>
-        public MetricAggregationType? AggregationType { get; set; }
+        public CloudHealthMetricAggregationType? AggregationType { get; set; }
 
         /// <summary> Optional: Dimension filter to apply to the dimension. </summary>
         public string DimensionFilter { get; set; }

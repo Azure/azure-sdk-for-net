@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> A signal configuration for an Azure resource type. </summary>
-    public partial class SignalConfiguration
+    public partial class CloudHealthSignalConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SignalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealthSignalConfiguration"/>. </summary>
         /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
         /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
-        internal SignalConfiguration(string signalId, SignalRecommendationConfiguration configuration)
+        internal CloudHealthSignalConfiguration(string signalId, SignalRecommendationConfiguration configuration)
         {
             SignalId = signalId;
-            ApplicableResourceTypes = new ChangeTrackingList<string>();
+            ApplicableResourceTypes = new ChangeTrackingList<ResourceType>();
             Configuration = configuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealthSignalConfiguration"/>. </summary>
         /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
         /// <param name="displayName"> Display name of the recommended signal configuration. </param>
         /// <param name="description"> Description of the recommended signal configuration. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
         /// <param name="evaluationRules"> Evaluation rules with recommended thresholds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalConfiguration(string signalId, string displayName, string description, IList<string> applicableResourceTypes, EntitySignalRefreshInterval? refreshInterval, string dataUnit, SignalRecommendationConfiguration configuration, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudHealthSignalConfiguration(string signalId, string displayName, string description, IList<ResourceType> applicableResourceTypes, EntitySignalRefreshInterval? refreshInterval, string dataUnit, SignalRecommendationConfiguration configuration, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalId = signalId;
             DisplayName = displayName;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string Description { get; }
 
         /// <summary> Azure resource types to which the recommended signal configuration applies. </summary>
-        public IList<string> ApplicableResourceTypes { get; }
+        public IList<ResourceType> ApplicableResourceTypes { get; }
 
         /// <summary> Interval in which the recommended signal is evaluated. </summary>
         public EntitySignalRefreshInterval? RefreshInterval { get; }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> An Azure Resource Metric signal instance assigned to an entity. </summary>
-    public partial class ResourceSignal : SignalInstanceProperties, IJsonModel<ResourceSignal>
+    public partial class ResourceSignal : CloudHealthSignalInstanceProperties, IJsonModel<ResourceSignal>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceSignal"/> for deserialization. </summary>
         internal ResourceSignal()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CloudHealthSignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResourceSignal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CloudHealthSignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResourceSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntitySignalKind signalKind = default;
             string name = default;
             string signalDefinitionName = default;
-            SignalStatus status = default;
+            CloudHealthSignalStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string metricNamespace = default;
             string metricName = default;
             string timeGrain = default;
-            MetricAggregationType? aggregationType = default;
+            CloudHealthMetricAggregationType? aggregationType = default;
             string dimensionFilter = default;
             string displayName = default;
             EntitySignalRefreshInterval? refreshInterval = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    status = SignalStatus.DeserializeSignalStatus(prop.Value, options);
+                    status = CloudHealthSignalStatus.DeserializeCloudHealthSignalStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metricNamespace"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    aggregationType = new MetricAggregationType(prop.Value.GetString());
+                    aggregationType = new CloudHealthMetricAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensionFilter"u8))
