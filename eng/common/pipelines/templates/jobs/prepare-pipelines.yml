@@ -119,9 +119,6 @@ jobs:
           "cpp" {
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
           }
-          "ios" {
-            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner) $(AzureSDK_CocoaPods_Release_Pipeline_Secrets)'
-          }
           "go" {
             $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
