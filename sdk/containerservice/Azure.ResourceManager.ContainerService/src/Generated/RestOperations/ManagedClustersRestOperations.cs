@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string resourceName, ETag? ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string resourceName, ETag? ifMatch, bool? ignorePodDisruptionBudget, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,11 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
+            if (ignorePodDisruptionBudget != null)
+            {
+                uri.AppendQuery("ignore-pod-disruption-budget", TypeFormatters.ConvertToString(ignorePodDisruptionBudget), true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-02-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-02-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/accessProfiles/", false);
             uri.AppendPath(roleName, true);
             uri.AppendPath("/listCredential", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -251,7 +255,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterAdminCredential", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -276,7 +280,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterUserCredential", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -305,7 +309,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterMonitoringUserCredential", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -330,7 +334,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/resetServicePrincipalProfile", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -352,7 +356,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/resetAADProfile", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -374,7 +378,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/rotateClusterCertificates", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -394,7 +398,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/abort", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -414,7 +418,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/rotateServiceAccountSigningKeys", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -434,7 +438,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -454,7 +458,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -474,7 +478,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/runCommand", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -498,7 +502,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/commandResults/", false);
             uri.AppendPath(commandId, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -519,7 +523,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -540,13 +544,35 @@ namespace Azure.ResourceManager.ContainerService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-02-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRebalanceLoadBalancersRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/rebalanceLoadBalancers", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -561,7 +587,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/availableAgentPoolVersions", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -582,7 +608,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -603,7 +629,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/resolvePrivateLinkServiceId", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-02-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
