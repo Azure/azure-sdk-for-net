@@ -328,7 +328,12 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <summary>
+        /// The input definition information for a Browser Automation Tool, as used to configure an Agent.
+        /// BrowserAutomationPreviewTool is deprecated.
+        /// Please use BrowserAutomationTool instead.
+        /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+        /// </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]

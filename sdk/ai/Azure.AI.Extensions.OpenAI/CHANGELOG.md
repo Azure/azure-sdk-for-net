@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
 
 ### Bugs Fixed
 
