@@ -32,7 +32,7 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 ## Local SDK Generation and Package Lifecycle (TypeSpec)
 
 ### AUTHORITATIVE REFERENCE
-For all TypeSpec-based SDK workflows (generation, building, validation, testing, versioning, and release preparation), follow #file:../eng/common/instructions/azsdk-tools/local-sdk-workflow.instructions.md
+For all TypeSpec-based SDK workflows (generation, building, validation, testing, versioning, and release preparation), follow `eng/common/instructions/azsdk-tools/local-sdk-workflow.instructions.md` (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
 
 ### DEFAULT BEHAVIORS
 - **Repository:** Use the current workspace as the local SDK repository unless the user specifies a different path.
@@ -43,8 +43,17 @@ Ask the user for clarification if repository path or configuration file is ambig
 
 ## SDK release
 
-For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).
+For detailed workflow instructions, see the shared SDK release instructions (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
 
 ## Pre-Commit Validation
 
 Before committing changes to SDK packages under `sdk/`, always run the pre-commit validation checks described in the `pre-commit-checks` skill. These checks run `dotnet format`, regenerate public API listings, update snippets, and regenerate code as needed. They may produce additional file changes that must be included in the commit.
+
+## Code Review
+
+Before inspecting or commenting on any pull request, diff, patch, commit, or local changes for code
+review, load and follow
+[`code-review`](skills/code-review/SKILL.md) as the first review
+step. When Agent Skill invocation is available, invoke `code-review` before
+reviewing. Its Azure SDK-specific rules augment rather than replace the normal open-ended review
+for bugs, security, correctness, reliability, and maintainability.
