@@ -70,11 +70,17 @@ illustrated in the examples below.
 
 ### Thread safety
 
-Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads. Do not call `Dispose` while operations are in progress.
+Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads.
 
 ### Client lifetime
 
-`CertificateClient` implements `IDisposable`. Reuse it rather than creating a client for each request, and dispose it when its intended lifetime ends to release its internally owned HTTP transport. Finish certificate operations, downloads, and pageable enumeration before disposal. A transport or credential supplied by the application remains application-owned and is not disposed by the client.
+`CertificateClient` is not disposable; transport resources are cleaned up automatically. Reuse clients for efficiency. Application-provided transports, HTTP clients, credentials, and certificates remain application-owned.
+
+The beta `IDisposable` implementation and virtual `Dispose` method have been removed. When upgrading from a beta that exposed them, remove client `using` statements and explicit `Dispose` calls. Derived clients must remove `Dispose` overrides and any `base.Dispose()` calls, and manage any resources they own independently. This is a breaking change for consumers of those beta APIs.
+
+Bearer authentication uses the shared default transport (or your custom transport). Certificate-bound authentication uses immutable, certificate-specific transports shared by compatible clients. Each Key Vault package assembly caches at most 64 transports, including active transports. Idle transports are cleaned up automatically after two minutes, checked every 30 seconds. Read unbuffered response streams to completion or dispose them; active and detached streams keep their transport alive. If all 64 transports are active, requests needing another certificate fail rather than creating unbounded transports or falling back to bearer authentication.
+
+Certificate-bound tokens require the built-in platform transport and a certificate with a private key. A custom transport, including a wrapped `HttpClient` or an application-wide default transport, continues to work with bearer tokens but fails with `NotSupportedException` when a certificate-bound token is used. Custom transports are never rebound or disposed by the SDK.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->

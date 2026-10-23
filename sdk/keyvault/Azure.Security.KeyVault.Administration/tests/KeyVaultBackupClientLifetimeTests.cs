@@ -7,7 +7,7 @@ using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class KeyVaultBackupClientDisposalTests : ClientDisposalTestsBase<KeyVaultBackupClient, KeyVaultAdministrationClientOptions>
+    public class KeyVaultBackupClientLifetimeTests : ClientLifetimeTestsBase<KeyVaultBackupClient, KeyVaultAdministrationClientOptions>
     {
         protected override KeyVaultBackupClient CreateClient(TokenCredential credential, KeyVaultAdministrationClientOptions options = null) =>
             options == null ? new KeyVaultBackupClient(VaultUri, credential) : new KeyVaultBackupClient(VaultUri, credential, options);

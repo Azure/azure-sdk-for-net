@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- Removed the beta `IDisposable` implementation and virtual `Dispose` method from `CertificateClient`. Transport cleanup is automatic. Beta consumers must remove client `using` statements, explicit `Dispose` calls, and `Dispose` overrides or `base.Dispose()` calls in derived clients.
+
 ### Bugs Fixed
+
+- Fixed HTTP transport retention without requiring client disposal. Bearer requests share the default transport; certificate-bound requests use a bounded, automatically cleaned-up pool with request and response-stream leases. Custom transports remain supported for bearer tokens and fail explicitly for certificate-bound tokens.
 
 ### Other Changes
 
