@@ -80,6 +80,16 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Arguments);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
+            if (options.Format != "W" && Optional.IsDefined(ResponseIdInternal))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseIdInternal);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentReferenceInternal))
+            {
+                writer.WritePropertyName("agent_reference"u8);
+                writer.WriteObjectValue(AgentReferenceInternal, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,6 +140,8 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string arguments = default;
             ToolCallStatus status = default;
+            string responseIdInternal = default;
+            AgentReference agentReferenceInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +189,20 @@ namespace Azure.AI.Extensions.OpenAI
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseIdInternal = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReferenceInternal = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -191,6 +217,8 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 arguments,
                 status,
+                responseIdInternal,
+                agentReferenceInternal,
                 additionalBinaryDataProperties);
         }
     }

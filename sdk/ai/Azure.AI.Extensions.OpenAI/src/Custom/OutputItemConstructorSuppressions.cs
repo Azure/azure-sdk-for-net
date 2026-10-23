@@ -9,24 +9,12 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-[CodeGenSuppress(nameof(A2AToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
-public partial class A2AToolCall
-{
-    internal A2AToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
-    {
-        CallId = callId;
-        Name = name;
-        Arguments = arguments;
-        Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
-    }
-}
-
 [CodeGenSuppress(nameof(A2AToolCallOutput), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
 public partial class A2AToolCallOutput
 {
     internal A2AToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Name = name;
         Output = output;
@@ -40,6 +28,7 @@ public partial class AgentStructuredOutputsResponseItem
 {
     internal AgentStructuredOutputsResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         Output = output;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
@@ -48,8 +37,9 @@ public partial class AgentStructuredOutputsResponseItem
 [CodeGenSuppress(nameof(AgentWorkflowPreviewActionResponseItem), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(AgentWorkflowPreviewActionStatus?), typeof(IDictionary<string, BinaryData>))]
 public partial class AgentWorkflowPreviewActionResponseItem
 {
-    internal AgentWorkflowPreviewActionResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
+    internal AgentWorkflowPreviewActionResponseItem(AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.WorkflowAction)
     {
+        Id = responseId;
         CSDLActionKind = csdlActionKind;
         ActionId = actionId;
         ParentActionId = parentActionId;
@@ -64,6 +54,7 @@ public partial class AzureAISearchToolCall
 {
     internal AzureAISearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -76,6 +67,7 @@ public partial class AzureAISearchToolCallOutput
 {
     internal AzureAISearchToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;
@@ -88,6 +80,7 @@ public partial class AzureFunctionToolCall
 {
     internal AzureFunctionToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Name = name;
         Arguments = arguments;
@@ -101,6 +94,7 @@ public partial class AzureFunctionToolCallOutput
 {
     internal AzureFunctionToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Name = name;
         Output = output;
@@ -114,6 +108,7 @@ public partial class BingCustomSearchToolCall
 {
     internal BingCustomSearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -126,6 +121,7 @@ public partial class BingCustomSearchToolCallOutput
 {
     internal BingCustomSearchToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;
@@ -138,6 +134,7 @@ public partial class BingGroundingToolCall
 {
     internal BingGroundingToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -150,6 +147,7 @@ public partial class BingGroundingToolCallOutput
 {
     internal BingGroundingToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;
@@ -162,6 +160,7 @@ public partial class BrowserAutomationToolCall
 {
     internal BrowserAutomationToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -174,6 +173,7 @@ public partial class BrowserAutomationToolCallOutput
 {
     internal BrowserAutomationToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;
@@ -186,6 +186,7 @@ public partial class FabricDataAgentToolCall
 {
     internal FabricDataAgentToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -198,6 +199,7 @@ public partial class FabricDataAgentToolCallOutput
 {
     internal FabricDataAgentToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;
@@ -210,6 +212,7 @@ public partial class MemoryCommandToolCall
 {
     internal MemoryCommandToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -222,6 +225,7 @@ public partial class MemoryCommandToolCallOutput
 {
     internal MemoryCommandToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Status = status;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -233,33 +237,11 @@ public partial class MemorySearchToolCall
 {
     internal MemorySearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         Status = status;
         Memories = memories;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
-}
-
-[CodeGenSuppress(nameof(Id))]
-public partial class OAuthConsentRequestResponseItem
-{
-    /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
-    /// <param name="type"></param>
-    /// <param name="id"></param>
-    /// <param name="agentReference"> The agent that created the item. </param>
-    /// <param name="responseId"> The response on which the item is created. </param>
-    /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
-    /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OAuthConsentRequestResponseItem(ResponseItemKind type, string id, AgentReference agentReference, string responseId, Uri consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
-    {
-        Id = id;
-        ConsentLink = consentLink;
-        ServerLabel = serverLabel;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
-    }
-
-    /// <summary> Gets or sets the Id. </summary>
-    public new string Id { get; set; }
 }
 
 [CodeGenSuppress(nameof(OpenApiToolCall), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]
@@ -267,6 +249,7 @@ public partial class OpenApiToolCall
 {
     internal OpenApiToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Name = name;
         Arguments = arguments;
@@ -280,6 +263,7 @@ public partial class OpenApiToolCallOutput
 {
     internal OpenApiToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Name = name;
         Output = output;
@@ -293,6 +277,7 @@ public partial class SharePointGroundingToolCall
 {
     internal SharePointGroundingToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
@@ -305,6 +290,7 @@ public partial class SharePointGroundingToolCallOutput
 {
     internal SharePointGroundingToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        Id = responseId;
         CallId = callId;
         Output = output;
         Status = status;

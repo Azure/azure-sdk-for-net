@@ -3,6 +3,7 @@
 ## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
 
 ### Breaking Changes
 
