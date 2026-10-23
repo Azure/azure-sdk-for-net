@@ -446,6 +446,11 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>
+        /// <remarks>
+        /// With a nonempty collection id, a primary 404 triggers a legacy collection-based fallback:
+        /// the current entry is read from a configured failover ledger. This is not an exact historical
+        /// lookup; the returned entry retains its actual transaction id, which may differ from the request.
+        /// </remarks>
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -473,6 +478,11 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>
+        /// <remarks>
+        /// With a nonempty collection id, a primary 404 triggers a legacy collection-based fallback:
+        /// the current entry is read from a configured failover ledger. This is not an exact historical
+        /// lookup; the returned entry retains its actual transaction id, which may differ from the request.
+        /// </remarks>
         public virtual Response GetLedgerEntry(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -579,7 +589,7 @@ namespace Azure.Security.ConfidentialLedger
         private HttpMessage CreateFailoverGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
-            FailoverPolicy.MarkEligible(message);
+            FailoverPolicy.MarkEligible(message, collectionId);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -599,7 +609,7 @@ namespace Azure.Security.ConfidentialLedger
         private HttpMessage CreateFailoverGetCurrentLedgerEntryRequest(string collectionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, new ConfidentialLedgerResponseClassifier());
-            FailoverPolicy.MarkEligible(message);
+            FailoverPolicy.MarkEligible(message, collectionId);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
