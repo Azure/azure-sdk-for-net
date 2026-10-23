@@ -6,11 +6,11 @@ This sample demonstrates the use of the [claim check pattern](https://learn.micr
 
 In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the [stream-based](https://learn.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient.uploadblobasync?view=azure-dotnet#Azure_Storage_Blobs_BlobContainerClient_UploadBlobAsync_System_String_System_IO_Stream_System_Threading_CancellationToken_) Upload/Download methods instead.
 
-First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
+First, we create a `BlobContainerClient` for a new container with a unique name, such as `claim-checks-{Guid.NewGuid():N}`. `accountUri` includes that container name. `CreateAsync` fails if the container already exists, so we do not reuse another container. We store our message bodies in blobs within this container.
 ```C# Snippet:CreateBlobContainer
 DefaultAzureCredential credential = new();
 var containerClient = new BlobContainerClient(accountUri, credential);
-await containerClient.CreateIfNotExistsAsync();
+await containerClient.CreateAsync();
 ```
 
 Next, we will upload our large message body to a blob, and then assign the blob name to an application property in our `ServiceBusMessage`. In this example, we use a helper method that generates a random byte array of the specified size. For the blob name, we generate a GUID.
@@ -44,8 +44,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {
-    Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
-    var blobClient = new BlobClient(blobUri, credential);
+    var blobClient = containerClient.GetBlobClient((string)blobNameReceived);
 
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;
