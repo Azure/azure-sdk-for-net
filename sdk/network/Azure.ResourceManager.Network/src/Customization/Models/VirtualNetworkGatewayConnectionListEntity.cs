@@ -3,16 +3,19 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualNetworkGatewayConnectionListEntity
     {
-        // Preserve the released overload without depending on the generated serialization constructor.
+        // Preserve the released WritableSubResource overload by copying its ID to LocalNetworkGateway2Id.
+        // Hide this compatibility overload from IntelliSense without depending on the generated serialization constructor.
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
         /// <param name="localNetworkGateway2"> The local network gateway reference. </param>
         /// <param name="connectionType"> The gateway connection type. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public VirtualNetworkGatewayConnectionListEntity(WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType)
         {
             ConnectionType = connectionType;

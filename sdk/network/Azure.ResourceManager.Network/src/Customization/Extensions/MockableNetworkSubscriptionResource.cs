@@ -46,11 +46,13 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(AzureLocation location, CancellationToken cancellationToken = default)
             => GetApplicationGatewayWafDynamicManifests(location).Get(cancellationToken);
 
-        /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
+        // Native Get wraps a resource and requires a response ID; the released model also accepts ID-less SSL payloads.
+        // Use the generated request and shared FromData projection without constructing that resource response wrapper.
+        /// <summary> Gets the available SSL options in the released model shape. </summary>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().Get() instead.")]
-        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken)
+        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
         {
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             using DiagnosticScope scope = clientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
@@ -78,9 +80,11 @@ namespace Azure.ResourceManager.Network.Mocking
             }
         }
 
-        /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicy compatibility operation. </summary>
+        // The released subscription action returns a model; native policy access lives on the SSL-options resource.
+        // Preserve legacy policy identifiers through the same normalization used by the retained listing adapters.
+        /// <summary> Gets the specified SSL predefined policy. </summary>
         [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken)
+        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             var resource = Client.GetApplicationGatewayAvailableSslOptionsInfoResource(ApplicationGatewayAvailableSslOptionsInfoResource.CreateResourceIdentifier(Id.SubscriptionId));
             var response = resource.GetSslPredefinedPolicy(predefinedPolicyName, cancellationToken);
@@ -106,11 +110,11 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(AzureLocation location, CancellationToken cancellationToken = default)
             => GetApplicationGatewayWafDynamicManifests(location).GetAsync(cancellationToken);
 
-        /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
+        /// <summary> Gets the available SSL options in the released model shape. </summary>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().GetAsync() instead.")]
-        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken)
+        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
         {
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             using DiagnosticScope scope = clientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
@@ -138,9 +142,9 @@ namespace Azure.ResourceManager.Network.Mocking
             }
         }
 
-        /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicyAsync compatibility operation. </summary>
+        /// <summary> Gets the specified SSL predefined policy. </summary>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken)
+        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
             var resource = Client.GetApplicationGatewayAvailableSslOptionsInfoResource(ApplicationGatewayAvailableSslOptionsInfoResource.CreateResourceIdentifier(Id.SubscriptionId));
             var response = await resource.GetSslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);

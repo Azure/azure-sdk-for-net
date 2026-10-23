@@ -11,10 +11,13 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class TroubleshootingContent
     {
+        // Preserve the released Uri constructor after StorageUri became the string-valued StoragePath.
+        // Forward to the generated constructor while hiding this compatibility overload from IntelliSense.
         /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The storage account for troubleshooting output. </param>
         /// <param name="storagePath"> The absolute storage path. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storagePath)
             : this(targetResourceId, storageId, storagePath?.AbsoluteUri)
         {

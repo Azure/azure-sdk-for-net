@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Network.Tests
             var client = new ArmClient(new MockCredential(), subscriptionId, options);
             var subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
 
+#pragma warning disable CS0618 // Verify API-version selection on the retained deprecated entry points.
             if (async)
             {
                 await subscription.GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken.None);
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 subscription.GetApplicationGatewayAvailableSslOptions(CancellationToken.None);
             }
+#pragma warning restore CS0618
 
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
             var uri = transport.Requests[0].Uri.ToUri();

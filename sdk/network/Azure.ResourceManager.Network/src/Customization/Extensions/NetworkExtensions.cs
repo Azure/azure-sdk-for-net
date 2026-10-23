@@ -21,9 +21,13 @@ namespace Azure.ResourceManager.Network
         [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddresses instead.")]
         public static ArmOperation SwapPublicIPAddressesLoadBalancer(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).SwapPublicIPAddresses(waitUntil, location, content, cancellationToken);
-        /// <summary> Invokes the GetCloudServiceSwaps compatibility operation. </summary>
-        public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string cloudServiceName)
-            => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwaps(cloudServiceName);
+
+        // Native CloudSwap entry points are ArmClient-scoped, not resource-group methods.
+        // Retain the released receiver and dispatch through its cached virtual mockable surface.
+        /// <summary> Gets the swap collection for the specified cloud service. </summary>
+        public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string resourceName)
+            => GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServiceSwaps(resourceName);
+
         // Preserve the 1.15 ArmClient accessor for the custom aggregate VMSS facade, not a generated child resource.
         // Dispatch through MockableNetworkArmClient.GetVirtualMachineScaleSetNetworkResource; no HTTP is issued.
         /// <summary> Gets an object representing a virtual machine scale set with its network operations but no data. </summary>
@@ -49,35 +53,43 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(client, nameof(client));
             return GetMockableNetworkArmClient(client).GetVirtualMachineScaleSetVmNetworkResource(id);
         }
-        /// <summary> Invokes the GetCloudServiceSwap compatibility operation. </summary>
+        /// <summary> Gets the swap resource for the specified cloud service. </summary>
         [ForwardsClientCalls]
-        public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)
-            => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwap(cloudServiceName, cancellationToken);
-        /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
+        public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+            => GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServiceSwap(resourceName, cancellationToken);
+
+        // The released subscription methods return the legacy model, not the native SSL-options resource.
+        /// <summary> Gets the available SSL options in the released model shape. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().Get() instead.")]
-        public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptions(cancellationToken);
-        /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicy compatibility operation. </summary>
-        public static Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
+        public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslOptions(cancellationToken);
+
+        // Native policy actions belong to the SSL-options resource; preserve subscription ownership and mock dispatch.
+        /// <summary> Gets the specified SSL predefined policy. </summary>
+        public static Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
+
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddressesAsync instead.")]
         public static Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).SwapPublicIPAddressesAsync(waitUntil, location, content, cancellationToken);
-        /// <summary> Invokes the GetCloudServiceSwapAsync compatibility operation. </summary>
+
+        /// <summary> Gets the swap resource for the specified cloud service. </summary>
         [ForwardsClientCalls]
-        public static Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken)
-            => resourceGroupResource.GetCachedClient(client => new MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwapAsync(cloudServiceName, cancellationToken);
-        /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
+        public static Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+            => GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServiceSwapAsync(resourceName, cancellationToken);
+
+        /// <summary> Gets the available SSL options in the released model shape. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated and it will be removed in a future version. Please use GetApplicationGatewayAvailableSslOptionsInfo().GetAsync() instead.")]
-        public static async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => await subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
-        /// <summary> Invokes the GetApplicationGatewaySslPredefinedPolicyAsync compatibility operation. </summary>
-        public static async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken)
-            => await subscriptionResource.GetCachedClient(client => new MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+        public static Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken);
+
+        /// <summary> Gets the specified SSL predefined policy. </summary>
+        public static Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken);
 
         // Preserve the released token-only signatures: adding an optional filter changes the binary signature.
         // The mockable adapters supply the default filter to the generated overloads.
@@ -88,24 +100,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all express route cross connections in a subscription. </summary>
         public static Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
-
-        // Preserve the released signatures from before the optional detailLevel parameter was introduced.
-        // The mockable adapters supply the default detail level to the generated overloads.
-        /// <summary> Gets the specified load balancer. </summary>
-        [ForwardsClientCalls]
-        public static async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetLoadBalancerAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified load balancer. </summary>
-        [ForwardsClientCalls]
-        public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetLoadBalancer(loadBalancerName, expand, cancellationToken);
-        }
 
         // Keep the previously released, misleading names for binary compatibility.
         // These operations list policies across the subscription; GetServiceEndpointPolicies[Async] correctly describes that scope.
