@@ -153,7 +153,8 @@ public class VoiceConnectionTracingRedTests
                 callback?.GetTagItem("microsoft.session.id"),
                 Is.EqualTo(callback?.GetBaggageItem("azure.ai.agentserver.session_id")));
             Assert.That(callback?.TagObjects.Select(tag => tag.Key),
-                Is.EquivalentTo(new[] { "voice.event.type", "microsoft.session.id" }));
+                Is.EquivalentTo(new[] { "voice.event.type", "microsoft.session.id", "microsoft.foundry" }));
+            Assert.That(callback?.GetTagItem("microsoft.foundry"), Is.EqualTo("True"));
             Assert.That(customer?.TraceId, Is.EqualTo(traceId));
             Assert.That(customer?.ParentSpanId, Is.EqualTo(callback?.SpanId));
             Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);

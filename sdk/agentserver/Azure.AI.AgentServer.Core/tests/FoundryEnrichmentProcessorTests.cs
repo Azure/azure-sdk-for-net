@@ -38,12 +38,66 @@ public class FoundryEnrichmentProcessorTests
         FoundryEnvironment.Reload();
     }
 
-    private void BuildProvider()
+    private void BuildProvider(BaseExporter<Activity>? exporter = null)
     {
-        _tracerProvider = Sdk.CreateTracerProviderBuilder()
+        var builder = Sdk.CreateTracerProviderBuilder()
             .AddSource(_sourceName)
-            .AddProcessor(new FoundryEnrichmentProcessor())
-            .Build()!;
+            .AddProcessor(new FoundryEnrichmentProcessor());
+        if (exporter is not null)
+        {
+            builder.AddProcessor(new SimpleActivityExportProcessor(exporter));
+        }
+        _tracerProvider = builder.Build()!;
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void FoundryMarker_EnrichesParentAndChildSpans_WithoutChangingProvider(bool assertOnStart)
+    {
+        SetEnv();
+        using var exporter = new CapturingExporter();
+        BuildProvider(exporter);
+
+        using (var parent = _activitySource.StartActivity("parent", ActivityKind.Internal,
+            default(ActivityContext), new ActivityTagsCollection
+            {
+                ["microsoft.foundry"] = "initial-value",
+                ["gen_ai.provider.name"] = "other-provider"
+            })!)
+        {
+            if (assertOnStart)
+            {
+                Assert.That(parent.GetTagItem("microsoft.foundry"), Is.EqualTo("True"));
+            }
+            using (var child = _activitySource.StartActivity("child")!)
+            {
+                if (assertOnStart)
+                {
+                    Assert.That(child.GetTagItem("microsoft.foundry"), Is.EqualTo("True"));
+                }
+                child.SetTag("microsoft.foundry", "framework-value");
+            }
+            parent.SetTag("microsoft.foundry", "framework-value");
+        }
+
+        Assert.That(exporter.Tags, Has.Count.EqualTo(2));
+        Assert.That(exporter.Tags.Select(tags => tags["microsoft.foundry"]), Is.All.EqualTo("True"));
+        Assert.That(exporter.Tags[0].ContainsKey("gen_ai.provider.name"), Is.False);
+        Assert.That(exporter.Tags[1]["gen_ai.provider.name"], Is.EqualTo("other-provider"));
+    }
+
+    private sealed class CapturingExporter : BaseExporter<Activity>
+    {
+        public List<Dictionary<string, object?>> Tags { get; } = new();
+
+        public override ExportResult Export(in Batch<Activity> batch)
+        {
+            foreach (var activity in batch)
+            {
+                Tags.Add(activity.TagObjects.ToDictionary(tag => tag.Key, tag => tag.Value));
+            }
+            return ExportResult.Success;
+        }
     }
 
     [Test]

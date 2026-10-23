@@ -9,6 +9,16 @@ namespace Azure.AI.AgentServer.Core;
 internal static class AgentHostTelemetry
 {
     /// <summary>
+    /// The attribute identifying Foundry spans and log records.
+    /// </summary>
+    public const string FoundryAttributeName = "microsoft.foundry";
+
+    /// <summary>
+    /// The string value of the Foundry telemetry marker.
+    /// </summary>
+    public const string FoundryAttributeValue = "True";
+
+    /// <summary>
     /// The activity source name for the Responses protocol.
     /// </summary>
     public const string ResponsesSourceName = "Azure.AI.AgentServer.Responses";

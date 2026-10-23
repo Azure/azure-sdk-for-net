@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added the `microsoft.foundry = "True"` string attribute to all collected spans and log records. The default telemetry processors override conflicting marker values without changing `gen_ai.provider.name`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
