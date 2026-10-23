@@ -173,7 +173,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [Test]
-        [Ignore("The generated model currently omits CostControlConnections when explicitly assigned null.")]
         public async Task AccountUpdateSerializesExplicitNullCostControlConnections()
         {
             MockTransport transport = new(Json(200, AccountBody()));
