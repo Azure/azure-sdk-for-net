@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         internal MonitorWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string azureMonitorWorkspacesApiVersionOverride) ? azureMonitorWorkspacesApiVersionOverride : "2025-10-03");
+            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string azureMonitorWorkspacesApiVersionOverride) ? azureMonitorWorkspacesApiVersionOverride : "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -727,6 +727,13 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             Argument.AssertNotNullOrEmpty(metricsContainerName, nameof(metricsContainerName));
 
             return GetMonitorMetricsContainers().Get(metricsContainerName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceContainerResource"/> along with the instance operations that can be performed on it in the <see cref="MonitorWorkspaceResource"/>. </summary>
+        /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
+        public virtual TraceContainerResource GetTraceContainerResource()
+        {
+            return new TraceContainerResource(Client, Id.AppendChildResource("traceContainers", "default"));
         }
     }
 }

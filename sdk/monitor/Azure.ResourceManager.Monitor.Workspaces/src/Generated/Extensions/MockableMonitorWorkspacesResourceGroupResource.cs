@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,6 +94,33 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
             return GetMonitorWorkspaces().Get(azureMonitorWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the trace association at the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TraceAssociationsAtResourceGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-03-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="TraceAssociationsAtResourceGroupResource"/> object. </returns>
+        public virtual TraceAssociationsAtResourceGroupResource GetTraceAssociationsAtResourceGroup()
+        {
+            return new TraceAssociationsAtResourceGroupResource(Client, Id.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
         }
     }
 }
