@@ -753,6 +753,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             model.Patch.Remove("$.properties.virtualMachines[0]"u8);
             model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"vm3\"}"u8);
 
+            Assert.IsTrue(model.Patch.ContainsValue("$.properties.virtualMachines"u8));
+            Assert.IsFalse(model.Patch.Contains("$.properties.virtualMachines"u8));
+
             var data = ModelReaderWriter.Write(model);
             var model2 = GetRoundTripModelV2(data);
 
@@ -925,6 +928,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             model.VirtualMachines.Add(new WritableSubResource() { Id = "vm1" });
             model.VirtualMachines.Add(new WritableSubResource() { Id = "vm2" });
             model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"vm3\"}"u8);
+
+            Assert.IsTrue(model.Patch.ContainsValue("$.properties.virtualMachines"u8));
+            Assert.IsFalse(model.Patch.Contains("$.properties.virtualMachines"u8));
 
             // Get via EnumerateArray
             string fromEnumerate = JoinAsArray(model.Patch, "$.properties.virtualMachines"u8);
