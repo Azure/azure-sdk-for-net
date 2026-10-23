@@ -38,17 +38,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
         /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
         /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
+        /// <param name="sourceNetworkTapRuleId"> ARM resource ID of the source Network Tap Rule. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkPacketBrokerProperties(ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkPacketBrokerProperties(ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, ResourceIdentifier sourceNetworkTapRuleId, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkFabricId = networkFabricId;
             NetworkDeviceIds = networkDeviceIds;
             SourceInterfaceIds = sourceInterfaceIds;
             NetworkTapIds = networkTapIds;
             NeighborGroupIds = neighborGroupIds;
+            SourceNetworkTapRuleId = sourceNetworkTapRuleId;
             LastOperation = lastOperation;
             ProvisioningState = provisioningState;
             ConfigurationState = configurationState;
@@ -69,6 +71,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> List of neighbor group IDs configured on NPB. </summary>
         public IReadOnlyList<ResourceIdentifier> NeighborGroupIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
+
+        /// <summary> ARM resource ID of the source Network Tap Rule. </summary>
+        public ResourceIdentifier SourceNetworkTapRuleId { get; set; }
 
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }

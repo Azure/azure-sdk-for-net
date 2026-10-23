@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkPacketBrokerPatchContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -120,6 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkPacketBrokerPatchProperties properties = default;
             NetworkFabricManagedServiceIdentityPatch identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,6 +150,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NetworkPacketBrokerPatchProperties.DeserializeNetworkPacketBrokerPatchProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -158,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkPacketBrokerPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, identity);
+            return new NetworkPacketBrokerPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
         }
     }
 }

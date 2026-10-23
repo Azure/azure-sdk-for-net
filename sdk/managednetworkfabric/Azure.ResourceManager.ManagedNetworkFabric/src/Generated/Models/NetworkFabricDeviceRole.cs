@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string NpbValue = "NPB";
         /// <summary> Device Role Management Switch. </summary>
         private const string ManagementSwitchValue = "ManagementSwitch";
+        /// <summary> Device Role Terminal Server (NetworkBootstrapDevice). </summary>
+        private const string TerminalServerValue = "TerminalServer";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricDeviceRole"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Device Role Management Switch. </summary>
         public static NetworkFabricDeviceRole ManagementSwitch { get; } = new NetworkFabricDeviceRole(ManagementSwitchValue);
+
+        /// <summary> Device Role Terminal Server (NetworkBootstrapDevice). </summary>
+        public static NetworkFabricDeviceRole TerminalServer { get; } = new NetworkFabricDeviceRole(TerminalServerValue);
 
         /// <summary> Determines if two <see cref="NetworkFabricDeviceRole"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

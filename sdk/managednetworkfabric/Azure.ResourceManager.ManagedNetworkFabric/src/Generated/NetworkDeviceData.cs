@@ -220,6 +220,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Operational state of networkDevice indicating if the device is reachable and services are available. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
         /// <summary> Secret rotation status for the device's secrets. </summary>
         public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus
         {
