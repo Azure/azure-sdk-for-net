@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
@@ -19,128 +18,100 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/>. </summary>
-        /// <param name="administratorLogin"> The administrator login name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administratorLogin"/> is null. </exception>
-        public HorizonDBClusterProperties(string administratorLogin)
+        public HorizonDBClusterProperties()
         {
-            Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
-
-            AdministratorLogin = administratorLogin;
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/>. </summary>
-        /// <param name="administratorLogin"> The administrator login name. </param>
-        /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="version"> The version of the HorizonDB cluster. </param>
-        /// <param name="createMode"> The mode to create a new HorizonDB cluster. </param>
-        /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
-        /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
-        /// <param name="poolName"> The pool name for restore or replica operations. </param>
-        /// <param name="replicaCount"> Number of replicas. </param>
-        /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="processorType"> The processor type for the HorizonDB cluster. </param>
-        /// <param name="network"> The network related info. </param>
+        /// <param name="postgreSqlVersion"> The PostgreSQL major version used by the HorizonDB cluster. API version 2026-10-01-preview supports versions 17 and 18. For ordinary cluster creation, the version is supplied in the request and is immutable after creation. For point-in-time restore, the service obtains the version from the source backup metadata and the request must omit this property. This API version does not support in-place PostgreSQL major-version upgrades. </param>
+        /// <param name="creationMode"> The mode used to create the cluster. When this property is omitted while creating a new cluster, the service records Create. PointInTimeRestore creates a new cluster from an available backup; pointInTimeUtc and creationSourceClusterResourceId are then required, postgreSqlVersion must be omitted because it is obtained from the backup metadata, and creationSourceClusterLocation is required when the source and target cluster locations differ. This property is immutable and is returned as creation provenance. On replacement, omission preserves the recorded value, resubmitting the same value is accepted, and changing it is rejected. </param>
+        /// <param name="pointInTimeUtc"> The requested point in time, in UTC. This property is required in every PointInTimeRestore request. For a same-location restore, the service restores the latest backup available at or before this value. For a cross-location restore, the service requires but ignores this value and restores the latest available backup; cross-location responses omit this property. This property must be absent for other creation modes or when creationMode is omitted and can only be specified during resource creation. </param>
+        /// <param name="creationSourceClusterResourceId"> The Azure resource ID of the source HorizonDB cluster used by the selected creation mode. This property is required for PointInTimeRestore and other source-based creation modes, and must be absent when creationMode is Create or omitted. A source cluster does not need to have a pool to be restored, provided an available backup exists. This immutable creation-provenance value does not change after creation. </param>
+        /// <param name="creationSourceClusterLocation"> The Azure location of the source HorizonDB cluster used for point-in-time restore. This property is optional when the source and target cluster locations are the same. It is required when the source cluster location differs from the target cluster location and must identify the source cluster's location. This property must be absent for creation modes other than PointInTimeRestore or when creationMode is omitted. This immutable creation-provenance value does not change after creation. </param>
+        /// <param name="network"> The network configuration for the cluster. When this object is omitted, the service defaults it to publicAccess Disabled. </param>
+        /// <param name="backup"> The backup configuration for the cluster. </param>
+        /// <param name="dataEncryption"> The data encryption configuration for the cluster. When omitted during initial cluster creation, the service uses SystemManaged encryption. When supplied during initial cluster creation, type is required. For PUT updates of an existing cluster, type may be omitted; if provided, it must match the existing encryption type. The encryption type is selected at cluster creation; switching between SystemManaged and AzureKeyVault after creation is not supported. </param>
+        /// <param name="aiModelManagement"> Specifies whether AI Model Management is enabled for the cluster. </param>
         /// <param name="state"> Current state of the cluster. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the cluster. </param>
-        /// <param name="readOnlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
-        /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
-        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
-        /// <param name="computeModel"> The compute model for the cluster. </param>
-        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
+        /// <param name="readWritePool"> The pool currently designated to host the cluster's read-write node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readOnlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDBClusterAuthConfig authConfig, HorizonDBComputeModel computeModel, HorizonDBClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(PostgreSqlVersion? postgreSqlVersion, ClusterCreateMode? creationMode, DateTimeOffset? pointInTimeUtc, ResourceIdentifier creationSourceClusterResourceId, string creationSourceClusterLocation, Network network, BackupProperties backup, HorizonDBClusterDataEncryption dataEncryption, AiModelManagementStatus? aiModelManagement, ClusterState state, HorizonDBProvisioningState provisioningState, ReadWritePoolProperties readWritePool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            Version = version;
-            CreateMode = createMode;
-            PointInTimeUtcOn = pointInTimeUtcOn;
-            SourceClusterResourceId = sourceClusterResourceId;
-            PoolName = poolName;
-            ReplicaCount = replicaCount;
-            VCores = vCores;
-            ProcessorType = processorType;
+            PostgreSqlVersion = postgreSqlVersion;
+            CreationMode = creationMode;
+            PointInTimeUtc = pointInTimeUtc;
+            CreationSourceClusterResourceId = creationSourceClusterResourceId;
+            CreationSourceClusterLocation = creationSourceClusterLocation;
             Network = network;
+            Backup = backup;
+            DataEncryption = dataEncryption;
+            AiModelManagement = aiModelManagement;
             State = state;
-            FullyQualifiedDomainName = fullyQualifiedDomainName;
-            ReadOnlyEndpoint = readOnlyEndpoint;
             ProvisioningState = provisioningState;
-            ZonePlacementPolicy = zonePlacementPolicy;
-            ParameterGroup = parameterGroup;
-            AuthConfig = authConfig;
-            ComputeModel = computeModel;
-            Mirroring = mirroring;
+            ReadWritePool = readWritePool;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The administrator login name. </summary>
-        public string AdministratorLogin { get; set; }
+        /// <summary> The PostgreSQL major version used by the HorizonDB cluster. API version 2026-10-01-preview supports versions 17 and 18. For ordinary cluster creation, the version is supplied in the request and is immutable after creation. For point-in-time restore, the service obtains the version from the source backup metadata and the request must omit this property. This API version does not support in-place PostgreSQL major-version upgrades. </summary>
+        public PostgreSqlVersion? PostgreSqlVersion { get; set; }
 
-        /// <summary> The administrator login password. </summary>
-        public string AdministratorLoginPassword { get; set; }
+        /// <summary> The mode used to create the cluster. When this property is omitted while creating a new cluster, the service records Create. PointInTimeRestore creates a new cluster from an available backup; pointInTimeUtc and creationSourceClusterResourceId are then required, postgreSqlVersion must be omitted because it is obtained from the backup metadata, and creationSourceClusterLocation is required when the source and target cluster locations differ. This property is immutable and is returned as creation provenance. On replacement, omission preserves the recorded value, resubmitting the same value is accepted, and changing it is rejected. </summary>
+        public ClusterCreateMode? CreationMode { get; set; }
 
-        /// <summary> The version of the HorizonDB cluster. </summary>
-        public string Version { get; set; }
+        /// <summary> The requested point in time, in UTC. This property is required in every PointInTimeRestore request. For a same-location restore, the service restores the latest backup available at or before this value. For a cross-location restore, the service requires but ignores this value and restores the latest available backup; cross-location responses omit this property. This property must be absent for other creation modes or when creationMode is omitted and can only be specified during resource creation. </summary>
+        public DateTimeOffset? PointInTimeUtc { get; set; }
 
-        /// <summary> The mode to create a new HorizonDB cluster. </summary>
-        public HorizonDBClusterCreateMode? CreateMode { get; set; }
+        /// <summary> The Azure resource ID of the source HorizonDB cluster used by the selected creation mode. This property is required for PointInTimeRestore and other source-based creation modes, and must be absent when creationMode is Create or omitted. A source cluster does not need to have a pool to be restored, provided an available backup exists. This immutable creation-provenance value does not change after creation. </summary>
+        public ResourceIdentifier CreationSourceClusterResourceId { get; set; }
 
-        /// <summary> Restore point creation time specifying the time to restore from. </summary>
-        public DateTimeOffset? PointInTimeUtcOn { get; set; }
+        /// <summary> The Azure location of the source HorizonDB cluster used for point-in-time restore. This property is optional when the source and target cluster locations are the same. It is required when the source cluster location differs from the target cluster location and must identify the source cluster's location. This property must be absent for creation modes other than PointInTimeRestore or when creationMode is omitted. This immutable creation-provenance value does not change after creation. </summary>
+        public string CreationSourceClusterLocation { get; set; }
 
-        /// <summary> The source cluster resource ID for restore or replica creation. </summary>
-        public ResourceIdentifier SourceClusterResourceId { get; set; }
-
-        /// <summary> The pool name for restore or replica operations. </summary>
-        public string PoolName { get; set; }
-
-        /// <summary> Number of replicas. </summary>
-        public int? ReplicaCount { get; set; }
-
-        /// <summary> Number of vCores. </summary>
-        public int? VCores { get; set; }
-
-        /// <summary> The processor type for the HorizonDB cluster. </summary>
-        public string ProcessorType { get; set; }
-
-        /// <summary> The network related info. </summary>
+        /// <summary> The network configuration for the cluster. When this object is omitted, the service defaults it to publicAccess Disabled. </summary>
         internal Network Network { get; set; }
 
+        /// <summary> The backup configuration for the cluster. </summary>
+        public BackupProperties Backup { get; set; }
+
+        /// <summary> The data encryption configuration for the cluster. When omitted during initial cluster creation, the service uses SystemManaged encryption. When supplied during initial cluster creation, type is required. For PUT updates of an existing cluster, type may be omitted; if provided, it must match the existing encryption type. The encryption type is selected at cluster creation; switching between SystemManaged and AzureKeyVault after creation is not supported. </summary>
+        public HorizonDBClusterDataEncryption DataEncryption { get; set; }
+
+        /// <summary> Specifies whether AI Model Management is enabled for the cluster. </summary>
+        public AiModelManagementStatus? AiModelManagement { get; set; }
+
         /// <summary> Current state of the cluster. </summary>
-        public HorizonDBClusterState? State { get; }
-
-        /// <summary> The fully qualified domain name of the cluster. </summary>
-        public string FullyQualifiedDomainName { get; }
-
-        /// <summary> The fully qualified domain name used for readonly endpoint for the cluster. </summary>
-        public string ReadOnlyEndpoint { get; }
+        public ClusterState State { get; }
 
         /// <summary> The provisioning state of the cluster. </summary>
-        public HorizonDBProvisioningState? ProvisioningState { get; }
+        public HorizonDBProvisioningState ProvisioningState { get; }
 
-        /// <summary> Defines how replicas are placed across availability zones. </summary>
-        public HorizonDBZonePlacementPolicy? ZonePlacementPolicy { get; set; }
+        /// <summary> The pool currently designated to host the cluster's read-write node. </summary>
+        internal ReadWritePoolProperties ReadWritePool { get; }
 
-        /// <summary> Defines connection to a parameter group. </summary>
-        public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
-
-        /// <summary> Authentication configuration for the HorizonDB cluster. </summary>
-        public HorizonDBClusterAuthConfig AuthConfig { get; set; }
-
-        /// <summary> The compute model for the cluster. </summary>
-        public HorizonDBComputeModel ComputeModel { get; set; }
-
-        /// <summary> Mirroring configuration for the HorizonDB cluster. </summary>
-        public HorizonDBClusterMirroring Mirroring { get; set; }
-
-        /// <summary> The flag indicating whether public ip is requested. </summary>
-        public HorizonDBPublicNetworkAccessState? PublicNetworkAccess
+        /// <summary> Specifies whether public access is enabled for the cluster. The service defaults to Disabled when this property is omitted. </summary>
+        public HorizonDBPublicNetworkAccessState? NetworkPublicAccess
         {
             get
             {
-                return Network is null ? default : Network.PublicNetworkAccess;
+                return Network is null ? default : Network.PublicAccess;
+            }
+            set
+            {
+                if (Network is null)
+                {
+                    Network = new Network();
+                }
+                Network.PublicAccess = value;
+            }
+        }
+
+        /// <summary> The Azure resource ID of the pool designated to host the cluster's read-write node. The pool is a child resource of this cluster. When a pool is created while the cluster currently has no pools, the service automatically sets this property to the new pool's resource ID, including when all pools that existed earlier in the cluster's lifetime were deleted. This property is absent when no pool is designated, such as after clearReadWritePool succeeds. </summary>
+        public ResourceIdentifier DesignatedPoolResourceId
+        {
+            get
+            {
+                return ReadWritePool.DesignatedPoolResourceId;
             }
         }
     }

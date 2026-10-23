@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HorizonDBPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="horizonDBPoolData"> The <see cref="HorizonDBPoolData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HorizonDBPoolData horizonDBPoolData)
+        {
+            if (horizonDBPoolData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(horizonDBPoolData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPoolData"/> from. </param>
         internal static HorizonDBPoolData FromResponse(Response response)
         {

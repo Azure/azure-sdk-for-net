@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolData"/>. </summary>
-        internal HorizonDBPoolData()
+        public HorizonDBPoolData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public HorizonDBPoolProperties Properties { get; }
+        public HorizonDBPoolProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
