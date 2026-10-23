@@ -4,7 +4,7 @@ These APIs require a service and index configured for the corresponding preview
 capabilities. The preview package defaults to `2026-11-01-preview`; applications
 can still explicitly select an older supported service version.
 
-Use the endpoint and credential setup from the [getting started guide](../README.md#getting-started).
+Use the endpoint and credential setup from the [getting started guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/README.md#getting-started).
 The examples use these namespaces:
 
 ```csharp

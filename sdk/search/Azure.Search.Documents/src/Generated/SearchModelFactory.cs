@@ -101,7 +101,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Uses topic graph diverse retrieval. </summary>
         /// <param name="diversityFactor"> The diversity factor used for topic graph diverse retrieval. If omitted, the default configured on the topic graph profile is used. </param>
-        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </param>
         /// <returns> A new <see cref="Models.DiverseVectorQueryTopicGraph"/> instance for mocking. </returns>
         public static DiverseVectorQueryTopicGraph DiverseVectorQueryTopicGraph(float? diversityFactor = default, int? minDiversityPoolSize = default)
         {
@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Blends pure vector similarity with diversity-aware retrieval. Recommended default to balance diversity with relevance. </summary>
-        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </param>
         /// <returns> A new <see cref="Models.BalancedVectorQueryTopicGraph"/> instance for mocking. </returns>
         public static BalancedVectorQueryTopicGraph BalancedVectorQueryTopicGraph(int? minDiversityPoolSize = default)
         {
@@ -2029,7 +2029,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="indexName"> The name of the index that stores the topics for the associated vector field. </param>
         /// <param name="defaultKind"> Default kind of topic graph vector search to use. </param>
         /// <param name="defaultDiversityFactor"> Default diversity factor for topic graph vector searches. This property can only be used when `defaultKind` is `diverse`. Default is 0.2. </param>
-        /// <param name="defaultMinDiversityPoolSize"> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="defaultMinDiversityPoolSize"> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000. </param>
         /// <returns> A new <see cref="Indexes.Models.VectorSearchTopicGraphProfile"/> instance for mocking. </returns>
         public static VectorSearchTopicGraphProfile VectorSearchTopicGraphProfile(string name = default, string indexName = default, VectorSearchTopicGraphKind defaultKind = default, float? defaultDiversityFactor = default, int? defaultMinDiversityPoolSize = default)
         {

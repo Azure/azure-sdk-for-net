@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="indexName"> The name of the index that stores the topics for the associated vector field. </param>
         /// <param name="defaultKind"> Default kind of topic graph vector search to use. </param>
         /// <param name="defaultDiversityFactor"> Default diversity factor for topic graph vector searches. This property can only be used when `defaultKind` is `diverse`. Default is 0.2. </param>
-        /// <param name="defaultMinDiversityPoolSize"> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="defaultMinDiversityPoolSize"> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VectorSearchTopicGraphProfile(string name, string indexName, VectorSearchTopicGraphKind defaultKind, float? defaultDiversityFactor, int? defaultMinDiversityPoolSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Default diversity factor for topic graph vector searches. This property can only be used when `defaultKind` is `diverse`. Default is 0.2. </summary>
         public float? DefaultDiversityFactor { get; set; }
 
-        /// <summary> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000 for classic services and 500 for serverless services. </summary>
+        /// <summary> Default minimum number of vector candidates to retrieve before topic graph sampling. This property can only be used when `defaultKind` is `diverse` or `balanced`. The default is 1,000. </summary>
         public int? DefaultMinDiversityPoolSize { get; set; }
     }
 }
