@@ -390,6 +390,10 @@ namespace Azure.Core.Tests.Identity
                 new X509BasicConstraintsExtension(false, false, 0, false));
             serverRequest.CertificateExtensions.Add(
                 new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.KeyEncipherment, true));
+            // macOS TLS policy requires an explicit server-authentication EKU.
+            serverRequest.CertificateExtensions.Add(
+                new X509EnhancedKeyUsageExtension(
+                    new OidCollection { new Oid("1.3.6.1.5.5.7.3.1") }, false));
 
             // Add Subject Alternative Name for localhost
             var sanBuilder = new SubjectAlternativeNameBuilder();
