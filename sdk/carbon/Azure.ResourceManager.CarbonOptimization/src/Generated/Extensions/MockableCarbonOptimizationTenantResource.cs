@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
 
         private ClientDiagnostics CarbonServiceClientDiagnostics => _carbonServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CarbonOptimization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CarbonService CarbonServiceRestClient => _carbonServiceRestClient ??= new CarbonService(CarbonServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01");
+        private CarbonService CarbonServiceRestClient => _carbonServiceRestClient ??= new CarbonService(CarbonServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// API for Carbon Emissions Reports
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
