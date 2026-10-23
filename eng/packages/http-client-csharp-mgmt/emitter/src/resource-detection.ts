@@ -35,7 +35,8 @@ import {
 import {
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType
+  SdkModelType,
+  getClientNameOverride
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -279,10 +280,23 @@ export function buildArmProviderSchema(
   // Build the ArmResourceSchema list from collected entries.
   const resources: ArmResourceSchema[] = [];
   const resourcePathToClientName = new Map<string, string>();
+  const resourcePathToClientNameIsExplicit = new Map<string, boolean>();
   const resourcePathToExplicitName = new Map<string, string>();
   for (const entry of resourceEntries) {
     const model = resourceModelMap.get(entry.modelId);
     resourcePathToClientName.set(entry.instancePath.path, entry.client.name);
+    const readMethod = serviceMethods.get(entry.methods[0].methodId);
+    const rawInterface = readMethod?.__raw?.interface;
+    const clientNameOverride = rawInterface
+      ? getClientNameOverride(sdkContext, rawInterface, "csharp")
+      : undefined;
+    if (clientNameOverride !== undefined) {
+      resourcePathToClientName.set(entry.instancePath.path, clientNameOverride);
+    }
+    resourcePathToClientNameIsExplicit.set(
+      entry.instancePath.path,
+      clientNameOverride !== undefined
+    );
     if (entry.explicitResourceName) {
       resourcePathToExplicitName.set(
         entry.instancePath.path,
@@ -297,6 +311,10 @@ export function buildArmProviderSchema(
       scope: buildResourceMethodScope(m.operationPath)
     }));
 
+    const rawModel = models.get(entry.modelId)?.__raw;
+    const modelNameOverride = rawModel
+      ? getClientNameOverride(sdkContext, rawModel, "csharp")
+      : undefined;
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
@@ -308,7 +326,14 @@ export function buildArmProviderSchema(
       methods,
       parentResourceId: undefined,
       parentResourceModelId: undefined,
-      resourceName: model?.name ?? "Unknown",
+      resourceName:
+        entry.explicitResourceName ??
+        modelNameOverride ??
+        model?.name ??
+        "Unknown",
+      resourceNameIsExplicit:
+        entry.explicitResourceName !== undefined ||
+        modelNameOverride !== undefined,
       nameConstraints: {},
       apiVersions: [],
       rbacRoles: []
@@ -369,12 +394,15 @@ export function buildArmProviderSchema(
       const explicitName = resourcePathToExplicitName.get(resourcePath);
       if (explicitName) {
         resource.metadata.resourceName = explicitName;
+        resource.metadata.resourceNameIsExplicit = true;
         continue;
       }
       if (list.length > 1) {
         const clientName = resourcePathToClientName.get(resourcePath);
         if (clientName) {
           resource.metadata.resourceName = pluralize.singular(clientName);
+          resource.metadata.resourceNameIsExplicit =
+            resourcePathToClientNameIsExplicit.get(resourcePath) ?? false;
         }
       }
     }

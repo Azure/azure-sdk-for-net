@@ -2066,6 +2066,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "EscapedWireVersionTest",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -2160,6 +2161,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "WireVersionTest",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -2206,6 +2208,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "OrdinaryWireVersionTest",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

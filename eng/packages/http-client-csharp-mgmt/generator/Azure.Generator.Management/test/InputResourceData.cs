@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool? resourceNameIsExplicit = null, string? singletonResourceName = null)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -91,7 +91,7 @@ namespace Azure.Generator.Management.Tests.Common
                 clientMethods.Add(checkExistenceMethod);
             }
 
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, resourceName);
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", singletonResourceName, ResourceScope.ResourceGroup, resourceName, resourceNameIsExplicit);
 
             var client = InputFactory.Client(
                 TestClientName,
@@ -828,7 +828,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// Child:  .../parents/{parentName}/nestedTypes/{nestedTypeName}/children/{childName}
         /// The child has one extra path parameter (nestedTypeName) between parent and child.
         /// </summary>
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource()
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource(string childResourceName = "ChildType", bool? resourceNameIsExplicit = null)
         {
             const string ParentClientName = "ParentClient";
             const string ChildClientName = "ChildClient";
@@ -924,7 +924,7 @@ namespace Azure.Generator.Management.Tests.Common
                     new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
-                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, "ChildType", parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup))
+                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, childResourceName, parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
 
             var parentClient = InputFactory.Client(
@@ -1020,7 +1020,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel]);
         }
 
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource()
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource(string parentResourceName = "Watchlist", bool? resourceNameIsExplicit = null)
         {
             const string ParentClientName = "WatchlistsClient";
             const string ChildClientName = "WatchlistItemsClient";
@@ -1084,7 +1084,7 @@ namespace Azure.Generator.Management.Tests.Common
             var armProviderDecorator = BuildArmProviderSchemaMultiResource([
                 new ResourceSchemaInput(parentModel, [
                     new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)
-                ], parentIdPattern, "Microsoft.SecurityInsights/watchlists", null, ResourceScope.Extension, "Watchlist", null, scopeIdPattern, "Microsoft.OperationalInsights/workspaces"),
+                ], parentIdPattern, "Microsoft.SecurityInsights/watchlists", null, ResourceScope.Extension, parentResourceName, null, scopeIdPattern, "Microsoft.OperationalInsights/workspaces", ResourceNameIsExplicit: resourceNameIsExplicit),
                 new ResourceSchemaInput(childModel, [
                     new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(childIdPattern), "Microsoft.OperationalInsights/workspaces"), null!),
                     new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)
@@ -1106,7 +1106,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false, string resourceType = "Microsoft.Tests/events")
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false, string resourceType = "Microsoft.Tests/events", string resourceName = "Event", bool? resourceNameIsExplicit = null)
         {
             const string TestClientName = "TestClient";
             var eventModel = InputFactory.Model("EventData",
@@ -1173,7 +1173,8 @@ namespace Azure.Generator.Management.Tests.Common
                 resourceType,
                 null,
                 ResourceScope.Subscription,
-                "Event");
+                resourceName,
+                resourceNameIsExplicit);
 
             var client = InputFactory.Client(
                 TestClientName,
@@ -1476,10 +1477,10 @@ namespace Azure.Generator.Management.Tests.Common
                     .. hasName ? new[] { InputFactory.MethodParameter("resourceName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true) } : []];
         }
 
-        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName, bool? resourceNameIsExplicit = null)
         {
             return BuildArmProviderSchemaMultiResource([
-                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope))
+                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
         }
 
@@ -1511,6 +1512,10 @@ namespace Azure.Generator.Management.Tests.Common
                 if (r.ParentResourceId is not null)
                 {
                     schema["parentResourceId"] = r.ParentResourceId;
+                }
+                if (r.ResourceNameIsExplicit is not null)
+                {
+                    schema["resourceNameIsExplicit"] = r.ResourceNameIsExplicit;
                 }
                 return schema;
             }).ToArray();
@@ -1561,6 +1566,7 @@ namespace Azure.Generator.Management.Tests.Common
             string? ResourceName,
             string? ParentResourceId,
             string ScopeIdPattern,
-            string? ScopeResourceType = null);
+            string? ScopeResourceType = null,
+            bool? ResourceNameIsExplicit = null);
     }
 }

@@ -2137,5 +2137,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ipAddress"> The address value. </param>
+        /// <returns> A new <see cref="Tests.IPAddressData"/> instance for mocking. </returns>
+        public static IPAddressData IPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ipAddress = default)
+        {
+            return new IPAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ipAddress is null ? default : new IPAddressProperties(ipAddress, default),
+                default);
+        }
     }
 }

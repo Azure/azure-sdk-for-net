@@ -5081,6 +5081,7 @@
                   "scopeIdPattern": "/{scope}"
                 },
                 "resourceName": "CostReport",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2023-12-01-preview"
@@ -5136,6 +5137,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Widget",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -5193,6 +5195,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Monitor",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

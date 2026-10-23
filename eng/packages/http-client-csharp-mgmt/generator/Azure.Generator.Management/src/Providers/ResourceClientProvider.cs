@@ -71,7 +71,7 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
-            ResourceName = resourceName.ToIdentifierName();
+            ResourceName = ResolveResourceName(resourceName, resourceMetadata);
             var resourceTypeName = ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
             TagPatchHookMethodName = ManagementClientGenerator.Instance.TagPatchHookCustomizationResolver.GetMethodName(resourceTypeName);
 
@@ -102,6 +102,78 @@ namespace Azure.Generator.Management.Providers
         private readonly CSharpType _originalResourceDataType;
         internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
+        internal bool UsesDerivedResourceName { get; private set; }
+        private bool? _preserveResourceNameCasing;
+        internal bool PreserveResourceNameCasing => _preserveResourceNameCasing ??= ResolveResourceNameCasing();
+        internal string PluralResourceName => ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false, preserveCasing: PreserveResourceNameCasing);
+
+        private bool ResolveResourceNameCasing()
+        {
+            if (ResourceCollection is null)
+            {
+                return UsesDerivedResourceName;
+            }
+
+            var derivedGetter = ResourceName.GetCollectionMethodName(preserveCasing: true);
+            var legacyGetter = ResourceName.GetCollectionMethodName();
+            if (derivedGetter == legacyGetter)
+            {
+                return UsesDerivedResourceName;
+            }
+
+            var library = ManagementClientGenerator.Instance.OutputLibrary;
+            var parentContract = ParentResourceIdPattern is { } parentId
+                ? library.GetResourceById(parentId).LastContractView
+                : library.MockableResourceProviders.FirstOrDefault(p => IsExtensionResource
+                    ? p.ArmCoreType.Equals(typeof(ArmClient))
+                    : p.ArmCoreType.Equals(TypeOfParentResource))?.LastContractView;
+            IReadOnlyList<ParameterProvider> factoryParameters = IsExtensionResource && ParentResourceIdPattern is null
+                ? [new ParameterProvider("scope", $"The resource scope.", typeof(ResourceIdentifier)), .. ResourceCollection.PathParameters]
+                : ResourceCollection.PathParameters;
+            // A resource type alone cannot tell us which accessor casing was published.
+            var publishedGetter = parentContract?.Methods.FirstOrDefault(m =>
+                m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                !m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                m.Signature.GenericArguments is not { Count: > 0 } &&
+                m.Signature.ReturnType?.Equals(ResourceCollection.Type) == true &&
+                (m.Signature.Name == derivedGetter || m.Signature.Name == legacyGetter) &&
+                m.Signature.Parameters.Count == factoryParameters.Count &&
+                m.Signature.Parameters.Zip(factoryParameters).All(pair =>
+                    pair.First.Name == pair.Second.Name &&
+                    pair.First.Type.Equals(pair.Second.Type) &&
+                    pair.First.IsRef == pair.Second.IsRef &&
+                    pair.First.IsOut == pair.Second.IsOut &&
+                    pair.First.IsIn == pair.Second.IsIn &&
+                    pair.First.IsParams == pair.Second.IsParams));
+            return publishedGetter is null ? UsesDerivedResourceName : publishedGetter.Signature.Name == derivedGetter;
+        }
+
+        private string ResolveResourceName(string resourceName, ArmResourceMetadata metadata)
+        {
+            var name = resourceName.ToIdentifierName();
+            if (metadata.ResourceNameIsExplicit)
+            {
+                return name;
+            }
+
+            var generator = ManagementClientGenerator.Instance;
+            var ns = generator.TypeFactory.PrimaryNamespace;
+            var resourceTypeName = name.EndsWith("Resource") ? name : $"{name}Resource";
+            // Resolve identities before normalization so customizations and published names remain discoverable.
+            if (HasPreservedIdentity(resourceTypeName) ||
+                (metadata.SingletonResourceName is null && HasPreservedIdentity($"{name}Collection")))
+            {
+                return name;
+            }
+
+            UsesDerivedResourceName = true;
+            var normalizedTypeName = NormalizeTypeNameForNewContract(resourceTypeName);
+            return name.EndsWith("Resource") ? normalizedTypeName : normalizedTypeName[..^"Resource".Length];
+
+            bool HasPreservedIdentity(string typeName)
+                => generator.SourceInputModel.FindForTypeInCurrentCompilation(ns, typeName, null, false) is not null ||
+                   generator.SourceInputModel.FindForTypeInLastContract(ns, typeName, null) is not null;
+        }
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
@@ -215,11 +287,11 @@ namespace Azure.Generator.Management.Providers
             if (ResourceCollection != null)
             {
                 // we have the collection, we are not a singleton resource
-                var methodName = ResourceName.GetCollectionMethodName();
+                var methodName = ResourceName.GetCollectionMethodName(preserveCasing: PreserveResourceNameCasing);
                 // Use inputIsKnownToBeSingular: false because some words like "Quota" and "Metadata"
                 // are treated by Humanizer as already plural (from Latin), and we want to preserve
                 // them unchanged rather than incorrectly pluralizing them.
-                var pluralOfResourceName = ResourceName.PluralizeLastWord(inputIsKnownToBeSingular: false);
+                var pluralOfResourceName = PluralResourceName;
                 return new MethodSignature(
                     methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
