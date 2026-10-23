@@ -28,7 +28,7 @@ namespace Azure.Identity
         private HandlerState _handler;
         private bool _disposed;
 
-        internal HttpMessageHandler InnerHandler => _handler.Handler;
+        internal HttpMessageHandler InnerHandler => Volatile.Read(ref _handler).Handler;
 
         public KubernetesProxyHttpHandler(KubernetesProxyConfig config)
         {
@@ -46,6 +46,7 @@ namespace Azure.Identity
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             HandlerState handler;
+            HandlerState handlerToDispose = null;
             lock (_lock)
             {
                 if (_disposed)
@@ -53,14 +54,20 @@ namespace Azure.Identity
                     throw new ObjectDisposedException(nameof(KubernetesProxyHttpHandler));
                 }
 
-                byte[] caData = GetCaCertificateData();
-                if (ShouldReloadHandler(caData))
+                if (!string.IsNullOrEmpty(_config.CaFilePath))
                 {
-                    HandlerState replacement = CreateHandler(caData);
-                    RetireHandler(_handler);
-                    _handler = replacement;
-                    _lastCaData = caData;
-                    AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
+                    byte[] caData = GetCaCertificateData();
+                    if (ShouldReloadHandler(caData))
+                    {
+                        HandlerState replacement = CreateHandler(caData);
+                        if (RetireHandler(_handler))
+                        {
+                            handlerToDispose = _handler;
+                        }
+                        _handler = replacement;
+                        _lastCaData = caData;
+                        AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
+                    }
                 }
 
                 handler = _handler;
@@ -69,6 +76,7 @@ namespace Azure.Identity
 
             try
             {
+                handlerToDispose?.Dispose();
                 RewriteRequestUrl(request);
 
                 if (_pipeline != null)
@@ -80,13 +88,16 @@ namespace Azure.Identity
             }
             finally
             {
+                bool shouldDispose;
                 lock (_lock)
                 {
                     handler.OutstandingRequests--;
-                    if (handler.Retired && handler.OutstandingRequests == 0)
-                    {
-                        handler.Dispose();
-                    }
+                    shouldDispose = handler.Retired && handler.OutstandingRequests == 0;
+                }
+
+                if (shouldDispose)
+                {
+                    handler.Dispose();
                 }
             }
         }
@@ -95,26 +106,29 @@ namespace Azure.Identity
         {
             if (disposing)
             {
+                HandlerState handlerToDispose = null;
                 lock (_lock)
                 {
                     if (!_disposed)
                     {
                         _disposed = true;
-                        RetireHandler(_handler);
+                        if (RetireHandler(_handler))
+                        {
+                            handlerToDispose = _handler;
+                        }
                     }
                 }
+
+                handlerToDispose?.Dispose();
             }
 
             base.Dispose(disposing);
         }
 
-        private static void RetireHandler(HandlerState handler)
+        private static bool RetireHandler(HandlerState handler)
         {
             handler.Retired = true;
-            if (handler.OutstandingRequests == 0)
-            {
-                handler.Dispose();
-            }
+            return handler.OutstandingRequests == 0;
         }
 
         private async Task<HttpResponseMessage> SendMockRequest(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -267,6 +281,7 @@ namespace Azure.Identity
             {
                 string pemContent = System.Text.Encoding.UTF8.GetString(caData);
                 X509Certificate2 caCertificate = PemReader.LoadCertificate(pemContent.AsSpan(), allowCertificateOnly: true);
+                string caThumbprint = caCertificate.Thumbprint;
 
                 handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
                 {
@@ -303,7 +318,7 @@ namespace Azure.Identity
                         if (customChain.ChainElements.Count > 0)
                         {
                             var rootCert = customChain.ChainElements[customChain.ChainElements.Count - 1].Certificate;
-                            if (rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase))
+                            if (rootCert.Thumbprint.Equals(caThumbprint, StringComparison.OrdinalIgnoreCase))
                             {
                                 return true;
                             }

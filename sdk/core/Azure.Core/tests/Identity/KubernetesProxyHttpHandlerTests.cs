@@ -719,6 +719,29 @@ namespace Azure.Core.Tests.Identity
 #endif
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SendAsync_DoesNotMonitorCaWithoutCaFile(bool useInlineCa)
+        {
+            using var handler = new KubernetesProxyHttpHandler(CreateTestConfig(
+                caData: useInlineCa ? GetTestCertificatePem() : null,
+                transport: CreateMockTransport()));
+            using var client = new HttpClient(handler);
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Informational);
+
+            for (int i = 0; i < 2; i++)
+            {
+                using var response = await client.GetAsync(DefaultTargetUrl);
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            }
+
+            Assert.That(listener.EventData.Where(e =>
+                e.EventName == "KubernetesProxyCaCertificateReloadSkipped" ||
+                e.EventName == "KubernetesProxyCaCertificateReloaded" ||
+                e.EventName == "KubernetesProxyCaCertificateReloadFailed"), Is.Empty);
+        }
+
         [Test]
         public async Task SendAsync_LogsWhenCaFileIsEmptyOrMissing()
         {
