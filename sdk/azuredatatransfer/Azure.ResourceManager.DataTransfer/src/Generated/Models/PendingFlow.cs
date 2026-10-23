@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public SystemData SystemData { get; }
 
         /// <summary> A source IP address or CIDR range. </summary>
-        public IList<string> StreamSourceAddresses
+        public IList<string> SourceAddresses
         {
             get
             {
-                return this.StreamSourceAddresses is null ? default : StreamSourceAddresses.SourceAddresses;
+                return StreamSourceAddresses is null ? default : StreamSourceAddresses.SourceAddresses;
             }
         }
     }

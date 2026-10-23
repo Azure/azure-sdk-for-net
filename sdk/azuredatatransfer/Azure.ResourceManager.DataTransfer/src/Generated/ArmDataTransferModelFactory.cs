@@ -545,13 +545,13 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="streamProtocol"> The protocol of the stream. </param>
         /// <param name="streamLatency"> The latency of the stream in milliseconds. </param>
         /// <param name="passphrase"> The passphrase used for SRT streams. </param>
-        /// <param name="streamSourceAddresses"> A source IP address or CIDR range. </param>
+        /// <param name="sourceAddresses"> A source IP address or CIDR range. </param>
         /// <param name="destinationEndpoints"> The destination endpoints of the stream. </param>
         /// <param name="destinationEndpointPorts"> The destination endpoint ports of the stream. </param>
         /// <param name="eventHubId"> Event Hub ID. </param>
         /// <param name="consumerGroup"> Event Hub Consumer Group. </param>
         /// <returns> A new <see cref="Models.FlowProperties"/> instance for mocking. </returns>
-        public static FlowProperties FlowProperties(SelectedResource connection = default, string flowId = default, string keyVaultUri = default, LinkStatus? linkStatus = default, string linkedFlowId = default, FlowStatus? status = default, IEnumerable<ForceDisabledStatus> forceDisabledStatus = default, string storageAccountName = default, ResourceIdentifier storageAccountId = default, string storageContainerName = default, string storageTableName = default, ResourceIdentifier serviceBusQueueId = default, FlowProfileMetadata flowProfile = default, DataClass? flowDataType = default, FlowType? flowType = default, DataType? dataType = default, ProvisioningState? provisioningState = default, IEnumerable<string> policies = default, Schema schema = default, MessagingOptions messagingOptions = default, ApiFlowOptions apiFlowOptions = default, Uri customerManagedKeyVaultUri = default, string streamId = default, StreamProtocol? streamProtocol = default, long? streamLatency = default, string passphrase = default, IEnumerable<string> streamSourceAddresses = default, IEnumerable<string> destinationEndpoints = default, IEnumerable<long> destinationEndpointPorts = default, ResourceIdentifier eventHubId = default, string consumerGroup = default)
+        public static FlowProperties FlowProperties(SelectedResource connection = default, string flowId = default, string keyVaultUri = default, LinkStatus? linkStatus = default, string linkedFlowId = default, FlowStatus? status = default, IEnumerable<ForceDisabledStatus> forceDisabledStatus = default, string storageAccountName = default, ResourceIdentifier storageAccountId = default, string storageContainerName = default, string storageTableName = default, ResourceIdentifier serviceBusQueueId = default, FlowProfileMetadata flowProfile = default, DataClass? flowDataType = default, FlowType? flowType = default, DataType? dataType = default, ProvisioningState? provisioningState = default, IEnumerable<string> policies = default, Schema schema = default, MessagingOptions messagingOptions = default, ApiFlowOptions apiFlowOptions = default, Uri customerManagedKeyVaultUri = default, string streamId = default, StreamProtocol? streamProtocol = default, long? streamLatency = default, string passphrase = default, IEnumerable<string> sourceAddresses = default, IEnumerable<string> destinationEndpoints = default, IEnumerable<long> destinationEndpointPorts = default, ResourceIdentifier eventHubId = default, string consumerGroup = default)
         {
             forceDisabledStatus ??= new ChangeTrackingList<ForceDisabledStatus>();
             policies ??= new ChangeTrackingList<string>();
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
                 streamProtocol,
                 streamLatency,
                 passphrase,
-                streamSourceAddresses is null ? default : new StreamSourceAddresses((streamSourceAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
+                sourceAddresses is null ? default : new StreamSourceAddresses((sourceAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
                 (destinationEndpoints ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationEndpointPorts ?? new ChangeTrackingList<long>()).ToList(),
                 eventHubId,
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="streamProtocol"> The protocol of the stream. </param>
         /// <param name="streamLatency"> The latency of the stream in milliseconds. </param>
         /// <param name="passphrase"> The passphrase used for SRT streams. </param>
-        /// <param name="streamSourceAddresses"> A source IP address or CIDR range. </param>
+        /// <param name="sourceAddresses"> A source IP address or CIDR range. </param>
         /// <param name="destinationEndpoints"> The destination endpoints of the stream. </param>
         /// <param name="destinationEndpointPorts"> The destination endpoint ports of the stream. </param>
         /// <param name="eventHubId"> Event Hub ID. </param>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <returns> A new <see cref="Models.PendingFlow"/> instance for mocking. </returns>
-        public static PendingFlow PendingFlow(string subscriptionId = default, string connectionId = default, SelectedResource connection = default, string flowId = default, string keyVaultUri = default, LinkStatus? linkStatus = default, string linkedFlowId = default, FlowStatus? status = default, IEnumerable<ForceDisabledStatus> forceDisabledStatus = default, string storageAccountName = default, ResourceIdentifier storageAccountId = default, string storageContainerName = default, string storageTableName = default, ResourceIdentifier serviceBusQueueId = default, FlowProfileMetadata flowProfile = default, DataClass? flowDataType = default, FlowType? flowType = default, DataType? dataType = default, ProvisioningState? provisioningState = default, IEnumerable<string> policies = default, Schema schema = default, MessagingOptions messagingOptions = default, ApiFlowOptions apiFlowOptions = default, Uri customerManagedKeyVaultUri = default, string streamId = default, StreamProtocol? streamProtocol = default, long? streamLatency = default, string passphrase = default, IEnumerable<string> streamSourceAddresses = default, IEnumerable<string> destinationEndpoints = default, IEnumerable<long> destinationEndpointPorts = default, ResourceIdentifier eventHubId = default, string consumerGroup = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier id = default, string name = default, ResourceType? @type = default, SystemData systemData = default)
+        public static PendingFlow PendingFlow(string subscriptionId = default, string connectionId = default, SelectedResource connection = default, string flowId = default, string keyVaultUri = default, LinkStatus? linkStatus = default, string linkedFlowId = default, FlowStatus? status = default, IEnumerable<ForceDisabledStatus> forceDisabledStatus = default, string storageAccountName = default, ResourceIdentifier storageAccountId = default, string storageContainerName = default, string storageTableName = default, ResourceIdentifier serviceBusQueueId = default, FlowProfileMetadata flowProfile = default, DataClass? flowDataType = default, FlowType? flowType = default, DataType? dataType = default, ProvisioningState? provisioningState = default, IEnumerable<string> policies = default, Schema schema = default, MessagingOptions messagingOptions = default, ApiFlowOptions apiFlowOptions = default, Uri customerManagedKeyVaultUri = default, string streamId = default, StreamProtocol? streamProtocol = default, long? streamLatency = default, string passphrase = default, IEnumerable<string> sourceAddresses = default, IEnumerable<string> destinationEndpoints = default, IEnumerable<long> destinationEndpointPorts = default, ResourceIdentifier eventHubId = default, string consumerGroup = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier id = default, string name = default, ResourceType? @type = default, SystemData systemData = default)
         {
             forceDisabledStatus ??= new ChangeTrackingList<ForceDisabledStatus>();
             policies ??= new ChangeTrackingList<string>();
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
                 streamProtocol,
                 streamLatency,
                 passphrase,
-                streamSourceAddresses is null ? default : new StreamSourceAddresses((streamSourceAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
+                sourceAddresses is null ? default : new StreamSourceAddresses((sourceAddresses ?? new ChangeTrackingList<string>()).ToList(), default),
                 (destinationEndpoints ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationEndpointPorts ?? new ChangeTrackingList<long>()).ToList(),
                 eventHubId,

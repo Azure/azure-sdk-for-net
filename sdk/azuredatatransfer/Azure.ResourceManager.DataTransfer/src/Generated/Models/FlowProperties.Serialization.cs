@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
             if (Optional.IsDefined(StreamSourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
-                writer.WriteObjectValue<StreamSourceAddresses>(StreamSourceAddresses, options);
+                writer.WriteObjectValue(StreamSourceAddresses, options);
             }
             if (Optional.IsCollectionDefined(DestinationEndpoints))
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
                     {
                         continue;
                     }
-                    streamSourceAddresses = Models.StreamSourceAddresses.DeserializeStreamSourceAddresses(prop.Value, options);
+                    streamSourceAddresses = StreamSourceAddresses.DeserializeStreamSourceAddresses(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("destinationEndpoints"u8))

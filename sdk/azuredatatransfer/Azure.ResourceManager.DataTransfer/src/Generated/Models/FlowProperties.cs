@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public string ConsumerGroup { get; set; }
 
         /// <summary> A source IP address or CIDR range. </summary>
-        public IList<string> StreamSourceAddresses
+        public IList<string> SourceAddresses
         {
             get
             {
-                if (this.StreamSourceAddresses is null)
+                if (StreamSourceAddresses is null)
                 {
                     StreamSourceAddresses = new StreamSourceAddresses();
                 }
