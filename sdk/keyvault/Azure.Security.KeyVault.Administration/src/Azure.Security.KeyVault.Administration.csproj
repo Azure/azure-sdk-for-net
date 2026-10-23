@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-<PropertyGroup>
+  <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Administration client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Administration client library</AssemblyTitle>
-    <Version>4.9.0-beta.4</Version>
+    <Version>4.9.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>4.8.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Administration;$(PackageCommonTags)</PackageTags>
@@ -12,11 +11,9 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <ItemGroup>
     <!-- Include just the few items we need from Azure.Security.KeyVault.Shared -->
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" />
@@ -24,7 +21,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Security.KeyVault.Shared\src\IJsonSerializable.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
@@ -35,5 +31,4 @@
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-
 </Project>
