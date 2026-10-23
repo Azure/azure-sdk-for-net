@@ -15,7 +15,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     /// <summary> Client options for <see cref="WebPubSubChatServiceClient"/>. </summary>
     public partial class WebPubSubChatServiceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_02_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_08_01_Preview;
 
         /// <summary> Initializes a new instance of WebPubSubChatServiceClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -24,6 +24,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             Version = version switch
             {
                 ServiceVersion.V2026_02_01_Preview => "2026-02-01-preview",
+                ServiceVersion.V2026_08_01_Preview => "2026-08-01-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -34,7 +35,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         [Experimental("SCME0002")]
         internal WebPubSubChatServiceClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-02-01-preview";
+            Version = "2026-08-01-preview";
             if (section is null || !section.Exists())
             {
                 return;
@@ -60,7 +61,9 @@ namespace Azure.Messaging.WebPubSub.Chat
         public enum ServiceVersion
         {
             /// <summary> The 2026-02-01-preview API version. </summary>
-            V2026_02_01_Preview = 1
+            V2026_02_01_Preview = 1,
+            /// <summary> The 2026-08-01-preview API version. </summary>
+            V2026_08_01_Preview = 2
         }
     }
 }
