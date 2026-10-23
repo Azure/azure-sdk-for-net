@@ -20,18 +20,13 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the TotalThroughputLimit. </summary>
+        /// <summary> Gets the TotalThroughputLimit. </summary>
         public BicepValue<int> TotalThroughputLimit
         {
             get
             {
                 Initialize();
                 return _totalThroughputLimit;
-            }
-            set
-            {
-                Initialize();
-                _totalThroughputLimit.Assign(value);
             }
         }
 

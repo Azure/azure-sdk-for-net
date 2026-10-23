@@ -6,20 +6,6 @@ namespace Azure.Provisioning.Subscription
         Completed = 1,
         Expired = 2,
     }
-    public partial class BillingAccountPolicy : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal BillingAccountPolicy() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.Subscription.BillingAccountPolicyProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Subscription.BillingAccountPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_11_01_PREVIEW;
-        }
-    }
     public partial class BillingAccountPolicyProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BillingAccountPolicyProperties() { }
@@ -32,6 +18,20 @@ namespace Azure.Provisioning.Subscription
         Initialized = 0,
         InProgress = 1,
         Completed = 2,
+    }
+    public partial class ExternalResourceBillingAccountPolicy : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ExternalResourceBillingAccountPolicy() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Subscription.BillingAccountPolicyProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Subscription.ExternalResourceBillingAccountPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_11_01_PREVIEW;
+        }
     }
     public partial class ServiceTenant : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

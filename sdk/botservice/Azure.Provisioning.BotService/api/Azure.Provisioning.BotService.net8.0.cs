@@ -8,31 +8,31 @@ namespace Azure.Provisioning.BotService
     public partial class AlexaChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public AlexaChannel() { }
-        public Azure.Provisioning.BotService.AlexaChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.AlexaChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AlexaChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AlexaChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> AlexaSkillId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AlexaSkillId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> ServiceEndpointUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> UriFragment { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BotChannel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public BotChannel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        internal BotChannel() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.BotChannelProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotChannelProperties Properties { get { throw null; } }
+        public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.BotService.BotChannel FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -46,33 +46,33 @@ namespace Azure.Provisioning.BotService
     public partial class BotChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BotChannelProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BotChannelSite : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BotChannelSite() { }
-        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsBlockUserUploadEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDetailedLoggingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEndpointParametersEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsNoStorageEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSecureSiteEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsBlockUserUploadEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDetailedLoggingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEndpointParametersEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsNoStorageEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsSecureSiteEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsTokenEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsV1Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsV3Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebchatPreviewEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsWebChatSpeechEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsV1Enabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsV3Enabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsWebchatPreviewEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsWebChatSpeechEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Key { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SiteId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SiteName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> TrustedOrigins { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SiteName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> TrustedOrigins { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BotConnectionSetting : Azure.Provisioning.Primitives.ProvisionableResource
@@ -328,16 +328,16 @@ namespace Azure.Provisioning.BotService
     public partial class DirectLineChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public DirectLineChannel() { }
-        public Azure.Provisioning.BotService.DirectLineChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.DirectLineChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DirectLineChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DirectLineChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> DirectLineEmbedCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ExtensionKey1 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ExtensionKey2 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.DirectLineSite> Sites { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DirectLineEmbedCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ExtensionKey1 { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ExtensionKey2 { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.DirectLineSite> Sites { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DirectLineSite : Azure.Provisioning.BotService.BotChannelSite
@@ -348,19 +348,19 @@ namespace Azure.Provisioning.BotService
     public partial class DirectLineSpeechChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public DirectLineSpeechChannel() { }
-        public Azure.Provisioning.BotService.DirectLineSpeechChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.DirectLineSpeechChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DirectLineSpeechChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DirectLineSpeechChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CustomSpeechModelId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CustomVoiceDeploymentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDefaultBotForCogSvcAccount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CustomSpeechModelId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CustomVoiceDeploymentId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDefaultBotForCogSvcAccount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class Dynamics365OmnichannelChannel : Azure.Provisioning.BotService.BotChannelProperties
@@ -371,7 +371,7 @@ namespace Azure.Provisioning.BotService
     public partial class EmailChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public EmailChannel() { }
-        public Azure.Provisioning.BotService.EmailChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.EmailChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum EmailChannelAuthMethod
@@ -384,56 +384,56 @@ namespace Azure.Provisioning.BotService
     public partial class EmailChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EmailChannelProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.EmailChannelAuthMethod> AuthMethod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EmailAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MagicCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.EmailChannelAuthMethod> AuthMethod { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EmailAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> MagicCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Password { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FacebookChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public FacebookChannel() { }
-        public Azure.Provisioning.BotService.FacebookChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.FacebookChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FacebookChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public FacebookChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AppSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AppId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AppSecret { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> CallbackUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.FacebookPage> Pages { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.FacebookPage> Pages { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> VerifyToken { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FacebookPage : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public FacebookPage() { }
-        public Azure.Provisioning.BicepValue<string> AccessToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AccessToken { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class KikChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public KikChannel() { }
-        public Azure.Provisioning.BotService.KikChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.KikChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class KikChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KikChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> ApiKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> UserName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ApiKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> UserName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class LineChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public LineChannel() { }
-        public Azure.Provisioning.BotService.LineChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.LineChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class LineChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -441,14 +441,14 @@ namespace Azure.Provisioning.BotService
         public LineChannelProperties() { }
         public Azure.Provisioning.BicepValue<System.Uri> CallbackUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.LineRegistration> LineRegistrations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.LineRegistration> LineRegistrations { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class LineRegistration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public LineRegistration() { }
-        public Azure.Provisioning.BicepValue<string> ChannelAccessToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ChannelSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ChannelAccessToken { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ChannelSecret { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> GeneratedId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -460,18 +460,18 @@ namespace Azure.Provisioning.BotService
     public partial class MsTeamsChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public MsTeamsChannel() { }
-        public Azure.Provisioning.BotService.MsTeamsChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.MsTeamsChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MsTeamsChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MsTeamsChannelProperties() { }
-        public Azure.Provisioning.BicepValue<bool> AcceptedTerms { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CallingWebhook { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DeploymentEnvironment { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IncomingCallRoute { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCallingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> AcceptedTerms { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CallingWebhook { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DeploymentEnvironment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> IncomingCallRoute { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsCallingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkSecurityPerimeter : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -546,130 +546,130 @@ namespace Azure.Provisioning.BotService
     public partial class SkypeChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public SkypeChannel() { }
-        public Azure.Provisioning.BotService.SkypeChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.SkypeChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SkypeChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SkypeChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> CallingWebHook { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> GroupsMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IncomingCallRoute { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCallingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsGroupsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsMediaCardsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsMessagingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsScreenSharingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsVideoEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CallingWebHook { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> GroupsMode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> IncomingCallRoute { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsCallingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsGroupsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsMediaCardsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsMessagingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsScreenSharingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsVideoEnabled { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SlackChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public SlackChannel() { }
-        public Azure.Provisioning.BotService.SlackChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.SlackChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SlackChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SlackChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Uri> LandingPageUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> LandingPageUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LastSubmissionId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RedirectAction { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> RegisterBeforeOAuthFlow { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Scopes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SigningSecret { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VerificationToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> RegisterBeforeOAuthFlow { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Scopes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SigningSecret { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> VerificationToken { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SmsChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public SmsChannel() { }
-        public Azure.Provisioning.BotService.SmsChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.SmsChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SmsChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SmsChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> AccountSID { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AuthToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Phone { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AccountSID { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AuthToken { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Phone { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelegramChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public TelegramChannel() { }
-        public Azure.Provisioning.BotService.TelegramChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.TelegramChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelegramChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TelegramChannelProperties() { }
-        public Azure.Provisioning.BicepValue<string> AccessToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AccessToken { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsValidated { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelephonyChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public TelephonyChannel() { }
-        public Azure.Provisioning.BotService.TelephonyChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.TelephonyChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelephonyChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TelephonyChannelProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.TelephonyChannelResourceApiConfiguration> ApiConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.TelephonyPhoneNumbers> PhoneNumbers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PremiumSku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.TelephonyChannelResourceApiConfiguration> ApiConfigurations { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.TelephonyPhoneNumbers> PhoneNumbers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PremiumSku { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelephonyChannelResourceApiConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TelephonyChannelResourceApiConfiguration() { }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProviderName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ProviderName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TelephonyPhoneNumbers : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TelephonyPhoneNumbers() { }
-        public Azure.Provisioning.BicepValue<string> AcsEndpoint { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AcsResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AcsSecret { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OfferType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PhoneNumber { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AcsEndpoint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AcsResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AcsSecret { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceRegion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CognitiveServiceResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CognitiveServiceSubscriptionKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DefaultLocale { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OfferType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PhoneNumber { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class WebChatChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public WebChatChannel() { }
-        public Azure.Provisioning.BotService.WebChatChannelProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.WebChatChannelProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class WebChatChannelProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public WebChatChannelProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.WebChatSite> Sites { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.WebChatSite> Sites { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> WebChatEmbedCode { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

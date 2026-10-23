@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         /// <summary> Creates a new ApiManagementEmailTemplate. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApiManagementEmailTemplate(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/templates", resourceVersion ?? "2025-09-01-preview")
+        internal ApiManagementEmailTemplate(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/templates", resourceVersion ?? "2025-09-01-preview")
         {
         }
 
@@ -64,18 +64,13 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal EmailTemplateContractProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -94,71 +89,39 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the Subject. </summary>
+        /// <summary> Gets the Subject. </summary>
         public BicepValue<string> Subject
         {
             get
             {
                 return Properties is null ? default : Properties.Subject;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                Properties.Subject = value;
-            }
         }
 
-        /// <summary> Gets or sets the Body. </summary>
+        /// <summary> Gets the Body. </summary>
         public BicepValue<string> Body
         {
             get
             {
                 return Properties is null ? default : Properties.Body;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                Properties.Body = value;
-            }
         }
 
-        /// <summary> Gets or sets the Title. </summary>
+        /// <summary> Gets the Title. </summary>
         public BicepValue<string> Title
         {
             get
             {
                 return Properties is null ? default : Properties.Title;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                Properties.Title = value;
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                Properties.Description = value;
             }
         }
 
@@ -167,28 +130,16 @@ namespace Azure.Provisioning.ApiManagement
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                return Properties.IsDefault;
+                return Properties is null ? default : Properties.IsDefault;
             }
         }
 
-        /// <summary> Gets or sets the Parameters. </summary>
+        /// <summary> Gets the Parameters. </summary>
         public BicepList<EmailTemplateParametersContractProperties> Parameters
         {
             get
             {
                 return Properties is null ? default : Properties.Parameters;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EmailTemplateContractProperties();
-                }
-                Properties.Parameters = value;
             }
         }
 

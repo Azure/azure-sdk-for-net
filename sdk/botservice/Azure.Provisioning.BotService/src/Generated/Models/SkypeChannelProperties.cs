@@ -29,7 +29,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the IsMessagingEnabled. </summary>
+        /// <summary> Gets the IsMessagingEnabled. </summary>
         public BicepValue<bool> IsMessagingEnabled
         {
             get
@@ -37,14 +37,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isMessagingEnabled;
             }
-            set
-            {
-                Initialize();
-                _isMessagingEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsMediaCardsEnabled. </summary>
+        /// <summary> Gets the IsMediaCardsEnabled. </summary>
         public BicepValue<bool> IsMediaCardsEnabled
         {
             get
@@ -52,14 +47,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isMediaCardsEnabled;
             }
-            set
-            {
-                Initialize();
-                _isMediaCardsEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsVideoEnabled. </summary>
+        /// <summary> Gets the IsVideoEnabled. </summary>
         public BicepValue<bool> IsVideoEnabled
         {
             get
@@ -67,14 +57,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isVideoEnabled;
             }
-            set
-            {
-                Initialize();
-                _isVideoEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsCallingEnabled. </summary>
+        /// <summary> Gets the IsCallingEnabled. </summary>
         public BicepValue<bool> IsCallingEnabled
         {
             get
@@ -82,14 +67,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isCallingEnabled;
             }
-            set
-            {
-                Initialize();
-                _isCallingEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsScreenSharingEnabled. </summary>
+        /// <summary> Gets the IsScreenSharingEnabled. </summary>
         public BicepValue<bool> IsScreenSharingEnabled
         {
             get
@@ -97,14 +77,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isScreenSharingEnabled;
             }
-            set
-            {
-                Initialize();
-                _isScreenSharingEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsGroupsEnabled. </summary>
+        /// <summary> Gets the IsGroupsEnabled. </summary>
         public BicepValue<bool> IsGroupsEnabled
         {
             get
@@ -112,14 +87,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isGroupsEnabled;
             }
-            set
-            {
-                Initialize();
-                _isGroupsEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the GroupsMode. </summary>
+        /// <summary> Gets the GroupsMode. </summary>
         public BicepValue<string> GroupsMode
         {
             get
@@ -127,14 +97,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _groupsMode;
             }
-            set
-            {
-                Initialize();
-                _groupsMode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CallingWebHook. </summary>
+        /// <summary> Gets the CallingWebHook. </summary>
         public BicepValue<string> CallingWebHook
         {
             get
@@ -142,14 +107,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _callingWebHook;
             }
-            set
-            {
-                Initialize();
-                _callingWebHook.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IncomingCallRoute. </summary>
+        /// <summary> Gets the IncomingCallRoute. </summary>
         public BicepValue<string> IncomingCallRoute
         {
             get
@@ -157,25 +117,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _incomingCallRoute;
             }
-            set
-            {
-                Initialize();
-                _incomingCallRoute.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
             }
         }
 
@@ -192,7 +142,7 @@ namespace Azure.Provisioning.BotService
             _groupsMode = DefineProperty<string>(nameof(GroupsMode), new string[] { "groupsMode" });
             _callingWebHook = DefineProperty<string>(nameof(CallingWebHook), new string[] { "callingWebHook" });
             _incomingCallRoute = DefineProperty<string>(nameof(IncomingCallRoute), new string[] { "incomingCallRoute" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 

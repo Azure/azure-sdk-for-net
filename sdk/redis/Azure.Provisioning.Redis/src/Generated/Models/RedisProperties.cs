@@ -5,16 +5,12 @@
 
 #nullable disable
 
-using System.Net;
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Redis
 {
-    /// <summary> Properties of the redis cache. </summary>
-    internal partial class RedisProperties : ProvisionableConstruct
+    internal partial class RedisProperties : RedisCreateProperties
     {
         private BicepValue<RedisProvisioningState> _provisioningState;
         private BicepValue<string> _hostName;
@@ -23,22 +19,6 @@ namespace Azure.Provisioning.Redis
         private RedisAccessKeys _accessKeys;
         private BicepList<SubResource> _linkedServers;
         private BicepList<RedisInstanceDetails> _instances;
-        private BicepList<RedisPrivateEndpointConnection> _privateEndpointConnectionResources;
-        private RedisSku _sku;
-        private BicepValue<ResourceIdentifier> _subnetId;
-        private BicepValue<IPAddress> _staticIP;
-        private RedisCommonConfiguration _redisConfiguration;
-        private BicepValue<string> _redisVersion;
-        private BicepValue<bool> _enableNonSslPort;
-        private BicepValue<int> _replicasPerMaster;
-        private BicepValue<int> _replicasPerPrimary;
-        private BicepDictionary<string> _tenantSettings;
-        private BicepValue<int> _shardCount;
-        private BicepValue<RedisTlsVersion> _minimumTlsVersion;
-        private BicepValue<RedisPublicNetworkAccess> _publicNetworkAccess;
-        private BicepValue<UpdateChannel> _updateChannel;
-        private BicepValue<bool> _isAccessKeyAuthenticationDisabled;
-        private BicepValue<ZonalAllocationPolicy> _zonalAllocationPolicy;
 
         /// <summary> Creates a new RedisProperties. </summary>
         public RedisProperties()
@@ -115,241 +95,6 @@ namespace Azure.Provisioning.Redis
             }
         }
 
-        /// <summary> Gets the PrivateEndpointConnectionResources. </summary>
-        public BicepList<RedisPrivateEndpointConnection> PrivateEndpointConnectionResources
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnectionResources;
-            }
-        }
-
-        /// <summary> Gets or sets the Sku. </summary>
-        public RedisSku Sku
-        {
-            get
-            {
-                Initialize();
-                return _sku;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _sku, value);
-            }
-        }
-
-        /// <summary> Gets or sets the SubnetId. </summary>
-        public BicepValue<ResourceIdentifier> SubnetId
-        {
-            get
-            {
-                Initialize();
-                return _subnetId;
-            }
-            set
-            {
-                Initialize();
-                _subnetId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the StaticIP. </summary>
-        public BicepValue<IPAddress> StaticIP
-        {
-            get
-            {
-                Initialize();
-                return _staticIP;
-            }
-            set
-            {
-                Initialize();
-                _staticIP.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RedisConfiguration. </summary>
-        public RedisCommonConfiguration RedisConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _redisConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _redisConfiguration, value);
-            }
-        }
-
-        /// <summary> Gets or sets the RedisVersion. </summary>
-        public BicepValue<string> RedisVersion
-        {
-            get
-            {
-                Initialize();
-                return _redisVersion;
-            }
-            set
-            {
-                Initialize();
-                _redisVersion.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnableNonSslPort. </summary>
-        public BicepValue<bool> EnableNonSslPort
-        {
-            get
-            {
-                Initialize();
-                return _enableNonSslPort;
-            }
-            set
-            {
-                Initialize();
-                _enableNonSslPort.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ReplicasPerMaster. </summary>
-        public BicepValue<int> ReplicasPerMaster
-        {
-            get
-            {
-                Initialize();
-                return _replicasPerMaster;
-            }
-            set
-            {
-                Initialize();
-                _replicasPerMaster.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ReplicasPerPrimary. </summary>
-        public BicepValue<int> ReplicasPerPrimary
-        {
-            get
-            {
-                Initialize();
-                return _replicasPerPrimary;
-            }
-            set
-            {
-                Initialize();
-                _replicasPerPrimary.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TenantSettings. </summary>
-        public BicepDictionary<string> TenantSettings
-        {
-            get
-            {
-                Initialize();
-                return _tenantSettings;
-            }
-            set
-            {
-                Initialize();
-                _tenantSettings.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ShardCount. </summary>
-        public BicepValue<int> ShardCount
-        {
-            get
-            {
-                Initialize();
-                return _shardCount;
-            }
-            set
-            {
-                Initialize();
-                _shardCount.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the MinimumTlsVersion. </summary>
-        public BicepValue<RedisTlsVersion> MinimumTlsVersion
-        {
-            get
-            {
-                Initialize();
-                return _minimumTlsVersion;
-            }
-            set
-            {
-                Initialize();
-                _minimumTlsVersion.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<RedisPublicNetworkAccess> PublicNetworkAccess
-        {
-            get
-            {
-                Initialize();
-                return _publicNetworkAccess;
-            }
-            set
-            {
-                Initialize();
-                _publicNetworkAccess.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UpdateChannel. </summary>
-        public BicepValue<UpdateChannel> UpdateChannel
-        {
-            get
-            {
-                Initialize();
-                return _updateChannel;
-            }
-            set
-            {
-                Initialize();
-                _updateChannel.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsAccessKeyAuthenticationDisabled. </summary>
-        public BicepValue<bool> IsAccessKeyAuthenticationDisabled
-        {
-            get
-            {
-                Initialize();
-                return _isAccessKeyAuthenticationDisabled;
-            }
-            set
-            {
-                Initialize();
-                _isAccessKeyAuthenticationDisabled.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ZonalAllocationPolicy. </summary>
-        public BicepValue<ZonalAllocationPolicy> ZonalAllocationPolicy
-        {
-            get
-            {
-                Initialize();
-                return _zonalAllocationPolicy;
-            }
-            set
-            {
-                Initialize();
-                _zonalAllocationPolicy.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for RedisProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -361,22 +106,6 @@ namespace Azure.Provisioning.Redis
             _accessKeys = DefineModelProperty<RedisAccessKeys>(nameof(AccessKeys), new string[] { "accessKeys" }, isOutput: true);
             _linkedServers = DefineListProperty<SubResource>(nameof(LinkedServers), new string[] { "linkedServers" }, isOutput: true);
             _instances = DefineListProperty<RedisInstanceDetails>(nameof(Instances), new string[] { "instances" }, isOutput: true);
-            _privateEndpointConnectionResources = DefineListProperty<RedisPrivateEndpointConnection>(nameof(PrivateEndpointConnectionResources), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _sku = DefineModelProperty<RedisSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
-            _subnetId = DefineProperty<ResourceIdentifier>(nameof(SubnetId), new string[] { "subnetId" });
-            _staticIP = DefineProperty<IPAddress>(nameof(StaticIP), new string[] { "staticIP" });
-            _redisConfiguration = DefineModelProperty<RedisCommonConfiguration>(nameof(RedisConfiguration), new string[] { "redisConfiguration" });
-            _redisVersion = DefineProperty<string>(nameof(RedisVersion), new string[] { "redisVersion" });
-            _enableNonSslPort = DefineProperty<bool>(nameof(EnableNonSslPort), new string[] { "enableNonSslPort" });
-            _replicasPerMaster = DefineProperty<int>(nameof(ReplicasPerMaster), new string[] { "replicasPerMaster" });
-            _replicasPerPrimary = DefineProperty<int>(nameof(ReplicasPerPrimary), new string[] { "replicasPerPrimary" });
-            _tenantSettings = DefineDictionaryProperty<string>(nameof(TenantSettings), new string[] { "tenantSettings" });
-            _shardCount = DefineProperty<int>(nameof(ShardCount), new string[] { "shardCount" });
-            _minimumTlsVersion = DefineProperty<RedisTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
-            _publicNetworkAccess = DefineProperty<RedisPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _updateChannel = DefineProperty<UpdateChannel>(nameof(UpdateChannel), new string[] { "updateChannel" });
-            _isAccessKeyAuthenticationDisabled = DefineProperty<bool>(nameof(IsAccessKeyAuthenticationDisabled), new string[] { "disableAccessKeyAuthentication" });
-            _zonalAllocationPolicy = DefineProperty<ZonalAllocationPolicy>(nameof(ZonalAllocationPolicy), new string[] { "zonalAllocationPolicy" });
             DefineAdditionalProperties();
         }
 

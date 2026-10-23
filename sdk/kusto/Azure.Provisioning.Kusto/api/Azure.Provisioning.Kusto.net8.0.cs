@@ -6,53 +6,6 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum BlobStorageEventType
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="Microsoft.Storage.BlobCreated")]
-        MicrosoftStorageBlobCreated = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="Microsoft.Storage.BlobRenamed")]
-        MicrosoftStorageBlobRenamed = 1,
-    }
-    public partial class EventGridDataConnectionWithManagedIdentity : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public EventGridDataConnectionWithManagedIdentity(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.BlobStorageEventType> BlobStorageEventType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ConsumerGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseRouting> DatabaseRouting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoEventGridDataFormat> DataFormat { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventGridResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceIdForManagedIdentity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityObjectId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> ShouldIgnoreFirstRecord { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceIdForManagedIdentity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class EventHubDataConnectionWithManagedIdentity : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public EventHubDataConnectionWithManagedIdentity(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.EventHubMessagesCompressionType> Compression { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ConsumerGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseRouting> DatabaseRouting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoEventHubDataFormat> DataFormat { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceIdForManagedIdentity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> EventSystemProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityObjectId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum EventHubMessagesCompressionType
-    {
-        None = 0,
-        GZip = 1,
-    }
     public partial class KustoAttachedDatabaseConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoAttachedDatabaseConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -253,36 +206,6 @@ namespace Azure.Provisioning.Kusto
         ZonalInconsistency = 1,
         Zonal = 2,
     }
-    public partial class KustoCosmosDBDataConnection : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public KustoCosmosDBDataConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CosmosDBAccountResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CosmosDBContainer { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CosmosDBDatabase { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityObjectId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class KustoDatabase : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public KustoDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Kusto.KustoCluster Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Kusto.KustoDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_14;
-        }
-    }
     public enum KustoDatabaseDefaultPrincipalsModificationKind
     {
         Union = 0,
@@ -296,7 +219,6 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<string> DatabasePrincipalId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Kusto.KustoDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoPrincipalAssignmentType> PrincipalType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
@@ -321,23 +243,6 @@ namespace Azure.Provisioning.Kusto
         UnrestrictedViewer = 4,
         Viewer = 5,
     }
-    public enum KustoDatabasePrincipalsModificationKind
-    {
-        Union = 0,
-        Replace = 1,
-        None = 2,
-    }
-    public enum KustoDatabaseRouting
-    {
-        Single = 0,
-        Multi = 1,
-    }
-    public enum KustoDatabaseShareOrigin
-    {
-        Direct = 0,
-        DataShare = 1,
-        Other = 2,
-    }
     public partial class KustoDatabaseTableLevelSharingProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KustoDatabaseTableLevelSharingProperties() { }
@@ -350,180 +255,6 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepList<string> TablesToExclude { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> TablesToInclude { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class KustoDataConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public KustoDataConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Kusto.KustoDatabase Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Kusto.KustoDataConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_02_14;
-        }
-    }
-    public partial class KustoEventGridDataConnection : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public KustoEventGridDataConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.BlobStorageEventType> BlobStorageEventType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ConsumerGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseRouting> DatabaseRouting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoEventGridDataFormat> DataFormat { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventGridResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsFirstRecordIgnored { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityObjectId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum KustoEventGridDataFormat
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="MULTIJSON")]
-        MultiJson = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="JSON")]
-        Json = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="CSV")]
-        Csv = 2,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSV")]
-        Tsv = 3,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SCSV")]
-        Scsv = 4,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SOHSV")]
-        Sohsv = 5,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PSV")]
-        Psv = 6,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TXT")]
-        Txt = 7,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="RAW")]
-        Raw = 8,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SINGLEJSON")]
-        SingleJson = 9,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="AVRO")]
-        Avro = 10,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSVE")]
-        Tsve = 11,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PARQUET")]
-        Parquet = 12,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="ORC")]
-        Orc = 13,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="APACHEAVRO")]
-        ApacheAvro = 14,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="W3CLOGFILE")]
-        W3CLogFile = 15,
-        AZMONSTREAM = 16,
-    }
-    public partial class KustoEventHubDataConnection : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public KustoEventHubDataConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.EventHubMessagesCompressionType> Compression { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ConsumerGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseRouting> DatabaseRouting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoEventHubDataFormat> DataFormat { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> EventSystemProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityObjectId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum KustoEventHubDataFormat
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="MULTIJSON")]
-        MultiJson = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="JSON")]
-        Json = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="CSV")]
-        Csv = 2,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSV")]
-        Tsv = 3,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SCSV")]
-        Scsv = 4,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SOHSV")]
-        Sohsv = 5,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PSV")]
-        Psv = 6,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TXT")]
-        Txt = 7,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="RAW")]
-        Raw = 8,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SINGLEJSON")]
-        SingleJson = 9,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="AVRO")]
-        Avro = 10,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSVE")]
-        Tsve = 11,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PARQUET")]
-        Parquet = 12,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="ORC")]
-        Orc = 13,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="APACHEAVRO")]
-        ApacheAvro = 14,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="W3CLOGFILE")]
-        W3CLogFile = 15,
-        AZMONSTREAM = 16,
-    }
-    public partial class KustoIotHubDataConnection : Azure.Provisioning.Kusto.KustoDataConnection
-    {
-        public KustoIotHubDataConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ConsumerGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseRouting> DatabaseRouting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoIotHubDataFormat> DataFormat { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> EventSystemProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> IotHubResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MappingRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RetrievalStartsOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SharedAccessPolicyName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum KustoIotHubDataFormat
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="MULTIJSON")]
-        MultiJson = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="JSON")]
-        Json = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="CSV")]
-        Csv = 2,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSV")]
-        Tsv = 3,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SCSV")]
-        Scsv = 4,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SOHSV")]
-        Sohsv = 5,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PSV")]
-        Psv = 6,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TXT")]
-        Txt = 7,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="RAW")]
-        Raw = 8,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SINGLEJSON")]
-        SingleJson = 9,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="AVRO")]
-        Avro = 10,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="TSVE")]
-        Tsve = 11,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="PARQUET")]
-        Parquet = 12,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="ORC")]
-        Orc = 13,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="APACHEAVRO")]
-        ApacheAvro = 14,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="W3CLOGFILE")]
-        W3CLogFile = 15,
-        AZMONSTREAM = 16,
     }
     public partial class KustoKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -643,34 +374,6 @@ namespace Azure.Provisioning.Kusto
         Moving = 5,
         Canceled = 6,
     }
-    public partial class KustoReadOnlyFollowingDatabase : Azure.Provisioning.Kusto.KustoDatabase
-    {
-        public KustoReadOnlyFollowingDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> AttachedDatabaseConfigurationName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseShareOrigin> DatabaseShareOrigin { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> HotCachePeriod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LeaderClusterResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> OriginalDatabaseName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabasePrincipalsModificationKind> PrincipalsModificationKind { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> SoftDeletePeriod { get { throw null; } }
-        public Azure.Provisioning.BicepValue<float> StatisticsSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartsOn { get { throw null; } }
-        public Azure.Provisioning.Kusto.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class KustoReadWriteDatabase : Azure.Provisioning.Kusto.KustoDatabase
-    {
-        public KustoReadWriteDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> HotCachePeriod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsFollowed { get { throw null; } }
-        public Azure.Provisioning.Kusto.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> SoftDeletePeriod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> StatisticsSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionStartsOn { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class KustoScript : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoScript(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -678,7 +381,6 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Kusto.KustoDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.PrincipalPermissionsAction> PrincipalPermissionsAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ScriptContent { get { throw null; } set { } }

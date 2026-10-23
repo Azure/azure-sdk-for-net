@@ -1,6 +1,7 @@
 {
   "package-name": "Azure.Provisioning.ProvisioningTypeSpec",
   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
+  "use-legacy-resource-detection": false,
   "model-namespace": false,
   "license": {
     "name": "MIT License",

@@ -255,21 +255,6 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterInboundRuleSubscription> Subscriptions { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class SearchServiceNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal SearchServiceNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Search.SearchService Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_05_01;
-        }
-    }
     public partial class SearchServiceNetworkSecurityPerimeterConfigurationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterConfigurationProperties() { }
@@ -384,6 +369,21 @@ namespace Azure.Provisioning.Search
         Enabled = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
         Disabled = 1,
+    }
+    public partial class SearchServiceSearchServiceNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal SearchServiceSearchServiceNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Search.SearchService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Search.SearchServiceSearchServiceNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
     }
     public enum SearchServiceSharedPrivateLinkResourceProvisioningState
     {

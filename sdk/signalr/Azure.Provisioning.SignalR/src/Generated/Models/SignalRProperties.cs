@@ -20,7 +20,7 @@ namespace Azure.Provisioning.SignalR
         private BicepValue<int> _serverPort;
         private BicepValue<string> _version;
         private BicepList<SignalRPrivateEndpointConnection> _privateEndpointConnections;
-        private BicepList<SignalRSharedPrivateLink> _sharedPrivateLinkResources;
+        private BicepList<ReplicasSharedPrivateLinkResources> _sharedPrivateLinkResources;
         private SignalRTlsSettings _tls;
         private BicepValue<string> _hostNamePrefix;
         private BicepList<SignalRFeature> _features;
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the SharedPrivateLinkResources. </summary>
-        public BicepList<SignalRSharedPrivateLink> SharedPrivateLinkResources
+        public BicepList<ReplicasSharedPrivateLinkResources> SharedPrivateLinkResources
         {
             get
             {
@@ -437,7 +437,7 @@ namespace Azure.Provisioning.SignalR
             _serverPort = DefineProperty<int>(nameof(ServerPort), new string[] { "serverPort" }, isOutput: true);
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             _privateEndpointConnections = DefineListProperty<SignalRPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
-            _sharedPrivateLinkResources = DefineListProperty<SignalRSharedPrivateLink>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
+            _sharedPrivateLinkResources = DefineListProperty<ReplicasSharedPrivateLinkResources>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _tls = DefineModelProperty<SignalRTlsSettings>(nameof(Tls), new string[] { "tls" });
             _hostNamePrefix = DefineProperty<string>(nameof(HostNamePrefix), new string[] { "hostNamePrefix" }, isOutput: true);
             _features = DefineListProperty<SignalRFeature>(nameof(Features), new string[] { "features" });

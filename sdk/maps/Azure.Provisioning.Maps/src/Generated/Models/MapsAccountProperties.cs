@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Maps
         private MapsCorsRules _cors;
         private MapsEncryption _encryption;
         private BicepList<MapsLocationItem> _locations;
-        private BicepList<MapsPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<MapsAccountMapsPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<MapsPublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new MapsAccountProperties. </summary>
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<MapsPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<MapsAccountMapsPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.Maps
             _cors = DefineModelProperty<MapsCorsRules>(nameof(Cors), new string[] { "cors" });
             _encryption = DefineModelProperty<MapsEncryption>(nameof(Encryption), new string[] { "encryption" });
             _locations = DefineListProperty<MapsLocationItem>(nameof(Locations), new string[] { "locations" });
-            _privateEndpointConnections = DefineListProperty<MapsPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<MapsAccountMapsPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<MapsPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             DefineAdditionalProperties();
         }

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.RecoveryServices
         private SystemData _systemData;
         private VaultExtendedInfo _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<RecoveryServicesVault> _parent;
+        private ResourceReference<Vaults> _parent;
 
         /// <summary> Creates a new RecoveryServicesVaultExtendedInfo. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.RecoveryServices
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public RecoveryServicesVault Parent
+        public Vaults Parent
         {
             get
             {
@@ -182,7 +182,7 @@ namespace Azure.Provisioning.RecoveryServices
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VaultExtendedInfo>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<RecoveryServicesVault>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Vaults>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

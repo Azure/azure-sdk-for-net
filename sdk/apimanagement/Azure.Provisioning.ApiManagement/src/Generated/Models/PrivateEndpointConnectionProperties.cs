@@ -34,7 +34,7 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpoint. </summary>
+        /// <summary> Gets the PrivateEndpoint. </summary>
         internal PrivateEndpoint PrivateEndpoint
         {
             get
@@ -42,25 +42,15 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _privateEndpoint;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _privateEndpoint, value);
-            }
         }
 
-        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
+        /// <summary> Gets the PrivateLinkServiceConnectionState. </summary>
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
             {
                 Initialize();
                 return _privateLinkServiceConnectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _privateLinkServiceConnectionState, value);
             }
         }
 
@@ -79,11 +69,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             get
             {
-                if (PrivateEndpoint is null)
-                {
-                    PrivateEndpoint = new PrivateEndpoint();
-                }
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
 
@@ -93,7 +79,7 @@ namespace Azure.Provisioning.ApiManagement
             base.DefineProvisionableProperties();
             _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "groupIds" }, isOutput: true);
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
-            _privateLinkServiceConnectionState = DefineModelProperty<ApiManagementPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
+            _privateLinkServiceConnectionState = DefineModelProperty<ApiManagementPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" });
             _provisioningState = DefineProperty<ApiManagementPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

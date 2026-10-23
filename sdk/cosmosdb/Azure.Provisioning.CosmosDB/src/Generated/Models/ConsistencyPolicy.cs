@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the DefaultConsistencyLevel. </summary>
+        /// <summary> Gets the DefaultConsistencyLevel. </summary>
         public BicepValue<DefaultConsistencyLevel> DefaultConsistencyLevel
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _defaultConsistencyLevel;
             }
-            set
-            {
-                Initialize();
-                _defaultConsistencyLevel.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MaxStalenessPrefix. </summary>
+        /// <summary> Gets the MaxStalenessPrefix. </summary>
         public BicepValue<long> MaxStalenessPrefix
         {
             get
@@ -45,14 +40,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _maxStalenessPrefix;
             }
-            set
-            {
-                Initialize();
-                _maxStalenessPrefix.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MaxIntervalInSeconds. </summary>
+        /// <summary> Gets the MaxIntervalInSeconds. </summary>
         public BicepValue<int> MaxIntervalInSeconds
         {
             get
@@ -60,18 +50,13 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _maxIntervalInSeconds;
             }
-            set
-            {
-                Initialize();
-                _maxIntervalInSeconds.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for ConsistencyPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _defaultConsistencyLevel = DefineProperty<DefaultConsistencyLevel>(nameof(DefaultConsistencyLevel), new string[] { "defaultConsistencyLevel" }, isRequired: true);
+            _defaultConsistencyLevel = DefineProperty<DefaultConsistencyLevel>(nameof(DefaultConsistencyLevel), new string[] { "defaultConsistencyLevel" });
             _maxStalenessPrefix = DefineProperty<long>(nameof(MaxStalenessPrefix), new string[] { "maxStalenessPrefix" });
             _maxIntervalInSeconds = DefineProperty<int>(nameof(MaxIntervalInSeconds), new string[] { "maxIntervalInSeconds" });
             DefineAdditionalProperties();

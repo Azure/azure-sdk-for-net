@@ -23,18 +23,13 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the LineRegistrations. </summary>
+        /// <summary> Gets the LineRegistrations. </summary>
         public BicepList<LineRegistration> LineRegistrations
         {
             get
             {
                 Initialize();
                 return _lineRegistrations;
-            }
-            set
-            {
-                Initialize();
-                _lineRegistrations.Assign(value);
             }
         }
 
@@ -62,7 +57,7 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lineRegistrations = DefineListProperty<LineRegistration>(nameof(LineRegistrations), new string[] { "lineRegistrations" }, isRequired: true);
+            _lineRegistrations = DefineListProperty<LineRegistration>(nameof(LineRegistrations), new string[] { "lineRegistrations" });
             _callbackUri = DefineProperty<Uri>(nameof(CallbackUri), new string[] { "callbackUrl" }, isOutput: true);
             _isValidated = DefineProperty<bool>(nameof(IsValidated), new string[] { "isValidated" }, isOutput: true);
             DefineAdditionalProperties();

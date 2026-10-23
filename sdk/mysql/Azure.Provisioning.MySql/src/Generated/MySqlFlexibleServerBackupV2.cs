@@ -26,7 +26,7 @@ namespace Azure.Provisioning.MySql
         /// <summary> Creates a new MySqlFlexibleServerBackupV2. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MySqlFlexibleServerBackupV2(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/flexibleServers/backupsV2", resourceVersion ?? "2024-12-30")
+        internal MySqlFlexibleServerBackupV2(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/flexibleServers/backupsV2", resourceVersion ?? "2024-12-30")
         {
         }
 
@@ -65,18 +65,13 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ServerBackupPropertiesV2 Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -95,71 +90,39 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the BackupNameV2. </summary>
+        /// <summary> Gets the BackupNameV2. </summary>
         public BicepValue<string> BackupNameV2
         {
             get
             {
                 return Properties is null ? default : Properties.BackupNameV2;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerBackupPropertiesV2();
-                }
-                Properties.BackupNameV2 = value;
-            }
         }
 
-        /// <summary> Gets or sets the BackupType. </summary>
+        /// <summary> Gets the BackupType. </summary>
         public BicepValue<MySqlFlexibleServerBackupType> BackupType
         {
             get
             {
                 return Properties is null ? default : Properties.BackupType;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerBackupPropertiesV2();
-                }
-                Properties.BackupType = value;
-            }
         }
 
-        /// <summary> Gets or sets the CompletedOn. </summary>
+        /// <summary> Gets the CompletedOn. </summary>
         public BicepValue<DateTimeOffset> CompletedOn
         {
             get
             {
                 return Properties is null ? default : Properties.CompletedOn;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerBackupPropertiesV2();
-                }
-                Properties.CompletedOn = value;
-            }
         }
 
-        /// <summary> Gets or sets the Source. </summary>
+        /// <summary> Gets the Source. </summary>
         public BicepValue<string> Source
         {
             get
             {
                 return Properties is null ? default : Properties.Source;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerBackupPropertiesV2();
-                }
-                Properties.Source = value;
             }
         }
 
@@ -168,11 +131,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ServerBackupPropertiesV2();
-                }
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 

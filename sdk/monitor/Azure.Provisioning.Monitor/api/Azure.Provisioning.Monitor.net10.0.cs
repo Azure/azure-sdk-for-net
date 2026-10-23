@@ -867,6 +867,30 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> MaxSizePerMinuteInGB { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManagementGroupTenantActionGroupResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ManagementGroupTenantActionGroupResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorAzureAppPushReceiver> AzureAppPushReceivers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorEmailReceiver> EmailReceivers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> GroupShortName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorSmsReceiver> SmsReceivers { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorVoiceReceiver> VoiceReceivers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.WebhookReceiver> WebhookReceivers { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Monitor.ManagementGroupTenantActionGroupResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_05_01_PREVIEW;
+        }
+    }
     public partial class MetricAlert : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MetricAlert(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1182,25 +1206,6 @@ namespace Azure.Provisioning.Monitor
     {
         Scale = 0,
     }
-    public partial class MonitorPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public MonitorPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.Monitor.MonitorPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Monitor.MonitorPrivateLinkScope Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.MonitorPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2023_06_01_PREVIEW;
-        }
-    }
     public enum MonitorPrivateEndpointConnectionProvisioningState
     {
         Succeeded = 0,
@@ -1235,24 +1240,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorPrivateLinkAccessMode> QueryAccessMode { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MonitorPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal MonitorPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Monitor.MonitorPrivateLinkScope Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.MonitorPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2023_06_01_PREVIEW;
-        }
-    }
     public partial class MonitorPrivateLinkScope : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MonitorPrivateLinkScope(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1260,7 +1247,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorPrivateLinkScopeMonitorPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorPrivateLinkScopeProvisioningState> PrivateLinkScopeProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
@@ -1285,6 +1272,43 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Monitor.MonitorPrivateLinkScopedResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_06_01_PREVIEW;
+        }
+    }
+    public partial class MonitorPrivateLinkScopeMonitorPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public MonitorPrivateLinkScopeMonitorPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.Monitor.MonitorPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Monitor.MonitorPrivateLinkScope Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Monitor.MonitorPrivateLinkScopeMonitorPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_06_01_PREVIEW;
+        }
+    }
+    public partial class MonitorPrivateLinkScopeMonitorPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal MonitorPrivateLinkScopeMonitorPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Monitor.MonitorPrivateLinkScope Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Monitor.MonitorPrivateLinkScopeMonitorPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
@@ -1829,30 +1853,6 @@ namespace Azure.Provisioning.Monitor
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="Microsoft-Syslog")]
         MicrosoftSyslog = 0,
-    }
-    public partial class TenantActionGroupResource : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public TenantActionGroupResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorAzureAppPushReceiver> AzureAppPushReceivers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorEmailReceiver> EmailReceivers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> GroupShortName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorSmsReceiver> SmsReceivers { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorVoiceReceiver> VoiceReceivers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.WebhookReceiver> WebhookReceivers { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.TenantActionGroupResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2023_05_01_PREVIEW;
-        }
     }
     public partial class VMInsightsOnboardingStatus : Azure.Provisioning.Primitives.ProvisionableResource
     {

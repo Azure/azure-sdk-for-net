@@ -12,6 +12,7 @@ export async function $onEmit(
 ) {
   context.options["generator-name"] ??= "ProvisioningGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
+  context.options["use-legacy-resource-detection"] ??= false;
   // Provisioning libraries use a flat namespace (no .Models sub-namespace)
   context.options["model-namespace"] = false;
   await emitManagementCodeModel(context, (codeModel, _, armProviderSchema) =>

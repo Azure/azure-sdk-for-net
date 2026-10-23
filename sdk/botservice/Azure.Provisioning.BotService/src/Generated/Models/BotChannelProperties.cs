@@ -38,18 +38,13 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
             {
                 Initialize();
                 return _eTag;
-            }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
             }
         }
 
@@ -63,7 +58,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -71,18 +66,13 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _location;
             }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for BotChannelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _channelName = DefineProperty<string>(nameof(ChannelName), new string[] { "channelName" }, isRequired: true);
+            _channelName = DefineProperty<string>(nameof(ChannelName), new string[] { "channelName" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });

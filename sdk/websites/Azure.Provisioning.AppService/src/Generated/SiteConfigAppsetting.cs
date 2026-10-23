@@ -20,6 +20,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private ApiKeyVaultReferenceProperties _properties;
         private BicepValue<string> _kind;
+        private ResourceReference<WebSiteConfig> _parent;
 
         /// <summary> Creates a new SiteConfigAppsetting. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,6 +81,21 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 return _kind;
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public WebSiteConfig Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -173,6 +189,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ApiKeyVaultReferenceProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
+            _parent = DefineResource<WebSiteConfig>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

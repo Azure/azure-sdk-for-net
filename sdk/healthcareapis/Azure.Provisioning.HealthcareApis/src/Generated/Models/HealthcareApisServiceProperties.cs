@@ -19,7 +19,7 @@ namespace Azure.Provisioning.HealthcareApis
         private HealthcareApisServiceAuthenticationConfiguration _authenticationConfiguration;
         private HealthcareApisServiceCorsConfiguration _corsConfiguration;
         private ServiceExportConfigurationInfo _exportConfiguration;
-        private BicepList<HealthcareApisServicePrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<ServicesPrivateEndpointConnections> _privateEndpointConnections;
         private BicepValue<HealthcareApisPublicNetworkAccess> _publicNetworkAccess;
         private HealthcareApisServiceAcrConfiguration _acrConfiguration;
         private HealthcareApisServiceImportConfiguration _importConfiguration;
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<ServicesPrivateEndpointConnections> PrivateEndpointConnections
         {
             get
             {
@@ -201,7 +201,7 @@ namespace Azure.Provisioning.HealthcareApis
             _authenticationConfiguration = DefineModelProperty<HealthcareApisServiceAuthenticationConfiguration>(nameof(AuthenticationConfiguration), new string[] { "authenticationConfiguration" });
             _corsConfiguration = DefineModelProperty<HealthcareApisServiceCorsConfiguration>(nameof(CorsConfiguration), new string[] { "corsConfiguration" });
             _exportConfiguration = DefineModelProperty<ServiceExportConfigurationInfo>(nameof(ExportConfiguration), new string[] { "exportConfiguration" });
-            _privateEndpointConnections = DefineListProperty<HealthcareApisServicePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
+            _privateEndpointConnections = DefineListProperty<ServicesPrivateEndpointConnections>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
             _publicNetworkAccess = DefineProperty<HealthcareApisPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _acrConfiguration = DefineModelProperty<HealthcareApisServiceAcrConfiguration>(nameof(AcrConfiguration), new string[] { "acrConfiguration" });
             _importConfiguration = DefineModelProperty<HealthcareApisServiceImportConfiguration>(nameof(ImportConfiguration), new string[] { "importConfiguration" });

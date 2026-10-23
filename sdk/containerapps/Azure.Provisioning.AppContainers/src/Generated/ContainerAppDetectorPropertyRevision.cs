@@ -20,6 +20,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _name;
         private SystemData _systemData;
         private RevisionProperties _properties;
+        private ResourceReference<ContainerAppDetectorProperty> _parent;
 
         /// <summary> Creates a new ContainerAppDetectorPropertyRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -70,6 +71,21 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public ContainerAppDetectorProperty Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -180,6 +196,7 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RevisionProperties>(nameof(Properties), new string[] { "properties" });
+            _parent = DefineResource<ContainerAppDetectorProperty>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

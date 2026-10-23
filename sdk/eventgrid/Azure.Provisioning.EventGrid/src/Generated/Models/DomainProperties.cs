@@ -13,7 +13,7 @@ namespace Azure.Provisioning.EventGrid
 {
     internal partial class DomainProperties : ProvisionableConstruct
     {
-        private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<EventGridPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<EventGridDomainProvisioningState> _provisioningState;
         private BicepValue<TlsVersion> _minimumTlsVersionAllowed;
         private BicepValue<Uri> _endpoint;
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<EventGridPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -227,7 +227,7 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpointConnections = DefineListProperty<EventGridDomainPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _provisioningState = DefineProperty<EventGridDomainProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _minimumTlsVersionAllowed = DefineProperty<TlsVersion>(nameof(MinimumTlsVersionAllowed), new string[] { "minimumTlsVersionAllowed" });
             _endpoint = DefineProperty<Uri>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);

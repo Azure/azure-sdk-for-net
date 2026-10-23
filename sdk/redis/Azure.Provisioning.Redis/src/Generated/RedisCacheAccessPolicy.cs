@@ -145,7 +145,7 @@ namespace Azure.Provisioning.Redis
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RedisCacheAccessPolicyProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<RedisResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RedisResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

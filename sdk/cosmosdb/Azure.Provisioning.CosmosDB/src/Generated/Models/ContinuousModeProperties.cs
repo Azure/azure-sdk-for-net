@@ -20,18 +20,13 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the Tier. </summary>
+        /// <summary> Gets the Tier. </summary>
         public BicepValue<ContinuousTier> Tier
         {
             get
             {
                 Initialize();
                 return _tier;
-            }
-            set
-            {
-                Initialize();
-                _tier.Assign(value);
             }
         }
 
