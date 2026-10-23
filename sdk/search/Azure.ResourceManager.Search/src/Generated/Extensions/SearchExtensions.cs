@@ -38,12 +38,6 @@ namespace Azure.ResourceManager.Search
             return subscriptionResource.GetCachedClient(client => new MockableSearchSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableSearchTenantResource GetMockableSearchTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableSearchTenantResource(client, tenantResource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -327,40 +321,6 @@ namespace Azure.ResourceManager.Search
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSearchSubscriptionResource(subscriptionResource).GetUsagesBySubscription(location, searchManagementRequestOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.FetchOfferingsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<SearchOfferingsResult>> FetchOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableSearchTenantResource(tenantResource).FetchOfferingsAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchTenantResource.FetchOfferings(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<SearchOfferingsResult> FetchOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSearchTenantResource(tenantResource).FetchOfferings(cancellationToken);
         }
     }
 }
