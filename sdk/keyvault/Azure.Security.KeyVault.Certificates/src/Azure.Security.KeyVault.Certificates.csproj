@@ -1,25 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
-    <Version>4.10.0-beta.5</Version>
+    <Version>4.10.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>4.9.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
@@ -31,5 +26,4 @@
     <Compile Include="$(AzureCoreSharedSources)UnsupportedOSPlatformAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-
 </Project>
