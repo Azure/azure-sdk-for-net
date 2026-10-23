@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
@@ -48,6 +49,15 @@ public class BicepValueTests
         TestHelpers.AssertExpression("-2147483647", new BicepValue<double>(-2147483647d));
         TestHelpers.AssertExpression("-2147483648", new BicepValue<double>(-2147483648d));
         TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<double>(-2147483649d));
+    }
+
+    [Test]
+    public void ValidateResponseErrorBicepValue()
+    {
+        BicepValue<ResponseError> value = new ResponseError("ExampleCode", "Example message");
+
+        TestHelpers.AssertExpression("json('{\"code\":\"ExampleCode\",\"message\":\"Example message\"}')", value);
+        TestHelpers.AssertExpression("object", new TypeExpression(typeof(ResponseError)));
     }
 
     [Test]
