@@ -380,21 +380,72 @@ public class InfrastructureJsonRoundTripTests
         StorageAccount dependency = new("dependency", StorageAccount.ResourceVersions.V2024_01_01);
         StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01);
         storage.DependsOn.Add(dependency);
-        infra.Add(dependency);
         infra.Add(storage);
+        infra.Add(dependency);
 
         string json = SerializationTestHelpers.SerializeToJson(infra);
         Infrastructure deserialized = SerializationTestHelpers.DeserializeFromJson(json);
 
+        ProvisionableResource[] placeholders = deserialized.GetProvisionableResources()
+            .OfType<ProvisionableResource>().ToArray();
+        ProvisionableResource placeholderDependency = placeholders.Single(r => r.BicepIdentifier == "dependency");
+        ProvisionableResource placeholderStorage = placeholders.Single(r => r.BicepIdentifier == "storage");
+        Assert.AreSame(placeholderDependency, placeholderStorage.DependsOn.Single());
+
+        placeholderStorage.DependsOn.Clear();
+        string withoutDependency = deserialized.Build().Compile()["main.bicep"];
+        Assert.IsFalse(withoutDependency.Contains("dependsOn"));
+        placeholderStorage.DependsOn.Add(placeholderDependency);
+
         StorageAccount[] resources = deserialized.GetProvisionableResources()
             .OfResourceType<StorageAccount>().ToArray();
         Assert.AreEqual(2, resources.Length);
+        StorageAccount upgradedDependency = resources.Single(r => r.BicepIdentifier == "dependency");
+        StorageAccount upgradedStorage = resources.Single(r => r.BicepIdentifier == "storage");
+        Assert.AreSame(upgradedDependency, upgradedStorage.DependsOn.Single());
 
         string mainBicep = deserialized.Build().Compile()["main.bicep"];
         Assert.IsTrue(mainBicep.Contains("dependsOn"),
             $"Expected explicit dependency after typed-resource upgrade.\n{mainBicep}");
         Assert.IsTrue(mainBicep.Contains("dependency"),
             $"Expected dependency reference after typed-resource upgrade.\n{mainBicep}");
+    }
+
+    [Test]
+    public void Deserialize_ResourceDependencyMustReferenceResource()
+    {
+        const string json =
+            """
+            {
+              "fileName": "main.bicep",
+              "resources": {
+                "storage": {
+                  "bicepIdentifier": "storage",
+                  "type": "Microsoft.Storage/storageAccounts",
+                  "apiVersion": "2024-01-01",
+                  "existing": false,
+                  "value": {
+                    "kind": "object",
+                    "value": {
+                      "dependsOn": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "identifier",
+                            "id": "missing"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            """;
+
+        FormatException exception = Assert.Throws<FormatException>(
+            () => SerializationTestHelpers.DeserializeFromJson(json))!;
+        Assert.IsTrue(exception.Message.Contains("depends on unknown resource 'missing'"));
     }
 
     [Test]

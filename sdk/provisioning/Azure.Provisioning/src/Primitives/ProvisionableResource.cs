@@ -87,8 +87,6 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// </remarks>
     public IList<ProvisionableResource> DependsOn { get; } = [];
 
-    internal IList<BicepExpression> PreservedDependencies { get; } = [];
-
     /// <summary>
     /// Compose the resource into a provisioning plan that can be saved as
     /// Bicep or deployed directly.
@@ -111,8 +109,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} must have {nameof(ResourceVersion)} specified.");
         }
 
-        if ((DependsOn.Count > 0 || PreservedDependencies.Count > 0) &&
-            (IsExistingResource || ((IBicepValue)this).Kind == BicepValueKind.Expression))
+        if (DependsOn.Count > 0 && (IsExistingResource || ((IBicepValue)this).Kind == BicepValueKind.Expression))
         {
             throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} cannot have dependencies if it's an existing resource or an expression override.");
         }
@@ -145,7 +142,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         BicepExpression body = CompileProperties();
 
         // Optionally add any explicit dependencies
-        if (DependsOn.Count > 0 || PreservedDependencies.Count > 0)
+        if (DependsOn.Count > 0)
         {
             // This should be caught by Validate above
             if (body is not ObjectExpression obj)
@@ -154,8 +151,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             }
 
             // Add the dependsOn property
-            ArrayExpression dependencies = new(
-                [.. PreservedDependencies, .. DependsOn.Select(r => BicepSyntax.Var(r.BicepIdentifier))]);
+            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.BicepIdentifier)).ToArray());
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 

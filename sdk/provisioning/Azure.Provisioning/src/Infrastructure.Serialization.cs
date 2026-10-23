@@ -293,11 +293,21 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         // Parse resources
         if (element.TryGetProperty("resources", out JsonElement resourcesElement))
         {
+            Dictionary<string, DeserializedResource> resources = new(StringComparer.Ordinal);
             foreach (JsonProperty resProp in resourcesElement.EnumerateObject())
             {
                 ResourceStatement stmt = ResourceStatement.DeserializeResourceStatement(resProp.Value);
                 DeserializedResource resource = new(stmt);
                 infra.Add(resource);
+                if (!resources.TryAdd(resource.BicepIdentifier, resource))
+                {
+                    throw new FormatException($"InfraNode contains duplicate resource identifier '{resource.BicepIdentifier}'.");
+                }
+            }
+
+            foreach (DeserializedResource resource in resources.Values)
+            {
+                resource.ResolveDependencies(resources);
             }
         }
 
@@ -362,17 +372,9 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             if (body is ObjectExpression objExpr)
             {
                 HydrateProperties(resource.ProvisionableProperties, objExpr);
-                PropertyExpression? dependsOn = objExpr.Properties.FirstOrDefault(p => p.Name == "dependsOn");
-                if (dependsOn?.Value is ArrayExpression dependencies)
+                foreach (ProvisionableResource dependency in wrapper.DependsOn)
                 {
-                    foreach (BicepExpression dependency in dependencies.Values)
-                    {
-                        resource.PreservedDependencies.Add(dependency);
-                    }
-                }
-                else if (dependsOn != null)
-                {
-                    throw new FormatException("Expected resource 'dependsOn' value to be an ArrayExpression.");
+                    resource.DependsOn.Add(dependency);
                 }
             }
             else
@@ -479,30 +481,28 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
 /// Holds a pre-compiled ResourceStatement and replays it during compilation.
 /// Can be upgraded to a typed resource via <see cref="ProvisionableCollection.OfResourceType{T}"/>.
 /// </summary>
-internal class DeserializedResource : NamedProvisionableConstruct
+internal class DeserializedResource : ProvisionableResource
 {
     private readonly ResourceStatement _statement;
 
     internal DeserializedResource(ResourceStatement statement)
-        : base(statement.Name)
+        : base(statement.Name, GetArmType(statement), GetApiVersion(statement))
     {
         _statement = statement;
-
-        // Parse the ARM type and API version from the type string
-        string typeString = statement.Type.ToString().Trim('\'');
-        int atIndex = typeString.IndexOf('@');
-        ArmType = atIndex >= 0 ? typeString.Substring(0, atIndex) : typeString;
-        ApiVersion = atIndex >= 0 ? typeString.Substring(atIndex + 1) : "";
+        if (statement.Existing)
+        {
+            SetExistingInternal();
+        }
     }
 
     /// <summary>The ARM resource type (e.g. "Microsoft.Storage/storageAccounts").</summary>
-    internal string ArmType { get; }
+    internal string ArmType => ResourceType.ToString();
 
     /// <summary>The API version (e.g. "2024-01-01").</summary>
-    internal string ApiVersion { get; }
+    internal string ApiVersion => ResourceVersion!;
 
     /// <summary>The deserialized expression body.</summary>
-    internal BicepExpression? Body => _statement.Body;
+    internal BicepExpression Body => _statement.Body;
 
     /// <summary>Whether this is an existing resource reference.</summary>
     internal bool IsExisting => _statement.Existing;
@@ -510,9 +510,96 @@ internal class DeserializedResource : NamedProvisionableConstruct
     /// <summary>The decorator expressions.</summary>
     internal IList<DecoratorExpression> Decorators => _statement.Decorators;
 
+    internal void ResolveDependencies(IReadOnlyDictionary<string, DeserializedResource> resources)
+    {
+        BicepExpression body = Body is IfConditionExpression condition ? condition.Body : Body;
+        if (body is not ObjectExpression objExpr)
+        {
+            throw new FormatException(
+                $"Expected resource body to be an ObjectExpression, but got {body.GetType().Name}.");
+        }
+
+        PropertyExpression? dependsOn = objExpr.Properties.FirstOrDefault(p => p.Name == "dependsOn");
+        if (dependsOn == null)
+        {
+            return;
+        }
+        if (dependsOn.Value is not ArrayExpression dependencies)
+        {
+            throw new FormatException($"Resource '{BicepIdentifier}' has a non-array 'dependsOn' value.");
+        }
+
+        foreach (BicepExpression dependency in dependencies.Values)
+        {
+            if (dependency is not IdentifierExpression identifier)
+            {
+                throw new FormatException(
+                    $"Resource '{BicepIdentifier}' has a 'dependsOn' item that is not a resource identifier.");
+            }
+            if (!resources.TryGetValue(identifier.Name, out DeserializedResource? resource))
+            {
+                throw new FormatException(
+                    $"Resource '{BicepIdentifier}' depends on unknown resource '{identifier.Name}'.");
+            }
+            DependsOn.Add(resource);
+        }
+    }
+
+    private static string GetArmType(ResourceStatement statement)
+    {
+        string typeString = statement.Type.ToString().Trim('\'');
+        int atIndex = typeString.IndexOf('@');
+        return atIndex >= 0 ? typeString.Substring(0, atIndex) : typeString;
+    }
+
+    private static string GetApiVersion(ResourceStatement statement)
+    {
+        string typeString = statement.Type.ToString().Trim('\'');
+        int atIndex = typeString.IndexOf('@');
+        return atIndex >= 0 ? typeString.Substring(atIndex + 1) : "";
+    }
+
     protected internal override IEnumerable<BicepStatement> Compile()
     {
-        yield return _statement;
+        BicepExpression body = _statement.Body;
+        IfConditionExpression? condition = body as IfConditionExpression;
+        if (condition != null)
+        {
+            body = condition.Body;
+        }
+
+        if (body is not ObjectExpression objExpr)
+        {
+            throw new FormatException(
+                $"Expected resource body to be an ObjectExpression, but got {body.GetType().Name}.");
+        }
+
+        List<PropertyExpression> properties = objExpr.Properties
+            .Where(p => p.Name != "dependsOn")
+            .ToList();
+        if (DependsOn.Count > 0)
+        {
+            properties.Add(new PropertyExpression(
+                "dependsOn",
+                new ArrayExpression(DependsOn.Select(r => BicepSyntax.Var(r.BicepIdentifier)).ToArray())));
+        }
+
+        body = new ObjectExpression([.. properties]);
+        if (condition != null)
+        {
+            body = new IfConditionExpression(condition.Condition, body);
+        }
+
+        ResourceStatement statement = new(_statement.Name, _statement.Type, body)
+        {
+            Existing = _statement.Existing,
+            Condition = _statement.Condition,
+        };
+        foreach (DecoratorExpression decorator in _statement.Decorators)
+        {
+            statement.Decorators.Add(decorator);
+        }
+        yield return statement;
     }
 }
 

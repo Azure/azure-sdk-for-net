@@ -83,7 +83,27 @@ internal class ProvisionableCollection : IEnumerable<Provisionable>
                     construct.ParentInfrastructure = Owner;
                 }
                 _items[i] = typed;
+                ReplaceDependencyReferences(wrapper, typed as ProvisionableResource);
                 yield return typed;
+            }
+        }
+    }
+
+    private void ReplaceDependencyReferences(DeserializedResource wrapper, ProvisionableResource? typed)
+    {
+        if (typed == null)
+        {
+            return;
+        }
+
+        foreach (ProvisionableResource resource in _items.OfType<ProvisionableResource>())
+        {
+            for (int i = 0; i < resource.DependsOn.Count; i++)
+            {
+                if (ReferenceEquals(resource.DependsOn[i], wrapper))
+                {
+                    resource.DependsOn[i] = typed;
+                }
             }
         }
     }
