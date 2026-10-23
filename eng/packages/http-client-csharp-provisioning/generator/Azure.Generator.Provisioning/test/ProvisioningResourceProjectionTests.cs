@@ -172,7 +172,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void ReadOnlyExtensionResourceDoesNotExposeScopeMetadata()
+        public void ReadOnlyExtensionResourceExposesScopeMetadata()
         {
             var model = CreateModel("ReadOnlyExtension");
             var resource = CreateMetadata(
@@ -186,8 +186,8 @@ namespace Azure.Generator.Provisioning.Tests
             var provider = CreateResourceProvider(resource);
 
             Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
-            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.False);
-            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.False);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
         }
 
         [Test]
@@ -1396,7 +1396,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
-                writableScopes.Contains(ResourceScope.Extension));
+                readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)
