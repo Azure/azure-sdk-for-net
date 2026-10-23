@@ -5,7 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
-- `BrowserAutomationPreviewTool` was removed. Please use `BrowserAutomationTool` instead.
+- `BrowserAutomationPreviewTool` was marked as deprecated. Please use `BrowserAutomationTool` instead.
 
 ### Bugs Fixed
 

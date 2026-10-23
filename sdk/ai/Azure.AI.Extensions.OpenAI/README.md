@@ -45,6 +45,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
     - [Browser automation tool](#browser-automation-tool)
+    - [Browser automation preview tool](#browser-automation-preview-tool)
   - [SharePoint tool](#sharepoint)
   - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
@@ -1507,7 +1508,7 @@ Prefer Microsoft Entra ID authentication when supported; never include workspace
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-`BrowserAutomationTool` uses a Browser Automation project connection type.
+`BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
 Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_NAME` to the Browser Automation project connection name.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
@@ -1573,6 +1574,83 @@ After the sample completes, delete the agent version that you created. Agents ca
 
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+```
+
+#### Browser automation preview tool
+
+Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
+This tool was released to preview the functionality and is now deprecated, please use the stable version of the tool.
+
+`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the Browser Automation connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
+
+1. On the left panel select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Serverless Model**.
+4. Provide a name, then paste your Access Token into the **Key** field.
+5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+
+
+### SharePoint tool (preview)<a id="sharepoint"></a>
+`SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.
+
+```C# Snippet:Sample_CreateAgent_Sharepoint_Async
+AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
+SharePointGroundingToolOptions sharepointToolOption = new()
+{
+    ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = { new SharePointPreviewTool(sharepointToolOption), }
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Create the response and make sure we are always using tool.
+
+```C# Snippet:Sample_CreateResponse_Sharepoint_Async
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+CreateResponseOptions responseOptions = new()
+{
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems = { ResponseItem.CreateUserMessageItem("What is Contoso whistleblower policy") },
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+```
+
+SharePoint tool can create the reference to the page, grounding the data. We will create the `GetFormattedAnnotation` method to get the URI annotation.
+
+```C# Snippet:Sample_FormatReference_Sharepoint
+private static string GetFormattedAnnotation(ResponseResult response)
+{
+    foreach (ResponseItem item in response.OutputItems)
+    {
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        return $" [{uriAnnotation.Title}]({uriAnnotation.Uri})";
+                    }
+                }
+            }
+        }
+    }
+    return "";
+}
+```
+
+Print the Agent output and add the annotation at the end.
+
+```C# Snippet:Sample_WaitForResponse_Sharepoint
+Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 ```
 
 ### Fabric Data Agent tool (preview) <a id="fabric"></a>

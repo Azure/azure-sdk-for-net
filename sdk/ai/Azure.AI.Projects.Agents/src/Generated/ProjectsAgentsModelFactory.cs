@@ -333,7 +333,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A managed runtime and agent loop used to execute a prompt agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/> and <see cref="Agents.MicrosoftCopilotHarness"/>.
         /// </summary>
         /// <param name="type"> The type of managed harness. </param>
         /// <returns> A new <see cref="Agents.AgentHarness"/> instance for mocking. </returns>
@@ -343,7 +343,15 @@ namespace Azure.AI.Projects.Agents
             return new UnknownAgentHarness(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
+        /// <summary> The Microsoft Copilot managed harness for prompt agents. </summary>
+        /// <returns> A new <see cref="Agents.MicrosoftCopilotHarness"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftCopilotHarness MicrosoftCopilotHarness()
+        {
+            return new MicrosoftCopilotHarness("microsoft_copilot_preview", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The legacy GitHub Copilot managed harness retained for compatibility. Use `MicrosoftCopilotHarness` for new prompt agents. </summary>
         /// <returns> A new <see cref="Agents.GitHubCopilotHarness"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static GitHubCopilotHarness GitHubCopilotHarness()
@@ -754,8 +762,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-        /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+        /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+        /// and phrase hints.
         /// </summary>
         /// <param name="language">
         /// The language of the input audio. Supplying the input language in
@@ -779,9 +787,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
+        /// <param name="profanityFilter">
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default, VoiceAgentProfanityFilterMode? profanityFilter = default)
         {
             languages ??= new ChangeTrackingList<string>();
             keywords ??= new ChangeTrackingList<string>();
@@ -797,6 +814,7 @@ namespace Azure.AI.Projects.Agents
                 model,
                 customSpeech,
                 phraseList.ToList(),
+                profanityFilter,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2330,7 +2348,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -2720,6 +2738,35 @@ namespace Azure.AI.Projects.Agents
                 agentCardPath,
                 projectConnectionId,
                 sendCredentialsForAgentCard);
+        }
+
+        /// <summary>
+        /// A browser automation tool stored in a toolbox.
+        /// BrowserAutomationPreviewToolboxTool is deprecated.
+        /// Please use BrowserAutomationToolboxTool instead.
+        /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+        /// </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BrowserAutomationPreviewToolboxTool(
+                ToolboxToolType.BrowserAutomationPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                toolParameters);
         }
 
         /// <summary> A browser automation tool stored in a toolbox. </summary>

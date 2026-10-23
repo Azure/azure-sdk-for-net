@@ -18,6 +18,7 @@ namespace Azure.AI.Projects.Agents
             ToolboxToolType.AzureAiSearch => "azure_ai_search",
             ToolboxToolType.Openapi => "openapi",
             ToolboxToolType.A2aPreview => "a2a_preview",
+            ToolboxToolType.BrowserAutomationPreview => "browser_automation_preview",
             ToolboxToolType.ReminderPreview => "reminder_preview",
             ToolboxToolType.WorkIqPreview => "work_iq_preview",
             ToolboxToolType.FabricIqPreview => "fabric_iq_preview",
@@ -60,6 +61,10 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "a2a_preview"))
             {
                 return ToolboxToolType.A2aPreview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "browser_automation_preview"))
+            {
+                return ToolboxToolType.BrowserAutomationPreview;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "reminder_preview"))
             {
