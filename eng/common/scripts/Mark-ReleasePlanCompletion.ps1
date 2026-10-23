@@ -24,8 +24,8 @@ param(
 .DESCRIPTION
     Uses the requester-supplied release-plan ID for manual releases, or the triggering SDK PR
     for automatic releases. azsdk resolves the existing ADO plan and validates the language/package.
-    When neither is supplied, the current run URL can identify the plan recorded by auto-release preparation.
-    TRANSITIONAL: without a recorded association, azsdk falls back to the package-name lookup.
+    TRANSITIONAL: when neither is supplied, the original package-name lookup is used and an informational message is logged
+    so pipelines that do not yet forward the association keep working. Remove once every pipeline forwards one.
 
 .PARAMETER PackageInfoFilePath
     The path to the package information file (required) or path to the directory containing package information files.
@@ -40,19 +40,12 @@ param(
     The unambiguous SDK PR that triggered the automatic release. Not a spec PR or a previous package PR.
 
 .PARAMETER PipelineUrl
-    The current release pipeline URL, recorded for manual and automatic releases. When omitted in Azure Pipelines,
-    derive it from the current run so direct script callers retain the preparation-stage association.
+    The current release pipeline URL, recorded for manual and automatic releases.
 #>
 
 Set-StrictMode -Version 4
 $ErrorActionPreference = 'Stop'
 [int]$suppliedPlanId = [int]::Parse($ReleasePlanId, [System.Globalization.CultureInfo]::InvariantCulture)
-if ([string]::IsNullOrWhiteSpace($PipelineUrl) -and $env:TF_BUILD -eq 'True' -and
-    -not [string]::IsNullOrWhiteSpace($env:SYSTEM_COLLECTIONURI) -and
-    -not [string]::IsNullOrWhiteSpace($env:SYSTEM_TEAMPROJECT) -and $env:BUILD_BUILDID -match '^[1-9][0-9]*$')
-{
-    $PipelineUrl = "$env:SYSTEM_COLLECTIONURI$env:SYSTEM_TEAMPROJECT/_build/results?buildId=$env:BUILD_BUILDID"
-}
 . (Join-Path $PSScriptRoot common.ps1)
 
 #Validate azsdk executable path
@@ -85,7 +78,7 @@ function Process-Package([string]$packageInfoPath)
         return
     }
 
-    $isLegacyLookup = ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest) -and [string]::IsNullOrWhiteSpace($PipelineUrl))
+    $isLegacyLookup = ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest))
     if ($isLegacyLookup)
     {
         Write-Host "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR; using the legacy package lookup. Forward ReleasePlanId or SdkPullRequest from the release pipeline."
