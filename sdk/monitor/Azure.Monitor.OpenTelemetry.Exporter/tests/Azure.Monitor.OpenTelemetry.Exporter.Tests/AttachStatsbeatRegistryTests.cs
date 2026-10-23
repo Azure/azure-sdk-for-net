@@ -177,23 +177,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var stats = new MockStatsbeatScope();
             long now = Start;
-            using var exporter = new MultiEndpointStatsbeatExporter(
+            using var collector = new MultiEndpointStatsbeat(
                 null, EastUs, null, TimeSpan.FromTicks(Interval),
                 key => new Measurement<int>(1, new("rpId", stats.ResourceProviderId), new("cikey", key)));
-            exporter.Initialize();
-            using var meter = new Meter("AttachSnapshot." + Guid.NewGuid().ToString("N"));
-            meter.CreateObservableGauge("Attach", () =>
+            collector.Initialize();
+            using var meter = new Meter(StatsbeatConstants.AttachStatsbeatMeterName);
+            var instrument = meter.CreateObservableGauge("Attach", () =>
             {
-                var measurements = exporter.GetMeasurements(now);
-                exporter.Observe(MockStatsbeatScope.CreateRouteBatch(("key", WestEurope)), now + 1);
+                var measurements = collector.GetMeasurements(now);
+                collector.Observe(MockStatsbeatScope.CreateRouteBatch(("key", WestEurope)), now + 1);
                 return measurements;
             });
-            using var provider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(meter.Name)
-                .AddReader(new BaseExportingMetricReader(exporter) { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
+            using var provider = BuildProvider(collector, instrument);
 
-            exporter.Observe(MockStatsbeatScope.CreateRouteBatch(("key", EastUs)), now);
+            collector.Observe(MockStatsbeatScope.CreateRouteBatch(("key", EastUs)), now);
             Assert.True(provider.ForceFlush());
             Assert.Equal(StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, Assert.Single(stats.TelemetryItems).InstrumentationKey);
 
@@ -215,16 +212,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]);
                 var eu = Assert.IsType<MockTransmitter>(
                     TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_EU]);
-                using var exporter = new MultiEndpointStatsbeatExporter(
+                using var collector = new MultiEndpointStatsbeat(
                     null, EastUs, null, TimeSpan.FromTicks(Interval), _ => new Measurement<int>(1));
-                Parallel.Invoke(exporter.Initialize, exporter.Dispose);
-                exporter.Observe(MockStatsbeatScope.CreateRouteBatch(("late", EastUs)), Start);
+                Parallel.Invoke(collector.Initialize, collector.Dispose);
+                collector.Observe(MockStatsbeatScope.CreateRouteBatch(("late", EastUs)), Start);
 
-                Assert.False(exporter.HasDestination);
-                Assert.Null(exporter.DefaultConnectionString);
-                Assert.Equal(0, exporter.Registry.Count);
-                Assert.Equal(1, nonEu.DisposeCallCount);
-                Assert.Equal(1, eu.DisposeCallCount);
+                Assert.False(collector.HasDestination);
+                Assert.Null(collector.DefaultConnectionString);
+                Assert.Equal(0, collector.Registry.Count);
+                Assert.Equal(0, nonEu.DisposeCallCount);
+                Assert.Equal(0, eu.DisposeCallCount);
             }
         }
 
@@ -233,34 +230,75 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var stats = new MockStatsbeatScope();
             long now = Start;
-            using var exporter = new MultiEndpointStatsbeatExporter(
+            using var collector = new MultiEndpointStatsbeat(
                 null, EastUs, null, TimeSpan.FromTicks(Interval),
                 key => new Measurement<int>(1, new("rpId", stats.ResourceProviderId), new("cikey", key)));
-            exporter.Initialize();
-            using var meter = new Meter("AttachReclamation." + Guid.NewGuid().ToString("N"));
-            meter.CreateObservableGauge("Attach", () => exporter.GetMeasurements(now));
-            using var provider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(meter.Name)
-                .AddView("Attach", new MetricStreamConfiguration { CardinalityLimit = AttachStatsbeatRegistry.Capacity })
-                .AddReader(new BaseExportingMetricReader(exporter) { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
+            collector.Initialize();
+            using var meter = new Meter(StatsbeatConstants.AttachStatsbeatMeterName);
+            var instrument = meter.CreateObservableGauge("Attach", () => collector.GetMeasurements(now));
+            using var provider = BuildProvider(collector, instrument);
 
-            exporter.Observe(Keys(0), now);
+            collector.Observe(Keys(0), now);
             Assert.True(provider.ForceFlush());
             Assert.Equal(AttachStatsbeatRegistry.Capacity, stats.TelemetryItems.Count);
 
             now += Interval;
             Assert.True(provider.ForceFlush());
             Assert.True(provider.ForceFlush());
-            Assert.Equal(0, exporter.Registry.Count);
+            Assert.Equal(0, collector.Registry.Count);
 
-            exporter.Observe(Keys(AttachStatsbeatRegistry.Capacity), now);
+            collector.Observe(Keys(AttachStatsbeatRegistry.Capacity), now);
             Assert.True(provider.ForceFlush());
             Assert.Equal(AttachStatsbeatRegistry.Capacity * 2, stats.TelemetryItems.Count);
         }
 
-        private static Internals.MultiEndpoint.EndpointRouteBatch Keys(int start)
+        [Fact]
+        public void MovingAFullCohortBetweenRegionsDoesNotOverflowTheRealSdk()
+        {
+            using var stats = new MockStatsbeatScope();
+            long now = Start;
+            using var collector = new MultiEndpointStatsbeat(
+                null, EastUs, null, TimeSpan.FromTicks(Interval),
+                key => new Measurement<int>(1, new("rpId", stats.ResourceProviderId), new("cikey", key)));
+            collector.Initialize();
+            using var meter = new Meter(StatsbeatConstants.AttachStatsbeatMeterName);
+            var instrument = meter.CreateObservableGauge("Attach", () => collector.GetMeasurements(now));
+            using var provider = BuildProvider(collector, instrument);
+
+            for (int collection = 0; collection < 4; collection++)
+            {
+                var isEu = collection % 2 != 0;
+                collector.Observe(Keys(0, isEu ? WestEurope : EastUs), now);
+                Assert.True(provider.ForceFlush());
+                var items = stats.TelemetryItems.Skip(collection * AttachStatsbeatRegistry.Capacity).ToArray();
+                Assert.Equal(AttachStatsbeatRegistry.Capacity, items.Length);
+                Assert.Equal(AttachStatsbeatRegistry.Capacity,
+                    items.Select(item => ((MetricsData)item.Data.BaseData).Properties["cikey"]).Distinct().Count());
+                Assert.All(items, item => Assert.Equal(isEu
+                    ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                    : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, item.InstrumentationKey));
+                now += Interval;
+            }
+
+            Assert.True(provider.ForceFlush());
+            Assert.True(provider.ForceFlush());
+            Assert.Equal(0, collector.Registry.Count);
+            collector.Observe(Keys(AttachStatsbeatRegistry.Capacity), now);
+            Assert.True(provider.ForceFlush());
+            Assert.Equal(5 * AttachStatsbeatRegistry.Capacity, stats.TelemetryItems.Count);
+        }
+
+        private static MeterProvider BuildProvider(MultiEndpointStatsbeat collector, Instrument instrument)
+            => Sdk.CreateMeterProviderBuilder()
+                .AddMeter(instrument.Meter.Name)
+                .AddView(candidate => ReferenceEquals(candidate, instrument)
+                    ? new MetricStreamConfiguration { CardinalityLimit = MultiEndpointStatsbeat.CardinalityLimit }
+                    : MetricStreamConfiguration.Drop)
+                .AddReader(collector.CreateReader(int.MaxValue))
+                .Build();
+
+        private static Internals.MultiEndpoint.EndpointRouteBatch Keys(int start, string endpoint = EastUs)
             => MockStatsbeatScope.CreateRouteBatch(Enumerable.Range(start, AttachStatsbeatRegistry.Capacity)
-                .Select(i => ($"key-{i}", EastUs)).ToArray());
+                .Select(i => ($"key-{i}", endpoint)).ToArray());
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using OpenTelemetry;
@@ -21,6 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly string _instrumentationKey;
         private readonly bool _multiEndpointEnabled;
         private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
+        private readonly ConnectionVars? _defaultMetricRoute;
+        private readonly string? _routedMeterName;
         private EndpointRouteBatch? _routeBatch;
         private AzureMonitorResource? _resource;
         private bool _disposed;
@@ -54,15 +57,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static AzureMonitorMetricExporter CreateForInternalTelemetry(ITransmitter transmitter)
             => new(transmitter, multiEndpointEnabled: false);
 
+        internal static AzureMonitorMetricExporter CreateForInternalTelemetry(
+            AzureMonitorExporterOptions options, string routedMeterName)
+            => new(TransmitterFactory.Instance.Get(options), multiEndpointEnabled: true,
+                ConnectionStringParser.GetValues(options.ConnectionString!), routedMeterName);
+
         /// <remarks>
         /// The gate is a constructor parameter so a test can exercise either path without mutating
         /// process-wide state that other tests observe.
         /// </remarks>
-        internal AzureMonitorMetricExporter(ITransmitter transmitter, bool multiEndpointEnabled)
+        internal AzureMonitorMetricExporter(ITransmitter transmitter, bool multiEndpointEnabled,
+            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
             _multiEndpointEnabled = multiEndpointEnabled;
+            _defaultMetricRoute = defaultMetricRoute;
+            _routedMeterName = routedMeterName;
 
             if (_multiEndpointEnabled)
             {
@@ -136,7 +147,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(batch, MetricResource, routeBatch);
+                MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(
+                    batch, MetricResource, routeBatch, _defaultMetricRoute, _routedMeterName);
 
                 if (routeBatch.Count == 0)
                 {

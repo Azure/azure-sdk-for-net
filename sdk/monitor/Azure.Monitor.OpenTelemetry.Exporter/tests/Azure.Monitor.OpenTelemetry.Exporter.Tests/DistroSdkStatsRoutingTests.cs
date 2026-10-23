@@ -365,8 +365,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "us");
             Assert.All(_stats.TelemetryItems, item =>
                 Assert.Equal(_stats.ResourceProviderId, ((MetricsData)item.Data.BaseData).Properties["rpId"]));
-            Assert.Equal(1, GetTransmitter("stats.example.invalid", StatsbeatConstants.Statsbeat_InstrumentationKey_EU).TrackAsyncCallCount);
-            Assert.Equal(1, GetTransmitter("stats.example.invalid", StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU).TrackAsyncCallCount);
+            var send = Assert.Single(GetTransmitter("stats.example.invalid", defaultIkey).Sends);
+            Assert.Equal("https://stats.example.invalid/", send.IngestionEndpoint);
+            Assert.Equal(2, send.TelemetryItems.Length);
         }
 
         [Theory]
@@ -402,10 +403,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 Assert.Null(statsbeat._statsbeatMeterProvider);
                 Assert.Null(statsbeat._statsbeat_ConnectionString);
-                Assert.Equal(0, statsbeat._multiEndpointExporter!.Registry.Count);
+                Assert.Equal(0, statsbeat._multiEndpointStats!.Registry.Count);
                 statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(
                     ("late-eu", "https://westeurope-5.in.applicationinsights.azure.com/")));
-                Assert.Equal(0, statsbeat._multiEndpointExporter.Registry.Count);
+                Assert.Equal(0, statsbeat._multiEndpointStats.Registry.Count);
                 Assert.Empty(_stats.TelemetryItems);
             }
         }
@@ -435,7 +436,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.Equal(expectedIkey, item.InstrumentationKey);
                 Assert.Equal(DistinctCustomerIkey, ((MetricsData)item.Data.BaseData).Properties["cikey"]);
             });
-            Assert.Equal(1, GetTransmitter("stats.example.invalid", expectedIkey).TrackAsyncCallCount);
+            Assert.Equal(2, Assert.Single(GetTransmitter("stats.example.invalid", expectedIkey).Sends).TelemetryItems.Length);
         }
 
         [Fact]
@@ -459,14 +460,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, _stats.TelemetryItems.Count);
             Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU);
             Assert.Contains(_stats.TelemetryItems, item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU);
-            Assert.Equal(1, Assert.IsType<MockTransmitter>(
-                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_EU]).TrackAsyncCallCount);
-            Assert.Equal(1, Assert.IsType<MockTransmitter>(
-                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]).TrackAsyncCallCount);
+            var sends = Assert.IsType<MockTransmitter>(
+                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]).Sends;
+            Assert.Equal(2, sends.Count);
+            Assert.Contains(sends, send => send.IngestionEndpoint == "https://westus-0.in.applicationinsights.azure.com/");
+            Assert.Contains(sends, send => send.IngestionEndpoint == "https://westeurope-5.in.applicationinsights.azure.com/");
         }
 
-        [Fact]
-        public void MultiEndpointOverrideSkipsCollectorConfiguration()
+        [Theory]
+        [InlineData("https://override.example.invalid/")]
+        [InlineData("http://localhost:4318/")]
+        public void MultiEndpointOverrideSkipsCollectorConfiguration(string endpoint)
         {
             bool requested = false;
             using var handler = new StubHandler(_ =>
@@ -474,7 +478,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 requested = true;
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             });
-            var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint=https://override.example.invalid/";
+            var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={endpoint}";
             _stats.Add(connectionString);
             _stats.Platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, connectionString);
             using var statsbeat = new AzureMonitorStatsbeat(
@@ -489,10 +493,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, _stats.TelemetryItems.Count);
             Assert.All(_stats.TelemetryItems, item =>
                 Assert.Equal(ConnectionStringParser.GetValues(connectionString).InstrumentationKey, item.InstrumentationKey));
+            var transmitter = Assert.IsType<MockTransmitter>(TransmitterFactory.Instance._transmitters[connectionString]);
+            Assert.Equal(1, transmitter.TrackAsyncCallCount);
+            Assert.Empty(transmitter.Sends);
+            Assert.All(_stats.TelemetryItems, item => Assert.DoesNotContain(
+                SemanticConventions.AttributeMicrosoftIngestionEndpoint, ((MetricsData)item.Data.BaseData).Properties.Keys));
         }
 
         [Fact]
-        public async Task DisposalDuringCollectorConfigurationReleasesBothFallbackSenders()
+        public async Task DisposalDuringCollectorConfigurationDoesNotAcquireSenders()
         {
             var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             using var handler = new DelayedConfigHandler(release.Task);
@@ -508,13 +517,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             await AwaitInitAsync(statsbeat);
 
             Assert.Null(statsbeat._statsbeatMeterProvider);
-            Assert.Equal(1, nonEu.DisposeCallCount);
-            Assert.Equal(1, eu.DisposeCallCount);
+            Assert.Equal(0, nonEu.DisposeCallCount);
+            Assert.Equal(0, eu.DisposeCallCount);
+            Assert.False(statsbeat._multiEndpointStats!.HasDestination);
             Assert.Empty(_stats.TelemetryItems);
         }
 
         [Fact]
-        public async Task DisposingCollectorReleasesBothRegionalKeySenders()
+        public async Task DisposingCollectorReleasesTheSharedRoutedSender()
         {
             using var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"stats.example.invalid\"}"));
             using var statsbeat = new AzureMonitorStatsbeat(
@@ -526,7 +536,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             statsbeat.Dispose();
 
             Assert.True(SpinWait.SpinUntil(
-                () => eu.DisposeCallCount == 1 && nonEu.DisposeCallCount == 1, TimeSpan.FromSeconds(5)));
+                () => nonEu.DisposeCallCount == 1 && !statsbeat._multiEndpointStats!.HasDestination, TimeSpan.FromSeconds(5)));
+            Assert.Equal(0, eu.DisposeCallCount);
         }
 
         [Fact]

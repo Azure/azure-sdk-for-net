@@ -44,7 +44,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TransmitterFactory.Instance._transmitters.TryGetValue(connectionString, out var previous);
             _previousTransmitters.Add(connectionString, previous);
             TransmitterFactory.Instance.Set(connectionString,
-                new MockTransmitter(TelemetryItems, ConnectionStringParser.GetValues(connectionString).InstrumentationKey));
+                new MockTransmitter(TelemetryItems, ConnectionStringParser.GetValues(connectionString).InstrumentationKey)
+                { CaptureRoutedTelemetry = true });
         }
 
         public void AddEndpoint(string endpoint)

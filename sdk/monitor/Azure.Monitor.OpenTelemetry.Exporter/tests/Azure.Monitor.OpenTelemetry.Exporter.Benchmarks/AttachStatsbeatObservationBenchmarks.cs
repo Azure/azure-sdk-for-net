@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
     {
         private const int BatchSize = 512;
         private const int ConcurrentBatches = 128;
-        private MultiEndpointStatsbeatExporter _exporter = null!;
+        private MultiEndpointStatsbeat _stats = null!;
         private EndpointRouteBatch _batch = null!;
 
         [Params(1, 3)]
@@ -48,13 +48,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             }
 
             // Observe can run before configuration completes; no transmitters or network are needed.
-            _exporter = new MultiEndpointStatsbeatExporter(
+            _stats = new MultiEndpointStatsbeat(
                 null, endpoints[0], null, TimeSpan.FromHours(24), _ => new Measurement<int>(1));
-            _exporter.Observe(_batch, 1);
+            _stats.Observe(_batch, 1);
         }
 
         [Benchmark]
-        public void Observe() => _exporter.Observe(_batch, 1);
+        public void Observe() => _stats.Observe(_batch, 1);
 
         [Benchmark(OperationsPerInvoke = ConcurrentBatches)]
         public void ObserveConcurrent()
@@ -63,12 +63,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             {
                 for (int i = 0; i < ConcurrentBatches / 4; i++)
                 {
-                    _exporter.Observe(_batch, 1);
+                    _stats.Observe(_batch, 1);
                 }
             });
         }
 
         [GlobalCleanup]
-        public void Cleanup() => _exporter.Dispose();
+        public void Cleanup() => _stats.Dispose();
     }
 }

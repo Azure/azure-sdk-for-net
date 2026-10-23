@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Diagnostics.Tracing;
 using System.Linq;
@@ -101,6 +102,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void FourResourcesUseTheExistingExportersRegionalGroups()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride: false);
+            scope.Observe(("us-1", EastUs), ("us-2", EastUs), ("eu-1", WestEurope), ("eu-2", WestEurope));
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+
+            var transmitter = Assert.IsType<MockTransmitter>(
+                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]);
+            Assert.Equal(0, transmitter.TrackAsyncCallCount);
+            Assert.Equal(2, transmitter.Sends.Count);
+            Assert.All(transmitter.Sends, send => Assert.Equal(2, send.TelemetryItems.Length));
+            Assert.Equal(new[] { "eu-1", "eu-2", "us-1", "us-2" },
+                scope.AttachMeasurements().Select(data => data.Properties["cikey"]).OrderBy(key => key));
+            Assert.All(scope.AttachMeasurements(), data =>
+            {
+                Assert.Equal(1, Assert.Single(data.Metrics).Value);
+                Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, data.Properties.Keys);
+                Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, data.Properties.Keys);
+                Assert.Equal(scope.ResourceProviderId, data.Properties["rpId"]);
+            });
+            Assert.All(transmitter.Sends, send => Assert.All(send.TelemetryItems, item =>
+                Assert.Equal(send.IngestionEndpoint.Contains("westeurope")
+                    ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                    : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, item.InstrumentationKey)));
+        }
+
+        [Fact]
         public void AnOverrideAppliesToBothRegions()
         {
             using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
@@ -115,15 +143,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void OneRegionsSendFailureDoesNotPreventTheOtherRegion()
         {
-            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride: false);
-            var nonEu = Assert.IsType<MockTransmitter>(
-                TransmitterFactory.Instance._transmitters[StatsbeatConstants.Statsbeat_ConnectionString_NonEU]);
-            nonEu.Result = ExportResult.Failure;
-            scope.Observe(("us", EastUs), ("eu", WestEurope));
+            using var scope = new MockStatsbeatScope();
+            var sends = new List<(string Host, string Content)>();
+            var options = AzureMonitorStatsbeat.CreateExporterOptions(StatsbeatConstants.Statsbeat_ConnectionString_NonEU);
+            options.Transport = new MockTransport(request =>
+            {
+                Assert.True(HttpPipelineHelper.TryGetRequestContent(request.Content, out var content));
+                var host = Assert.IsType<string>(request.Uri.Host);
+                sends.Add((host, System.Text.Encoding.UTF8.GetString(content!)));
+                return new MockResponse(host.StartsWith("westus", StringComparison.Ordinal) ? 500 : 200);
+            });
+            using var transmitter = new AzureMonitorTransmitter(options, scope.Platform);
+            TransmitterFactory.Instance.Set(StatsbeatConstants.Statsbeat_ConnectionString_NonEU, transmitter);
+            using var statsbeat = new AzureMonitorStatsbeat(
+                Internals.ConnectionString.ConnectionVars.CreateUnconfigured(), scope.Platform, multiEndpointEnabled: true);
+            using var provider = statsbeat._statsbeatMeterProvider!;
+            statsbeat.ObserveAttach(MockStatsbeatScope.CreateRouteBatch(("us", EastUs), ("eu", WestEurope)));
 
-            Assert.False(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
-            Assert.Contains(scope.Items(), item => item.InstrumentationKey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
-                && ((MetricsData)item.Data.BaseData).Properties["cikey"] == "eu");
+            Assert.False(provider.ForceFlush());
+            Assert.Equal(2, sends.Count);
+            Assert.Contains(sends, send => send.Host.StartsWith("westus", StringComparison.Ordinal));
+            var eu = Assert.Single(sends.Where(send => send.Host.StartsWith("westeurope", StringComparison.Ordinal)));
+            Assert.Contains(StatsbeatConstants.Statsbeat_InstrumentationKey_EU, eu.Content);
+            Assert.Contains("\"cikey\":\"eu\"", eu.Content);
         }
 
         [Fact]

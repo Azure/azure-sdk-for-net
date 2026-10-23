@@ -7,19 +7,17 @@ using System.Diagnostics.Metrics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
-    internal sealed class MultiEndpointStatsbeatExporter : BaseExporter<Metric>
+    internal sealed class MultiEndpointStatsbeat : IDisposable
     {
+        // Allow old and new regional series to coexist during slot reclamation.
+        internal const int CardinalityLimit = 2 * AttachStatsbeatRegistry.Capacity;
         private static readonly Destinations s_disposed = new(null, null);
 
         private readonly string? _connectionStringOverride;
@@ -28,12 +26,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private readonly Func<string, Measurement<int>> _createMeasurement;
         private readonly long _intervalTicks;
         private Destinations? _destinations;
-        private IReadOnlyDictionary<string, bool>? _reportRegions;
         private KeyValuePair<string, object?>[]? _tags;
         private int _keyIndex;
-        private AzureMonitorResource? _resource;
 
-        internal MultiEndpointStatsbeatExporter(
+        internal MultiEndpointStatsbeat(
             string? connectionStringOverride,
             string defaultIngestionEndpoint,
             HttpMessageHandler? configHandler,
@@ -65,8 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal async Task InitializeAsync()
         {
-            // The collector has no EU deployment. Share its configuration while preserving
-            // the regional envelope keys and the existing regional Breeze fallback.
+            // One collector config serves both regional keys.
             var result = await SdkStatsConfigFetcher.FetchAsync(
                 StatsbeatConstants.SdkStatsConfigUrl_NonEU, _configHandler).ConfigureAwait(false);
             Publish(ResolveDestination(result, isEu: false), ResolveDestination(result, isEu: true));
@@ -90,9 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             try
             {
-                var vars = ConnectionStringParser.GetValues(connectionString);
-                return new Destination(connectionString, vars.InstrumentationKey,
-                    TransmitterFactory.Instance.Get(AzureMonitorStatsbeat.CreateExporterOptions(connectionString)));
+                return new Destination(connectionString);
             }
             catch (Exception ex)
             {
@@ -104,15 +97,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private void Publish(Destination? nonEu, Destination? eu)
         {
             var destinations = new Destinations(nonEu, eu);
-            // Disposal replaces the pending state, so late configuration cannot publish.
+            // Do not publish after disposal.
             if (Interlocked.CompareExchange(ref _destinations, destinations, null) == null)
             {
                 Registry.SetEnabledRegions(nonEu != null, eu != null);
-                return;
             }
+        }
 
-            nonEu?.Transmitter.Dispose();
-            eu?.Transmitter.Dispose();
+        internal PeriodicExportingMetricReader CreateReader(int exportIntervalMilliseconds)
+        {
+            var destinations = Volatile.Read(ref _destinations);
+            var connectionString = DefaultConnectionString
+                ?? destinations?.NonEu?.ConnectionString
+                ?? destinations?.Eu?.ConnectionString
+                ?? throw new InvalidOperationException("SDK stats have no enabled destination.");
+            var options = AzureMonitorStatsbeat.CreateExporterOptions(connectionString);
+            var exporter = _connectionStringOverride != null
+                ? AzureMonitorMetricExporter.CreateForInternalTelemetry(options)
+                : AzureMonitorMetricExporter.CreateForInternalTelemetry(options, StatsbeatConstants.AttachStatsbeatMeterName);
+            return new AttachMetricReader(exporter, this, exportIntervalMilliseconds);
         }
 
         internal IEnumerable<Measurement<int>> GetMeasurements()
@@ -120,7 +123,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal IEnumerable<Measurement<int>> GetMeasurements(long now)
         {
-            _reportRegions = null;
             if (Registry.Count == 0)
             {
                 return Array.Empty<Measurement<int>>();
@@ -130,7 +132,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             {
                 if (_tags == null)
                 {
-                    // Keep invariant dimensions stable so only customer keys consume new SDK slots.
                     var tags = _createMeasurement(string.Empty).Tags.ToArray();
                     var keyIndex = Array.FindIndex(tags, tag => tag.Key == "cikey");
                     if (keyIndex < 0)
@@ -138,20 +139,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         throw new InvalidOperationException("Attach measurements require a cikey dimension.");
                     }
                     _keyIndex = keyIndex;
-                    _tags = tags;
+                    _tags = new KeyValuePair<string, object?>[tags.Length + (_connectionStringOverride == null ? 2 : 0)];
+                    tags.CopyTo(_tags, 0);
                 }
 
-                // The reader serializes collection and export. Observations cannot mutate
-                // this collection's region snapshot while its metrics are being exported.
+                var destinations = Volatile.Read(ref _destinations);
                 var regions = Registry.Collect(now, _intervalTicks);
                 var measurements = new List<Measurement<int>>(regions.Count);
-                foreach (var key in regions.Keys)
+                foreach (var pair in regions)
                 {
+                    var destination = destinations?.Get(pair.Value);
+                    if (destination == null)
+                    {
+                        continue;
+                    }
                     var tags = (KeyValuePair<string, object?>[])_tags.Clone();
-                    tags[_keyIndex] = new KeyValuePair<string, object?>("cikey", key);
+                    tags[_keyIndex] = new KeyValuePair<string, object?>("cikey", pair.Key);
+                    if (_connectionStringOverride == null)
+                    {
+                        tags[tags.Length - 2] = new(SemanticConventions.AttributeMicrosoftInstrumentationKey, destination.Vars.InstrumentationKey);
+                        tags[tags.Length - 1] = new(SemanticConventions.AttributeMicrosoftIngestionEndpoint, destination.Vars.IngestionEndpoint);
+                    }
                     measurements.Add(new Measurement<int>(1, tags));
                 }
-                _reportRegions = regions;
 
                 return measurements;
             }
@@ -162,88 +172,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        public override ExportResult Export(in Batch<Metric> batch)
+        public void Dispose()
         {
-            using var suppression = SuppressInstrumentationScope.Begin();
-            try
+            Registry.Close();
+            Interlocked.Exchange(ref _destinations, s_disposed);
+        }
+
+        private sealed class AttachMetricReader : PeriodicExportingMetricReader
+        {
+            private readonly MultiEndpointStatsbeat _stats;
+
+            internal AttachMetricReader(AzureMonitorMetricExporter exporter, MultiEndpointStatsbeat stats, int exportIntervalMilliseconds)
+                : base(exporter, exportIntervalMilliseconds)
             {
-                _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(string.Empty);
-                var (items, _) = MetricHelper.OtelToAzureMonitorMetrics(batch, _resource, string.Empty);
-                var destinations = Volatile.Read(ref _destinations);
-                var reportRegions = _reportRegions;
-                var nonEuItems = new List<TelemetryItem>();
-                var euItems = new List<TelemetryItem>();
+                _stats = stats;
+                TemporalityPreference = MetricReaderTemporalityPreference.Delta;
+            }
 
-                foreach (var item in items)
+            protected override bool OnCollect(int timeoutMilliseconds)
+            {
+                var result = base.OnCollect(timeoutMilliseconds);
+                _stats.Registry.CompleteCollection();
+                return result;
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                try
                 {
-                    var isEu = _defaultIsEu;
-                    if (item.Data.BaseData is MetricsData data
-                        && data.Metrics.Count == 1
-                        && data.Metrics[0].Name == StatsbeatConstants.AttachStatsbeatMetricName)
+                    base.Dispose(disposing);
+                }
+                finally
+                {
+                    if (disposing)
                     {
-                        if (!data.Properties.TryGetValue("cikey", out var key)
-                            || reportRegions == null
-                            || !reportRegions.TryGetValue(key, out isEu))
-                        {
-                            continue;
-                        }
-                    }
-
-                    var destination = destinations?.Get(isEu);
-                    if (destination != null)
-                    {
-                        item.InstrumentationKey = destination.InstrumentationKey;
-                        (isEu ? euItems : nonEuItems).Add(item);
+                        _stats.Dispose();
                     }
                 }
-
-                var nonEuResult = Send(destinations?.NonEu, nonEuItems);
-                var euResult = Send(destinations?.Eu, euItems);
-                return nonEuResult == ExportResult.Success && euResult == ExportResult.Success
-                    ? ExportResult.Success : ExportResult.Failure;
             }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
-                return ExportResult.Failure;
-            }
-            finally
-            {
-                Registry.CompleteCollection();
-            }
-        }
-
-        private static ExportResult Send(Destination? destination, List<TelemetryItem> items)
-        {
-            if (destination == null || items.Count == 0)
-            {
-                return ExportResult.Success;
-            }
-
-            try
-            {
-                return destination.Transmitter.TrackAsync(items,
-                    new TelemetrySchemaTypeCounter(),
-                    TelemetryItemOrigin.AzureMonitorMetricExporter, async: false, CancellationToken.None).EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
-                return ExportResult.Failure;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Registry.Close();
-                var destinations = Interlocked.Exchange(ref _destinations, s_disposed);
-                destinations?.NonEu?.Transmitter.Dispose();
-                destinations?.Eu?.Transmitter.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
 
         private sealed class Destinations
@@ -262,16 +228,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private sealed class Destination
         {
-            internal Destination(string connectionString, string instrumentationKey, ITransmitter transmitter)
+            internal Destination(string connectionString)
             {
                 ConnectionString = connectionString;
-                InstrumentationKey = instrumentationKey;
-                Transmitter = transmitter;
+                Vars = ConnectionStringParser.GetValues(connectionString);
             }
 
             internal string ConnectionString { get; }
-            internal string InstrumentationKey { get; }
-            internal ITransmitter Transmitter { get; }
+            internal ConnectionVars Vars { get; }
         }
     }
 }
