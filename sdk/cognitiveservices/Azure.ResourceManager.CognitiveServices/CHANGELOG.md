@@ -4,11 +4,13 @@
 
 ### Features Added
 
+- Upgraded api-version to 2026-09-15-preview.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Compared to `1.6.0-beta.4`, renamed `CapabilitySettings` to `CognitiveServicesAgentCapabilitySettings`, including references in account/project properties and model-factory methods.
+- Compared to `1.6.0-beta.4`, changed `CognitiveServicesClusterComputeProperties.SubnetArmId` from `string` to `Azure.Core.ResourceIdentifier`.
+- Compared to `1.6.0-beta.4`, changed `CognitiveServicesManagedComputeDeploymentInfo.DeploymentId` and `ProjectId` from `string` to `Azure.Core.ResourceIdentifier`.
 
 ## 1.6.0 (2026-09-10)
 
