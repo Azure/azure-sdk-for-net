@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> An externally submitted signal instance assigned to an entity. </summary>
-    public partial class ExternalSignal : SignalInstanceProperties
+    public partial class ExternalSignal : CloudHealthSignalInstanceProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExternalSignal"/>. </summary>
         /// <param name="name"> Unique name of the signal within the entity. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="status"> Current status of the signal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evaluationRules"> Evaluation rules for the external signal as submitted. </param>
-        internal ExternalSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, SignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
+        internal ExternalSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, CloudHealthSignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
         {
             EvaluationRules = evaluationRules;
         }

@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             writer.WritePropertyName("recommendedSignals"u8);
             writer.WriteStartArray();
-            foreach (SignalConfiguration item in RecommendedSignals)
+            foreach (CloudHealthSignalConfiguration item in RecommendedSignals)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("recommendedConfigurations"u8);
             writer.WriteStartArray();
-            foreach (SignalConfiguration item in RecommendedConfigurations)
+            foreach (CloudHealthSignalConfiguration item in RecommendedConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -143,27 +143,27 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            IList<SignalConfiguration> recommendedSignals = default;
-            IList<SignalConfiguration> recommendedConfigurations = default;
+            IList<CloudHealthSignalConfiguration> recommendedSignals = default;
+            IList<CloudHealthSignalConfiguration> recommendedConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recommendedSignals"u8))
                 {
-                    List<SignalConfiguration> array = new List<SignalConfiguration>();
+                    List<CloudHealthSignalConfiguration> array = new List<CloudHealthSignalConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SignalConfiguration.DeserializeSignalConfiguration(item, options));
+                        array.Add(CloudHealthSignalConfiguration.DeserializeCloudHealthSignalConfiguration(item, options));
                     }
                     recommendedSignals = array;
                     continue;
                 }
                 if (prop.NameEquals("recommendedConfigurations"u8))
                 {
-                    List<SignalConfiguration> array = new List<SignalConfiguration>();
+                    List<CloudHealthSignalConfiguration> array = new List<CloudHealthSignalConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SignalConfiguration.DeserializeSignalConfiguration(item, options));
+                        array.Add(CloudHealthSignalConfiguration.DeserializeCloudHealthSignalConfiguration(item, options));
                     }
                     recommendedConfigurations = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntityGetSignalRecommendationsResult(recommendedSignals ?? new ChangeTrackingList<SignalConfiguration>(), recommendedConfigurations ?? new ChangeTrackingList<SignalConfiguration>(), additionalBinaryDataProperties);
+            return new EntityGetSignalRecommendationsResult(recommendedSignals ?? new ChangeTrackingList<CloudHealthSignalConfiguration>(), recommendedConfigurations ?? new ChangeTrackingList<CloudHealthSignalConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

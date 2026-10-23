@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string metricNamespace = default;
             string metricName = default;
-            MetricAggregationType aggregationType = default;
+            CloudHealthMetricAggregationType aggregationType = default;
             string timeGrain = default;
             string dimensionFilter = default;
             foreach (var prop in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (prop.NameEquals("aggregationType"u8))
                 {
-                    aggregationType = new MetricAggregationType(prop.Value.GetString());
+                    aggregationType = new CloudHealthMetricAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="EntityGetSignalRecommendationsResult"/>. </summary>
         /// <param name="recommendedSignals"> Signals that are broadly recommended to be enabled by default for health models monitoring an Entity of this resource type. Each entry is a complete signal configuration (metric, aggregation, thresholds) ready to be added to a health model. Independent of `recommendedConfigurations` — not paired by index. </param>
         /// <param name="recommendedConfigurations"> Additional signal configurations for metrics that are not broadly applicable to every health model for an Entity of this resource type, but if a caller chooses to monitor one of these metrics, the provided thresholds are suggested as a starting point. Independent of `recommendedSignals` — not paired by index. </param>
-        internal EntityGetSignalRecommendationsResult(IEnumerable<SignalConfiguration> recommendedSignals, IEnumerable<SignalConfiguration> recommendedConfigurations)
+        internal EntityGetSignalRecommendationsResult(IEnumerable<CloudHealthSignalConfiguration> recommendedSignals, IEnumerable<CloudHealthSignalConfiguration> recommendedConfigurations)
         {
             RecommendedSignals = recommendedSignals.ToList();
             RecommendedConfigurations = recommendedConfigurations.ToList();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="recommendedSignals"> Signals that are broadly recommended to be enabled by default for health models monitoring an Entity of this resource type. Each entry is a complete signal configuration (metric, aggregation, thresholds) ready to be added to a health model. Independent of `recommendedConfigurations` — not paired by index. </param>
         /// <param name="recommendedConfigurations"> Additional signal configurations for metrics that are not broadly applicable to every health model for an Entity of this resource type, but if a caller chooses to monitor one of these metrics, the provided thresholds are suggested as a starting point. Independent of `recommendedSignals` — not paired by index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityGetSignalRecommendationsResult(IList<SignalConfiguration> recommendedSignals, IList<SignalConfiguration> recommendedConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityGetSignalRecommendationsResult(IList<CloudHealthSignalConfiguration> recommendedSignals, IList<CloudHealthSignalConfiguration> recommendedConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendedSignals = recommendedSignals;
             RecommendedConfigurations = recommendedConfigurations;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Signals that are broadly recommended to be enabled by default for health models monitoring an Entity of this resource type. Each entry is a complete signal configuration (metric, aggregation, thresholds) ready to be added to a health model. Independent of `recommendedConfigurations` — not paired by index. </summary>
-        public IList<SignalConfiguration> RecommendedSignals { get; }
+        public IList<CloudHealthSignalConfiguration> RecommendedSignals { get; }
 
         /// <summary> Additional signal configurations for metrics that are not broadly applicable to every health model for an Entity of this resource type, but if a caller chooses to monitor one of these metrics, the provided thresholds are suggested as a starting point. Independent of `recommendedSignals` — not paired by index. </summary>
-        public IList<SignalConfiguration> RecommendedConfigurations { get; }
+        public IList<CloudHealthSignalConfiguration> RecommendedConfigurations { get; }
     }
 }

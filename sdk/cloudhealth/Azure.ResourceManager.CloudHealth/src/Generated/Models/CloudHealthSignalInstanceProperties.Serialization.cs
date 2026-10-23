@@ -16,57 +16,57 @@ namespace Azure.ResourceManager.CloudHealth.Models
     /// Additional properties for signal instances assigned to an entity
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalSignal"/>, <see cref="LogAnalyticsSignal"/>, <see cref="PrometheusMetricsSignal"/>, and <see cref="ResourceSignal"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownSignalInstanceProperties))]
-    public abstract partial class SignalInstanceProperties : IJsonModel<SignalInstanceProperties>
+    [PersistableModelProxy(typeof(UnknownCloudHealthSignalInstanceProperties))]
+    public abstract partial class CloudHealthSignalInstanceProperties : IJsonModel<CloudHealthSignalInstanceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="SignalInstanceProperties"/> for deserialization. </summary>
-        internal SignalInstanceProperties()
+        /// <summary> Initializes a new instance of <see cref="CloudHealthSignalInstanceProperties"/> for deserialization. </summary>
+        internal CloudHealthSignalInstanceProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CloudHealthSignalInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHealthSignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSignalInstanceProperties(document.RootElement, options);
+                        return DeserializeCloudHealthSignalInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalInstanceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHealthSignalInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHealthSignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SignalInstanceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHealthSignalInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SignalInstanceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CloudHealthSignalInstanceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SignalInstanceProperties IPersistableModel<SignalInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CloudHealthSignalInstanceProperties IPersistableModel<CloudHealthSignalInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SignalInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CloudHealthSignalInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SignalInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CloudHealthSignalInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHealthSignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalInstanceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHealthSignalInstanceProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("signalKind"u8);
             writer.WriteStringValue(SignalKind.ToString());
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SignalInstanceProperties IJsonModel<SignalInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CloudHealthSignalInstanceProperties IJsonModel<CloudHealthSignalInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CloudHealthSignalInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHealthSignalInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalInstanceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHealthSignalInstanceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSignalInstanceProperties(document.RootElement, options);
+            return DeserializeCloudHealthSignalInstanceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SignalInstanceProperties DeserializeSignalInstanceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudHealthSignalInstanceProperties DeserializeCloudHealthSignalInstanceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                         return ResourceSignal.DeserializeResourceSignal(element, options);
                 }
             }
-            return UnknownSignalInstanceProperties.DeserializeUnknownSignalInstanceProperties(element, options);
+            return UnknownCloudHealthSignalInstanceProperties.DeserializeUnknownCloudHealthSignalInstanceProperties(element, options);
         }
     }
 }

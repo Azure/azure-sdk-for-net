@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Threshold-based evaluation rule for a signal definition. </summary>
-    public partial class EntitySignalThresholdRuleV2
+    public partial class EntitySignalThresholdRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRuleV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRule"/>. </summary>
         /// <param name="signalOperator"> Operator how to compare the signal value with the threshold. </param>
-        public EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator)
+        public EntitySignalThresholdRule(EntitySignalOperator signalOperator)
         {
             SignalOperator = signalOperator;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRuleV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitySignalThresholdRule"/>. </summary>
         /// <param name="signalOperator"> Operator how to compare the signal value with the threshold. </param>
         /// <param name="threshold"> Threshold value. </param>
         /// <param name="sensitivity"> Sensitivity level for dynamic threshold detection. Only applicable when operator is Dynamic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator, double? threshold, EntityDynamicThresholdSensitivity? sensitivity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySignalThresholdRule(EntitySignalOperator signalOperator, double? threshold, EntityDynamicThresholdSensitivity? sensitivity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalOperator = signalOperator;
             Threshold = threshold;

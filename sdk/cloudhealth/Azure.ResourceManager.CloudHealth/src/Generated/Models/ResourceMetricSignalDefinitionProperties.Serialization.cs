@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string metricNamespace = default;
             string metricName = default;
             string timeGrain = default;
-            MetricAggregationType aggregationType = default;
+            CloudHealthMetricAggregationType aggregationType = default;
             string dimensionFilter = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (prop.NameEquals("aggregationType"u8))
                 {
-                    aggregationType = new MetricAggregationType(prop.Value.GetString());
+                    aggregationType = new CloudHealthMetricAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensionFilter"u8))

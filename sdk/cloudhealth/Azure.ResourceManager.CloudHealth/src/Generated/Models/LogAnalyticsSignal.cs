@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> A Log Analytics Query signal instance assigned to an entity. </summary>
-    public partial class LogAnalyticsSignal : SignalInstanceProperties
+    public partial class LogAnalyticsSignal : CloudHealthSignalInstanceProperties
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsSignal"/>. </summary>
         /// <param name="name"> Unique name of the signal within the entity. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        internal LogAnalyticsSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, SignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
+        internal LogAnalyticsSignal(EntitySignalKind signalKind, string name, string signalDefinitionName, CloudHealthSignalStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName, string displayName, EntitySignalRefreshInterval? refreshInterval, string dataUnit, EntitySignalEvaluationRule evaluationRules) : base(signalKind, name, signalDefinitionName, status, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;

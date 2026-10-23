@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Properties for dependent entities, i.e. child entities. </summary>
-    public partial class DependenciesSignalGroupV2
+    public partial class DependenciesSignalGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroupV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroup"/>. </summary>
         /// <param name="aggregationType"> Aggregation type for child dependencies. </param>
-        public DependenciesSignalGroupV2(HealthStateAggregationType aggregationType)
+        public DependenciesSignalGroup(HealthStateAggregationType aggregationType)
         {
             AggregationType = aggregationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroupV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroup"/>. </summary>
         /// <param name="aggregationType"> Aggregation type for child dependencies. </param>
         /// <param name="degradedThreshold"> Degraded threshold for aggregation. For MinHealthy: parent is degraded when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is degraded when not-healthy count/percentage reaches or exceeds this value. Optional — if not set, there is no degraded state (transitions directly from Healthy to Unhealthy). </param>
         /// <param name="unhealthyThreshold"> Unhealthy threshold for aggregation. For MinHealthy: parent is unhealthy when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is unhealthy when not-healthy count/percentage reaches or exceeds this value. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependenciesSignalGroupV2(HealthStateAggregationType aggregationType, double? degradedThreshold, double? unhealthyThreshold, HealthStateAggregationUnit? unit, bool? shouldIgnoreUnknown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependenciesSignalGroup(HealthStateAggregationType aggregationType, double? degradedThreshold, double? unhealthyThreshold, HealthStateAggregationUnit? unit, bool? shouldIgnoreUnknown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregationType = aggregationType;
             DegradedThreshold = degradedThreshold;

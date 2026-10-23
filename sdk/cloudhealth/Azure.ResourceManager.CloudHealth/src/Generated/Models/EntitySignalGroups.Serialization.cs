@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             ResourceSignals azureResource = default;
             LogAnalyticsSignals azureLogAnalytics = default;
             MonitorWorkspaceSignals azureMonitorWorkspace = default;
-            DependenciesSignalGroupV2 dependencies = default;
+            DependenciesSignalGroup dependencies = default;
             ExternalSignalGroup external = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    dependencies = DependenciesSignalGroupV2.DeserializeDependenciesSignalGroupV2(prop.Value, options);
+                    dependencies = DependenciesSignalGroup.DeserializeDependenciesSignalGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("external"u8))
