@@ -21,20 +21,20 @@ namespace Specs.Azure.ClientGenerator.Core.ResponseAsBool._HeadAsBoolean
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response Exists(RequestContext context) => throw null;
+        public virtual Response<bool> Exists(RequestContext context) => throw null;
 
-        public virtual Task<Response> ExistsAsync(RequestContext context) => throw null;
+        public virtual Task<Response<bool>> ExistsAsync(RequestContext context) => throw null;
 
-        public virtual Response Exists(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<bool> Exists(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ExistsAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response NotExists(RequestContext context) => throw null;
+        public virtual Response<bool> NotExists(RequestContext context) => throw null;
 
-        public virtual Task<Response> NotExistsAsync(RequestContext context) => throw null;
+        public virtual Task<Response<bool>> NotExistsAsync(RequestContext context) => throw null;
 
-        public virtual Response NotExists(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<bool> NotExists(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> NotExistsAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<bool>> NotExistsAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }
