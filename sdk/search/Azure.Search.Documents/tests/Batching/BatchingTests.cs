@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
@@ -127,7 +128,7 @@ namespace Azure.Search.Documents.Tests
             {
             }
 
-            public BatchingSearchClient(Uri endpoint, string indexName, AzureKeyCredential credential, SearchClientOptions options)
+            public BatchingSearchClient(Uri endpoint, string indexName, TokenCredential credential, SearchClientOptions options)
                 : base(endpoint, indexName, credential, options)
             {
             }
@@ -206,7 +207,7 @@ namespace Azure.Search.Documents.Tests
                 new BatchingSearchClient(
                     resources.Endpoint,
                     resources.IndexName,
-                    new AzureKeyCredential(resources.PrimaryApiKey),
+                    TestEnvironment.Credential,
                     GetSearchClientOptions()));
         }
         #endregion

@@ -129,18 +129,6 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("@search.answers"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(DebugInfo, _debugInfoIsDefined))
-            {
-                if (DebugInfo != null)
-                {
-                    writer.WritePropertyName("@search.debug"u8);
-                    writer.WriteObjectValue(DebugInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("@search.debug"u8);
-                }
-            }
             if (options.Format != "W" && Optional.IsDefined(NextPageParameters))
             {
                 writer.WritePropertyName("@search.nextPageParameters"u8);
@@ -170,11 +158,6 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("@search.semanticPartialResponseType"u8);
                 writer.WriteStringValue(SemanticPartialResponseType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(SemanticQueryRewritesResultType))
-            {
-                writer.WritePropertyName("@search.semanticQueryRewritesResultType"u8);
-                writer.WriteStringValue(SemanticQueryRewritesResultType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -222,14 +205,11 @@ namespace Azure.Search.Documents.Models
             double? coverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
             IReadOnlyList<QueryAnswerResult> answers = new ChangeTrackingList<QueryAnswerResult>();
-            bool debugInfoIsDefined = false;
-            DebugInfo debugInfo = default;
             SearchOptions nextPageParameters = default;
             IReadOnlyList<SearchResult> results = default;
             string nextLink = default;
             SemanticErrorReason? semanticPartialResponseReason = default;
             SemanticSearchResultsType? semanticPartialResponseType = default;
-            SemanticQueryRewritesResultType? semanticQueryRewritesResultType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -292,17 +272,6 @@ namespace Azure.Search.Documents.Models
                     answers = array;
                     continue;
                 }
-                if (prop.NameEquals("@search.debug"u8))
-                {
-                    debugInfoIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        debugInfo = null;
-                        continue;
-                    }
-                    debugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("@search.nextPageParameters"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -345,15 +314,6 @@ namespace Azure.Search.Documents.Models
                     semanticPartialResponseType = new SemanticSearchResultsType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("@search.semanticQueryRewritesResultType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    semanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -364,17 +324,12 @@ namespace Azure.Search.Documents.Models
                 coverage,
                 facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 answers,
-                debugInfo,
                 nextPageParameters,
                 results ?? new ChangeTrackingList<SearchResult>(),
                 nextLink,
                 semanticPartialResponseReason,
                 semanticPartialResponseType,
-                semanticQueryRewritesResultType,
-                additionalBinaryDataProperties)
-            {
-                _debugInfoIsDefined = debugInfoIsDefined
-            };
+                additionalBinaryDataProperties);
         }
     }
 }

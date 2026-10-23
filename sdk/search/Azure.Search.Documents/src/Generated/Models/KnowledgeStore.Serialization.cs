@@ -100,11 +100,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity"u8);
                 }
             }
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,7 +146,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<KnowledgeStoreProjection> projections = default;
             bool identityIsDefined = false;
             SearchIndexerDataIdentity identity = default;
-            SearchIndexerKnowledgeStoreParameters parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,21 +175,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parameters = SearchIndexerKnowledgeStoreParameters.DeserializeSearchIndexerKnowledgeStoreParameters(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeStore(storageConnectionString, projections ?? new ChangeTrackingList<KnowledgeStoreProjection>(), identity, parameters, additionalBinaryDataProperties)
+            return new KnowledgeStore(storageConnectionString, projections ?? new ChangeTrackingList<KnowledgeStoreProjection>(), identity, additionalBinaryDataProperties)
             {
                 _identityIsDefined = identityIsDefined
             };

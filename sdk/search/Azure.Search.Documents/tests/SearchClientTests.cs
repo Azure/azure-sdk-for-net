@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -35,6 +37,26 @@ namespace Azure.Search.Documents.Tests
 
             Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, indexName, tokenCredential: null));
         }
+
+#pragma warning disable SCME0002
+        [Test]
+        public void SettingsConstructorUsesCustomSerializer()
+        {
+            JsonObjectSerializer serializer = new JsonObjectSerializer(new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            });
+            SearchClient client = new SearchClient(new SearchClientSettings
+            {
+                Endpoint = new Uri("https://fake-search.search.windows.net"),
+                IndexName = "test-index",
+                Options = new SearchClientOptions { Serializer = serializer },
+            });
+
+            Assert.AreSame(serializer, client.Serializer);
+            Assert.AreSame(serializer, client.GetSearchIndexClient().GetSearchClient("another-index").Serializer);
+        }
+#pragma warning restore SCME0002
 
         [Test]
         public void AuthenticateInChinaCloud()

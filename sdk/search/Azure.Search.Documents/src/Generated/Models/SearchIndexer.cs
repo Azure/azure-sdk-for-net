@@ -25,8 +25,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private bool _isDisabledIsDefined;
         private SearchResourceEncryptionKey _encryptionKey;
         private bool _encryptionKeyIsDefined;
-        private SearchIndexerCache _cache;
-        private bool _cacheIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
@@ -59,9 +57,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
         /// <param name="eTag"> The ETag of the indexer. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -75,7 +72,6 @@ namespace Azure.Search.Documents.Indexes.Models
             _isDisabled = isDisabled;
             ETag = eTag;
             _encryptionKey = encryptionKey;
-            _cache = cache;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -156,20 +152,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 _encryptionKey = value;
                 _encryptionKeyIsDefined = true;
-            }
-        }
-
-        /// <summary> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </summary>
-        public SearchIndexerCache Cache
-        {
-            get
-            {
-                return _cache;
-            }
-            set
-            {
-                _cache = value;
-                _cacheIsDefined = true;
             }
         }
     }

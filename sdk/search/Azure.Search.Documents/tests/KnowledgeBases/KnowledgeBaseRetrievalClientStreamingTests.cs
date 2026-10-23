@@ -1,4 +1,3 @@
-# if AZURE_SEARCH_PREVIEW
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -45,8 +44,7 @@ namespace Azure.Search.Documents.Tests
 
             await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(
                 requestContent,
-                querySourceAuthorization: "query-auth",
-                queryWorkIQSourceAuthorization: "work-iq-auth");
+                querySourceAuthorization: "query-auth");
 
             Assert.That(result.Status, Is.EqualTo(200));
             Assert.That(result.Headers.TryGetValue("x-ms-request-id", out string requestId), Is.True);
@@ -60,8 +58,7 @@ namespace Azure.Search.Documents.Tests
             Assert.That(accept, Is.EqualTo("text/event-stream"));
             Assert.That(request.Headers.TryGetValue("x-ms-query-source-authorization", out string queryAuth), Is.True);
             Assert.That(queryAuth, Is.EqualTo("query-auth"));
-            Assert.That(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqAuth), Is.True);
-            Assert.That(workIqAuth, Is.EqualTo("work-iq-auth"));
+            Assert.That(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out _), Is.False);
 
             List<SseItem<BinaryData>> items = new();
             await foreach (SseItem<BinaryData> item in result)
@@ -256,8 +253,7 @@ namespace Azure.Search.Documents.Tests
 
             KnowledgeBaseRetrievalStartedStreamEvent started = items[0].Data as KnowledgeBaseRetrievalStartedStreamEvent;
             Assert.That(started, Is.Not.Null);
-            Assert.That(started.EventName, Is.EqualTo("retrieval.started"));
-            Assert.That(started.IsTerminal, Is.False);
+            Assert.That(items[0].EventType, Is.EqualTo("retrieval.started"));
             Assert.That(started.Value.RequestId, Is.EqualTo("request-id"));
             Assert.That(started.Value.KnowledgeBaseName, Is.EqualTo("fake-knowledge-base"));
             Assert.That(started.Value.OutputMode, Is.EqualTo(KnowledgeRetrievalOutputMode.AnswerSynthesis));
@@ -307,8 +303,7 @@ namespace Azure.Search.Documents.Tests
 
             KnowledgeBaseResponseCompletedStreamEvent completed = items[6].Data as KnowledgeBaseResponseCompletedStreamEvent;
             Assert.That(completed, Is.Not.Null);
-            Assert.That(completed.EventName, Is.EqualTo("response.completed"));
-            Assert.That(completed.IsTerminal, Is.True);
+            Assert.That(items[6].EventType, Is.EqualTo("response.completed"));
             Assert.That(completed.Value.StatusCode, Is.EqualTo(KnowledgeBaseRetrievalStatusCode.OK));
             Assert.That(response.IsDisposed, Is.True);
             Assert.That(transport.Requests.Single().Headers.TryGetValue("Accept", out string accept), Is.True);
@@ -364,6 +359,61 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task RetrieveStreamAsyncAcceptsEmptyReferencesArray()
+        {
+            MockResponse response = new(200);
+            response.SetContent("""
+                event: references.completed
+                data: []
+
+                event: response.completed
+                data: {"statusCode":206,"response":{}}
+
+                event: ignored.after.terminal
+                data: invalid JSON
+
+                """);
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+
+            List<SseItem<KnowledgeBaseRetrievalStreamEvent>> items = new();
+            await foreach (SseItem<KnowledgeBaseRetrievalStreamEvent> item in
+                client.RetrieveStreamAsync(new KnowledgeBaseRetrievalRequest()))
+            {
+                items.Add(item);
+            }
+
+            Assert.That(items, Has.Count.EqualTo(2));
+            Assert.That(items[0].Data, Is.TypeOf<KnowledgeBaseReferencesCompletedStreamEvent>());
+            Assert.That(((KnowledgeBaseReferencesCompletedStreamEvent)items[0].Data).Value, Is.Empty);
+            Assert.That(items[1].Data, Is.TypeOf<KnowledgeBaseResponseCompletedStreamEvent>());
+            Assert.That(((KnowledgeBaseResponseCompletedStreamEvent)items[1].Data).Value.StatusCode,
+                Is.EqualTo(KnowledgeBaseRetrievalStatusCode.PartialContent));
+            Assert.That(response.IsDisposed, Is.True);
+        }
+
+        [TestCase("""{"value":[]}""")]
+        [TestCase("null")]
+        [TestCase("invalid JSON")]
+        public void RetrieveStreamAsyncRejectsInvalidReferencesPayload(string payload)
+        {
+            MockResponse response = new(200);
+            response.SetContent($"event: references.completed\ndata: {payload}\n\n");
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+
+            Assert.CatchAsync<System.Text.Json.JsonException>(async () =>
+            {
+                await foreach (SseItem<KnowledgeBaseRetrievalStreamEvent> _ in
+                    client.RetrieveStreamAsync(new KnowledgeBaseRetrievalRequest()))
+                {
+                }
+            });
+
+            Assert.That(response.IsDisposed, Is.True);
+        }
+
+        [Test]
         public async Task RetrieveStreamAsyncYieldsTerminalErrorBeforeCompleting()
         {
             const string content = """
@@ -382,17 +432,17 @@ namespace Azure.Search.Documents.Tests
             response.AddHeader("Content-Type", "text/event-stream");
             KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
 
-            List<KnowledgeBaseRetrievalStreamEvent> events = new();
+            List<SseItem<KnowledgeBaseRetrievalStreamEvent>> events = new();
             await foreach (SseItem<KnowledgeBaseRetrievalStreamEvent> item in
                 client.RetrieveStreamAsync(new KnowledgeBaseRetrievalRequest()))
             {
-                events.Add(item.Data);
+                events.Add(item);
             }
 
             Assert.That(events, Has.Count.EqualTo(2));
-            KnowledgeBaseErrorStreamEvent error = events[1] as KnowledgeBaseErrorStreamEvent;
+            KnowledgeBaseErrorStreamEvent error = events[1].Data as KnowledgeBaseErrorStreamEvent;
             Assert.That(error, Is.Not.Null);
-            Assert.That(error.IsTerminal, Is.True);
+            Assert.That(events[1].EventType, Is.EqualTo("error"));
             Assert.That(error.Value.Error.Code, Is.EqualTo("SourceTimeout"));
             Assert.That(error.Value.Error.Message, Is.EqualTo("A knowledge source timed out."));
             Assert.That(response.IsDisposed, Is.True);
@@ -588,4 +638,3 @@ namespace Azure.Search.Documents.Tests
         }
     }
 }
-# endif

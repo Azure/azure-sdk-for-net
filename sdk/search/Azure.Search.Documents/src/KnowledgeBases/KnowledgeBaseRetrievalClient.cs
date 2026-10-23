@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,7 +23,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -69,7 +70,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the request or stream enumeration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -85,15 +85,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
                 KnowledgeBaseRetrievalRequest retrievalRequest,
                 string querySourceAuthorization = default,
-                string queryWorkIQSourceAuthorization = default,
                 [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
             AsyncStreamingResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
-                retrievalRequest,
+                RequestContent.Create(retrievalRequest),
                 querySourceAuthorization,
-                queryWorkIQSourceAuthorization,
                 cancellationToken.ToRequestContext()).ConfigureAwait(false);
 
             await using (((IAsyncDisposable)result).ConfigureAwait(false))
@@ -105,14 +103,14 @@ namespace Azure.Search.Documents.KnowledgeBases
                         yield break;
                     }
 
-                    KnowledgeBaseRetrievalStreamEvent value = KnowledgeBaseRetrievalStreamEvent.Deserialize(item.EventType, item.Data);
+                    KnowledgeBaseRetrievalStreamEvent value = DeserializeStreamEvent(item.EventType, item.Data);
                     yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType)
                     {
                         EventId = item.EventId,
                         ReconnectionInterval = item.ReconnectionInterval,
                     };
 
-                    if (value.IsTerminal)
+                    if (item.EventType is "response.completed" or "error")
                     {
                         yield break;
                     }
@@ -124,5 +122,53 @@ namespace Azure.Search.Documents.KnowledgeBases
 #pragma warning restore AZC0015
 #pragma warning restore AZC0004
 
+        private static KnowledgeBaseRetrievalStreamEvent DeserializeStreamEvent(string eventName, BinaryData data)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            JsonElement element = document.RootElement;
+            var options = ModelSerializationExtensions.WireOptions;
+
+            // SSE data contains the payload itself, not the generated envelope's JSON "value" property.
+            return eventName switch
+            {
+                "retrieval.started" => new KnowledgeBaseRetrievalStartedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseRetrievalStartedEvent.DeserializeKnowledgeBaseRetrievalStartedEvent(element, options)),
+                "activity.started" => new KnowledgeBaseActivityStartedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseActivityStartedEvent.DeserializeKnowledgeBaseActivityStartedEvent(element, options)),
+                "activity.completed" => new KnowledgeBaseActivityCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(element, options)),
+                "answer.completed" => new KnowledgeBaseAnswerCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseAnswerCompletedEvent.DeserializeKnowledgeBaseAnswerCompletedEvent(element, options)),
+                "references.completed" => new KnowledgeBaseReferencesCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: DeserializeStreamReferences(element)),
+                "error" => new KnowledgeBaseErrorStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseStreamErrorEvent.DeserializeKnowledgeBaseStreamErrorEvent(element, options)),
+                "response.completed" => new KnowledgeBaseResponseCompletedStreamEvent(
+                    additionalBinaryDataProperties: null,
+                    value: KnowledgeBaseResponseCompletedEvent.DeserializeKnowledgeBaseResponseCompletedEvent(element, options)),
+                _ => new UnknownKnowledgeBaseRetrievalStreamEvent(eventName, data),
+            };
+        }
+
+        private static List<KnowledgeBaseReference> DeserializeStreamReferences(JsonElement element)
+        {
+            if (element.ValueKind != JsonValueKind.Array)
+            {
+                throw new JsonException("The references.completed event payload must be a JSON array.");
+            }
+
+            List<KnowledgeBaseReference> references = new();
+            foreach (JsonElement item in element.EnumerateArray())
+            {
+                references.Add(KnowledgeBaseReference.DeserializeKnowledgeBaseReference(item, ModelSerializationExtensions.WireOptions));
+            }
+            return references;
+        }
     }
 }

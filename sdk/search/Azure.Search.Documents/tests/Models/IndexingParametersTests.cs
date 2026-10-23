@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
@@ -24,6 +25,84 @@ namespace Azure.Search.Documents.Tests.Models
             parameters.Configuration["customTestProperty"] = "custom";
             Assert.IsNotNull(parameters.IndexingParametersConfiguration);
             Assert.AreEqual(1, parameters.Configuration.Count);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void ConfigurationIsAvailableAfterDeserialization(string format)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            IndexingParameters parameters = ModelReaderWriter.Read<IndexingParameters>(BinaryData.FromString("{}"), options);
+
+            Assert.IsNotNull(parameters.Configuration);
+            Assert.IsEmpty(parameters.Configuration);
+            Assert.IsNull(parameters.IndexingParametersConfiguration);
+            Assert.AreSame(parameters.Configuration, parameters.Configuration);
+
+            parameters.Configuration["customTestProperty"] = "custom";
+            Assert.AreEqual("custom", parameters.IndexingParametersConfiguration["customTestProperty"]);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void ConfigurationRoundtripsAfterDeserialization(string format)
+        {
+            const string json = @"{""configuration"":{
+                ""markdownParsingSubmode"":""oneToMany"",
+                ""markdownHeaderDepth"":""h3"",
+                ""refreshAllAcls"":true,
+                ""customTestProperty"":""custom""}}";
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            IndexingParameters parameters = ModelReaderWriter.Read<IndexingParameters>(BinaryData.FromString(json), options);
+
+            Assert.IsNotNull(parameters.Configuration);
+            Assert.AreEqual(4, parameters.Configuration.Count);
+            Assert.AreEqual(new MarkdownParsingSubmode("oneToMany"), parameters.Configuration["markdownParsingSubmode"]);
+            Assert.AreEqual(new MarkdownHeaderDepth("h3"), parameters.Configuration["markdownHeaderDepth"]);
+            Assert.AreEqual(true, parameters.Configuration["refreshAllAcls"]);
+            Assert.AreEqual("custom", parameters.Configuration["customTestProperty"]);
+
+            IndexingParameters roundtripped = ModelReaderWriter.Read<IndexingParameters>(ModelReaderWriter.Write(parameters, options), options);
+            CollectionAssert.AreEquivalent(parameters.Configuration, roundtripped.Configuration);
+
+            IDictionary<string, object> adapter = parameters.Configuration;
+            parameters.IndexingParametersConfiguration = new IndexingParametersConfiguration { RefreshAllAcls = false };
+            Assert.AreSame(adapter, parameters.Configuration);
+            Assert.AreEqual(false, adapter["refreshAllAcls"]);
+        }
+
+        [Test]
+        public void ConfigurationSynchronizesAndResetsMarkdownAndAcls()
+        {
+            IndexingParameters parameters = new IndexingParameters();
+            parameters.Configuration["markdownParsingSubmode"] = "oneToMany";
+            parameters.Configuration["markdownHeaderDepth"] = "h3";
+            parameters.Configuration["refreshAllAcls"] = true;
+            IndexingParametersConfiguration configuration = parameters.IndexingParametersConfiguration;
+
+            Assert.AreEqual(new MarkdownParsingSubmode("oneToMany"), configuration.MarkdownParsingSubmode);
+            Assert.AreEqual(new MarkdownHeaderDepth("h3"), configuration.MarkdownHeaderDepth);
+            Assert.IsTrue(configuration.RefreshAllAcls);
+            Assert.IsEmpty(configuration);
+            Assert.AreEqual(3, parameters.Configuration.Count);
+
+            configuration.MarkdownParsingSubmode = new MarkdownParsingSubmode("oneToOne");
+            configuration.MarkdownHeaderDepth = new MarkdownHeaderDepth("h2");
+            configuration.RefreshAllAcls = false;
+            Assert.AreEqual(configuration.MarkdownParsingSubmode, parameters.Configuration["markdownParsingSubmode"]);
+            Assert.AreEqual(configuration.MarkdownHeaderDepth, parameters.Configuration["markdownHeaderDepth"]);
+            Assert.AreEqual(false, parameters.Configuration["refreshAllAcls"]);
+            Assert.Throws<ArgumentException>(() => parameters.Configuration.Add("refreshAllAcls", true));
+
+            Assert.IsTrue(parameters.Configuration.Remove("refreshAllAcls"));
+            Assert.IsNull(configuration.RefreshAllAcls);
+            parameters.Configuration["refreshAllAcls"] = true;
+            parameters.Configuration.Clear();
+
+            Assert.IsNull(configuration.MarkdownParsingSubmode);
+            Assert.IsNull(configuration.MarkdownHeaderDepth);
+            Assert.IsNull(configuration.RefreshAllAcls);
+            Assert.IsEmpty(parameters.Configuration);
         }
 
         [Test]
