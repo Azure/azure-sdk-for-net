@@ -81,6 +81,35 @@ The read-only PR job reads configuration from the PR checkout. The writer uses
 default-branch configuration and recomputes independently, so PR code or a
 modified report cannot choose the destination or content of a privileged comment.
 
+## Workflow dependency locks
+
+The two coverage workflows use readable, full release versions. Their exact action
+commits and source-repository identities are recorded in the generated
+[Actions lockfile](../../../../.github/workflows/actions.lock). This is a scoped
+adoption of GitHub's
+[workflow dependency lockfiles](https://docs.github.com/en/actions/concepts/security/workflow-dependency-lockfiles),
+which are in public preview. Other repository workflows retain their existing pins.
+Action versions and commits are unchanged by this migration.
+
+The read-only coverage job runs the official generator's frozen online verification
+for these two workflows. It fails on stale or invalid locks, without changing files,
+accepting moved pins, or requiring write permissions. The existing GitHub Actions
+Dependabot configuration maintains version updates and their matching lock entries.
+
+After changing an action reference, regenerate and verify from the repository root:
+
+```sh
+gh extension install github/gh-actions-lock --pin v0.3.0
+gh actions-lock .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml
+gh actions-lock --verify .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml
+```
+
+Commit the generated lockfile with the workflow changes; never edit it by hand.
+Review commit or repository-identity changes as dependency changes. This adoption
+does not change repository or organization policies. The effective Actions policy
+and hosted lockfile behavior must still be checked before merging the public-preview
+migration; no policy relaxation is part of this change.
+
 ## Run locally
 
 Requires **Node 24.14.1+** and Git. From the repository root:

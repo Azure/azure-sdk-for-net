@@ -192,6 +192,41 @@ test("lint, coverage and trusted reporting all use Node 24", () => {
   assert.equal(setupSteps, 3);
 });
 
+test("coverage workflows use readable releases backed by a complete workflow dependency lock", () => {
+  const files = [".github/workflows/skill-eval.yml", ".github/workflows/skill-eval-coverage-comment.yml"];
+  const lock = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/actions.lock"), "utf8"));
+  assert.equal(lock.version, "v0.0.3");
+  assert.deepEqual(Object.keys(lock.workflows).sort(), [...files].sort());
+  for (const file of files) {
+    const workflow = parse(fs.readFileSync(path.join(repoRoot, file), "utf8"));
+    const refs = new Set<string>();
+    for (const job of Object.values(workflow.jobs) as { steps: WorkflowStep[] }[]) {
+      for (const step of job.steps) {
+        if (!step.uses) continue;
+        assert.match(step.uses, /^[^@\s]+@v\d+\.\d+\.\d+$/);
+        refs.add(step.uses);
+        const entry = lock.dependencies[step.uses];
+        assert.ok(entry, `${file}: ${step.uses} must be locked`);
+        assert.equal(entry.ref, step.uses.split("@")[1]);
+        assert.match(entry.commit, /^sha1-[a-f0-9]{40}$/);
+        assert.ok(Number.isSafeInteger(entry.owner_id) && entry.owner_id > 0);
+        assert.ok(Number.isSafeInteger(entry.repo_id) && entry.repo_id > 0);
+      }
+    }
+    assert.deepEqual([...lock.workflows[file]].sort(), [...refs].sort());
+  }
+});
+
+test("workflow dependency verification is frozen and scoped to the two coverage workflows", () => {
+  const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/skill-eval.yml"), "utf8"));
+  assert.ok(workflow.on.push.paths.includes(".github/workflows/actions.lock"));
+  const step = workflow.jobs["skill-eval-coverage"].steps.find((item: WorkflowStep) => item.run?.includes("gh actions-lock --verify"));
+  assert.ok(step, "verify the generated dependency pins against GitHub, not only offline coverage");
+  assert.equal(step.run, "gh extension install github/gh-actions-lock --pin v0.3.0\ngh actions-lock --verify .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml\n");
+  assert.equal(step.env.GH_TOKEN, "${{ github.token }}");
+  assert.equal(step["continue-on-error"], undefined);
+});
+
 test("checker package has exactly one frozen parser dependency and no local workspace links", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(packageRoot, "package.json"), "utf8"));
   const lock = JSON.parse(fs.readFileSync(path.join(packageRoot, "package-lock.json"), "utf8"));
