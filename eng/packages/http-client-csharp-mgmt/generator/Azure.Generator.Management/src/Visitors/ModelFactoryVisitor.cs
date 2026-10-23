@@ -123,7 +123,7 @@ namespace Azure.Generator.Management.Visitors
         /// type whose removal the baseline already accepted. Without the second check the generator would resurrect an
         /// overload whose signature names a type that is no longer generated, producing code that does not compile.
         /// </summary>
-        private static bool IsRemovalAcceptedInBaseline(ModelFactoryProvider modelFactory, MethodSignature previousSignature)
+        internal static bool IsRemovalAcceptedInBaseline(ModelFactoryProvider modelFactory, MethodSignature previousSignature)
         {
             var baseline = CodeModelGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
             if (baseline is null || baseline.IsEmpty)
@@ -241,7 +241,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
+        internal static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
         {
             return first.Name == second.Name
                 && first.Parameters.Count == second.Parameters.Count
