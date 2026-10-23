@@ -1,5 +1,5 @@
 directory: specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub
-commit: ec4027ffadfa8c62280acab86dfdc91d51844fc9
+commit: f4d3ffca09f884850694ecfbfe0b775a391a2936
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

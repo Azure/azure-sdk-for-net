@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExpeditedRolloutSubmitters = new ChangeTrackingList<string>();
             CanaryManifestOwners = new ChangeTrackingList<string>();
             FeatureManagementOwners = new ChangeTrackingList<string>();
+            FeatureApprovalClaims = new ChangeTrackingList<string>();
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
         }
 
@@ -46,9 +47,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="profitCenterCode"> The profit center code for the subscription. </param>
         /// <param name="profitCenterProgramId"> The profit center program id for the subscription. </param>
         /// <param name="featureManagementOwners"> List of feature management owners. </param>
+        /// <param name="featureApprovalClaims"> List of claims to approve or reject feature registration. </param>
         /// <param name="serviceTreeInfos"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IList<string> featureManagementOwners, IList<ServiceTreeInfo> serviceTreeInfos, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, IList<string> authorizationOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, ResourceAccessPolicy? resourceAccessPolicy, IList<ResourceAccessRole> resourceAccessRoleList, IList<string> expeditedRolloutSubmitters, ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions, ExpeditedRolloutMetadata expeditedRolloutMetadata, IList<string> canaryManifestOwners, string profitCenterCode, string profitCenterProgramId, IList<string> featureManagementOwners, IList<string> featureApprovalClaims, IList<ServiceTreeInfo> serviceTreeInfos, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -65,6 +67,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProfitCenterCode = profitCenterCode;
             ProfitCenterProgramId = profitCenterProgramId;
             FeatureManagementOwners = featureManagementOwners;
+            FeatureApprovalClaims = featureApprovalClaims;
             ServiceTreeInfos = serviceTreeInfos;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -113,6 +116,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> List of feature management owners. </summary>
         public IList<string> FeatureManagementOwners { get; }
+
+        /// <summary> List of claims to approve or reject feature registration. </summary>
+        public IList<string> FeatureApprovalClaims { get; }
 
         /// <summary> Type of server failure response message. </summary>
         public ServerFailureResponseMessageType? ServerFailureResponseMessageType

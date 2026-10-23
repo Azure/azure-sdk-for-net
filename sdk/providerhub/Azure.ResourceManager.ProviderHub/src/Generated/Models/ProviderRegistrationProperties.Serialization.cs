@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("enablePresetResourceTypes"u8);
                 writer.WriteBooleanValue(EnablePresetResourceTypes.Value);
             }
+            if (Optional.IsDefined(LifecycleInfo))
+            {
+                writer.WritePropertyName("lifecycleInfo"u8);
+                writer.WriteObjectValue(LifecycleInfo, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TokenAuthConfiguration tokenAuthConfiguration = default;
             string oboSubscriptionId = default;
             bool? enablePresetResourceTypes = default;
+            ResourceProviderLifecycleInfo lifecycleInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("providerAuthentication"u8))
@@ -575,6 +581,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     enablePresetResourceTypes = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("lifecycleInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleInfo = ResourceProviderLifecycleInfo.DeserializeResourceProviderLifecycleInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -619,7 +634,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 privateResourceProviderConfiguration,
                 tokenAuthConfiguration,
                 oboSubscriptionId,
-                enablePresetResourceTypes)
+                enablePresetResourceTypes,
+                lifecycleInfo)
             {
                 _enableTenantLinkedNotificationIsDefined = enableTenantLinkedNotificationIsDefined
             };

@@ -34,9 +34,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerRegistration"> The provider registration. </param>
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
         /// <param name="rolloutId"> The rollout id. </param>
+        /// <param name="rolloutOrchestrationMetadata"> Orchestration metadata associated with the rollout. </param>
         /// <param name="manifestCheckinSpecification"> The manifest checkin specification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, string rolloutId, ManifestCheckinSpecification manifestCheckinSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, string rolloutId, RolloutOrchestrationMetadata rolloutOrchestrationMetadata, ManifestCheckinSpecification manifestCheckinSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoProvisionConfig = autoProvisionConfig;
             Canary = canary;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
             RolloutId = rolloutId;
+            RolloutOrchestrationMetadata = rolloutOrchestrationMetadata;
             ManifestCheckinSpecification = manifestCheckinSpecification;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,6 +75,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The rollout id. </summary>
         public string RolloutId { get; set; }
+
+        /// <summary> Orchestration metadata associated with the rollout. </summary>
+        public RolloutOrchestrationMetadata RolloutOrchestrationMetadata { get; set; }
 
         /// <summary> The manifest checkin specification. </summary>
         public ManifestCheckinSpecification ManifestCheckinSpecification { get; set; }
