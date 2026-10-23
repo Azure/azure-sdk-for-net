@@ -1,6 +1,6 @@
 # Release History
 
-## 4.12.0 (2026-10-23)
+## 4.12.0 (2026-10-24)
 
 ### Other Changes
 
