@@ -1,6 +1,6 @@
-# Selective local regeneration with packaged MPG
+# Validate generator SDK changes
 
-`RegenSdkPackaged.ps1` is a developer alternative to the **packaging and SDK-generation** portions of the MPG regeneration pipeline. It does not replace hosted tests, compliance checks, or required PR validation. Existing `RegenSdkLocal.ps1` remains unchanged and continues to run directly from a local generator build.
+`ValidateGeneratorSdkChanges.ps1` is a developer alternative to the **packaging and SDK-generation** portions of the MPG regeneration pipeline. It does not replace hosted tests, compliance checks, or required PR validation. Existing `RegenSdkLocal.ps1` remains unchanged and continues to run directly from a local generator build.
 
 ## Scope and prerequisites
 
@@ -10,14 +10,14 @@ The default selection is the 21 TypeSpec-enabled SDKs from the [priority list](h
 
 ```powershell
 # Inspect the intended scope/actions without creating worktrees or publishing.
-./eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkPackaged.ps1 -WhatIf
+./eng/packages/http-client-csharp-mgmt/eng/scripts/GeneratorSdkValidation/ValidateGeneratorSdkChanges.ps1 -WhatIf
 
 # Build committed HEAD; regenerate exactly two SDKs with two workers.
-./eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkPackaged.ps1 `
+./eng/packages/http-client-csharp-mgmt/eng/scripts/GeneratorSdkValidation/ValidateGeneratorSdkChanges.ps1 `
   -Services Azure.ResourceManager.KeyVault,Azure.ResourceManager.Dns -Parallel 2
 
 # Use a generator PR's pinned merge commit and the default priority scope.
-./eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkPackaged.ps1 `
+./eng/packages/http-client-csharp-mgmt/eng/scripts/GeneratorSdkValidation/ValidateGeneratorSdkChanges.ps1 `
   -GeneratorPullRequest 12345 -Parallel 4
 ```
 
@@ -38,7 +38,7 @@ Local-only runs retain a `file:` tarball reference in their isolated emitter con
 
 Scheduling is always slowest first; there is no timing-file option. This applies equally to the default priority scope and explicit `-Services` subsets.
 
-The runner starts with bundled measurements in `RegenSdkPackaged.timings.json` and overlays the latest successful per-service timings learned in this repository. History is stored under `<git-common-dir>/mpg-local-regen/service-timings.json`, shared across worktrees but never committed. Successful workers update history even when a sibling fails; failures never replace an earlier successful measurement. Updates use a lock and atomic file replacement; an unavailable cache produces a warning rather than failing SDK generation.
+The runner starts with bundled measurements in `ValidateGeneratorSdkChanges.timings.json` and overlays the latest successful per-service timings learned in this repository. History is stored under `<git-common-dir>/mpg-local-regen/service-timings.json`, shared across worktrees but never committed. Successful workers update history even when a sibling fails; failures never replace an earlier successful measurement. Updates use a lock and atomic file replacement; an unavailable cache produces a warning rather than failing SDK generation.
 
 Only successful, finite, nonnegative measurements influence scheduling. Selected SDKs without a measurement follow the measured SDKs; a custom subset may include slow SDKs that have not been measured yet. History never adds packages to the selected scope. Bundled values are estimates from a validated local benchmark, not runtime guarantees; actual timings vary with source, machine, and contention.
 
@@ -49,7 +49,7 @@ Each worker records elapsed seconds plus UTC start/finish timestamps in `logs/re
 A reusable PR needs a package URL accessible to other machines, not an absolute local file path. With existing npm credentials for CI's Azure DevOps feed:
 
 ```powershell
-./eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkPackaged.ps1 `
+./eng/packages/http-client-csharp-mgmt/eng/scripts/GeneratorSdkValidation/ValidateGeneratorSdkChanges.ps1 `
   -GeneratorPullRequest 12345 `
   -Services Azure.ResourceManager.KeyVault,Azure.ResourceManager.Dns `
   -Parallel 2 -PublishPackages -CreateDraftPullRequest
@@ -72,5 +72,5 @@ Focused regression tests:
 
 ```powershell
 Import-Module Pester -RequiredVersion 5.3.3
-Invoke-Pester ./eng/packages/http-client-csharp-mgmt/eng/scripts/tests/PackagedRegen.Tests.ps1 -Output Detailed
+Invoke-Pester ./eng/packages/http-client-csharp-mgmt/eng/scripts/GeneratorSdkValidation/tests/GeneratorSdkValidation.Tests.ps1 -Output Detailed
 ```

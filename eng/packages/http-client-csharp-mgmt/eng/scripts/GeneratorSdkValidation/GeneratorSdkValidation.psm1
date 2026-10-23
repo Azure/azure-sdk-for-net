@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 Set-StrictMode -Version 3.0
 
-function Get-PackagedRegenIdentity {
+function Get-GeneratorSdkValidationIdentity {
     param([string]$PackageName, [string]$Version, [int]$PullRequest, [string]$RunId)
     $identifier = ($PackageName -replace '^@', '' -replace '[^a-zA-Z0-9\-_/]', '-').Trim('-').ToLowerInvariant()
     $version = "$($Version.Split('-')[0])-alpha.$RunId"
@@ -13,7 +13,7 @@ function Get-PackagedRegenIdentity {
     }
 }
 
-function Get-PackagedRegenServices {
+function Get-GeneratorSdkValidationServices {
     [CmdletBinding()]
     param([string]$RepoRoot, [string[]]$Services)
     $packages = @(Get-ChildItem (Join-Path $RepoRoot sdk) -Directory | Get-ChildItem -Directory | Where-Object {
@@ -30,10 +30,10 @@ function Get-PackagedRegenServices {
     return $packages
 }
 
-function Get-PackagedRegenSchedule {
+function Get-GeneratorSdkValidationSchedule {
     param([object[]]$Packages, [string]$HistoryPath)
     $secondsByPackage = @{}
-    $seed = Join-Path $PSScriptRoot RegenSdkPackaged.timings.json
+    $seed = Join-Path $PSScriptRoot ValidateGeneratorSdkChanges.timings.json
     foreach ($path in @($seed, $HistoryPath)) {
         if (-not $path -or -not (Test-Path $path)) { continue }
         try { $measurements = @((Get-Content $path -Raw -ErrorAction Stop) | ConvertFrom-Json -ErrorAction Stop) }
@@ -58,7 +58,7 @@ function Get-PackagedRegenSchedule {
     }; Descending = $true }, Name
 }
 
-function Update-PackagedRegenHistory {
+function Update-GeneratorSdkValidationHistory {
     param([string]$HistoryPath, [object[]]$Results)
     if (-not $HistoryPath) { return }
     $lock = $null
@@ -94,7 +94,7 @@ function Update-PackagedRegenHistory {
     }
 }
 
-function Invoke-PackagedRegenCommand {
+function Invoke-GeneratorSdkValidationCommand {
     param([string]$File, [string[]]$Arguments, [string]$WorkingDirectory)
     Push-Location $WorkingDirectory
     try {
@@ -106,7 +106,7 @@ function Invoke-PackagedRegenCommand {
     finally { Pop-Location }
 }
 
-function Assert-PackagedRegenPortableConfig {
+function Assert-GeneratorSdkValidationPortableConfig {
     param([string[]]$Paths)
     foreach ($path in $Paths) {
         $content = Get-Content $path -Raw
@@ -117,7 +117,7 @@ function Assert-PackagedRegenPortableConfig {
     }
 }
 
-function Invoke-PackagedRegenParallel {
+function Invoke-GeneratorSdkValidationParallel {
     param([object[]]$Packages, [int]$Parallel, [string]$LogDirectory, [string]$HistoryPath)
     New-Item $LogDirectory -ItemType Directory -Force | Out-Null
     $results = @($Packages | ForEach-Object -ThrottleLimit $Parallel -Parallel {
@@ -140,7 +140,7 @@ function Invoke-PackagedRegenParallel {
         }
     })
     $results | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $LogDirectory results.json)
-    Update-PackagedRegenHistory -HistoryPath $HistoryPath -Results $results
+    Update-GeneratorSdkValidationHistory -HistoryPath $HistoryPath -Results $results
     $results | Sort-Object Package | Format-Table Package, Success, Seconds, Log | Out-Host
     if (@($results | Where-Object { -not $_.Success }).Count) {
         throw "SDK regeneration failed. No commit, push, or PR was attempted. See $LogDirectory/results.json."
@@ -148,4 +148,4 @@ function Invoke-PackagedRegenParallel {
     return $results
 }
 
-Export-ModuleMember -Function Get-PackagedRegenIdentity, Get-PackagedRegenServices, Get-PackagedRegenSchedule, Update-PackagedRegenHistory, Invoke-PackagedRegenCommand, Assert-PackagedRegenPortableConfig, Invoke-PackagedRegenParallel
+Export-ModuleMember -Function Get-GeneratorSdkValidationIdentity, Get-GeneratorSdkValidationServices, Get-GeneratorSdkValidationSchedule, Update-GeneratorSdkValidationHistory, Invoke-GeneratorSdkValidationCommand, Assert-GeneratorSdkValidationPortableConfig, Invoke-GeneratorSdkValidationParallel

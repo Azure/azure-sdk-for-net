@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 <#
 .SYNOPSIS
-Regenerate selected management SDKs using a versioned, packaged MPG build.
+Validate management-generator changes by regenerating selected SDKs.
 .DESCRIPTION
 Uses CI's Initialize-WorkingDirectory.ps1, Build-Emitter.ps1, tsp-client
  generate-config-files, and the normal GenerateCode target in an isolated worktree.
@@ -21,11 +21,11 @@ Never publishes to npmjs.org. NuGet artifacts are built but not published.
 After successful regeneration, commit only selected SDK/config changes, push a new
 branch, and create a draft PR. Requires PublishPackages so its package refs are portable.
 .EXAMPLE
-./RegenSdkPackaged.ps1 -GeneratorPullRequest 12345 -Services Azure.ResourceManager.KeyVault,Azure.ResourceManager.Dns -Parallel 2
+./ValidateGeneratorSdkChanges.ps1 -GeneratorPullRequest 12345 -Services Azure.ResourceManager.KeyVault,Azure.ResourceManager.Dns -Parallel 2
 .EXAMPLE
-./RegenSdkPackaged.ps1 -GeneratorPullRequest 12345 -PublishPackages -CreateDraftPullRequest
+./ValidateGeneratorSdkChanges.ps1 -GeneratorPullRequest 12345 -PublishPackages -CreateDraftPullRequest
 .EXAMPLE
-./RegenSdkPackaged.ps1 -WhatIf
+./ValidateGeneratorSdkChanges.ps1 -WhatIf
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param(
@@ -49,17 +49,17 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 3.0
-Import-Module (Join-Path $PSScriptRoot PackagedRegen.psm1) -Force -DisableNameChecking
+Import-Module (Join-Path $PSScriptRoot GeneratorSdkValidation.psm1) -Force -DisableNameChecking
 
 if ($CreateDraftPullRequest -and -not $PublishPackages) { throw '-CreateDraftPullRequest requires -PublishPackages. Local file URLs must not enter a PR.' }
-$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../../../../..')).Path
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../../../../../..')).Path
 $emitterRelativePath = 'eng/packages/http-client-csharp-mgmt'
 $configRelativePath = 'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
 $lockRelativePath = 'eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json'
 $registry = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
 $runId = "$(Get-Date -AsUTC -Format yyyyMMdd).$([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds())"
 $manifest = Get-Content (Join-Path $repoRoot "$emitterRelativePath/package.json") -Raw | ConvertFrom-Json
-$identity = Get-PackagedRegenIdentity -PackageName $manifest.name -Version $manifest.version -PullRequest $GeneratorPullRequest -RunId $runId
+$identity = Get-GeneratorSdkValidationIdentity -PackageName $manifest.name -Version $manifest.version -PullRequest $GeneratorPullRequest -RunId $runId
 $scope = $Services -join ', '
 if (-not $PSCmdlet.ShouldProcess($scope, "Build packaged MPG in a new worktree; regenerate with $Parallel workers; publish=$PublishPackages; draft PR=$CreateDraftPullRequest")) { return }
 foreach ($tool in @('git', 'npm', 'dotnet', 'pwsh')) { $null = Get-Command $tool -ErrorAction Stop }
@@ -70,29 +70,29 @@ if (Test-Path $OutputRoot) { throw "Output directory already exists: $OutputRoot
 
 # Resolve and pin the source before executing PR code. No checkout/reset of the caller.
 if ($GeneratorPullRequest) {
-    $pr = (Invoke-PackagedRegenCommand gh @('pr', 'view', "$GeneratorPullRequest", '--repo', 'Azure/azure-sdk-for-net', '--json', 'state,baseRefName,headRefOid') $repoRoot) -join "`n" | ConvertFrom-Json
+    $pr = (Invoke-GeneratorSdkValidationCommand gh @('pr', 'view', "$GeneratorPullRequest", '--repo', 'Azure/azure-sdk-for-net', '--json', 'state,baseRefName,headRefOid') $repoRoot) -join "`n" | ConvertFrom-Json
     if ($pr.state -ne 'OPEN' -or $pr.baseRefName -ne 'main') { throw 'Expected an open generator PR targeting main.' }
-    Invoke-PackagedRegenCommand git @('fetch', 'https://github.com/Azure/azure-sdk-for-net.git', "refs/pull/$GeneratorPullRequest/merge") $repoRoot | Out-Host
-    $sourceSha = (Invoke-PackagedRegenCommand git @('rev-parse', 'FETCH_HEAD') $repoRoot | Select-Object -Last 1).Trim()
-    $mergeHead = (Invoke-PackagedRegenCommand git @('rev-parse', "$sourceSha^2") $repoRoot | Select-Object -Last 1).Trim()
+    Invoke-GeneratorSdkValidationCommand git @('fetch', 'https://github.com/Azure/azure-sdk-for-net.git', "refs/pull/$GeneratorPullRequest/merge") $repoRoot | Out-Host
+    $sourceSha = (Invoke-GeneratorSdkValidationCommand git @('rev-parse', 'FETCH_HEAD') $repoRoot | Select-Object -Last 1).Trim()
+    $mergeHead = (Invoke-GeneratorSdkValidationCommand git @('rev-parse', "$sourceSha^2") $repoRoot | Select-Object -Last 1).Trim()
     if ($mergeHead -ne $pr.headRefOid) { throw 'PR head changed or merge ref is stale. Retry against the new head.' }
 }
 else {
-    $sourceSha = (Invoke-PackagedRegenCommand git @('rev-parse', 'HEAD') $repoRoot | Select-Object -Last 1).Trim()
+    $sourceSha = (Invoke-GeneratorSdkValidationCommand git @('rev-parse', 'HEAD') $repoRoot | Select-Object -Last 1).Trim()
 }
 New-Item $OutputRoot -ItemType Directory | Out-Null
 $worktree = Join-Path $OutputRoot sdk
 $artifacts = Join-Path $OutputRoot artifacts
 New-Item $artifacts -ItemType Directory | Out-Null
 # Detached local runs cannot collide with an existing CI regeneration branch.
-Invoke-PackagedRegenCommand git @('worktree', 'add', '--detach', $worktree, $sourceSha) $repoRoot | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('worktree', 'add', '--detach', $worktree, $sourceSha) $repoRoot | Out-Host
 $packageRoot = Join-Path $worktree $emitterRelativePath
 $manifest = Get-Content (Join-Path $packageRoot package.json) -Raw | ConvertFrom-Json
-$identity = Get-PackagedRegenIdentity -PackageName $manifest.name -Version $manifest.version -PullRequest $GeneratorPullRequest -RunId $runId
-$packages = @(Get-PackagedRegenServices -RepoRoot $worktree -Services $Services)
-$commonGitDirectory = ((Invoke-PackagedRegenCommand git @('rev-parse', '--path-format=absolute', '--git-common-dir') $repoRoot) -join '').Trim()
+$identity = Get-GeneratorSdkValidationIdentity -PackageName $manifest.name -Version $manifest.version -PullRequest $GeneratorPullRequest -RunId $runId
+$packages = @(Get-GeneratorSdkValidationServices -RepoRoot $worktree -Services $Services)
+$commonGitDirectory = ((Invoke-GeneratorSdkValidationCommand git @('rev-parse', '--path-format=absolute', '--git-common-dir') $repoRoot) -join '').Trim()
 $historyPath = Join-Path $commonGitDirectory 'mpg-local-regen/service-timings.json'
-$packages = @(Get-PackagedRegenSchedule -Packages $packages -HistoryPath $historyPath)
+$packages = @(Get-GeneratorSdkValidationSchedule -Packages $packages -HistoryPath $historyPath)
 # Honor package-specific instructions before regenerating SDK code.
 foreach ($package in $packages) {
     if (Test-Path (Join-Path $package.FullName '.github/skills')) {
@@ -109,13 +109,13 @@ Write-Host "Automatic slowest-first order starts with: $($packages.Name | Select
 
 # CI scripts run in child PowerShell processes: their scope/exit handling cannot
 # terminate the orchestrator or accidentally overwrite caller variables.
-Invoke-PackagedRegenCommand pwsh @('-NoProfile', '-File', (Join-Path $worktree 'eng/scripts/typespec/Initialize-WorkingDirectory.ps1'), '-OutputDirectory', $artifacts, '-PrereleaseSuffix', "-alpha.$runId", '-EmitterPackagePath', $emitterRelativePath) $worktree | Out-Host
-Invoke-PackagedRegenCommand pwsh @('-NoProfile', '-File', (Join-Path $worktree 'eng/scripts/typespec/Build-Emitter.ps1'), '-OutputDirectory', (Join-Path $artifacts packages), '-EmitterPackagePath', $emitterRelativePath, '-GeneratorVersion', $identity.Version) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand pwsh @('-NoProfile', '-File', (Join-Path $worktree 'eng/scripts/typespec/Initialize-WorkingDirectory.ps1'), '-OutputDirectory', $artifacts, '-PrereleaseSuffix', "-alpha.$runId", '-EmitterPackagePath', $emitterRelativePath) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand pwsh @('-NoProfile', '-File', (Join-Path $worktree 'eng/scripts/typespec/Build-Emitter.ps1'), '-OutputDirectory', (Join-Path $artifacts packages), '-EmitterPackagePath', $emitterRelativePath, '-GeneratorVersion', $identity.Version) $worktree | Out-Host
 $archives = @(Get-ChildItem (Join-Path $artifacts packages) -Filter '*.tgz')
 if ($archives.Count -ne 1) { throw "Expected exactly one emitter tarball, found $($archives.Count)." }
 $overrides = Join-Path $artifacts 'packages/overrides.json'
 if ($PublishPackages) {
-    Invoke-PackagedRegenCommand npm @('publish', $archives[0].FullName, '--registry', $registry, '--access', 'public') $worktree | Out-Host
+    Invoke-GeneratorSdkValidationCommand npm @('publish', $archives[0].FullName, '--registry', $registry, '--access', 'public') $worktree | Out-Host
     # Publication is not rolled back if a later generation task fails.
     $receiptPath = Join-Path $OutputRoot run.json
     $receipt = Get-Content $receiptPath -Raw | ConvertFrom-Json
@@ -129,10 +129,10 @@ else {
     $localOverrides | ConvertTo-Json | Set-Content $overrides
 }
 $tspClient = Join-Path $worktree 'eng/common/tsp-client'
-Invoke-PackagedRegenCommand npm @('ci') $tspClient | Out-Host
-Invoke-PackagedRegenCommand npm @('ci') $worktree | Out-Host
-Invoke-PackagedRegenCommand npm @('exec', '--no', '--', 'tsp-client', 'generate-config-files', '--package-json', (Join-Path $artifacts 'lock-files/package.json'), '--emitter-package-json-path', (Join-Path $worktree $configRelativePath), '--overrides', $overrides) $tspClient | Out-Host
-$results = Invoke-PackagedRegenParallel -Packages $packages -Parallel $Parallel -LogDirectory (Join-Path $OutputRoot logs) -HistoryPath $historyPath
+Invoke-GeneratorSdkValidationCommand npm @('ci') $tspClient | Out-Host
+Invoke-GeneratorSdkValidationCommand npm @('ci') $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand npm @('exec', '--no', '--', 'tsp-client', 'generate-config-files', '--package-json', (Join-Path $artifacts 'lock-files/package.json'), '--emitter-package-json-path', (Join-Path $worktree $configRelativePath), '--overrides', $overrides) $tspClient | Out-Host
+$results = Invoke-GeneratorSdkValidationParallel -Packages $packages -Parallel $Parallel -LogDirectory (Join-Path $OutputRoot logs) -HistoryPath $historyPath
 $receiptPath = Join-Path $OutputRoot run.json
 $receipt = Get-Content $receiptPath -Raw | ConvertFrom-Json
 $receipt.Published = [bool]$PublishPackages
@@ -143,28 +143,28 @@ Write-Host "Regeneration complete. Worktree: $worktree; receipt: $receiptPath"
 if (-not $CreateDraftPullRequest) { return }
 
 # Never commit local tarball references, unrelated source/build drift, or failures.
-Assert-PackagedRegenPortableConfig @((Join-Path $worktree $configRelativePath), (Join-Path $worktree $lockRelativePath))
+Assert-GeneratorSdkValidationPortableConfig @((Join-Path $worktree $configRelativePath), (Join-Path $worktree $lockRelativePath))
 $allowed = @($configRelativePath, $lockRelativePath)
 $selectedPrefixes = @($packages | ForEach-Object { [IO.Path]::GetRelativePath($worktree, $_.FullName).Replace('\', '/') + '/' })
-$changed = @(Invoke-PackagedRegenCommand git @('diff', '--name-only', 'HEAD') $worktree)
-$changed += @(Invoke-PackagedRegenCommand git @('ls-files', '--others', '--exclude-standard') $worktree)
+$changed = @(Invoke-GeneratorSdkValidationCommand git @('diff', '--name-only', 'HEAD') $worktree)
+$changed += @(Invoke-GeneratorSdkValidationCommand git @('ls-files', '--others', '--exclude-standard') $worktree)
 foreach ($path in $changed) {
     if ($path -in $allowed) { continue }
     if (-not @($selectedPrefixes | Where-Object { $path.StartsWith($_, [StringComparison]::Ordinal) }).Count) {
         throw "Unexpected change outside selected SDKs/config: $path. Inspect $worktree; nothing was committed or pushed."
     }
 }
-$remote = (Invoke-PackagedRegenCommand git @('remote', 'get-url', 'origin') $worktree) -join ''
+$remote = (Invoke-GeneratorSdkValidationCommand git @('remote', 'get-url', 'origin') $worktree) -join ''
 if ($remote -notmatch '^(https://github\.com/|git@github\.com:)Azure/azure-sdk-for-net(\.git)?$') { throw "Refusing to push to unexpected origin: $remote" }
 $branch = $identity.Branch
-$existing = @(Invoke-PackagedRegenCommand git @('ls-remote', '--heads', 'origin', $branch) $worktree)
+$existing = @(Invoke-GeneratorSdkValidationCommand git @('ls-remote', '--heads', 'origin', $branch) $worktree)
 if ($existing.Count) { $branch += "-local-$runId" }
-Invoke-PackagedRegenCommand git @('switch', '-c', $branch) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('switch', '-c', $branch) $worktree | Out-Host
 $paths = @($configRelativePath, $lockRelativePath) + @($selectedPrefixes | ForEach-Object { $_.TrimEnd('/') })
-Invoke-PackagedRegenCommand git (@('add', '--') + $paths) $worktree | Out-Host
-Invoke-PackagedRegenCommand git @('diff', '--cached', '--check') $worktree | Out-Host
-Invoke-PackagedRegenCommand git @('commit', '-m', "Regenerate SDKs with packaged MPG $($identity.Version)") $worktree | Out-Host
-Invoke-PackagedRegenCommand git @('push', '-u', 'origin', $branch) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git (@('add', '--') + $paths) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('diff', '--cached', '--check') $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('commit', '-m', "Regenerate SDKs with packaged MPG $($identity.Version)") $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('push', '-u', 'origin', $branch) $worktree | Out-Host
 $source = if ($GeneratorPullRequest) { "https://github.com/Azure/azure-sdk-for-net/pull/$GeneratorPullRequest" } else { "commit $sourceSha" }
 $body = @"
 Generated locally from $source at ``$sourceSha`` using packaged MPG ``$($identity.Version)``.
@@ -177,4 +177,4 @@ Used CI packaging/configuration scripts and the normal GenerateCode target. All 
 "@
 $bodyPath = Join-Path $OutputRoot pr-body.md
 $body | Set-Content $bodyPath
-Invoke-PackagedRegenCommand gh @('pr', 'create', '--repo', 'Azure/azure-sdk-for-net', '--base', 'main', '--head', $branch, '--draft', '--title', $identity.Title, '--body-file', $bodyPath) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand gh @('pr', 'create', '--repo', 'Azure/azure-sdk-for-net', '--base', 'main', '--head', $branch, '--draft', '--title', $identity.Title, '--body-file', $bodyPath) $worktree | Out-Host
