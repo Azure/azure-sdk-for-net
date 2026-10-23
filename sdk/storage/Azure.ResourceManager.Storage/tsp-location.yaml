@@ -1,5 +1,5 @@
 directory: specification/storage/resource-manager/Microsoft.Storage/Storage
-commit: fd6b671904429f73310b882648f81346b05024d1
+commit: 1ba0ef01552f48496d7c1ccb850f693ea66bffc3
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
