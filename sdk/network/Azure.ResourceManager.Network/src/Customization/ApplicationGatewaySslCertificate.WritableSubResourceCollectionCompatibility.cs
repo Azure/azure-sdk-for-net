@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("PublicCertData")]
     public partial class ApplicationGatewaySslCertificate
     {
-        /// <summary> Gets or sets the Data compatibility property. </summary>
+        /// <summary> Gets or sets JSON-backed certificate data. Use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions)"/> with the certificate string, or <see cref="BinaryData.FromString(string)"/> with a quoted JSON string. </summary>
         [Azure.ResourceManager.Network.WirePath("properties.data")]
         public BinaryData Data
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Gets or sets the PublicCertData compatibility property. </summary>
+        /// <summary> Gets JSON-backed public certificate data produced from a complete JSON value, such as <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions)"/> with the certificate string. </summary>
         [Azure.ResourceManager.Network.WirePath("properties.publicCertData")]
         public BinaryData PublicCertData => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.ParseBinaryData(Properties?.PublicCertData);
     }

@@ -11,7 +11,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Trusted Root certificates properties of an application gateway. </summary>
     internal partial class ApplicationGatewayTrustedRootCertificatePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

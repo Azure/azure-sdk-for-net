@@ -13,7 +13,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Trusted client certificates properties of an application gateway. </summary>
     internal partial class ApplicationGatewayTrustedClientCertificatePropertiesFormat : IJsonModel<ApplicationGatewayTrustedClientCertificatePropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data, "D");
+                SerializeData(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ValidatedCertData))
             {
                 writer.WritePropertyName("validatedCertData"u8);
-                writer.WriteBase64StringValue(ValidatedCertData, "D");
+                SerializeValidatedCertData(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientCertIssuerDN))
             {
@@ -145,20 +144,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref data);
                     continue;
                 }
                 if (prop.NameEquals("validatedCertData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validatedCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref validatedCertData);
                     continue;
                 }
                 if (prop.NameEquals("clientCertIssuerDN"u8))

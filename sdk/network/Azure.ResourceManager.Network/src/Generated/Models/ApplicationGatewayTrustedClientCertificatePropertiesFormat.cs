@@ -11,7 +11,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Trusted client certificates properties of an application gateway. </summary>
     internal partial class ApplicationGatewayTrustedClientCertificatePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
