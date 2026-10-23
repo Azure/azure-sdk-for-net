@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 accountParameters)).Value;
 
             BlobAccessPointQumuloSourceProperties source = CreateSource();
-            ArmOperation<BlobAccessPointConnectionTestResult> proposedConnectionOperation = await account.TestProposedConnectionAsync(
+            ArmOperation<BlobAccessPointConnectionTestResult> proposedConnectionOperation = await account.TestBlobAccessPointProposedConnectionAsync(
                 WaitUntil.Started,
                 new BlobAccessPointProposedConnectionTestContent(source));
             Assert.IsNotEmpty(proposedConnectionOperation.Id);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(BlobAccessPointConfigurationState.Active, configuration.Data.Properties.State);
             Assert.AreEqual("Test Blob Access Point configuration", configuration.Data.Properties.Description);
             Assert.IsNotEmpty(configuration.Data.Properties.UniqueId);
-            Assert.AreEqual(ResourceProvisioningState.Succeeded, configuration.Data.Properties.ProvisioningState);
+            Assert.AreEqual(StorageResourceProvisioningState.Succeeded, configuration.Data.Properties.ProvisioningState);
             Assert.AreEqual("test", configuration.Data.Tags["environment"]);
             AssertSource(configuration.Data.Properties.Source);
 

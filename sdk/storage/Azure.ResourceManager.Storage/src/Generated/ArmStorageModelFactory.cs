@@ -2480,7 +2480,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="source"> Information about the backing data source. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.BlobAccessPointConfigurationProperties"/> instance for mocking. </returns>
-        public static BlobAccessPointConfigurationProperties BlobAccessPointConfigurationProperties(string uniqueId = default, BlobAccessPointConfigurationState? state = default, string description = default, BlobAccessPointConnectionTestStatus? lastConnectionTestStatus = default, DateTimeOffset? lastConnectionTestOn = default, string lastConnectionTestErrorMessage = default, BlobAccessPointSourceProperties source = default, ResourceProvisioningState? provisioningState = default)
+        public static BlobAccessPointConfigurationProperties BlobAccessPointConfigurationProperties(string uniqueId = default, BlobAccessPointConfigurationState? state = default, string description = default, BlobAccessPointConnectionTestStatus? lastConnectionTestStatus = default, DateTimeOffset? lastConnectionTestOn = default, string lastConnectionTestErrorMessage = default, BlobAccessPointSourceProperties source = default, StorageResourceProvisioningState? provisioningState = default)
         {
             return new BlobAccessPointConfigurationProperties(
                 uniqueId,
@@ -2544,7 +2544,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tlsVerification"> TLS certificate verification behavior. Defaults to Perform when not specified. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint created by Azure Storage. </param>
         /// <returns> A new <see cref="Models.BlobAccessPointPrivateLinkConnectionProperties"/> instance for mocking. </returns>
-        public static BlobAccessPointPrivateLinkConnectionProperties BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointPrivateLinkIdType privateLinkIdType = default, ResourceIdentifier privateLinkId = default, string privateLinkGroupId = default, string privateLinkLocation = default, string requestMessage = default, Uri endpoint = default, BlobAccessPointTlsVerification? tlsVerification = default, string privateEndpointName = default)
+        public static BlobAccessPointPrivateLinkConnectionProperties BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointPrivateLinkIdType privateLinkIdType = default, ResourceIdentifier privateLinkId = default, string privateLinkGroupId = default, AzureLocation privateLinkLocation = default, string requestMessage = default, Uri endpoint = default, BlobAccessPointTlsVerification? tlsVerification = default, string privateEndpointName = default)
         {
             return new BlobAccessPointPrivateLinkConnectionProperties(
                 BlobAccessPointConnectionType.PrivateLink,

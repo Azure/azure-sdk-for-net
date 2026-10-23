@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The provisioning state of a resource type. </summary>
-    public readonly partial struct ResourceProvisioningState : IEquatable<ResourceProvisioningState>
+    public readonly partial struct StorageResourceProvisioningState : IEquatable<StorageResourceProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Resource creation was canceled. </summary>
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceProvisioningState(string value)
+        public StorageResourceProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static ResourceProvisioningState Succeeded { get; } = new ResourceProvisioningState(SucceededValue);
+        public static StorageResourceProvisioningState Succeeded { get; } = new StorageResourceProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static ResourceProvisioningState Failed { get; } = new ResourceProvisioningState(FailedValue);
+        public static StorageResourceProvisioningState Failed { get; } = new StorageResourceProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static ResourceProvisioningState Canceled { get; } = new ResourceProvisioningState(CanceledValue);
+        public static StorageResourceProvisioningState Canceled { get; } = new StorageResourceProvisioningState(CanceledValue);
 
-        /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageResourceProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceProvisioningState left, ResourceProvisioningState right) => left.Equals(right);
+        public static bool operator ==(StorageResourceProvisioningState left, StorageResourceProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageResourceProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceProvisioningState left, ResourceProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(StorageResourceProvisioningState left, StorageResourceProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProvisioningState(string value) => new ResourceProvisioningState(value);
+        public static implicit operator StorageResourceProvisioningState(string value) => new StorageResourceProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProvisioningState?(string value) => value == null ? null : new ResourceProvisioningState(value);
+        public static implicit operator StorageResourceProvisioningState?(string value) => value == null ? null : new StorageResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageResourceProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

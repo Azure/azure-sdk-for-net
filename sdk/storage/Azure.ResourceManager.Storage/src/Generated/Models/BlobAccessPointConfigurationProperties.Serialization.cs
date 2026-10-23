@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset? lastConnectionTestOn = default;
             string lastConnectionTestErrorMessage = default;
             BlobAccessPointSourceProperties source = default;
-            ResourceProvisioningState? provisioningState = default;
+            StorageResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new StorageResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -21,11 +21,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="privateLinkLocation"> The Azure region in which the private endpoint is provisioned. </param>
         /// <param name="requestMessage"> The connection request message sent to the Private Link owner. </param>
         /// <param name="endpoint"> The backing endpoint as seen by the target of the Private Link. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkId"/>, <paramref name="privateLinkLocation"/>, <paramref name="requestMessage"/> or <paramref name="endpoint"/> is null. </exception>
-        public BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointPrivateLinkIdType privateLinkIdType, ResourceIdentifier privateLinkId, string privateLinkLocation, string requestMessage, Uri endpoint) : base(BlobAccessPointConnectionType.PrivateLink)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkId"/>, <paramref name="requestMessage"/> or <paramref name="endpoint"/> is null. </exception>
+        public BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointPrivateLinkIdType privateLinkIdType, ResourceIdentifier privateLinkId, AzureLocation privateLinkLocation, string requestMessage, Uri endpoint) : base(BlobAccessPointConnectionType.PrivateLink)
         {
             Argument.AssertNotNull(privateLinkId, nameof(privateLinkId));
-            Argument.AssertNotNull(privateLinkLocation, nameof(privateLinkLocation));
             Argument.AssertNotNull(requestMessage, nameof(requestMessage));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="endpoint"> The backing endpoint as seen by the target of the Private Link. </param>
         /// <param name="tlsVerification"> TLS certificate verification behavior. Defaults to Perform when not specified. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint created by Azure Storage. </param>
-        internal BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointConnectionType connectionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointPrivateLinkIdType privateLinkIdType, ResourceIdentifier privateLinkId, string privateLinkGroupId, string privateLinkLocation, string requestMessage, Uri endpoint, BlobAccessPointTlsVerification? tlsVerification, string privateEndpointName) : base(connectionType, additionalBinaryDataProperties)
+        internal BlobAccessPointPrivateLinkConnectionProperties(BlobAccessPointConnectionType connectionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointPrivateLinkIdType privateLinkIdType, ResourceIdentifier privateLinkId, string privateLinkGroupId, AzureLocation privateLinkLocation, string requestMessage, Uri endpoint, BlobAccessPointTlsVerification? tlsVerification, string privateEndpointName) : base(connectionType, additionalBinaryDataProperties)
         {
             PrivateLinkIdType = privateLinkIdType;
             PrivateLinkId = privateLinkId;
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The Azure region in which the private endpoint is provisioned. </summary>
         [WirePath("privateLinkLocation")]
-        public string PrivateLinkLocation { get; set; }
+        public AzureLocation PrivateLinkLocation { get; set; }
 
         /// <summary> The connection request message sent to the Private Link owner. </summary>
         [WirePath("requestMessage")]

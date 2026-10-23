@@ -437,11 +437,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BlobAccessPointConnectionTestResult>> TestProposedConnectionAsync(WaitUntil waitUntil, BlobAccessPointProposedConnectionTestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BlobAccessPointConnectionTestResult>> TestBlobAccessPointProposedConnectionAsync(WaitUntil waitUntil, BlobAccessPointProposedConnectionTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _blobAccessPointConnectionTestsClientDiagnostics.CreateScope("StorageAccountResource.TestProposedConnection");
+            using DiagnosticScope scope = _blobAccessPointConnectionTestsClientDiagnostics.CreateScope("StorageAccountResource.TestBlobAccessPointProposedConnection");
             scope.Start();
             try
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
+                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BlobAccessPointConnectionTestResult> TestProposedConnection(WaitUntil waitUntil, BlobAccessPointProposedConnectionTestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BlobAccessPointConnectionTestResult> TestBlobAccessPointProposedConnection(WaitUntil waitUntil, BlobAccessPointProposedConnectionTestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _blobAccessPointConnectionTestsClientDiagnostics.CreateScope("StorageAccountResource.TestProposedConnection");
+            using DiagnosticScope scope = _blobAccessPointConnectionTestsClientDiagnostics.CreateScope("StorageAccountResource.TestBlobAccessPointProposedConnection");
             scope.Start();
             try
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
+                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),

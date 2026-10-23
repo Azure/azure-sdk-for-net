@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobAccessPointPrivateLinkIdType privateLinkIdType = default;
             ResourceIdentifier privateLinkId = default;
             string privateLinkGroupId = default;
-            string privateLinkLocation = default;
+            AzureLocation privateLinkLocation = default;
             string requestMessage = default;
             Uri endpoint = default;
             BlobAccessPointTlsVerification? tlsVerification = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("privateLinkLocation"u8))
                 {
-                    privateLinkLocation = prop.Value.GetString();
+                    privateLinkLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requestMessage"u8))

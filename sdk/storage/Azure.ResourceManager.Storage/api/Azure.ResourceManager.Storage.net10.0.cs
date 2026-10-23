@@ -1146,8 +1146,8 @@ namespace Azure.ResourceManager.Storage
         Azure.ResourceManager.Storage.StorageAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestResult> TestProposedConnection(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.BlobAccessPointProposedConnectionTestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestResult>> TestProposedConnectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.BlobAccessPointProposedConnectionTestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestResult> TestBlobAccessPointProposedConnection(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.BlobAccessPointProposedConnectionTestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestResult>> TestBlobAccessPointProposedConnectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.BlobAccessPointProposedConnectionTestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Update(Azure.ResourceManager.Storage.Models.StorageAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> UpdateAsync(Azure.ResourceManager.Storage.Models.StorageAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationConnection BlobAccessPointConfigurationConnection(string blobAccessPointConfigurationName = null, string blobAccessPointConfigurationUniqueId = null) { throw null; }
         public static Azure.ResourceManager.Storage.BlobAccessPointConfigurationData BlobAccessPointConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationPatch BlobAccessPointConfigurationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationPropertiesPatch properties = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationProperties BlobAccessPointConfigurationProperties(string uniqueId = null, Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState? state = default(Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState?), string description = null, Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestStatus? lastConnectionTestStatus = default(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestStatus?), System.DateTimeOffset? lastConnectionTestOn = default(System.DateTimeOffset?), string lastConnectionTestErrorMessage = null, Azure.ResourceManager.Storage.Models.BlobAccessPointSourceProperties source = null, Azure.ResourceManager.Storage.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.ResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationProperties BlobAccessPointConfigurationProperties(string uniqueId = null, Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState? state = default(Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState?), string description = null, Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestStatus? lastConnectionTestStatus = default(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestStatus?), System.DateTimeOffset? lastConnectionTestOn = default(System.DateTimeOffset?), string lastConnectionTestErrorMessage = null, Azure.ResourceManager.Storage.Models.BlobAccessPointSourceProperties source = null, Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationPropertiesPatch BlobAccessPointConfigurationPropertiesPatch(Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState? state = default(Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState?), string description = null, Azure.ResourceManager.Storage.Models.BlobAccessPointSourcePropertiesPatch source = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionProperties BlobAccessPointConnectionProperties(string connectionType = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionPropertiesPatch BlobAccessPointConnectionPropertiesPatch(string connectionType = null) { throw null; }
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointNasuniSourcePropertiesPatch BlobAccessPointNasuniSourcePropertiesPatch(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionPropertiesPatch connection = null, Azure.ResourceManager.Storage.Models.BlobAccessPointRemoteAuthPropertiesPatch auth = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointNetAppOntapSourceProperties BlobAccessPointNetAppOntapSourceProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionProperties connection = null, Azure.ResourceManager.Storage.Models.BlobAccessPointRemoteAuthProperties auth = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointNetAppOntapSourcePropertiesPatch BlobAccessPointNetAppOntapSourcePropertiesPatch(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionPropertiesPatch connection = null, Azure.ResourceManager.Storage.Models.BlobAccessPointRemoteAuthPropertiesPatch auth = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkConnectionProperties BlobAccessPointPrivateLinkConnectionProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType privateLinkIdType = default(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType), Azure.Core.ResourceIdentifier privateLinkId = null, string privateLinkGroupId = null, string privateLinkLocation = null, string requestMessage = null, System.Uri endpoint = null, Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification? tlsVerification = default(Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification?), string privateEndpointName = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkConnectionProperties BlobAccessPointPrivateLinkConnectionProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType privateLinkIdType = default(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType), Azure.Core.ResourceIdentifier privateLinkId = null, string privateLinkGroupId = null, Azure.Core.AzureLocation privateLinkLocation = default(Azure.Core.AzureLocation), string requestMessage = null, System.Uri endpoint = null, Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification? tlsVerification = default(Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification?), string privateEndpointName = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkConnectionPropertiesPatch BlobAccessPointPrivateLinkConnectionPropertiesPatch(Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification? tlsVerification = default(Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointProposedConnectionTestContent BlobAccessPointProposedConnectionTestContent(Azure.ResourceManager.Storage.Models.BlobAccessPointSourceProperties source = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobAccessPointQumuloSourceProperties BlobAccessPointQumuloSourceProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionProperties connection = null, Azure.ResourceManager.Storage.Models.BlobAccessPointRemoteAuthProperties auth = null) { throw null; }
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string LastConnectionTestErrorMessage { get { throw null; } }
         public System.DateTimeOffset? LastConnectionTestOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionTestStatus? LastConnectionTestStatus { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobAccessPointSourceProperties Source { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.BlobAccessPointConfigurationState? State { get { throw null; } set { } }
         public string UniqueId { get { throw null; } }
@@ -2501,13 +2501,13 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class BlobAccessPointPrivateLinkConnectionProperties : Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkConnectionProperties>
     {
-        public BlobAccessPointPrivateLinkConnectionProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType privateLinkIdType, Azure.Core.ResourceIdentifier privateLinkId, string privateLinkLocation, string requestMessage, System.Uri endpoint) { }
+        public BlobAccessPointPrivateLinkConnectionProperties(Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType privateLinkIdType, Azure.Core.ResourceIdentifier privateLinkId, Azure.Core.AzureLocation privateLinkLocation, string requestMessage, System.Uri endpoint) { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public string PrivateEndpointName { get { throw null; } }
         public string PrivateLinkGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkId { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.BlobAccessPointPrivateLinkIdType PrivateLinkIdType { get { throw null; } set { } }
-        public string PrivateLinkLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation PrivateLinkLocation { get { throw null; } set { } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.BlobAccessPointTlsVerification? TlsVerification { get { throw null; } set { } }
         protected override Azure.ResourceManager.Storage.Models.BlobAccessPointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4707,24 +4707,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Storage.Models.ResourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.ResourceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.ResourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.ResourceProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.ResourceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.ResourceProvisioningState left, Azure.ResourceManager.Storage.Models.ResourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.ResourceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.ResourceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.ResourceProvisioningState left, Azure.ResourceManager.Storage.Models.ResourceProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RestorePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.RestorePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.RestorePolicy>
     {
         public RestorePolicy(bool isEnabled) { }
@@ -6257,6 +6239,24 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess left, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageResourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState left, Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState left, Azure.ResourceManager.Storage.Models.StorageResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
