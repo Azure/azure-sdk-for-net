@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.DataTransfer.Models
                 writer.WritePropertyName("passphrase"u8);
                 writer.WriteStringValue(Passphrase);
             }
-            if (Optional.IsDefined(SourceAddresses))
+            if (Optional.IsDefined(StreamSourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
-                writer.WriteObjectValue<StreamSourceAddresses>(SourceAddresses, options);
+                writer.WriteObjectValue<StreamSourceAddresses>(StreamSourceAddresses, options);
             }
             if (Optional.IsCollectionDefined(DestinationEndpoints))
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
             StreamProtocol? streamProtocol = default;
             long? streamLatency = default;
             string passphrase = default;
-            StreamSourceAddresses sourceAddresses = default;
+            StreamSourceAddresses streamSourceAddresses = default;
             IList<string> destinationEndpoints = default;
             IList<long> destinationEndpointPorts = default;
             ResourceIdentifier eventHubId = default;
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
                     {
                         continue;
                     }
-                    sourceAddresses = StreamSourceAddresses.DeserializeStreamSourceAddresses(prop.Value, options);
+                    streamSourceAddresses = Models.StreamSourceAddresses.DeserializeStreamSourceAddresses(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("destinationEndpoints"u8))
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
                 streamProtocol,
                 streamLatency,
                 passphrase,
-                sourceAddresses,
+                streamSourceAddresses,
                 destinationEndpoints ?? new ChangeTrackingList<string>(),
                 destinationEndpointPorts ?? new ChangeTrackingList<long>(),
                 eventHubId,

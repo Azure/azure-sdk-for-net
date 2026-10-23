@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="streamProtocol"> The protocol of the stream. </param>
         /// <param name="streamLatency"> The latency of the stream in milliseconds. </param>
         /// <param name="passphrase"> The passphrase used for SRT streams. </param>
-        /// <param name="sourceAddresses"> The source IP address and CIDR ranges of the stream. </param>
+        /// <param name="streamSourceAddresses"> The source IP address and CIDR ranges of the stream. </param>
         /// <param name="destinationEndpoints"> The destination endpoints of the stream. </param>
         /// <param name="destinationEndpointPorts"> The destination endpoint ports of the stream. </param>
         /// <param name="eventHubId"> Event Hub ID. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PendingFlow(string subscriptionId, string connectionId, SelectedResource connection, string flowId, string keyVaultUri, LinkStatus? linkStatus, string linkedFlowId, FlowStatus? status, IReadOnlyList<ForceDisabledStatus> forceDisabledStatus, string storageAccountName, ResourceIdentifier storageAccountId, string storageContainerName, string storageTableName, ResourceIdentifier serviceBusQueueId, FlowProfileMetadata flowProfile, DataClass? flowDataType, FlowType? flowType, DataType? dataType, ProvisioningState? provisioningState, IList<string> policies, Schema schema, MessagingOptions messagingOptions, ApiFlowOptions apiFlowOptions, Uri customerManagedKeyVaultUri, string streamId, StreamProtocol? streamProtocol, long? streamLatency, string passphrase, StreamSourceAddresses sourceAddresses, IList<string> destinationEndpoints, IList<long> destinationEndpointPorts, ResourceIdentifier eventHubId, string consumerGroup, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PendingFlow(string subscriptionId, string connectionId, SelectedResource connection, string flowId, string keyVaultUri, LinkStatus? linkStatus, string linkedFlowId, FlowStatus? status, IReadOnlyList<ForceDisabledStatus> forceDisabledStatus, string storageAccountName, ResourceIdentifier storageAccountId, string storageContainerName, string storageTableName, ResourceIdentifier serviceBusQueueId, FlowProfileMetadata flowProfile, DataClass? flowDataType, FlowType? flowType, DataType? dataType, ProvisioningState? provisioningState, IList<string> policies, Schema schema, MessagingOptions messagingOptions, ApiFlowOptions apiFlowOptions, Uri customerManagedKeyVaultUri, string streamId, StreamProtocol? streamProtocol, long? streamLatency, string passphrase, StreamSourceAddresses streamSourceAddresses, IList<string> destinationEndpoints, IList<long> destinationEndpointPorts, ResourceIdentifier eventHubId, string consumerGroup, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             ConnectionId = connectionId;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
             StreamProtocol = streamProtocol;
             StreamLatency = streamLatency;
             Passphrase = passphrase;
-            SourceAddresses = sourceAddresses;
+            StreamSourceAddresses = streamSourceAddresses;
             DestinationEndpoints = destinationEndpoints;
             DestinationEndpointPorts = destinationEndpointPorts;
             EventHubId = eventHubId;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public string Passphrase { get; }
 
         /// <summary> The source IP address and CIDR ranges of the stream. </summary>
-        internal StreamSourceAddresses SourceAddresses { get; }
+        internal StreamSourceAddresses StreamSourceAddresses { get; }
 
         /// <summary> The destination endpoints of the stream. </summary>
         public IList<string> DestinationEndpoints { get; }
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public SystemData SystemData { get; }
 
         /// <summary> A source IP address or CIDR range. </summary>
-        public IList<string> SourceAddresses
+        public IList<string> StreamSourceAddresses
         {
             get
             {
-                return this.SourceAddresses is null ? default : SourceAddresses.SourceAddresses;
+                return this.StreamSourceAddresses is null ? default : StreamSourceAddresses.SourceAddresses;
             }
         }
     }

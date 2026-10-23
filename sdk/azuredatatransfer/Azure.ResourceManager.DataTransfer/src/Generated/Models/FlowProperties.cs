@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.DataTransfer.Models
         /// <param name="streamProtocol"> The protocol of the stream. </param>
         /// <param name="streamLatency"> The latency of the stream in milliseconds. </param>
         /// <param name="passphrase"> The passphrase used for SRT streams. </param>
-        /// <param name="sourceAddresses"> The source IP address and CIDR ranges of the stream. </param>
+        /// <param name="streamSourceAddresses"> The source IP address and CIDR ranges of the stream. </param>
         /// <param name="destinationEndpoints"> The destination endpoints of the stream. </param>
         /// <param name="destinationEndpointPorts"> The destination endpoint ports of the stream. </param>
         /// <param name="eventHubId"> Event Hub ID. </param>
         /// <param name="consumerGroup"> Event Hub Consumer Group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowProperties(SelectedResource connection, string flowId, string keyVaultUri, LinkStatus? linkStatus, string linkedFlowId, FlowStatus? status, IReadOnlyList<ForceDisabledStatus> forceDisabledStatus, string storageAccountName, ResourceIdentifier storageAccountId, string storageContainerName, string storageTableName, ResourceIdentifier serviceBusQueueId, FlowProfileMetadata flowProfile, DataClass? flowDataType, FlowType? flowType, DataType? dataType, ProvisioningState? provisioningState, IList<string> policies, Schema schema, MessagingOptions messagingOptions, ApiFlowOptions apiFlowOptions, Uri customerManagedKeyVaultUri, string streamId, StreamProtocol? streamProtocol, long? streamLatency, string passphrase, StreamSourceAddresses sourceAddresses, IList<string> destinationEndpoints, IList<long> destinationEndpointPorts, ResourceIdentifier eventHubId, string consumerGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowProperties(SelectedResource connection, string flowId, string keyVaultUri, LinkStatus? linkStatus, string linkedFlowId, FlowStatus? status, IReadOnlyList<ForceDisabledStatus> forceDisabledStatus, string storageAccountName, ResourceIdentifier storageAccountId, string storageContainerName, string storageTableName, ResourceIdentifier serviceBusQueueId, FlowProfileMetadata flowProfile, DataClass? flowDataType, FlowType? flowType, DataType? dataType, ProvisioningState? provisioningState, IList<string> policies, Schema schema, MessagingOptions messagingOptions, ApiFlowOptions apiFlowOptions, Uri customerManagedKeyVaultUri, string streamId, StreamProtocol? streamProtocol, long? streamLatency, string passphrase, StreamSourceAddresses streamSourceAddresses, IList<string> destinationEndpoints, IList<long> destinationEndpointPorts, ResourceIdentifier eventHubId, string consumerGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connection = connection;
             FlowId = flowId;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
             StreamProtocol = streamProtocol;
             StreamLatency = streamLatency;
             Passphrase = passphrase;
-            SourceAddresses = sourceAddresses;
+            StreamSourceAddresses = streamSourceAddresses;
             DestinationEndpoints = destinationEndpoints;
             DestinationEndpointPorts = destinationEndpointPorts;
             EventHubId = eventHubId;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public string Passphrase { get; set; }
 
         /// <summary> The source IP address and CIDR ranges of the stream. </summary>
-        internal StreamSourceAddresses SourceAddresses { get; set; }
+        internal StreamSourceAddresses StreamSourceAddresses { get; set; }
 
         /// <summary> The destination endpoints of the stream. </summary>
         public IList<string> DestinationEndpoints { get; }
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.DataTransfer.Models
         public string ConsumerGroup { get; set; }
 
         /// <summary> A source IP address or CIDR range. </summary>
-        public IList<string> SourceAddresses
+        public IList<string> StreamSourceAddresses
         {
             get
             {
-                if (this.SourceAddresses is null)
+                if (this.StreamSourceAddresses is null)
                 {
-                    SourceAddresses = new StreamSourceAddresses();
+                    StreamSourceAddresses = new StreamSourceAddresses();
                 }
-                return SourceAddresses.SourceAddresses;
+                return StreamSourceAddresses.SourceAddresses;
             }
         }
     }
