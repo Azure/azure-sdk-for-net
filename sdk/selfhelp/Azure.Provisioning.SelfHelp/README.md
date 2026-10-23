@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.SelfHelp --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
 ## Key concepts
 
 This library lets you describe Azure Self Help diagnostics, solutions, simplified solutions, and troubleshooters using .NET. Build an `Infrastructure` definition to generate Bicep for deployment to Azure.
