@@ -119,9 +119,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> events = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-0900", EventTime = t0900 },
-                new TestEvent { Id = "evt-0930", EventTime = t0930 },
-                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+                new TestEvent { Id = "evt-0900", EventOccurredOn = t0900 },
+                new TestEvent { Id = "evt-0930", EventOccurredOn = t0930 },
+                new TestEvent { Id = "evt-1000", EventOccurredOn = t1000 },
             };
 
             SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
@@ -146,9 +146,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> events = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-0900", EventTime = t0900 },
-                new TestEvent { Id = "evt-0930", EventTime = t0930 },
-                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+                new TestEvent { Id = "evt-0900", EventOccurredOn = t0900 },
+                new TestEvent { Id = "evt-0930", EventOccurredOn = t0930 },
+                new TestEvent { Id = "evt-1000", EventOccurredOn = t1000 },
             };
 
             SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
@@ -174,9 +174,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             List<TestEvent> events = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-0900", EventTime = t0900 },
-                new TestEvent { Id = "evt-0930", EventTime = t0930 },
-                new TestEvent { Id = "evt-1000", EventTime = t1000 },
+                new TestEvent { Id = "evt-0900", EventOccurredOn = t0900 },
+                new TestEvent { Id = "evt-0930", EventOccurredOn = t0930 },
+                new TestEvent { Id = "evt-1000", EventOccurredOn = t1000 },
             };
 
             SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);

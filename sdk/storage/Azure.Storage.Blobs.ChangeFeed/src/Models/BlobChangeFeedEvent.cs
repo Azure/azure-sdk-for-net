@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             Topic = (string)record[Constants.ChangeFeed.Event.Topic];
             Subject = (string)record[Constants.ChangeFeed.Event.Subject];
             EventType = new BlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
-            EventTime = DateTimeOffset.Parse((string)record[Constants.ChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
+            EventOccurredOn = DateTimeOffset.Parse((string)record[Constants.ChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
             Id = Guid.Parse((string)record[Constants.ChangeFeed.Event.EventId]);
             EventData = new BlobChangeFeedEventData((Dictionary<string, object>)record[Constants.ChangeFeed.Event.Data]);
             record.TryGetValue(Constants.ChangeFeed.Event.SchemaVersion, out object schemaVersion);
@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// The time the event is generated based on the provider's UTC time.
         /// </summary>
-        public DateTimeOffset EventTime { get; internal set; }
+        public DateTimeOffset EventOccurredOn { get; internal set; }
 
         /// <summary>
         /// Unique identifier for the event.
@@ -74,6 +74,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public string MetadataVersion { get; internal set; }
 
         /// <inheritdoc/>
-        public override string ToString() => $"{EventTime}: {EventType} {Subject} ({EventData?.ToString() ?? "Unknown Event"})";
+        public override string ToString() => $"{EventOccurredOn}: {EventType} {Subject} ({EventData?.ToString() ?? "Unknown Event"})";
     }
 }
