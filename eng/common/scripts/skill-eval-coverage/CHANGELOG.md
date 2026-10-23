@@ -16,3 +16,4 @@
   separately from the coverage outcome and historical dashboard results.
 - Keep the original blocking lint selectors independent of coverage configuration.
 - Match Vally's nonempty string-array multi-turn contract instead of object turns.
+- Use Node 24 consistently for lint, coverage checks and trusted PR reporting.
