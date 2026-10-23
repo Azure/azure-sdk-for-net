@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
-    public partial class CdnRuleSetProperties : FrontDoorStateProperties, IJsonModel<CdnRuleSetProperties>
+    internal partial class CdnRuleSetProperties : FrontDoorStateProperties, IJsonModel<CdnRuleSetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -80,6 +80,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
+            if (Optional.IsDefined(BatchMode))
+            {
+                writer.WritePropertyName("batchMode"u8);
+                writer.WriteBooleanValue(BatchMode.Value);
+            }
+            if (Optional.IsCollectionDefined(Rules))
+            {
+                writer.WritePropertyName("rules"u8);
+                writer.WriteStartArray();
+                foreach (BatchRuleProperties item in Rules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,6 +126,8 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string profileName = default;
+            bool? batchMode = default;
+            IList<BatchRuleProperties> rules = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -136,12 +153,41 @@ namespace Azure.ResourceManager.Cdn.Models
                     profileName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("batchMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    batchMode = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("rules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BatchRuleProperties> array = new List<BatchRuleProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(BatchRuleProperties.DeserializeBatchRuleProperties(item, options));
+                    }
+                    rules = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CdnRuleSetProperties(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName);
+            return new CdnRuleSetProperties(
+                provisioningState,
+                deploymentStatus,
+                additionalBinaryDataProperties,
+                profileName,
+                batchMode,
+                rules ?? new ChangeTrackingList<BatchRuleProperties>());
         }
     }
 }

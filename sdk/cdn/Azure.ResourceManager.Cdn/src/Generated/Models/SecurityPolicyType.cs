@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
         private const string WebApplicationFirewallValue = "WebApplicationFirewall";
-        private const string WebApplicationFirewallEmbeddedValue = "WebApplicationFirewallEmbedded";
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,9 +29,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the WebApplicationFirewall. </summary>
         public static SecurityPolicyType WebApplicationFirewall { get; } = new SecurityPolicyType(WebApplicationFirewallValue);
-
-        /// <summary> Gets the WebApplicationFirewallEmbedded. </summary>
-        public static SecurityPolicyType WebApplicationFirewallEmbedded { get; } = new SecurityPolicyType(WebApplicationFirewallEmbeddedValue);
 
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
