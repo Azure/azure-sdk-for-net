@@ -7,12 +7,6 @@
 - Updated to support API version `2026-11-01`.
 - Added support for Device Registry namespaces linked to a Device Provisioning Service.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0 (2026-09-03)
 
 ### Features Added
