@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConfluentAgreementListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

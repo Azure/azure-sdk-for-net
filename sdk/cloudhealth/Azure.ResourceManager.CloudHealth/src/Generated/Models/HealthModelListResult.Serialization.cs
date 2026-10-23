@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HealthModelListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HealthModelListResult(value ?? new ChangeTrackingList<HealthModelData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

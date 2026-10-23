@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.Security.Attestation
 {
     /// <summary> The sealed result of an attestation operation. </summary>
-    internal partial class SealedAttestationResult : IJsonModel<SealedAttestationResult>
+    public partial class SealedAttestationResult : IJsonModel<SealedAttestationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

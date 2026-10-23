@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaccResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maccApiVersion);
             _maccsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maccApiVersion ?? "2025-12-01-preview");
+            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BillingBenefits/maccs", out string maccsApiVersionOverride) ? maccsApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

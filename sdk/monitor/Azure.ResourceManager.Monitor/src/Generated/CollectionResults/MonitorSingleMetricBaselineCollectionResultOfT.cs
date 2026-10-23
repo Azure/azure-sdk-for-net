@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The pages of MonitorSingleMetricBaselineCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<MonitorSingleMetricBaseline>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     yield break;
                 }
-                MetricBaselinesResponse result = MetricBaselinesResponse.FromResponse(response);
+                MetricBaselinesResult result = MetricBaselinesResult.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 yield return Page<MonitorSingleMetricBaseline>.FromValues((IReadOnlyList<MonitorSingleMetricBaseline>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);

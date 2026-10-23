@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DatabaseMigrationsMongoToCosmosDbRUMongoCollection : ArmCollection, IEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>, IAsyncEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>
     {
-        private readonly ClientDiagnostics _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics;
-        private readonly DatabaseMigrationsMongoToCosmosDbRUMongo _databaseMigrationsMongoToCosmosDbRUMongoRestClient;
+        private readonly ClientDiagnostics _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics;
+        private readonly DatabaseMigrationsMongoToCosmosDBRUMongo _databaseMigrationsMongoToCosmosDBRUMongoRestClient;
 
         /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDbRUMongoCollection for mocking. </summary>
         protected DatabaseMigrationsMongoToCosmosDbRUMongoCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.DataMigration
         internal DatabaseMigrationsMongoToCosmosDbRUMongoCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DatabaseMigrationsMongoToCosmosDbRUMongoResource.ResourceType, out string databaseMigrationsMongoToCosmosDbRUMongoApiVersion);
-            _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationsMongoToCosmosDbRUMongoResource.ResourceType.Namespace, Diagnostics);
-            _databaseMigrationsMongoToCosmosDbRUMongoRestClient = new DatabaseMigrationsMongoToCosmosDbRUMongo(_databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationsMongoToCosmosDbRUMongoApiVersion ?? "2025-09-01-preview");
+            _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationsMongoToCosmosDbRUMongoResource.ResourceType.Namespace, Diagnostics);
+            _databaseMigrationsMongoToCosmosDBRUMongoRestClient = new DatabaseMigrationsMongoToCosmosDBRUMongo(_databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationsMongoToCosmosDbRUMongoApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(
                     new DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource(Client),
-                    _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics,
+                    _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(
                     new DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource(Client),
-                    _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics,
+                    _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseMigrationCosmosDBMongoData> response = Response.FromValue(DatabaseMigrationCosmosDBMongoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseMigrationCosmosDBMongoData> response = Response.FromValue(DatabaseMigrationCosmosDBMongoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataMigration
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbRUMongoResource>(new DatabaseMigrationCosmosDBMongoDataAsync0CollectionResultOfT(
-                _databaseMigrationsMongoToCosmosDbRUMongoRestClient,
+                _databaseMigrationsMongoToCosmosDBRUMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataMigration
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbRUMongoResource>(new DatabaseMigrationCosmosDBMongoData0CollectionResultOfT(
-                _databaseMigrationsMongoToCosmosDbRUMongoRestClient,
+                _databaseMigrationsMongoToCosmosDBRUMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseMigrationCosmosDBMongoData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseMigrationCosmosDBMongoData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseMigrationCosmosDBMongoData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDbRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsMongoToCosmosDbRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
+                HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseMigrationCosmosDBMongoData> response = default;

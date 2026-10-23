@@ -42,11 +42,17 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
 
         private ClientDiagnostics HealthcareApisWorkspacesClientDiagnostics => _healthcareApisWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HealthcareApisWorkspaces HealthcareApisWorkspacesRestClient => _healthcareApisWorkspacesRestClient ??= new HealthcareApisWorkspaces(HealthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01-preview");
+        private HealthcareApisWorkspaces HealthcareApisWorkspacesRestClient => _healthcareApisWorkspacesRestClient ??= new HealthcareApisWorkspaces(HealthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HealthcareApis/workspaces", out string apiVersion) ? apiVersion : "2025-04-01-preview");
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01-preview");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(
+            ServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-04-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HorizonDBClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDBClusterResource.ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBClusterResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBClusterApiVersion ?? "2026-05-01-preview");
+            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string horizonDBClustersApiVersionOverride) ? horizonDBClustersApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

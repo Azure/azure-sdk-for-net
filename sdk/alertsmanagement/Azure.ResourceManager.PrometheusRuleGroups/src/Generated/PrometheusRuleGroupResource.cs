@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrometheusRuleGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string prometheusRuleGroupApiVersion);
             _prometheusRuleGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrometheusRuleGroups", ResourceType.Namespace, Diagnostics);
-            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(_prometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, prometheusRuleGroupApiVersion ?? "2023-03-01");
+            _prometheusRuleGroupResourcesRestClient = new PrometheusRuleGroupResources(_prometheusRuleGroupResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AlertsManagement/prometheusRuleGroups", out string prometheusRuleGroupResourcesApiVersionOverride) ? prometheusRuleGroupResourcesApiVersionOverride : "2023-03-01");
             ValidateResourceId(id);
         }
 

@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 updatedOn,
                 createdBy,
                 updatedBy,
-                itemsKeyValueDictionary,
+                itemsKeyValueDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 entityMappingDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);
         }

@@ -183,7 +183,6 @@
             "$id": "15",
             "name": "test",
             "isExactName": false,
-            "resourceName": "TypeChangedFrom",
             "accessibility": "public",
             "parameters": [
               {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AvailableServiceAlias PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableServiceAlias IPersistableModel<AvailableServiceAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailableServiceAlias)PersistableModelCreateCore(data, options);
+        AvailableServiceAlias IPersistableModel<AvailableServiceAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailableServiceAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableServiceAlias IJsonModel<AvailableServiceAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvailableServiceAlias)JsonModelCreateCore(ref reader, options);
+        AvailableServiceAlias IJsonModel<AvailableServiceAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AvailableServiceAlias JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

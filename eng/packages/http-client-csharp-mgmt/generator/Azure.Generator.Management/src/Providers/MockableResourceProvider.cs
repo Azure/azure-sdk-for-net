@@ -113,7 +113,9 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion), .. inputClient.HasOperationApiVersionDefaults ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
+                            New.Instance(restClientProvider.Type, [clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), .. inputClient.NeedsApiVersionField ? new[] { inputClient.ConstructorApiVersion is { } constructorVersion
+                            ? InputClientExtensions.BuildConstructorApiVersion(constructorVersion)
+                            : Literal(inputClient.CurrentApiVersion) } : [], .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []]),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -265,9 +267,19 @@ namespace Azure.Generator.Management.Providers
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
 
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
-                    client => New.Instance(collection.Type,
-                        [client, This.As<ArmResource>().Id(), .. collectionMethodSignature.Parameters]))); // the first two parameters have values, others we just pass through them.
+                var thisResource = This.As<ArmResource>();
+                MethodBodyStatement bodyStatement;
+                if (collectionMethodSignature.Parameters.Count > 0)
+                {
+                    // GetCachedClient keys only on the collection type, so it would ignore different path parameter values.
+                    bodyStatement = Return(New.Instance(collection.Type,
+                        [thisResource.Client(), thisResource.Id(), .. collectionMethodSignature.Parameters]));
+                }
+                else
+                {
+                    bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"),
+                        client => New.Instance(collection.Type, client, thisResource.Id())));
+                }
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,

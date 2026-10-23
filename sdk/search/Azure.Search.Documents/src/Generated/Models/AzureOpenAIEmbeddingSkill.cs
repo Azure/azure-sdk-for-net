@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill
     {
         private int? _dimensions;
-        internal bool _dimensionsIsDefined;
+        private bool _dimensionsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIEmbeddingSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

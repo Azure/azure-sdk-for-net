@@ -76,19 +76,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(NodeSelector))
             {
-                writer.WritePropertyName("nodeSelector"u8);
-                writer.WriteStartObject();
-                foreach (var item in NodeSelector)
+                if (NodeSelector != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("nodeSelector"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in NodeSelector)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("nodeSelector"u8);
+                }
             }
             if (Optional.IsDefined(Resources))
             {
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, string> nodeSelector = default;
+            IDictionary<string, string> nodeSelector = new ChangeTrackingDictionary<string, string>();
             MachineLearningInstanceTypeSchemaResources resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        nodeSelector = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -177,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningInstanceTypeSchema(nodeSelector ?? new ChangeTrackingDictionary<string, string>(), resources, additionalBinaryDataProperties);
+            return new MachineLearningInstanceTypeSchema(nodeSelector, resources, additionalBinaryDataProperties);
         }
     }
 }

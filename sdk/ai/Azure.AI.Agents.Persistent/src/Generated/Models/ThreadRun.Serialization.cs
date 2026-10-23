@@ -96,7 +96,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (_requiredActionIsDefined || Optional.IsDefined(RequiredAction))
+            if (Optional.IsDefined(RequiredAction, _requiredActionIsDefined))
             {
                 if (RequiredAction != null)
                 {
@@ -193,7 +193,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("usage"u8);
             }
-            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
                 if (Temperature != null)
                 {
@@ -205,7 +205,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("temperature"u8);
                 }
             }
-            if (_topPIsDefined || Optional.IsDefined(TopP))
+            if (Optional.IsDefined(TopP, _topPIsDefined))
             {
                 if (TopP != null)
                 {
@@ -296,7 +296,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("metadata"u8);
             }
-            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
+            if (Optional.IsDefined(ToolResources, _toolResourcesIsDefined))
             {
                 if (ToolResources != null)
                 {

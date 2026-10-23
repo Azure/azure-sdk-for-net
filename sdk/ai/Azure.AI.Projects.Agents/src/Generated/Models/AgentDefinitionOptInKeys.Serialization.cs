@@ -18,6 +18,7 @@ namespace Azure.AI.Projects.Agents
             AgentDefinitionOptInKeys.DigitalWorkerV1Preview => "DigitalWorker=V1Preview",
             AgentDefinitionOptInKeys.GithubCopilotV1Preview => "GitHubCopilot=V1Preview",
             AgentDefinitionOptInKeys.SkillsV1Preview => "Skills=V1Preview",
+            AgentDefinitionOptInKeys.MicrosoftCopilotV1Preview => "MicrosoftCopilot=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.")
         };
 
@@ -51,6 +52,10 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {
                 return AgentDefinitionOptInKeys.SkillsV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftCopilot=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.MicrosoftCopilotV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.");
         }

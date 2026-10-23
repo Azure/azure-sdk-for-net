@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperatorApiPlanMarketplaceProperties(offerId, publisherId, planId, planTermsAndConditionsLinks, additionalBinaryDataProperties);
+            return new OperatorApiPlanMarketplaceProperties(offerId, publisherId, planId, planTermsAndConditionsLinks ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

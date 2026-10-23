@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmVirtualMachineTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scVmmVirtualMachineTemplateApiVersion);
             _virtualMachineTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            _virtualMachineTemplatesRestClient = new VirtualMachineTemplates(_virtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmVirtualMachineTemplateApiVersion ?? "2025-03-13");
+            _virtualMachineTemplatesRestClient = new VirtualMachineTemplates(_virtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualMachineTemplates", out string virtualMachineTemplatesApiVersionOverride) ? virtualMachineTemplatesApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 

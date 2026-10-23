@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 name,
                 displayName,
                 aggregationType,
-                members,
+                members ?? new ChangeTrackingList<string>(),
                 degradedThreshold,
                 unhealthyThreshold,
                 unit,

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
 
         private ClientDiagnostics DeidServicesClientDiagnostics => _deidServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeidServices DeidServicesRestClient => _deidServicesRestClient ??= new DeidServices(DeidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-20");
+        private DeidServices DeidServicesRestClient => _deidServicesRestClient ??= new DeidServices(DeidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HealthDataAIServices/deidServices", out string apiVersion) ? apiVersion : "2024-09-20");
 
         /// <summary>
         /// List DeidService resources by subscription ID

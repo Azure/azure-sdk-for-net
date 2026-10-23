@@ -1,4 +1,9 @@
 import:
   - ../../.vscode/cspell.json
-words:
-  - hmac
+overrides:
+  - filename: '**/sdk/storage/**/*.cs'
+    words:
+      - hmac
+      - Nasuni
+      - Ontap
+      - Qumulo
