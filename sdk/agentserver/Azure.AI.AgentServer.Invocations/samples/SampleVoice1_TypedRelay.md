@@ -1,14 +1,25 @@
 # Sample Voice 1: Typed Voice relay
 
 This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay
-over `/conversation_engine` and the existing `/invocations_ws` endpoint. The
+over `/voice_conversation_engine` and the existing `/invocations_ws` endpoint. The
 handler explicitly acknowledges startup, creates every response and output ID,
 and owns cancellation for its response tasks.
 
+Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. Voice Live senders must use the same event contract. Interruption cancellation and the `heard_text` snapshot are unchanged.
+
 ## Prerequisites
 
+This sample requires `Azure.AI.AgentServer.Invocations` version `1.0.0-beta.8`
+or a compatible later version containing `VoiceUserBargeInEvent` and
+`OnUserBargeInAsync`. Older preview packages do not contain these APIs.
+
+Until a release containing these APIs and the CE route is published, use a
+matching local library build, including its companion Core package, from the
+same SDK checkout. An older package selected by `--prerelease` is not sufficient.
+After a matching release is available, install it explicitly:
+
 ```dotnetcli
-dotnet add package Azure.AI.AgentServer.Invocations --prerelease
+dotnet add package Azure.AI.AgentServer.Invocations --version 1.0.0-beta.8
 ```
 
 ## Declare Voice support
@@ -32,7 +43,7 @@ code, and declare the following in the hosted agent definition instead:
 
 ```json
 "protocol_versions": [
-  { "protocol": "conversation_engine", "version": "1.0.0" }
+  { "protocol": "voice_conversation_engine", "version": "1.0.0" }
 ]
 ```
 
@@ -135,9 +146,9 @@ public class VoiceSupportHandler : VoiceHandler
             generation);
     }
 
-    protected override Task OnBargeInAsync(
+    protected override Task OnUserBargeInAsync(
         VoiceSession session,
-        VoiceBargeInEvent bargeIn,
+        VoiceUserBargeInEvent bargeIn,
         CancellationToken cancellationToken)
     {
         CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);
