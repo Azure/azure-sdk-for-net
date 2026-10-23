@@ -1,0 +1,5 @@
+directory: specification/management/resource-manager/Microsoft.Management/ServiceGroups
+commit: 5dc9fa8f2e94ed99f4b745eeeebfe109016209de
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories: []
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
