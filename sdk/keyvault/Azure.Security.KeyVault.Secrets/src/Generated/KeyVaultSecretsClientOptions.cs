@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary> Client options for <see cref="KeyVaultSecretsClient"/>. </summary>
     internal partial class KeyVaultSecretsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_01_Preview;
 
         /// <summary> Initializes a new instance of KeyVaultSecretsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Secrets
         [Experimental("SCME0002")]
         internal KeyVaultSecretsClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-04-01";
+            Version = "2026-07-01-preview";
             if (section is null || !section.Exists())
             {
                 return;
