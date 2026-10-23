@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rules to create. </summary>
-    public partial class CdnRuleProperties : IJsonModel<CdnRuleProperties>
+    internal partial class CdnRuleProperties : IJsonModel<CdnRuleProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

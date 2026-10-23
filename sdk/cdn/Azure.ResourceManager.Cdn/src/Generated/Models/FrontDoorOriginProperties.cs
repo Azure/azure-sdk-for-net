@@ -13,7 +13,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin. </summary>
-    public partial class FrontDoorOriginProperties
+    internal partial class FrontDoorOriginProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginProperties"/>. </summary>
         public FrontDoorOriginProperties()
         {
+            CustomCertificateSubjects = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginProperties"/>. </summary>
@@ -33,13 +34,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
-        /// <param name="originCapacityResource"> Origin capacity settings for an origin. </param>
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
+        /// <param name="certificateNameCheckValidationMode"> The validation mode for certificate name check. Only applicable when enforceCertificateNameCheck is true. </param>
+        /// <param name="customCertificateSubjects"> The list of custom certificate subjects to validate against. Only applicable when certificateNameCheckValidationMode is 'CustomCertificateSubject'. Must contain 1 or 2 entries. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginProperties(string originGroupName, CdnResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, FrontDoorOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginProperties(string originGroupName, CdnResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, CertificateNameCheckValidationMode? certificateNameCheckValidationMode, IList<string> customCertificateSubjects, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginGroupName = originGroupName;
             Origin = origin;
@@ -50,9 +52,10 @@ namespace Azure.ResourceManager.Cdn.Models
             Priority = priority;
             Weight = weight;
             SharedPrivateLinkResource = sharedPrivateLinkResource;
-            OriginCapacityResource = originCapacityResource;
             EnabledState = enabledState;
             EnforceCertificateNameCheck = enforceCertificateNameCheck;
+            CertificateNameCheckValidationMode = certificateNameCheckValidationMode;
+            CustomCertificateSubjects = customCertificateSubjects;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -94,10 +97,6 @@ namespace Azure.ResourceManager.Cdn.Models
         [WirePath("sharedPrivateLinkResource")]
         public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
 
-        /// <summary> Origin capacity settings for an origin. </summary>
-        [WirePath("originCapacityResource")]
-        public FrontDoorOriginCapacitySettings OriginCapacityResource { get; set; }
-
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         [WirePath("enabledState")]
         public EnabledState? EnabledState { get; set; }
@@ -105,6 +104,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Whether to enable certificate name check at origin level. </summary>
         [WirePath("enforceCertificateNameCheck")]
         public bool? EnforceCertificateNameCheck { get; set; }
+
+        /// <summary> The validation mode for certificate name check. Only applicable when enforceCertificateNameCheck is true. </summary>
+        [WirePath("certificateNameCheckValidationMode")]
+        public CertificateNameCheckValidationMode? CertificateNameCheckValidationMode { get; set; }
+
+        /// <summary> The list of custom certificate subjects to validate against. Only applicable when certificateNameCheckValidationMode is 'CustomCertificateSubject'. Must contain 1 or 2 entries. </summary>
+        [WirePath("customCertificateSubjects")]
+        public IList<string> CustomCertificateSubjects { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Provisioning status. </summary>
         [WirePath("provisioningState")]

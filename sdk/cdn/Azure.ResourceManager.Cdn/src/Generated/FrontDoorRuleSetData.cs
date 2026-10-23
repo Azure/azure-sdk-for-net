@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Cdn
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
+        public FrontDoorRuleSetData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,14 +37,9 @@ namespace Azure.ResourceManager.Cdn
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
-        public FrontDoorRuleSetData()
-        {
-        }
-
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
         [WirePath("properties")]
-        internal CdnRuleSetProperties Properties { get; }
+        internal CdnRuleSetProperties Properties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
@@ -68,6 +68,46 @@ namespace Azure.ResourceManager.Cdn
             get
             {
                 return Properties is null ? default : Properties.ProfileName;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether rule set is in batch mode. When batch mode is enabled, rules will be processed in a batch along with the rule set.
+        /// When batch mode is disabled, rules would need to be processed independently.
+        /// This property can only be set during rule set creation and cannot be updated later.
+        /// For switching modes, a new rule set needs to be created with the desired mode and rules need to be migrated to the new rule set.
+        /// </summary>
+        [WirePath("properties.batchMode")]
+        public bool? BatchMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BatchMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleSetProperties();
+                }
+                Properties.BatchMode = value;
+            }
+        }
+
+        /// <summary>
+        /// A list of rules that are part of this rule set provided the rule set is in batch mode.
+        /// This property will be ignored if the rule set is not in batch mode.
+        /// </summary>
+        [WirePath("properties.rules")]
+        public IList<BatchRuleProperties> Rules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleSetProperties();
+                }
+                return Properties.Rules;
             }
         }
     }
