@@ -51,7 +51,7 @@ use a fresh ID when rerunning it:
 
 ```C# Snippet:WebPubSubChatCreateTopic
 ChatTopic topic = await client.CreateOrReplaceTopicAsync(
-    "room1", "planning", new ChatTopic("Planning", ChatTopicState.Normal),
+    "room1", "planning", new ChatTopic("Planning"),
     new MatchConditions { IfNoneMatch = ETag.All });
 Console.WriteLine($"{topic.Id}: {topic.ConversationId}");
 ```
@@ -80,15 +80,14 @@ Console.WriteLine($"{topic.Title}: {topic.State}");
 Use the ETag from the previously retrieved `topic` to avoid overwriting
 concurrent changes. A conflicting change produces a `RequestFailedException`
 with status 412; retrieve the latest topic and decide whether to retry.
-`UpdateTopicAsync` accepts a JSON merge patch, so omitted properties are
-unchanged:
+`UpdateTopicAsync` accepts `UpdateTopicOptions`. Unset or null properties are
+unchanged. The `RequestContent` overload remains available for raw JSON patches:
 
 ```C# Snippet:WebPubSubChatUpdateTopic
 // Merge patch changes only the supplied properties.
-using RequestContent patch = RequestContent.Create(new { state = "Archived" });
-Response updated = await client.UpdateTopicAsync(
-    "room1", "planning", patch, new MatchConditions { IfMatch = topic.Etag });
-topic = (ChatTopic)updated;
+topic = await client.UpdateTopicAsync(
+    "room1", "planning", new UpdateTopicOptions { State = ChatTopicState.Archived },
+    new MatchConditions { IfMatch = topic.Etag });
 ```
 
 ## Soft delete a topic

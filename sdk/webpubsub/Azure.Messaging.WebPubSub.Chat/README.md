@@ -190,7 +190,7 @@ Use a different topic ID when rerunning it:
 
 ```C# Snippet:WebPubSubChatCreateTopic
 ChatTopic topic = await client.CreateOrReplaceTopicAsync(
-    "room1", "planning", new ChatTopic("Planning", ChatTopicState.Normal),
+    "room1", "planning", new ChatTopic("Planning"),
     new MatchConditions { IfNoneMatch = ETag.All });
 Console.WriteLine($"{topic.Id}: {topic.ConversationId}");
 ```

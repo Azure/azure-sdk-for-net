@@ -88,7 +88,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="conversationId"> Conversation associated with this topic. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <returns> A new <see cref="Chat.ChatTopic"/> instance for mocking. </returns>
-        public static ChatTopic ChatTopic(string id = default, string title = default, DateTimeOffset createdOn = default, string createdBy = default, ChatTopicState state = default, string conversationId = default, ETag etag = default)
+        public static ChatTopic ChatTopic(string id = default, string title = default, DateTimeOffset createdOn = default, string createdBy = default, ChatTopicState? state = default, string conversationId = default, ETag etag = default)
         {
             return new ChatTopic(
                 id,

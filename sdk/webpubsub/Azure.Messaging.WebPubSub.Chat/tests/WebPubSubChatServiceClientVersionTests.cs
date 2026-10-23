@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -161,7 +162,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             var transport = new MockTransport(JsonResponse(status, TopicJson));
             var client = CreateClient(transport);
             ChatTopic topic = await client.CreateOrReplaceTopicAsync(
-                "room1", "topic1", new ChatTopic("Planning", ChatTopicState.Normal),
+                "room1", "topic1", new ChatTopic("Planning") { State = ChatTopicState.Normal },
                 new MatchConditions { IfNoneMatch = ETag.All });
 
             AssertTopic(topic);
@@ -175,6 +176,62 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Assert.That(body.RootElement.TryGetProperty("createdBy", out _), Is.False);
             Assert.That(body.RootElement.TryGetProperty("conversationId", out _), Is.False);
             Assert.That(body.RootElement.TryGetProperty("etag", out _), Is.False);
+        }
+
+        [TestCase(200)]
+        [TestCase(201)]
+        public async Task CreateOrReplaceTopicOmitsUnsetState(int status)
+        {
+            var transport = new MockTransport(JsonResponse(status, TopicJson));
+            var topic = new ChatTopic("Announcements");
+            Assert.That(topic.State, Is.Null);
+
+            ChatTopic result = await CreateClient(transport).CreateOrReplaceTopicAsync("room1", "topic1", topic);
+
+            AssertTopic(result);
+            AssertTopicRequest(transport.SingleRequest, RequestMethod.Put);
+            using JsonDocument body = await ReadBodyAsync(transport.SingleRequest);
+            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "title" }));
+            Assert.That(body.RootElement.GetProperty("title").GetString(), Is.EqualTo("Announcements"));
+        }
+
+        [TestCase("Normal")]
+        [TestCase("Archived")]
+        [TestCase("FutureState")]
+        public async Task CreateOrReplaceTopicSendsExplicitState(string state)
+        {
+            var transport = new MockTransport(JsonResponse(200, TopicJson));
+            var topic = new ChatTopic("Announcements") { State = new ChatTopicState(state) };
+
+            await CreateClient(transport).CreateOrReplaceTopicAsync("room1", "topic1", topic);
+
+            using JsonDocument body = await ReadBodyAsync(transport.SingleRequest);
+            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "title", "state" }));
+            Assert.That(body.RootElement.GetProperty("state").GetString(), Is.EqualTo(state));
+        }
+
+        [Test]
+        public void TopicTitleIsRequired()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ChatTopic(null));
+        }
+
+        [Test]
+        public void TopicPersistencePreservesResponseAndUnknownProperties()
+        {
+            string json = TopicJson.Replace("\"Normal\"", "\"FutureState\"").Replace(
+                "\"etag\":\"topic-etag\"", "\"etag\":\"topic-etag\",\"futureProperty\":{\"value\":42}");
+            ChatTopic topic = ModelReaderWriter.Read<ChatTopic>(BinaryData.FromString(json));
+
+            using JsonDocument body = JsonDocument.Parse(ModelReaderWriter.Write(topic));
+            Assert.That(body.RootElement.GetProperty("id").GetString(), Is.EqualTo("topic1"));
+            Assert.That(body.RootElement.GetProperty("createdAt").GetDateTimeOffset(),
+                Is.EqualTo(DateTimeOffset.Parse("2026-08-01T12:00:00Z")));
+            Assert.That(body.RootElement.GetProperty("createdBy").GetString(), Is.EqualTo("alice"));
+            Assert.That(body.RootElement.GetProperty("conversationId").GetString(), Is.EqualTo("c.room1.topic1"));
+            Assert.That(body.RootElement.GetProperty("etag").GetString(), Is.EqualTo("topic-etag"));
+            Assert.That(body.RootElement.GetProperty("state").GetString(), Is.EqualTo("FutureState"));
+            Assert.That(body.RootElement.GetProperty("futureProperty").GetProperty("value").GetInt32(), Is.EqualTo(42));
         }
 
         [TestCase("Normal")]
@@ -205,6 +262,154 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             using JsonDocument body = await ReadBodyAsync(transport.SingleRequest);
             Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "state" }));
             Assert.That(body.RootElement.GetProperty("state").GetString(), Is.EqualTo("Archived"));
+        }
+
+        [TestCase("title", """{"title":"Renamed"}""")]
+        [TestCase("state", """{"state":"Archived"}""")]
+        [TestCase("futureState", """{"state":"FutureState"}""")]
+        [TestCase("both", """{"title":"Renamed","state":"Archived"}""")]
+        [TestCase("empty", "{}")]
+        public async Task TypedUpdateTopicSendsOnlySuppliedProperties(string fields, string expected)
+        {
+            var transport = CreatePatchTransport(TopicJson, expected);
+            var options = new UpdateTopicOptions
+            {
+                Title = fields == "title" || fields == "both" ? "Renamed" : null,
+                State = fields == "state" || fields == "both" ? ChatTopicState.Archived :
+                    fields == "futureState" ? new ChatTopicState("FutureState") : (ChatTopicState?)null
+            };
+
+            ChatTopic topic = await CreateClient(transport).UpdateTopicAsync(
+                "room1", "topic1", options, new MatchConditions { IfMatch = new ETag("topic-etag") });
+
+            AssertTopic(topic);
+            AssertTopicRequest(transport.SingleRequest, RequestMethod.Patch);
+            AssertHeader(transport.SingleRequest, "If-Match", "\"topic-etag\"");
+            AssertHeader(transport.SingleRequest, "Content-Type", "application/merge-patch+json");
+        }
+
+        [Test]
+        public async Task ProtocolUpdateMessagePreservesExplicitNulls()
+        {
+            const string expected = """{"createdBy":null,"content":null}""";
+            const string messageJson = """{"id":"123","createdBy":"","content":{"text":""},"etag":"message-etag"}""";
+            var transport = CreatePatchTransport(messageJson, expected);
+            using RequestContent patch = RequestContent.Create(BinaryData.FromString(expected));
+
+            Response response = await CreateClient(transport).UpdateMessageAsync(
+                "c.room1.default", "123", patch, new MatchConditions { IfMatch = ETag.All });
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(((WebPubSubChatMessage)response).Content.Text, Is.Empty);
+            Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Patch));
+            AssertHeader(transport.SingleRequest, "If-Match", "*");
+            AssertHeader(transport.SingleRequest, "Content-Type", "application/merge-patch+json");
+        }
+
+        [TestCase("content", """{"content":{"text":"Edited"}}""")]
+        [TestCase("creator", """{"createdBy":"bob"}""")]
+        [TestCase("both", """{"createdBy":"bob","content":{"text":"Edited"}}""")]
+        [TestCase("binary", """{"content":{"binary":"AQID"}}""")]
+        [TestCase("clearCreator", """{"createdBy":null}""")]
+        [TestCase("clearContent", """{"content":null}""")]
+        [TestCase("clearBoth", """{"createdBy":null,"content":null}""")]
+        [TestCase("emptyText", """{"content":{"text":""}}""")]
+        [TestCase("emptyBinary", """{"content":{"binary":""}}""")]
+        [TestCase("empty", "{}")]
+        public async Task TypedUpdateMessageSendsOnlySuppliedProperties(string fields, string expected)
+        {
+            const string messageJson = """{"id":"123","createdBy":"alice","content":{"text":"Edited"},"createdAt":"2026-08-01T12:00:00Z","etag":"message-etag"}""";
+            var transport = CreatePatchTransport(messageJson, expected);
+            var options = new UpdateMessageOptions();
+            Assert.That(options.CreatedBy, Is.Null);
+            Assert.That(options.Content, Is.Null);
+            if (fields == "creator" || fields == "both")
+            {
+                options.CreatedBy = "bob";
+            }
+            if (fields == "content" || fields == "both")
+            {
+                options.Content = new WebPubSubChatMessageContent { Text = "Edited" };
+            }
+            if (fields == "binary" || fields == "emptyBinary")
+            {
+                options.Content = new WebPubSubChatMessageContent
+                {
+                    Binary = BinaryData.FromBytes(fields == "binary" ? new byte[] { 1, 2, 3 } : Array.Empty<byte>())
+                };
+            }
+            if (fields == "emptyText")
+            {
+                options.Content = new WebPubSubChatMessageContent { Text = string.Empty };
+            }
+            if (fields == "clearCreator" || fields == "clearBoth")
+            {
+                options.CreatedBy = "bob";
+                options.CreatedBy = null;
+            }
+            if (fields == "clearContent" || fields == "clearBoth")
+            {
+                options.Content = new WebPubSubChatMessageContent { Text = "Edited" };
+                options.Content = null;
+            }
+
+            WebPubSubChatMessage message = await CreateClient(transport).UpdateMessageAsync(
+                "c.room1.default", "123", options, new MatchConditions { IfMatch = new ETag("message-etag") });
+
+            Assert.That(message.Id, Is.EqualTo("123"));
+            Assert.That(message.CreatedBy, Is.EqualTo("alice"));
+            Assert.That(message.Content.Text, Is.EqualTo("Edited"));
+            Assert.That(message.CreatedOn, Is.EqualTo(new DateTimeOffset(2026, 8, 1, 12, 0, 0, TimeSpan.Zero)));
+            Assert.That(message.Etag, Is.EqualTo(new ETag("message-etag")));
+            Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Patch));
+            Assert.That(transport.SingleRequest.Uri.ToUri().AbsoluteUri,
+                Is.EqualTo($"{Endpoint}/api/hubs/hub/chat/conversations/c.room1.default/messages/123?api-version={ApiVersion}"));
+            AssertHeader(transport.SingleRequest, "If-Match", "\"message-etag\"");
+            AssertHeader(transport.SingleRequest, "Content-Type", "application/merge-patch+json");
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TypedUpdatesRequireOptions(bool topic)
+        {
+            var transport = new MockTransport();
+            var client = CreateClient(transport);
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                if (topic)
+                {
+                    await client.UpdateTopicAsync("room1", "topic1", (UpdateTopicOptions)null);
+                }
+                else
+                {
+                    await client.UpdateMessageAsync("c.room1.default", "123", (UpdateMessageOptions)null);
+                }
+            });
+            Assert.That(transport.Requests, Is.Empty);
+        }
+
+        [TestCase(true, 404)]
+        [TestCase(true, 412)]
+        [TestCase(false, 404)]
+        [TestCase(false, 412)]
+        public void TypedUpdatesSurfaceServiceErrors(bool topic, int status)
+        {
+            var transport = new MockTransport(JsonResponse(status, """{"error":{"code":"UpdateError","message":"Update failed."}}"""));
+            var client = CreateClient(transport);
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                if (topic)
+                {
+                    await client.UpdateTopicAsync("room1", "topic1", new UpdateTopicOptions { State = ChatTopicState.Archived });
+                }
+                else
+                {
+                    await client.UpdateMessageAsync("c.room1.default", "123",
+                        new UpdateMessageOptions { Content = new WebPubSubChatMessageContent { Text = "Edited" } });
+                }
+            });
+            Assert.That(exception.Status, Is.EqualTo(status));
+            Assert.That(exception.ErrorCode, Is.EqualTo("UpdateError"));
         }
 
         [Test]
@@ -250,6 +455,19 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             options.AddPolicy(new SyncAsyncValidatingPolicy(IsAsync), HttpPipelinePosition.PerCall);
             return InstrumentClient(new WebPubSubChatServiceClient(
                 new Uri(Endpoint), "hub", new AzureKeyCredential("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH"), options));
+        }
+
+        private static MockTransport CreatePatchTransport(string responseJson, string expectedBody)
+        {
+            return new MockTransport(request =>
+            {
+                // Inspect the body before the convenience method disposes its request content.
+                using var stream = new MemoryStream();
+                request.Content.WriteTo(stream, CancellationToken.None);
+                using JsonDocument body = JsonDocument.Parse(stream.ToArray());
+                Assert.That(body.RootElement.GetRawText(), Is.EqualTo(expectedBody));
+                return JsonResponse(200, responseJson);
+            });
         }
 
         private sealed class SyncAsyncValidatingPolicy : HttpPipelinePolicy

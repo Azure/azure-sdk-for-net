@@ -40,18 +40,29 @@ Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation
 
 ## Update a message
 
-Update the content of an existing message:
+Use `UpdateMessageOptions` to update only the supplied properties of an existing
+message. Leaving `CreatedBy` unset preserves the original creator:
 
 ```C# Snippet:WebPubSubChatUpdateMessage
-var updatedMessage = new WebPubSubChatMessage(
-    "user1",
-    new WebPubSubChatMessageContent { Text = "Updated message text" });
+var updatedMessage = new UpdateMessageOptions
+{
+    Content = new WebPubSubChatMessageContent { Text = "Updated message text" }
+};
 
 client.UpdateMessage(
     room.DefaultConversation,
     "<message-id>",
     updatedMessage);
 ```
+
+`Content` replaces the entire existing content. Supply either `Text` or `Binary`;
+switching to binary does not require clearing the previous text separately.
+Leaving a property unset preserves its value, whereas explicitly assigning null
+clears it (`CreatedBy` becomes an empty string, and `Content` becomes empty text).
+For example, `new UpdateMessageOptions { Content = null }` clears only the body.
+The method returns the updated `WebPubSubChatMessage`. Pass `MatchConditions`
+with its ETag to protect against concurrent changes. The `RequestContent`
+overload remains available for raw JSON patches.
 
 ## Delete a message
 

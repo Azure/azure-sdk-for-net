@@ -104,7 +104,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
 
             #region Snippet:WebPubSubChatCreateTopic
             ChatTopic topic = await client.CreateOrReplaceTopicAsync(
-                "room1", "planning", new ChatTopic("Planning", ChatTopicState.Normal),
+                "room1", "planning", new ChatTopic("Planning"),
                 new MatchConditions { IfNoneMatch = ETag.All });
             Console.WriteLine($"{topic.Id}: {topic.ConversationId}");
             #endregion
@@ -123,10 +123,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
 
             #region Snippet:WebPubSubChatUpdateTopic
             // Merge patch changes only the supplied properties.
-            using RequestContent patch = RequestContent.Create(new { state = "Archived" });
-            Response updated = await client.UpdateTopicAsync(
-                "room1", "planning", patch, new MatchConditions { IfMatch = topic.Etag });
-            topic = (ChatTopic)updated;
+            topic = await client.UpdateTopicAsync(
+                "room1", "planning", new UpdateTopicOptions { State = ChatTopicState.Archived },
+                new MatchConditions { IfMatch = topic.Etag });
             #endregion
 
             #region Snippet:WebPubSubChatDeleteTopic
@@ -395,9 +394,10 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
             #region Snippet:WebPubSubChatUpdateMessage
-            var updatedMessage = new WebPubSubChatMessage(
-                "user1",
-                new WebPubSubChatMessageContent { Text = "Updated message text" });
+            var updatedMessage = new UpdateMessageOptions
+            {
+                Content = new WebPubSubChatMessageContent { Text = "Updated message text" }
+            };
 
             client.UpdateMessage(
                 room.DefaultConversation,

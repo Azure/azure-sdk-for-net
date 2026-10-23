@@ -87,23 +87,23 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Updates a message. </summary>
         /// <param name="conversationId">Conversation identifier.</param>
         /// <param name="messageId">Message identifier.</param>
-        /// <param name="message">The message content and creator.</param>
+        /// <param name="options">The message properties to update. Unset properties are unchanged.</param>
         /// <param name="matchConditions">Conditions for the request.</param>
         /// <param name="cancellationToken">The cancellation token that can be used to cancel the operation.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="message"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
         /// <returns>The updated message.</returns>
         public virtual Response<WebPubSubChatMessage> UpdateMessage(
             string conversationId,
             string messageId,
-            WebPubSubChatMessage message,
+            UpdateMessageOptions options,
             MatchConditions matchConditions = default,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = RequestContent.Create(message);
+            using RequestContent content = options.ToRequestContent();
             Response response = UpdateMessage(conversationId, messageId, content, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((WebPubSubChatMessage)response, response);
         }
@@ -111,25 +111,73 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Updates a message. </summary>
         /// <param name="conversationId">Conversation identifier.</param>
         /// <param name="messageId">Message identifier.</param>
-        /// <param name="message">The message content and creator.</param>
+        /// <param name="options">The message properties to update. Unset properties are unchanged.</param>
         /// <param name="matchConditions">Conditions for the request.</param>
         /// <param name="cancellationToken">The cancellation token that can be used to cancel the operation.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="message"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
         /// <returns>The updated message.</returns>
         public virtual async Task<Response<WebPubSubChatMessage>> UpdateMessageAsync(
             string conversationId,
             string messageId,
-            WebPubSubChatMessage message,
+            UpdateMessageOptions options,
             MatchConditions matchConditions = default,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = RequestContent.Create(message);
+            using RequestContent content = options.ToRequestContent();
             Response response = await UpdateMessageAsync(conversationId, messageId, content, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WebPubSubChatMessage)response, response);
+        }
+
+        /// <summary> Updates the supplied properties of a topic. </summary>
+        /// <param name="roomId"> The room identifier. </param>
+        /// <param name="topicId"> The topic identifier. </param>
+        /// <param name="options"> The topic properties to update. Unset properties are unchanged. </param>
+        /// <param name="matchConditions"> Conditions for the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="topicId"/> is empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The updated topic. </returns>
+        public virtual Response<ChatTopic> UpdateTopic(
+            string roomId,
+            string topicId,
+            UpdateTopicOptions options,
+            MatchConditions matchConditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            Response response = UpdateTopic(roomId, topicId, content, matchConditions, cancellationToken.ToRequestContext());
+            return Response.FromValue((ChatTopic)response, response);
+        }
+
+        /// <summary> Updates the supplied properties of a topic. </summary>
+        /// <param name="roomId"> The room identifier. </param>
+        /// <param name="topicId"> The topic identifier. </param>
+        /// <param name="options"> The topic properties to update. Unset properties are unchanged. </param>
+        /// <param name="matchConditions"> Conditions for the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="topicId"/> is empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The updated topic. </returns>
+        public virtual async Task<Response<ChatTopic>> UpdateTopicAsync(
+            string roomId,
+            string topicId,
+            UpdateTopicOptions options,
+            MatchConditions matchConditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            Response response = await UpdateTopicAsync(roomId, topicId, content, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ChatTopic)response, response);
         }
 
         internal WebPubSubChatServiceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string hub, WebPubSubChatServiceClientOptions options)

@@ -18,18 +18,6 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChatTopic"/>. </summary>
-        /// <param name="title"> Topic title. </param>
-        /// <param name="state"> Current lifecycle state of the topic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
-        public ChatTopic(string title, ChatTopicState state)
-        {
-            Argument.AssertNotNull(title, nameof(title));
-
-            Title = title;
-            State = state;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatTopic"/>. </summary>
         /// <param name="id"> Topic identifier unique within the room. </param>
         /// <param name="title"> Topic title. </param>
         /// <param name="createdOn"> Timestamp when the topic was created. </param>
@@ -38,7 +26,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="conversationId"> Conversation associated with this topic. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTopic(string id, string title, DateTimeOffset createdOn, string createdBy, ChatTopicState state, string conversationId, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatTopic(string id, string title, DateTimeOffset createdOn, string createdBy, ChatTopicState? state, string conversationId, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Title = title;
@@ -61,9 +49,6 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> User who created the topic. </summary>
         public string CreatedBy { get; }
-
-        /// <summary> Current lifecycle state of the topic. </summary>
-        public ChatTopicState State { get; set; }
 
         /// <summary> Conversation associated with this topic. </summary>
         public string ConversationId { get; }

@@ -252,10 +252,13 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 messageId = createdMessage.Id;
 
                 string updatedText = $"{messageText} updated";
-                var updatedMessage = new WebPubSubChatMessage(
-                    userId,
-                    new WebPubSubChatMessageContent { Text = updatedText });
-                await _client.UpdateMessageAsync(conversationId, messageId, updatedMessage);
+                var updatedMessage = new UpdateMessageOptions
+                {
+                    Content = new WebPubSubChatMessageContent { Text = updatedText }
+                };
+                WebPubSubChatMessage updated = await _client.UpdateMessageAsync(conversationId, messageId, updatedMessage);
+                Assert.That(updated.Content.Text, Is.EqualTo(updatedText));
+                Assert.That(updated.CreatedBy, Is.EqualTo(createdMessage.CreatedBy));
 
                 WebPubSubChatMessage fetchedMessage = null;
                 await foreach (WebPubSubChatMessage message in _client.GetMessagesAsync(conversationId))
@@ -269,6 +272,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
                 Assert.That(fetchedMessage, Is.Not.Null);
                 Assert.That(fetchedMessage.Content.Text, Is.EqualTo(updatedText));
+                Assert.That(fetchedMessage.CreatedBy, Is.EqualTo(createdMessage.CreatedBy));
 
                 await _client.DeleteMessageAsync(conversationId, messageId);
                 messageId = null;

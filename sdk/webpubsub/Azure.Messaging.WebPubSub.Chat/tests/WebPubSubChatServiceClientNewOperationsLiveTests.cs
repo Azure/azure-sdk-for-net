@@ -86,14 +86,14 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             try
             {
                 ChatTopic created = await _client.CreateOrReplaceTopicAsync(
-                    roomId, "planning", new ChatTopic("Planning", ChatTopicState.Normal),
+                    roomId, "planning", new ChatTopic("Planning") { State = ChatTopicState.Normal },
                     new MatchConditions { IfNoneMatch = ETag.All });
                 Assert.That(created.Id, Is.EqualTo("planning"));
                 Assert.That(created.ConversationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(created.State, Is.EqualTo(ChatTopicState.Normal));
 
                 await _client.CreateOrReplaceTopicAsync(
-                    roomId, "general", new ChatTopic("General", ChatTopicState.Normal));
+                    roomId, "general", new ChatTopic("General") { State = ChatTopicState.Normal });
                 var topicIds = new List<string>();
                 int pageCount = 0;
                 await foreach (Page<ChatTopic> page in _client.GetTopicsAsync(roomId, maxPageSize: 1).AsPages())
@@ -112,10 +112,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 Assert.That(fetched.Title, Is.EqualTo("Planning"));
                 Assert.That(fetched.ConversationId, Is.EqualTo(created.ConversationId));
 
-                using RequestContent patch = RequestContent.Create(new { title = "Archived planning", state = "Archived" });
-                Response response = await _client.UpdateTopicAsync(
-                    roomId, "planning", patch, new MatchConditions { IfMatch = fetched.Etag });
-                ChatTopic archived = (ChatTopic)response;
+                ChatTopic archived = await _client.UpdateTopicAsync(
+                    roomId, "planning", new UpdateTopicOptions { Title = "Archived planning", State = ChatTopicState.Archived },
+                    new MatchConditions { IfMatch = fetched.Etag });
                 Assert.That(archived.Title, Is.EqualTo("Archived planning"));
                 Assert.That(archived.State, Is.EqualTo(ChatTopicState.Archived));
 
