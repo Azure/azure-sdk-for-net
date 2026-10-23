@@ -93,9 +93,6 @@ jobs:
             $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
-          "android" {
-            $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
-          }
           "js" {
             $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(NPM_Registry_Authentication) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
