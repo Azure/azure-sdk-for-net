@@ -32,14 +32,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SynchronizationState"/>. </summary>
+        /// <param name="graphStatistics"> Graph extraction statistics for this synchronization. Omitted when no graph extraction took place. </param>
         /// <param name="startTime"> The start time of the current synchronization. </param>
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
         /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynchronizationState(DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IList<KnowledgeSourceSynchronizationError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynchronizationState(KnowledgeSourceGraphStatistics graphStatistics, DateTimeOffset startTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IList<KnowledgeSourceSynchronizationError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            GraphStatistics = graphStatistics;
             StartTime = startTime;
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
             ItemsUpdatesFailed = itemsUpdatesFailed;
@@ -47,6 +49,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             Errors = errors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Graph extraction statistics for this synchronization. Omitted when no graph extraction took place. </summary>
+        public KnowledgeSourceGraphStatistics GraphStatistics { get; }
 
         /// <summary> The start time of the current synchronization. </summary>
         public DateTimeOffset StartTime { get; set; }

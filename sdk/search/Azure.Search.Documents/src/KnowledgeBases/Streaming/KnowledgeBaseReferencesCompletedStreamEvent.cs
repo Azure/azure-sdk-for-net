@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Wraps a <c>references.completed</c> event payload. </summary>
-    public sealed class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public sealed partial class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         internal KnowledgeBaseReferencesCompletedStreamEvent(IReadOnlyList<KnowledgeBaseReference> value)
             : base("references.completed")

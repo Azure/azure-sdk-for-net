@@ -4,7 +4,7 @@
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Wraps a <c>retrieval.started</c> event payload. </summary>
-    public sealed class KnowledgeBaseRetrievalStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public sealed partial class KnowledgeBaseRetrievalStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         internal KnowledgeBaseRetrievalStartedStreamEvent(KnowledgeBaseRetrievalStartedEvent value)
             : base("retrieval.started") => Value = value;

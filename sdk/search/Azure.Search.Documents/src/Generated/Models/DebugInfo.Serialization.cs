@@ -79,6 +79,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("queryRewrites"u8);
                 writer.WriteObjectValue(QueryRewrites, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Agentic))
+            {
+                writer.WritePropertyName("agentic"u8);
+                writer.WriteObjectValue(Agentic, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             QueryRewritesDebugInfo queryRewrites = default;
+            AgenticSearchDebugInfo agentic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.Search.Documents.Models
                     queryRewrites = QueryRewritesDebugInfo.DeserializeQueryRewritesDebugInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agentic"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentic = AgenticSearchDebugInfo.DeserializeAgenticSearchDebugInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DebugInfo(queryRewrites, additionalBinaryDataProperties);
+            return new DebugInfo(queryRewrites, agentic, additionalBinaryDataProperties);
         }
     }
 }

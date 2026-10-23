@@ -4,7 +4,7 @@
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Wraps a <c>response.completed</c> event payload. </summary>
-    public sealed class KnowledgeBaseResponseCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public sealed partial class KnowledgeBaseResponseCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         internal KnowledgeBaseResponseCompletedStreamEvent(KnowledgeBaseResponseCompletedEvent value)
             : base("response.completed") => Value = value;

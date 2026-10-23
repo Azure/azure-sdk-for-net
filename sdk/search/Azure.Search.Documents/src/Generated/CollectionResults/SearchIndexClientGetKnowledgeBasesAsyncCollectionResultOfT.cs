@@ -82,7 +82,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetKnowledgeBasesRequest(nextLink, _search, _pageSize, _searchType, _context) : _client.CreateGetKnowledgeBasesRequest(_search, _pageSize, _searchType, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _pageSize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetKnowledgeBasesRequest(nextLink, pageSize, _context) : _client.CreateGetKnowledgeBasesRequest(_search, pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

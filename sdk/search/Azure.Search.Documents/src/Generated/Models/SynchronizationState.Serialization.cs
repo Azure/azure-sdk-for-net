@@ -79,6 +79,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(SynchronizationState)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(GraphStatistics))
+            {
+                writer.WritePropertyName("graphStatistics"u8);
+                writer.WriteObjectValue(GraphStatistics, options);
+            }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("itemsUpdatesProcessed"u8);
@@ -139,6 +144,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 return null;
             }
+            KnowledgeSourceGraphStatistics graphStatistics = default;
             DateTimeOffset startTime = default;
             int itemsUpdatesProcessed = default;
             int itemsUpdatesFailed = default;
@@ -147,6 +153,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("graphStatistics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    graphStatistics = KnowledgeSourceGraphStatistics.DeserializeKnowledgeSourceGraphStatistics(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("startTime"u8))
                 {
                     startTime = prop.Value.GetDateTimeOffset("O");
@@ -187,6 +202,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
             }
             return new SynchronizationState(
+                graphStatistics,
                 startTime,
                 itemsUpdatesProcessed,
                 itemsUpdatesFailed,

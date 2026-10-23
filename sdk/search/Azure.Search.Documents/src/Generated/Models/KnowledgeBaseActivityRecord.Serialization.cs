@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, and <see cref="KnowledgeBaseWorkIQActivityRecord"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseGraphSearchActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, and <see cref="KnowledgeBaseWorkIQActivityRecord"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseActivityRecord))]
     public abstract partial class KnowledgeBaseActivityRecord : IJsonModel<KnowledgeBaseActivityRecord>
@@ -167,6 +167,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeBaseFabricOntologyActivityRecord.DeserializeKnowledgeBaseFabricOntologyActivityRecord(element, options);
                     case "file":
                         return KnowledgeBaseFileActivityRecord.DeserializeKnowledgeBaseFileActivityRecord(element, options);
+                    case "graphSearch":
+                        return KnowledgeBaseGraphSearchActivityRecord.DeserializeKnowledgeBaseGraphSearchActivityRecord(element, options);
                     case "indexedOneLake":
                         return KnowledgeBaseIndexedOneLakeActivityRecord.DeserializeKnowledgeBaseIndexedOneLakeActivityRecord(element, options);
                     case "indexedSharePoint":

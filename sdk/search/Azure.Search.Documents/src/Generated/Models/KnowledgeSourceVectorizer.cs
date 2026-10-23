@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used for knowledge source embedding model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeSourceAzureOpenAIVectorizer"/> and <see cref="KnowledgeSourceOpenAICompatibleVectorizer"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceVectorizer
     {

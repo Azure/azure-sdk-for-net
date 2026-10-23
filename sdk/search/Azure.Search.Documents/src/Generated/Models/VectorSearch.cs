@@ -24,6 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
             Vectorizers = new ChangeTrackingList<VectorSearchVectorizer>();
             Compressions = new ChangeTrackingList<VectorSearchCompression>();
+            TopicGraphProfiles = new ChangeTrackingList<VectorSearchTopicGraphProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
@@ -31,13 +32,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="algorithms"> Contains configuration options specific to the algorithm used during indexing or querying. </param>
         /// <param name="vectorizers"> Contains configuration options on how to vectorize text vector queries. </param>
         /// <param name="compressions"> Contains configuration options specific to the compression method used during indexing or querying. </param>
+        /// <param name="topicGraphProfiles"> Contains profiles for topic graph vector search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompression> compressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers, IList<VectorSearchCompression> compressions, IList<VectorSearchTopicGraphProfile> topicGraphProfiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Profiles = profiles;
             Algorithms = algorithms;
             Vectorizers = vectorizers;
             Compressions = compressions;
+            TopicGraphProfiles = topicGraphProfiles;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +55,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Contains configuration options specific to the compression method used during indexing or querying. </summary>
         public IList<VectorSearchCompression> Compressions { get; }
+
+        /// <summary> Contains profiles for topic graph vector search. </summary>
+        public IList<VectorSearchTopicGraphProfile> TopicGraphProfiles { get; }
     }
 }

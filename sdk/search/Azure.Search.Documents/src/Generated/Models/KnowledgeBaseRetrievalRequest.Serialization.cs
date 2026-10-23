@@ -150,6 +150,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ToolName))
+            {
+                writer.WritePropertyName("toolName"u8);
+                writer.WriteStringValue(ToolName);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -202,6 +207,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             bool? includeActivity = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
             IList<KnowledgeSourceParams> knowledgeSourceParams = default;
+            string toolName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -310,6 +316,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     knowledgeSourceParams = array;
                     continue;
                 }
+                if (prop.NameEquals("toolName"u8))
+                {
+                    toolName = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -326,6 +337,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 includeActivity,
                 outputMode,
                 knowledgeSourceParams ?? new ChangeTrackingList<KnowledgeSourceParams>(),
+                toolName,
                 additionalBinaryDataProperties);
         }
     }
