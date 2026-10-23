@@ -25,12 +25,8 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string DeviceLifecycleEventsValue = "DeviceLifecycleEvents";
         /// <summary> DeviceJobLifecycleEvents. </summary>
         private const string DeviceJobLifecycleEventsValue = "DeviceJobLifecycleEvents";
-        /// <summary> DigitalTwinChangeEvents. </summary>
-        private const string DigitalTwinChangeEventsValue = "DigitalTwinChangeEvents";
         /// <summary> DeviceConnectionStateEvents. </summary>
         private const string DeviceConnectionStateEventsValue = "DeviceConnectionStateEvents";
-        /// <summary> MqttBrokerMessages. </summary>
-        private const string MqttBrokerMessagesValue = "MqttBrokerMessages";
 
         /// <summary> Initializes a new instance of <see cref="IotHubRoutingSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -57,14 +53,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> DeviceJobLifecycleEvents. </summary>
         public static IotHubRoutingSource DeviceJobLifecycleEvents { get; } = new IotHubRoutingSource(DeviceJobLifecycleEventsValue);
 
-        /// <summary> DigitalTwinChangeEvents. </summary>
-        public static IotHubRoutingSource DigitalTwinChangeEvents { get; } = new IotHubRoutingSource(DigitalTwinChangeEventsValue);
-
         /// <summary> DeviceConnectionStateEvents. </summary>
         public static IotHubRoutingSource DeviceConnectionStateEvents { get; } = new IotHubRoutingSource(DeviceConnectionStateEventsValue);
-
-        /// <summary> MqttBrokerMessages. </summary>
-        public static IotHubRoutingSource MqttBrokerMessages { get; } = new IotHubRoutingSource(MqttBrokerMessagesValue);
 
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -232,20 +232,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsDefined(DeviceStreams))
-            {
-                writer.WritePropertyName("deviceStreams"u8);
-                writer.WriteObjectValue(DeviceStreams, options);
-            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -261,26 +251,6 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
-            }
-            if (Optional.IsDefined(RootCertificate))
-            {
-                writer.WritePropertyName("rootCertificate"u8);
-                writer.WriteObjectValue(RootCertificate, options);
-            }
-            if (Optional.IsDefined(IPVersion))
-            {
-                writer.WritePropertyName("ipVersion"u8);
-                writer.WriteStringValue(IPVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(ConnectionProfile))
-            {
-                writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteStringValue(ConnectionProfile.Value.ToString());
-            }
-            if (Optional.IsDefined(MqttV5Settings))
-            {
-                writer.WritePropertyName("mqttV5Settings"u8);
-                writer.WriteObjectValue(MqttV5Settings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeviceRegistry))
             {
@@ -357,15 +327,9 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? enableFileUploadNotifications = default;
             CloudToDeviceProperties cloudToDevice = default;
             string comments = default;
-            IotHubPropertiesDeviceStreams deviceStreams = default;
             IotHubCapability? features = default;
-            IotHubEncryptionProperties encryption = default;
             IReadOnlyList<IotHubLocationDescription> locations = default;
             bool? enableDataResidency = default;
-            IotHubRootCertificateProperties rootCertificate = default;
-            IotHubIPVersion? ipVersion = default;
-            IotHubConnectionProfile? connectionProfile = default;
-            MqttV5Settings mqttV5Settings = default;
             IotHubDeviceRegistry deviceRegistry = default;
             IotHubDetails iotHubDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -592,15 +556,6 @@ namespace Azure.ResourceManager.IotHub.Models
                     comments = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deviceStreams"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deviceStreams = IotHubPropertiesDeviceStreams.DeserializeIotHubPropertiesDeviceStreams(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("features"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -608,15 +563,6 @@ namespace Azure.ResourceManager.IotHub.Models
                         continue;
                     }
                     features = new IotHubCapability(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("encryption"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encryption = IotHubEncryptionProperties.DeserializeIotHubEncryptionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("locations"u8))
@@ -640,42 +586,6 @@ namespace Azure.ResourceManager.IotHub.Models
                         continue;
                     }
                     enableDataResidency = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("rootCertificate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rootCertificate = IotHubRootCertificateProperties.DeserializeIotHubRootCertificateProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("ipVersion"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipVersion = new IotHubIPVersion(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("connectionProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    connectionProfile = new IotHubConnectionProfile(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("mqttV5Settings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mqttV5Settings = MqttV5Settings.DeserializeMqttV5Settings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deviceRegistry"u8))
@@ -725,15 +635,9 @@ namespace Azure.ResourceManager.IotHub.Models
                 enableFileUploadNotifications,
                 cloudToDevice,
                 comments,
-                deviceStreams,
                 features,
-                encryption,
                 locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
                 enableDataResidency,
-                rootCertificate,
-                ipVersion,
-                connectionProfile,
-                mqttV5Settings,
                 deviceRegistry,
                 iotHubDetails,
                 additionalBinaryDataProperties);
