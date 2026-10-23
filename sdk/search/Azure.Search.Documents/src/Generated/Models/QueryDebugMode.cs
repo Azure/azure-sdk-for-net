@@ -23,6 +23,8 @@ namespace Azure.Search.Documents.Models
         private const string VectorValue = "vector";
         /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
         private const string QueryRewritesValue = "queryRewrites";
+        /// <summary> Returns bounded diagnostics for agentic search under @search.debug.agentic. Combine with other supported modes using |; this selector does not enable agentic retrieval or query rewriting. </summary>
+        private const string AgenticValue = "agentic";
         /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
         private const string InnerHitsValue = "innerHits";
         /// <summary> Turn on all debug options. </summary>
@@ -49,6 +51,9 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
         public static QueryDebugMode QueryRewrites { get; } = new QueryDebugMode(QueryRewritesValue);
+
+        /// <summary> Returns bounded diagnostics for agentic search under @search.debug.agentic. Combine with other supported modes using |; this selector does not enable agentic retrieval or query rewriting. </summary>
+        public static QueryDebugMode Agentic { get; } = new QueryDebugMode(AgenticValue);
 
         /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
         public static QueryDebugMode InnerHits { get; } = new QueryDebugMode(InnerHitsValue);

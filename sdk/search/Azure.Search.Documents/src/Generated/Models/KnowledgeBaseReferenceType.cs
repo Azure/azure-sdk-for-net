@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     internal readonly partial struct KnowledgeBaseReferenceType : IEquatable<KnowledgeBaseReferenceType>
     {
         private readonly string _value;
+        /// <summary> Graph result or hydrated graph-source document reference. </summary>
+        private const string GraphSearchValue = "graphSearch";
         /// <summary> Search index document reference. </summary>
         private const string SearchIndexValue = "searchIndex";
         /// <summary> Azure Blob document reference. </summary>
@@ -49,6 +51,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
             _value = value;
         }
+
+        /// <summary> Graph result or hydrated graph-source document reference. </summary>
+        public static KnowledgeBaseReferenceType GraphSearch { get; } = new KnowledgeBaseReferenceType(GraphSearchValue);
 
         /// <summary> Search index document reference. </summary>
         public static KnowledgeBaseReferenceType SearchIndex { get; } = new KnowledgeBaseReferenceType(SearchIndexValue);

@@ -13,7 +13,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A hint that identifies a field and representative values the query planner can use when constructing a filter. </summary>
+    /// <summary> A hint that identifies a field and exhaustive grounding values the query planner can use when constructing a filter. </summary>
     public partial class SearchIndexKnowledgeSourceFilterHint : IJsonModel<SearchIndexKnowledgeSourceFilterHint>
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceFilterHint"/> for deserialization. </summary>
@@ -81,18 +81,26 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("field"u8);
             writer.WriteStringValue(Field);
-            writer.WritePropertyName("fieldValues"u8);
-            writer.WriteStartArray();
-            foreach (string item in FieldValues)
+            if (Optional.IsCollectionDefined(FieldValues))
             {
-                if (item == null)
+                writer.WritePropertyName("fieldValues"u8);
+                writer.WriteStartArray();
+                foreach (string item in FieldValues)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(AutoConfiguration))
+            {
+                writer.WritePropertyName("autoConfiguration"u8);
+                writer.WriteObjectValue(AutoConfiguration, options);
+            }
             if (Optional.IsDefined(FilterInstructions))
             {
                 writer.WritePropertyName("filterInstructions"u8);
@@ -142,6 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string @field = default;
             IList<string> fieldValues = default;
+            SearchIndexKnowledgeSourceFilterHintAutoConfiguration autoConfiguration = default;
             string filterInstructions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,6 +162,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("fieldValues"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -168,6 +181,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     fieldValues = array;
                     continue;
                 }
+                if (prop.NameEquals("autoConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoConfiguration = SearchIndexKnowledgeSourceFilterHintAutoConfiguration.DeserializeSearchIndexKnowledgeSourceFilterHintAutoConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("filterInstructions"u8))
                 {
                     filterInstructions = prop.Value.GetString();
@@ -178,7 +200,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchIndexKnowledgeSourceFilterHint(@field, fieldValues ?? new ChangeTrackingList<string>(), filterInstructions, additionalBinaryDataProperties);
+            return new SearchIndexKnowledgeSourceFilterHint(@field, fieldValues ?? new ChangeTrackingList<string>(), autoConfiguration, filterInstructions, additionalBinaryDataProperties);
         }
     }
 }

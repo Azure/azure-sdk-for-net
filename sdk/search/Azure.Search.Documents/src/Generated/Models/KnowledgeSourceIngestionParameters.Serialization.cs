@@ -184,6 +184,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("networkAccessMode"u8);
                 writer.WriteStringValue(NetworkAccessMode.Value.ToString());
             }
+            if (Optional.IsDefined(Cache))
+            {
+                writer.WritePropertyName("cache"u8);
+                writer.WriteObjectValue(Cache, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -243,6 +248,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             AssetStore assetStore = default;
             FreshnessPolicy freshnessPolicy = default;
             KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
+            KnowledgeSourceCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -363,6 +369,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     networkAccessMode = new KnowledgeSourceNetworkAccessMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("cache"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cache = KnowledgeSourceCache.DeserializeKnowledgeSourceCache(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -380,6 +395,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 assetStore,
                 freshnessPolicy,
                 networkAccessMode,
+                cache,
                 additionalBinaryDataProperties)
             {
                 _identityIsDefined = identityIsDefined,

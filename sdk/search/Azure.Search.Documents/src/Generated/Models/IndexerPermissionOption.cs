@@ -21,6 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string GroupIdsValue = "groupIds";
         /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
         private const string RbacScopeValue = "rbacScope";
+        /// <summary> For OneLake data sources only, ingest all ancestor folder paths from '/Files' through the immediate parent, excluding the file name, as the string collection 'metadata_onelake_parent_folders'. Use indexer fieldMappings to map this source metadata to a filterable Collection(Edm.String) field with permissionFilter 'oneLakeParentFolders'; index projections use source '/document/metadata_onelake_parent_folders'. The index must also specify 'oneLakeSecuritySource'. </summary>
+        private const string OneLakeParentFoldersValue = "oneLakeParentFolders";
+        /// <summary> For OneLake data sources only, ingest the source item's lakehouse ID for mapping to an index field with permissionFilter 'oneLakeLakehouseId'. The index must also specify 'oneLakeSecuritySource'. </summary>
+        private const string OneLakeLakehouseIdValue = "oneLakeLakehouseId";
 
         /// <summary> Initializes a new instance of <see cref="IndexerPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
         public static IndexerPermissionOption RbacScope { get; } = new IndexerPermissionOption(RbacScopeValue);
+
+        /// <summary> For OneLake data sources only, ingest all ancestor folder paths from '/Files' through the immediate parent, excluding the file name, as the string collection 'metadata_onelake_parent_folders'. Use indexer fieldMappings to map this source metadata to a filterable Collection(Edm.String) field with permissionFilter 'oneLakeParentFolders'; index projections use source '/document/metadata_onelake_parent_folders'. The index must also specify 'oneLakeSecuritySource'. </summary>
+        public static IndexerPermissionOption OneLakeParentFolders { get; } = new IndexerPermissionOption(OneLakeParentFoldersValue);
+
+        /// <summary> For OneLake data sources only, ingest the source item's lakehouse ID for mapping to an index field with permissionFilter 'oneLakeLakehouseId'. The index must also specify 'oneLakeSecuritySource'. </summary>
+        public static IndexerPermissionOption OneLakeLakehouseId { get; } = new IndexerPermissionOption(OneLakeLakehouseIdValue);
 
         /// <summary> Determines if two <see cref="IndexerPermissionOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -120,7 +120,7 @@ Upload documents directly to the File knowledge source, list uploaded files, and
                 // Prefixes are derived from relative paths. The pageable handles
                 // continuation tokens internally; callers should not parse them.
                 HashSet<string> listedFileIds = new HashSet<string>();
-                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(
+                await foreach (KnowledgeSourceFile file in indexClient.GetAllKnowledgeSourceFilesAsync(
                     knowledgeSourceName,
                     prefix: "guides/",
                     pageSize: 1))

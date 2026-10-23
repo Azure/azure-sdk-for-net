@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the connection parameters for the model to use for query planning.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>, <see cref="KnowledgeBaseMicrosoftRetriever1Model"/>, and <see cref="KnowledgeBaseOpenAICompatibleModel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseModel))]
     public abstract partial class KnowledgeBaseModel : IJsonModel<KnowledgeBaseModel>
@@ -132,6 +132,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     case "azureOpenAI":
                         return KnowledgeBaseAzureOpenAIModel.DeserializeKnowledgeBaseAzureOpenAIModel(element, options);
+                    case "microsoftRetriever1":
+                        return KnowledgeBaseMicrosoftRetriever1Model.DeserializeKnowledgeBaseMicrosoftRetriever1Model(element, options);
+                    case "openAICompatible":
+                        return KnowledgeBaseOpenAICompatibleModel.DeserializeKnowledgeBaseOpenAICompatibleModel(element, options);
                 }
             }
             return UnknownKnowledgeBaseModel.DeserializeUnknownKnowledgeBaseModel(element, options);

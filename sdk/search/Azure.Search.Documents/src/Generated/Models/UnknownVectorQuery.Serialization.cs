@@ -114,6 +114,7 @@ namespace Azure.Search.Documents.Models
             VectorThreshold threshold = default;
             string filterOverride = default;
             int? perDocumentVectorLimit = default;
+            VectorQueryTopicGraph topicGraph = default;
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,6 +183,15 @@ namespace Azure.Search.Documents.Models
                     perDocumentVectorLimit = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("topicGraph"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topicGraph = VectorQueryTopicGraph.DeserializeVectorQueryTopicGraph(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new VectorQueryKind(prop.Value.GetString());
@@ -201,6 +211,7 @@ namespace Azure.Search.Documents.Models
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
+                topicGraph,
                 kind,
                 additionalBinaryDataProperties);
         }

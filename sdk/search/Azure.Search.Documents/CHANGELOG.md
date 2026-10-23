@@ -1,5 +1,22 @@
 # Release History
 
+## 12.1.0-beta.4 (Unreleased)
+
+### Features Added
+
+- Added support for `2026-11-01-preview`, now the default service version. Older supported service versions remain available.
+- Added graph queries with typed results, diagnostics, statistics, explain plans, and provenance, along with graph knowledge source extraction, grounding, and retrieval models.
+- Added topic-graph vector search profiles and discriminated `NoneVectorQueryTopicGraph`, `DiverseVectorQueryTopicGraph`, and `BalancedVectorQueryTopicGraph` query options.
+- Added facet-based filter-hint `AutoConfiguration`, knowledge source enrichment caching, and the `Gpt6Astra`, `Gpt6Sol`, `Gpt6Luna`, and `Gpt61Sol` model names.
+- Added random scoring profiles with optional query-time seeds, agentic search options, and more-like-this queries.
+- Restored preview indexer cache, query, and knowledge retrieval capabilities from the full preview specification.
+
+### Breaking Changes
+
+- Renamed the preview `GetIndexStatsSummary` and `GetKnowledgeSourceFiles` pageable methods to `GetAllIndexStatsSummary` and `GetAllKnowledgeSourceFiles`. Generated pageable APIs for synonym maps, indexers, data sources, and skillsets now use `GetAll*` names; the existing buffered list APIs remain available.
+- Updated preview knowledge source query-hint and retrieval models to match the `2026-11-01-preview` contract.
+- Renamed the preview activity record property `ElapsedInMs` to `ElapsedMs`.
+
 ## 12.1.0-beta.3 (2026-09-14)
 
 ### Breaking Changes
