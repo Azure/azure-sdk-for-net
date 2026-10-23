@@ -1020,7 +1020,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel]);
         }
 
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource()
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource(string parentResourceName = "Watchlist", bool? resourceNameIsExplicit = null)
         {
             const string ParentClientName = "WatchlistsClient";
             const string ChildClientName = "WatchlistItemsClient";
@@ -1084,7 +1084,7 @@ namespace Azure.Generator.Management.Tests.Common
             var armProviderDecorator = BuildArmProviderSchemaMultiResource([
                 new ResourceSchemaInput(parentModel, [
                     new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)
-                ], parentIdPattern, "Microsoft.SecurityInsights/watchlists", null, ResourceScope.Extension, "Watchlist", null, scopeIdPattern, "Microsoft.OperationalInsights/workspaces"),
+                ], parentIdPattern, "Microsoft.SecurityInsights/watchlists", null, ResourceScope.Extension, parentResourceName, null, scopeIdPattern, "Microsoft.OperationalInsights/workspaces", ResourceNameIsExplicit: resourceNameIsExplicit),
                 new ResourceSchemaInput(childModel, [
                     new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(childIdPattern), "Microsoft.OperationalInsights/workspaces"), null!),
                     new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern(parentIdPattern), "Microsoft.OperationalInsights/workspaces"), null!)

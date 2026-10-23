@@ -92,7 +92,7 @@ internal class ResourceNameTests
         var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == name);
         var getter = legacy ? name.GetCollectionMethodName() : resource.FactoryMethodSignature.Name;
         var parentDeclaration = child
-            ? $"namespace Samples {{ public class ParentTypeResource {{ public virtual {name}Collection {getter}() => throw null; }} }}"
+            ? $"namespace Samples {{ public class ParentTypeResource {{ public virtual {name}Collection {getter}(string nestedTypeName) => throw null; }} }}"
             : $"namespace Samples.Mocking {{ public class MockableSamplesResourceGroupResource {{ public virtual global::Samples.{name}Collection {getter}() => throw null; }} }}";
         var contract = Helpers.BuildCompilation([
             ("Resources.cs", $"namespace Samples {{ public class {name}Resource {{ }} public class {name}Collection {{ }} }}"),
@@ -112,6 +112,79 @@ internal class ResourceNameTests
             Assert.That(parentMethods.Any(m => m.Signature.Name == getter &&
                 m.Signature.ReturnType?.Equals(resource.ResourceCollection!.Type) == true), Is.True);
         }
+    }
+
+    [Test]
+    public void PublishedCollectionAccessorIgnoresUnrelatedOverloads(
+        [Values(false, true)] bool child,
+        [Values(false, true)] bool unrelatedFirst,
+        [Values("extra", "type", "name", "ref", "static", "generic")] string shape)
+    {
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: "OS", resourceNameIsExplicit: false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource("OS", false);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
+            clients: () => child ? [parentClient, childClient] : [client]);
+        var parameters = child ? "string nestedTypeName" : "";
+        var unrelatedParameters = shape switch
+        {
+            "extra" => child ? "string nestedTypeName, bool includeHidden" : "bool includeHidden",
+            "type" => "bool nestedTypeName",
+            "name" => "string otherName",
+            "ref" => "ref string nestedTypeName",
+            _ => parameters
+        };
+        var modifiers = shape == "static" ? "public static" : "public virtual";
+        var genericParameters = shape == "generic" ? "<T>" : "";
+        var factory = $"public virtual global::Samples.OSCollection GetOs({parameters}) => throw null;";
+        var unrelated = $"{modifiers} global::Samples.OSCollection GetAllOS{genericParameters}({unrelatedParameters}) => throw null;";
+        var members = unrelatedFirst ? $"{unrelated}\n{factory}" : $"{factory}\n{unrelated}";
+        var parentNamespace = child ? "Samples" : "Samples.Mocking";
+        var parentName = child ? "ParentTypeResource" : "MockableSamplesResourceGroupResource";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSResource { } public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {members} }} }}")
+        ]);
+        var customization = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {unrelated} }} }}")
+        ]);
+        plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
+            clients: () => child ? [parentClient, childClient] : [client],
+            customizationCompilation: () => customization, lastContractCompilation: () => contract);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "OS");
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo("GetOs"));
+        Assert.That(resource.FactoryMethodSignature.Parameters.Select(p => p.Name),
+            Is.EqualTo(child ? new[] { "nestedTypeName" } : Array.Empty<string>()));
+        var parentMethods = child
+            ? plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "ParentType").Methods
+            : plugin.Object.OutputLibrary.TypeProviders.OfType<MockableResourceProvider>()
+                .Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.Resources.ResourceGroupResource))).Methods;
+        Assert.That(parentMethods.Any(m => m.Signature.Name == "GetOs" &&
+            m.Signature.ReturnType?.Equals(resource.ResourceCollection!.Type) == true), Is.True);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void PublishedExtensionFactoryMatchesScopeParameter(bool unrelatedFirst)
+    {
+        var (parentClient, childClient, models) = InputResourceData.ClientWithNestedExtensionChildResource("OS", false);
+        ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parentClient, childClient]);
+        const string factory = "public virtual global::Samples.OSCollection GetOs(global::Azure.Core.ResourceIdentifier scope) => throw null;";
+        const string unrelated = "public virtual global::Samples.OSCollection GetAllOS() => throw null;";
+        var members = unrelatedFirst ? $"{unrelated}\n{factory}" : $"{factory}\n{unrelated}";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSResource { } public class OSCollection { } }"),
+            ("Parent.cs", $"namespace Samples.Mocking {{ public class MockableSamplesArmClient {{ {members} }} }}")
+        ]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parentClient, childClient],
+            lastContractCompilation: () => contract);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "OS");
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo("GetOs"));
+        var mockable = plugin.Object.OutputLibrary.TypeProviders.OfType<MockableResourceProvider>()
+            .Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.ArmClient)));
+        var getter = mockable.Methods.Single(m => m.Signature.Name == "GetOs" &&
+            m.Signature.ReturnType?.Equals(resource.ResourceCollection!.Type) == true);
+        Assert.That(getter.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "scope" }));
     }
 
     [TestCase(false)]

@@ -127,11 +127,24 @@ namespace Azure.Generator.Management.Providers
                 : library.MockableResourceProviders.FirstOrDefault(p => IsExtensionResource
                     ? p.ArmCoreType.Equals(typeof(ArmClient))
                     : p.ArmCoreType.Equals(TypeOfParentResource))?.LastContractView;
+            IReadOnlyList<ParameterProvider> factoryParameters = IsExtensionResource && ParentResourceIdPattern is null
+                ? [new ParameterProvider("scope", $"The resource scope.", typeof(ResourceIdentifier)), .. ResourceCollection.PathParameters]
+                : ResourceCollection.PathParameters;
             // A resource type alone cannot tell us which accessor casing was published.
             var publishedGetter = parentContract?.Methods.FirstOrDefault(m =>
                 m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                !m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                m.Signature.GenericArguments is not { Count: > 0 } &&
                 m.Signature.ReturnType?.Equals(ResourceCollection.Type) == true &&
-                (m.Signature.Name == derivedGetter || m.Signature.Name == legacyGetter));
+                (m.Signature.Name == derivedGetter || m.Signature.Name == legacyGetter) &&
+                m.Signature.Parameters.Count == factoryParameters.Count &&
+                m.Signature.Parameters.Zip(factoryParameters).All(pair =>
+                    pair.First.Name == pair.Second.Name &&
+                    pair.First.Type.Equals(pair.Second.Type) &&
+                    pair.First.IsRef == pair.Second.IsRef &&
+                    pair.First.IsOut == pair.Second.IsOut &&
+                    pair.First.IsIn == pair.Second.IsIn &&
+                    pair.First.IsParams == pair.Second.IsParams));
             return publishedGetter is null ? UsesDerivedResourceName : publishedGetter.Signature.Name == derivedGetter;
         }
 
