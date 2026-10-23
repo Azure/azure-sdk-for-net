@@ -13,6 +13,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        if (args.Length == 1 && args[0] == "--proxy-registration-storage")
+        {
+            ProxyRegistrationStorage.Run();
+            return;
+        }
+
         // To see the list of benchmarks that can be run
         // dotnet run -c Release --framework net6.0 --list flat
 
