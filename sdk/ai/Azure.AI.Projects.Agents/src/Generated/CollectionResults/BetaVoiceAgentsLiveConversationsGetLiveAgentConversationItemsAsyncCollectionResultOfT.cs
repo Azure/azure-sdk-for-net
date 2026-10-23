@@ -98,7 +98,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        [Experimental("AAIP001")]
         protected override async IAsyncEnumerable<VoiceAgentLiveConversationItem> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (VoiceAgentLiveConversationItem item in ((AgentsPagedResultVoiceAgentLiveConversationItem)page).Data)

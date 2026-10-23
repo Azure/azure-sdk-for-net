@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents
@@ -86,12 +87,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of BetaVoiceAgentsLiveConversations. </summary>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public virtual BetaVoiceAgentsLiveConversations GetBetaVoiceAgentsLiveConversationsClient()
         {
             return Volatile.Read(ref _cachedBetaVoiceAgentsLiveConversations) ?? Interlocked.CompareExchange(ref _cachedBetaVoiceAgentsLiveConversations, new BetaVoiceAgentsLiveConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaVoiceAgentsLiveConversations;
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
         public virtual AgentToolboxes GetAgentToolboxesClient()

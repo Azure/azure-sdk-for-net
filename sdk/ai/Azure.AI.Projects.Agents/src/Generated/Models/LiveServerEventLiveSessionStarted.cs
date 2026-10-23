@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveServerEventLiveSessionStarted"/>. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="session"></param>
-        internal LiveServerEventLiveSessionStarted(string eventId, LiveSessionResourceParam session) : base(LiveServerEventType.SessionStarted)
+        internal LiveServerEventLiveSessionStarted(string eventId, VoiceAgentLiveSessionResource session) : base(LiveServerEventType.SessionStarted)
         {
             EventId = eventId;
             Session = session;
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="session"></param>
         /// <param name="conversationId"> Stored conversation ID when effective store is true. Use protocols/voice/live/conversations; this ID differs from session.id. </param>
-        internal LiveServerEventLiveSessionStarted(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, LiveSessionResourceParam session, string conversationId) : base(@type, additionalBinaryDataProperties)
+        internal LiveServerEventLiveSessionStarted(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, VoiceAgentLiveSessionResource session, string conversationId) : base(@type, additionalBinaryDataProperties)
         {
             EventId = eventId;
             ClientEventId = clientEventId;
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         public string ClientEventId { get; }
 
         /// <summary> Gets the Session. </summary>
-        public LiveSessionResourceParam Session { get; }
+        public VoiceAgentLiveSessionResource Session { get; }
 
         /// <summary> Stored conversation ID when effective store is true. Use protocols/voice/live/conversations; this ID differs from session.id. </summary>
         public string ConversationId { get; }

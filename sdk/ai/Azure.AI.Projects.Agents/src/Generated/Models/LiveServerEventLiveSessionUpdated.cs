@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveServerEventLiveSessionUpdated"/>. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="session"></param>
-        internal LiveServerEventLiveSessionUpdated(string eventId, LiveSessionResourceParam session) : base(LiveServerEventType.SessionUpdated)
+        internal LiveServerEventLiveSessionUpdated(string eventId, VoiceAgentLiveSessionResource session) : base(LiveServerEventType.SessionUpdated)
         {
             EventId = eventId;
             Session = session;
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="session"></param>
-        internal LiveServerEventLiveSessionUpdated(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, LiveSessionResourceParam session) : base(@type, additionalBinaryDataProperties)
+        internal LiveServerEventLiveSessionUpdated(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, VoiceAgentLiveSessionResource session) : base(@type, additionalBinaryDataProperties)
         {
             EventId = eventId;
             ClientEventId = clientEventId;
@@ -41,6 +41,6 @@ namespace Azure.AI.Projects.Agents
         public string ClientEventId { get; }
 
         /// <summary> Gets the Session. </summary>
-        public LiveSessionResourceParam Session { get; }
+        public VoiceAgentLiveSessionResource Session { get; }
     }
 }

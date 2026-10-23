@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="offsetMs"> The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session. </param>
         /// <param name="delegation"> The delegated work identifier and destination. This object contains metadata, not the task text. </param>
-        internal LiveServerEventLiveDelegationCreated(string eventId, long offsetMs, LiveDelegationItem delegation) : base(LiveServerEventType.SessionDelegationCreated)
+        internal LiveServerEventLiveDelegationCreated(string eventId, long offsetMs, VoiceAgentLiveDelegationItem delegation) : base(LiveServerEventType.SessionDelegationCreated)
         {
             EventId = eventId;
             OffsetMs = offsetMs;
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="offsetMs"> The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session. </param>
         /// <param name="delegation"> The delegated work identifier and destination. This object contains metadata, not the task text. </param>
-        internal LiveServerEventLiveDelegationCreated(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, long offsetMs, LiveDelegationItem delegation) : base(@type, additionalBinaryDataProperties)
+        internal LiveServerEventLiveDelegationCreated(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, long offsetMs, VoiceAgentLiveDelegationItem delegation) : base(@type, additionalBinaryDataProperties)
         {
             EventId = eventId;
             ClientEventId = clientEventId;
@@ -48,6 +48,6 @@ namespace Azure.AI.Projects.Agents
         public long OffsetMs { get; }
 
         /// <summary> The delegated work identifier and destination. This object contains metadata, not the task text. </summary>
-        public LiveDelegationItem Delegation { get; }
+        public VoiceAgentLiveDelegationItem Delegation { get; }
     }
 }

@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The resolved Live session configuration and server-assigned session metadata. </summary>
-    public partial class LiveSessionResourceParam : IJsonModel<LiveSessionResourceParam>
+    /// <summary> Live session resource reported to Foundry clients. GPT Live runs native client delegation for foundry_managed_agent sessions; Foundry reports the effective owner. </summary>
+    public partial class VoiceAgentLiveSessionResource : IJsonModel<VoiceAgentLiveSessionResource>
     {
-        /// <summary> Initializes a new instance of <see cref="LiveSessionResourceParam"/> for deserialization. </summary>
-        internal LiveSessionResourceParam()
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveSessionResource"/> for deserialization. </summary>
+        internal VoiceAgentLiveSessionResource()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveSessionResourceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentLiveSessionResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionResourceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveSessionResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLiveSessionResourceParam(document.RootElement, options);
+                        return DeserializeVoiceAgentLiveSessionResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveSessionResourceParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentLiveSessionResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionResourceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveSessionResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LiveSessionResourceParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentLiveSessionResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LiveSessionResourceParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceAgentLiveSessionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveSessionResourceParam IPersistableModel<LiveSessionResourceParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAgentLiveSessionResource IPersistableModel<VoiceAgentLiveSessionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LiveSessionResourceParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceAgentLiveSessionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LiveSessionResourceParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceAgentLiveSessionResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionResourceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveSessionResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveSessionResourceParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentLiveSessionResource)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToString());
@@ -104,6 +104,22 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("audio"u8);
                 writer.WriteObjectValue(Audio, options);
             }
+            if (Optional.IsDefined(Store))
+            {
+                writer.WritePropertyName("store"u8);
+                writer.WriteBooleanValue(Store.Value);
+            }
+            if (Optional.IsDefined(Client))
+            {
+                writer.WritePropertyName("client"u8);
+                writer.WriteObjectValue(Client, options);
+            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("expires_at"u8);
+            writer.WriteNumberValue(ExpiresAt);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
             if (Optional.IsDefined(Delegation, _delegationIsDefined))
             {
                 if (Delegation != null)
@@ -123,22 +139,6 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("delegation"u8);
                 }
             }
-            if (Optional.IsDefined(Store))
-            {
-                writer.WritePropertyName("store"u8);
-                writer.WriteBooleanValue(Store.Value);
-            }
-            if (Optional.IsDefined(Client))
-            {
-                writer.WritePropertyName("client"u8);
-                writer.WriteObjectValue(Client, options);
-            }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("expires_at"u8);
-            writer.WriteNumberValue(ExpiresAt);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,24 +158,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveSessionResourceParam IJsonModel<LiveSessionResourceParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAgentLiveSessionResource IJsonModel<VoiceAgentLiveSessionResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveSessionResourceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentLiveSessionResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionResourceParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveSessionResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveSessionResourceParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentLiveSessionResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLiveSessionResourceParam(document.RootElement, options);
+            return DeserializeVoiceAgentLiveSessionResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LiveSessionResourceParam DeserializeLiveSessionResourceParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceAgentLiveSessionResource DeserializeVoiceAgentLiveSessionResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,13 +186,13 @@ namespace Azure.AI.Projects.Agents
             string instructions = default;
             IList<LiveInitialItem> input = default;
             LiveInitialSessionAudioParam audio = default;
-            bool delegationIsDefined = false;
-            BinaryData delegation = default;
             bool? store = default;
             LiveClientConfigParam client = default;
             string id = default;
             long expiresAt = default;
             string status = default;
+            bool delegationIsDefined = false;
+            BinaryData delegation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,17 +235,6 @@ namespace Azure.AI.Projects.Agents
                     audio = LiveInitialSessionAudioParam.DeserializeLiveInitialSessionAudioParam(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("delegation"u8))
-                {
-                    delegationIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        delegation = null;
-                        continue;
-                    }
-                    delegation = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
                 if (prop.NameEquals("store"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -279,22 +268,33 @@ namespace Azure.AI.Projects.Agents
                     status = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("delegation"u8))
+                {
+                    delegationIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        delegation = null;
+                        continue;
+                    }
+                    delegation = prop.Value.GetUtf8Bytes();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveSessionResourceParam(
+            return new VoiceAgentLiveSessionResource(
                 model,
                 instructions,
                 input ?? new ChangeTrackingList<LiveInitialItem>(),
                 audio,
-                delegation,
                 store,
                 client,
                 id,
                 expiresAt,
                 status,
+                delegation,
                 additionalBinaryDataProperties)
             {
                 _instructionsIsDefined = instructionsIsDefined,

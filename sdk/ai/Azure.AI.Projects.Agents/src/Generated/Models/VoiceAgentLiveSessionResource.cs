@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The resolved Live session configuration and server-assigned session metadata. </summary>
-    public partial class LiveSessionResourceParam
+    /// <summary> Live session resource reported to Foundry clients. GPT Live runs native client delegation for foundry_managed_agent sessions; Foundry reports the effective owner. </summary>
+    [Experimental("AAIP001")]
+    public partial class VoiceAgentLiveSessionResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -18,11 +20,11 @@ namespace Azure.AI.Projects.Agents
         private BinaryData _delegation;
         private bool _delegationIsDefined;
 
-        /// <summary> Initializes a new instance of <see cref="LiveSessionResourceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveSessionResource"/>. </summary>
         /// <param name="model"></param>
         /// <param name="id"> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, at which the Live session expires. </param>
-        internal LiveSessionResourceParam(ModelIdsLive model, string id, long expiresAt)
+        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string id, long expiresAt)
         {
             Model = model;
             Input = new ChangeTrackingList<LiveInitialItem>();
@@ -30,30 +32,30 @@ namespace Azure.AI.Projects.Agents
             ExpiresAt = expiresAt;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LiveSessionResourceParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveSessionResource"/>. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
         /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
-        /// <param name="delegation"></param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="id"> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, at which the Live session expires. </param>
         /// <param name="status"> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </param>
+        /// <param name="delegation"> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionResourceParam(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, BinaryData delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
             Input = input;
             Audio = audio;
-            _delegation = delegation;
             Store = store;
             Client = client;
             Id = id;
             ExpiresAt = expiresAt;
             Status = status;
+            _delegation = delegation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,8 +77,23 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </summary>
         public LiveInitialSessionAudioParam Audio { get; }
 
+        /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
+        public bool? Store { get; }
+
+        /// <summary> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </summary>
+        public LiveClientConfigParam Client { get; }
+
+        /// <summary> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </summary>
+        public string Id { get; }
+
+        /// <summary> The Unix timestamp, in seconds, at which the Live session expires. </summary>
+        public long ExpiresAt { get; }
+
+        /// <summary> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </summary>
+        public string Status { get; } = "active";
+
         /// <summary>
-        /// Gets the Delegation.
+        /// Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -88,6 +105,9 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// <item>
         /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceAgentLiveManagedAgentDelegation"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -121,20 +141,5 @@ namespace Azure.AI.Projects.Agents
                 return _delegation;
             }
         }
-
-        /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
-        public bool? Store { get; }
-
-        /// <summary> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </summary>
-        public LiveClientConfigParam Client { get; }
-
-        /// <summary> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </summary>
-        public string Id { get; }
-
-        /// <summary> The Unix timestamp, in seconds, at which the Live session expires. </summary>
-        public long ExpiresAt { get; }
-
-        /// <summary> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </summary>
-        public string Status { get; } = "active";
     }
 }

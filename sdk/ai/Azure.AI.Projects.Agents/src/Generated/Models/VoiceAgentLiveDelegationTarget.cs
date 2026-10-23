@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegation owner. Foundry agent targets use native client delegation upstream. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct VoiceAgentLiveDelegationTarget : IEquatable<VoiceAgentLiveDelegationTarget>
+    public readonly partial struct VoiceAgentLiveDelegationTarget : IEquatable<VoiceAgentLiveDelegationTarget>
     {
         private readonly string _value;
         private const string ResponsesValue = "responses";

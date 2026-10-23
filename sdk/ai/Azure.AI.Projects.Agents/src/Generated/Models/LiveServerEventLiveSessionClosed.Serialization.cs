@@ -121,7 +121,7 @@ namespace Azure.AI.Projects.Agents
             string eventId = default;
             string clientEventId = default;
             LiveServerEventLiveSessionClosedReason reason = default;
-            LiveSessionResourceParam session = default;
+            VoiceAgentLiveSessionResource session = default;
             LiveSessionUsage usage = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("session"u8))
                 {
-                    session = LiveSessionResourceParam.DeserializeLiveSessionResourceParam(prop.Value, options);
+                    session = VoiceAgentLiveSessionResource.DeserializeVoiceAgentLiveSessionResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
