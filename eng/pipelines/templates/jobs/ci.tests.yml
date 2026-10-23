@@ -84,20 +84,15 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
       
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            # we only need to checkout all sdk directories for All PR builds OR the
-            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
-            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
-            ${{ else }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/*/**/SessionRecords/*"
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+          fetchDepth: 0
+          # Only the non-auto, non-dependency leg needs recordings from a single service.
+          ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
+            sparseCheckoutPatterns: "/* !/*/ /eng /.config /* !SessionRecords /sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
+          ${{ else }}:
+            sparseCheckoutPatterns: '/* !/*/ /eng /.config /* !SessionRecords /sdk/*/**/SessionRecords/*'
 
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2
