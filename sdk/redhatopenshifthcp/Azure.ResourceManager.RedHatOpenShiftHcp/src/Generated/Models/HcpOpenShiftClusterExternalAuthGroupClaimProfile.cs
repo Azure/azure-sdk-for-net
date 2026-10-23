@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterExternalAuthGroupClaimProfile"/>. </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
-        /// Prefix for the claim external profile
-        /// If this is specified prefixPolicy will be set to "Prefix" by default
+        /// Prefix for the claim external profile.
+        /// If this is specified, prefixPolicy will be set to "Prefix" by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HcpOpenShiftClusterExternalAuthGroupClaimProfile(string claim, string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string Claim { get; set; }
 
         /// <summary>
-        /// Prefix for the claim external profile
-        /// If this is specified prefixPolicy will be set to "Prefix" by default
+        /// Prefix for the claim external profile.
+        /// If this is specified, prefixPolicy will be set to "Prefix" by default.
         /// </summary>
         public string Prefix { get; set; }
     }

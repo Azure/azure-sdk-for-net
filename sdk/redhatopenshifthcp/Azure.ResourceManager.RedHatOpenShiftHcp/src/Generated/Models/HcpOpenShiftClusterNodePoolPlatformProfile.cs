@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterNodePoolPlatformProfile"/>. </summary>
         /// <param name="subnetId">
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters, however the
         /// same subnet can be used for NodePools of the same cluster.
         /// </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary>
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters, however the
         /// same subnet can be used for NodePools of the same cluster.
         /// </summary>
