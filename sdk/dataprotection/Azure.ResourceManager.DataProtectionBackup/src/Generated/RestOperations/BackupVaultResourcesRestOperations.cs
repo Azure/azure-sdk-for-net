@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-31-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/validateForBackup", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath("/providers/Microsoft.DataProtection/backupVaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/exportBackupJobs", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-31-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
