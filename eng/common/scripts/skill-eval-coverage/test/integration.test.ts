@@ -178,6 +178,20 @@ test("write-enabled reporter uses only default-branch code, no PR artifacts or c
   assert.ok(job.steps.every((step: WorkflowStep) => !step.uses?.includes("download-artifact") && !step.run?.includes("vally eval")));
 });
 
+test("lint, coverage and trusted reporting all use Node 24", () => {
+  let setupSteps = 0;
+  for (const file of ["skill-eval.yml", "skill-eval-coverage-comment.yml"]) {
+    const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows", file), "utf8"));
+    for (const [name, job] of Object.entries(workflow.jobs) as [string, { steps: (WorkflowStep & { with?: Record<string, unknown> })[] }][]) {
+      const setup = job.steps.filter((step) => step.uses?.startsWith("actions/setup-node@"));
+      assert.equal(setup.length, 1, `${file}: ${name}`);
+      assert.equal(String(setup[0].with?.["node-version"]), "24", `${file}: ${name}`);
+      setupSteps += setup.length;
+    }
+  }
+  assert.equal(setupSteps, 3);
+});
+
 test("checker package has exactly one frozen parser dependency and no local workspace links", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(packageRoot, "package.json"), "utf8"));
   const lock = JSON.parse(fs.readFileSync(path.join(packageRoot, "package-lock.json"), "utf8"));
