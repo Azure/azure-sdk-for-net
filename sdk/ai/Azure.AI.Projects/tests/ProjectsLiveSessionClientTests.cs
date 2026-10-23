@@ -100,6 +100,32 @@ public class ProjectsLiveSessionClientTests
     }
 
     [Test]
+    public async Task StartupPreservesFoundryManagedDelegationOwnership()
+    {
+        using ControlledLiveWebSocket socket = new();
+        using ProjectsLiveSessionClient session = LiveTestHelpers.CreateSession(socket);
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+        socket.QueueText("""
+            {"type":"session.started","event_id":"started",
+             "session":{"id":"live-session","model":"gpt-live-1","expires_at":2000000000,
+               "delegation":{"type":"foundry_managed_agent","agent_name":"backend","agent_version":"2"}}}
+            """);
+
+        await LiveTestHelpers.InitializeAsync(session, timeout.Token);
+
+        VoiceAgentLiveSessionResource snapshot = session.SessionStarted.Session;
+        VoiceAgentLiveManagedAgentDelegation owner = ModelReaderWriter.Read<VoiceAgentLiveManagedAgentDelegation>(
+            snapshot.Delegation, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        Assert.Multiple(() =>
+        {
+            Assert.That(snapshot.Id, Is.EqualTo("live-session"));
+            Assert.That(owner.Type, Is.EqualTo("foundry_managed_agent"));
+            Assert.That(owner.AgentName, Is.EqualTo("backend"));
+            Assert.That(owner.AgentVersion, Is.EqualTo("2"));
+        });
+    }
+
+    [Test]
     public async Task ServiceErrorIsDeliveredAsNativeEventAndDoesNotTerminateReceiving()
     {
         using ControlledLiveWebSocket socket = new();

@@ -179,7 +179,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(LiveCustomVoiceParam))]
     [ModelReaderWriterBuildable(typeof(LiveDataChannelConfigParam))]
     [ModelReaderWriterBuildable(typeof(LiveDelegation))]
-    [ModelReaderWriterBuildable(typeof(LiveDelegationItem))]
     [ModelReaderWriterBuildable(typeof(LiveDelegationReasoningInputParam))]
     [ModelReaderWriterBuildable(typeof(LiveDelegationTextInputParam))]
     [ModelReaderWriterBuildable(typeof(LiveFunctionToolChoiceParam))]
@@ -257,7 +256,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(LiveSessionAudioFormatPCMParam))]
     [ModelReaderWriterBuildable(typeof(LiveSessionAudioFormatPCMUParam))]
     [ModelReaderWriterBuildable(typeof(LiveSessionCreateParams))]
-    [ModelReaderWriterBuildable(typeof(LiveSessionResourceParam))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionStartEvent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionStartEvent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionStartEvent is experimental and may change in future versions.
@@ -541,6 +539,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveDelegationConversationItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentLiveDelegationConversationItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveDelegationConversationItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentLiveDelegationItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentLiveDelegationResultItem1))]
     [ModelReaderWriterBuildable(typeof(VoiceAgentLiveDelegationResultItem2))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveFoundryManagedAgentDelegationItem is experimental and may change in future versions.
@@ -558,6 +559,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentLiveResponsesDelegationConversationItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentLiveSessionResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentLlmGeneratedGreetingConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig is experimental and may change in future versions.

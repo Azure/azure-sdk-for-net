@@ -4,36 +4,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Metadata for work delegated by the Live model. Client delegations are handled by your application; Responses delegations run on the configured backend. </summary>
-    public partial class LiveDelegationItem
+    /// <summary> Live delegation trigger metadata reported to Foundry clients. This object contains metadata, not the task text. </summary>
+    [Experimental("AAIP001")]
+    public partial class VoiceAgentLiveDelegationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LiveDelegationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveDelegationItem"/>. </summary>
         /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
-        /// <param name="target"> Where the Live model delegated the work: `client` for your application, or `responses` for the configured Responses backend. </param>
-        internal LiveDelegationItem(string id, LiveDelegationItemTarget target)
+        /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
+        internal VoiceAgentLiveDelegationItem(string id, VoiceAgentLiveDelegationTarget target)
         {
             Id = id;
             Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LiveDelegationItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveDelegationItem"/>. </summary>
         /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
         /// <param name="type"> The object type, always `delegation`. </param>
-        /// <param name="target"> Where the Live model delegated the work: `client` for your application, or `responses` for the configured Responses backend. </param>
         /// <param name="responseId"> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </param>
+        /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDelegationItem(string id, string @type, LiveDelegationItemTarget target, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentLiveDelegationItem(string id, string @type, string responseId, VoiceAgentLiveDelegationTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
-            Target = target;
             ResponseId = responseId;
+            Target = target;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,10 +45,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The object type, always `delegation`. </summary>
         public string Type { get; } = "delegation";
 
-        /// <summary> Where the Live model delegated the work: `client` for your application, or `responses` for the configured Responses backend. </summary>
-        public LiveDelegationItemTarget Target { get; }
-
         /// <summary> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </summary>
         public string ResponseId { get; }
+
+        /// <summary> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </summary>
+        public VoiceAgentLiveDelegationTarget Target { get; }
     }
 }

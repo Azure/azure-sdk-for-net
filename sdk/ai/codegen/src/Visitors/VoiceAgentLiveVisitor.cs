@@ -355,7 +355,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         => type is CollectionResultDefinition && type.Name.StartsWith(LiveClientName, StringComparison.Ordinal);
 
     private static AttributeStatement ExperimentalAttribute()
-        => new(typeof(ExperimentalAttribute), Literal("AAIP001"));
+        => new(typeof(ExperimentalAttribute), new LiteralExpression("AAIP001"));
 
     private static void MarkExperimental(TypeProvider type)
     {

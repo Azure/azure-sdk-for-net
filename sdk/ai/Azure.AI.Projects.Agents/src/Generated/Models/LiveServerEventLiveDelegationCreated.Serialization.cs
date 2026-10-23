@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
             string eventId = default;
             string clientEventId = default;
             long offsetMs = default;
-            LiveDelegationItem delegation = default;
+            VoiceAgentLiveDelegationItem delegation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("delegation"u8))
                 {
-                    delegation = LiveDelegationItem.DeserializeLiveDelegationItem(prop.Value, options);
+                    delegation = VoiceAgentLiveDelegationItem.DeserializeVoiceAgentLiveDelegationItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

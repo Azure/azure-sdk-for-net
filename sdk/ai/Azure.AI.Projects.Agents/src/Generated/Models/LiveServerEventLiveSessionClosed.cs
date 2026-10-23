@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="reason"> Why the Live session ended: `close_requested` for an application close or hangup request, `expired` for the session duration limit, `content` for a safety filter, `remote_hangup` for a graceful remote disconnect, or `connection_lost` for an unexpected primary or upstream disconnection. </param>
         /// <param name="session"></param>
         /// <param name="usage"> The final cumulative Live audio usage after session finalization. </param>
-        internal LiveServerEventLiveSessionClosed(string eventId, LiveServerEventLiveSessionClosedReason reason, LiveSessionResourceParam session, LiveSessionUsage usage) : base(LiveServerEventType.SessionClosed)
+        internal LiveServerEventLiveSessionClosed(string eventId, LiveServerEventLiveSessionClosedReason reason, VoiceAgentLiveSessionResource session, LiveSessionUsage usage) : base(LiveServerEventType.SessionClosed)
         {
             EventId = eventId;
             Reason = reason;
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="reason"> Why the Live session ended: `close_requested` for an application close or hangup request, `expired` for the session duration limit, `content` for a safety filter, `remote_hangup` for a graceful remote disconnect, or `connection_lost` for an unexpected primary or upstream disconnection. </param>
         /// <param name="session"></param>
         /// <param name="usage"> The final cumulative Live audio usage after session finalization. </param>
-        internal LiveServerEventLiveSessionClosed(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, LiveServerEventLiveSessionClosedReason reason, LiveSessionResourceParam session, LiveSessionUsage usage) : base(@type, additionalBinaryDataProperties)
+        internal LiveServerEventLiveSessionClosed(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string clientEventId, LiveServerEventLiveSessionClosedReason reason, VoiceAgentLiveSessionResource session, LiveSessionUsage usage) : base(@type, additionalBinaryDataProperties)
         {
             EventId = eventId;
             ClientEventId = clientEventId;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         public LiveServerEventLiveSessionClosedReason Reason { get; }
 
         /// <summary> Gets the Session. </summary>
-        public LiveSessionResourceParam Session { get; }
+        public VoiceAgentLiveSessionResource Session { get; }
 
         /// <summary> The final cumulative Live audio usage after session finalization. </summary>
         public LiveSessionUsage Usage { get; }

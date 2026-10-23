@@ -4197,23 +4197,21 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveClientEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEvent LiveClientEvent(string @type = default)
         {
             return new UnknownLiveClientEvent(new LiveClientEventType(@type), additionalBinaryDataProperties: null);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Start a Live session on a primary WebSocket. Send this event before other commands and wait for `session.started`. </summary>
         /// <param name="eventId"></param>
         /// <param name="session"> Initial configuration for a primary WebSocket. Send session.start first and wait for session.started before application commands. WebRTC creation already starts the session; do not send this event again on its data channel. </param>
         /// <returns> A new <see cref="Agents.LiveSessionStartEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveSessionStartEvent LiveSessionStartEvent(string eventId = default, LiveSessionCreateParams session = default)
         {
             return new LiveSessionStartEvent(LiveClientEventType.SessionStart, additionalBinaryDataProperties: null, eventId, session);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling. </summary>
         /// <param name="model"></param>
@@ -4363,12 +4361,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eventId"></param>
         /// <param name="session"> Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveSessionUpdateParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveSessionUpdateParam LiveClientEventLiveSessionUpdateParam(string eventId = default, LiveSessionUpdateParams session = default)
         {
             return new LiveClientEventLiveSessionUpdateParam(LiveClientEventType.SessionUpdate, additionalBinaryDataProperties: null, eventId, session);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Changes to an active Live session. Only delegation backend settings can be updated after startup. </summary>
         /// <param name="delegation"></param>
@@ -4418,100 +4415,90 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eventId"></param>
         /// <param name="audio"> Base64-encoded raw audio in the startup-selected format, without a WAV or other container header. Primary WebSocket only; media transports use their audio track. Audio appends have no acknowledgment. Reflected sideband server events reuse this event type and audio key, with no timestamps or event_id; their audio is always mono PCM16LE at 24 kHz. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveInputAudioAppendEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveInputAudioAppendEvent LiveClientEventLiveInputAudioAppendEvent(string eventId = default, string audio = default)
         {
             return new LiveClientEventLiveInputAudioAppendEvent(LiveClientEventType.SessionInputAudioAppend, additionalBinaryDataProperties: null, eventId, audio);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Mute audio input to the Live model without closing the session. The server acknowledges with `session.input_audio.muted`. </summary>
         /// <param name="eventId"></param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveInputAudioMuteParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveInputAudioMuteParam LiveClientEventLiveInputAudioMuteParam(string eventId = default)
         {
             return new LiveClientEventLiveInputAudioMuteParam(LiveClientEventType.SessionInputAudioMute, additionalBinaryDataProperties: null, eventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. </summary>
         /// <param name="eventId"></param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveInputAudioUnmuteParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveInputAudioUnmuteParam LiveClientEventLiveInputAudioUnmuteParam(string eventId = default)
         {
             return new LiveClientEventLiveInputAudioUnmuteParam(LiveClientEventType.SessionInputAudioUnmute, additionalBinaryDataProperties: null, eventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Append instructions to the Live conversation while it is running, optionally associating them with an existing client delegation. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Instruction text to append, limited to 500 tokens. This is a plain string, not an array of content parts. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveInstructionsAppendParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveInstructionsAppendParam LiveClientEventLiveInstructionsAppendParam(string eventId = default, string delegationId = default, string content = default)
         {
             return new LiveClientEventLiveInstructionsAppendParam(LiveClientEventType.SessionInstructionsAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Silent reasoning or progress context, limited to 500 tokens. It does not directly request speech, but can influence later speech and is not a secrecy boundary. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveThinkingAppendParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveThinkingAppendParam LiveClientEventLiveThinkingAppendParam(string eventId = default, string delegationId = default, string content = default)
         {
             return new LiveClientEventLiveThinkingAppendParam(LiveClientEventType.SessionThinkingAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Provide context the Live model can communicate to the user, optionally for an existing client delegation. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Speakable context for the Live model, limited to 500 tokens. Use this for a result the model should communicate; use session.thinking.append for silent context. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveCommentaryAppendParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveCommentaryAppendParam LiveClientEventLiveCommentaryAppendParam(string eventId = default, string delegationId = default, string content = default)
         {
             return new LiveClientEventLiveCommentaryAppendParam(LiveClientEventType.SessionCommentaryAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Add an input item to the Live session’s Responses backend. Requires Responses delegation; use `response.create` to request a response. </summary>
         /// <param name="eventId"></param>
         /// <param name="item"> An input item to append to the Responses backend conversation, such as a user message or a function tool result. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveResponseItemCreateParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        [Experimental("AAIP002")]
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveResponseItemCreateParam LiveClientEventLiveResponseItemCreateParam(string eventId = default, ResponseItem item = default)
         {
             return new LiveClientEventLiveResponseItemCreateParam(LiveClientEventType.ResponseItemCreate, additionalBinaryDataProperties: null, eventId, item);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Request a response from the Live session’s Responses backend, or continue a delegated response waiting for tool results. Requires Responses delegation. </summary>
         /// <param name="eventId"></param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveResponseCreateParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveResponseCreateParam LiveClientEventLiveResponseCreateParam(string eventId = default)
         {
             return new LiveClientEventLiveResponseCreateParam(LiveClientEventType.ResponseCreate, additionalBinaryDataProperties: null, eventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Request that the Live session close. The terminal `session.closed` event contains the close reason and final usage. </summary>
         /// <param name="eventId"></param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveSessionCloseParam"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveClientEventLiveSessionCloseParam LiveClientEventLiveSessionCloseParam(string eventId = default)
         {
             return new LiveClientEventLiveSessionCloseParam(LiveClientEventType.SessionClose, additionalBinaryDataProperties: null, eventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// An event sent by the Live API on a primary WebSocket or sideband connection.
@@ -4519,90 +4506,82 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveServerEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEvent LiveServerEvent(string @type = default)
         {
             return new UnknownLiveServerEvent(new LiveServerEventType(@type), additionalBinaryDataProperties: null);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Input audio received from the primary transport and reflected to a Live sideband connection before model-input muting. </summary>
         /// <param name="audio"> Base64-encoded raw mono PCM16LE at 24 kHz received from the primary transport, reflected to the sideband before model-input muting. This server event uses the same audio key as the client command, but is not an acknowledgment of it. </param>
         /// <returns> A new <see cref="Agents.LiveInputAudioAppend"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveInputAudioAppend LiveInputAudioAppend(string audio = default)
         {
             return new LiveInputAudioAppend(LiveServerEventType.SessionInputAudioAppend, additionalBinaryDataProperties: null, audio);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> An audio chunk generated by the Live model. Decode and play primary WebSocket chunks in delivery order using the configured session audio format. Sideband connections receive reflected output audio with timestamps. </summary>
         /// <param name="delta"> Base64-encoded raw audio. Primary WebSocket events use the session's configured format; reflected sideband events use mono PCM16LE at 24 kHz. </param>
         /// <param name="startMs"> Inclusive session-relative start in milliseconds. Required on reflected sideband events; omitted on the primary WebSocket. </param>
         /// <param name="endMs"> Exclusive session-relative end in milliseconds. Required on reflected sideband events; omitted on the primary WebSocket. Dropped output frames leave gaps between reflected ranges. </param>
         /// <returns> A new <see cref="Agents.LiveOutputAudioDelta"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveOutputAudioDelta LiveOutputAudioDelta(string delta = default, long? startMs = default, long? endMs = default)
         {
             return new LiveOutputAudioDelta(LiveServerEventType.SessionOutputAudioDelta, additionalBinaryDataProperties: null, delta, startMs, endMs);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> A SIP DTMF keypress received from the caller. Delivered only to sideband observers. </summary>
         /// <param name="eventId"></param>
         /// <param name="event"></param>
         /// <returns> A new <see cref="Agents.LiveTransportDTMFReceived"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveTransportDTMFReceived LiveTransportDTMFReceived(string eventId = default, string @event = default)
         {
             return new LiveTransportDTMFReceived(LiveServerEventType.TransportDtmfReceived, additionalBinaryDataProperties: null, eventId, @event);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> A SIP DTMF keypress successfully sent by the hosted tool. Delivered only to sideband observers; this is not a client command. </summary>
         /// <param name="eventId"></param>
         /// <param name="event"></param>
         /// <returns> A new <see cref="Agents.LiveTransportDTMFSend"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveTransportDTMFSend LiveTransportDTMFSend(string eventId = default, string @event = default)
         {
             return new LiveTransportDTMFSend(LiveServerEventType.TransportDtmfSend, additionalBinaryDataProperties: null, eventId, @event);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The outbound SIP provider leg is ringing or providing early media. Delivered only to sideband observers. </summary>
         /// <param name="eventId"></param>
         /// <param name="sessionId"> The canonical Live session ID. </param>
         /// <returns> A new <see cref="Agents.LiveTransportRinging"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveTransportRinging LiveTransportRinging(string eventId = default, string sessionId = default)
         {
             return new LiveTransportRinging(LiveServerEventType.TransportRinging, additionalBinaryDataProperties: null, eventId, sessionId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The outbound SIP provider leg answered and media is established. Delivered only to sideband observers. </summary>
         /// <param name="eventId"></param>
         /// <param name="sessionId"> The canonical Live session ID. </param>
         /// <returns> A new <see cref="Agents.LiveTransportAnswered"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveTransportAnswered LiveTransportAnswered(string eventId = default, string sessionId = default)
         {
             return new LiveTransportAnswered(LiveServerEventType.TransportAnswered, additionalBinaryDataProperties: null, eventId, sessionId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> An asynchronous outbound SIP setup failure. Delivered only to sideband observers. </summary>
         /// <param name="eventId"></param>
         /// <param name="sessionId"> The canonical Live session ID. </param>
         /// <param name="error"></param>
         /// <returns> A new <see cref="Agents.LiveTransportFailed"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveTransportFailed LiveTransportFailed(string eventId = default, string sessionId = default, LiveTransportCallError error = default)
         {
             return new LiveTransportFailed(LiveServerEventType.TransportFailed, additionalBinaryDataProperties: null, eventId, sessionId, error);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The LiveTransportCallError. </summary>
         /// <param name="code"> The call setup failure code. </param>
@@ -4620,8 +4599,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="session"></param>
         /// <param name="conversationId"> Stored conversation ID when effective store is true. Use protocols/voice/live/conversations; this ID differs from session.id. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveSessionStarted"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        public static LiveServerEventLiveSessionStarted LiveServerEventLiveSessionStarted(string eventId = default, string clientEventId = default, LiveSessionResourceParam session = default, string conversationId = default)
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveSessionStarted LiveServerEventLiveSessionStarted(string eventId = default, string clientEventId = default, VoiceAgentLiveSessionResource session = default, string conversationId = default)
         {
             return new LiveServerEventLiveSessionStarted(
                 LiveServerEventType.SessionStarted,
@@ -4631,34 +4610,34 @@ namespace Azure.AI.Projects.Agents
                 session,
                 conversationId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
-        /// <summary> The resolved Live session configuration and server-assigned session metadata. </summary>
+        /// <summary> Live session resource reported to Foundry clients. GPT Live runs native client delegation for foundry_managed_agent sessions; Foundry reports the effective owner. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
         /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
-        /// <param name="delegation"></param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="id"> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, at which the Live session expires. </param>
-        /// <returns> A new <see cref="Agents.LiveSessionResourceParam"/> instance for mocking. </returns>
-        public static LiveSessionResourceParam LiveSessionResourceParam(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, BinaryData delegation = default, bool? store = default, LiveClientConfigParam client = default, string id = default, long expiresAt = default)
+        /// <param name="delegation"> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentLiveSessionResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentLiveSessionResource VoiceAgentLiveSessionResource(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, bool? store = default, LiveClientConfigParam client = default, string id = default, long expiresAt = default, BinaryData delegation = default)
         {
             input ??= new ChangeTrackingList<LiveInitialItem>();
 
-            return new LiveSessionResourceParam(
+            return new VoiceAgentLiveSessionResource(
                 model,
                 instructions,
                 input.ToList(),
                 audio,
-                delegation,
                 store,
                 client,
                 id,
                 expiresAt,
                 "active",
+                delegation,
                 additionalBinaryDataProperties: null);
         }
 
@@ -4667,34 +4646,31 @@ namespace Azure.AI.Projects.Agents
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="session"></param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveSessionUpdated"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        public static LiveServerEventLiveSessionUpdated LiveServerEventLiveSessionUpdated(string eventId = default, string clientEventId = default, LiveSessionResourceParam session = default)
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveSessionUpdated LiveServerEventLiveSessionUpdated(string eventId = default, string clientEventId = default, VoiceAgentLiveSessionResource session = default)
         {
             return new LiveServerEventLiveSessionUpdated(LiveServerEventType.SessionUpdated, additionalBinaryDataProperties: null, eventId, clientEventId, session);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when a session.input_audio.mute command is accepted. Input audio is no longer sent to the model; sideband audio reflection continues. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInputAudioMuted"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveInputAudioMuted LiveServerEventLiveInputAudioMuted(string eventId = default, string clientEventId = default)
         {
             return new LiveServerEventLiveInputAudioMuted(LiveServerEventType.SessionInputAudioMuted, additionalBinaryDataProperties: null, eventId, clientEventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when a session.input_audio.unmute command is accepted. Input audio is sent to the model again. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInputAudioUnmuted"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveInputAudioUnmuted LiveServerEventLiveInputAudioUnmuted(string eventId = default, string clientEventId = default)
         {
             return new LiveServerEventLiveInputAudioUnmuted(LiveServerEventType.SessionInputAudioUnmuted, additionalBinaryDataProperties: null, eventId, clientEventId);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when a session.instructions.append command is accepted into the Live session timeline. Acknowledges the appended instructions without guaranteeing that the model has acted on them. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4702,7 +4678,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="startMs"> The start of this event on the Live session timeline, in milliseconds from the beginning of the session. </param>
         /// <param name="endMs"> The end of this event on the Live session timeline, in milliseconds from the beginning of the session. For appended context, this can equal start_ms. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInstructionsAppended"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveInstructionsAppended LiveServerEventLiveInstructionsAppended(string eventId = default, string clientEventId = default, long startMs = default, long endMs = default)
         {
             return new LiveServerEventLiveInstructionsAppended(
@@ -4713,7 +4689,6 @@ namespace Azure.AI.Projects.Agents
                 startMs,
                 endMs);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when a session.thinking.append command is accepted into the Live session timeline. Acknowledges the added reasoning context without guaranteeing any spoken output. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4721,7 +4696,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="startMs"> The start of this event on the Live session timeline, in milliseconds from the beginning of the session. </param>
         /// <param name="endMs"> The end of this event on the Live session timeline, in milliseconds from the beginning of the session. For appended context, this can equal start_ms. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveThinkingAppended"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveThinkingAppended LiveServerEventLiveThinkingAppended(string eventId = default, string clientEventId = default, long startMs = default, long endMs = default)
         {
             return new LiveServerEventLiveThinkingAppended(
@@ -4732,7 +4707,6 @@ namespace Azure.AI.Projects.Agents
                 startMs,
                 endMs);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when a session.commentary.append command is accepted into the Live session timeline. Acknowledges the added commentary without guaranteeing exact wording or completed audio playback. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4740,7 +4714,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="startMs"> The start of this event on the Live session timeline, in milliseconds from the beginning of the session. </param>
         /// <param name="endMs"> The end of this event on the Live session timeline, in milliseconds from the beginning of the session. For appended context, this can equal start_ms. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveCommentaryAppended"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveCommentaryAppended LiveServerEventLiveCommentaryAppended(string eventId = default, string clientEventId = default, long startMs = default, long endMs = default)
         {
             return new LiveServerEventLiveCommentaryAppended(
@@ -4751,7 +4725,6 @@ namespace Azure.AI.Projects.Agents
                 startMs,
                 endMs);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> A transcript fragment for user input audio in the Live session. Accumulate fragments in delivery order; these events do not define complete turns or include a transcript-done event. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4760,7 +4733,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endMs"> The end of this event on the Live session timeline, in milliseconds from the beginning of the session. For appended context, this can equal start_ms. </param>
         /// <param name="delta"> The transcript text fragment for the audio in this time range. Append fragments in delivery order to build the transcript. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInputTranscriptDelta"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveInputTranscriptDelta LiveServerEventLiveInputTranscriptDelta(string eventId = default, string clientEventId = default, long startMs = default, long endMs = default, string delta = default)
         {
             return new LiveServerEventLiveInputTranscriptDelta(
@@ -4772,7 +4745,6 @@ namespace Azure.AI.Projects.Agents
                 endMs,
                 delta);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> A transcript fragment for assistant output audio in the Live session. Accumulate fragments in delivery order; these events do not define complete turns or include a transcript-done event. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4781,7 +4753,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endMs"> The end of this event on the Live session timeline, in milliseconds from the beginning of the session. For appended context, this can equal start_ms. </param>
         /// <param name="delta"> The transcript text fragment for the audio in this time range. Append fragments in delivery order to build the transcript. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveOutputTranscriptDelta"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveOutputTranscriptDelta LiveServerEventLiveOutputTranscriptDelta(string eventId = default, string clientEventId = default, long startMs = default, long endMs = default, string delta = default)
         {
             return new LiveServerEventLiveOutputTranscriptDelta(
@@ -4793,7 +4765,6 @@ namespace Azure.AI.Projects.Agents
                 endMs,
                 delta);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Returned when the Live model delegates work to your application or a Responses backend. Contains delegation metadata and the position on the session timeline where the work was delegated. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4801,8 +4772,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="offsetMs"> The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session. </param>
         /// <param name="delegation"> The delegated work identifier and destination. This object contains metadata, not the task text. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveDelegationCreated"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        public static LiveServerEventLiveDelegationCreated LiveServerEventLiveDelegationCreated(string eventId = default, string clientEventId = default, long offsetMs = default, LiveDelegationItem delegation = default)
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveDelegationCreated LiveServerEventLiveDelegationCreated(string eventId = default, string clientEventId = default, long offsetMs = default, VoiceAgentLiveDelegationItem delegation = default)
         {
             return new LiveServerEventLiveDelegationCreated(
                 LiveServerEventType.SessionDelegationCreated,
@@ -4812,16 +4783,16 @@ namespace Azure.AI.Projects.Agents
                 offsetMs,
                 delegation);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
-        /// <summary> Metadata for work delegated by the Live model. Client delegations are handled by your application; Responses delegations run on the configured backend. </summary>
+        /// <summary> Live delegation trigger metadata reported to Foundry clients. This object contains metadata, not the task text. </summary>
         /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
-        /// <param name="target"> Where the Live model delegated the work: `client` for your application, or `responses` for the configured Responses backend. </param>
         /// <param name="responseId"> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </param>
-        /// <returns> A new <see cref="Agents.LiveDelegationItem"/> instance for mocking. </returns>
-        public static LiveDelegationItem LiveDelegationItem(string id = default, LiveDelegationItemTarget target = default, string responseId = default)
+        /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentLiveDelegationItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentLiveDelegationItem VoiceAgentLiveDelegationItem(string id = default, string responseId = default, VoiceAgentLiveDelegationTarget target = default)
         {
-            return new LiveDelegationItem(id, "delegation", target, responseId, additionalBinaryDataProperties: null);
+            return new VoiceAgentLiveDelegationItem(id, "delegation", responseId, target, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A streaming Responses API event from a backend delegated to by the Live session. Use the outer delegation_id to associate the nested stream with its Live delegation. </summary>
@@ -4830,7 +4801,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="delegationId"></param>
         /// <param name="event"> The nested Responses streaming event. Dispatch on its type field. Response lifecycle snapshots omit input and clear instructions, tools, and output to keep messages small; consume granular output events for the generated content. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveResponseEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveResponseEvent LiveServerEventLiveResponseEvent(string eventId = default, string clientEventId = default, string delegationId = default, IDictionary<string, BinaryData> @event = default)
         {
             @event ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -4843,7 +4814,6 @@ namespace Azure.AI.Projects.Agents
                 delegationId,
                 @event);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Reports cumulative Live audio usage and, when available, the most recent context-window usage. Delegated Responses token usage is reported separately in response.event events. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
@@ -4851,7 +4821,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="usage"> The cumulative Live audio usage so far. </param>
         /// <param name="contextWindow"> The latest measured Live context-window usage. Omitted when the context limit is unknown. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveSessionUsageUpdated"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveSessionUsageUpdated LiveServerEventLiveSessionUsageUpdated(string eventId = default, string clientEventId = default, LiveSessionUsage usage = default, LiveContextWindowUsage contextWindow = default)
         {
             return new LiveServerEventLiveSessionUsageUpdated(
@@ -4862,7 +4832,6 @@ namespace Azure.AI.Projects.Agents
                 usage,
                 contextWindow);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The latest measured context-window usage of the Live model. This is separate from billing usage and delegated Responses token usage. </summary>
         /// <param name="usageRatio"> The latest active context token count divided by the Live model context limit. Can decrease after compaction and may lag between measured audio frames. </param>
@@ -4879,8 +4848,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="session"></param>
         /// <param name="usage"> The final cumulative Live audio usage after session finalization. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveSessionClosed"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        public static LiveServerEventLiveSessionClosed LiveServerEventLiveSessionClosed(string eventId = default, string clientEventId = default, LiveServerEventLiveSessionClosedReason reason = default, LiveSessionResourceParam session = default, LiveSessionUsage usage = default)
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveSessionClosed LiveServerEventLiveSessionClosed(string eventId = default, string clientEventId = default, LiveServerEventLiveSessionClosedReason reason = default, VoiceAgentLiveSessionResource session = default, LiveSessionUsage usage = default)
         {
             return new LiveServerEventLiveSessionClosed(
                 LiveServerEventType.SessionClosed,
@@ -4891,19 +4860,17 @@ namespace Azure.AI.Projects.Agents
                 session,
                 usage);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Reports an error in the Live session, such as an invalid client command. Use error.client_event_id, when present, to identify the command that caused the error. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="error"> Details of the Live error and the client command that caused it, when known. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveErrorEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveErrorEvent LiveServerEventLiveErrorEvent(string eventId = default, string clientEventId = default, LiveLiveError error = default)
         {
             return new LiveServerEventLiveErrorEvent(LiveServerEventType.Error, additionalBinaryDataProperties: null, eventId, clientEventId, error);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Details of an error encountered by the Live session, including the affected parameter or client command when available. </summary>
         /// <param name="type"> The category of error, such as `invalid_request_error` for an invalid Live client command. </param>
@@ -4929,7 +4896,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="code"> A machine-readable code for the notice, such as `data_channel_permissions`. </param>
         /// <param name="message"> A human-readable explanation of the Live session notice. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInfoEvent"/> instance for mocking. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        [Experimental("AAIP001")]
         public static LiveServerEventLiveInfoEvent LiveServerEventLiveInfoEvent(string eventId = default, string clientEventId = default, string code = default, string message = default)
         {
             return new LiveServerEventLiveInfoEvent(
@@ -4940,7 +4907,6 @@ namespace Azure.AI.Projects.Agents
                 code,
                 message);
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <param name="id"></param>
         /// <param name="name"></param>

@@ -121,7 +121,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string eventId = default;
             string clientEventId = default;
-            LiveSessionResourceParam session = default;
+            VoiceAgentLiveSessionResource session = default;
             string conversationId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("session"u8))
                 {
-                    session = LiveSessionResourceParam.DeserializeLiveSessionResourceParam(prop.Value, options);
+                    session = VoiceAgentLiveSessionResource.DeserializeVoiceAgentLiveSessionResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("conversation_id"u8))

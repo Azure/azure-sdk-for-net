@@ -18,6 +18,7 @@
 
 - Added Realtime function-calling and recorded-speech audio samples.
 - Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs with synchronous/asynchronous typed/protocol overloads.
+- Live samples recognize the reported delegation owner and reply only to client-owned work, leaving Responses and Foundry-managed delegations to the service.
 - Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
 
 ## 3.0.0-beta.5 (2026-10-16)

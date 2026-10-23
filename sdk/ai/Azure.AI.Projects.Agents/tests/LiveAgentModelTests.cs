@@ -320,6 +320,79 @@ public class LiveAgentModelTests
         });
     }
 
+    [TestCase("session.started")]
+    [TestCase("session.updated")]
+    [TestCase("session.closed")]
+    public void SessionLifecycleRoundTripsFoundryManagedDelegationOwner(string eventType)
+    {
+        string closing = eventType == "session.closed" ? ""","reason":"close_requested","usage":{"seconds":1}""" : "";
+        string json = $$$$"""
+            {"type":"{{{{eventType}}}}","event_id":"event_1"{{{{closing}}}},
+             "session":{"id":"live_1","model":"gpt-live-1","expires_at":1900000000,"status":"active",
+               "audio":{"format":{"type":"audio/pcm","rate":24000}},
+               "delegation":{"type":"foundry_managed_agent","agent_name":"backend","agent_version":"2"}}}
+            """;
+        LiveServerEvent value = Read<LiveServerEvent>(json);
+        LiveServerEvent roundTrip = Read<LiveServerEvent>(Write(value).ToString());
+        foreach (LiveServerEvent serverEvent in new[] { value, roundTrip })
+        {
+            VoiceAgentLiveSessionResource session = serverEvent switch
+            {
+                LiveServerEventLiveSessionStarted started => started.Session,
+                LiveServerEventLiveSessionUpdated updated => updated.Session,
+                LiveServerEventLiveSessionClosed closed => closed.Session,
+                _ => throw new InvalidOperationException("Unexpected lifecycle event.")
+            };
+            VoiceAgentLiveManagedAgentDelegation owner = Read<VoiceAgentLiveManagedAgentDelegation>(session.Delegation.ToString());
+            Assert.Multiple(() =>
+            {
+                Assert.That(session.Id, Is.EqualTo("live_1"));
+                Assert.That(session.Model, Is.EqualTo(ModelIdsLive.GptLive1));
+                Assert.That(session.ExpiresAt, Is.EqualTo(1900000000));
+                Assert.That(session.Status, Is.EqualTo("active"));
+                Assert.That(session.Audio.Format, Is.TypeOf<LiveSessionAudioFormatPCMParam>());
+                Assert.That(owner.Type, Is.EqualTo("foundry_managed_agent"));
+                Assert.That(owner.AgentName, Is.EqualTo("backend"));
+                Assert.That(owner.AgentVersion, Is.EqualTo("2"));
+            });
+        }
+    }
+
+    [TestCase("client")]
+    [TestCase("responses")]
+    [TestCase("foundry_managed_agent")]
+    [TestCase("future_owner")]
+    public void DelegationCreatedRoundTripsFoundryAndNativeTargets(string target)
+    {
+        string responseId = target == "responses" ? ""","response_id":"response_1" """ : "";
+        LiveServerEvent value = Read<LiveServerEvent>($$$$"""
+            {"type":"session.delegation.created","event_id":"event_1","offset_ms":100,
+             "delegation":{"id":"delegation_1","type":"delegation","target":"{{{{target}}}}"{{{{responseId}}}}}}
+            """);
+        LiveServerEventLiveDelegationCreated roundTrip = (LiveServerEventLiveDelegationCreated)Read<LiveServerEvent>(Write(value).ToString());
+        Assert.Multiple(() =>
+        {
+            Assert.That(roundTrip.Delegation, Is.TypeOf<VoiceAgentLiveDelegationItem>());
+            Assert.That(roundTrip.Delegation.Id, Is.EqualTo("delegation_1"));
+            Assert.That(roundTrip.Delegation.Type, Is.EqualTo("delegation"));
+            Assert.That(roundTrip.Delegation.Target.ToString(), Is.EqualTo(target));
+            Assert.That(roundTrip.Delegation.ResponseId, Is.EqualTo(target == "responses" ? "response_1" : null));
+            Assert.That(roundTrip.OffsetMs, Is.EqualTo(100));
+        });
+    }
+
+    [TestCase(typeof(LiveServerEventLiveSessionStarted))]
+    [TestCase(typeof(LiveServerEventLiveSessionUpdated))]
+    [TestCase(typeof(LiveServerEventLiveSessionClosed))]
+    [TestCase(typeof(LiveServerEventLiveDelegationCreated))]
+    public void FoundryEventModelsHaveExactlyOneExperimentalAttribute(Type eventType)
+    {
+        Assert.That(eventType.GetCustomAttributesData().Count(attribute =>
+            attribute.AttributeType.FullName == "System.Diagnostics.CodeAnalysis.ExperimentalAttribute" &&
+            attribute.ConstructorArguments.Count == 1 &&
+            Equals(attribute.ConstructorArguments[0].Value, "AAIP001")), Is.EqualTo(1));
+    }
+
     private static T Read<T>(string json) => ModelReaderWriter.Read<T>(
         BinaryData.FromString(json), ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
 

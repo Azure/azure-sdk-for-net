@@ -45,6 +45,13 @@ cumulative usage, notices, and closure. It does not play reflected input as assi
 print backend text as spoken captions. Unknown and non-audio events are identified by their wire
 type rather than assuming every generated event will occur in each conversation.
 
+Live lifecycle events expose `VoiceAgentLiveSessionResource`. Its `Delegation` JSON reports
+`client`, `responses`, or `foundry_managed_agent`; a Foundry-managed owner includes the pinned
+`agent_name` and resolved `agent_version`. Delegation-created events expose
+`VoiceAgentLiveDelegationItem.Target` to identify who handles the work. The audio receiver
+replies only to `VoiceAgentLiveDelegationTarget.Client`; Responses and Foundry-managed work
+remain owned by the service, and an unknown future target is not executed locally.
+
 ## Prerequisites
 
 - A Foundry project endpoint and a deployed native GPT Live model, such as `gpt-live-1`.

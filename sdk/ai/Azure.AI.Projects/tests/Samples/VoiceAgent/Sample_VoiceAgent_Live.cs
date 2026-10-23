@@ -584,7 +584,8 @@ public static class Sample_VoiceAgent_Live
                 case LiveServerEventLiveOutputTranscriptDelta text:
                     await WriteCaptionAsync("Assistant", text.Delta);
                     break;
-                case LiveServerEventLiveDelegationCreated delegation:
+                case LiveServerEventLiveDelegationCreated delegation
+                    when delegation.Delegation.Target == VoiceAgentLiveDelegationTarget.Client:
                     await session.SendEventAsync(new LiveClientEventLiveCommentaryAppendParam(delegation.Delegation.Id,
                         "This demonstration cannot look up current weather conditions."), cancellationToken);
                     break;

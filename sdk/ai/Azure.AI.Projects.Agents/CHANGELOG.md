@@ -4,9 +4,12 @@
 
 ### Features Added
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
+- Added Foundry-aware Live session snapshots and delegation trigger metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
+- Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory signatures. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
 - Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
 
 ### Breaking Changes
+- Live lifecycle events now expose `VoiceAgentLiveSessionResource`, and delegation-created events expose `VoiceAgentLiveDelegationItem` with `VoiceAgentLiveDelegationTarget`, replacing the corresponding native-only snapshot and trigger types.
 - `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
 - `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
 - `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.

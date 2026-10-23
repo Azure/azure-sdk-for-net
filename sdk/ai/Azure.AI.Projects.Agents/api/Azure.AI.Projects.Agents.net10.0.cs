@@ -1541,47 +1541,35 @@ namespace Azure.AI.Projects.Agents
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteLiveAgentConversationAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteLiveAgentConversationAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversation(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversation> GetLiveAgentConversation(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversation>> GetLiveAgentConversationAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversationAudio(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceRecording> GetLiveAgentConversationAudio(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationAudioAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceRecording>> GetLiveAgentConversationAudioAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversationAudioContent(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<System.BinaryData> GetLiveAgentConversationAudioContent(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationAudioContentAsync(string agentName, string conversationId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetLiveAgentConversationAudioContentAsync(string agentName, string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversationAudioItem(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAudioItem> GetLiveAgentConversationAudioItem(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationAudioItemAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAudioItem>> GetLiveAgentConversationAudioItemAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversationAudioItemContent(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<System.BinaryData> GetLiveAgentConversationAudioItemContent(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationAudioItemContentAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.BinaryData>> GetLiveAgentConversationAudioItemContentAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetLiveAgentConversationItem(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversationItem> GetLiveAgentConversationItem(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetLiveAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversationItem>> GetLiveAgentConversationItemAsync(string agentName, string conversationId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversationItem> GetLiveAgentConversationItems(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetLiveAgentConversationItems(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversationItem> GetLiveAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetLiveAgentConversationItemsAsync(string agentName, string conversationId, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversation> GetLiveAgentConversations(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetLiveAgentConversations(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.VoiceAgentLiveConversation> GetLiveAgentConversationsAsync(string agentName, int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetLiveAgentConversationsAsync(string agentName, int? limit, string order, string after, string before, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
@@ -2510,28 +2498,6 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LiveDelegationItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDelegationItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegationItem>
-    {
-        internal LiveDelegationItem() { }
-        public string Id { get { throw null; } }
-        public string ResponseId { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveDelegationItemTarget Target { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.LiveDelegationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.LiveDelegationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.LiveDelegationItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDelegationItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDelegationItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.LiveDelegationItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegationItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum LiveDelegationItemTarget
-    {
-        Client = 0,
-        Responses = 1,
-    }
     public partial class LiveDelegationReasoningInputParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam>
     {
         public LiveDelegationReasoningInputParam() { }
@@ -3016,7 +2982,7 @@ namespace Azure.AI.Projects.Agents
     {
         internal LiveServerEventLiveDelegationCreated() { }
         public string ClientEventId { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveDelegationItem Delegation { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem Delegation { get { throw null; } }
         public string EventId { get { throw null; } }
         public long OffsetMs { get { throw null; } }
         protected override Azure.AI.Projects.Agents.LiveServerEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3177,7 +3143,7 @@ namespace Azure.AI.Projects.Agents
         public string ClientEventId { get { throw null; } }
         public string EventId { get { throw null; } }
         public Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosedReason Reason { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveSessionResourceParam Session { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource Session { get { throw null; } }
         public Azure.AI.Projects.Agents.LiveSessionUsage Usage { get { throw null; } }
         protected override Azure.AI.Projects.Agents.LiveServerEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3204,7 +3170,7 @@ namespace Azure.AI.Projects.Agents
         public string ClientEventId { get { throw null; } }
         public string ConversationId { get { throw null; } }
         public string EventId { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveSessionResourceParam Session { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource Session { get { throw null; } }
         protected override Azure.AI.Projects.Agents.LiveServerEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.LiveServerEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3221,7 +3187,7 @@ namespace Azure.AI.Projects.Agents
         internal LiveServerEventLiveSessionUpdated() { }
         public string ClientEventId { get { throw null; } }
         public string EventId { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveSessionResourceParam Session { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource Session { get { throw null; } }
         protected override Azure.AI.Projects.Agents.LiveServerEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.LiveServerEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3334,29 +3300,6 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.LiveSessionCreateParams System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionCreateParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionCreateParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionCreateParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LiveSessionResourceParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>
-    {
-        internal LiveSessionResourceParam() { }
-        public Azure.AI.Projects.Agents.LiveInitialSessionAudioParam Audio { get { throw null; } }
-        public Azure.AI.Projects.Agents.LiveClientConfigParam Client { get { throw null; } }
-        public System.BinaryData Delegation { get { throw null; } }
-        public long ExpiresAt { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.LiveInitialItem> Input { get { throw null; } }
-        public string Instructions { get { throw null; } }
-        public Azure.AI.Projects.Agents.ModelIdsLive Model { get { throw null; } }
-        public string Status { get { throw null; } }
-        public bool? Store { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.LiveSessionResourceParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.LiveSessionResourceParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.LiveSessionResourceParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.LiveSessionResourceParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionResourceParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class LiveSessionStartEvent : Azure.AI.Projects.Agents.LiveClientEvent, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveSessionStartEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionStartEvent>
@@ -3969,23 +3912,32 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.LiveAudioFormat LiveAudioFormat(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveClientConfigParam LiveClientConfigParam(Azure.AI.Projects.Agents.LiveDataChannelConfigParam dataChannel = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveClientDelegationParam LiveClientDelegationParam() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEvent LiveClientEvent(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveCommentaryAppendParam LiveClientEventLiveCommentaryAppendParam(string eventId = null, string delegationId = null, string content = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveInputAudioAppendEvent LiveClientEventLiveInputAudioAppendEvent(string eventId = null, string audio = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveInputAudioMuteParam LiveClientEventLiveInputAudioMuteParam(string eventId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveInputAudioUnmuteParam LiveClientEventLiveInputAudioUnmuteParam(string eventId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveInstructionsAppendParam LiveClientEventLiveInstructionsAppendParam(string eventId = null, string delegationId = null, string content = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveResponseCreateParam LiveClientEventLiveResponseCreateParam(string eventId = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveResponseItemCreateParam LiveClientEventLiveResponseItemCreateParam(string eventId = null, OpenAI.Responses.ResponseItem item = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveSessionCloseParam LiveClientEventLiveSessionCloseParam(string eventId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveSessionUpdateParam LiveClientEventLiveSessionUpdateParam(string eventId = null, Azure.AI.Projects.Agents.LiveSessionUpdateParams session = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveClientEventLiveThinkingAppendParam LiveClientEventLiveThinkingAppendParam(string eventId = null, string delegationId = null, string content = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveContextWindowUsage LiveContextWindowUsage(double usageRatio = 0) { throw null; }
         public static Azure.AI.Projects.Agents.LiveCustomVoiceParam LiveCustomVoiceParam(string id = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveDataChannelConfigParam LiveDataChannelConfigParam(System.BinaryData allowedClientEvents = null, System.BinaryData allowedServerEvents = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveDelegation LiveDelegation(string type = null) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveDelegationItem LiveDelegationItem(string id = null, Azure.AI.Projects.Agents.LiveDelegationItemTarget target = Azure.AI.Projects.Agents.LiveDelegationItemTarget.Client, string responseId = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam LiveDelegationReasoningInputParam(Azure.AI.Projects.Agents.LiveReasoningEffort? effort = default(Azure.AI.Projects.Agents.LiveReasoningEffort?), Azure.AI.Projects.Agents.LiveReasoningSummary? summary = default(Azure.AI.Projects.Agents.LiveReasoningSummary?)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveDelegationTextInputParam LiveDelegationTextInputParam(Azure.AI.Projects.Agents.LiveTextVerbosity? verbosity = default(Azure.AI.Projects.Agents.LiveTextVerbosity?)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveFunctionToolChoiceParam LiveFunctionToolChoiceParam(string name = null) { throw null; }
@@ -3999,43 +3951,66 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.LiveInitialSessionAudioParam LiveInitialSessionAudioParam(Azure.AI.Projects.Agents.LiveAudioFormat format = null, Azure.AI.Projects.Agents.LiveInitialSessionAudioOutputParam output = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveInitialTextContentPartParam LiveInitialTextContentPartParam(Azure.AI.Projects.Agents.LiveInitialTextContentPartParamType? type = default(Azure.AI.Projects.Agents.LiveInitialTextContentPartParamType?), string text = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveInitialUserMessageItemParam LiveInitialUserMessageItemParam(string id = null, Azure.AI.Projects.Agents.LiveInitialUserMessageItemParamType? type = default(Azure.AI.Projects.Agents.LiveInitialUserMessageItemParamType?), Azure.AI.Projects.Agents.LiveInitialMessageStatus? status = default(Azure.AI.Projects.Agents.LiveInitialMessageStatus?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParam> content = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveInputAudioAppend LiveInputAudioAppend(string audio = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveLiveError LiveLiveError(string type = null, string code = null, string message = null, string param = null, string clientEventId = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveMCPToolChoiceParam LiveMCPToolChoiceParam(string serverLabel = null, string name = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveOutputAudioDelta LiveOutputAudioDelta(string delta = null, long? startMs = default(long?), long? endMs = default(long?)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveResponsesDelegationParam LiveResponsesDelegationParam(Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsInputParam responses = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsInputParam LiveResponsesDelegationSettingsInputParam(string model = null, string instructions = null, long? maxOutputTokens = default(long?), Azure.AI.Projects.Agents.LiveResponsesServiceTier? serviceTier = default(Azure.AI.Projects.Agents.LiveResponsesServiceTier?), Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam reasoning = null, Azure.AI.Projects.Agents.LiveDelegationTextInputParam text = null, System.Collections.Generic.IEnumerable<System.BinaryData> tools = null, System.BinaryData toolChoice = null, bool? parallelToolCalls = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsUpdateInputParam LiveResponsesDelegationSettingsUpdateInputParam(string model = null, string instructions = null, long? maxOutputTokens = default(long?), Azure.AI.Projects.Agents.LiveResponsesServiceTier? serviceTier = default(Azure.AI.Projects.Agents.LiveResponsesServiceTier?), Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam reasoning = null, Azure.AI.Projects.Agents.LiveDelegationTextInputParam text = null, System.Collections.Generic.IEnumerable<System.BinaryData> tools = null, System.BinaryData toolChoice = null, bool? parallelToolCalls = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveResponsesDelegationUpdateParam LiveResponsesDelegationUpdateParam(Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsUpdateInputParam responses = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEvent LiveServerEvent(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveCommentaryAppended LiveServerEventLiveCommentaryAppended(string eventId = null, string clientEventId = null, long startMs = (long)0, long endMs = (long)0) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveServerEventLiveDelegationCreated LiveServerEventLiveDelegationCreated(string eventId = null, string clientEventId = null, long offsetMs = (long)0, Azure.AI.Projects.Agents.LiveDelegationItem delegation = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.LiveServerEventLiveDelegationCreated LiveServerEventLiveDelegationCreated(string eventId = null, string clientEventId = null, long offsetMs = (long)0, Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem delegation = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveErrorEvent LiveServerEventLiveErrorEvent(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveLiveError error = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveInfoEvent LiveServerEventLiveInfoEvent(string eventId = null, string clientEventId = null, string code = null, string message = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveInputAudioMuted LiveServerEventLiveInputAudioMuted(string eventId = null, string clientEventId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveInputAudioUnmuted LiveServerEventLiveInputAudioUnmuted(string eventId = null, string clientEventId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveInputTranscriptDelta LiveServerEventLiveInputTranscriptDelta(string eventId = null, string clientEventId = null, long startMs = (long)0, long endMs = (long)0, string delta = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveInstructionsAppended LiveServerEventLiveInstructionsAppended(string eventId = null, string clientEventId = null, long startMs = (long)0, long endMs = (long)0) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveOutputTranscriptDelta LiveServerEventLiveOutputTranscriptDelta(string eventId = null, string clientEventId = null, long startMs = (long)0, long endMs = (long)0, string delta = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveResponseEvent LiveServerEventLiveResponseEvent(string eventId = null, string clientEventId = null, string delegationId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> @event = null) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosed LiveServerEventLiveSessionClosed(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosedReason reason = Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosedReason.CloseRequested, Azure.AI.Projects.Agents.LiveSessionResourceParam session = null, Azure.AI.Projects.Agents.LiveSessionUsage usage = null) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionStarted LiveServerEventLiveSessionStarted(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveSessionResourceParam session = null, string conversationId = null) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionUpdated LiveServerEventLiveSessionUpdated(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveSessionResourceParam session = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosed LiveServerEventLiveSessionClosed(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosedReason reason = Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosedReason.CloseRequested, Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource session = null, Azure.AI.Projects.Agents.LiveSessionUsage usage = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionStarted LiveServerEventLiveSessionStarted(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource session = null, string conversationId = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionUpdated LiveServerEventLiveSessionUpdated(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource session = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveSessionUsageUpdated LiveServerEventLiveSessionUsageUpdated(string eventId = null, string clientEventId = null, Azure.AI.Projects.Agents.LiveSessionUsage usage = null, Azure.AI.Projects.Agents.LiveContextWindowUsage contextWindow = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveServerEventLiveThinkingAppended LiveServerEventLiveThinkingAppended(string eventId = null, string clientEventId = null, long startMs = (long)0, long endMs = (long)0) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMAParam LiveSessionAudioFormatPCMAParam(long rate = (long)0) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParam LiveSessionAudioFormatPCMParam(Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParamRate rate = (Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParamRate)(0)) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMUParam LiveSessionAudioFormatPCMUParam(long rate = (long)0) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionCreateParams LiveSessionCreateParams(Azure.AI.Projects.Agents.ModelIdsLive model = default(Azure.AI.Projects.Agents.ModelIdsLive), string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.LiveInitialItem> input = null, Azure.AI.Projects.Agents.LiveInitialSessionAudioParam audio = null, System.BinaryData delegation = null, bool? store = default(bool?), Azure.AI.Projects.Agents.LiveClientConfigParam client = null) { throw null; }
-        public static Azure.AI.Projects.Agents.LiveSessionResourceParam LiveSessionResourceParam(Azure.AI.Projects.Agents.ModelIdsLive model = default(Azure.AI.Projects.Agents.ModelIdsLive), string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.LiveInitialItem> input = null, Azure.AI.Projects.Agents.LiveInitialSessionAudioParam audio = null, System.BinaryData delegation = null, bool? store = default(bool?), Azure.AI.Projects.Agents.LiveClientConfigParam client = null, string id = null, long expiresAt = (long)0) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveSessionStartEvent LiveSessionStartEvent(string eventId = null, Azure.AI.Projects.Agents.LiveSessionCreateParams session = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionUpdateParams LiveSessionUpdateParams(System.BinaryData delegation = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveSessionUsage LiveSessionUsage(double seconds = 0) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveTransportAnswered LiveTransportAnswered(string eventId = null, string sessionId = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveTransportCallError LiveTransportCallError(string code = null, string message = null, string param = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveTransportDTMFReceived LiveTransportDTMFReceived(string eventId = null, string @event = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveTransportDTMFSend LiveTransportDTMFSend(string eventId = null, string @event = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveTransportFailed LiveTransportFailed(string eventId = null, string sessionId = null, Azure.AI.Projects.Agents.LiveTransportCallError error = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveTransportRinging LiveTransportRinging(string eventId = null, string sessionId = null) { throw null; }
         public static Azure.AI.Projects.Agents.LiveWebSearchToolInputParam LiveWebSearchToolInputParam() { throw null; }
         public static Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference ManagedAgentIdentityBlueprintReference(string blueprintId = null) { throw null; }
@@ -4210,6 +4185,8 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.VoiceAgentLiveDefinition VoiceAgentLiveDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string instructions = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs = null, bool? store = default(bool?), string model = null, Azure.AI.Projects.Agents.VoiceAgentTemplateGreetingConfig greeting = null, Azure.AI.Projects.Agents.LiveInitialSessionAudioParam audio = null, System.BinaryData delegation = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationConversationItem VoiceAgentLiveDelegationConversationItem(string id = null, string responseId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem VoiceAgentLiveDelegationItem(string id = null, string responseId = null, Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget target = default(Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget)) { throw null; }
         public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationResultItem1 VoiceAgentLiveDelegationResultItem1(string commentary = null, string thinking = null) { throw null; }
         public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationResultItem2 VoiceAgentLiveDelegationResultItem2(string commentary = null, string thinking = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -4222,6 +4199,8 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.VoiceAgentLiveOutputConversationItem VoiceAgentLiveOutputConversationItem(string id = null, string transcription = null, Azure.AI.Projects.Agents.VoiceAudioItem audio = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem VoiceAgentLiveResponsesDelegationConversationItem(string id = null, string responseId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string output = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource VoiceAgentLiveSessionResource(Azure.AI.Projects.Agents.ModelIdsLive model = default(Azure.AI.Projects.Agents.ModelIdsLive), string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.LiveInitialItem> input = null, Azure.AI.Projects.Agents.LiveInitialSessionAudioParam audio = null, bool? store = default(bool?), Azure.AI.Projects.Agents.LiveClientConfigParam client = null, string id = null, long expiresAt = (long)0, System.BinaryData delegation = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = null, System.BinaryData internalToolChoice = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -6742,6 +6721,24 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationConversationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationConversationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentLiveDelegationItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>
+    {
+        internal VoiceAgentLiveDelegationItem() { }
+        public string Id { get { throw null; } }
+        public string ResponseId { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget Target { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VoiceAgentLiveDelegationResultItem1 : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationResultItem1>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationResultItem1>
     {
         internal VoiceAgentLiveDelegationResultItem1() { }
@@ -6791,6 +6788,25 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.VoiceAgentLiveDelegationStatus (string value) { throw null; }
         public static implicit operator Azure.AI.Projects.Agents.VoiceAgentLiveDelegationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentLiveDelegationStatus left, Azure.AI.Projects.Agents.VoiceAgentLiveDelegationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentLiveDelegationTarget : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentLiveDelegationTarget(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget Client { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget FoundryManagedAgent { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget Responses { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget left, Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget left, Azure.AI.Projects.Agents.VoiceAgentLiveDelegationTarget right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -6877,6 +6893,30 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveResponsesDelegationConversationItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class VoiceAgentLiveSessionResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>
+    {
+        internal VoiceAgentLiveSessionResource() { }
+        public Azure.AI.Projects.Agents.LiveInitialSessionAudioParam Audio { get { throw null; } }
+        public Azure.AI.Projects.Agents.LiveClientConfigParam Client { get { throw null; } }
+        public System.BinaryData Delegation { get { throw null; } }
+        public long ExpiresAt { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.LiveInitialItem> Input { get { throw null; } }
+        public string Instructions { get { throw null; } }
+        public Azure.AI.Projects.Agents.ModelIdsLive Model { get { throw null; } }
+        public string Status { get { throw null; } }
+        public bool? Store { get { throw null; } }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLiveSessionResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class VoiceAgentLlmGeneratedGreetingConfig : Azure.AI.Projects.Agents.VoiceAgentGreetingConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentLlmGeneratedGreetingConfig>

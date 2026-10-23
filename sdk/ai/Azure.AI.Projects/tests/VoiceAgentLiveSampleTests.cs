@@ -519,6 +519,37 @@ public class VoiceAgentLiveSampleTests
         });
     }
 
+    [TestCase("client", true)]
+    [TestCase("responses", false)]
+    [TestCase("foundry_managed_agent", false)]
+    [TestCase("future_owner", false)]
+    public async Task AudioReceiverRepliesOnlyToClientOwnedDelegations(string target, bool expectReply)
+    {
+        using ScriptedSession session = new(Read(BinaryData.FromObjectAsJson(new
+        {
+            type = "session.delegation.created",
+            event_id = "delegated",
+            offset_ms = 100,
+            delegation = new { id = "delegation_1", type = "delegation", target }
+        }).ToString()), Closed());
+        using MemoryStream audio = new();
+        using StringWriter output = new();
+
+        await Sample_VoiceAgent_Live.ReceiveAudioAsync(session, audio, output, default);
+
+        Assert.That(session.Commands, Has.Count.EqualTo(expectReply ? 1 : 0));
+        if (expectReply)
+        {
+            using JsonDocument command = JsonDocument.Parse(session.Commands[0]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(command.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.commentary.append"));
+                Assert.That(command.RootElement.GetProperty("delegation_id").GetString(), Is.EqualTo("delegation_1"));
+            });
+        }
+        Assert.That(session.ReceiverEnded, Is.True);
+    }
+
     private static LiveServerEvent[] ControlAcknowledgments() =>
     [
         Read("""{"type":"session.updated","client_event_id":"sample-update","session":{"id":"session","model":"gpt-live-1","expires_at":2000000000}}"""),

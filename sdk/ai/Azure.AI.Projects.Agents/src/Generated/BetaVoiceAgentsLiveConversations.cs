@@ -178,7 +178,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<VoiceAgentLiveConversation> GetLiveAgentConversations(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -217,7 +216,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<VoiceAgentLiveConversation> GetLiveAgentConversationsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -307,7 +305,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<VoiceAgentLiveConversation> GetLiveAgentConversation(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -324,7 +321,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<VoiceAgentLiveConversation>> GetLiveAgentConversationAsync(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -575,7 +571,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<VoiceAgentLiveConversationItem> GetLiveAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -617,7 +612,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<VoiceAgentLiveConversationItem> GetLiveAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -714,7 +708,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<VoiceAgentLiveConversationItem> GetLiveAgentConversationItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -733,7 +726,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<VoiceAgentLiveConversationItem>> GetLiveAgentConversationItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -824,7 +816,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<VoiceAudioItem> GetLiveAgentConversationAudioItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -843,7 +834,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<VoiceAudioItem>> GetLiveAgentConversationAudioItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -1037,7 +1027,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<VoiceRecording> GetLiveAgentConversationAudio(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -1054,7 +1043,6 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<VoiceRecording>> GetLiveAgentConversationAudioAsync(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
