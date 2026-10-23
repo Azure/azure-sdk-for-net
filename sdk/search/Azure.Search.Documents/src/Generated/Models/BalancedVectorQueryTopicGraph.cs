@@ -21,13 +21,13 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="BalancedVectorQueryTopicGraph"/>. </summary>
         /// <param name="kind"> The kind of topic graph vector search to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </param>
         internal BalancedVectorQueryTopicGraph(VectorSearchTopicGraphKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? minDiversityPoolSize) : base(kind, additionalBinaryDataProperties)
         {
             MinDiversityPoolSize = minDiversityPoolSize;
         }
 
-        /// <summary> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </summary>
+        /// <summary> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </summary>
         public int? MinDiversityPoolSize { get; set; }
     }
 }

@@ -521,7 +521,7 @@ Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowled
 - [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
 - [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md)
 - [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md)
-- [Preview graph queries, topic-graph vectors, facet filter hints, and random scoring](samples/Sample23_NovemberPreview.md)
+- [Preview graph queries, topic-graph vectors, facet filter hints, and random scoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample23_NovemberPreview.md)
 
 ### Authenticate in a National Cloud
 

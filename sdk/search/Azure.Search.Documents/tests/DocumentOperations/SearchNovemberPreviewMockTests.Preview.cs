@@ -166,7 +166,7 @@ namespace Azure.Search.Documents.Tests
         public void AllSupportedVersionsRoundtripAndPreviewIsDefault()
         {
             Assert.AreEqual(SearchClientOptions.ServiceVersion.V2026_11_01_Preview, new SearchClientOptions().Version);
-            foreach (SearchClientOptions.ServiceVersion version in Enum.GetValues<SearchClientOptions.ServiceVersion>())
+            foreach (SearchClientOptions.ServiceVersion version in Enum.GetValues(typeof(SearchClientOptions.ServiceVersion)))
             {
                 Assert.AreEqual(version, new SearchClientOptions(version).Version);
                 Assert.AreEqual(version, version.ToVersionString().ToServiceVersion());

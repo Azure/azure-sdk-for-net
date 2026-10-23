@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> The kind of topic graph vector search to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diversityFactor"> The diversity factor used for topic graph diverse retrieval. If omitted, the default configured on the topic graph profile is used. </param>
-        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </param>
+        /// <param name="minDiversityPoolSize"> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </param>
         internal DiverseVectorQueryTopicGraph(VectorSearchTopicGraphKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? diversityFactor, int? minDiversityPoolSize) : base(kind, additionalBinaryDataProperties)
         {
             DiversityFactor = diversityFactor;
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The diversity factor used for topic graph diverse retrieval. If omitted, the default configured on the topic graph profile is used. </summary>
         public float? DiversityFactor { get; set; }
 
-        /// <summary> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000 for classic services and 500 for serverless services. </summary>
+        /// <summary> The minimum number of vector candidates to retrieve before topic graph sampling. The default is 1,000. </summary>
         public int? MinDiversityPoolSize { get; set; }
     }
 }
