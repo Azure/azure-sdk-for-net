@@ -17,3 +17,6 @@
 - Keep the original blocking lint selectors independent of coverage configuration.
 - Match Vally's nonempty string-array multi-turn contract instead of object turns.
 - Use Node 24 consistently for lint, coverage checks and trusted PR reporting.
+- Move the two coverage workflows' action pins to a generated workflow dependency
+  lockfile, keeping readable release versions, the same action commits, and scoped
+  read-only verification. Other workflows and repository policies are unchanged.
