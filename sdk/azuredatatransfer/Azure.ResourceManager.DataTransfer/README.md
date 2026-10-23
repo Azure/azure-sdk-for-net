@@ -1,4 +1,4 @@
-# Azure.ResourceManager.DataTransfer management client library for .NET
+# Azure Data Transfer management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
