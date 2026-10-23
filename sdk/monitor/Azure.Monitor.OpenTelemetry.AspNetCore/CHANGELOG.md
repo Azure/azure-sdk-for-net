@@ -7,10 +7,16 @@
 ### Breaking Changes
 
 - Reduce default HTTP client metric volume on .NET 8+ while retaining request latency, count, and failure dimensions through `http.client.request.duration`. Other `System.Net.Http` metrics are now opt-in through OpenTelemetry `AddView`; dashboards and alerts using them must [explicitly enable collection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore#http-client-metrics). HTTP dependency tracing and server metrics are unchanged. No new public API is introduced.
+- Updated the vendored Azure resource detectors to `OpenTelemetry.Resources.Azure` `1.20.1-beta.1`, which aligns the detected resource attributes with OpenTelemetry Semantic Conventions v1.44.0. Cloud Role Name, Cloud Role Instance, and Application Version are unchanged. The following changes are visible in the resource attributes exported on the `_OTELRESOURCE_` metric:
+  - `cloud.platform` values changed from `azure_app_service`, `azure_container_apps`, and `azure_vm` to `azure.app_service`, `azure.container_apps`, and `azure.vm`.
+  - The App Service slot name is now reported as `deployment.environment.name` instead of `deployment.environment`.
+  - The Azure VM detector no longer reports `azure.vm.sku`, and `os.type` is now lowercase (for example `windows` instead of `Windows`).
+  - The Azure App Service and VM detectors now also report `cloud.account.id` and `azure.resource_group.name`, and the VM detector reports `host.image.id`, `host.image.name`, and `host.image.version`.
 
 ### Bugs Fixed
 
 - `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` now take precedence over resource attributes detected by the Azure App Service, Container Apps, and VM resource detectors. Applications that set these variables will see Cloud Role Name and/or Cloud Role Instance change in Application Insights to the configured values.
+- Updated the vendored Azure VM resource detector to limit how much of the Azure Instance Metadata Service response is read ([GHSA-vc24-j8c5-2vw4](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/security/advisories/GHSA-vc24-j8c5-2vw4)), to apply its two second timeout to reading the response body, to skip detection on Azure App Service, and to retry detection after a failure instead of remembering the failure for the lifetime of the process.
 
 ### Other Changes
 
