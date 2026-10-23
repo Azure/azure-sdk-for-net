@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Encryption settings. </summary>
+        [CodeGenMember("Encryption")]
         public NetAppAccountEncryption Encryption
         {
             get
@@ -74,23 +76,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new AccountPropertiesPatch();
                 }
                 Properties.Encryption = value;
-            }
-        }
-
-        /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NfsV4IdDomain;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.NfsV4IdDomain = value;
             }
         }
     }

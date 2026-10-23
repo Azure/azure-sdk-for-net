@@ -38,6 +38,18 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
 
+        /// <summary> Domain for NFSv4 user ID mapping. </summary>
+        [CodeGenMember("NfsV4IDDomain")]
+        public string NfsV4IdDomain
+        {
+            get => Properties?.NfsV4IDDomain;
+            set
+            {
+                Properties ??= new AccountPropertiesPatch();
+                Properties.NfsV4IDDomain = value;
+            }
+        }
+
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfigPatch EntraIdConfig
         {
