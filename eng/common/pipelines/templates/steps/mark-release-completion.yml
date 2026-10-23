@@ -13,7 +13,9 @@ steps:
   # Runtime output variables must not be tested at template-expansion time.
   # Initialize the optional macro before use on manual runs that have no SDK PR.
   - ${{ if eq(parameters.SdkPullRequest, '') }}:
-    - pwsh: Write-Host '##vso[task.setvariable variable=AutoReleaseSdkPullRequestUrl]'
+    - pwsh: |
+        Write-Host '##vso[task.setvariable variable=AutoReleaseSdkPullRequestUrl]'
+        Write-Host 'AutoReleaseSdkPullRequestUrl is set to an empty string.'
       displayName: Initialize optional auto-release SDK PR
       condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'), eq(variables['AutoReleaseSdkPullRequestUrl'], ''))
 
