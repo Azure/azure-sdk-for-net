@@ -96,12 +96,80 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
         }
 
-        [Test]
-        public void SerializeUsesOriginalNfsDomainWireName()
+        [TestCase("W")]
+        [TestCase("J")]
+        public void SerializeOmitsUnsetNfsDomain(string format)
+        {
+            var patch = new NetAppAccountPatch("westus2");
+
+            Assert.That(patch.NfsV4IdDomain, Is.Null);
+            using JsonDocument document = Serialize(patch, format);
+            Assert.That(document.RootElement.TryGetProperty("properties", out JsonElement properties)
+                && properties.TryGetProperty("nfsV4IDDomain", out _), Is.False);
+        }
+
+        [TestCase("W")]
+        [TestCase("J")]
+        public void SerializePreservesExplicitNullNfsDomain(string format)
+        {
+            var patch = new NetAppAccountPatch("westus2") { NfsV4IdDomain = null };
+
+            using JsonDocument document = Serialize(patch, format);
+            JsonElement properties = document.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("nfsV4IDDomain").ValueKind, Is.EqualTo(JsonValueKind.Null));
+            Assert.That(properties.TryGetProperty("nfsV4IdDomain", out _), Is.False);
+        }
+
+        [TestCase("W")]
+        [TestCase("J")]
+        public void SerializePreservesClearedNfsDomain(string format)
         {
             var patch = new NetAppAccountPatch("westus2") { NfsV4IdDomain = "contoso.com" };
+            patch.NfsV4IdDomain = null;
 
-            using JsonDocument document = Serialize(patch);
+            using JsonDocument document = Serialize(patch, format);
+            Assert.That(document.RootElement.GetProperty("properties").GetProperty("nfsV4IDDomain").ValueKind,
+                Is.EqualTo(JsonValueKind.Null));
+        }
+
+        [TestCase("W")]
+        [TestCase("J")]
+        public void RoundTripPreservesExplicitNullNfsDomain(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var data = BinaryData.FromString("{\"location\":\"westus2\",\"properties\":{\"nfsV4IDDomain\":null}}");
+            NetAppAccountPatch patch = ModelReaderWriter.Read<NetAppAccountPatch>(
+                data, options, AzureResourceManagerNetAppContext.Default);
+
+            Assert.That(patch.NfsV4IdDomain, Is.Null);
+            using JsonDocument document = Serialize(patch, format);
+            Assert.That(document.RootElement.GetProperty("properties").GetProperty("nfsV4IDDomain").ValueKind,
+                Is.EqualTo(JsonValueKind.Null));
+        }
+
+        [TestCase("W")]
+        [TestCase("J")]
+        public void RoundTripOmitsUnsetNfsDomain(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var data = BinaryData.FromString("{\"location\":\"westus2\",\"properties\":{}}");
+            NetAppAccountPatch patch = ModelReaderWriter.Read<NetAppAccountPatch>(
+                data, options, AzureResourceManagerNetAppContext.Default);
+
+            Assert.That(patch.NfsV4IdDomain, Is.Null);
+            using JsonDocument document = Serialize(patch, format);
+            Assert.That(document.RootElement.GetProperty("properties").TryGetProperty("nfsV4IDDomain", out _), Is.False);
+        }
+
+        [TestCase("W")]
+        [TestCase("J")]
+        public void SerializeUsesOriginalNfsDomainWireName(string format)
+        {
+            Assert.That(typeof(NetAppAccountPatch).GetProperty("NfsV4IDDomain"), Is.Null);
+
+            var patch = new NetAppAccountPatch("westus2") { NfsV4IdDomain = "contoso.com" };
+
+            using JsonDocument document = Serialize(patch, format);
             JsonElement properties = document.RootElement.GetProperty("properties");
             Assert.That(properties.GetProperty("nfsV4IDDomain").GetString(), Is.EqualTo("contoso.com"));
             Assert.That(properties.TryGetProperty("nfsV4IdDomain", out _), Is.False);
@@ -156,9 +224,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.That(properties.GetProperty("nfsV4IDDomain").GetString(), Is.EqualTo("contoso.com"));
         }
 
-        private static JsonDocument Serialize(NetAppAccountPatch patch)
+        private static JsonDocument Serialize(NetAppAccountPatch patch, string format = "W")
         {
-            return JsonDocument.Parse(ModelReaderWriter.Write(patch, WireOptions, AzureResourceManagerNetAppContext.Default));
+            return JsonDocument.Parse(ModelReaderWriter.Write(patch, new ModelReaderWriterOptions(format), AzureResourceManagerNetAppContext.Default));
         }
     }
 }

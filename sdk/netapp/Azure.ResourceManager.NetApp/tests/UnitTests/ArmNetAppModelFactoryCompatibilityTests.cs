@@ -15,6 +15,46 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private const string ResourceGroupId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/test";
 
+        private static IEnumerable<TestCaseData> ElasticFactoryTagDefaults()
+        {
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticAccountData(),
+                ArmNetAppModelFactory.NetAppElasticAccountData(tags: null))
+                .SetName("ElasticAccountFactoryProvidesMutableDefaultTags");
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticCapacityPoolData(),
+                ArmNetAppModelFactory.NetAppElasticCapacityPoolData(tags: null))
+                .SetName("ElasticCapacityPoolFactoryProvidesMutableDefaultTags");
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticVolumeData(),
+                ArmNetAppModelFactory.NetAppElasticVolumeData(tags: null))
+                .SetName("ElasticVolumeFactoryProvidesMutableDefaultTags");
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticSnapshotPolicyData(),
+                ArmNetAppModelFactory.NetAppElasticSnapshotPolicyData(tags: null))
+                .SetName("ElasticSnapshotPolicyFactoryProvidesMutableDefaultTags");
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticBackupPolicyData(),
+                ArmNetAppModelFactory.NetAppElasticBackupPolicyData(tags: null))
+                .SetName("ElasticBackupPolicyFactoryProvidesMutableDefaultTags");
+            yield return new TestCaseData(
+                ArmNetAppModelFactory.NetAppElasticBackupVaultData(),
+                ArmNetAppModelFactory.NetAppElasticBackupVaultData(tags: null))
+                .SetName("ElasticBackupVaultFactoryProvidesMutableDefaultTags");
+        }
+
+        [TestCaseSource(nameof(ElasticFactoryTagDefaults))]
+        public void ElasticFactoryProvidesMutableDefaultTags(TrackedResourceData omittedTags, TrackedResourceData nullTags)
+        {
+            foreach (TrackedResourceData data in new[] { omittedTags, nullTags })
+            {
+                Assert.That(data.Tags, Is.Not.Null.And.Empty);
+                data.Tags.Add("env", "test");
+                Assert.That(data.Tags["env"], Is.EqualTo("test"));
+            }
+            Assert.That(omittedTags.Tags, Is.Not.SameAs(nullTags.Tags));
+        }
+
         [Test]
         public void ElasticAccountFactoryPreservesResourceMetadataAndNestedEncryption()
         {

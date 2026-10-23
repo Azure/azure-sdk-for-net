@@ -14,6 +14,9 @@
 ### Bugs Fixed
 
 - Preserved the existing `NetAppAccountPatch.Encryption` and `NetAppAccountPatch.ActiveDirectories` property types and `NfsV4IdDomain` property name when generating from TypeSpec.
+- Preserved explicit-null NFSv4 ID domain updates and their serialization round-trips.
+- Restored mutable empty tags when Elastic resource model factories receive omitted or null tags.
+- Restored collection interface enumeration through overridden listing methods, including cancellation-token forwarding.
 
 ## 1.19.0-beta.2 (2026-08-27)
 

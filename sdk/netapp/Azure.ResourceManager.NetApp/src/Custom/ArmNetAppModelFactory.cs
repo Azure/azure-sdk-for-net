@@ -859,36 +859,42 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticAccountProperties properties = null, ETag? eTag = default, ManagedServiceIdentity identity = null)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticAccountData(id, name, resourceType, systemData, tags, location, properties, eTag, identity);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticCapacityPoolProperties properties = null, ETag? eTag = default, IEnumerable<string> zones = null)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticCapacityPoolData(id, name, resourceType, systemData, tags, location, properties, eTag, zones);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticVolumeProperties properties = null, ETag? eTag = default, IEnumerable<string> zones = null)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticVolumeData(id, name, resourceType, systemData, tags, location, properties, eTag, zones);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = null, ETag? eTag = default)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticSnapshotPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticBackupPolicyProperties properties = null, ETag? eTag = default)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticBackupPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
         {
+            tags ??= new Dictionary<string, string>();
             return new NetAppElasticBackupVaultData(id, name, resourceType, systemData, tags, location, elasticBackupVaultProvisioningState, eTag);
         }
 

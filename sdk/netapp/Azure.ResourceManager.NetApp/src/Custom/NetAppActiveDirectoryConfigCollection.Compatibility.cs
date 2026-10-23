@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.NetApp
 
         public virtual NullableResponse<NetAppActiveDirectoryConfigResource> GetIfExists(string activeDirectoryConfigName, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
-        public IEnumerator<NetAppActiveDirectoryConfigResource> GetEnumerator() => throw new NotSupportedException();
+        public IEnumerator<NetAppActiveDirectoryConfigResource> GetEnumerator() => GetAll().GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException();
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
 
-        public IAsyncEnumerator<NetAppActiveDirectoryConfigResource> GetAsyncEnumerator(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+        public IAsyncEnumerator<NetAppActiveDirectoryConfigResource> GetAsyncEnumerator(CancellationToken cancellationToken = default) => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
     }
 }
