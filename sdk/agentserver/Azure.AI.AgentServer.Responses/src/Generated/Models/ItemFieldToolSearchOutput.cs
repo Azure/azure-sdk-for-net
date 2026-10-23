@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {

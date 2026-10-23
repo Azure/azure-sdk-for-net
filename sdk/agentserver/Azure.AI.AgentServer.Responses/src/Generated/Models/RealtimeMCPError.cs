@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The RealtimeMCPError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPHTTPError"/>, <see cref="RealtimeMCPProtocolError"/>, and <see cref="RealtimeMCPToolExecutionError"/>.
     /// </summary>
     public abstract partial class RealtimeMCPError
     {

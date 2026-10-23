@@ -16,6 +16,12 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _timeoutMs;
+        private bool _timeoutMsIsDefined;
+        private string _workingDirectory;
+        private bool _workingDirectoryIsDefined;
+        private string _user;
+        private bool _userIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
@@ -42,10 +48,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         {
             Type = @type;
             Command = command;
-            TimeoutMs = timeoutMs;
-            WorkingDirectory = workingDirectory;
+            _timeoutMs = timeoutMs;
+            _workingDirectory = workingDirectory;
             Env = env;
-            User = user;
+            _user = user;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,15 +62,48 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IList<string> Command { get; }
 
         /// <summary> Gets or sets the TimeoutMs. </summary>
-        public long? TimeoutMs { get; set; }
+        public long? TimeoutMs
+        {
+            get
+            {
+                return _timeoutMs;
+            }
+            set
+            {
+                _timeoutMs = value;
+                _timeoutMsIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the WorkingDirectory. </summary>
-        public string WorkingDirectory { get; set; }
+        public string WorkingDirectory
+        {
+            get
+            {
+                return _workingDirectory;
+            }
+            set
+            {
+                _workingDirectory = value;
+                _workingDirectoryIsDefined = true;
+            }
+        }
 
         /// <summary> Environment variables to set for the command. </summary>
         public IDictionary<string, string> Env { get; }
 
         /// <summary> Gets or sets the User. </summary>
-        public string User { get; set; }
+        public string User
+        {
+            get
+            {
+                return _user;
+            }
+            set
+            {
+                _user = value;
+                _userIsDefined = true;
+            }
+        }
     }
 }

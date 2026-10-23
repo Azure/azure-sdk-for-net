@@ -80,17 +80,31 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
             writer.WritePropertyName("input_schema"u8);
             writer.WriteObjectValue(InputSchema, options);
-            if (Optional.IsDefined(Annotations))
+            if (Optional.IsDefined(Annotations, _annotationsIsDefined))
             {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteObjectValue(Annotations, options);
+                if (Annotations != null)
+                {
+                    writer.WritePropertyName("annotations"u8);
+                    writer.WriteObjectValue(Annotations, options);
+                }
+                else
+                {
+                    writer.WriteNull("annotations"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,8 +149,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string name = default;
+            bool descriptionIsDefined = false;
             string description = default;
             MCPListToolsToolInputSchema inputSchema = default;
+            bool annotationsIsDefined = false;
             MCPListToolsToolAnnotations annotations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +164,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -163,6 +180,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
+                    annotationsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         annotations = null;
@@ -173,10 +191,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MCPListToolsTool(name, description, inputSchema, annotations, additionalBinaryDataProperties);
+            return new MCPListToolsTool(name, description, inputSchema, annotations, additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _annotationsIsDefined = annotationsIsDefined
+            };
         }
     }
 }

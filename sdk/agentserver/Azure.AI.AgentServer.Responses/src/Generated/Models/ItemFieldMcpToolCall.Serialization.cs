@@ -87,10 +87,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
             writer.WriteStringValue(Arguments);
-            if (Optional.IsDefined(Output))
+            if (Optional.IsDefined(Output, _outputIsDefined))
             {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStringValue(Output);
+                if (Output != null)
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteStringValue(Output);
+                }
+                else
+                {
+                    writer.WriteNull("output"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Error))
             {
@@ -120,10 +127,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ApprovalRequestId))
+            if (Optional.IsDefined(ApprovalRequestId, _approvalRequestIdIsDefined))
             {
-                writer.WritePropertyName("approval_request_id"u8);
-                writer.WriteStringValue(ApprovalRequestId);
+                if (ApprovalRequestId != null)
+                {
+                    writer.WritePropertyName("approval_request_id"u8);
+                    writer.WriteStringValue(ApprovalRequestId);
+                }
+                else
+                {
+                    writer.WriteNull("approval_request_id"u8);
+                }
             }
         }
 
@@ -158,9 +172,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             string serverLabel = default;
             string name = default;
             string arguments = default;
+            bool outputIsDefined = false;
             string output = default;
             IDictionary<string, BinaryData> error = default;
             MCPToolCallStatus? status = default;
+            bool approvalRequestIdIsDefined = false;
             string approvalRequestId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,6 +207,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("output"u8))
                 {
+                    outputIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         output = null;
@@ -214,7 +231,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     error = dictionary;
@@ -231,6 +248,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("approval_request_id"u8))
                 {
+                    approvalRequestIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         approvalRequestId = null;
@@ -241,7 +259,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldMcpToolCall(
@@ -254,7 +272,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 output,
                 error ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 status,
-                approvalRequestId);
+                approvalRequestId)
+            {
+                _outputIsDefined = outputIsDefined,
+                _approvalRequestIdIsDefined = approvalRequestIdIsDefined
+            };
         }
     }
 }

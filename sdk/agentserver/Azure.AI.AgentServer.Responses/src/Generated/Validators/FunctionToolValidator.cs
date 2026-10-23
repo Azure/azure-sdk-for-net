@@ -31,6 +31,20 @@ internal static partial class FunctionToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
+        // Optional: async
+        if (element.TryGetProperty("async", out var asyncProp))
+        {
+            if (asyncProp.ValueKind != JsonValueKind.True && asyncProp.ValueKind != JsonValueKind.False)
+                errors.Add(new ValidationError("$.async", $"Expected boolean, got {asyncProp.ValueKind}"));
+        }
+
         // Optional: defer_loading
         if (element.TryGetProperty("defer_loading", out var deferLoadingProp))
         {
@@ -52,6 +66,13 @@ internal static partial class FunctionToolValidator
         {
             if (nameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
+        // Optional: output_schema
+        if (element.TryGetProperty("output_schema", out var outputSchemaProp) && outputSchemaProp.ValueKind != JsonValueKind.Null)
+        {
+            if (outputSchemaProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.output_schema", $"Expected object, got {outputSchemaProp.ValueKind}"));
         }
 
         // Optional: parameters

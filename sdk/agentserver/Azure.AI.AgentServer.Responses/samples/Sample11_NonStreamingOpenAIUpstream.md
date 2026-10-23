@@ -6,14 +6,16 @@ This pattern is useful when your handler needs to inspect or transform the full 
 
 > **Conversation ID isolation.** If you use conversation IDs (`previous_response_id`) to maintain conversation state, use a **different** conversation ID for the upstream call than the one your client uses. Both servers persist conversation history, and sharing the same ID can cause duplicate messages or state conflicts.
 
-All item types (messages, function calls, reasoning, file search, etc.) are translated using the built-in `.Translate().To<T>()` helper:
+All item types (messages, function calls, reasoning, file search, etc.) share the OpenAI SDK `ResponseItem` type, so input and output items can be forwarded without conversion:
 
 ```csharp
-// Our Item → OpenAI ResponseItem (input)
-options.InputItems.Add(item.Translate().To<ResponseItem>());
+// Input items are OpenAI ResponseItem instances — forward them directly.
+options.InputItems.Add(item);
 
-// OpenAI ResponseItem → our OutputItem (output)
-OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
+// Upstream output items can be emitted as-is.
+var builder = stream.AddOutputItem<ResponseItem>(upstreamItem.Id);
+yield return builder.EmitAdded(upstreamItem);
+yield return builder.EmitDone(upstreamItem);
 ```
 
 ## Prerequisites
@@ -34,8 +36,8 @@ public class NonStreamingUpstreamHandler : ResponseHandler
 
     public NonStreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -46,30 +48,27 @@ public class NonStreamingUpstreamHandler : ResponseHandler
             Instructions = request.Instructions,
         };
 
-        // Translate every input item with full fidelity.
-        // Both model stacks share the same JSON wire contract, so
-        // .Translate().To<T>() round-trips through JSON to convert.
-        foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
+        // Input items are already OpenAI ResponseItem instances, so
+        // they can be forwarded to the upstream as-is.
+        foreach (ResponseItem item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
         {
-            options.InputItems.Add(item.Translate().To<ResponseItem>());
+            options.InputItems.Add(item);
         }
 
         // Call upstream without streaming and get the complete response.
         var result = await _upstream.CreateResponseAsync(options, cancellationToken);
 
-        // Build a standard SSE event stream, translating every output
-        // item back: OpenAI ResponseItem → our OutputItem.
+        // Build a standard SSE event stream, emitting every upstream
+        // output item.
         var stream = new ResponseEventStream(context, request);
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
 
         foreach (ResponseItem upstreamItem in result.Value.OutputItems)
         {
-            OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
-
-            var builder = stream.AddOutputItem<OutputItem>(upstreamItem.Id);
-            yield return builder.EmitAdded(outputItem);
-            yield return builder.EmitDone(outputItem);
+            var builder = stream.AddOutputItem<ResponseItem>(upstreamItem.Id);
+            yield return builder.EmitAdded(upstreamItem);
+            yield return builder.EmitDone(upstreamItem);
         }
 
         yield return stream.EmitCompleted();

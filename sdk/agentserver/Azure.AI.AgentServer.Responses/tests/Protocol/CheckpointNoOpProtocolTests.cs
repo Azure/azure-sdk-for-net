@@ -124,7 +124,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
         public int UpdateCount => Volatile.Read(ref _updateCount);
 
         public override Task CreateResponseAsync(
-            CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
         {
             Interlocked.Increment(ref _createCount);
             return _inner.CreateResponseAsync(request, context, cancellationToken);

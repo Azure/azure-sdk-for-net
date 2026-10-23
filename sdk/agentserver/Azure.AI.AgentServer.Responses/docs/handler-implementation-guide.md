@@ -63,7 +63,7 @@
 The library handles all protocol concerns — routing, serialization, SSE framing,
 `stream`/`background` mode negotiation, status lifecycle, and error shapes. You
 extend one handler class by overriding `ResponseHandler.CreateAsync`. Your
-handler receives a `CreateResponse` request and produces response events. The
+handler receives a `CreateResponseOptions` request and produces response events. The
 library wraps these events into the correct HTTP response format based on the
 client's requested mode.
 
@@ -94,8 +94,8 @@ using Azure.AI.AgentServer.Responses;
 
 public class EchoHandler : ResponseHandler
 {
-    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken)
     {
@@ -123,15 +123,15 @@ That's it. One line starts a Kestrel host with OpenTelemetry, health checks, ide
 
 ## TextResponse
 
-A standalone convenience class for the most common case — returning a single text message. `TextResponse` implements `IAsyncEnumerable<ResponseStreamEvent>` and handles the full event lifecycle internally (`response.created` → `response.in_progress` → message/content events → `response.completed`).
+A standalone convenience class for the most common case — returning a single text message. `TextResponse` implements `IAsyncEnumerable<StreamingResponseUpdate>` and handles the full event lifecycle internally (`response.created` → `response.in_progress` → message/content events → `response.completed`).
 
 ### Complete Text
 
 When you have the full text available at once:
 
 ```csharp
-public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)
 {
     return new TextResponse(context, request,
         createText: async ct =>
@@ -147,8 +147,8 @@ public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 When an LLM produces tokens incrementally:
 
 ```csharp
-public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)
 {
     return new TextResponse(context, request,
         createTextStream: GenerateTokensAsync);
@@ -314,8 +314,8 @@ When deployed to Azure AI Foundry, durable persistence is enabled by default —
 ```csharp
 public abstract class ResponseHandler
 {
-    public abstract IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public abstract IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         CancellationToken cancellationToken);
 }
@@ -323,11 +323,11 @@ public abstract class ResponseHandler
 
 | Parameter | Description |
 |-----------|-------------|
-| `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
+| `request` | The deserialized `CreateResponseOptions` body from the client (model, input, tools, instructions, etc.) |
 | `context` | The handler-facing `ResponseContext` — request-scoped state, input/history helpers, forwarded headers, and shutdown/recovery/steering flags. |
 | `cancellationToken` | The cooperative cancellation signal for the current execution. It is triggered by explicit cancel, foreground client disconnect, shutdown, steering pressure, or certain pre-creation persistence failures. |
 
-Handlers override `CreateAsync` and return an `IAsyncEnumerable<ResponseStreamEvent>`.
+Handlers override `CreateAsync` and return an `IAsyncEnumerable<StreamingResponseUpdate>`.
 Your handler can either:
 
 1. **Return a `TextResponse`** — the simplest approach for text-only responses.
@@ -347,8 +347,8 @@ using Azure.AI.AgentServer.Responses;
 
 public class EchoHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -401,7 +401,7 @@ It provides:
 
 | Prefix | Example | Returns | Purpose |
 |--------|---------|---------|----------|
-| `Emit*` | `EmitCreated()`, `EmitCompleted()` | A single `ResponseStreamEvent` | Produce one response-lifecycle event |
+| `Emit*` | `EmitCreated()`, `EmitCompleted()` | A single `StreamingResponseUpdate` | Produce one response-lifecycle event |
 | `Add*` | `AddOutputItemMessage()`, `AddOutputItemFunctionCall(...)` | A **builder** object | Create a builder for step-by-step, fine-grained event emission |
 | `OutputItem*` | `OutputItemMessage(text)`, `OutputItemFunctionCall(...)` | `IEnumerable` or `IAsyncEnumerable` of events | **Convenience generator** — yields the complete output-item lifecycle in one call |
 
@@ -419,8 +419,8 @@ Every convenience generator has two overloads:
 
 | Overload | Signature pattern | Use when |
 |----------|-------------------|----------|
-| **Complete** | Takes a `string` → returns `IEnumerable<ResponseStreamEvent>` | You have the full value up-front |
-| **Streaming** | Takes an `IAsyncEnumerable<string>` → returns `IAsyncEnumerable<ResponseStreamEvent>` | You're receiving chunks from a model or service |
+| **Complete** | Takes a `string` → returns `IEnumerable<StreamingResponseUpdate>` | You have the full value up-front |
+| **Streaming** | Takes an `IAsyncEnumerable<string>` → returns `IAsyncEnumerable<StreamingResponseUpdate>` | You're receiving chunks from a model or service |
 
 > **Tip**: Start with `TextResponse`. If you need `ResponseEventStream`, start with convenience generators. Drop down to `Add*` builders only when you need fine-grained control (e.g., multiple content parts in one message, custom properties on the output item, or interleaving non-content work between events).
 
@@ -445,11 +445,11 @@ stream.Response.Instructions = BinaryData.FromObjectAsJson("You are a helpful as
 yield return stream.EmitCreated();
 ```
 
-If the handler does not set `Metadata` or `Instructions`, the library automatically copies them from the original `CreateResponse` request.
+If the handler does not set `Metadata` or `Instructions`, the library automatically copies them from the original `CreateResponseOptions` request.
 
 The library also auto-populates `Conversation` and `PreviousResponseId` on the `Response` from the original request:
 
-- **`Conversation`** — set to a `ConversationReference` with the request's `conversation_id` (if present), enabling conversation chain tracking.
+- **`Conversation`** — set to a `ResponseConversationOptions` with the request's `conversation_id` (if present), enabling conversation chain tracking.
 - **`PreviousResponseId`** — set to the request's `previous_response_id` (if present), linking responses in a chain.
 
 Handlers do not need to set these — they are populated automatically in the `ResponseEventStream` constructor.
@@ -507,9 +507,9 @@ public class ResponseContext
     public bool IsShutdownRequested { get; set; }
     public virtual CancellationToken Shutdown { get; }
     public virtual BinaryData? RawBody { get; }
-    public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<ResponseItem>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
-    public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<ResponseItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
     public virtual PlatformContext PlatformContext { get; }
     public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
@@ -534,21 +534,21 @@ For resilient and steerable deployments, the concrete runtime context also expos
 
 ### Input Items — `GetInputItemsAsync()`
 
-Returns the caller's input items as their `Item` subtypes:
+Returns the caller's input items as their `ResponseItem` subtypes:
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken ct)
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken ct)
 {
     var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
-    // inputItems contains ItemMessage, FunctionCallOutputItemParam, etc.
+    // inputItems contains MessageResponseItem, FunctionCallOutputResponseItem, etc.
     // Inline items are returned directly; item references are resolved via the provider
 }
 ```
 
-- **Inline items** are returned as-is — the same `Item` subtypes from the original request (e.g., `ItemMessage`, `FunctionCallOutputItemParam`, `ItemFunctionToolCall`).
-- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync` and converted back to their corresponding `Item` subtypes.
-- **`resolveReferences` parameter** — pass `false` to skip reference resolution and receive `ItemReferenceParam` instances as-is: `await context.GetInputItemsAsync(resolveReferences: false, cancellationToken: ct)`.
+- **Inline items** are returned as-is — the same `ResponseItem` subtypes from the original request (e.g., `MessageResponseItem`, `FunctionCallOutputResponseItem`, `FunctionCallResponseItem`).
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `ResponsesProvider.GetItemsAsync` and converted back to their corresponding `ResponseItem` subtypes.
+- **`resolveReferences` parameter** — pass `false` to skip reference resolution and receive `ReferenceResponseItem` instances as-is: `await context.GetInputItemsAsync(resolveReferences: false, cancellationToken: ct)`.
 - **Input order is preserved** — items are returned in the same order as in the request.
 - **Lazy singleton** — the result is computed once on first call and cached per `resolveReferences` mode. Subsequent calls return the same instance. Thread-safe.
 
@@ -561,11 +561,11 @@ var text = await context.GetInputTextAsync(cancellationToken: ct);
 // Equivalent to: (await context.GetInputItemsAsync(cancellationToken: ct)).GetInputText()
 ```
 
-You can also use the `GetInputText()` extension on any `IEnumerable<Item>`:
+You can also use the `GetInputText()` extension on any `IEnumerable<ResponseItem>`:
 
 ```csharp
 var items = await context.GetInputItemsAsync(cancellationToken: ct);
-var text = items.GetInputText(); // filters for ItemMessage, joins text content
+var text = items.GetInputText(); // filters for MessageResponseItem, joins text content
 ```
 
 ### Conversation History — `GetHistoryAsync()`
@@ -574,7 +574,7 @@ Returns resolved output items from previous responses in the conversation chain:
 
 ```csharp
 var history = await context.GetHistoryAsync(ct);
-// history contains OutputItem instances from previous responses
+// history contains ResponseItem instances from previous responses
 // Empty if no previous_response_id or conversation context
 ```
 
@@ -591,8 +591,8 @@ var history = await context.GetHistoryAsync(ct);
 Returns `x-client-*` prefixed headers forwarded from the original HTTP request. These headers enable end-to-end tracing context and client metadata to flow through the server:
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken ct)
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken ct)
 {
     // Access forwarded client headers (e.g., x-client-request-id, x-client-trace-id)
     var clientHeaders = context.ClientHeaders;
@@ -615,8 +615,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 Returns all query parameters from the original HTTP request:
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken ct)
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken ct)
 {
     var queryParams = context.QueryParameters;
 
@@ -827,8 +827,8 @@ The client receives the function call, executes it locally, and sends a new requ
 #### Multi-Turn Function Calling
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     await Task.CompletedTask;
@@ -836,7 +836,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
     // Check if this is a follow-up with function output
-    var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+    var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
     if (toolOutput is not null)
     {
@@ -1009,8 +1009,8 @@ Access the client's input via `context.GetInputItemsAsync()`:
 var inputItems = await context.GetInputItemsAsync(cancellationToken: ct);
 
 // Check for specific input types
-var textMessages = inputItems.OfType<ItemMessage>();
-var functionOutputs = inputItems.OfType<FunctionCallOutputItemParam>();
+var textMessages = inputItems.OfType<MessageResponseItem>();
+var functionOutputs = inputItems.OfType<FunctionCallOutputResponseItem>();
 ```
 
 Or use `context.GetInputTextAsync()` when you only need the text content:
@@ -1019,7 +1019,7 @@ Or use `context.GetInputTextAsync()` when you only need the text content:
 var text = await context.GetInputTextAsync(cancellationToken: ct);
 ```
 
-The `CreateResponse` object also provides:
+The `CreateResponseOptions` object also provides:
 - `request.Model` — the requested model name
 - `request.Instructions` — system instructions
 - `request.Tools` — registered tool definitions
@@ -1030,11 +1030,11 @@ The `CreateResponse` object also provides:
 
 ### Expanding Message Content
 
-To access typed content parts from an `ItemMessage` (e.g., in resolved input items or history), use `GetContentExpanded()`:
+To access typed content parts from a `MessageResponseItem` (e.g., in resolved input items or history), use `GetContentExpanded()`:
 
 ```csharp
 var inputItems = await context.GetInputItemsAsync(cancellationToken);
-foreach (var item in inputItems.OfType<ItemMessage>())
+foreach (var item in inputItems.OfType<MessageResponseItem>())
 {
     var contentParts = item.GetContentExpanded();
     foreach (var part in contentParts)
@@ -1047,7 +1047,7 @@ foreach (var item in inputItems.OfType<ItemMessage>())
 }
 ```
 
-This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `ItemMessage` instances.
+This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `MessageResponseItem` instances.
 
 ---
 
@@ -1116,8 +1116,8 @@ cancellation token for a final checkpoint after cancellation has already fired.
 `TextResponse` handlers use `return new TextResponse(...)` and pass cancellation through the delegate's `ct` parameter. No `[EnumeratorCancellation]` is needed:
 
 ```csharp
-public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)
 {
     return new TextResponse(context, request,
         createText: async ct =>
@@ -1147,8 +1147,8 @@ return new TextResponse(context, request,
 **Use `[EnumeratorCancellation]` on the cancellation token parameter** — this is required for `IAsyncEnumerable` to propagate cancellation correctly with `yield return`.
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var stream = new ResponseEventStream(context, request);
@@ -1201,8 +1201,8 @@ a `failed` terminal just because shutdown fired — check the shutdown surface f
 **Option A — Emit `response.incomplete`** (clients can resume with `previous_response_id`):
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var stream = new ResponseEventStream(context, request);
@@ -1325,9 +1325,9 @@ When `store=true` (the default), the library persists the response to durable st
 |------|----------------------|----------------------|---------------------|
 | Non-streaming, non-background | Phase 1 (create) or Phase 2 (finalize) | Nothing — handler already produced its response | **HTTP error** carrying the *original* storage error (e.g. `500` `storage_error`, or `400` for a non-retryable bad request); no dangling response is returned |
 | Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
-| Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
+| Background, non-streaming | Phase 1 (CreateResponseOptions): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
 | Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |
-| Background, streaming | Phase 1 (CreateResponse): before `response.created` sent | `CancellationToken` fires (`OperationCanceledException`) | Standalone `error` SSE event |
+| Background, streaming | Phase 1 (CreateResponseOptions): before `response.created` sent | `CancellationToken` fires (`OperationCanceledException`) | Standalone `error` SSE event |
 | Background, streaming | Phase 2 (UpdateResponse): after terminal event streamed | Nothing — handler already finished | `response.failed` SSE event replaces original terminal |
 
 **Key points for handler authors:**
@@ -1441,8 +1441,8 @@ Handlers that proxy to an LLM and receive token counts should pass them through.
 The `ResponseContext` exposes the full raw JSON request body via `context.RawBody`:
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     // Access the raw JSON request body
@@ -1465,7 +1465,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 | Property | Type | Description |
 |---|---|---|
-| `context.RawBody` | `BinaryData?` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
+| `context.RawBody` | `BinaryData?` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponseOptions` model |
 
 **Notes**:
 - Returns `null` in test contexts where no HTTP request is available (e.g., unit tests using `ResponseContext`).
@@ -1478,7 +1478,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
+| `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponseOptions`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `-1` | Maximum number of history items to resolve when `GetHistoryAsync()` is called; `-1` fetches all history. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
 | `ResilientBackground` | `bool` | `false` | Opts background responses into crash-recoverable re-invocation when `store=true` and `background=true` |
 | `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn. Requires `ResilientBackground=true` or explicit `SetResilientTasksEnabled()` |
@@ -1504,7 +1504,7 @@ recovered after an ungraceful crash.
 
 ### Model Resolution
 
-The `model` field is optional on `CreateResponse`. When omitted, the library resolves it in priority order:
+The `model` field is optional on `CreateResponseOptions`. When omitted, the library resolves it in priority order:
 
 1. **Request-level**: `request.Model` (from the JSON payload)
 2. **Server default**: `ResponsesServerOptions.DefaultModel`
@@ -1521,8 +1521,8 @@ services.AddResponsesServer(options =>
 
 The library automatically stamps output items with contextual metadata:
 
-- **`ResponseId`**: Every `OutputItem` gets its `ResponseId` set to the current response ID. If you set it explicitly in your handler, your value takes precedence.
-- **`AgentReference`**: When `CreateResponse.AgentReference` is set, it is propagated to every `OutputItem.AgentReference`. If you set it explicitly in your handler, your value takes precedence.
+- **`ResponseId`**: Every `ResponseItem` gets its `ResponseId` set to the current response ID. If you set it explicitly in your handler, your value takes precedence.
+- **`AgentReference`**: When `CreateResponseOptions.AgentReference` is set, it is propagated to every `ResponseItem.AgentReference`. If you set it explicitly in your handler, your value takes precedence.
 
 This happens transparently — no handler code is needed.
 
@@ -1564,8 +1564,8 @@ The library sets baggage items on the activity for `POST /responses` requests. H
 ```csharp
 using System.Diagnostics;
 
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var activity = Activity.Current;
@@ -1744,14 +1744,14 @@ but never sent to clients.
 
 | Facility | Scope / lifetime | Visible to client? | Use for |
 |---|---|---|---|
-| `ResponseObject.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on the response. |
+| `ResponseResult.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on the response. |
 | `internal_metadata` | Single turn; framework-internal | **No** — stripped on egress | Per-turn bookkeeping you want persisted with the response for recovery. |
 | `FoundryStateStore` | Application-defined scope; survives crash and spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
 
 **Rule of thumb:** need it in a later turn or recovery →
 `FoundryStateStore`; need it only to reconstruct this response on crash
 recovery → `internal_metadata` plus `stream.Checkpoint()`; need it visible to the
-client → `ResponseObject.Metadata`.
+client → `ResponseResult.Metadata`.
 
 ### Default Pattern (recovery-aware)
 
@@ -1759,7 +1759,7 @@ A recovery-aware handler uses the same first events on fresh and recovered
 entries: `EmitCreated()` followed by `EmitInProgress()`. The difference is the
 stream seed. On recovery, seed from `context.PersistedResponse` or a resumption
 response built from upstream state. On fresh entry, seed from the incoming
-`CreateResponse` request.
+`CreateResponseOptions` request.
 
 Then apply the cancellation contract from [Cancellation](#cancellation): check
 shutdown first, call `ExitForRecoveryAsync()` for resilient deferral, distinguish
@@ -1804,7 +1804,7 @@ false marker means no prior side effect is known.
 
 ### Resumption Response Construction
 
-The resumption response is the `ResponseObject` you seed into
+The resumption response is the `ResponseResult` you seed into
 `ResponseEventStream` on a recovered entry; its `Output` is the client-visible
 reset point. If you used framework checkpoints, `context.PersistedResponse`
 already contains the committed items and can be used as-is. If the snapshot or
@@ -1911,7 +1911,7 @@ Every builder follows `EmitAdded()` → work → `EmitDone()`. If you forget `Em
 If your `ResponseEventStream` handler does no async work, the compiler requires at least one `await`. Use `await Task.CompletedTask` at the top:
 
 ```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(...)
 {
     await Task.CompletedTask;
     // ... synchronous work with yield return ...
@@ -1948,13 +1948,13 @@ When using `ResponseEventStream` with `yield return`, you must annotate the canc
 
 ```csharp
 // ❌ Cancellation won't propagate correctly
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     CancellationToken cancellationToken)
 
 // ✅ Correct
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
+public async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+    CreateResponseOptions request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 ```
 
@@ -2025,30 +2025,30 @@ yield return stream.EmitCompleted();
 
 ### Omitting Output Items from Terminal Response (Raw Events)
 
-When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `ResponseObject` with the event's embedded `ResponseObject`. If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `ResponseObject` before yielding a terminal event — the library validates but never auto-sets terminal status.
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `ResponseResult` with the event's embedded `ResponseResult`. If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `ResponseResult` before yielding a terminal event — the library validates but never auto-sets terminal status.
 
 ```csharp
 // ❌ Terminal response has empty output — items accumulated via output_item.added are lost
-var response = new ResponseObject(ctx.ResponseId, "test-model");
-yield return new ResponseCreatedEvent(0, response);
-yield return new ResponseOutputItemAddedEvent(0, 0, msg);
-yield return new ResponseCompletedEvent(0, response); // response.Output is still empty!
+var response = new ResponseResult(ctx.ResponseId, "test-model");
+yield return new StreamingResponseCreatedUpdate(0, response);
+yield return new StreamingResponseOutputItemAddedUpdate(0, 0, msg);
+yield return new StreamingResponseCompletedUpdate(0, response); // response.Output is still empty!
 
 // ❌ Status not set — library validates and emits response.failed
-var response = new ResponseObject(ctx.ResponseId, "test-model");
-yield return new ResponseCreatedEvent(0, response);
-yield return new ResponseCompletedEvent(0, response); // Status is still null!
+var response = new ResponseResult(ctx.ResponseId, "test-model");
+yield return new StreamingResponseCreatedUpdate(0, response);
+yield return new StreamingResponseCompletedUpdate(0, response); // Status is still null!
 
 // ✅ Include output items and set Status in the terminal response
-var response = new ResponseObject(ctx.ResponseId, "test-model");
-yield return new ResponseCreatedEvent(0, response);
-yield return new ResponseOutputItemAddedEvent(0, 0, msg);
+var response = new ResponseResult(ctx.ResponseId, "test-model");
+yield return new StreamingResponseCreatedUpdate(0, response);
+yield return new StreamingResponseOutputItemAddedUpdate(0, 0, msg);
 
-var completedResponse = new ResponseObject(ctx.ResponseId, "test-model");
+var completedResponse = new ResponseResult(ctx.ResponseId, "test-model");
 completedResponse.Output.Add(msg);              // Handler is source of truth
 completedResponse.Status = ResponseStatus.Completed;
 completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-yield return new ResponseCompletedEvent(0, completedResponse);
+yield return new StreamingResponseCompletedUpdate(0, completedResponse);
 ```
 
 **Note**: This only applies to raw event construction. When using `ResponseEventStream` builders (e.g., `stream.EmitCompleted()`), the library automatically includes all accumulated output items in the terminal response — no additional work is needed.

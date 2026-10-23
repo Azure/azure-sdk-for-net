@@ -40,10 +40,10 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP list tools item.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+        var item = new OutputItemMcpListTools(_serverLabel, Array.Empty<McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitAdded(item);
     }
 
@@ -53,8 +53,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsInProgressEvent"/>.</returns>
     public virtual ResponseMCPListToolsInProgressEvent EmitInProgress()
     {
-        return new ResponseMCPListToolsInProgressEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -64,8 +63,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsCompletedEvent"/>.</returns>
     public virtual ResponseMCPListToolsCompletedEvent EmitCompleted()
     {
-        return new ResponseMCPListToolsCompletedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -75,8 +73,7 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsFailedEvent"/>.</returns>
     public virtual ResponseMCPListToolsFailedEvent EmitFailed()
     {
-        return new ResponseMCPListToolsFailedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsFailedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -87,10 +84,10 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP list tools item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+        var item = new OutputItemMcpListTools(_serverLabel, Array.Empty<McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitDone(item);
     }
 }

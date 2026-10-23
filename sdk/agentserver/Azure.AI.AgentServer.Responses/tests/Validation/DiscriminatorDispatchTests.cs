@@ -64,6 +64,30 @@ public class DiscriminatorDispatchTests
     }
 
     [Test]
+    public void Tool_MicrosoftCopilotToolsetPreviewType_DispatchesToItsValidator()
+    {
+        // The Foundry spec defines this discriminator, so a malformed tool must be rejected
+        // rather than passed through like an unknown (forward compatible) type.
+        var invalid = ValidateElement("""
+        {
+            "type": "microsoft_copilot_toolset_preview",
+            "configs": "not-an-array"
+        }
+        """, ToolValidator.Validate);
+
+        Assert.That(invalid.IsValid, Is.False);
+        XAssert.Contains(invalid.Errors, e => e.Path == "$.configs");
+
+        var valid = ValidateElement("""
+        {
+            "type": "microsoft_copilot_toolset_preview"
+        }
+        """, ToolValidator.Validate);
+
+        Assert.That(valid.IsValid, Is.True);
+    }
+
+    [Test]
     public void Tool_UnknownType_ReturnsSuccess()
     {
         // Decision D-7: unknown types return Success (forward compatible)

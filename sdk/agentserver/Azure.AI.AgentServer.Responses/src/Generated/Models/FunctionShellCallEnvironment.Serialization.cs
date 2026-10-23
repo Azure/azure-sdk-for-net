@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The FunctionShellCallEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerReferenceResource"/> and <see cref="LocalEnvironmentResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellCallEnvironment))]
     public abstract partial class FunctionShellCallEnvironment : IJsonModel<FunctionShellCallEnvironment>
@@ -129,10 +129,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "local":
-                        return LocalEnvironmentResource.DeserializeLocalEnvironmentResource(element, options);
                     case "container_reference":
                         return ContainerReferenceResource.DeserializeContainerReferenceResource(element, options);
+                    case "local":
+                        return LocalEnvironmentResource.DeserializeLocalEnvironmentResource(element, options);
                 }
             }
             return UnknownFunctionShellCallEnvironment.DeserializeUnknownFunctionShellCallEnvironment(element, options);

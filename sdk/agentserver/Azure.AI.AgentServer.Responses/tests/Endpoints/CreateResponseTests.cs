@@ -51,8 +51,8 @@ public class CreateResponseTests : IDisposable
         await _client.PostAsync("/responses", content);
 
         Assert.That(_handler.LastRequest, Is.Not.Null);
-        Assert.That(_handler.LastRequest.Stream, Is.False);
-        Assert.That(_handler.LastRequest.Background, Is.False);
+        Assert.That(_handler.LastRequest.StreamingEnabled, Is.False);
+        Assert.That(_handler.LastRequest.BackgroundModeEnabled, Is.False);
     }
 
     [Test]
@@ -201,7 +201,7 @@ public class CreateResponseTests : IDisposable
         string responseId,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        yield return new ResponseCreatedEvent(0, new Models.ResponseObject(responseId, "test-model"));
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = new ResponseObject { Id = responseId, Model = "test-model" } };
         await Task.CompletedTask;
         throw new InvalidOperationException("Simulated handler failure");
     }

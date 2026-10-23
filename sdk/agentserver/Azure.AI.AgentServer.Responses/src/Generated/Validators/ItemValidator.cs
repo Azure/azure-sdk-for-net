@@ -79,17 +79,19 @@ internal static partial class ItemValidator
 
     private static ValidationResult DispatchValidation(string typeValue, JsonElement element) => typeValue switch
     {
+        "additional_tools" => AdditionalToolsItemParamValidator.Validate(element),
         "apply_patch_call" => ApplyPatchToolCallItemParamValidator.Validate(element),
         "apply_patch_call_output" => ApplyPatchToolCallOutputItemParamValidator.Validate(element),
         "code_interpreter_call" => ItemCodeInterpreterToolCallValidator.Validate(element),
         "compaction" => CompactionSummaryItemParamValidator.Validate(element),
         "computer_call" => ItemComputerToolCallValidator.Validate(element),
         "computer_call_output" => ComputerCallOutputItemParamValidator.Validate(element),
+        "configuration_update" => ResponseConfigurationUpdateItemParamValidator.Validate(element),
         "custom_tool_call" => ItemCustomToolCallValidator.Validate(element),
         "custom_tool_call_output" => ItemCustomToolCallOutputValidator.Validate(element),
         "file_search_call" => ItemFileSearchToolCallValidator.Validate(element),
         "function_call" => ItemFunctionToolCallValidator.Validate(element),
-        "function_call_output" => FunctionCallOutputItemParamValidator.Validate(element),
+        "function_call_output" => ItemFunctionCallOutputItemParamValidator.Validate(element),
         "image_generation_call" => ItemImageGenToolCallValidator.Validate(element),
         "item_reference" => ItemReferenceParamValidator.Validate(element),
         "local_shell_call" => ItemLocalShellToolCallValidator.Validate(element),
@@ -98,7 +100,6 @@ internal static partial class ItemValidator
         "mcp_approval_response" => MCPApprovalResponseValidator.Validate(element),
         "mcp_call" => ItemMcpToolCallValidator.Validate(element),
         "mcp_list_tools" => ItemMcpListToolsValidator.Validate(element),
-        "memory_search_call" => MemorySearchToolCallItemParamValidator.Validate(element),
         "message" => ItemMessageValidator.Validate(element),
         "output_message" => ItemOutputMessageValidator.Validate(element),
         "reasoning" => ItemReasoningItemValidator.Validate(element),

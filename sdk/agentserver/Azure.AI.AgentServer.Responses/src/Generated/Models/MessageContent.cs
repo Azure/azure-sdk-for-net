@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// A content part that makes up an input or output item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SummaryTextContent"/>, <see cref="TextContent"/>, <see cref="ComputerScreenshotContent"/>, <see cref="MessageContentInputTextContent"/>, <see cref="MessageContentOutputTextContent"/>, <see cref="MessageContentReasoningTextContent"/>, <see cref="MessageContentRefusalContent"/>, <see cref="MessageContentInputImageContent"/>, and <see cref="MessageContentInputFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ComputerScreenshotContent"/>, <see cref="MessageContentInputFileContent"/>, <see cref="MessageContentInputImageContent"/>, <see cref="MessageContentInputTextContent"/>, <see cref="MessageContentOutputTextContent"/>, <see cref="MessageContentReasoningTextContent"/>, <see cref="MessageContentRefusalContent"/>, <see cref="SummaryTextContent"/>, and <see cref="TextContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {

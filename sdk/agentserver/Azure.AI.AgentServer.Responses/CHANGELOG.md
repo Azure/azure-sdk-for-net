@@ -5,10 +5,33 @@
 ### Features Added
 
 ### Breaking Changes
+- The package no longer emits its own copies of the OpenAI Responses models. Public handler,
+  context, and event-stream APIs now use the shared types from the `OpenAI` package and
+  `Azure.AI.Extensions.OpenAI`, so handlers and tests that referenced the removed types must
+  switch to them (add `using OpenAI.Responses;`, and `using Azure.AI.Extensions.OpenAI;` for
+  Azure-specific items). The handler signature is now
+  `IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(CreateResponseOptions request, ResponseContext context, CancellationToken cancellationToken)`.
+  Common replacements: `CreateResponse` → `CreateResponseOptions`, `ResponseStreamEvent` →
+  `StreamingResponseUpdate` (and `Response*Event` → `StreamingResponse*Update`),
+  `ResponseObject` → `ResponseResult`, `Item` / `OutputItem` → `ResponseItem`,
+  `ItemMessage` / `OutputItemMessage` → `MessageResponseItem`,
+  `FunctionCallOutputItemParam` → `FunctionCallOutputResponseItem`,
+  `ConversationReference` → `ResponseConversationOptions`, and
+  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Consumers must also
+  suppress or acknowledge the OpenAI package's `OPENAI001` experimental diagnostic.
+- Regenerating against the updated Foundry spec also reshaped a few remaining generated models in
+  `Azure.AI.AgentServer.Responses.Models`: `CreateResponseResponse`, `LocalShellCallStatus`,
+  `LocalShellCallOutputStatusEnum`, and `ItemWebSearchToolCallStatus` were removed;
+  `CreateResponseRequestReasoningEffort` is replaced by the extensible `ReasoningEffort`;
+  `ConversationParam`, `WebSearchActionSearch`, and `MessageContentOutputTextContent` lost or changed
+  their public constructors; and `WebSearchActionSearchSources.Url` is now a `Uri`.
 
 ### Bugs Fixed
 
 ### Other Changes
+- Request validation now covers the `cloud_computer_use_preview` and
+  `microsoft_copilot_toolset_preview` tool types from the Foundry spec, so a malformed
+  `microsoft_copilot_toolset_preview` tool is rejected instead of passing through unvalidated.
 
 ## 1.0.0-beta.9 (2026-10-15)
 

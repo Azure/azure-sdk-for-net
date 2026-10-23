@@ -25,11 +25,24 @@ public static class ItemExtensions
     {
         Argument.AssertNotNull(items, nameof(items));
 
-        var texts = items
-            .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+        // Explicit loops instead of a LINQ chain: the generator's custom-code analyzer throws
+        // ArgumentException on lambda chains over externalized OpenAI types, which breaks regeneration.
+        var texts = new List<string>();
+        foreach (Item item in items)
+        {
+            if (item is not ItemMessage msg)
+            {
+                continue;
+            }
+
+            foreach (MessageContent content in msg.GetContentExpanded())
+            {
+                if (content is MessageContentInputTextContent textContent)
+                {
+                    texts.Add(textContent.Text);
+                }
+            }
+        }
 
         return string.Join("\n", texts);
     }

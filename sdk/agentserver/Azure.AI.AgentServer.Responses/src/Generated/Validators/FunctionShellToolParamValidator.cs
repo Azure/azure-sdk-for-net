@@ -31,6 +31,13 @@ internal static partial class FunctionShellToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
         // Optional: description
         if (element.TryGetProperty("description", out var descriptionProp))
         {
@@ -54,6 +61,13 @@ internal static partial class FunctionShellToolParamValidator
         {
             if (nameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
+        // Optional: tool_configs
+        if (element.TryGetProperty("tool_configs", out var toolConfigsProp))
+        {
+            if (toolConfigsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.tool_configs", $"Expected object, got {toolConfigsProp.ValueKind}"));
         }
 
         // Required: type

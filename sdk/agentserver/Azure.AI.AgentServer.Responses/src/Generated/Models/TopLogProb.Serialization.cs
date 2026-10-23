@@ -159,10 +159,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TopLogProb(token, logprob, bytes, additionalBinaryDataProperties);
+            return new TopLogProb(token, logprob, bytes ?? new ChangeTrackingList<long>(), additionalBinaryDataProperties);
         }
     }
 }

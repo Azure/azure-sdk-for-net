@@ -11,13 +11,16 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
+    internal readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string ProgramValue = "program";
+        private const string ProgramOutputValue = "program_output";
         private const string FunctionCallValue = "function_call";
         private const string ToolSearchCallValue = "tool_search_call";
         private const string ToolSearchOutputValue = "tool_search_output";
+        private const string AdditionalToolsValue = "additional_tools";
         private const string FunctionCallOutputValue = "function_call_output";
         private const string FileSearchCallValue = "file_search_call";
         private const string WebSearchCallValue = "web_search_call";
@@ -53,6 +56,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Message. </summary>
         public static ItemFieldType Message { get; } = new ItemFieldType(MessageValue);
 
+        /// <summary> Gets the Program. </summary>
+        public static ItemFieldType Program { get; } = new ItemFieldType(ProgramValue);
+
+        /// <summary> Gets the ProgramOutput. </summary>
+        public static ItemFieldType ProgramOutput { get; } = new ItemFieldType(ProgramOutputValue);
+
         /// <summary> Gets the FunctionCall. </summary>
         public static ItemFieldType FunctionCall { get; } = new ItemFieldType(FunctionCallValue);
 
@@ -61,6 +70,9 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the ToolSearchOutput. </summary>
         public static ItemFieldType ToolSearchOutput { get; } = new ItemFieldType(ToolSearchOutputValue);
+
+        /// <summary> Gets the AdditionalTools. </summary>
+        public static ItemFieldType AdditionalTools { get; } = new ItemFieldType(AdditionalToolsValue);
 
         /// <summary> Gets the FunctionCallOutput. </summary>
         public static ItemFieldType FunctionCallOutput { get; } = new ItemFieldType(FunctionCallOutputValue);

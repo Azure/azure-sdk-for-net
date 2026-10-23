@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input text. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
@@ -27,12 +27,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text input to the model. </param>
-        internal FunctionAndCustomToolCallOutputInputTextContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        /// <param name="promptCacheBreakpoint"></param>
+        internal FunctionAndCustomToolCallOutputInputTextContent(FunctionAndCustomToolCallOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, PromptCacheBreakpointConfig promptCacheBreakpoint) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
         }
 
         /// <summary> The text input to the model. </summary>
         public string Text { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

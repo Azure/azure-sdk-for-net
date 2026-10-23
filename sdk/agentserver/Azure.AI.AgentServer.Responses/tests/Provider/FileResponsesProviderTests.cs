@@ -6,6 +6,7 @@ using System.Text;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Provider;
 
@@ -43,9 +44,9 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Create_Then_Get_RoundTrips()
     {
         var provider = NewProvider();
-        var response = new Models.ResponseObject("resp_rt", "gpt-4o") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = "resp_rt", Model = "gpt-4o", Status = ResponseStatus.InProgress };
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         var retrieved = await provider.GetResponseAsync("resp_rt", PlatformContext.Empty);
         Assert.That(retrieved.Id, Is.EqualTo("resp_rt"));
@@ -57,8 +58,8 @@ public class FileResponsesProviderTests : IDisposable
     {
         // Write with one instance.
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_durable", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_durable", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         // Read back with a fresh instance over the same directory (simulates process restart).
         var reader = NewProvider();
@@ -71,8 +72,8 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Update_Persists_Across_Instances()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_upd", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_upd", Model = "gpt-4o", Status = ResponseStatus.InProgress };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
 
         response.Status = ResponseStatus.Completed;
         await writer.UpdateResponseAsync(response, PlatformContext.Empty);
@@ -86,8 +87,8 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Delete_Is_Persisted_As_Tombstone()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_del", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_del", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
         await writer.DeleteResponseAsync("resp_del", PlatformContext.Empty);
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
@@ -111,19 +112,19 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Duplicate_Create_Throws()
     {
         var provider = NewProvider();
-        var response = new Models.ResponseObject("resp_dup", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
+        var response = new ResponseObject { Id = "resp_dup", Model = "gpt-4o", Status = ResponseStatus.InProgress };
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty);
         Assert.ThrowsAsync<InvalidOperationException>(
-            () => provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty));
+            () => provider.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), PlatformContext.Empty));
     }
 
     [Test]
     public async Task UserIsolation_Mismatch_Returns_NotFound_Across_Instances()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_iso", "gpt-4o") { Status = ResponseStatus.Completed };
+        var response = new ResponseObject { Id = "resp_iso", Model = "gpt-4o", Status = ResponseStatus.Completed };
         var owner = new PlatformContext("user-owner", null);
-        await writer.CreateResponseAsync(new CreateResponseRequest(response, null, null), owner);
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(response, null, null), owner);
 
         var reader = NewProvider();
         var stranger = new PlatformContext("user-other", null);
@@ -139,10 +140,10 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Input_Items_Survive_Restart()
     {
         var writer = NewProvider();
-        var response = new Models.ResponseObject("resp_items", "gpt-4o") { Status = ResponseStatus.Completed };
-        var inputItem = new OutputItemMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
+        var response = new ResponseObject { Id = "resp_items", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        var inputItem = MessageItemFactory.OutputMessage("msg_in_1", MessageStatus.Completed, MessageRole.User, new[] { ResponseContentPart.CreateInputTextPart("hi") });
         await writer.CreateResponseAsync(
-            new CreateResponseRequest(response, new OutputItem[] { inputItem }, null),
+            new CreateResponsePersistRequest(response, new OutputItem[] { inputItem }, null),
             PlatformContext.Empty);
 
         var reader = NewProvider();
@@ -165,25 +166,25 @@ public class FileResponsesProviderTests : IDisposable
     {
         var provider = NewProvider();
         var historyIds = Enumerable.Range(0, 120).Select(i => $"history_{i}").ToArray();
-        var input = new OutputItemMessage(
-            "input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
-        var response = new Models.ResponseObject("resp_history", "gpt-4o")
+        var input = MessageItemFactory.OutputMessage("input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>());
+        var response = new ResponseObject
         {
+            Id = "resp_history",
+            Model = "gpt-4o",
             Status = ResponseStatus.Completed,
-            Conversation = new ConversationReference("conv_history"),
+            ConversationOptions = new ConversationReference("conv_history"),
         };
-        response.Output.Add(new OutputItemMessage(
-            "output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        response.OutputItems.Add(MessageItemFactory.OutputMessage("output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
         await provider.CreateResponseAsync(
-            new CreateResponseRequest(response, new[] { input }, historyIds),
+            new CreateResponsePersistRequest(response, new[] { input }, historyIds),
             PlatformContext.Empty);
 
         var unlimited = (await provider.GetHistoryItemIdsAsync(
-            response.Id, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
+            response.Id, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
         var limited = (await provider.GetHistoryItemIdsAsync(
-            response.Id, response.Conversation.Id, 10, PlatformContext.Empty)).ToList();
+            response.Id, response.ConversationOptions.ConversationId, 10, PlatformContext.Empty)).ToList();
         var conversationOnly = (await provider.GetHistoryItemIdsAsync(
-            null, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
+            null, response.ConversationOptions.ConversationId, -1, PlatformContext.Empty)).ToList();
 
         Assert.That(unlimited, Has.Count.EqualTo(122));
         Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
@@ -195,31 +196,33 @@ public class FileResponsesProviderTests : IDisposable
     public async Task GetHistoryItemIdsAsync_PreviousResponseIdExcludesLaterConversationResponses()
     {
         var provider = NewProvider();
-        var first = new Models.ResponseObject("resp_first", "gpt-4o")
+        var first = new ResponseObject
         {
+            Id = "resp_first",
+            Model = "gpt-4o",
             Status = ResponseStatus.Completed,
-            Conversation = new ConversationReference("conv_cutoff"),
+            ConversationOptions = new ConversationReference("conv_cutoff"),
         };
-        first.Output.Add(new OutputItemMessage(
-            "output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        first.OutputItems.Add(MessageItemFactory.OutputMessage("output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
         await provider.CreateResponseAsync(
-            new CreateResponseRequest(
+            new CreateResponsePersistRequest(
                 first,
-                new[] { new OutputItemMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                new[] { MessageItemFactory.OutputMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
                 Array.Empty<string>()),
             PlatformContext.Empty);
 
-        var second = new Models.ResponseObject("resp_second", "gpt-4o")
+        var second = new ResponseObject
         {
+            Id = "resp_second",
+            Model = "gpt-4o",
             Status = ResponseStatus.Completed,
-            Conversation = new ConversationReference("conv_cutoff"),
+            ConversationOptions = new ConversationReference("conv_cutoff"),
         };
-        second.Output.Add(new OutputItemMessage(
-            "output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        second.OutputItems.Add(MessageItemFactory.OutputMessage("output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<ResponseContentPart>()));
         await provider.CreateResponseAsync(
-            new CreateResponseRequest(
+            new CreateResponsePersistRequest(
                 second,
-                new[] { new OutputItemMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                new[] { MessageItemFactory.OutputMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<ResponseContentPart>()) },
                 new[] { "input_first", "output_first" }),
             PlatformContext.Empty);
 
@@ -233,8 +236,8 @@ public class FileResponsesProviderTests : IDisposable
     public async Task Corrupt_Envelope_File_Is_Skipped_On_Rehydrate()
     {
         var writer = NewProvider();
-        var good = new Models.ResponseObject("resp_good", "gpt-4o") { Status = ResponseStatus.Completed };
-        await writer.CreateResponseAsync(new CreateResponseRequest(good, null, null), PlatformContext.Empty);
+        var good = new ResponseObject { Id = "resp_good", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(good, null, null), PlatformContext.Empty);
 
         // Drop a corrupt file alongside the good one.
         var envelopesDir = Path.Combine(_dir, "partitions-v1", "anonymous", "envelopes");
@@ -252,10 +255,10 @@ public class FileResponsesProviderTests : IDisposable
     public async Task ListResponseIds_Excludes_Deleted()
     {
         var provider = NewProvider();
-        var a = new Models.ResponseObject("resp_a", "gpt-4o") { Status = ResponseStatus.Completed };
-        var b = new Models.ResponseObject("resp_b", "gpt-4o") { Status = ResponseStatus.Completed };
-        await provider.CreateResponseAsync(new CreateResponseRequest(a, null, null), PlatformContext.Empty);
-        await provider.CreateResponseAsync(new CreateResponseRequest(b, null, null), PlatformContext.Empty);
+        var a = new ResponseObject { Id = "resp_a", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        var b = new ResponseObject { Id = "resp_b", Model = "gpt-4o", Status = ResponseStatus.Completed };
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(a, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(b, null, null), PlatformContext.Empty);
         await provider.DeleteResponseAsync("resp_b", PlatformContext.Empty);
 
         var ids = provider.ListResponseIds();
@@ -308,7 +311,7 @@ public class FileResponsesProviderTests : IDisposable
         }
 
         var writer = NewProvider();
-        await writer.CreateResponseAsync(new CreateResponseRequest(new Models.ResponseObject("resp_legacy", "new"), null, null),
+        await writer.CreateResponseAsync(new CreateResponsePersistRequest(new ResponseObject { Id = "resp_legacy", Model = "new" }, null, null),
             PlatformContext.Empty);
         await writer.DeleteResponseAsync("resp_legacy", PlatformContext.Empty);
         foreach (var pair in original)

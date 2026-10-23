@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Responses.Tests;
@@ -19,7 +20,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_Response_ViaConvenienceConstructor()
     {
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
+        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
         Assert.That(response.Id, Is.EqualTo("resp_123"));
         Assert.That(response.Model, Is.EqualTo("gpt-4o"));
     }
@@ -27,8 +28,8 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseCreatedEvent()
     {
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseCreatedEvent(sequenceNumber: 0, response: response);
+        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
+        var evt = new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Response, Is.EqualTo(response));
     }
@@ -36,35 +37,27 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseInProgressEvent()
     {
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseInProgressEvent(sequenceNumber: 1, response: response);
+        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
+        var evt = new ResponseInProgressEvent { SequenceNumber = (int)(1), Response = response };
         Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ResponseTextDeltaEvent()
     {
-        var evt = new ResponseTextDeltaEvent(
-            sequenceNumber: 2,
-            itemId: "item_1",
-            outputIndex: 0,
-            contentIndex: 0,
-            delta: "Hello ",
-            logprobs: Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(2), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello " };
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         Assert.That(evt, Is.Not.Null);
-        Assert.That(evt.Delta, Is.EqualTo("Hello "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("Hello "));
     }
 
     [Test]
     public void Consumer_CanConstruct_ResponseTextDoneEvent()
     {
-        var evt = new ResponseTextDoneEvent(
-            sequenceNumber: 3,
-            itemId: "item_1",
-            outputIndex: 0,
-            contentIndex: 0,
-            text: "Hello world",
-            logprobs: Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDoneEvent { SequenceNumber = (int)(3), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Text = "Hello world" };
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Text, Is.EqualTo("Hello world"));
     }
@@ -72,18 +65,18 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseCompletedEvent()
     {
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseCompletedEvent(sequenceNumber: 4, response: response);
+        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
+        var evt = new ResponseCompletedEvent { SequenceNumber = (int)(4), Response = response };
         Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ErrorPath()
     {
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "failed");
-        var response = new Models.ResponseObject("resp_err", "gpt-4o");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "failed");
+        var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o" };
         response.Error = error;
-        var evt = new ResponseFailedEvent(sequenceNumber: 5, response: response);
+        var evt = new ResponseFailedEvent { SequenceNumber = (int)(5), Response = response };
 
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Response.Error.Message, Is.EqualTo("failed"));
@@ -92,15 +85,12 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_OutputItemMessage()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(text: "Hello world", annotations: Array.Empty<Annotation>());
         Assert.That(content, Is.Not.Null);
 
-        var outputMsg = new OutputItemMessage(
+        var outputMsg = MessageItemFactory.OutputMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
+            content: new List<ResponseContentPart> { content },
             status: MessageStatus.Completed);
         Assert.That(outputMsg, Is.Not.Null);
     }
@@ -108,18 +98,12 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseOutputItemDoneEvent()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
-        var outputMsg = new OutputItemMessage(
+        var content = ResponseContentPart.CreateOutputTextPart(text: "Hello world", annotations: Array.Empty<Annotation>());
+        var outputMsg = MessageItemFactory.OutputMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
+            content: new List<ResponseContentPart> { content },
             status: MessageStatus.Completed);
-        var evt = new ResponseOutputItemDoneEvent(
-            sequenceNumber: 6,
-            outputIndex: 0,
-            item: outputMsg);
+        var evt = new ResponseOutputItemDoneEvent { SequenceNumber = (int)(6), OutputIndex = (int)(0), Item = outputMsg };
 
         Assert.That(evt, Is.Not.Null);
         XAssert.IsType<OutputItemMessage>(evt.Item);
@@ -128,7 +112,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseError()
     {
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test");
+        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test");
         Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
@@ -149,7 +133,7 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanSetProperties_AfterConstruction()
     {
         // R2 accepted: public setters allow post-construction customization
-        var response = new Models.ResponseObject("resp_123", "gpt-4o");
+        var response = new ResponseObject { Id = "resp_123", Model = "gpt-4o" };
         response.Status = ResponseStatus.Completed;
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -169,13 +153,13 @@ public class ExternalConsumerValidationTests
         {
             Model = "gpt-4o",
             Instructions = "You are a helpful assistant.",
-            Stream = true,
-            Background = false,
+            StreamingEnabled = true,
+            BackgroundModeEnabled = false,
         };
 
         Assert.That(request.Model, Is.EqualTo("gpt-4o"));
         Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
-        Assert.That(request.Stream, Is.True);
-        Assert.That(request.Background, Is.False);
+        Assert.That(request.StreamingEnabled, Is.True);
+        Assert.That(request.BackgroundModeEnabled, Is.False);
     }
 }

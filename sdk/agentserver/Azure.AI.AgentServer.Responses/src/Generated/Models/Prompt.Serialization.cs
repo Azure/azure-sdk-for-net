@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// Reference to a prompt template and its variables.
-    /// [Learn more](/docs/guides/text?api-mode=responses#reusable-prompts).
+    /// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
     /// </summary>
     public partial class Prompt : IJsonModel<Prompt>
     {
@@ -83,15 +83,29 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version"u8);
+                }
             }
-            if (Optional.IsDefined(Variables))
+            if (Optional.IsDefined(Variables, _variablesIsDefined))
             {
-                writer.WritePropertyName("variables"u8);
-                writer.WriteObjectValue(Variables, options);
+                if (Variables != null)
+                {
+                    writer.WritePropertyName("variables"u8);
+                    writer.WriteObjectValue(Variables, options);
+                }
+                else
+                {
+                    writer.WriteNull("variables"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,7 +150,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string id = default;
+            bool versionIsDefined = false;
             string version = default;
+            bool variablesIsDefined = false;
             ResponsePromptVariables variables = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +164,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
+                    versionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         version = null;
@@ -158,6 +175,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("variables"u8))
                 {
+                    variablesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         variables = null;
@@ -168,10 +186,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Prompt(id, version, variables, additionalBinaryDataProperties);
+            return new Prompt(id, version, variables, additionalBinaryDataProperties)
+            {
+                _versionIsDefined = versionIsDefined,
+                _variablesIsDefined = variablesIsDefined
+            };
         }
     }
 }

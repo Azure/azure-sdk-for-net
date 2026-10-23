@@ -38,8 +38,8 @@ public class ResilientSteeringHandler : ResponseHandler
 {
     private static readonly DefaultAzureCredential s_credential = new();
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
