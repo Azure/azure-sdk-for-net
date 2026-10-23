@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `PrivateEndpointIPConfiguration.PrivateIPAddress` serialization and deserialization.
+
 ### Other Changes
 
 ## 1.18.0-beta.1 (2026-09-20)
