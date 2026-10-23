@@ -65,7 +65,7 @@ if (-not $PSCmdlet.ShouldProcess($scope, "Build packaged MPG in a new worktree; 
 foreach ($tool in @('git', 'npm', 'dotnet', 'pwsh')) { $null = Get-Command $tool -ErrorAction Stop }
 if ($GeneratorPullRequest -or $CreateDraftPullRequest) { $null = Get-Command gh -ErrorAction Stop }
 if (-not $OutputRoot) { $OutputRoot = Join-Path (Split-Path $repoRoot) "mpg-local-runs/$runId" }
-$OutputRoot = [IO.Path]::GetFullPath($OutputRoot)
+$OutputRoot = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutputRoot)
 if (Test-Path $OutputRoot) { throw "Output directory already exists: $OutputRoot. Choose a new directory; existing runs are never overwritten." }
 
 # Resolve and pin the source before executing PR code. No checkout/reset of the caller.
@@ -154,17 +154,33 @@ foreach ($path in $changed) {
         throw "Unexpected change outside selected SDKs/config: $path. Inspect $worktree; nothing was committed or pushed."
     }
 }
-$remote = (Invoke-GeneratorSdkValidationCommand git @('remote', 'get-url', 'origin') $worktree) -join ''
-if ($remote -notmatch '^(https://github\.com/|git@github\.com:)Azure/azure-sdk-for-net(\.git)?$') { throw "Refusing to push to unexpected origin: $remote" }
+$remote = @(Invoke-GeneratorSdkValidationCommand git @('remote', 'get-url', '--push', '--all', 'origin') $worktree)
+if (-not $remote.Count) { throw 'No origin push destination was found.' }
+foreach ($url in $remote) {
+    if ($url -notmatch '^(https://github\.com/|git@github\.com:)Azure/azure-sdk-for-net(\.git)?$') {
+        throw 'Refusing to push to an unexpected origin push destination; expected Azure/azure-sdk-for-net on GitHub.'
+    }
+}
+# Every accepted URL identifies the same upstream repository. Pin the URL used
+# for collision checks and push rather than resolving the named remote again.
+$remote = $remote[0]
 $branch = $identity.Branch
-$existing = @(Invoke-GeneratorSdkValidationCommand git @('ls-remote', '--heads', 'origin', $branch) $worktree)
-if ($existing.Count) { $branch += "-local-$runId" }
+$localRefs = @(Invoke-GeneratorSdkValidationCommand git @('for-each-ref', '--format=%(refname)', 'refs/heads/') $worktree)
+$attempt = 0
+while ("refs/heads/$branch" -in $localRefs -or @(
+    Invoke-GeneratorSdkValidationCommand git @('ls-remote', '--heads', $remote, $branch) $worktree |
+        Where-Object { $_ -cmatch "^[0-9a-f]+\s+refs/heads/$([regex]::Escape($branch))$" }
+).Count) {
+    $attempt++
+    $branch = "$($identity.Branch)-local-$runId"
+    if ($attempt -gt 1) { $branch += "-$attempt" }
+}
 Invoke-GeneratorSdkValidationCommand git @('switch', '-c', $branch) $worktree | Out-Host
 $paths = @($configRelativePath, $lockRelativePath) + @($selectedPrefixes | ForEach-Object { $_.TrimEnd('/') })
 Invoke-GeneratorSdkValidationCommand git (@('add', '--') + $paths) $worktree | Out-Host
 Invoke-GeneratorSdkValidationCommand git @('diff', '--cached', '--check') $worktree | Out-Host
 Invoke-GeneratorSdkValidationCommand git @('commit', '-m', "Regenerate SDKs with packaged MPG $($identity.Version)") $worktree | Out-Host
-Invoke-GeneratorSdkValidationCommand git @('push', '-u', 'origin', $branch) $worktree | Out-Host
+Invoke-GeneratorSdkValidationCommand git @('push', '-u', $remote, $branch) $worktree | Out-Host
 $source = if ($GeneratorPullRequest) { "https://github.com/Azure/azure-sdk-for-net/pull/$GeneratorPullRequest" } else { "commit $sourceSha" }
 $body = @"
 Generated locally from $source at ``$sourceSha`` using packaged MPG ``$($identity.Version)``.

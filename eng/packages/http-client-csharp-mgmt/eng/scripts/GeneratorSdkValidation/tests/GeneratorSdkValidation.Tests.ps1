@@ -9,6 +9,32 @@ BeforeAll {
         "emitterPackageJsonPath: eng/$Emitter.json" | Set-Content (Join-Path $path tsp-location.yaml)
         return Get-Item $path
     }
+    function Get-RunnerAssignment([string]$Name, [string]$Until) {
+        $tokens = $null
+        $errors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
+        $assignments = @($ast.EndBlock.Statements | Where-Object {
+            $_ -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+            $_.Left -is [System.Management.Automation.Language.VariableExpressionAst]
+        })
+        $first = $assignments | Where-Object { $_.Left.VariablePath.UserPath -eq $Name } | Select-Object -First 1
+        if (-not $first) { throw "Runner assignment not found: $Name" }
+        $end = $first.Extent.EndOffset
+        if ($Until) {
+            $last = $assignments | Where-Object { $_.Left.VariablePath.UserPath -eq $Until } | Select-Object -First 1
+            if (-not $last) { throw "Runner assignment not found: $Until" }
+            $end = $last.Extent.StartOffset
+        }
+        [scriptblock]::Create($ast.Extent.Text.Substring($first.Extent.StartOffset, $end - $first.Extent.StartOffset))
+    }
+    function Get-RunnerPushCommand {
+        $tokens = $null
+        $errors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
+        $statement = $ast.EndBlock.Statements | Where-Object { $_.Extent.Text.Contains("git @('push'") }
+        if (@($statement).Count -ne 1) { throw 'Expected one runner push command.' }
+        [scriptblock]::Create($statement.Extent.Text)
+    }
 }
 
 Describe 'Purpose-based file naming' {
@@ -92,6 +118,99 @@ Describe 'Local selective-only scope' {
     }
 }
 
+Describe 'Caller-independent filesystem paths' {
+    It 'resolves relative output paths against PowerShell location, not process CWD' {
+        $caller = Join-Path $TestDrive caller
+        New-Item $caller -ItemType Directory | Out-Null
+        $processDirectory = [Environment]::CurrentDirectory
+        Push-Location $caller
+        try {
+            [Environment]::CurrentDirectory = $TestDrive
+            $OutputRoot = 'relative-run'
+            . (Get-RunnerAssignment OutputRoot)
+            $OutputRoot | Should -BeExactly (Join-Path $caller relative-run)
+        }
+        finally { Pop-Location; [Environment]::CurrentDirectory = $processDirectory }
+    }
+    It 'resolves a filesystem PSDrive output path to its native path' {
+        $OutputRoot = 'TestDrive:/relative-run'
+        . (Get-RunnerAssignment OutputRoot)
+        $OutputRoot | Should -BeExactly (Join-Path $TestDrive relative-run)
+    }
+}
+
+Describe 'Validated push destinations and retry branches' {
+    BeforeEach {
+        $script:pushUrls = @('https://github.com/Azure/azure-sdk-for-net.git')
+        $script:localRefs = @()
+        $script:remoteBranches = @()
+        $script:warningRemaining = 0
+        Mock Invoke-GeneratorSdkValidationCommand {
+            param($File, $Arguments, $WorkingDirectory)
+            if ($File -ne 'git') { throw "Unexpected fixture command: $File" }
+            switch ($Arguments[0]) {
+                'remote' {
+                    if ($Arguments -contains '--push') { return $script:pushUrls }
+                    return 'https://github.com/Azure/azure-sdk-for-net.git'
+                }
+                'for-each-ref' { return $script:localRefs }
+                'ls-remote' {
+                    if ($script:warningRemaining -gt 0) {
+                        $script:warningRemaining--
+                        'warning: fixture transport notice'
+                    }
+                    if ($Arguments[-1] -in $script:remoteBranches) { return "0123456789`trefs/heads/$($Arguments[-1])" }
+                }
+                'switch' { }
+                'push' { }
+                default { throw "Unexpected fixture git arguments: $Arguments" }
+            }
+        }
+        $identity = [pscustomobject]@{ Branch = 'validate-fixture' }
+        $runId = 'fixture-run'
+        $worktree = $TestDrive
+        $prepare = Get-RunnerAssignment remote paths
+    }
+    It 'rejects an unexpected pushurl even when the fetch URL is allowed' {
+        $script:pushUrls = @('https://github.com/example/unexpected.git')
+        { & $prepare } | Should -Throw '*unexpected*'
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 0 -Exactly -ParameterFilter { $Arguments[0] -in @('switch', 'push') }
+    }
+    It 'checks every effective push destination' {
+        $script:pushUrls += 'https://github.com/example/unexpected.git'
+        { & $prepare } | Should -Throw '*unexpected*'
+    }
+    It 'uses the validated URL for remote collision checks and the actual push' {
+        . $prepare
+        & (Get-RunnerPushCommand)
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 1 -Exactly -ParameterFilter {
+            $Arguments[0] -eq 'ls-remote' -and $Arguments[2] -eq 'https://github.com/Azure/azure-sdk-for-net.git'
+        }
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 1 -Exactly -ParameterFilter {
+            $Arguments[0] -eq 'push' -and $Arguments[2] -eq 'https://github.com/Azure/azure-sdk-for-net.git'
+        }
+    }
+    It 'does not mistake native warnings for remote branch refs' {
+        $script:warningRemaining = 1
+        . $prepare
+        $branch | Should -BeExactly 'validate-fixture'
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 1 -Exactly -ParameterFilter { $Arguments[0] -eq 'ls-remote' }
+    }
+    It 'avoids remote branches, including a colliding retry suffix' {
+        $script:remoteBranches = @('validate-fixture', 'validate-fixture-local-fixture-run')
+        . $prepare
+        $branch | Should -BeExactly 'validate-fixture-local-fixture-run-2'
+    }
+    It 'avoids retained local branches, including a colliding retry suffix' {
+        $script:localRefs = @('refs/heads/validate-fixture', 'refs/heads/validate-fixture-local-fixture-run')
+        . $prepare
+        $branch | Should -BeExactly 'validate-fixture-local-fixture-run-2'
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 1 -Exactly -ParameterFilter {
+            $Arguments[0] -eq 'switch' -and $Arguments[2] -eq 'validate-fixture-local-fixture-run-2'
+        }
+    }
+}
+
 Describe 'Publication safety and checked commands' {
     It 'rejects local tarball paths in either emitter file' {
         $config = Join-Path $TestDrive emitter.json
@@ -131,11 +250,51 @@ Describe 'Measured slowest-first scheduling' {
         $packages = @('Second', 'First') | ForEach-Object { [pscustomobject]@{ Name = $_ } }
         (@(Get-GeneratorSdkValidationSchedule -Packages $packages).Name -join ',') | Should -BeExactly 'Second,First'
     }
-    It 'rejects invalid successful timing measurements' {
+    It 'still rejects invalid bundled timing measurements' {
         $history = Join-Path $TestDrive invalid-timings.json
         @(@{ Package = 'Slow'; Success = $true; Seconds = -1 }) | ConvertTo-Json -AsArray | Set-Content $history
-        { Get-GeneratorSdkValidationSchedule -Packages @([pscustomobject]@{ Name = 'Slow' }) -HistoryPath $history } |
-            Should -Throw '*finite nonnegative*'
+        # Learned history now recovers, but the same invalid measurement must
+        # remain an error under the strict bundled-data policy.
+        InModuleScope GeneratorSdkValidation -Parameters @{ History = $history } {
+            param($History)
+            { Read-GeneratorSdkValidationTimings -Path $History -Strict } | Should -Throw '*finite nonnegative*'
+        }
+    }
+}
+
+Describe 'Recoverable learned timing history' {
+    It 'repairs <Kind> cache data without blocking scheduling or new measurements' -TestCases @(
+        @{ Kind = 'malformed JSON'; Content = '{' },
+        @{ Kind = 'invalid schema'; Content = '[{"Package":"Azure.ResourceManager.Network","Success":true}]' },
+        @{ Kind = 'nonnumeric seconds'; Content = '[{"Package":"Azure.ResourceManager.Network","Success":true,"Seconds":"invalid"}]' },
+        @{ Kind = 'negative seconds'; Content = '[{"Package":"Azure.ResourceManager.Network","Success":true,"Seconds":-1}]' }
+    ) {
+        param($Content)
+        $cache = Join-Path $TestDrive damaged-cache.json
+        $Content | Set-Content $cache
+        $packages = @('Azure.ResourceManager.Dns', 'Azure.ResourceManager.Network') |
+            ForEach-Object { [pscustomobject]@{ Name = $_ } }
+        (@(Get-GeneratorSdkValidationSchedule -Packages $packages -HistoryPath $cache).Name -join ',') |
+            Should -BeExactly 'Azure.ResourceManager.Network,Azure.ResourceManager.Dns'
+        Update-GeneratorSdkValidationHistory -HistoryPath $cache -Results @(
+            [pscustomobject]@{ Package = 'Azure.ResourceManager.Dns'; Success = $true; Seconds = 1200 }
+        )
+        $saved = @(Get-Content $cache -Raw | ConvertFrom-Json)
+        $saved.Count | Should -Be 1
+        $saved[0].Package | Should -BeExactly 'Azure.ResourceManager.Dns'
+        (@(Get-GeneratorSdkValidationSchedule -Packages $packages -HistoryPath $cache).Name -join ',') |
+            Should -BeExactly 'Azure.ResourceManager.Dns,Azure.ResourceManager.Network'
+    }
+    It 'keeps valid cached measurements when a sibling entry is malformed' {
+        $cache = Join-Path $TestDrive mixed-cache.json
+        '[{"Package":"Slow","Success":true,"Seconds":300},{"Package":"Broken","Success":true}]' | Set-Content $cache
+        $packages = @('Fast', 'Slow') | ForEach-Object { [pscustomobject]@{ Name = $_ } }
+        (@(Get-GeneratorSdkValidationSchedule -Packages $packages -HistoryPath $cache).Name -join ',') | Should -BeExactly 'Slow,Fast'
+        Update-GeneratorSdkValidationHistory -HistoryPath $cache -Results @(
+            [pscustomobject]@{ Package = 'Fast'; Success = $true; Seconds = 100 }
+        )
+        $saved = @(Get-Content $cache -Raw | ConvertFrom-Json)
+        ($saved.Package -join ',') | Should -BeExactly 'Fast,Slow'
     }
 }
 
@@ -183,6 +342,34 @@ Describe 'Automatic timing history' {
 }
 
 Describe 'Parallel GenerateCode workers' {
+    It 'uses the SDK directory even when the caller has an incompatible global.json' {
+        $package = New-SdkFixture 'Azure.ResourceManager.CallerIndependent'
+        '<Project><Target Name="Restore" /><Target Name="GenerateCode" /></Project>' |
+            Set-Content (Join-Path $package.FullName "src/$($package.Name).csproj")
+        $caller = Join-Path $TestDrive unrelated-checkout
+        New-Item $caller -ItemType Directory | Out-Null
+        '{"sdk":{"version":"99.0.100","rollForward":"disable"}}' | Set-Content (Join-Path $caller global.json)
+        Push-Location $caller
+        try {
+            $results = @(Invoke-GeneratorSdkValidationParallel @($package) 1 (Join-Path $TestDrive caller-logs))
+            $results[0].Success | Should -BeTrue
+            (Get-Location).Path | Should -BeExactly $caller
+        }
+        finally { Pop-Location }
+    }
+    It 'keeps relative logs rooted at the caller while workers change directory' {
+        $package = New-SdkFixture 'Azure.ResourceManager.RelativeLogs'
+        '<Project><Target Name="Restore" /><Target Name="GenerateCode" /></Project>' |
+            Set-Content (Join-Path $package.FullName "src/$($package.Name).csproj")
+        Push-Location $TestDrive
+        try {
+            $results = @(Invoke-GeneratorSdkValidationParallel @($package) 1 'relative-logs')
+            $results[0].Log | Should -BeExactly (Join-Path $TestDrive "relative-logs/$($package.Name).log")
+            Test-Path $results[0].Log | Should -BeTrue
+            (Get-Location).Path | Should -BeExactly $TestDrive
+        }
+        finally { Pop-Location }
+    }
     It 'uses distinct SDK outputs and per-package logs' {
         $one = New-SdkFixture 'Azure.ResourceManager.ParallelOne'
         $two = New-SdkFixture 'Azure.ResourceManager.ParallelTwo'

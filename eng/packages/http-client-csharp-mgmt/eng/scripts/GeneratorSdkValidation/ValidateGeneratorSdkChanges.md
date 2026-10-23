@@ -21,7 +21,7 @@ The default selection is the 21 TypeSpec-enabled SDKs from the [priority list](h
   -GeneratorPullRequest 12345 -Parallel 4
 ```
 
-The script creates a detached worktree under a new sibling `mpg-local-runs/<run-id>/sdk` directory. Override the run directory with `-OutputRoot`; existing directories are never overwritten. Generator PRs must be open, target `main`, and have a merge ref matching their reported head. Without `-GeneratorPullRequest`, the source is committed HEAD of the caller checkout, not uncommitted generator edits. The caller's checkout is never reset or switched.
+The script creates a detached worktree under a new sibling `mpg-local-runs/<run-id>/sdk` directory. Override the run directory with `-OutputRoot`; paths resolve through PowerShell's filesystem provider, so relative paths respect the current location and filesystem PSDrives are supported. Existing directories are never overwritten. Generator PRs must be open, target `main`, and have a merge ref matching their reported head. Without `-GeneratorPullRequest`, the source is committed HEAD of the caller checkout, not uncommitted generator edits. The caller's checkout is never reset or switched.
 
 Local-only runs retain a `file:` tarball reference in their isolated emitter config/lock. They do **not** push a branch, publish packages, or create a PR.
 
@@ -30,7 +30,7 @@ Local-only runs retain a `file:` tarball reference in their isolated emitter con
 1. `eng/scripts/typespec/Initialize-WorkingDirectory.ps1` installs locked dependencies, sets a unique prerelease version, and saves the package metadata.
 2. `eng/scripts/typespec/Build-Emitter.ps1` builds and packs the emitter/generator, produces npm and NuGet artifacts plus overrides, and restores the emitter's tracked package metadata.
 3. `tsp-client generate-config-files` consumes the saved metadata and either a local tarball override or CI's Azure DevOps tarball URL. It updates the same management emitter config and lock used by SDK generation.
-4. Each selected SDK runs `dotnet msbuild /restore /t:GenerateCode` in parallel with its own log, preserving CI's restore-before-generation behavior. This is required for SDKs such as MySql that import `GenerateCode` from NuGet targets. Shared root/tsp-client npm installations run **once before** workers start. Workers set `SkipTspClientInstall=true`.
+4. Each selected SDK runs `dotnet msbuild /restore /t:GenerateCode` from its own `src` directory in parallel with its own log, selecting the isolated worktree's .NET SDK rather than the caller's and preserving CI's restore-before-generation behavior. This is required for SDKs such as MySql that import `GenerateCode` from NuGet targets. Shared root/tsp-client npm installations run **once before** workers start. Workers set `SkipTspClientInstall=true`.
 
 `eng/common/scripts/Update-GeneratedSdks.ps1` is not called concurrently: its .NET implementation writes the shared `artifacts/GeneratedSdks.proj` and reinstalls root npm dependencies. Running several copies in the same worktree would race. The local runner instead calls the same per-SDK `GenerateCode` target without those shared writes.
 
@@ -38,7 +38,7 @@ Local-only runs retain a `file:` tarball reference in their isolated emitter con
 
 Scheduling is always slowest first; there is no timing-file option. This applies equally to the default priority scope and explicit `-Services` subsets.
 
-The runner starts with bundled measurements in `ValidateGeneratorSdkChanges.timings.json` and overlays the latest successful per-service timings learned in this repository. History is stored under `<git-common-dir>/mpg-local-regen/service-timings.json`, shared across worktrees but never committed. Successful workers update history even when a sibling fails; failures never replace an earlier successful measurement. Updates use a lock and atomic file replacement; an unavailable cache produces a warning rather than failing SDK generation.
+The runner starts with bundled measurements in `ValidateGeneratorSdkChanges.timings.json` and overlays the latest successful per-service timings learned in this repository. History is stored under `<git-common-dir>/mpg-local-regen/service-timings.json`, shared across worktrees but never committed. Successful workers update history even when a sibling fails; failures never replace an earlier successful measurement. Updates use a lock and atomic file replacement; unavailable or corrupt learned history produces warnings rather than failing SDK generation. Invalid learned records are skipped while valid records are retained, and the next successful cache update repairs malformed history. Bundled timing data remains strictly validated.
 
 Only successful, finite, nonnegative measurements influence scheduling. Selected SDKs without a measurement follow the measured SDKs; a custom subset may include slow SDKs that have not been measured yet. History never adds packages to the selected scope. Bundled values are estimates from a validated local benchmark, not runtime guarantees; actual timings vary with source, machine, and contention.
 
@@ -58,8 +58,8 @@ A reusable PR needs a package URL accessible to other machines, not an absolute 
 These are explicit opt-ins:
 
 - `-PublishPackages` publishes the **npm** tarball only to the Azure DevOps feed used by CI, never npmjs.org. It uses existing credentials and does not create or copy tokens. NuGet artifacts are retained locally, not published; they are not needed by the packaged npm generator.
-- `-CreateDraftPullRequest` requires `-PublishPackages`. All selected generation tasks must pass. Local package URLs, unrelated changed files, and an unexpected `origin` prevent commit/push.
-- Branch/title follow CI's `validate-typespec-pr-<PR>-azure-typespec/http-client-csharp-mgmt` and `[Preview] Update azure-typespec/http-client-csharp-mgmt version to prerelease <version>` conventions. If the remote CI branch already exists, the local branch gets a `-local-<run-id>` suffix. Existing branches/PRs are never force-pushed or reused.
+- `-CreateDraftPullRequest` requires `-PublishPackages`. All selected generation tasks must pass. Local package URLs, unrelated changed files, and any unexpected effective `origin` push URL prevent commit/push. All push URLs are validated; collision checks and the actual push use the same validated upstream URL.
+- Branch/title follow CI's `validate-typespec-pr-<PR>-azure-typespec/http-client-csharp-mgmt` and `[Preview] Update azure-typespec/http-client-csharp-mgmt version to prerelease <version>` conventions. If the CI-style branch already exists locally or remotely, the new branch gets a `-local-<run-id>` suffix, with a numeric suffix if needed. Retained branches from failed attempts are never overwritten or reused. Existing branches/PRs are never force-pushed or reused.
 - As in CI, the generation checkout is based on the generator PR's merge ref; its source changes are therefore included in the resulting branch until that PR merges. Required PR checks still apply.
 
 ## Results, failures, cleanup

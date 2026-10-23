@@ -30,26 +30,49 @@ function Get-GeneratorSdkValidationServices {
     return $packages
 }
 
-function Get-GeneratorSdkValidationSchedule {
-    param([object[]]$Packages, [string]$HistoryPath)
-    $secondsByPackage = @{}
-    $seed = Join-Path $PSScriptRoot ValidateGeneratorSdkChanges.timings.json
-    foreach ($path in @($seed, $HistoryPath)) {
-        if (-not $path -or -not (Test-Path $path)) { continue }
-        try { $measurements = @((Get-Content $path -Raw -ErrorAction Stop) | ConvertFrom-Json -ErrorAction Stop) }
-        catch {
-            if ($path -eq $seed) { throw }
-            Write-Warning "Cannot read timing cache; using bundled measurements: $_"
-            continue
-        }
-        foreach ($measurement in $measurements) {
-            if ($measurement.Success -ne $true) { continue }
+function Read-GeneratorSdkValidationTimings {
+    param([string]$Path, [switch]$Strict)
+    if (-not $Path -or -not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+        if ($Strict) { throw "Bundled timing file is missing: $Path" }
+        return
+    }
+    try { $measurements = @((Get-Content -LiteralPath $Path -Raw -ErrorAction Stop) | ConvertFrom-Json -ErrorAction Stop) }
+    catch {
+        if ($Strict) { throw }
+        Write-Warning "Cannot read learned timing history; ignoring it: $_"
+        return
+    }
+    foreach ($measurement in $measurements) {
+        try {
+            if ($measurement.Success -isnot [bool]) { throw 'Expected a Boolean Success value.' }
+            if (-not $measurement.Success) { continue }
+            if ($measurement.Package -isnot [string] -or [string]::IsNullOrWhiteSpace($measurement.Package)) {
+                throw 'Expected a nonempty Package name.'
+            }
+            if ($null -eq $measurement.Seconds -or $measurement.Seconds -is [bool]) {
+                throw 'Expected elapsed seconds.'
+            }
             $seconds = [double]$measurement.Seconds
             if ([double]::IsNaN($seconds) -or [double]::IsInfinity($seconds) -or $seconds -lt 0) {
                 throw "Expected finite nonnegative elapsed seconds for $($measurement.Package)."
             }
-            $secondsByPackage[$measurement.Package] = $seconds
+            $measurement
         }
+        catch {
+            if ($Strict) { throw }
+            Write-Warning "Ignoring an invalid learned timing measurement in ${Path}: $_"
+        }
+    }
+}
+
+function Get-GeneratorSdkValidationSchedule {
+    param([object[]]$Packages, [string]$HistoryPath)
+    $secondsByPackage = @{}
+    $seed = Join-Path $PSScriptRoot ValidateGeneratorSdkChanges.timings.json
+    $measurements = @(Read-GeneratorSdkValidationTimings -Path $seed -Strict)
+    $measurements += @(Read-GeneratorSdkValidationTimings -Path $HistoryPath)
+    foreach ($measurement in $measurements) {
+        $secondsByPackage[$measurement.Package] = [double]$measurement.Seconds
     }
     if (-not @($Packages | Where-Object { $secondsByPackage.ContainsKey($_.Name) }).Count) { return $Packages }
     # Reorder only; timing history must never add SDKs to the requested scope.
@@ -67,10 +90,8 @@ function Update-GeneratorSdkValidationHistory {
         New-Item (Split-Path $HistoryPath -Parent) -ItemType Directory -Force | Out-Null
         $lock = [IO.File]::Open("$HistoryPath.lock", [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
         $byPackage = @{}
-        if (Test-Path $HistoryPath) {
-            foreach ($measurement in @((Get-Content $HistoryPath -Raw) | ConvertFrom-Json)) {
-                if ($measurement.Success -eq $true) { $byPackage[$measurement.Package] = $measurement }
-            }
+        foreach ($measurement in @(Read-GeneratorSdkValidationTimings -Path $HistoryPath)) {
+            $byPackage[$measurement.Package] = $measurement
         }
         foreach ($result in $Results) {
             if (-not $result.Success) { continue }
@@ -89,7 +110,9 @@ function Update-GeneratorSdkValidationHistory {
     }
     catch { Write-Warning "Timing history was not updated; SDK results are unaffected: $_" }
     finally {
-        if ($temporary -and (Test-Path $temporary)) { Remove-Item $temporary -Force }
+        if ($temporary -and (Test-Path -LiteralPath $temporary -ErrorAction SilentlyContinue)) {
+            Remove-Item -LiteralPath $temporary -Force -ErrorAction SilentlyContinue
+        }
         if ($lock) { $lock.Dispose() }
     }
 }
@@ -119,6 +142,7 @@ function Assert-GeneratorSdkValidationPortableConfig {
 
 function Invoke-GeneratorSdkValidationParallel {
     param([object[]]$Packages, [int]$Parallel, [string]$LogDirectory, [string]$HistoryPath)
+    $LogDirectory = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($LogDirectory)
     New-Item $LogDirectory -ItemType Directory -Force | Out-Null
     $results = @($Packages | ForEach-Object -ThrottleLimit $Parallel -Parallel {
         $package = $_
@@ -129,9 +153,14 @@ function Invoke-GeneratorSdkValidationParallel {
             # Match CI's restore-before-generation ordering: some SDKs import
             # GenerateCode from NuGet targets. Shared npm tools are installed by
             # the parent, not concurrently in every worker.
-            & dotnet msbuild (Join-Path $package.FullName "src/$($package.Name).csproj") `
-                /restore /t:GenerateCode /p:SkipTspClientInstall=true *> $log
-            $code = $LASTEXITCODE
+            # dotnet selects its SDK from the working directory's global.json.
+            Push-Location (Join-Path $package.FullName src) -ErrorAction Stop
+            try {
+                & dotnet msbuild (Join-Path $package.FullName "src/$($package.Name).csproj") `
+                    /restore /t:GenerateCode /p:SkipTspClientInstall=true *> $log
+                $code = $LASTEXITCODE
+            }
+            finally { Pop-Location }
             if ($code -ne 0) { throw "GenerateCode exited with code $code; see $log" }
             [pscustomobject]@{ Package = $package.Name; Success = $true; Seconds = $timer.Elapsed.TotalSeconds; StartedUtc = $start.ToString('o'); FinishedUtc = (Get-Date -AsUTC -Format o); Log = $log; Error = $null }
         }
