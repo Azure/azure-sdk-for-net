@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/quotaMetrics", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(iotHubName, true);
             uri.AppendPath("/routingEndpointsHealth", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(iotHubName, true);
             uri.AppendPath("/routing/routes/$testall", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(iotHubName, true);
             uri.AppendPath("/routing/routes/$testnew", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/IotHubKeys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/exportDevices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/importDevices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(iotHubName, true);
             uri.AppendPath("/failover", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/IotHubStats", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(eventHubEndpointName, true);
             uri.AppendPath("/ConsumerGroups/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(eventHubEndpointName, true);
             uri.AppendPath("/ConsumerGroups/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(eventHubEndpointName, true);
             uri.AppendPath("/ConsumerGroups/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath("/eventHubEndpoints/", false);
             uri.AppendPath(eventHubEndpointName, true);
             uri.AppendPath("/ConsumerGroups", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-10-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-10-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups") ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
