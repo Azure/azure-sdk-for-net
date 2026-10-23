@@ -16,6 +16,7 @@
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 
 ### Bugs Fixed
+- Fixed `CreateAgentVersionFromCode` creating ZIP entries with `\` separators on Windows, which extracted as flat file names instead of nested directories on Linux hosted agents ([#63804](https://github.com/Azure/azure-sdk-for-net/issues/63804)).
 
 ### Other Changes
 
