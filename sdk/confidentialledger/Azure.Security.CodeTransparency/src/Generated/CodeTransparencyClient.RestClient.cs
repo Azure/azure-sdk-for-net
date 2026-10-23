@@ -13,18 +13,24 @@ namespace Azure.Security.CodeTransparency
     /// <summary></summary>
     public partial class CodeTransparencyClient
     {
-        private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier200202;
-        private static ResponseClassifier _pipelineMessageClassifier200302;
-        private static ResponseClassifier _pipelineMessageClassifier201303;
+        private static ResponseClassifier _pipelineMessageClassifier200202400401404429500503;
+        private static ResponseClassifier _pipelineMessageClassifier200302400401404429500503;
+        private static ResponseClassifier _pipelineMessageClassifier200400401404429500503;
+        private static ResponseClassifier _pipelineMessageClassifier200400404429500503;
+        private static ResponseClassifier _pipelineMessageClassifier200500503;
+        private static ResponseClassifier _pipelineMessageClassifier201303400401404429500503;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200202400401404429500503 => _pipelineMessageClassifier200202400401404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202, 400, 401, 404, 429, 500, 503 });
 
-        private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier PipelineMessageClassifier200302400401404429500503 => _pipelineMessageClassifier200302400401404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 302, 400, 401, 404, 429, 500, 503 });
 
-        private static ResponseClassifier PipelineMessageClassifier200302 => _pipelineMessageClassifier200302 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 302 });
+        private static ResponseClassifier PipelineMessageClassifier200400401404429500503 => _pipelineMessageClassifier200400401404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 401, 404, 429, 500, 503 });
 
-        private static ResponseClassifier PipelineMessageClassifier201303 => _pipelineMessageClassifier201303 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 303 });
+        private static ResponseClassifier PipelineMessageClassifier200400404429500503 => _pipelineMessageClassifier200400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 404, 429, 500, 503 });
+
+        private static ResponseClassifier PipelineMessageClassifier200500503 => _pipelineMessageClassifier200500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 500, 503 });
+
+        private static ResponseClassifier PipelineMessageClassifier201303400401404429500503 => _pipelineMessageClassifier201303400401404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 303, 400, 401, 404, 429, 500, 503 });
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
@@ -35,7 +41,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200400404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
@@ -52,7 +58,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
@@ -70,7 +76,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
@@ -91,7 +97,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("waitForCommit", TypeFormatters.ConvertToString(waitForCommit), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201303);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201303400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
@@ -111,7 +117,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
@@ -129,7 +135,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200302);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200302400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
@@ -148,7 +154,7 @@ namespace Azure.Security.CodeTransparency
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200400401404429500503);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
