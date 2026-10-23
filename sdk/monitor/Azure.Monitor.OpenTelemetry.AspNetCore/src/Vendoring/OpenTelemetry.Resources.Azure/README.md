@@ -14,7 +14,7 @@ package dependency.
 | Commit | `cae14fd3d642fb7bc1c114116b0fff45a11698e8` |
 
 Files copied from `src/OpenTelemetry.Resources.Azure/` (all `*.cs`) into this folder, and from `src/Shared/` into
-[`../Shared`](../Shared):
+[`Vendoring/Shared`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/src/Vendoring/Shared):
 
 | Upstream `src/Shared` file | Status |
 |---|---|
@@ -42,7 +42,7 @@ re-apply it.
 
 1. Pick the latest `Resources.Azure-*` release tag in opentelemetry-dotnet-contrib.
 2. Copy `src/OpenTelemetry.Resources.Azure/*.cs` into this folder and the `src/Shared` files listed above into
-   [`../Shared`](../Shared). Check the upstream `.csproj` for any new `src/Shared` includes.
-3. Re-apply every deviation listed above and update the [Source](#source) table.
+   [`Vendoring/Shared`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/src/Vendoring/Shared). Check the upstream `.csproj` for any new `src/Shared` includes.
+3. Re-apply every deviation listed above and update the Source table.
 4. Review the upstream `CHANGELOG.md` for attribute name or value changes and call out any customer-visible change in
    this package's `CHANGELOG.md` (all resource attributes are exported on the `_OTELRESOURCE_` metric).
