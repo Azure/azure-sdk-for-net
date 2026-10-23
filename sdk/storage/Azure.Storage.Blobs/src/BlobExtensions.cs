@@ -1399,35 +1399,6 @@ namespace Azure.Storage.Blobs
         }
 
         internal static void ValidateConditionsNotPresent(
-            this BlobLeaseRequestConditions requestConditions,
-            BlobRequestConditionProperty invalidConditions,
-            string operationName,
-            string parameterName)
-        {
-            if (CompatSwitches.DisableRequestConditionsValidation)
-            {
-                return;
-            }
-
-            if (requestConditions == null)
-            {
-                return;
-            }
-
-            List<string> invalidList = null;
-            requestConditions.ValidateConditionsNotPresent(
-                invalidConditions, ref invalidList);
-
-            if (invalidList?.Count > 0)
-            {
-                string unsupportedString = string.Join(", ", invalidList);
-                throw new ArgumentException(
-                    $"{operationName} does not support the {unsupportedString} condition(s).",
-                    parameterName);
-            }
-        }
-
-        internal static void ValidateConditionsNotPresent(
             this AppendBlobRequestConditions requestConditions,
             BlobRequestConditionProperty invalidConditions,
             string operationName,
