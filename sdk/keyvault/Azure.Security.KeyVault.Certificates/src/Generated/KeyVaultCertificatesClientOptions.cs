@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary> Client options for <see cref="KeyVaultCertificatesClient"/>. </summary>
     internal partial class KeyVaultCertificatesClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
 
         /// <summary> Initializes a new instance of KeyVaultCertificatesClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -26,13 +26,8 @@ namespace Azure.Security.KeyVault.Certificates
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6_Preview_2 => "7.6-preview.2",
                 ServiceVersion.V7_6 => "7.6",
-                ServiceVersion.V2025_06_01_Preview => "2025-06-01-preview",
                 ServiceVersion.V2025_07_01 => "2025-07-01",
-                ServiceVersion.V2026_01_01_Preview => "2026-01-01-preview",
-                ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
                 ServiceVersion.V2026_04_01 => "2026-04-01",
-                ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
-                ServiceVersion.V2026_07_01_Preview => "2026-07-01-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -43,7 +38,7 @@ namespace Azure.Security.KeyVault.Certificates
         [Experimental("SCME0002")]
         internal KeyVaultCertificatesClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-07-01-preview";
+            Version = "2026-04-01";
             if (section is null || !section.Exists())
             {
                 return;
@@ -69,20 +64,10 @@ namespace Azure.Security.KeyVault.Certificates
             V7_6_Preview_2 = 2,
             /// <summary> The 7.6 API version. </summary>
             V7_6 = 3,
-            /// <summary> The 2025-06-01-preview API version. </summary>
-            V2025_06_01_Preview = 4,
             /// <summary> The 2025-07-01 API version. </summary>
-            V2025_07_01 = 5,
-            /// <summary> The 2026-01-01-preview API version. </summary>
-            V2026_01_01_Preview = 6,
-            /// <summary> The 2026-03-01-preview API version. </summary>
-            V2026_03_01_Preview = 7,
+            V2025_07_01 = 4,
             /// <summary> The 2026-04-01 API version. </summary>
-            V2026_04_01 = 8,
-            /// <summary> The 2026-05-01-preview API version. </summary>
-            V2026_05_01_Preview = 9,
-            /// <summary> The 2026-07-01-preview API version. </summary>
-            V2026_07_01_Preview = 10
+            V2026_04_01 = 5
         }
     }
 }
