@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -26,17 +27,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Only user-assigned identities are supported; 'SystemAssigned' and 'SystemAssigned,UserAssigned' are rejected. At most one user-assigned managed identity may be assigned to an autoscale setting. To remove the assigned identity, send 'type' as 'None'. </param>
         /// <param name="properties"> The autoscale setting properties of the update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoscaleSettingPatch(IDictionary<string, string> tags, AutoscaleSettingProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoscaleSettingPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AutoscaleSettingProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Identity = identity;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The managed service identities assigned to this resource. Only user-assigned identities are supported; 'SystemAssigned' and 'SystemAssigned,UserAssigned' are rejected. At most one user-assigned managed identity may be assigned to an autoscale setting. To remove the assigned identity, send 'type' as 'None'. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The autoscale setting properties of the update operation. </summary>
         internal AutoscaleSettingProperties Properties { get; set; }

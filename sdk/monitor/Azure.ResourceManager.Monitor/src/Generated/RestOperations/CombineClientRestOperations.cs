@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -41,5 +42,54 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateCreateNotificationsAtTenantActionGroupResourceLevelRequest(string managementGroupId, string tenantActionGroupName, string xMsClientTenantId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/tenantActionGroups/", false);
+            uri.AppendPath(tenantActionGroupName, true);
+            uri.AppendPath("/createNotifications", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("x-ms-client-tenant-id", xMsClientTenantId);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetTestNotificationsAtTenantActionGroupResourceLevelRequest(string managementGroupId, string tenantActionGroupName, string notificationId, string xMsClientTenantId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/microsoft.Insights/tenantActionGroups/", false);
+            uri.AppendPath(tenantActionGroupName, true);
+            uri.AppendPath("/notificationStatus/", false);
+            uri.AppendPath(notificationId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("x-ms-client-tenant-id", xMsClientTenantId);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

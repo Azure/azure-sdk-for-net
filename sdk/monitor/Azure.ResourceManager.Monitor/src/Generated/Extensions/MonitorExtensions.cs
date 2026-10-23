@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Monitor.Mocking;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
@@ -42,6 +43,12 @@ namespace Azure.ResourceManager.Monitor
         private static MockableMonitorTenantResource GetMockableMonitorTenantResource(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new MockableMonitorTenantResource(client, tenantResource.Id));
+        }
+
+        /// <param name="managementGroupResource"></param>
+        private static MockableMonitorManagementGroupResource GetMockableMonitorManagementGroupResource(ManagementGroupResource managementGroupResource)
+        {
+            return managementGroupResource.GetCachedClient(client => new MockableMonitorManagementGroupResource(client, managementGroupResource.Id));
         }
 
         /// <summary>
@@ -370,6 +377,194 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMonitorArmClient(client).GetActionGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantActionGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetTenantActionGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantActionGroupResource"/> object. </returns>
+        public static TenantActionGroupResource GetTenantActionGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetTenantActionGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VMInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetVMInsightsOnboardingStatusResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VMInsightsOnboardingStatusResource"/> object. </returns>
+        public static VMInsightsOnboardingStatusResource GetVMInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetVMInsightsOnboardingStatusResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VMInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it in the ArmClient
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetVMInsightsOnboardingStatus(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VMInsightsOnboardingStatusResource"/> object. </returns>
+        public static VMInsightsOnboardingStatusResource GetVMInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetVMInsightsOnboardingStatus(scope);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DiagnosticSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DiagnosticSettingsResource"/> object. </returns>
+        public static DiagnosticSettingsResource GetDiagnosticSettingsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="DiagnosticSettingsResourceCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsResources(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingsResource"/> objects. </returns>
+        public static DiagnosticSettingsResourceCollection GetDiagnosticSettingsResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsResources(scope);
+        }
+
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DiagnosticSettingsResource> GetDiagnosticSettingsResource(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsResource(scope, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the active diagnostic settings for the specified resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsResourceAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMonitorArmClient(client).GetDiagnosticSettingsResourceAsync(scope, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="DiagnosticSettingsCategoryResourceCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategoryResources(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects. </returns>
+        public static DiagnosticSettingsCategoryResourceCollection GetDiagnosticSettingsCategoryResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategoryResources(scope);
+        }
+
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategoryResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategoryResource(scope, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the diagnostic settings category for the specified resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategoryResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryResourceAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategoryResourceAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1785,6 +1980,63 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMonitorTenantResource(tenantResource).GetTenantActivityLogs(filter, @select, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantActionGroupResources in the <see cref="ManagementGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorManagementGroupResource.GetTenantActionGroupResources()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantActionGroupResources and their operations over a TenantActionGroupResource. </returns>
+        public static TenantActionGroupResourceCollection GetTenantActionGroupResources(this ManagementGroupResource managementGroupResource)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableMonitorManagementGroupResource(managementGroupResource).GetTenantActionGroupResources();
+        }
+
+        /// <summary>
+        /// Get a tenant action group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorManagementGroupResource.GetTenantActionGroupResourceAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="tenantActionGroupName"> The name of the action group. </param>
+        /// <param name="xMsClientTenantId"> The tenant ID of the client making the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantActionGroupResource>> GetTenantActionGroupResourceAsync(this ManagementGroupResource managementGroupResource, string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableMonitorManagementGroupResource(managementGroupResource).GetTenantActionGroupResourceAsync(tenantActionGroupName, xMsClientTenantId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a tenant action group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorManagementGroupResource.GetTenantActionGroupResource(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="tenantActionGroupName"> The name of the action group. </param>
+        /// <param name="xMsClientTenantId"> The tenant ID of the client making the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantActionGroupResource> GetTenantActionGroupResource(this ManagementGroupResource managementGroupResource, string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableMonitorManagementGroupResource(managementGroupResource).GetTenantActionGroupResource(tenantActionGroupName, xMsClientTenantId, cancellationToken);
         }
     }
 }

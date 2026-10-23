@@ -20,6 +20,144 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMonitorModelFactory
     {
+        /// <summary> The request body which contain contact detail metadata. </summary>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type value is: servicehealth. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="Models.TenantNotificationRequestBody"/> instance for mocking. </returns>
+        public static TenantNotificationRequestBody TenantNotificationRequestBody(string alertType = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<WebhookReceiver> webhookReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default)
+        {
+            emailReceivers ??= new ChangeTrackingList<MonitorEmailReceiver>();
+            smsReceivers ??= new ChangeTrackingList<MonitorSmsReceiver>();
+            webhookReceivers ??= new ChangeTrackingList<WebhookReceiver>();
+            azureAppPushReceivers ??= new ChangeTrackingList<MonitorAzureAppPushReceiver>();
+            voiceReceivers ??= new ChangeTrackingList<MonitorVoiceReceiver>();
+
+            return new TenantNotificationRequestBody(
+                alertType,
+                (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
+                (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
+                (webhookReceivers ?? new ChangeTrackingList<WebhookReceiver>()).ToList(),
+                (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
+                (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
+                default);
+        }
+
+        /// <summary> An email receiver. </summary>
+        /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="emailAddress"> The email address of this receiver. </param>
+        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="status"> The receiver status of the e-mail. </param>
+        /// <returns> A new <see cref="Models.MonitorEmailReceiver"/> instance for mocking. </returns>
+        public static MonitorEmailReceiver MonitorEmailReceiver(string name = default, string emailAddress = default, bool? useCommonAlertSchema = default, MonitorReceiverStatus? status = default)
+        {
+            return new MonitorEmailReceiver(name, emailAddress, useCommonAlertSchema, status, default);
+        }
+
+        /// <summary> An SMS receiver. </summary>
+        /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="countryCode"> The country code of the SMS receiver. </param>
+        /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
+        /// <param name="status"> The status of the receiver. </param>
+        /// <returns> A new <see cref="Models.MonitorSmsReceiver"/> instance for mocking. </returns>
+        public static MonitorSmsReceiver MonitorSmsReceiver(string name = default, string countryCode = default, string phoneNumber = default, MonitorReceiverStatus? status = default)
+        {
+            return new MonitorSmsReceiver(name, countryCode, phoneNumber, status, default);
+        }
+
+        /// <summary> A webhook receiver. </summary>
+        /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within a tenant action group. </param>
+        /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
+        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="useAadAuth"> Indicates whether or not use AAD authentication. </param>
+        /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
+        /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
+        /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
+        /// <returns> A new <see cref="Models.WebhookReceiver"/> instance for mocking. </returns>
+        public static WebhookReceiver WebhookReceiver(string name = default, string serviceUri = default, bool? useCommonAlertSchema = default, bool? useAadAuth = default, string objectId = default, string identifierUri = default, string tenantId = default)
+        {
+            return new WebhookReceiver(
+                name,
+                serviceUri,
+                useCommonAlertSchema,
+                useAadAuth,
+                objectId,
+                identifierUri,
+                tenantId,
+                default);
+        }
+
+        /// <summary> The Azure mobile App push notification receiver. </summary>
+        /// <param name="name"> The name of the Azure mobile app push receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="emailAddress"> The email address registered for the Azure mobile app. </param>
+        /// <returns> A new <see cref="Models.MonitorAzureAppPushReceiver"/> instance for mocking. </returns>
+        public static MonitorAzureAppPushReceiver MonitorAzureAppPushReceiver(string name = default, string emailAddress = default)
+        {
+            return new MonitorAzureAppPushReceiver(name, emailAddress, default);
+        }
+
+        /// <summary> A voice receiver. </summary>
+        /// <param name="name"> The name of the voice receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="countryCode"> The country code of the voice receiver. </param>
+        /// <param name="phoneNumber"> The phone number of the voice receiver. </param>
+        /// <returns> A new <see cref="Models.MonitorVoiceReceiver"/> instance for mocking. </returns>
+        public static MonitorVoiceReceiver MonitorVoiceReceiver(string name = default, string countryCode = default, string phoneNumber = default)
+        {
+            return new MonitorVoiceReceiver(name, countryCode, phoneNumber, default);
+        }
+
+        /// <summary> The details of the test notification results. </summary>
+        /// <param name="context"> The context info. </param>
+        /// <param name="state"> The overall state. </param>
+        /// <param name="completedTime"> The completed time. </param>
+        /// <param name="createdTime"> The created time. </param>
+        /// <param name="actionDetails"> The list of action detail. </param>
+        /// <returns> A new <see cref="Models.TestNotificationDetailsResult"/> instance for mocking. </returns>
+        public static TestNotificationDetailsResult TestNotificationDetailsResult(NotificationContext context = default, string state = default, string completedTime = default, string createdTime = default, IEnumerable<ActionDetail> actionDetails = default)
+        {
+            actionDetails ??= new ChangeTrackingList<ActionDetail>();
+
+            return new TestNotificationDetailsResult(
+                context,
+                state,
+                completedTime,
+                createdTime,
+                (actionDetails ?? new ChangeTrackingList<ActionDetail>()).ToList(),
+                default);
+        }
+
+        /// <summary> The context info. </summary>
+        /// <param name="notificationSource"> The source of the notification request. </param>
+        /// <param name="contextType"> The context id type. </param>
+        /// <returns> A new <see cref="Models.NotificationContext"/> instance for mocking. </returns>
+        public static NotificationContext NotificationContext(string notificationSource = default, string contextType = default)
+        {
+            return new NotificationContext(notificationSource, contextType, default);
+        }
+
+        /// <summary> The action detail. </summary>
+        /// <param name="mechanismType"> The mechanism type. </param>
+        /// <param name="name"> The name of the action. </param>
+        /// <param name="status"> The status of the action. </param>
+        /// <param name="subState"> The substatus of the action. </param>
+        /// <param name="sendTime"> The send time. </param>
+        /// <param name="message"> The detail of the friendly error message. </param>
+        /// <returns> A new <see cref="Models.ActionDetail"/> instance for mocking. </returns>
+        public static ActionDetail ActionDetail(string mechanismType = default, string name = default, string status = default, string subState = default, string sendTime = default, string message = default)
+        {
+            return new ActionDetail(
+                mechanismType,
+                name,
+                status,
+                subState,
+                sendTime,
+                message,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1534,8 +1672,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Only user-assigned identities are supported; 'SystemAssigned' and 'SystemAssigned,UserAssigned' are rejected. At most one user-assigned managed identity may be assigned to an autoscale setting. To remove the assigned identity, send 'type' as 'None'. </param>
         /// <returns> A new <see cref="Monitor.AutoscaleSettingData"/> instance for mocking. </returns>
-        public static AutoscaleSettingData AutoscaleSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default)
+        public static AutoscaleSettingData AutoscaleSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1555,6 +1694,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     targetResourceId,
                     targetResourceLocation,
                     default),
+                identity,
                 default);
         }
 
@@ -1733,6 +1873,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Only user-assigned identities are supported; 'SystemAssigned' and 'SystemAssigned,UserAssigned' are rejected. At most one user-assigned managed identity may be assigned to an autoscale setting. To remove the assigned identity, send 'type' as 'None'. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <param name="notifications"> the collection of notifications. </param>
         /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
@@ -1741,11 +1882,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
         /// <returns> A new <see cref="Models.AutoscaleSettingPatch"/> instance for mocking. </returns>
-        public static AutoscaleSettingPatch AutoscaleSettingPatch(IDictionary<string, string> tags = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default)
+        public static AutoscaleSettingPatch AutoscaleSettingPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AutoscaleSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), profiles is null && notifications is null && isEnabled is null && predictiveAutoscalePolicy is null && autoscaleSettingName is null && targetResourceId is null && targetResourceLocation is null ? default : new AutoscaleSettingProperties(
+            return new AutoscaleSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, profiles is null && notifications is null && isEnabled is null && predictiveAutoscalePolicy is null && autoscaleSettingName is null && targetResourceId is null && targetResourceLocation is null ? default : new AutoscaleSettingProperties(
                 (profiles ?? new ChangeTrackingList<AutoscaleProfile>()).ToList(),
                 (notifications ?? new ChangeTrackingList<AutoscaleNotification>()).ToList(),
                 isEnabled,
@@ -3044,28 +3185,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <summary> An email receiver. </summary>
-        /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="emailAddress"> The email address of this receiver. </param>
-        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        /// <param name="status"> The receiver status of the e-mail. </param>
-        /// <returns> A new <see cref="Models.MonitorEmailReceiver"/> instance for mocking. </returns>
-        public static MonitorEmailReceiver MonitorEmailReceiver(string name = default, string emailAddress = default, bool? useCommonAlertSchema = default, MonitorReceiverStatus? status = default)
-        {
-            return new MonitorEmailReceiver(name, emailAddress, useCommonAlertSchema, status, default);
-        }
-
-        /// <summary> An SMS receiver. </summary>
-        /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="countryCode"> The country code of the SMS receiver. </param>
-        /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
-        /// <param name="status"> The status of the receiver. </param>
-        /// <returns> A new <see cref="Models.MonitorSmsReceiver"/> instance for mocking. </returns>
-        public static MonitorSmsReceiver MonitorSmsReceiver(string name = default, string countryCode = default, string phoneNumber = default, MonitorReceiverStatus? status = default)
-        {
-            return new MonitorSmsReceiver(name, countryCode, phoneNumber, status, default);
-        }
-
         /// <summary> A webhook receiver. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
@@ -3108,15 +3227,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <summary> The Azure mobile App push notification receiver. </summary>
-        /// <param name="name"> The name of the Azure mobile app push receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="emailAddress"> The email address registered for the Azure mobile app. </param>
-        /// <returns> A new <see cref="Models.MonitorAzureAppPushReceiver"/> instance for mocking. </returns>
-        public static MonitorAzureAppPushReceiver MonitorAzureAppPushReceiver(string name = default, string emailAddress = default)
-        {
-            return new MonitorAzureAppPushReceiver(name, emailAddress, default);
-        }
-
         /// <summary> The Azure Automation Runbook notification receiver. </summary>
         /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
         /// <param name="runbookName"> The name for this runbook. </param>
@@ -3139,16 +3249,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 useCommonAlertSchema,
                 managedIdentity,
                 default);
-        }
-
-        /// <summary> A voice receiver. </summary>
-        /// <param name="name"> The name of the voice receiver. Names must be unique across all receivers within an action group. </param>
-        /// <param name="countryCode"> The country code of the voice receiver. </param>
-        /// <param name="phoneNumber"> The phone number of the voice receiver. </param>
-        /// <returns> A new <see cref="Models.MonitorVoiceReceiver"/> instance for mocking. </returns>
-        public static MonitorVoiceReceiver MonitorVoiceReceiver(string name = default, string countryCode = default, string phoneNumber = default)
-        {
-            return new MonitorVoiceReceiver(name, countryCode, phoneNumber, default);
         }
 
         /// <summary> A logic app receiver. </summary>
@@ -3321,15 +3421,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <summary> The context info. </summary>
-        /// <param name="notificationSource"> The source of the notification request. </param>
-        /// <param name="contextType"> The context id type. </param>
-        /// <returns> A new <see cref="Models.NotificationContext"/> instance for mocking. </returns>
-        public static NotificationContext NotificationContext(string notificationSource = default, string contextType = default)
-        {
-            return new NotificationContext(notificationSource, contextType, default);
-        }
-
         /// <summary> The action detail. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
@@ -3356,6 +3447,186 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ActionGroupEnableContent ActionGroupEnableContent(string receiverName = default)
         {
             return new ActionGroupEnableContent(receiverName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
+        /// <param name="enabled"> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this tenant action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this tenant action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this tenant action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this tenant action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this tenant action group. </param>
+        /// <returns> A new <see cref="Monitor.TenantActionGroupResourceData"/> instance for mocking. </returns>
+        public static TenantActionGroupResourceData TenantActionGroupResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupShortName = default, bool? enabled = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<WebhookReceiver> webhookReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TenantActionGroupResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                groupShortName is null && enabled is null && emailReceivers is null && smsReceivers is null && webhookReceivers is null && azureAppPushReceivers is null && voiceReceivers is null ? default : new TenantActionGroup(
+                    groupShortName,
+                    enabled.GetValueOrDefault(),
+                    (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
+                    (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
+                    (webhookReceivers ?? new ChangeTrackingList<WebhookReceiver>()).ToList(),
+                    (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
+                    (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
+                    default),
+                default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </param>
+        /// <returns> A new <see cref="Models.TenantActionGroupResourcePatch"/> instance for mocking. </returns>
+        public static TenantActionGroupResourcePatch TenantActionGroupResourcePatch(IDictionary<string, string> tags = default, bool? isEnabled = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TenantActionGroupResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), isEnabled is null ? default : new ActionGroupPatchProperties(isEnabled, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
+        /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
+        /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
+        /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
+        /// <returns> A new <see cref="Monitor.VMInsightsOnboardingStatusData"/> instance for mocking. </returns>
+        public static VMInsightsOnboardingStatusData VMInsightsOnboardingStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceId = default, OnboardingStatus? onboardingStatus = default, DataStatus? dataStatus = default, IEnumerable<DataContainer> data = default)
+        {
+            return new VMInsightsOnboardingStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId is null && onboardingStatus is null && dataStatus is null && data is null ? default : new VMInsightsOnboardingStatusProperties(resourceId, onboardingStatus.GetValueOrDefault(), dataStatus.GetValueOrDefault(), (data ?? new ChangeTrackingList<DataContainer>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
+        /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
+        /// <param name="eventHubName"> The name of the event hub. If none is specified, the default event hub will be selected. </param>
+        /// <param name="metrics"> The list of metric settings. </param>
+        /// <param name="logs"> The list of logs settings. </param>
+        /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
+        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
+        /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
+        /// <returns> A new <see cref="Monitor.DiagnosticSettingsResourceData"/> instance for mocking. </returns>
+        public static DiagnosticSettingsResourceData DiagnosticSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string storageAccountId = default, string serviceBusRuleId = default, string eventHubAuthorizationRuleId = default, string eventHubName = default, IEnumerable<DiagnosticsMetricSettings> metrics = default, IEnumerable<DiagnosticsLogSettings> logs = default, string workspaceId = default, string marketplacePartnerId = default, string logAnalyticsDestinationType = default)
+        {
+            return new DiagnosticSettingsResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && eventHubName is null && metrics is null && logs is null && workspaceId is null && marketplacePartnerId is null && logAnalyticsDestinationType is null ? default : new DiagnosticSettings(
+                    storageAccountId,
+                    serviceBusRuleId,
+                    eventHubAuthorizationRuleId,
+                    eventHubName,
+                    (metrics ?? new ChangeTrackingList<DiagnosticsMetricSettings>()).ToList(),
+                    (logs ?? new ChangeTrackingList<DiagnosticsLogSettings>()).ToList(),
+                    workspaceId,
+                    marketplacePartnerId,
+                    logAnalyticsDestinationType,
+                    default),
+                default);
+        }
+
+        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
+        /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
+        /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="enabled"> a value indicating whether this category is enabled. </param>
+        /// <param name="retentionPolicy"> the retention policy for this category. </param>
+        /// <returns> A new <see cref="Models.DiagnosticsMetricSettings"/> instance for mocking. </returns>
+        public static DiagnosticsMetricSettings DiagnosticsMetricSettings(TimeSpan? timeGrain = default, string category = default, bool enabled = default, RetentionPolicy retentionPolicy = default)
+        {
+            return new DiagnosticsMetricSettings(timeGrain, category, enabled, retentionPolicy, default);
+        }
+
+        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
+        /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="enabled"> a value indicating whether this log is enabled. </param>
+        /// <param name="retentionPolicy"> the retention policy for this log. </param>
+        /// <returns> A new <see cref="Models.DiagnosticsLogSettings"/> instance for mocking. </returns>
+        public static DiagnosticsLogSettings DiagnosticsLogSettings(string category = default, string categoryGroup = default, bool enabled = default, RetentionPolicy retentionPolicy = default)
+        {
+            return new DiagnosticsLogSettings(category, categoryGroup, enabled, retentionPolicy, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="categoryType"> The type of the diagnostic settings category. </param>
+        /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
+        /// <returns> A new <see cref="Monitor.DiagnosticSettingsCategoryResourceData"/> instance for mocking. </returns>
+        public static DiagnosticSettingsCategoryResourceData DiagnosticSettingsCategoryResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? categoryType = default, IEnumerable<string> categoryGroups = default)
+        {
+            return new DiagnosticSettingsCategoryResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                categoryType is null && categoryGroups is null ? default : new DiagnosticSettingsCategory(categoryType, (categoryGroups ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> The autoscale setting resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
+        /// <param name="notifications"> the collection of notifications. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
+        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
+        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
+        /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
+        /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
+        /// <returns> A new <see cref="Monitor.AutoscaleSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutoscaleSettingData AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<AutoscaleProfile> profiles, IEnumerable<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation)
+        {
+            return new AutoscaleSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                profiles is null && notifications is null && isEnabled is null && predictiveAutoscalePolicy is null && autoscaleSettingName is null && targetResourceId is null && targetResourceLocation is null ? default : new AutoscaleSettingProperties(
+                    (profiles ?? new ChangeTrackingList<AutoscaleProfile>()).ToList(),
+                    (notifications ?? new ChangeTrackingList<AutoscaleNotification>()).ToList(),
+                    isEnabled,
+                    predictiveAutoscalePolicy,
+                    autoscaleSettingName,
+                    targetResourceId,
+                    targetResourceLocation,
+                    default),
+                default,
+                default);
         }
 
         /// <summary> An action group resource. </summary>
