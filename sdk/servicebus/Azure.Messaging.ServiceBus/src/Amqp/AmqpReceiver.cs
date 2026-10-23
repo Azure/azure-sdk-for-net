@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -43,6 +43,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </value>
         public override bool IsClosed => Volatile.Read(ref _closed) != 0;
 
+        public override bool IsClosedBySessionLockLoss => Volatile.Read(ref _closed) == ClosedBySessionLockLoss;
+
         static AmqpReceiver()
         {
             // The non-exclusive session filter is a described composite type that the service echoes back on the
@@ -53,6 +55,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 () => new AmqpNonExclusiveSessionFilterCodec());
         }
 
+        private const int ClosedByCaller = 1;
+        private const int ClosedBySessionLockLoss = 2;
         private int _closed;
 
         /// <summary>
@@ -1676,12 +1680,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public override async Task CloseAsync(CancellationToken cancellationToken)
+        public override Task CloseAsync(CancellationToken cancellationToken) =>
+            CloseAsync(cancellationToken, sessionLockLost: false);
+
+        private async Task CloseAsync(CancellationToken cancellationToken, bool sessionLockLost)
         {
             // Claiming the close atomically makes the caller its sole owner, so only that caller may restore the flag below.
 
-            if (Interlocked.CompareExchange(ref _closed, 1, 0) != 0)
+            int closeState = sessionLockLost ? ClosedBySessionLockLoss : ClosedByCaller;
+            if (Interlocked.CompareExchange(ref _closed, closeState, 0) != 0)
             {
+                if (!sessionLockLost)
+                {
+                    Interlocked.CompareExchange(ref _closed, ClosedByCaller, ClosedBySessionLockLoss);
+                }
                 return;
             }
 
@@ -1744,7 +1756,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Clean up and dispose the underlying resources. The receive link should already be closed, but management link may need to be
                 // closed as well.
-                _ = CloseAsync(CancellationToken.None);
+                _ = CloseAsync(CancellationToken.None, sessionLockLost: true);
             }
 
             ServiceBusEventSource.Log.ReceiveLinkClosed(
