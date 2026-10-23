@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -63,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            var maxValueLength = SchemaConstants.GetPropertyMaxValueLength(scopeItem.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
+                            var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(scopeItem.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
                             var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
                             properties.Add(scopeItem.Key, stringValue);
                         }
@@ -357,7 +358,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        var maxValueLength = SchemaConstants.GetPropertyMaxValueLength(item.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
+                                        var maxValueLength = GenAiTruncationConfig.GetPropertyMaxValueLength(item.Key, SchemaConstants.MessageData_Properties_MaxValueLength);
                                         var stringValue = Convert.ToString(item.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }

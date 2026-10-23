@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 
@@ -19,21 +20,26 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class GenAiTruncationTests
+    /// <summary>
+    /// Tests GenAI attribute truncation with and without the <c>gen_ai_input_output_limit_increase</c> experimental switch.
+    /// The switch is process wide, so these tests do not run in parallel with other tests.
+    /// </summary>
+    [Collection(nameof(GenAiTruncationSwitchCollection))]
+    public class GenAiTruncationTests : IDisposable
     {
         /// <summary>
         /// A payload larger than the 256 KiB GenAI truncation limit and smaller than the 4 MiB GenAI messages limit.
         /// </summary>
         private const int LargePayloadLength = 300_000;
 
-        private const int GenAiMessagesLimit = 4 * 1024 * 1024;
-
         private static readonly string s_largePayload = new string('x', LargePayloadLength);
 
         /// <summary>
         /// A non-uniform payload larger than the 4 MiB GenAI messages limit, used to verify the retained prefix.
         /// </summary>
-        private static readonly string s_oversizedMessagesPayload = string.Concat(Enumerable.Repeat("abc", (GenAiMessagesLimit + 1000) / 3));
+        private static readonly string s_oversizedMessagesPayload = string.Concat(Enumerable.Repeat("abc", (SchemaConstants.GenAi_Messages_MaxValueLength + 1000) / 3));
+
+        private readonly bool _originalIsInputOutputLimitIncreaseEnabled;
 
         public static IEnumerable<object[]> GenAiMessageKeys => new[]
         {
@@ -50,6 +56,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             new object[] { "gen_ai.evaluation.explanation" },
         };
 
+        public static IEnumerable<object[]> AllGenAiKeys => GenAiMessageKeys.Concat(GenAiNonMessageKeys);
+
         static GenAiTruncationTests()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -64,35 +72,114 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
         }
 
+        public GenAiTruncationTests()
+        {
+            _originalIsInputOutputLimitIncreaseEnabled = GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled;
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = false;
+        }
+
+        public void Dispose()
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = _originalIsInputOutputLimitIncreaseEnabled;
+        }
+
         [Fact]
-        public void GenAiPropertyMaxValueLengths_HasExpectedLimits()
+        public void InputOutputLimitIncreaseSwitch_IsDisabledByDefault()
+        {
+            Assert.Equal("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", GenAiTruncationConfig.InputOutputLimitIncreaseSwitchName);
+            Assert.False(GenAiTruncationConfig.IsSwitchEnabled(GenAiTruncationConfig.InputOutputLimitIncreaseSwitchName));
+        }
+
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, false)]
+        public void IsSwitchEnabled_ReadsAppContextSwitch(bool switchValue, bool expected)
+        {
+            var switchName = $"{nameof(GenAiTruncationTests)}.{Guid.NewGuid():N}";
+            AppContext.SetSwitch(switchName, switchValue);
+
+            Assert.Equal(expected, GenAiTruncationConfig.IsSwitchEnabled(switchName));
+        }
+
+        [Theory]
+        [InlineData("true", true)]
+        [InlineData("True", true)]
+        [InlineData("false", false)]
+        [InlineData("1", false)]
+        [InlineData("yes", false)]
+        [InlineData("", false)]
+        public void IsSwitchEnabled_ReadsRuntimeConfigStringValue(string value, bool expected)
+        {
+            // runtimeconfig.json configProperties are surfaced to AppContext as string data.
+            var switchName = $"{nameof(GenAiTruncationTests)}.{Guid.NewGuid():N}";
+            AppContext.SetData(switchName, value);
+
+            Assert.Equal(expected, GenAiTruncationConfig.IsSwitchEnabled(switchName));
+        }
+
+        [Fact]
+        public void IsSwitchEnabled_ReturnsFalse_WhenNotSet()
+        {
+            Assert.False(GenAiTruncationConfig.IsSwitchEnabled($"{nameof(GenAiTruncationTests)}.{Guid.NewGuid():N}"));
+        }
+
+        [Fact]
+        public void MaxValueLengths_HaveExpectedLimits()
         {
             Assert.Equal(8 * 1024, SchemaConstants.KVP_MaxValueLength);
             Assert.Equal(256 * 1024, SchemaConstants.GenAi_Properties_MaxValueLength);
             Assert.Equal(4 * 1024 * 1024, SchemaConstants.GenAi_Messages_MaxValueLength);
 
-            Assert.Equal(7, SchemaConstants.GenAiPropertyMaxValueLengths.Count);
+            var allKeys = AllGenAiKeys.Select(x => (string)x[0]).ToArray();
+            Assert.Equal(allKeys.OrderBy(x => x), GenAiTruncationConfig.DefaultMaxValueLengths.Keys.OrderBy(x => x));
+            Assert.Equal(allKeys.OrderBy(x => x), GenAiTruncationConfig.IncreasedMaxValueLengths.Keys.OrderBy(x => x));
+
+            foreach (var key in allKeys)
+            {
+                Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GenAiTruncationConfig.DefaultMaxValueLengths[key]);
+            }
+
             foreach (var key in GenAiMessageKeys.Select(x => (string)x[0]))
             {
-                Assert.Equal(SchemaConstants.GenAi_Messages_MaxValueLength, SchemaConstants.GenAiPropertyMaxValueLengths[key]);
+                Assert.Equal(SchemaConstants.GenAi_Messages_MaxValueLength, GenAiTruncationConfig.IncreasedMaxValueLengths[key]);
             }
 
             foreach (var key in GenAiNonMessageKeys.Select(x => (string)x[0]))
             {
-                Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, SchemaConstants.GenAiPropertyMaxValueLengths[key]);
+                Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GenAiTruncationConfig.IncreasedMaxValueLengths[key]);
             }
-
-            Assert.Equal(SchemaConstants.KVP_MaxValueLength, SchemaConstants.GetPropertyMaxValueLength("custom.attribute", SchemaConstants.KVP_MaxValueLength));
-            Assert.Equal(SchemaConstants.KVP_MaxValueLength, SchemaConstants.GetPropertyMaxValueLength("GEN_AI.INPUT.MESSAGES", SchemaConstants.KVP_MaxValueLength));
         }
 
         [Theory]
-        [InlineData("gen_ai.input.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
-        [InlineData("gen_ai.output.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
-        [InlineData("gen_ai.tool.definitions", SchemaConstants.GenAi_Properties_MaxValueLength)]
-        [InlineData("custom.attribute", SchemaConstants.KVP_MaxValueLength)]
-        public void Properties_AreTruncatedAtTheirLimitBoundary(string propertyKey, int limit)
+        [InlineData(false, "gen_ai.input.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.output.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.tool.definitions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "custom.attribute", SchemaConstants.KVP_MaxValueLength)]
+        [InlineData(false, "GEN_AI.INPUT.MESSAGES", SchemaConstants.KVP_MaxValueLength)]
+        [InlineData(true, "gen_ai.input.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
+        [InlineData(true, "gen_ai.output.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
+        [InlineData(true, "gen_ai.tool.definitions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(true, "custom.attribute", SchemaConstants.KVP_MaxValueLength)]
+        [InlineData(true, "GEN_AI.INPUT.MESSAGES", SchemaConstants.KVP_MaxValueLength)]
+        public void GetPropertyMaxValueLength_HonorsSwitch(bool increaseLimit, string propertyKey, int expected)
         {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
+
+            Assert.Equal(expected, GenAiTruncationConfig.GetPropertyMaxValueLength(propertyKey, SchemaConstants.KVP_MaxValueLength));
+        }
+
+        [Theory]
+        [InlineData(false, "gen_ai.input.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.output.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.tool.definitions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "custom.attribute", SchemaConstants.KVP_MaxValueLength)]
+        [InlineData(true, "gen_ai.input.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
+        [InlineData(true, "gen_ai.output.messages", SchemaConstants.GenAi_Messages_MaxValueLength)]
+        [InlineData(true, "gen_ai.tool.definitions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(true, "custom.attribute", SchemaConstants.KVP_MaxValueLength)]
+        public void Properties_AreTruncatedAtTheirLimitBoundary(bool increaseLimit, string propertyKey, int limit)
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
             var baseValue = new string('b', limit + 1);
 
             foreach (var length in new[] { limit - 1, limit, limit + 1 })
@@ -106,35 +193,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        // Default behavior: every GenAI attribute, including input/output messages, is truncated at 256 KiB.
+
         [Theory]
-        [MemberData(nameof(GenAiNonMessageKeys))]
+        [MemberData(nameof(AllGenAiKeys))]
         public void GenAiProperties_AreTruncatedTo256KB_InAddPropertiesToTelemetry(string propertyKey)
         {
-            var value = AddPropertiesToTelemetry(propertyKey, s_largePayload);
-
-            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value.Length);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, AddPropertiesToTelemetry(propertyKey, s_largePayload).Length);
         }
 
         [Theory]
-        [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreNotTruncatedBelow4MB_InAddPropertiesToTelemetry(string propertyKey)
-        {
-            var value = AddPropertiesToTelemetry(propertyKey, s_largePayload);
-
-            Assert.Equal(s_largePayload, value);
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreTruncatedTo4MB_InAddPropertiesToTelemetry(string propertyKey)
-        {
-            var value = AddPropertiesToTelemetry(propertyKey, s_oversizedMessagesPayload);
-
-            AssertTruncatedTo4MB(value);
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiNonMessageKeys))]
+        [MemberData(nameof(AllGenAiKeys))]
         public void GenAiProperties_AreTruncatedTo256KB_InAddKvpToDictionary_WithStringOverload(string propertyKey)
         {
             IDictionary<string, string> destination = new Dictionary<string, string>();
@@ -146,9 +215,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreTruncatedTo4MB_InAddKvpToDictionary_WithStringOverload(string propertyKey)
+        [MemberData(nameof(AllGenAiKeys))]
+        public void GenAiProperties_AreTruncatedTo256KB_InLogRecordAttributes(string propertyKey)
         {
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GetLogRecordProperty(propertyKey, s_largePayload).Length);
+        }
+
+        [Theory]
+        [MemberData(nameof(AllGenAiKeys))]
+        public void GenAiProperties_AreTruncatedTo256KB_InActivityCustomDimensions(string propertyKey)
+        {
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GetRemoteDependencyProperty(propertyKey, s_largePayload).Length);
+        }
+
+        [Theory]
+        [MemberData(nameof(AllGenAiKeys))]
+        public void GenAiProperties_AreTruncatedTo256KB_InRequestDataCustomDimensions(string propertyKey)
+        {
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GetRequestProperty(propertyKey, s_largePayload).Length);
+        }
+
+        [Fact]
+        public void NonGenAiProperties_AreTruncated_InAddPropertiesToTelemetry()
+        {
+            Assert.Equal(SchemaConstants.KVP_MaxValueLength, AddPropertiesToTelemetry("regular.property", s_largePayload).Length);
+        }
+
+        [Fact]
+        public void NonGenAiProperties_AreTruncated_InAddKvpToDictionary_WithStringOverload()
+        {
+            IDictionary<string, string> destination = new Dictionary<string, string>();
+
+            TraceHelper.AddKvpToDictionary(destination, "regular.property", s_largePayload);
+
+            Assert.True(destination.TryGetValue("regular.property", out var value));
+            Assert.Equal(SchemaConstants.KVP_MaxValueLength, value!.Length);
+        }
+
+        [Fact]
+        public void NonGenAiProperties_AreTruncated_InLogRecordAttributes()
+        {
+            Assert.Equal(SchemaConstants.MessageData_Properties_MaxValueLength, GetLogRecordProperty("regular.property", s_largePayload).Length);
+        }
+
+        // Switch enabled: input/output messages are kept up to 4 MiB, other GenAI attributes stay at 256 KiB.
+
+        [Theory]
+        [MemberData(nameof(GenAiMessageKeys))]
+        public void GenAiMessages_AreTruncatedTo4MB_InAddPropertiesToTelemetry_WhenSwitchEnabled(string propertyKey)
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
+            Assert.Equal(s_largePayload, AddPropertiesToTelemetry(propertyKey, s_largePayload));
+            AssertTruncatedTo4MB(AddPropertiesToTelemetry(propertyKey, s_oversizedMessagesPayload));
+        }
+
+        [Theory]
+        [MemberData(nameof(GenAiMessageKeys))]
+        public void GenAiMessages_AreTruncatedTo4MB_InAddKvpToDictionary_WithStringOverload_WhenSwitchEnabled(string propertyKey)
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
             IDictionary<string, string> destination = new Dictionary<string, string>();
 
             TraceHelper.AddKvpToDictionary(destination, propertyKey, s_largePayload);
@@ -167,57 +293,71 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertTruncatedTo4MB(value!);
         }
 
-        [Fact]
-        public void NonGenAiProperties_AreTruncated_InAddPropertiesToTelemetry()
-        {
-            var value = AddPropertiesToTelemetry("regular.property", s_largePayload);
-
-            Assert.Equal(SchemaConstants.KVP_MaxValueLength, value.Length);
-        }
-
-        [Fact]
-        public void NonGenAiProperties_AreTruncated_InAddKvpToDictionary_WithStringOverload()
-        {
-            IDictionary<string, string> destination = new Dictionary<string, string>();
-
-            TraceHelper.AddKvpToDictionary(destination, "regular.property", s_largePayload);
-
-            Assert.True(destination.TryGetValue("regular.property", out var value));
-            Assert.Equal(SchemaConstants.KVP_MaxValueLength, value!.Length);
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiNonMessageKeys))]
-        public void GenAiProperties_AreTruncatedTo256KB_InLogRecordAttributes(string propertyKey)
-        {
-            var value = GetLogRecordProperty(propertyKey, s_largePayload);
-
-            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value.Length);
-        }
-
         [Theory]
         [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreTruncatedTo4MB_InLogRecordAttributes(string propertyKey)
+        public void GenAiMessages_AreTruncatedTo4MB_InLogRecordAttributes_WhenSwitchEnabled(string propertyKey)
         {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
             Assert.Equal(s_largePayload, GetLogRecordProperty(propertyKey, s_largePayload));
             AssertTruncatedTo4MB(GetLogRecordProperty(propertyKey, s_oversizedMessagesPayload));
         }
 
-        [Fact]
-        public void NonGenAiProperties_AreTruncated_InLogRecordAttributes()
+        [Theory]
+        [MemberData(nameof(GenAiMessageKeys))]
+        public void GenAiMessages_AreTruncatedTo4MB_InActivityCustomDimensions_WhenSwitchEnabled(string propertyKey)
         {
-            var value = GetLogRecordProperty("regular.property", s_largePayload);
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
 
-            Assert.Equal(SchemaConstants.MessageData_Properties_MaxValueLength, value.Length);
+            Assert.Equal(s_largePayload, GetRemoteDependencyProperty(propertyKey, s_largePayload));
+            AssertTruncatedTo4MB(GetRemoteDependencyProperty(propertyKey, s_oversizedMessagesPayload));
         }
 
         [Theory]
-        [InlineData("gen_ai.input.messages", LargePayloadLength)]
-        [InlineData("gen_ai.output.messages", LargePayloadLength)]
-        [InlineData("gen_ai.system_instructions", SchemaConstants.GenAi_Properties_MaxValueLength)]
-        [InlineData("regular.property", SchemaConstants.MessageData_Properties_MaxValueLength)]
-        public void Properties_AreTruncated_InLogScopes(string propertyKey, int expectedLength)
+        [MemberData(nameof(GenAiMessageKeys))]
+        public void GenAiMessages_AreTruncatedTo4MB_InRequestDataCustomDimensions_WhenSwitchEnabled(string propertyKey)
         {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
+            Assert.Equal(s_largePayload, GetRequestProperty(propertyKey, s_largePayload));
+            AssertTruncatedTo4MB(GetRequestProperty(propertyKey, s_oversizedMessagesPayload));
+        }
+
+        [Theory]
+        [MemberData(nameof(GenAiNonMessageKeys))]
+        public void GenAiNonMessageProperties_RemainTruncatedTo256KB_WhenSwitchEnabled(string propertyKey)
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, AddPropertiesToTelemetry(propertyKey, s_largePayload).Length);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GetLogRecordProperty(propertyKey, s_largePayload).Length);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, GetRemoteDependencyProperty(propertyKey, s_largePayload).Length);
+        }
+
+        [Fact]
+        public void NonGenAiProperties_RemainTruncatedTo8KB_WhenSwitchEnabled()
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
+            Assert.Equal(SchemaConstants.KVP_MaxValueLength, AddPropertiesToTelemetry("regular.property", s_largePayload).Length);
+            Assert.Equal(SchemaConstants.MessageData_Properties_MaxValueLength, GetLogRecordProperty("regular.property", s_largePayload).Length);
+        }
+
+        // Paths covered for both switch states.
+
+        [Theory]
+        [InlineData(false, "gen_ai.input.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.output.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.system_instructions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "regular.property", SchemaConstants.MessageData_Properties_MaxValueLength)]
+        [InlineData(true, "gen_ai.input.messages", LargePayloadLength)]
+        [InlineData(true, "gen_ai.output.messages", LargePayloadLength)]
+        [InlineData(true, "gen_ai.system_instructions", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(true, "regular.property", SchemaConstants.MessageData_Properties_MaxValueLength)]
+        public void Properties_AreTruncated_InLogScopes(bool increaseLimit, string propertyKey, int expectedLength)
+        {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
+
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -249,46 +389,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GenAiNonMessageKeys))]
-        public void GenAiProperties_AreTruncatedTo256KB_InActivityCustomDimensions(string propertyKey)
+        [InlineData(false, "gen_ai.input.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.output.messages", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "gen_ai.tool.call.result", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(false, "regular.property", SchemaConstants.KVP_MaxValueLength)]
+        [InlineData(true, "gen_ai.input.messages", LargePayloadLength)]
+        [InlineData(true, "gen_ai.output.messages", LargePayloadLength)]
+        [InlineData(true, "gen_ai.tool.call.result", SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(true, "regular.property", SchemaConstants.KVP_MaxValueLength)]
+        public void Properties_AreTruncated_InActivityEvents(bool increaseLimit, string propertyKey, int expectedLength)
         {
-            var value = GetRemoteDependencyProperty(propertyKey, s_largePayload);
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
 
-            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value.Length);
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreTruncatedTo4MB_InActivityCustomDimensions(string propertyKey)
-        {
-            Assert.Equal(s_largePayload, GetRemoteDependencyProperty(propertyKey, s_largePayload));
-            AssertTruncatedTo4MB(GetRemoteDependencyProperty(propertyKey, s_oversizedMessagesPayload));
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiNonMessageKeys))]
-        public void GenAiProperties_AreTruncatedTo256KB_InRequestDataCustomDimensions(string propertyKey)
-        {
-            var value = GetRequestProperty(propertyKey, s_largePayload);
-
-            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value.Length);
-        }
-
-        [Theory]
-        [MemberData(nameof(GenAiMessageKeys))]
-        public void GenAiMessages_AreTruncatedTo4MB_InRequestDataCustomDimensions(string propertyKey)
-        {
-            Assert.Equal(s_largePayload, GetRequestProperty(propertyKey, s_largePayload));
-            AssertTruncatedTo4MB(GetRequestProperty(propertyKey, s_oversizedMessagesPayload));
-        }
-
-        [Theory]
-        [InlineData("gen_ai.input.messages", LargePayloadLength)]
-        [InlineData("gen_ai.output.messages", LargePayloadLength)]
-        [InlineData("gen_ai.tool.call.result", SchemaConstants.GenAi_Properties_MaxValueLength)]
-        [InlineData("regular.property", SchemaConstants.KVP_MaxValueLength)]
-        public void Properties_AreTruncated_InActivityEvents(string propertyKey, int expectedLength)
-        {
             using var activitySource = new ActivitySource(nameof(GenAiTruncationTests));
             using var activity = activitySource.StartActivity("TestActivity", ActivityKind.Client);
 
@@ -306,9 +418,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedLength, value!.Length);
         }
 
-        [Fact]
-        public void Properties_AreTruncatedPerTier_InMixedActivity()
+        [Theory]
+        [InlineData(false, SchemaConstants.GenAi_Properties_MaxValueLength)]
+        [InlineData(true, 1024 * 1024)]
+        public void Properties_AreTruncatedPerTier_InMixedActivity(bool increaseLimit, int expectedMessagesLength)
         {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
+
             var value = new string('z', 1024 * 1024);
             var tags = new[]
             {
@@ -327,15 +443,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal(value.Length, remoteDependencyData.Properties["gen_ai.input.messages"].Length);
-            Assert.Equal(value.Length, remoteDependencyData.Properties["gen_ai.output.messages"].Length);
+            Assert.Equal(expectedMessagesLength, remoteDependencyData.Properties["gen_ai.input.messages"].Length);
+            Assert.Equal(expectedMessagesLength, remoteDependencyData.Properties["gen_ai.output.messages"].Length);
             Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, remoteDependencyData.Properties["gen_ai.system_instructions"].Length);
             Assert.Equal(SchemaConstants.KVP_MaxValueLength, remoteDependencyData.Properties["custom.attribute"].Length);
         }
 
-        [Fact]
-        public void GenAiMessages_WithMultimodalBlob_AreKeptIntact_ThroughSerialization()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void GenAiMessages_WithMultimodalBlob_ThroughSerialization(bool increaseLimit)
         {
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = increaseLimit;
+
             var imageBytes = new byte[1024 * 1024];
             new Random(42).NextBytes(imageBytes);
             var blob = Convert.ToBase64String(imageBytes);
@@ -373,11 +493,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             foreach (var key in new[] { "gen_ai.input.messages", "gen_ai.output.messages" })
             {
                 var value = properties.GetProperty(key).GetString();
-                Assert.Equal(messages, value);
 
-                using var messagesDocument = JsonDocument.Parse(value!);
-                var blobPart = messagesDocument.RootElement[0].GetProperty("parts")[1];
-                Assert.Equal(blob, blobPart.GetProperty("content").GetString());
+                if (increaseLimit)
+                {
+                    Assert.Equal(messages, value);
+
+                    using var messagesDocument = JsonDocument.Parse(value!);
+                    var blobPart = messagesDocument.RootElement[0].GetProperty("parts")[1];
+                    Assert.Equal(blob, blobPart.GetProperty("content").GetString());
+                }
+                else
+                {
+                    Assert.Equal(messages.Substring(0, SchemaConstants.GenAi_Properties_MaxValueLength), value);
+                }
             }
         }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 
 using BenchmarkDotNet.Attributes;
 
@@ -16,6 +17,8 @@ using OpenTelemetry;
 Measures the cost of GenAI message attributes (gen_ai.input.messages / gen_ai.output.messages)
 of increasing size: the Activity -> TelemetryItem conversion alone, and conversion plus NDJSON
 serialization (the request body that is sent to ingestion or written to offline storage).
+The gen_ai_input_output_limit_increase experimental switch is enabled for the run, so messages
+are kept up to 4 MiB; without it they are truncated at 256 KiB.
 
 Content shapes:
 - Ascii: plain ASCII text, written as is by Utf8JsonWriter.
@@ -64,6 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         private ActivitySource? _activitySource;
         private ActivityListener? _listener;
         private Activity[] _activities = Array.Empty<Activity>();
+        private bool _originalIsInputOutputLimitIncreaseEnabled;
 
         public enum ContentShape
         {
@@ -84,6 +88,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
+            _originalIsInputOutputLimitIncreaseEnabled = GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled;
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = true;
+
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
 
@@ -119,6 +126,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             _activitySource?.Dispose();
             _listener?.Dispose();
+
+            GenAiTruncationConfig.IsInputOutputLimitIncreaseEnabled = _originalIsInputOutputLimitIncreaseEnabled;
         }
 
         [Benchmark]

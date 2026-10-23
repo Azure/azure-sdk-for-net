@@ -197,11 +197,31 @@ Span, span event, log record, and log scope attributes are exported as custom pr
 
 | Attributes | Max length |
 | --- | --- |
-| `gen_ai.input.messages`, `gen_ai.output.messages` | 4 MiB (`4 * 1024 * 1024`) |
+| `gen_ai.input.messages`, `gen_ai.output.messages` | 256 KiB (`256 * 1024`); 4 MiB (`4 * 1024 * 1024`) when the `gen_ai_input_output_limit_increase` experimental switch is enabled |
 | `gen_ai.system_instructions`, `gen_ai.tool.definitions`, `gen_ai.tool.call.arguments`, `gen_ai.tool.call.result`, `gen_ai.evaluation.explanation` | 256 KiB (`256 * 1024`) |
 | All other attributes | 8 KiB (`8 * 1024`) |
 
-GenAI messages with multimodal content (for example, base64-encoded images or audio) can produce large telemetry items. Telemetry is sent uncompressed, up to 512 items per request, and the offline storage cap (50 MiB) is not configurable. If you capture such content, consider limiting content capture in your GenAI instrumentation, or increasing `AzureMonitorExporterOptions.Retry.NetworkTimeout` for slow networks. Values truncated at these limits are cut at the character boundary and are no longer valid JSON.
+Values truncated at these limits are cut at the character boundary, so a truncated JSON value is no longer valid JSON.
+
+#### Larger GenAI input and output messages (experimental)
+
+GenAI input and output messages can carry multimodal content, such as base64-encoded images or audio, that exceeds 256 KiB. To keep `gen_ai.input.messages` and `gen_ai.output.messages` up to 4 MiB, enable the `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` `AppContext` switch. It is read once, so set it before building your providers:
+
+```csharp
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", true);
+```
+
+Or declare it in `runtimeconfig.template.json` so that it is baked into the application:
+
+```json
+{
+  "configProperties": {
+    "Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase": true
+  }
+}
+```
+
+With the switch enabled, multimodal messages can produce large telemetry items. Telemetry is sent uncompressed, up to 512 items per request, and the offline storage cap (50 MiB) is not configurable. If you capture such content, consider limiting content capture in your GenAI instrumentation, or increasing `AzureMonitorExporterOptions.Retry.NetworkTimeout` for slow networks.
 
 ## Telemetry delivery on shutdown
 
