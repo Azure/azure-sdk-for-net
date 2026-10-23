@@ -1,20 +1,25 @@
 # Stream audio with a Foundry Voice Agent over WebSocket
 
-This runnable sample explicitly selects `VoiceAgentTransport.Websocket`, streams five PCM audio
-chunks to a voice agent, and logs the actual input and output audio bytes alongside every received
-event. It sends a text request for the voice agent to answer aloud; the generated tone exercises
-the incremental audio input path but is not speech to transcribe. Replace the tone with microphone
-PCM chunks for speech input.
+This runnable sample selects `VoiceAgentTransport.Websocket`, streams a recorded spoken
+question as PCM audio, and receives the spoken answer. It prints the transferred audio sizes
+and the returned transcript.
 
 Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME`
 to a deployed realtime model. Suppress experimental diagnostics `AAIP001`, `AAIP002`, and `OPENAI002`
 when building the sample.
+
+Set `VOICE_SAMPLE_AUDIO_PATH` to a mono PCM16LE/24 kHz WAV recording. The repository test uses
+the existing recorded weather question. The sample's WAV reader strips the container header;
+only raw audio is sent.
 
 1. Create an audio-modality voice agent with PCM16 audio at 24 kHz and one channel.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Create
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 string modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_REALTIME_MODEL_NAME");
+string speechPath = Environment.GetEnvironmentVariable("VOICE_SAMPLE_AUDIO_PATH");
+using Stream speechFile = File.OpenRead(speechPath);
+byte[] speech = ReadPcmWave(speechFile);
 const int audioSampleRate = 24000;
 string agentName = $"voice-audio-sample-{Guid.NewGuid():N}".Substring(0, 40);
 AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
@@ -23,12 +28,14 @@ VoiceAgentDefinition definition = new()
 {
     ModelType = VoiceModelType.SelfDeployed,
     Model = modelDeploymentName,
-    Instructions = "Respond briefly and helpfully.",
+    Instructions = "Identify the subject of the spoken question in one English sentence. " +
+        "You cannot access live information; do not invent facts or promise a lookup.",
     Audio = new VoiceAgentAudioConfig
     {
         Input = new VoiceAgentAudioInputConfig
         {
-            Format = new RealtimePcmAudioFormat { Rate = audioSampleRate }
+            Format = new RealtimePcmAudioFormat { Rate = audioSampleRate },
+            TurnDetection = null
         },
         Output = new VoiceAgentAudioOutputConfig
         {
@@ -55,23 +62,18 @@ ProjectsRealtimeSessionClientOptions options = new()
 using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
     await projectClient.ProjectsRealtimeClient.StartSessionAsync(
         agentName, intent: null, options: options, cancellationToken: timeout.Token);
-await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);
-
 long inputAudioBytes = 0;
-for (int chunkIndex = 0; chunkIndex < 5; chunkIndex++)
+const int chunkBytes = 960;
+for (int offset = 0; offset < speech.Length; offset += chunkBytes)
 {
-    int sampleCount = audioSampleRate / 10;
-    byte[] toneChunk = new byte[sampleCount * sizeof(short)];
-    for (int sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++)
-    {
-        double seconds = (chunkIndex * sampleCount + sampleIndex) / (double)audioSampleRate;
-        short sample = (short)(3000 * Math.Sin(2 * Math.PI * 440 * seconds));
-        BinaryPrimitives.WriteInt16LittleEndian(toneChunk.AsSpan(sampleIndex * sizeof(short)), sample);
-    }
-    await session.SendInputAudioAsync(BinaryData.FromBytes(toneChunk), timeout.Token);
-    inputAudioBytes += toneChunk.Length;
+    int count = Math.Min(chunkBytes, speech.Length - offset);
+    await session.SendInputAudioAsync(BinaryData.FromBytes(speech.AsMemory(offset, count)), timeout.Token);
+    inputAudioBytes += count;
+    await Task.Delay(TimeSpan.FromMilliseconds(20), timeout.Token);
 }
-await session.StartResponseAsync(timeout.Token);
+await session.CommitPendingAudioAsync(timeout.Token);
+await session.StartResponseAsync(
+    new RealtimeResponseOptions { ToolChoice = RealtimeDefaultToolChoice.None }, timeout.Token);
 
 long outputAudioBytes = 0;
 string transcript = string.Empty;

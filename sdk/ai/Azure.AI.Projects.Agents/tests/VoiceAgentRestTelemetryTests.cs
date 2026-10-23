@@ -232,6 +232,52 @@ public class VoiceAgentRestTelemetryTests
         AssertPrivateSafe(span);
     }
 
+    private static IEnumerable<TestCaseData> LiveDefinitionTelemetryCases()
+    {
+        foreach (string operation in new[] { "create", "version", "update" })
+        {
+            foreach (bool isAsync in new[] { false, true })
+            {
+                foreach (bool recordContent in new[] { false, true })
+                {
+                    yield return new TestCaseData(operation, isAsync, recordContent);
+                }
+            }
+        }
+    }
+
+    [TestCaseSource(nameof(LiveDefinitionTelemetryCases))]
+    public async Task LiveDefinitionsUseExistingVoiceTelemetry(string operation, bool isAsync, bool recordContent)
+    {
+        SetContentRecording(recordContent);
+        const string definition = """
+            {"kind":"voice","sub_protocol":"live","model_type":"self_deployed","model":"gpt-live-1","instructions":"private-rest-content"}
+            """;
+        string response = AgentResponse.Replace("\"kind\": \"voice\"", "\"kind\": \"voice\", \"sub_protocol\": \"live\"")
+            .Replace("\"model_type\": \"managed\"", "\"model_type\": \"self_deployed\"")
+            .Replace("gpt-realtime", "gpt-live-1");
+        AgentAdministrationClient client = CreateClient(isAsync, _ => new MockPipelineResponse(200).WithContent(response));
+        await CreateVoiceDefinition(client, operation, isAsync, definition);
+
+        Activity span = GetOnlyGenAiSpan();
+        AssertCommon(span, "create_agent", "create_agent", 200);
+        Assert.Multiple(() =>
+        {
+            Assert.That(span.GetTagItem("gen_ai.agent.type"), Is.EqualTo("voice"));
+            Assert.That(span.GetTagItem("gen_ai.request.model"), Is.EqualTo("gpt-live-1"));
+            Assert.That(span.GetTagItem("gen_ai.agent.id"), Is.EqualTo("agent_123"));
+            Assert.That(span.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1"));
+        });
+        if (recordContent)
+        {
+            AssertSystemInstructions(span, false, PrivateContent);
+        }
+        else
+        {
+            AssertPrivateSafe(span);
+        }
+    }
+
     [TestCase("create", false)]
     [TestCase("create", true)]
     [TestCase("version", false)]

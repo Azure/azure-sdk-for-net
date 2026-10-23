@@ -24,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Native GPT Live Voice Agents](#native-gpt-live-voice-agents)
   - [Voice Agent realtime transport](#voice-agent-realtime-transport)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
@@ -100,6 +101,15 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new Defau
 Once the `AIProjectClient` is created, you can use properties such as `.Datasets` and `.Indexes` on this client to perform relevant operations.
 
 ## Examples
+
+### Native GPT Live Voice Agents
+
+Use `AIProjectClient.ProjectsLiveClient` for native Live agents. It is a sibling of, not a
+replacement for, `ProjectsRealtimeClient`. The [Live WebSocket samples and API coverage table](samples/Sample_VoiceAgent_Live.md)
+include connection options, session controls, typed/raw events, chunked/streamed audio, text,
+function calls, cancellation, and both disposal patterns. The [Live conversation REST samples](samples/Sample_VoiceAgent_Live_Conversations.md)
+cover all nine history/recording operations with synchronous/asynchronous and typed/protocol
+overloads, including an end-to-end example that creates and stores a real audio conversation.
 
 ### Voice Agent realtime transport
 

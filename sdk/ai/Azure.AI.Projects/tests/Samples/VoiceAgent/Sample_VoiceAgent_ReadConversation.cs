@@ -29,7 +29,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
     {
 #if SNIPPET
         var projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_REALTIME_MODEL_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME;
@@ -79,7 +79,6 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
                 }
             }
             #endregion
-
             #region Snippet:Sample_VoiceAgent_ReadConversation_Read
             // Once the session above closes, the conversation it produced becomes readable through
             // the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
@@ -98,6 +97,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
                 Console.WriteLine($"Response {response.Id} status: {response.Status}");
             }
             #endregion
+            Assert.That(conversation.Id, Is.EqualTo(conversationId));
         }
         finally
         {
