@@ -33,6 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
             KnowledgeSources = knowledgeSources.ToList();
+            Tools = new ChangeTrackingList<KnowledgeBaseTool>();
             Models = new ChangeTrackingList<KnowledgeBaseModel>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -40,6 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
         /// <param name="knowledgeSources"> Knowledge sources referenced by this knowledge base. </param>
+        /// <param name="tools"> Named retrieval tools, each limited to a subset of this knowledge base's sources. When configured, MCP advertises these tools in addition to the built-in knowledge_base_retrieve tool, which retrieves from the full knowledge base. Omitting tools or supplying an empty array in this API version clears existing tools. </param>
         /// <param name="models"> Contains configuration options on how to connect to AI models. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="outputMode"> The output mode for the knowledge base. </param>
@@ -52,10 +54,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
         /// <param name="retrieveDefaults"> Persisted request-wide retrieve defaults for this knowledge base. These values apply to retrieve requests that omit the corresponding fields; request-time values take precedence when present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, IDictionary<string, string> tags, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, KnowledgeBaseRetrieveDefaults retrieveDefaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseTool> tools, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, IDictionary<string, string> tags, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, KnowledgeBaseRetrieveDefaults retrieveDefaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
+            Tools = tools;
             Models = models;
             RetrievalReasoningEffort = retrievalReasoningEffort;
             OutputMode = outputMode;
@@ -75,6 +78,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Knowledge sources referenced by this knowledge base. </summary>
         public IList<KnowledgeSourceReference> KnowledgeSources { get; }
+
+        /// <summary> Named retrieval tools, each limited to a subset of this knowledge base's sources. When configured, MCP advertises these tools in addition to the built-in knowledge_base_retrieve tool, which retrieves from the full knowledge base. Omitting tools or supplying an empty array in this API version clears existing tools. </summary>
+        public IList<KnowledgeBaseTool> Tools { get; }
 
         /// <summary> Contains configuration options on how to connect to AI models. </summary>
         public IList<KnowledgeBaseModel> Models { get; }

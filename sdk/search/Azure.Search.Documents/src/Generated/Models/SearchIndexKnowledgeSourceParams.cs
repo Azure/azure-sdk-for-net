@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -39,10 +40,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
         /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
-        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterAddOn, SearchIndexKnowledgeSourceQueryHints queryHintOverrides) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
+        /// <param name="topicGraph"> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </param>
+        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterAddOn, SearchIndexKnowledgeSourceQueryHints queryHintOverrides, VectorQueryTopicGraph topicGraph) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
             FilterAddOn = filterAddOn;
             QueryHintOverrides = queryHintOverrides;
+            TopicGraph = topicGraph;
         }
 
         /// <summary> A filter condition applied to the index (e.g., 'State eq VA'). </summary>
@@ -50,5 +53,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </summary>
         public SearchIndexKnowledgeSourceQueryHints QueryHintOverrides { get; set; }
+
+        /// <summary> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </summary>
+        public VectorQueryTopicGraph TopicGraph { get; set; }
     }
 }

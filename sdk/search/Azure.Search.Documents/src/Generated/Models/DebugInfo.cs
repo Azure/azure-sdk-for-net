@@ -23,14 +23,19 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of <see cref="DebugInfo"/>. </summary>
         /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
+        /// <param name="agentic"> Contains request-wide agentic diagnostics when debug selects agentic or all. Does not imply that classic query rewriting executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DebugInfo(QueryRewritesDebugInfo queryRewrites, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DebugInfo(QueryRewritesDebugInfo queryRewrites, AgenticSearchDebugInfo agentic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QueryRewrites = queryRewrites;
+            Agentic = agentic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contains debugging information specific to query rewrites. </summary>
         public QueryRewritesDebugInfo QueryRewrites { get; }
+
+        /// <summary> Contains request-wide agentic diagnostics when debug selects agentic or all. Does not imply that classic query rewriting executed. </summary>
+        public AgenticSearchDebugInfo Agentic { get; }
     }
 }

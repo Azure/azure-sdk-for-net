@@ -31,5 +31,8 @@ namespace Azure.Search.Documents.Models
         /// <para>Improves precision of search results by re-ranking the top search results using a ranking model trained on the Web corpus.</para>
         /// </summary>
         Semantic,
+
+        /// <summary> Uses agentic retrieval with request-scoped runtime options. </summary>
+        Agentic, // search-preview:2026-11-01-preview
     }
 }

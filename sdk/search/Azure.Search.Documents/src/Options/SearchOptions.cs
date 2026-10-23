@@ -18,6 +18,12 @@ namespace Azure.Search.Documents
     [CodeGenType("SearchRequest")]
     public partial class SearchOptions
     {
+        /// <summary> Gets or sets the document key to use for finding similar documents. Cannot be combined with search text. </summary>
+        public string MoreLikeThis { get; set; } // search-preview:2026-11-01-preview
+
+        /// <summary> Gets or sets runtime options for an agentic query. </summary>
+        public AgenticSearchOptions AgenticOptions { get; set; } // search-preview:2026-11-01-preview
+
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
@@ -426,6 +432,8 @@ namespace Azure.Search.Documents
             destination.MinimumCoverage = source.MinimumCoverage;
             destination.OrderBy = source.OrderBy;
             destination.QueryType = source.QueryType;
+            destination.MoreLikeThis = source.MoreLikeThis;
+            destination.AgenticOptions = source.AgenticOptions;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
             destination.ScoringStatistics = source.ScoringStatistics;

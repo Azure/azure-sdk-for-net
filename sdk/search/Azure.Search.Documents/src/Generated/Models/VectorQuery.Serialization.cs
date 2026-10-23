@@ -117,6 +117,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("perDocumentVectorLimit"u8);
                 writer.WriteNumberValue(PerDocumentVectorLimit.Value);
             }
+            if (Optional.IsDefined(TopicGraph))
+            {
+                writer.WritePropertyName("topicGraph"u8);
+                writer.WriteObjectValue(TopicGraph, options);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

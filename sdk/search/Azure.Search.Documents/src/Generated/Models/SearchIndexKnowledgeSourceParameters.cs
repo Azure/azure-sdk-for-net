@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -36,8 +37,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this search index knowledge source. Request-time query hints replace these defaults as a complete object. </param>
+        /// <param name="topicGraph"> Default topic graph vector search options for this search index knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, SearchIndexKnowledgeSourceQueryHints queryHints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, SearchIndexKnowledgeSourceQueryHints queryHints, VectorQueryTopicGraph topicGraph, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchIndexName = searchIndexName;
             SourceDataFields = sourceDataFields;
@@ -45,6 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticConfigurationName = semanticConfigurationName;
             BaseFilter = baseFilter;
             QueryHints = queryHints;
+            TopicGraph = topicGraph;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,5 +68,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Default hints that guide query planning toward useful filters and boosts for this search index knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
         public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
+
+        /// <summary> Default topic graph vector search options for this search index knowledge source. </summary>
+        public VectorQueryTopicGraph TopicGraph { get; set; }
     }
 }

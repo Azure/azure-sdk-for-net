@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -37,13 +38,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
-        internal AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchIndexKnowledgeSourceQueryHints queryHintOverrides) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
+        /// <param name="graphParameters"> Graph-query visibility and source-document hydration options for a graph-enabled source. </param>
+        /// <param name="topicGraph"> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </param>
+        internal AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, AgentRuntimeGraphParams graphParameters, VectorQueryTopicGraph topicGraph) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
-            QueryHintOverrides = queryHintOverrides;
+            GraphParameters = graphParameters;
+            TopicGraph = topicGraph;
         }
 
-        /// <summary> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </summary>
-        public SearchIndexKnowledgeSourceQueryHints QueryHintOverrides { get; set; }
+        /// <summary> Graph-query visibility and source-document hydration options for a graph-enabled source. </summary>
+        public AgentRuntimeGraphParams GraphParameters { get; set; }
+
+        /// <summary> Overrides the knowledge source's stored topicGraph for this retrieval. When omitted, the stored knowledge source value applies. </summary>
+        public VectorQueryTopicGraph TopicGraph { get; set; }
     }
 }
