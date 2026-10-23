@@ -6,16 +6,6 @@
 
 - Regenerated the library for stable Key Vault API version `2026-04-01`.
 
-## 4.12.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 4.12.0-beta.3 (2026-10-08)
 
 ### Bugs Fixed
