@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+- Fixed `GetRehydrationToken()` always returning `null` for the operations returned by `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` ([#54967](https://github.com/Azure/azure-sdk-for-net/issues/54967)).
+
 ### Other Changes
 
 ## 1.0.0 (2024-12-16)
