@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +15,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-#pragma warning disable CS0618 // These tests deliberately exercise the released deprecated SSL adapters.
+#pragma warning disable CS0618 // These tests deliberately exercise released deprecated compatibility APIs.
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -25,6 +27,41 @@ namespace Azure.ResourceManager.Network.Tests
         private const string SwapPath = CloudPath + "/providers/Microsoft.Network/cloudServiceSlots/swap";
         private const string OptionsPath = "/subscriptions/" + SubscriptionId + "/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default";
         private const string LegacyPolicyPath = OptionsPath + "/ApplicationGatewaySslPredefinedPolicy/policy";
+
+        [TestCase(nameof(ConnectionMonitorResource.Query))]
+        [TestCase(nameof(ConnectionMonitorResource.QueryAsync))]
+        [TestCase(nameof(ConnectionMonitorResource.Start))]
+        [TestCase(nameof(ConnectionMonitorResource.StartAsync))]
+        public void RetiredConnectionMonitorOperationsPreserveReleasedMetadata(string methodName)
+        {
+            var method = typeof(ConnectionMonitorResource).GetMethod(methodName, new[] { typeof(WaitUntil), typeof(CancellationToken) });
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method.IsVirtual, Is.True);
+            Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never));
+            var token = method.GetParameters()[1];
+            Assert.That(token.Name, Is.EqualTo("cancellationToken"));
+            Assert.That(token.IsOptional, Is.True);
+            Assert.That(token.DefaultValue, Is.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void RetiredConnectionMonitorOperationsPreserveReleasedExceptions(bool asynchronous)
+        {
+            var transport = new MockTransport();
+            var client = CreateClient(transport);
+            var id = new ResourceIdentifier(GroupPath + "/providers/Microsoft.Network/networkWatchers/watcher/connectionMonitors/monitor");
+            var resource = client.GetConnectionMonitorResource(id);
+            var query = asynchronous
+                ? Assert.ThrowsAsync<NotSupportedException>(async () => await resource.QueryAsync(WaitUntil.Completed))
+                : Assert.Throws<NotSupportedException>(() => resource.Query(WaitUntil.Completed));
+            var start = asynchronous
+                ? Assert.ThrowsAsync<NotSupportedException>(async () => await resource.StartAsync(WaitUntil.Completed))
+                : Assert.Throws<NotSupportedException>(() => resource.Start(WaitUntil.Completed));
+            Assert.That(query.Message, Is.EqualTo($"The {(asynchronous ? "QueryAsync" : "Query")} method has been deprecated for this resource type as of version 2024-07-01."));
+            Assert.That(start.Message, Is.EqualTo($"The {(asynchronous ? "StartAsync" : "Start")} method has been deprecated for this resource type as of version 2024-07-01."));
+            Assert.That(transport.Requests, Is.Empty);
+        }
 
         [Test]
         public void RestoredContractsHaveHistoricalParameterNamesAndOptionalTokens()
