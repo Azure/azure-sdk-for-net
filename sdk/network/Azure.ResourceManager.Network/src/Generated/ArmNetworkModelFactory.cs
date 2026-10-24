@@ -4885,10 +4885,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>
-        public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string size, int? priority, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState)
+        public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string size, int? priority, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new FirewallPolicyRuleCollectionGroupData(id, default, name, resourceType, size is null && priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default));
+            return new FirewallPolicyRuleCollectionGroupData(
+                id,
+                default,
+                name,
+                resourceType,
+                size is null && priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default),
+                eTag);
         }
 
         /// <summary>
@@ -11156,17 +11163,6 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <summary> Response for ListExpressRouteProviderPort API service call. </summary>
-        /// <param name="value"> The ExpressRouteProviderPort items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteProviderPortListResult"/> instance for mocking. </returns>
-        public static ExpressRouteProviderPortListResult ExpressRouteProviderPortListResult(IEnumerable<ExpressRouteProviderPortData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ExpressRouteProviderPortData>();
-
-            return new ExpressRouteProviderPortListResult((value ?? new ChangeTrackingList<ExpressRouteProviderPortData>()).ToList(), nextLink, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -16497,7 +16493,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="size"> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
@@ -16506,7 +16502,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, string size = default, int? priority = default, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new FirewallPolicyRuleCollectionGroupData(id, default, name, resourceType, size is null && priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default));
+            return new FirewallPolicyRuleCollectionGroupData(
+                id,
+                default,
+                name,
+                resourceType,
+                size is null && priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default),
+                etag);
         }
 
         /// <summary> FirewallPolicy Resource. </summary>
@@ -19946,7 +19948,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
@@ -19954,7 +19956,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState)
         {
-            return new FirewallPolicyRuleCollectionGroupData(id, default, name, resourceType, priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(default, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default));
+            return new FirewallPolicyRuleCollectionGroupData(
+                id,
+                default,
+                name,
+                resourceType,
+                priority is null && ruleCollections is null && provisioningState is null ? default : new FirewallPolicyRuleCollectionGroupProperties(default, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), provisioningState, default),
+                etag);
         }
 
         /// <summary> Subnet in a virtual network resource. </summary>

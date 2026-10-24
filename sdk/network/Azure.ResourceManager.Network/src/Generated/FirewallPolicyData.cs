@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -61,6 +62,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
+        [WirePath("properties.ruleCollectionGroups")]
+        public IReadOnlyList<WritableSubResource> RuleCollectionGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.RuleCollectionGroups;
+            }
+        }
+
         /// <summary> List of references to FirewallPolicyKubeSelectorGroups. </summary>
         [WirePath("properties.kubeSelectorGroups")]
         public IReadOnlyList<NetworkSubResource> KubeSelectorGroups
@@ -82,6 +97,34 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
+        [WirePath("properties.firewalls")]
+        public IReadOnlyList<WritableSubResource> Firewalls
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.Firewalls;
+            }
+        }
+
+        /// <summary> List of references to Child Firewall Policies. </summary>
+        [WirePath("properties.childPolicies")]
+        public IReadOnlyList<WritableSubResource> ChildPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.ChildPolicies;
             }
         }
 

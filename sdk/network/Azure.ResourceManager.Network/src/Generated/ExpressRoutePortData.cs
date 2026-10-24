@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -156,6 +157,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new ExpressRoutePortPropertiesFormat();
                 }
                 return Properties.Links;
+            }
+        }
+
+        /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </summary>
+        [WirePath("properties.circuits")]
+        public IReadOnlyList<WritableSubResource> Circuits
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRoutePortPropertiesFormat();
+                }
+                return Properties.Circuits;
             }
         }
 

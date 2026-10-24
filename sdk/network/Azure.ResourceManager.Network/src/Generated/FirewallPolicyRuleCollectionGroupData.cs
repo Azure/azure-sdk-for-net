@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,14 +27,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> The properties of the firewall policy rule collection group. </param>
-        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, FirewallPolicyRuleCollectionGroupProperties properties) : base(id, additionalBinaryDataProperties, name, resourceType)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, FirewallPolicyRuleCollectionGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> The properties of the firewall policy rule collection group. </summary>
         [WirePath("properties")]
         internal FirewallPolicyRuleCollectionGroupProperties Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </summary>
         [WirePath("properties.size")]

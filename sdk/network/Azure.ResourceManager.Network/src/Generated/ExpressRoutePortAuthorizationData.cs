@@ -62,6 +62,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The reference to the ExpressRoute circuit resource using the authorization. </summary>
+        [WirePath("properties.circuitResourceUri")]
+        public Uri CircuitResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CircuitResourceUri;
+            }
+        }
+
         /// <summary> The provisioning state of the authorization resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

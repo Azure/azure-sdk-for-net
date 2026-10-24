@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetAllAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetFirewallPolicyIdpsSignaturesFilterValueRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignatureOverridesFilterValuesResult> response = Response.FromValue(SignatureOverridesFilterValuesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -584,11 +584,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SignatureOverridesFilterValuesResult> GetAll(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SignatureOverridesFilterValuesResult> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
             try
             {
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesFilterValuesRestClient.CreateGetFirewallPolicyIdpsSignaturesFilterValueRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignatureOverridesFilterValuesQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignatureOverridesFilterValuesResult> response = Response.FromValue(SignatureOverridesFilterValuesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -636,11 +636,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IdpsSignatureListResult>> GetAllAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdpsSignatureListResult>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
             try
             {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetFirewallPolicyIdpsSignatureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IdpsSignatureListResult> response = Response.FromValue(IdpsSignatureListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -688,11 +688,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IdpsSignatureListResult> GetAll(IdpsQueryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IdpsSignatureListResult> GetFirewallPolicyIdpsSignature(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
             try
             {
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetFirewallPolicyIdpsSignatureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IdpsSignatureListResult> response = Response.FromValue(IdpsSignatureListResult.FromResponse(result), result);
                 if (response.Value == null)

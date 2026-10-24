@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.ResourceManager.Models;
@@ -28,6 +29,8 @@ namespace Azure.ResourceManager.Network.Tests
         private const string GroupPath = "/subscriptions/" + SubscriptionId + "/resourceGroups/rg";
         private const string GatewayPath = GroupPath + "/providers/Microsoft.Network/expressRouteGateways/gateway";
         private const string ReferencePath = GroupPath + "/providers/Microsoft.Network/virtualNetworks/vnet";
+        private const string PortPath = GroupPath + "/providers/Microsoft.Network/expressRoutePorts/port";
+        private const string PolicyPath = GroupPath + "/providers/Microsoft.Network/firewallPolicies/policy";
 
         [TestCase("J")]
         [TestCase("W")]
@@ -468,6 +471,346 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(transport.Requests, Has.Count.EqualTo(3));
         }
 
+        [TestCase("J")]
+        [TestCase("W")]
+        public void NativePortAndFirewallReferencesRetainReadOnlyContracts(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            string references = $$$$"""[{"id":"{{{{ReferencePath}}}}"}]""";
+            var port = ModelReaderWriter.Read<ExpressRoutePortData>(BinaryData.FromString($$$$"""{"properties":{"circuits":{{{{references}}}}}}"""), options);
+            var policy = ModelReaderWriter.Read<FirewallPolicyData>(BinaryData.FromString($$$$"""{"properties":{"childPolicies":{{{{references}}}},"firewalls":{{{{references}}}},"ruleCollectionGroups":{{{{references}}}}}}"""), options);
+            var authorization = ModelReaderWriter.Read<ExpressRoutePortAuthorizationData>(BinaryData.FromString($$$$"""{"properties":{"circuitResourceUri":"https://management.azure.com{{{{ReferencePath}}}}"}}"""), options);
+
+            Assert.That(authorization.CircuitResourceUri, Is.EqualTo(new Uri("https://management.azure.com" + ReferencePath)));
+            AssertReadOnlyCollection<WritableSubResource>(typeof(ExpressRoutePortData), nameof(ExpressRoutePortData.Circuits));
+            Assert.That(port.Circuits[0].Id.ToString(), Is.EqualTo(ReferencePath));
+            Assert.That(port.Circuits, Is.SameAs(port.Circuits));
+            Assert.That(new ExpressRoutePortData().Circuits, Is.Empty);
+            foreach (string name in new[] { "ChildPolicies", "Firewalls", "RuleCollectionGroups" })
+            {
+                AssertReadOnlyCollection<WritableSubResource>(typeof(FirewallPolicyData), name);
+                var values = (IReadOnlyList<WritableSubResource>)typeof(FirewallPolicyData).GetProperty(name).GetValue(policy);
+                Assert.That(values[0].Id.ToString(), Is.EqualTo(ReferencePath));
+                Assert.That(values, Is.SameAs(typeof(FirewallPolicyData).GetProperty(name).GetValue(policy)));
+                Assert.That(typeof(FirewallPolicyData).GetProperty(name).GetValue(new FirewallPolicyData()), Is.Empty);
+                values[0].Id = new ResourceIdentifier(ReferencePath + "2");
+            }
+            port.Circuits[0].Id = new ResourceIdentifier(ReferencePath + "2");
+
+            using JsonDocument portJson = JsonDocument.Parse(ModelReaderWriter.Write(port, options));
+            using JsonDocument policyJson = JsonDocument.Parse(ModelReaderWriter.Write(policy, options));
+            using JsonDocument authorizationJson = JsonDocument.Parse(ModelReaderWriter.Write(authorization, options));
+            Assert.That(portJson.RootElement.GetProperty("properties").TryGetProperty("circuits", out JsonElement circuits), Is.EqualTo(format == "J"));
+            Assert.That(authorizationJson.RootElement.GetProperty("properties").TryGetProperty("circuitResourceUri", out _), Is.EqualTo(format == "J"));
+            foreach (string wireName in new[] { "childPolicies", "firewalls", "ruleCollectionGroups" })
+            {
+                Assert.That(policyJson.RootElement.GetProperty("properties").TryGetProperty(wireName, out JsonElement values), Is.EqualTo(format == "J"));
+                if (format == "J")
+                {
+                    Assert.That(values[0].GetProperty("id").GetString(), Is.EqualTo(ReferencePath + "2"));
+                }
+            }
+            if (format == "J")
+            {
+                Assert.That(circuits[0].GetProperty("id").GetString(), Is.EqualTo(ReferencePath + "2"));
+            }
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void NativeFirewallRuleGroupETagIsDeserializedInsteadOfDefaulted(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var model = ModelReaderWriter.Read<FirewallPolicyRuleCollectionGroupData>(BinaryData.FromString("""{"etag":"review-etag","properties":{"priority":100}}"""), options);
+            Assert.That(model.ETag.ToString(), Is.EqualTo("review-etag"));
+            Assert.That(model.Priority, Is.EqualTo(100));
+            Assert.That(typeof(FirewallPolicyRuleCollectionGroupData).GetProperty("ETag").PropertyType, Is.EqualTo(typeof(ETag?)));
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            Assert.That(json.RootElement.TryGetProperty("etag", out JsonElement etag), Is.EqualTo(format == "J"));
+            if (format == "J")
+            {
+                Assert.That(etag.GetString(), Is.EqualTo("review-etag"));
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task NativeAuthorizationCreateUsesOnlyItsOwnName(bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            CancellationToken observed = default;
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                observed = message.CancellationToken;
+                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{PortPath}}}}/authorizations/authorization","name":"authorization","properties":{"provisioningState":"Succeeded"}}""");
+            });
+            var parent = CreateClient(transport).GetExpressRoutePortResource(new ResourceIdentifier(PortPath));
+            var collection = parent.GetExpressRoutePortAuthorizations();
+            Assert.That(collection.Id.ToString(), Is.EqualTo(PortPath));
+            foreach (MethodInfo method in typeof(ExpressRoutePortAuthorizationCollection).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(method => method.Name is "CreateOrUpdate" or "CreateOrUpdateAsync"))
+            {
+                Assert.That(method.GetParameters().Select(parameter => parameter.Name), Is.EqualTo(new[] { "waitUntil", "authorizationName", "data", "cancellationToken" }));
+            }
+            ArmOperation<ExpressRoutePortAuthorizationResource> operation = asynchronous
+                ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "authorization", new ExpressRoutePortAuthorizationData(), cancellation.Token)
+                : collection.CreateOrUpdate(WaitUntil.Completed, "authorization", new ExpressRoutePortAuthorizationData(), cancellation.Token);
+            Assert.That(operation.Value.Id.ToString(), Is.EqualTo(PortPath + "/authorizations/authorization"));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(PortPath + "/authorizations/authorization"));
+            Assert.That(observed.CanBeCanceled, Is.True);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task NativeAuthorizationParentGetForwardsToTheChildEndpoint(bool asynchronous)
+        {
+            var transport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent($$$$"""{"id":"{{{{PortPath}}}}/authorizations/authorization","name":"authorization"}"""));
+            var parent = CreateClient(transport).GetExpressRoutePortResource(new ResourceIdentifier(PortPath));
+            var response = asynchronous
+                ? await parent.GetExpressRoutePortAuthorizationAsync("authorization")
+                : parent.GetExpressRoutePortAuthorization("authorization");
+            Assert.That(response.Value.Id.ToString(), Is.EqualTo(PortPath + "/authorizations/authorization"));
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(PortPath + "/authorizations/authorization"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task NativeAuthorizationPagingUsesCorrectTransportAndContinuation(bool asynchronous)
+        {
+            string next = "https://management.azure.com" + PortPath + "/authorizations?api-version=2026-01-01&skipToken=second";
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent(message.Request.Uri.ToUri().Query.Contains("skipToken")
+                    ? $$$$"""{"value":[{"id":"{{{{PortPath}}}}/authorizations/second","name":"second"}]}"""
+                    : $$$$"""{"value":[{"id":"{{{{PortPath}}}}/authorizations/first","name":"first"}],"nextLink":"{{{{next}}}}"}""");
+            });
+            var tracking = new ModeTrackingTransport(transport);
+            var collection = CreateClient(tracking).GetExpressRoutePortResource(new ResourceIdentifier(PortPath)).GetExpressRoutePortAuthorizations();
+            var ids = new List<string>();
+            if (asynchronous)
+            {
+                await foreach (var item in collection.GetAllAsync(cancellation.Token))
+                {
+                    ids.Add(item.Id.Name);
+                }
+                await foreach (var page in collection.GetAllAsync(cancellation.Token).AsPages(next))
+                {
+                    Assert.That(page.Values.Single().Id.Name, Is.EqualTo("second"));
+                }
+            }
+            else
+            {
+                ids.AddRange(collection.GetAll(cancellation.Token).Select(item => item.Id.Name));
+                Assert.That(collection.GetAll(cancellation.Token).AsPages(next).Single().Values.Single().Id.Name, Is.EqualTo("second"));
+            }
+            Assert.That(ids, Is.EqualTo(new[] { "first", "second" }));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+            Assert.That(asynchronous ? tracking.AsyncCalls : tracking.SyncCalls, Is.EqualTo(3));
+            Assert.That(asynchronous ? tracking.SyncCalls : tracking.AsyncCalls, Is.Zero);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task NativeProviderPortPagingPreservesTheReleasedFilter(bool asynchronous)
+        {
+            string id = "/subscriptions/" + SubscriptionId + "/providers/Microsoft.Network/expressRouteProviderPorts/provider";
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent($$$$"""{"value":[{"id":"{{{{id}}}}","name":"provider","location":"westus","properties":{}}]}""");
+            });
+            var collection = CreateClient(transport).GetSubscriptionResource(new ResourceIdentifier("/subscriptions/" + SubscriptionId)).GetExpressRouteProviderPorts();
+            var resources = new List<ExpressRouteProviderPortResource>();
+            if (asynchronous)
+            {
+                await foreach (var item in collection.GetAllAsync("location eq 'westus'", cancellation.Token))
+                {
+                    resources.Add(item);
+                }
+            }
+            else
+            {
+                resources.AddRange(collection.GetAll("location eq 'westus'", cancellation.Token));
+            }
+            Assert.That(resources.Single().Id.ToString(), Is.EqualTo(id));
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo("/subscriptions/" + SubscriptionId + "/providers/Microsoft.Network/expressRouteProviderPorts"));
+            Assert.That(Uri.UnescapeDataString(transport.Requests.Single().Uri.ToUri().Query), Does.Contain("$filter=location eq 'westus'"));
+            MethodInfo method = typeof(ExpressRouteProviderPortCollection).GetMethod(asynchronous ? "GetAllAsync" : "GetAll", new[] { typeof(string), typeof(CancellationToken) });
+            Assert.That(method.GetParameters()[0].Name, Is.EqualTo("filter"));
+            Assert.That(method.GetParameters()[0].IsOptional, Is.True);
+        }
+
+        [Test]
+        public async Task NativeProviderPortEnumeratorsExecuteRequestsInsteadOfReturningEmpty()
+        {
+            var transport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent("""{"value":[]}"""));
+            var collection = CreateClient(transport).GetSubscriptionResource(new ResourceIdentifier("/subscriptions/" + SubscriptionId)).GetExpressRouteProviderPorts();
+            Assert.That(((IEnumerable)collection).Cast<ArmResource>(), Is.Empty);
+            Assert.That((IEnumerable<ArmResource>)collection, Is.Empty);
+            await foreach (var item in (IAsyncEnumerable<ArmResource>)collection)
+            {
+                Assert.Fail("Expected the service's empty list, got " + item.Id);
+            }
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task LegacyFirewallCreateOverloadIsHiddenAndForwardsDefaultAfcFlag(bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent($$$$"""{"id":"{{{{PolicyPath}}}}","name":"policy","properties":{"provisioningState":"Succeeded"}}"""));
+            var collection = CreateClient(transport).GetResourceGroupResource(new ResourceIdentifier(GroupPath)).GetFirewallPolicies();
+            string name = asynchronous ? "CreateOrUpdateAsync" : "CreateOrUpdate";
+            MethodInfo method = typeof(FirewallPolicyCollection).GetMethod(name, new[] { typeof(WaitUntil), typeof(string), typeof(FirewallPolicyData), typeof(CancellationToken) });
+            Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+            Assert.That(method.GetParameters().Last().IsOptional, Is.False);
+            var operation = asynchronous
+                ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "policy", new FirewallPolicyData(), cancellation.Token)
+                : collection.CreateOrUpdate(WaitUntil.Completed, "policy", new FirewallPolicyData(), cancellation.Token);
+            Assert.That(operation.Value.Id.ToString(), Is.EqualTo(PolicyPath));
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(PolicyPath));
+            Assert.That(transport.Requests.Single().Uri.ToUri().Query, Does.Not.Contain("afcManagedSync"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task LegacyFirewallDeployAliasUsesTheUnchangedDeployEndpoint(bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(_ => new MockResponse(200));
+            var resource = CreateClient(transport).GetFirewallPolicyResource(new ResourceIdentifier(PolicyPath));
+            string name = asynchronous ? "DeployFirewallPolicyDeploymentAsync" : "DeployFirewallPolicyDeployment";
+            Assert.That(typeof(FirewallPolicyResource).GetMethod(name).GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+            if (asynchronous)
+            {
+                await resource.DeployFirewallPolicyDeploymentAsync(WaitUntil.Started, cancellation.Token);
+            }
+            else
+            {
+                resource.DeployFirewallPolicyDeployment(WaitUntil.Started, cancellation.Token);
+            }
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Post));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(PolicyPath + "/deploy"));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task NativeFirewallIdpsOperationsUseTheirReleasedNamesAndEndpoints(bool filters, bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent("{}");
+            });
+            var resource = CreateClient(transport).GetFirewallPolicyResource(new ResourceIdentifier(PolicyPath));
+            if (filters)
+            {
+                var content = new SignatureOverridesFilterValuesQueryContent { FilterName = "severity" };
+                var response = asynchronous
+                    ? await resource.GetFirewallPolicyIdpsSignaturesFilterValueAsync(content, cancellation.Token)
+                    : resource.GetFirewallPolicyIdpsSignaturesFilterValue(content, cancellation.Token);
+                Assert.That(response.Value, Is.Not.Null);
+            }
+            else
+            {
+                var content = new IdpsQueryContent { Search = "review" };
+                var response = asynchronous
+                    ? await resource.GetFirewallPolicyIdpsSignatureAsync(content, cancellation.Token)
+                    : resource.GetFirewallPolicyIdpsSignature(content, cancellation.Token);
+                Assert.That(response.Value, Is.Not.Null);
+            }
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Post));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(PolicyPath + (filters ? "/listIdpsFilterOptions" : "/listIdpsSignatures")));
+            Assert.That(transport.Requests.Single().Content, Is.Not.Null);
+        }
+
+        [TestCase("AddTag")]
+        [TestCase("AddTagAsync")]
+        [TestCase("RemoveTag")]
+        [TestCase("RemoveTagAsync")]
+        [TestCase("SetTags")]
+        [TestCase("SetTagsAsync")]
+        public void LocationTagCompatibilityPreservesReleasedNamesAndHiddenObsoleteMetadata(string name)
+        {
+            MethodInfo method = typeof(ExpressRoutePortsLocationResource).GetMethod(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+            Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This method is obsolete and will be removed in a future release"));
+            Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().IsError, Is.False);
+            string[] parameters = name.StartsWith("Add") ? new[] { "key", "value", "cancellationToken" }
+                : name.StartsWith("Remove") ? new[] { "key", "cancellationToken" }
+                : new[] { "tags", "cancellationToken" };
+            Assert.That(method.GetParameters().Select(parameter => parameter.Name), Is.EqualTo(parameters));
+            Assert.That(method.GetParameters().Last().IsOptional, Is.True);
+        }
+
+        [Test]
+        public void UnreleasedConstructorIsAbsentAndRequiredUpdateAliasesAreHidden()
+        {
+            Assert.That(typeof(ExpressRoutePortsLocationData).GetConstructor(Type.EmptyTypes), Is.Not.Null);
+            Assert.That(typeof(ExpressRoutePortsLocationData).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(bool) }, null), Is.Null);
+            foreach (string name in new[] { "Update", "UpdateAsync" })
+            {
+                Assert.That(typeof(FirewallPolicyDraftResource).GetMethod(name, new[] { typeof(WaitUntil), typeof(FirewallPolicyDraftData), typeof(CancellationToken) }).GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+                MethodInfo method = typeof(FirewallPolicyResource).GetMethod(name, new[] { typeof(WaitUntil), typeof(FirewallPolicyData), typeof(CancellationToken) });
+                Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+                Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This method is obsolete and will be removed in a future release"));
+                Assert.That(method.GetParameters().Last().IsOptional, Is.True);
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RequiredDraftUpdateAliasForwardsToNativeCreateOrUpdate(bool asynchronous)
+        {
+            string id = PolicyPath + "/firewallPolicyDrafts/default";
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{id}}}}","name":"default","properties":{"provisioningState":"Succeeded"}}""");
+            });
+            var resource = CreateClient(transport).GetFirewallPolicyDraftResource(new ResourceIdentifier(id));
+            var operation = asynchronous
+                ? await resource.UpdateAsync(WaitUntil.Completed, new FirewallPolicyDraftData(), cancellation.Token)
+                : resource.Update(WaitUntil.Completed, new FirewallPolicyDraftData(), cancellation.Token);
+            Assert.That(operation.Value.Id.ToString(), Is.EqualTo(id));
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ReleasedFirewallUpdateAliasForwardsInsteadOfThrowing(bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{PolicyPath}}}}","name":"policy","properties":{"provisioningState":"Succeeded"}}""");
+            });
+            var resource = CreateClient(transport).GetFirewallPolicyResource(new ResourceIdentifier(PolicyPath));
+#pragma warning disable CS0618
+            var operation = asynchronous
+                ? await resource.UpdateAsync(WaitUntil.Completed, new FirewallPolicyData(), cancellation.Token)
+                : resource.Update(WaitUntil.Completed, new FirewallPolicyData(), cancellation.Token);
+#pragma warning restore CS0618
+            Assert.That(operation.Value.Id.ToString(), Is.EqualTo(PolicyPath));
+            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(PolicyPath));
+            Assert.That(transport.Requests.Single().Uri.ToUri().Query, Does.Not.Contain("afcManagedSync"));
+        }
+
         private static string NativeTrackedResourceProperties(Type modelType) =>
             modelType == typeof(ConnectionAnalyzerData)
                 ? """{"expiryInDays":7,"source":{"type":"ExternalAddress","address":"10.0.0.1"},"destination":{"type":"ExternalAddress","address":"10.0.0.2"},"diagnosticOperations":[]}"""
@@ -492,7 +835,31 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(property.SetMethod, Is.Null, owner.Name + "." + name);
         }
 
-        private static ArmClient CreateClient(MockTransport transport) =>
+        private sealed class ModeTrackingTransport : HttpPipelineTransport
+        {
+            private readonly MockTransport _inner;
+
+            public ModeTrackingTransport(MockTransport inner) => _inner = inner;
+
+            public int SyncCalls { get; private set; }
+            public int AsyncCalls { get; private set; }
+
+            public override Request CreateRequest() => _inner.CreateRequest();
+
+            public override void Process(HttpMessage message)
+            {
+                SyncCalls++;
+                _inner.Process(message);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message)
+            {
+                AsyncCalls++;
+                return _inner.ProcessAsync(message);
+            }
+        }
+
+        private static ArmClient CreateClient(HttpPipelineTransport transport) =>
             new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
     }
 }

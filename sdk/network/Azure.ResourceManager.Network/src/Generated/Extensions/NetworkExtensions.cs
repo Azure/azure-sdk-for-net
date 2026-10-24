@@ -8219,42 +8219,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteProviderPortsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ExpressRouteProviderPortListResult>> GetExpressRouteProviderPortsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteProviderPortsAsync(filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteProviderPorts(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ExpressRouteProviderPortListResult> GetExpressRouteProviderPorts(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteProviderPorts(filter, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets all of the available subnet delegations for this subscription in this region.
         /// <item>
         /// <term> Mocking. </term>

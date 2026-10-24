@@ -121,8 +121,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private P2sVpnGateways _p2sVpnGatewaysRestClient;
         private ClientDiagnostics _checkDnsNameAvailabilityClientDiagnostics;
         private CheckDnsNameAvailability _checkDnsNameAvailabilityRestClient;
-        private ClientDiagnostics _expressRouteProviderPortsLocationClientDiagnostics;
-        private ExpressRouteProviderPortsLocation _expressRouteProviderPortsLocationRestClient;
         private ClientDiagnostics _availableDelegationsClientDiagnostics;
         private AvailableDelegations _availableDelegationsRestClient;
         private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
@@ -375,10 +373,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private ClientDiagnostics CheckDnsNameAvailabilityClientDiagnostics => _checkDnsNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
-
-        private ClientDiagnostics ExpressRouteProviderPortsLocationClientDiagnostics => _expressRouteProviderPortsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -4148,96 +4142,6 @@ namespace Azure.ResourceManager.Network.Mocking
                 HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsNameAvailabilityResult> response = Response.FromValue(DnsNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteProviderPorts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteProviderPortListResult>> GetExpressRouteProviderPortsAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteProviderPortsLocationClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetExpressRouteProviderPorts");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteProviderPortsLocationRestClient.CreateGetExpressRouteProviderPortsRequest(Guid.Parse(Id.SubscriptionId), filter, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpressRouteProviderPortListResult> response = Response.FromValue(ExpressRouteProviderPortListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteProviderPorts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteProviderPortListResult> GetExpressRouteProviderPorts(string filter = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteProviderPortsLocationClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetExpressRouteProviderPorts");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteProviderPortsLocationRestClient.CreateGetExpressRouteProviderPortsRequest(Guid.Parse(Id.SubscriptionId), filter, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpressRouteProviderPortListResult> response = Response.FromValue(ExpressRouteProviderPortListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

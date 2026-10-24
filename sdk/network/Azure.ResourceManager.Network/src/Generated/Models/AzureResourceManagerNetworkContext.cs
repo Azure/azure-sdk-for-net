@@ -352,6 +352,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ExpressRouteLinkResource))]
     [ModelReaderWriterBuildable(typeof(ExpressRoutePeeringMetric))]
     [ModelReaderWriterBuildable(typeof(ExpressRoutePortAuthorizationData))]
+    [ModelReaderWriterBuildable(typeof(ExpressRoutePortAuthorizationListResult))]
     [ModelReaderWriterBuildable(typeof(ExpressRoutePortAuthorizationResource))]
     [ModelReaderWriterBuildable(typeof(ExpressRoutePortData))]
     [ModelReaderWriterBuildable(typeof(ExpressRoutePortListResult))]
