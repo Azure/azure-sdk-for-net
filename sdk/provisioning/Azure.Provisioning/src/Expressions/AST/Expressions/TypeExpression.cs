@@ -9,7 +9,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep type expression that maps a .NET <see cref="System.Type"/> to a Bicep primitive type name.
 /// </summary>
 /// <param name="type">The .NET type to map.</param>
-public class TypeExpression(Type type) : BicepExpression
+public partial class TypeExpression(Type type) : BicepExpression
 {
     /// <summary>
     /// Gets the .NET type being mapped to a Bicep type name.

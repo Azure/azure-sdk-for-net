@@ -1,0 +1,65 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Globalization;
+using System.Text.Json;
+using Azure.Provisioning;
+
+namespace Azure.Provisioning.Expressions;
+
+public partial class IntLiteralExpression : IJsonModel<BicepExpression>
+{
+    void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("kind", "integer");
+        writer.WriteString("value", Value.ToString(CultureInfo.InvariantCulture));
+        writer.WriteEndObject();
+    }
+
+    BicepExpression IJsonModel<BicepExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+        return DeserializeIntLiteralExpression(doc.RootElement);
+    }
+
+    BinaryData IPersistableModel<BicepExpression>.Write(ModelReaderWriterOptions options)
+    {
+        var format = options.Format == "W" ? ((IPersistableModel<BicepExpression>)this).GetFormatFromOptions(options) : options.Format;
+        switch (format)
+        {
+            case "J":
+                return ModelReaderWriter.Write(this, options, AzureProvisioningContext.Default);
+            case "bicep":
+                return new BinaryData(new BicepWriter().Append(this).ToString());
+            default:
+                throw new FormatException($"The model {nameof(IntLiteralExpression)} does not support writing '{format}' format.");
+        }
+    }
+
+    BicepExpression IPersistableModel<BicepExpression>.Create(BinaryData data, ModelReaderWriterOptions options)
+    {
+        using JsonDocument doc = JsonDocument.Parse(data);
+        return DeserializeIntLiteralExpression(doc.RootElement);
+    }
+
+    string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+    /// <inheritdoc/>
+    public override bool Equals(BicepExpression? other) => other is IntLiteralExpression i && Value == i.Value;
+    /// <inheritdoc/>
+    public override int GetHashCode() => typeof(IntLiteralExpression).GetHashCode() ^ Value.GetHashCode();
+
+    internal static BicepExpression DeserializeIntLiteralExpression(JsonElement element)
+    {
+        long value = long.Parse(element.GetProperty("value").GetString()!, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
+        return Create(value);
+    }
+
+    internal static BicepExpression Create(long value) =>
+        value >= int.MinValue && value <= int.MaxValue
+            ? new IntLiteralExpression((int)value)
+            : new LongLiteralExpression(value);
+}

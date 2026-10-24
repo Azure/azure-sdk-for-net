@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed provisioning JSON schema compatibility for decorators, 64-bit integers, type annotations, and reverse indexing. JSON serialization now explicitly rejects nested resource access, null suppression, and standalone decorators, which have no schema representation.
+
 ### Other Changes
 
 ## 1.6.0 (2026-08-20)
