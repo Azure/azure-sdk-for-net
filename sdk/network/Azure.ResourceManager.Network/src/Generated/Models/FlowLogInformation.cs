@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(storageId, nameof(storageId));
 
             TargetResourceId = targetResourceId;
-            Properties = new FlowLogProperties(storageId, enabled);
+            Properties = new FlowLogInformationProperties(storageId, enabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, FlowLogProperties properties, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, FlowLogInformationProperties properties, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             Properties = properties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the flow log. </summary>
         [WirePath("properties")]
-        internal FlowLogProperties Properties { get; set; }
+        internal FlowLogInformationProperties Properties { get; set; }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("flowAnalyticsConfiguration")]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.StorageId = value;
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.EnabledFilteringCriteria = value;
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.RecordTypes = value;
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.Enabled = value;
             }
@@ -148,9 +148,45 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new FlowLogProperties();
+                    Properties = new FlowLogInformationProperties();
                 }
                 Properties.RetentionPolicy = value;
+            }
+        }
+
+        /// <summary> Parameters that define the flow log format. </summary>
+        [WirePath("properties.format")]
+        public FlowLogProperties Format
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogInformationProperties();
+                }
+                Properties.Format = value;
+            }
+        }
+
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
+        {
+            get
+            {
+                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
+            }
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                {
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                }
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
     }

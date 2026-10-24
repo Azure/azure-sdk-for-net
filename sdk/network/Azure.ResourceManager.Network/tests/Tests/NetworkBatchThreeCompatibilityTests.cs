@@ -90,6 +90,7 @@ namespace Azure.ResourceManager.Network.Tests
             })
             {
                 using JsonDocument document = JsonDocument.Parse(persisted);
+                Assert.That(document.RootElement.EnumerateObject().Select(property => property.Name), Is.Unique);
                 Assert.That(document.RootElement.GetProperty("futureEnvelope").GetInt32(), Is.EqualTo(17));
                 Assert.That(document.RootElement.GetProperty("properties").GetProperty("futureProperty").GetBoolean(), Is.True);
                 AssertInboundRule(ModelReaderWriter.Read<InboundSecurityRule>(persisted));

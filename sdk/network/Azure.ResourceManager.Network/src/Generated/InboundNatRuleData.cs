@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,14 +27,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of load balancer inbound NAT rule. </param>
-        internal InboundNatRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, InboundNatRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, resourceType)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal InboundNatRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, InboundNatRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> Properties of load balancer inbound NAT rule. </summary>
         [WirePath("properties")]
         internal InboundNatRulePropertiesFormat Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
         [WirePath("properties.backendIPConfiguration")]

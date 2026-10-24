@@ -169,6 +169,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Parameters that define the flow log format. </summary>
+        [WirePath("properties.format")]
+        public FlowLogProperties Format
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogPropertiesFormat();
+                }
+                Properties.Format = value;
+            }
+        }
+
         /// <summary> The provisioning state of the flow log. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -181,11 +199,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("properties.flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkWatcherFlowAnalyticsConfiguration;
+                return Properties is null ? default : Properties.TrafficAnalyticsConfiguration;
             }
             set
             {
@@ -193,7 +211,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new FlowLogPropertiesFormat();
                 }
-                Properties.NetworkWatcherFlowAnalyticsConfiguration = value;
+                Properties.TrafficAnalyticsConfiguration = value;
             }
         }
     }

@@ -1080,11 +1080,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        /// <param name="networkWatcherFlowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
-        public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, NetworkProvisioningState? provisioningState, TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration, ETag? eTag, ManagedServiceIdentity identity)
+        public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, NetworkProvisioningState? provisioningState, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, ETag? eTag, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && recordTypes is null && enabled is null && retentionPolicy is null && format is null && networkWatcherFlowAnalyticsConfiguration is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
+                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && recordTypes is null && enabled is null && retentionPolicy is null && format is null && trafficAnalyticsConfiguration is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
                     targetResourceId,
                     targetResourceGuid,
                     storageId,
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Network.Models
                     enabled,
                     retentionPolicy,
                     format,
-                    networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default),
+                    trafficAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, default),
                     provisioningState,
                     default),
                 eTag,
@@ -1121,12 +1121,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Parameters that define the flow log format. </summary>
-        /// <param name="type"> The file type of flow log. </param>
+        /// <param name="formatType"> The file type of flow log. </param>
         /// <param name="version"> The version (revision) of the flow log. </param>
-        /// <returns> A new <see cref="Models.FlowLogFormatParameters"/> instance for mocking. </returns>
-        public static FlowLogFormatParameters FlowLogFormatParameters(FlowLogFormatType? @type = default, int? version = default)
+        /// <returns> A new <see cref="Models.FlowLogProperties"/> instance for mocking. </returns>
+        public static FlowLogProperties FlowLogProperties(FlowLogFormatType? formatType = default, int? version = default)
         {
-            return new FlowLogFormatParameters(@type, version, default);
+            return new FlowLogProperties(formatType, version, default);
         }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
@@ -1653,23 +1653,30 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
         /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.InboundNatRuleData"/> instance for mocking. </returns>
-        public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId)
+        public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId, ETag? eTag)
         {
-            return new InboundNatRuleData(id, default, name, resourceType, frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                backendIPConfiguration,
-                protocol,
-                frontendPort,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                frontendPortRangeStart,
-                frontendPortRangeEnd,
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                provisioningState,
-                default));
+            return new InboundNatRuleData(
+                id,
+                default,
+                name,
+                resourceType,
+                frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
+                    frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                    backendIPConfiguration,
+                    protocol,
+                    frontendPort,
+                    backendPort,
+                    idleTimeoutInMinutes,
+                    enableFloatingIP,
+                    enableTcpReset,
+                    frontendPortRangeStart,
+                    frontendPortRangeEnd,
+                    backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                    provisioningState,
+                    default),
+                eTag);
         }
 
         /// <summary> PrivateLinkConnection properties for the network interface. </summary>
@@ -5787,8 +5794,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allocationTags"> IpAllocation tags. </param>
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.IPAllocationData"/> instance for mocking. </returns>
-        public static IPAllocationData IPAllocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags, ResourceIdentifier subnetId, ResourceIdentifier virtualNetworkId)
+        public static IPAllocationData IPAllocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags, ResourceIdentifier subnetId, ResourceIdentifier virtualNetworkId, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5808,7 +5816,8 @@ namespace Azure.ResourceManager.Network.Models
                     prefixType,
                     ipamAllocationId,
                     allocationTags ?? new ChangeTrackingDictionary<string, string>(),
-                    default));
+                    default),
+                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -7390,40 +7399,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
-        /// <param name="networkWatcherFlowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageId"/> is null. </exception>
         /// <returns> A new <see cref="Models.FlowLogInformation"/> instance for mocking. </returns>
-        public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = default, ResourceIdentifier storageId = default, string enabledFilteringCriteria = default, string recordTypes = default, bool enabled = default, RetentionPolicyParameters retentionPolicy = default, FlowLogFormatParameters format = default, TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default, ManagedServiceIdentity identity = default)
+        public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = default, ResourceIdentifier storageId = default, string enabledFilteringCriteria = default, string recordTypes = default, bool enabled = default, RetentionPolicyParameters retentionPolicy = default, FlowLogProperties format = default, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = default, ManagedServiceIdentity identity = default)
         {
-            return new FlowLogInformation(targetResourceId, new FlowLogProperties(
+            return new FlowLogInformation(targetResourceId, new FlowLogInformationProperties(
                 storageId,
                 enabledFilteringCriteria,
                 recordTypes,
                 enabled,
                 retentionPolicy,
                 format,
-                default), networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default), identity, default);
-        }
-
-        /// <summary> Parameters that define the configuration of flow log. </summary>
-        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
-        /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
-        /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
-        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
-        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"> Parameters that define the flow log format. </param>
-        /// <returns> A new <see cref="Models.FlowLogProperties"/> instance for mocking. </returns>
-        public static FlowLogProperties FlowLogProperties(ResourceIdentifier storageId = default, string enabledFilteringCriteria = default, string recordTypes = default, bool enabled = default, RetentionPolicyParameters retentionPolicy = default, FlowLogFormatParameters format = default)
-        {
-            return new FlowLogProperties(
-                storageId,
-                enabledFilteringCriteria,
-                recordTypes,
-                enabled,
-                retentionPolicy,
-                format,
-                default);
+                default), trafficAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, default), identity, default);
         }
 
         /// <summary> Parameters that define a resource to query flow log and traffic analytics (optional) status. </summary>
@@ -10358,16 +10347,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubRouteTableData"/> instance for mocking. </returns>
-        public static HubRouteTableData HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, IEnumerable<HubRoute> routes, IEnumerable<string> labels, IEnumerable<string> associatedConnections, IEnumerable<string> propagatingConnections, NetworkProvisioningState? provisioningState)
+        public static HubRouteTableData HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, IEnumerable<HubRoute> routes, IEnumerable<string> labels, IEnumerable<string> associatedConnections, IEnumerable<string> propagatingConnections, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new HubRouteTableData(id, default, name, resourceType, routes is null && labels is null && associatedConnections is null && propagatingConnections is null && provisioningState is null ? default : new HubRouteTableProperties(
-                (routes ?? new ChangeTrackingList<HubRoute>()).ToList(),
-                (labels ?? new ChangeTrackingList<string>()).ToList(),
-                (associatedConnections ?? new ChangeTrackingList<string>()).ToList(),
-                (propagatingConnections ?? new ChangeTrackingList<string>()).ToList(),
-                provisioningState,
-                default));
+            return new HubRouteTableData(
+                id,
+                default,
+                name,
+                resourceType,
+                routes is null && labels is null && associatedConnections is null && propagatingConnections is null && provisioningState is null ? default : new HubRouteTableProperties(
+                    (routes ?? new ChangeTrackingList<HubRoute>()).ToList(),
+                    (labels ?? new ChangeTrackingList<string>()).ToList(),
+                    (associatedConnections ?? new ChangeTrackingList<string>()).ToList(),
+                    (propagatingConnections ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                eTag);
         }
 
         /// <summary> RouteTable route. </summary>
@@ -11839,10 +11835,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.InboundSecurityRuleData"/> instance for mocking. </returns>
-        public static InboundSecurityRuleData InboundSecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, InboundSecurityRuleType? ruleType, IEnumerable<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState)
+        public static InboundSecurityRuleData InboundSecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, InboundSecurityRuleType? ruleType, IEnumerable<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new InboundSecurityRuleData(id, default, name, resourceType, ruleType is null && rules is null && provisioningState is null ? default : new InboundSecurityRuleProperties(ruleType, (rules ?? new ChangeTrackingList<InboundSecurityRules>()).ToList(), provisioningState, default));
+            return new InboundSecurityRuleData(
+                id,
+                default,
+                name,
+                resourceType,
+                ruleType is null && rules is null && provisioningState is null ? default : new InboundSecurityRuleProperties(ruleType, (rules ?? new ChangeTrackingList<InboundSecurityRules>()).ToList(), provisioningState, default),
+                eTag);
         }
 
         /// <summary> Properties of the Inbound Security Rules resource. </summary>
@@ -12494,16 +12497,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubIPConfigurationData"/> instance for mocking. </returns>
-        public static HubIPConfigurationData HubIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState)
+        public static HubIPConfigurationData HubIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new HubIPConfigurationData(id, default, name, resourceType, privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && publicIPAddress is null && provisioningState is null ? default : new HubIPConfigurationPropertiesFormat(
-                privateIPAddress,
-                privateIPAllocationMethod,
-                subnet,
-                publicIPAddress,
-                provisioningState,
-                default));
+            return new HubIPConfigurationData(
+                id,
+                default,
+                name,
+                resourceType,
+                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && publicIPAddress is null && provisioningState is null ? default : new HubIPConfigurationPropertiesFormat(
+                    privateIPAddress,
+                    privateIPAllocationMethod,
+                    subnet,
+                    publicIPAddress,
+                    provisioningState,
+                    default),
+                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -14412,8 +14422,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"></param>
-        /// <param name="trafficAnalyticsConfiguration"></param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -14426,7 +14436,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && recordTypes is null && enabled is null && retentionPolicy is null && enabled is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
+                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && recordTypes is null && enabled is null && retentionPolicy is null && format is null && trafficAnalyticsConfiguration is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
                     targetResourceId,
                     targetResourceGuid,
                     storageId,
@@ -14434,14 +14444,8 @@ namespace Azure.ResourceManager.Network.Models
                     recordTypes,
                     enabled,
                     retentionPolicy,
-                    default,
-                    enabled is null ? default : new TrafficAnalyticsProperties(enabled is null ? default : new TrafficAnalyticsConfigurationProperties(
-                        enabled,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default), default),
+                    format,
+                    trafficAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, default),
                     provisioningState,
                     default),
                 etag,
@@ -14883,7 +14887,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
         /// <param name="backendIPConfiguration"> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
@@ -14900,20 +14904,26 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, ResourceIdentifier frontendIPConfigurationId = default, NetworkInterfaceIPConfigurationData backendIPConfiguration = default, LoadBalancingTransportProtocol? protocol = default, int? frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, int? frontendPortRangeStart = default, int? frontendPortRangeEnd = default, ResourceIdentifier backendAddressPoolId = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new InboundNatRuleData(id, default, name, resourceType, frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                backendIPConfiguration,
-                protocol,
-                frontendPort,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                frontendPortRangeStart,
-                frontendPortRangeEnd,
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                provisioningState,
-                default));
+            return new InboundNatRuleData(
+                id,
+                default,
+                name,
+                resourceType,
+                frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
+                    frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                    backendIPConfiguration,
+                    protocol,
+                    frontendPort,
+                    backendPort,
+                    idleTimeoutInMinutes,
+                    enableFloatingIP,
+                    enableTcpReset,
+                    frontendPortRangeStart,
+                    frontendPortRangeEnd,
+                    backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                    provisioningState,
+                    default),
+                etag);
         }
 
         /// <summary> Backend address pool settings of an application gateway. </summary>
@@ -16579,7 +16589,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="ipAllocationType"> The type for the IpAllocation. </param>
@@ -16608,7 +16618,8 @@ namespace Azure.ResourceManager.Network.Models
                     prefixType,
                     ipamAllocationId,
                     allocationTags ?? new ChangeTrackingDictionary<string, string>(),
-                    default));
+                    default),
+                etag);
         }
 
         /// <summary> The IpGroups resource information. </summary>
@@ -17199,7 +17210,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -17207,7 +17218,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InboundSecurityRuleData InboundSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, InboundSecurityRuleType? ruleType = default, IEnumerable<InboundSecurityRules> rules = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new InboundSecurityRuleData(id, default, name, resourceType, ruleType is null && rules is null && provisioningState is null ? default : new InboundSecurityRuleProperties(ruleType, (rules ?? new ChangeTrackingList<InboundSecurityRules>()).ToList(), provisioningState, default));
+            return new InboundSecurityRuleData(
+                id,
+                default,
+                name,
+                resourceType,
+                ruleType is null && rules is null && provisioningState is null ? default : new InboundSecurityRuleProperties(ruleType, (rules ?? new ChangeTrackingList<InboundSecurityRules>()).ToList(), provisioningState, default),
+                etag);
         }
 
         /// <summary> Network watcher in a resource group. </summary>
@@ -18803,7 +18820,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
@@ -18813,20 +18830,26 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HubIPConfigurationData HubIPConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, string privateIPAddress = default, NetworkIPAllocationMethod? privateIPAllocationMethod = default, SubnetData subnet = default, PublicIPAddressData publicIPAddress = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new HubIPConfigurationData(id, default, name, resourceType, privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && publicIPAddress is null && provisioningState is null ? default : new HubIPConfigurationPropertiesFormat(
-                privateIPAddress,
-                privateIPAllocationMethod,
-                subnet,
-                publicIPAddress,
-                provisioningState,
-                default));
+            return new HubIPConfigurationData(
+                id,
+                default,
+                name,
+                resourceType,
+                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && publicIPAddress is null && provisioningState is null ? default : new HubIPConfigurationPropertiesFormat(
+                    privateIPAddress,
+                    privateIPAllocationMethod,
+                    subnet,
+                    publicIPAddress,
+                    provisioningState,
+                    default),
+                etag);
         }
 
         /// <summary> RouteTable resource in a virtual hub. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="labels"> List of labels associated with this route table. </param>
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
@@ -18836,13 +18859,19 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HubRouteTableData HubRouteTableData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, IEnumerable<HubRoute> routes = default, IEnumerable<string> labels = default, IEnumerable<string> associatedConnections = default, IEnumerable<string> propagatingConnections = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new HubRouteTableData(id, default, name, resourceType, routes is null && labels is null && associatedConnections is null && propagatingConnections is null && provisioningState is null ? default : new HubRouteTableProperties(
-                (routes ?? new ChangeTrackingList<HubRoute>()).ToList(),
-                (labels ?? new ChangeTrackingList<string>()).ToList(),
-                (associatedConnections ?? new ChangeTrackingList<string>()).ToList(),
-                (propagatingConnections ?? new ChangeTrackingList<string>()).ToList(),
-                provisioningState,
-                default));
+            return new HubRouteTableData(
+                id,
+                default,
+                name,
+                resourceType,
+                routes is null && labels is null && associatedConnections is null && propagatingConnections is null && provisioningState is null ? default : new HubRouteTableProperties(
+                    (routes ?? new ChangeTrackingList<HubRoute>()).ToList(),
+                    (labels ?? new ChangeTrackingList<string>()).ToList(),
+                    (associatedConnections ?? new ChangeTrackingList<string>()).ToList(),
+                    (propagatingConnections ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                etag);
         }
 
         /// <summary> The routing intent child resource of a Virtual hub. </summary>
@@ -19174,8 +19203,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"></param>
-        /// <param name="trafficAnalyticsConfiguration"></param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -19188,7 +19217,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && enabled is null && retentionPolicy is null && enabled is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
+                targetResourceId is null && targetResourceGuid is null && storageId is null && enabledFilteringCriteria is null && enabled is null && retentionPolicy is null && format is null && trafficAnalyticsConfiguration is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
                     targetResourceId,
                     targetResourceGuid,
                     storageId,
@@ -19196,14 +19225,8 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     enabled,
                     retentionPolicy,
-                    default,
-                    enabled is null ? default : new TrafficAnalyticsProperties(enabled is null ? default : new TrafficAnalyticsConfigurationProperties(
-                        enabled,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default), default),
+                    format,
+                    trafficAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, default),
                     provisioningState,
                     default),
                 etag,
@@ -20875,8 +20898,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"></param>
-        /// <param name="trafficAnalyticsConfiguration"></param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -20889,7 +20912,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                targetResourceId is null && targetResourceGuid is null && storageId is null && enabled is null && retentionPolicy is null && enabled is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
+                targetResourceId is null && targetResourceGuid is null && storageId is null && enabled is null && retentionPolicy is null && format is null && trafficAnalyticsConfiguration is null && provisioningState is null ? default : new FlowLogPropertiesFormat(
                     targetResourceId,
                     targetResourceGuid,
                     storageId,
@@ -20897,14 +20920,8 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     enabled,
                     retentionPolicy,
-                    default,
-                    enabled is null ? default : new TrafficAnalyticsProperties(enabled is null ? default : new TrafficAnalyticsConfigurationProperties(
-                        enabled,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default), default),
+                    format,
+                    trafficAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, default),
                     provisioningState,
                     default),
                 etag,

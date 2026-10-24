@@ -28,7 +28,10 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(typeof(FlowLogInformation).GetProperty("NetworkWatcherFlowAnalyticsConfiguration"), Is.Null);
             Assert.That(GetWirePath(property), Is.EqualTo(WirePath));
             Assert.That(typeof(FlowLogInformation).GetProperties().Count(p => GetWirePath(p) == WirePath), Is.EqualTo(1));
-            Assert.That(typeof(FlowLogData).GetProperty("NetworkWatcherFlowAnalyticsConfiguration"), Is.Not.Null);
+            Assert.That(typeof(FlowLogData).GetProperty("NetworkWatcherFlowAnalyticsConfiguration"), Is.Null);
+            PropertyInfo dataProperty = typeof(FlowLogData).GetProperty("TrafficAnalyticsConfiguration");
+            Assert.That(dataProperty.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+            Assert.That(GetWirePath(dataProperty), Is.EqualTo("properties." + WirePath));
         }
 
         [Test]
@@ -41,17 +44,17 @@ namespace Azure.ResourceManager.Network.Tests
 
             model.TrafficAnalyticsConfiguration = null;
             Assert.That(model.FlowAnalyticsConfiguration, Is.Not.Null);
-            Assert.That(model.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration, Is.Null);
+            Assert.That(model.FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration, Is.Null);
 
             var configuration = new TrafficAnalyticsConfigurationProperties { Enabled = true };
             model.TrafficAnalyticsConfiguration = configuration;
-            Assert.That(model.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration, Is.SameAs(configuration));
+            Assert.That(model.FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration, Is.SameAs(configuration));
             var replacement = new TrafficAnalyticsConfigurationProperties { Enabled = false };
-            model.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = replacement;
+            model.FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = replacement;
             Assert.That(model.TrafficAnalyticsConfiguration, Is.SameAs(replacement));
             model.TrafficAnalyticsConfiguration = null;
             Assert.That(model.FlowAnalyticsConfiguration, Is.Not.Null);
-            Assert.That(model.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration, Is.Null);
+            Assert.That(model.FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration, Is.Null);
         }
 
         [TestCase("J")]
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(outer.GetProperty("networkWatcherFlowAnalyticsConfiguration").GetProperty("trafficAnalyticsInterval").GetInt32(), Is.EqualTo(60));
             FlowLogInformation restored = ModelReaderWriter.Read<FlowLogInformation>(serialized, options);
             Assert.That(restored.TrafficAnalyticsConfiguration.WorkspaceId, Is.EqualTo("after"));
-            Assert.That(restored.TrafficAnalyticsConfiguration, Is.SameAs(restored.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration));
+            Assert.That(restored.TrafficAnalyticsConfiguration, Is.SameAs(restored.FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration));
         }
 
         private static string GetWirePath(PropertyInfo property) =>

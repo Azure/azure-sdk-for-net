@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -59,17 +58,8 @@ namespace Azure.ResourceManager.Network.Models
             var additionalProperties = rule._additionalBinaryDataProperties is null
                 ? new Dictionary<string, BinaryData>()
                 : new Dictionary<string, BinaryData>(rule._additionalBinaryDataProperties);
-            // The current resource schema omits etag; retain the released metadata in persisted JSON and conversion.
-            if (rule.ETag.HasValue)
-            {
-                using var stream = new MemoryStream();
-                using (var writer = new Utf8JsonWriter(stream))
-                {
-                    writer.WriteStringValue(rule.ETag.Value.ToString());
-                }
-                additionalProperties["etag"] = BinaryData.FromBytes(stream.ToArray());
-            }
-            return new InboundSecurityRuleData(rule.Id, additionalProperties, rule.Name, rule.ResourceType, rule._properties);
+            // Preserve the legacy conversion while assigning modeled metadata through the native constructor.
+            return new InboundSecurityRuleData(rule.Id, additionalProperties, rule.Name, rule.ResourceType, rule._properties, rule.ETag);
         }
 
         InboundSecurityRule IJsonModel<InboundSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -130,20 +120,18 @@ namespace Azure.ResourceManager.Network.Models
             }
             // Reuse the generated resource/property readers for rules, provisioning state, unknown fields and wire formats.
             InboundSecurityRuleData data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(element, options);
-            ETag? etag = element.TryGetProperty("etag", out JsonElement etagElement) && etagElement.ValueKind != JsonValueKind.Null
-                ? new ETag(etagElement.GetString()) : default;
             var additionalProperties = new Dictionary<string, BinaryData>();
             if (options.Format != "W")
             {
                 foreach (JsonProperty property in element.EnumerateObject())
                 {
-                    if (property.Name != "id" && property.Name != "name" && property.Name != "type" && property.Name != "properties")
+                    if (property.Name != "id" && property.Name != "name" && property.Name != "type" && property.Name != "properties" && property.Name != "etag")
                     {
                         additionalProperties[property.Name] = BinaryData.FromString(property.Value.GetRawText());
                     }
                 }
             }
-            return new InboundSecurityRule(data.Id, data.Name, data.ResourceType, etag, data.Properties, additionalProperties);
+            return new InboundSecurityRule(data.Id, data.Name, data.ResourceType, data.ETag, data.Properties, additionalProperties);
         }
     }
 }

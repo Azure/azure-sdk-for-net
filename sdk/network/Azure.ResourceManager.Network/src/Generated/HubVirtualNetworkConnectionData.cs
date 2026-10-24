@@ -96,6 +96,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Enable Only IPv6 Peering for this connection. </summary>
         [WirePath("properties.enableOnlyIPv6Peering")]
         public bool? IsOnlyIPv6PeeringEnabled

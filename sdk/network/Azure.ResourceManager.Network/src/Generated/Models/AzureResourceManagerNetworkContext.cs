@@ -411,7 +411,6 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(FirstPartyServiceTagPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(FirstPartyServiceTagResource))]
     [ModelReaderWriterBuildable(typeof(FlowLogData))]
-    [ModelReaderWriterBuildable(typeof(FlowLogFormatParameters))]
     [ModelReaderWriterBuildable(typeof(FlowLogInformation))]
     [ModelReaderWriterBuildable(typeof(FlowLogListResult))]
     [ModelReaderWriterBuildable(typeof(FlowLogProperties))]

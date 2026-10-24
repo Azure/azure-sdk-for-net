@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType? resourceType = default;
             InboundNatRulePropertiesFormat properties = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -165,12 +171,27 @@ namespace Azure.ResourceManager.Network
                     properties = InboundNatRulePropertiesFormat.DeserializeInboundNatRulePropertiesFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InboundNatRuleData(id, additionalBinaryDataProperties, name, resourceType, properties);
+            return new InboundNatRuleData(
+                id,
+                additionalBinaryDataProperties,
+                name,
+                resourceType,
+                properties,
+                eTag);
         }
     }
 }
