@@ -606,7 +606,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc, credentialRefreshAt: TokenProvider.CredentialRefreshAt), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -776,7 +776,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     refreshTimerFactory: () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null),
                     identifier: identifier);
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc, credentialRefreshAt: TokenProvider.CredentialRefreshAt), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -915,7 +915,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     identifier: identifier
                 );
 
-                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc, credentialRefreshAt: TokenProvider.CredentialRefreshAt), Timeout.InfiniteTimeSpan);
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
@@ -1067,29 +1067,44 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         ///   Calculates the interval after which authorization for an AMQP link should be
-        ///   refreshed.
+        ///   refreshed. A credential refresh time earlier than the buffered expiration is used
+        ///   so the credential is called then. Jitter is not applied to that time, so the timer
+        ///   does not fire before the cache will request a new token. Otherwise the refresh is
+        ///   the authorization expiration less a buffer and jitter.
         /// </summary>
         ///
         /// <param name="expirationTimeUtc">The date/time, in UTC, that the current authorization is expected to expire.</param>
         /// <param name="currentTimeUtc">The current date/time, in UTC.  If not specified, the system time will be used.</param>
+        /// <param name="credentialRefreshAt">The time the credential asks to be refreshed, or <see langword="null" /> when the token has none. When earlier than the buffered expiration, the timer fires at this time.</param>
         ///
         /// <returns>The interval after which authorization should be refreshed.</returns>
         ///
         protected virtual TimeSpan CalculateLinkAuthorizationRefreshInterval(
             DateTime expirationTimeUtc,
-            DateTime? currentTimeUtc = null)
+            DateTime? currentTimeUtc = null,
+            DateTimeOffset? credentialRefreshAt = null)
         {
             currentTimeUtc ??= DateTime.UtcNow;
 
-            // Calculate the interval for when refreshing authorization should take place;
-            // the refresh is based on the time that the credential expires, less a buffer to
-            // allow for clock skew.  A random number of seconds is added as jitter, to prevent
-            // multiple resources using the same token from all requesting a refresh at the same moment.
+            // Rotate before the token expires, leaving a buffer for clock skew. A credential
+            // refresh time earlier than that is used instead, and jitter is not applied there:
+            // an early tick would reuse the cached token and the minimum interval would then
+            // delay the next attempt.
+            DateTime refreshTime = expirationTimeUtc.Subtract(AuthorizationRefreshBuffer);
+            var usingCredentialRefresh = false;
 
-            var refreshDueInterval = expirationTimeUtc
-                .Subtract(AuthorizationRefreshBuffer)
-                .Subtract(currentTimeUtc.Value)
-                .Subtract(TimeSpan.FromSeconds(RandomNumberGenerator.Value.NextDouble() * AuthorizationBaseJitterSeconds));
+            if (credentialRefreshAt is DateTimeOffset refreshAt && refreshAt.UtcDateTime < refreshTime)
+            {
+                refreshTime = refreshAt.UtcDateTime;
+                usingCredentialRefresh = true;
+            }
+
+            var refreshDueInterval = refreshTime.Subtract(currentTimeUtc.Value);
+
+            if (!usingCredentialRefresh)
+            {
+                refreshDueInterval = refreshDueInterval.Subtract(TimeSpan.FromSeconds(RandomNumberGenerator.Value.NextDouble() * AuthorizationBaseJitterSeconds));
+            }
 
             return refreshDueInterval switch
             {
@@ -1153,7 +1168,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     if (authExpirationUtc >= DateTimeOffset.UtcNow)
                     {
-                        refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+                        refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc, credentialRefreshAt: tokenProvider.CredentialRefreshAt), Timeout.InfiniteTimeSpan);
                     }
                 }
                 catch (ObjectDisposedException)

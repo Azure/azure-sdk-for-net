@@ -12,6 +12,8 @@
 
 ### Bugs Fixed
 
+- Fixed `CbsTokenProvider` ignoring `AccessToken.RefreshOn`. A token credential that asks to refresh before `ExpiresOn` is now called again at `RefreshOn`. The CBS token still reports `ExpiresOn` as the token's real expiration. ([#63612](https://github.com/Azure/azure-sdk-for-net/issues/63612))
+
 ### Other Changes
 
 ## 7.21.0 (2026-10-06)
