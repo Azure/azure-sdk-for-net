@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
 {
     // Do not regenerate factory overloads that were absent from the 1.15 API.
     [CodeGenSuppress("LoadBalancerInboundNatPoolProperties", typeof(ResourceIdentifier), typeof(LoadBalancingTransportProtocol), typeof(int), typeof(int), typeof(int), typeof(int?), typeof(bool?), typeof(bool?), typeof(NetworkProvisioningState?))]
+    // The generated 1.15.0 object-valued health factory adapter otherwise discards the supplied configuration ID.
+    [CodeGenSuppress("LoadBalancerHealthPerRulePerBackendAddress", typeof(string), typeof(NetworkInterfaceIPConfigurationData), typeof(string), typeof(string))]
     // The renamed numeric wire property must not consume or discard the legacy string input.
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
@@ -41,6 +43,12 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        // Preserve the 1.15.0 object-valued factory overload by projecting its ID to the canonical string-ID factory.
+        /// <summary> Initializes load-balancer backend health using the referenced IP configuration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId, string state, string reason)
+            => LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId?.Id, state, reason);
+
         /// <summary> Initializes a new appliance connection using the legacy NFV factory signature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsoleted and will be removed in a future version. Please use the overload with the connectionRoutingConfiguration parameter instead.")]

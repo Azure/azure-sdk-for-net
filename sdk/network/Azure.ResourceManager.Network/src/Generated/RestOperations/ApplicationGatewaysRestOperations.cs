@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableWafRuleSetsRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAppGatewayAvailableWafRuleSetsRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

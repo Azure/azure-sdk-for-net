@@ -2602,16 +2602,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewaySslPredefinedPolicy(id, default, name, resourceType, cipherSuites is null && minProtocolVersion is null ? default : new ApplicationGatewaySslPredefinedPolicyPropertiesFormat((cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>()).ToList(), minProtocolVersion, default));
         }
 
-        /// <summary> Response for ApplicationGatewayAvailableWafRuleSets API service call. </summary>
-        /// <param name="value"> The list of application gateway rule sets. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayAvailableWafRuleSetsResult"/> instance for mocking. </returns>
-        public static ApplicationGatewayAvailableWafRuleSetsResult ApplicationGatewayAvailableWafRuleSetsResult(IEnumerable<ApplicationGatewayFirewallRuleSet> value = default)
-        {
-            value ??= new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>();
-
-            return new ApplicationGatewayAvailableWafRuleSetsResult((value ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>()).ToList(), default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -11499,13 +11489,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The information about health per rule per backend address. </summary>
         /// <param name="ipAddress"> The IP address belonging to the backend address. </param>
-        /// <param name="networkInterfaceIPConfigurationId"> Resource ID of the Network Interface IP Configuration. </param>
+        /// <param name="networkInterfaceIPConfigurationResourceId"> Resource ID of the Network Interface IP Configuration. </param>
         /// <param name="state"> The current health of the backend instances that is associated to the LB rule. </param>
         /// <param name="reason"> The explanation of the State. </param>
         /// <returns> A new <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/> instance for mocking. </returns>
-        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId, string state, string reason)
+        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = default, ResourceIdentifier networkInterfaceIPConfigurationResourceId = default, string state = default, string reason = default)
         {
-            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, default);
+            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationResourceId, state, reason, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -16764,75 +16754,6 @@ namespace Azure.ResourceManager.Network.Models
                     idleTimeoutInMinutes,
                     default),
                 etag);
-        }
-
-        /// <summary> The information about health per rule per backend address. </summary>
-        /// <param name="ipAddress"> The IP address belonging to the backend address. </param>
-        /// <param name="networkInterfaceIPConfigurationResourceId"> Resource ID. </param>
-        /// <param name="state"> The current health of the backend instances that is associated to the LB rule. </param>
-        /// <param name="reason"> The explanation of the State. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = default, ResourceIdentifier networkInterfaceIPConfigurationResourceId = default, string state = default, string reason = default)
-        {
-            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationResourceId is null && ipAddress is null ? default : new NetworkInterfaceIPConfigurationData(
-                default,
-                default,
-                default,
-                default,
-                networkInterfaceIPConfigurationResourceId is null && ipAddress is null ? default : new NetworkInterfaceIPConfigurationPropertiesFormat(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    networkInterfaceIPConfigurationResourceId is null && ipAddress is null ? default : new PublicIPAddressData(
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        networkInterfaceIPConfigurationResourceId is null && ipAddress is null ? default : new PublicIPAddressPropertiesFormat(
-                            default,
-                            default,
-                            networkInterfaceIPConfigurationResourceId is null ? default : new NetworkIPConfiguration(
-                                networkInterfaceIPConfigurationResourceId,
-                                default,
-                                default,
-                                default,
-                                default,
-                                default),
-                            default,
-                            default,
-                            default,
-                            ipAddress,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default,
-                            default),
-                        default,
-                        default,
-                        default,
-                        default),
-                    default,
-                    default,
-                    default,
-                    default),
-                default), state, reason, default);
         }
 
         /// <summary> The Managed Network resource. </summary>

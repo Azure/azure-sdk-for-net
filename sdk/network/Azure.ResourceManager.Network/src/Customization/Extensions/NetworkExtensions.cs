@@ -16,6 +16,48 @@ namespace Azure.ResourceManager.Network
 {
     public static partial class NetworkExtensions
     {
+        // Preserve the obsolete 1.15.0 AsyncAsync spelling; the active pageable API is generated natively.
+        /// <summary> Gets the available application gateway WAF rule sets. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future release, please use `GetAppGatewayAvailableWafRuleSetsAsync` instead", false)]
+        public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
+
+        // Preserve the obsolete 1.15.0 synchronous Async spelling without inventing an alias on the mockable class.
+        /// <summary> Gets the available application gateway WAF rule sets. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsoleted and will be removed in a future release, please use `GetAppGatewayAvailableWafRuleSets` instead", false)]
+        public static Pageable<ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
+
+        // Preserve the 1.15.0 subscription listing; the native operation belongs to the SSL-options resource.
+        /// <summary> Gets the predefined application gateway SSL policies. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
+
+        // Preserve the 1.15.0 subscription receiver and its virtual mockable dispatch for native policy pages.
+        /// <summary> Gets the predefined application gateway SSL policies. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
+
+        // 1.15.0 returns subscription-qualified policy IDs even when the service omits or changes the ID.
+        internal static ApplicationGatewaySslPredefinedPolicy NormalizeApplicationGatewaySslPredefinedPolicy(ApplicationGatewaySslPredefinedPolicy policy, string subscriptionId)
+        {
+            if (policy is not null)
+            {
+                policy.Id = CreateApplicationGatewaySslPredefinedPolicyIdentifier(subscriptionId, policy.Name);
+            }
+            return policy;
+        }
+
+        // Keep the released policy identifier shape shared by both retained list and get operations.
+        internal static ResourceIdentifier CreateApplicationGatewaySslPredefinedPolicyIdentifier(string subscriptionId, string policyName)
+            => new ResourceIdentifier($"/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/ApplicationGatewaySslPredefinedPolicy/{policyName}");
+
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsoleted and will be removed in a future version. Please use SwapPublicIPAddresses instead.")]

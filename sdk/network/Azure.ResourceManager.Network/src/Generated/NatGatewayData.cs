@@ -132,6 +132,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
+        [WirePath("properties.subnets")]
+        public IReadOnlyList<WritableSubResource> Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.Subnets;
+            }
+        }
+
         /// <summary> Whether Nat64 is enabled for the NAT gateway resource. </summary>
         [WirePath("properties.nat64")]
         public Nat64State? Nat64

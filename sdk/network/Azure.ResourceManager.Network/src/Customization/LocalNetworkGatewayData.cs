@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LocalNetworkGatewayData
     {
-        // Preserve the 1.15 compatibility facade over the native change-tracking list.
+        // 1.15.0 exposes this custom convenience list alongside public LocalNetworkAddressSpace; flattening would remove that contract.
         /// <summary> Gets the local network address prefixes in CIDR notation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> LocalNetworkAddressPrefixes
