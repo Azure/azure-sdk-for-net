@@ -39,18 +39,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(reported["second"]);
         }
 
-        [Fact]
-        public void ActiveKeysBecomeDueAgainAfterTheLongInterval()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(Start)]
+        public void ActiveKeysBecomeDueAgainAfterTheLongInterval(long start)
         {
             var registry = new AttachStatsbeatRegistry();
             var batch = MockStatsbeatScope.CreateRouteBatch(("key", EastUs));
-            registry.Observe(batch, Start);
-            Assert.Single(registry.Collect(Start, Interval));
+            registry.Observe(batch, start);
+            Assert.Single(registry.Collect(start, Interval));
             registry.CompleteCollection();
-            Assert.Empty(registry.Collect(Start + 1, Interval));
+            Assert.Empty(registry.Collect(start, Interval));
+            Assert.Empty(registry.Collect(start + Interval - 1, Interval));
             registry.CompleteCollection();
-            registry.Observe(batch, Start + Interval);
-            Assert.Single(registry.Collect(Start + Interval, Interval));
+            registry.Observe(batch, start + Interval);
+            Assert.Single(registry.Collect(start + Interval, Interval));
         }
 
         [Fact]
@@ -64,23 +67,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(AttachStatsbeatRegistry.Capacity, registry.Collect(Start, Interval).Count);
         }
 
-        [Fact]
-        public void ExpirationWaitsForTheSdkToReclaimThePreviousCollection()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(Start)]
+        public void ExpirationWaitsForTheSdkToReclaimThePreviousCollection(long start)
         {
             var registry = new AttachStatsbeatRegistry();
-            registry.Observe(Keys(0), Start);
-            Assert.Equal(AttachStatsbeatRegistry.Capacity, registry.Collect(Start, Interval).Count);
+            registry.Observe(Keys(0), start);
+            Assert.Equal(AttachStatsbeatRegistry.Capacity, registry.Collect(start, Interval).Count);
             registry.CompleteCollection();
 
-            Assert.Empty(registry.Collect(Start + Interval, Interval));
-            registry.Observe(MockStatsbeatScope.CreateRouteBatch(("replacement", EastUs)), Start + Interval);
+            Assert.Empty(registry.Collect(start + Interval, Interval));
+            registry.Observe(MockStatsbeatScope.CreateRouteBatch(("replacement", EastUs)), start + Interval);
             Assert.Equal(AttachStatsbeatRegistry.Capacity, registry.Count);
             registry.CompleteCollection();
 
-            Assert.Empty(registry.Collect(Start + Interval + 1, Interval));
+            Assert.Empty(registry.Collect(start + Interval + 1, Interval));
             Assert.Equal(0, registry.Count);
-            registry.Observe(MockStatsbeatScope.CreateRouteBatch(("replacement", EastUs)), Start + Interval + 1);
-            Assert.Equal("replacement", Assert.Single(registry.Collect(Start + Interval + 1, Interval)).Key);
+            registry.Observe(MockStatsbeatScope.CreateRouteBatch(("replacement", EastUs)), start + Interval + 1);
+            Assert.Equal("replacement", Assert.Single(registry.Collect(start + Interval + 1, Interval)).Key);
         }
 
         [Fact]
@@ -253,13 +258,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void MovingAFullCohortBetweenRegionsDoesNotOverflowTheRealSdk()
+        public void MovingAFullCohortBetweenRegionsWithUpdatedMetadataDoesNotOverflowTheRealSdk()
         {
             using var stats = new MockStatsbeatScope();
             long now = Start;
+            var version = string.Empty;
             using var collector = new MultiEndpointStatsbeat(
                 null, EastUs, null, TimeSpan.FromTicks(Interval),
-                key => new Measurement<int>(1, new("rpId", stats.ResourceProviderId), new("cikey", key)));
+                key => new Measurement<int>(1, new("rpId", stats.ResourceProviderId), new("cikey", key), new("version", version)));
             collector.Initialize();
             using var meter = new Meter(StatsbeatConstants.AttachStatsbeatMeterName);
             var instrument = meter.CreateObservableGauge("Attach", () => collector.GetMeasurements(now));
@@ -268,6 +274,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             for (int collection = 0; collection < 4; collection++)
             {
                 var isEu = collection % 2 != 0;
+                version = $"version-{collection}";
                 collector.Observe(Keys(0, isEu ? WestEurope : EastUs), now);
                 Assert.True(provider.ForceFlush());
                 var items = stats.TelemetryItems.Skip(collection * AttachStatsbeatRegistry.Capacity).ToArray();
@@ -277,6 +284,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.All(items, item => Assert.Equal(isEu
                     ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
                     : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, item.InstrumentationKey));
+                Assert.All(items, item => Assert.Equal(version, ((MetricsData)item.Data.BaseData).Properties["version"]));
                 now += Interval;
             }
 

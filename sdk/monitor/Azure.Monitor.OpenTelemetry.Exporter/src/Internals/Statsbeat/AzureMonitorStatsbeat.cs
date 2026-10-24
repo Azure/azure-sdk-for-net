@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
@@ -23,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
     internal sealed class AzureMonitorStatsbeat : IDisposable
     {
         private static readonly Meter s_attachMeter = new(StatsbeatConstants.AttachStatsbeatMeterName, "1.0");
+        private static readonly double s_timestampToTicks = (double)TimeSpan.TicksPerSecond / Stopwatch.Frequency;
 
         internal string? _statsbeat_ConnectionString;
 
@@ -56,9 +58,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private volatile bool _isDisposed;
 
-        // Wall-clock throttle for the Attach observable gauge so it emits at most once per
+        // Monotonic throttle for the Attach observable gauge so it emits at most once per
         // AttachEmissionInterval even though the shared reader collects every 15 min.
-        private long _lastAttachEmissionTicks;
+        private long _lastAttachEmissionTicks = -1;
 
         /// <summary>
         /// Records Network SDKStats on the shared statsbeat <see cref="MeterProvider"/>.
@@ -187,7 +189,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         }
 
         internal void ObserveAttach(EndpointRouteBatch batch)
-            => _multiEndpointStats?.Observe(batch, DateTime.UtcNow.Ticks);
+            => _multiEndpointStats?.Observe(batch, GetTimestampTicks());
+
+        internal static long GetTimestampTicks()
+            => (long)(Stopwatch.GetTimestamp() * s_timestampToTicks);
 
         private async Task InitializeMultiEndpointAsync()
         {
@@ -410,13 +415,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // takes over sending metrics.
             _ = Task.Run(async () =>
             {
-                DateTime giveUpTime = DateTime.Now.AddMinutes(5);
+                var wait = Stopwatch.StartNew();
                 do
                 {
                     await Task.Delay(TimeSpan.FromMinutes(1)).ConfigureAwait(false);
                     if (SdkVersionUtils.IsHydrated)
                         break;
-                } while (!SdkVersionUtils.IsHydrated && giveUpTime > DateTime.Now);
+                } while (!SdkVersionUtils.IsHydrated && wait.Elapsed < TimeSpan.FromMinutes(5));
 
                 _statsbeatMeterProvider?.ForceFlush();
             });
@@ -456,12 +461,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         }
 
         private IEnumerable<Measurement<int>> GetAttachStatsbeat()
+            => GetAttachStatsbeat(GetTimestampTicks());
+
+        internal IEnumerable<Measurement<int>> GetAttachStatsbeat(long nowTicks)
         {
             // Emit at most once per AttachEmissionInterval. Delta temporality means
             // skipped intervals don't produce an exported metric point.
             long previousTicks = Volatile.Read(ref _lastAttachEmissionTicks);
-            long nowTicks = DateTime.UtcNow.Ticks;
-            if (previousTicks != 0
+            if (previousTicks >= 0
                 && nowTicks - previousTicks < _attachEmissionInterval.Ticks)
             {
                 yield break;

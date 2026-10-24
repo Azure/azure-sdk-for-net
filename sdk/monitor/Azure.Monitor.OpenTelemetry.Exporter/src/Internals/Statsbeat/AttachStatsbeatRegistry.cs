@@ -88,15 +88,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     // An idle SDK collection must finish before its slots can be reused.
                     // Removing an entry at the start of that collection would admit replacements
                     // before OTel reclaims the previous points, causing identity-losing overflow.
-                    if ((!enabled || (inactive && entry.LastReported != 0))
-                        && (entry.LastReported == 0 || completedCollections >= entry.LastCollection + 2))
+                    if ((!enabled || (inactive && entry.LastReported >= 0))
+                        && (entry.LastReported < 0 || completedCollections >= entry.LastCollection + 2))
                     {
                         (expired ??= new List<string>()).Add(pair.Key);
                         continue;
                     }
 
-                    if (!enabled || (inactive && entry.LastReported != 0)
-                        || (entry.LastReported != 0 && now - entry.LastReported < intervalTicks))
+                    if (!enabled || (inactive && entry.LastReported >= 0)
+                        || (entry.LastReported >= 0 && now - entry.LastReported < intervalTicks))
                     {
                         continue;
                     }
@@ -152,7 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private sealed class Entry
         {
             internal long LastSeen;
-            internal long LastReported;
+            internal long LastReported = -1;
             internal long LastCollection;
             internal bool IsEu;
         }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -23,6 +24,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private readonly MockStatsbeatScope _stats = new();
 
         public void Dispose() => _stats.Dispose();
+
+        [Fact]
+        public void AttachTimestampUsesTheMonotonicClockInTimeSpanTicks()
+        {
+            var before = Stopwatch.GetTimestamp();
+            var timestamp = AzureMonitorStatsbeat.GetTimestampTicks();
+            var after = Stopwatch.GetTimestamp();
+            var factor = (double)TimeSpan.TicksPerSecond / Stopwatch.Frequency;
+
+            Assert.InRange(timestamp, (long)(before * factor), (long)(after * factor));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1000)]
+        public void SingleEndpointAttachIsThrottledUntilTheExactInterval(long start)
+        {
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionStringParser.GetValues("InstrumentationKey=customer;IngestionEndpoint=https://eastus.in.applicationinsights.azure.com/"),
+                _stats.Platform);
+            var interval = statsbeat._attachEmissionInterval.Ticks;
+
+            Assert.Single(statsbeat.GetAttachStatsbeat(start));
+            Assert.Empty(statsbeat.GetAttachStatsbeat(start));
+            Assert.Empty(statsbeat.GetAttachStatsbeat(start + interval - 1));
+            Assert.Single(statsbeat.GetAttachStatsbeat(start + interval));
+        }
 
         public static TheoryData<string> EuEndpoints
         {

@@ -26,8 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private readonly Func<string, Measurement<int>> _createMeasurement;
         private readonly long _intervalTicks;
         private Destinations? _destinations;
-        private KeyValuePair<string, object?>[]? _tags;
-        private int _keyIndex;
 
         internal MultiEndpointStatsbeat(
             string? connectionStringOverride,
@@ -119,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         }
 
         internal IEnumerable<Measurement<int>> GetMeasurements()
-            => GetMeasurements(DateTime.UtcNow.Ticks);
+            => GetMeasurements(AzureMonitorStatsbeat.GetTimestampTicks());
 
         internal IEnumerable<Measurement<int>> GetMeasurements(long now)
         {
@@ -130,17 +128,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             try
             {
-                if (_tags == null)
+                // Resource attributes can hydrate the version and attach mode after the first collection.
+                var template = _createMeasurement(string.Empty).Tags.ToArray();
+                var keyIndex = Array.FindIndex(template, tag => tag.Key == "cikey");
+                if (keyIndex < 0)
                 {
-                    var tags = _createMeasurement(string.Empty).Tags.ToArray();
-                    var keyIndex = Array.FindIndex(tags, tag => tag.Key == "cikey");
-                    if (keyIndex < 0)
-                    {
-                        throw new InvalidOperationException("Attach measurements require a cikey dimension.");
-                    }
-                    _keyIndex = keyIndex;
-                    _tags = new KeyValuePair<string, object?>[tags.Length + (_connectionStringOverride == null ? 2 : 0)];
-                    tags.CopyTo(_tags, 0);
+                    throw new InvalidOperationException("Attach measurements require a cikey dimension.");
                 }
 
                 var destinations = Volatile.Read(ref _destinations);
@@ -153,8 +146,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     {
                         continue;
                     }
-                    var tags = (KeyValuePair<string, object?>[])_tags.Clone();
-                    tags[_keyIndex] = new KeyValuePair<string, object?>("cikey", pair.Key);
+                    var tags = new KeyValuePair<string, object?>[template.Length + (_connectionStringOverride == null ? 2 : 0)];
+                    template.CopyTo(tags, 0);
+                    tags[keyIndex] = new KeyValuePair<string, object?>("cikey", pair.Key);
                     if (_connectionStringOverride == null)
                     {
                         tags[tags.Length - 2] = new(SemanticConventions.AttributeMicrosoftInstrumentationKey, destination.Vars.InstrumentationKey);

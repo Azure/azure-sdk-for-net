@@ -16,6 +16,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using Xunit;
 using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
 
@@ -64,12 +65,91 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(scope.StatsConnectionString, scope.Statsbeat._statsbeat_ConnectionString);
         }
 
-        [Fact]
-        public void NoObservedCustomerDoesNotProduceAnAttach()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void NoObservedCustomerDoesNotProduceAnAttach(bool configured)
         {
-            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured);
             Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
             Assert.Empty(scope.AttachMeasurements());
+        }
+
+        [Fact]
+        public void SingleEndpointAttachStillReportsTheConfiguredKeyWithoutTelemetry()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: false, configured: true);
+
+            Assert.True(scope.Statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Equal(CustomerKey, Assert.Single(scope.AttachMeasurements()).Properties["cikey"]);
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void AttachMetadataReflectsResourceHydrationAfterTheFirstCollection(bool useOverride)
+        {
+            var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+            var sdkVersion = SdkVersionUtils.s_sdkVersion;
+            var sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+            var extensionVersion = SdkVersionUtils.s_extensionVersion;
+            var extensionVersionOverride = SdkVersionUtils.s_extensionVersionOverride;
+            var extensionLabel = SdkVersionUtils.ExtensionLabel;
+            try
+            {
+                SdkVersionUtils.SdkVersionPrefix = null;
+                SdkVersionUtils.VersionType = SdkVersionType.Exporter;
+                SdkVersionUtils.s_sdkVersionType = null;
+                var initialVersion = SdkVersionUtils.GetVersion();
+                using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false, useOverride);
+                var provider = scope.Statsbeat._statsbeatMeterProvider!;
+                scope.Observe(("early", EastUs));
+                Assert.True(provider.ForceFlush());
+                var early = Assert.Single(scope.AttachMeasurements());
+                Assert.Equal(initialVersion, early.Properties["version"]);
+                Assert.Equal("Manual", early.Properties["attach"]);
+
+                var resource = ResourceBuilder.CreateEmpty().AddAttributes(new Dictionary<string, object>
+                {
+                    ["ai.sdk.prefix"] = "test",
+                    ["telemetry.distro.name"] = "Microsoft.OpenTelemetry",
+                    ["telemetry.distro.version"] = "1.2.3",
+                }).Build();
+                _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: scope.Platform);
+                scope.Observe(("late", WestEurope));
+                Assert.True(provider.ForceFlush());
+
+                Assert.Equal(2, scope.AttachMeasurements().Length);
+                var late = Assert.Single(scope.AttachMeasurements().Where(data => data.Properties["cikey"] == "late"));
+                Assert.Equal("mot1.2.3", late.Properties["version"]);
+                Assert.Equal("IntegratedAuto", late.Properties["attach"]);
+                Assert.Equal(scope.ResourceProviderId, late.Properties["rpId"]);
+            }
+            finally
+            {
+                SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+                SdkVersionUtils.s_sdkVersion = sdkVersion;
+                SdkVersionUtils.s_sdkVersionType = sdkVersionType;
+                SdkVersionUtils.s_extensionVersion = extensionVersion;
+                SdkVersionUtils.s_extensionVersionOverride = extensionVersionOverride;
+                SdkVersionUtils.ExtensionLabel = extensionLabel;
+            }
+        }
+
+        [Fact]
+        public void ObservationAndCollectionUseTheSameMonotonicClockForExpiry()
+        {
+            using var scope = new AttachTestScope(multiEndpointEnabled: true, configured: false);
+            var collector = scope.Statsbeat._multiEndpointStats!;
+            scope.Observe(("key", EastUs));
+            Assert.Single(collector.GetMeasurements());
+            collector.Registry.CompleteCollection();
+
+            var next = AzureMonitorStatsbeat.GetTimestampTicks() + scope.Statsbeat._attachEmissionInterval.Ticks;
+            Assert.Empty(collector.GetMeasurements(next));
+            collector.Registry.CompleteCollection();
+            Assert.Empty(collector.GetMeasurements(next));
+            Assert.Equal(0, collector.Registry.Count);
         }
 
         [Fact]
