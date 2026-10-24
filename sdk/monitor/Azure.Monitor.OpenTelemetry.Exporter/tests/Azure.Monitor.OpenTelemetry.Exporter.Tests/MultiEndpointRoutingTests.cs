@@ -525,6 +525,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint={EastUs}",
                 Credential = new StubCredential(),
                 DisableOfflineStorage = true,
+                EnableStatsbeat = false,
             };
 
             using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
@@ -542,6 +543,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint={EastUs}",
                 DisableOfflineStorage = true,
+                EnableStatsbeat = false,
             };
 
             using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
