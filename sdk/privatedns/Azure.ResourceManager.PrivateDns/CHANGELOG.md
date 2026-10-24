@@ -1,12 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2026-10-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for API version `2026-06-01-preview`, including querying Private DNS resource references.
+- Added `TrafficManagementProfileId` and read-only `ProvisioningState` to record data models.
 
 ### Other Changes
 
