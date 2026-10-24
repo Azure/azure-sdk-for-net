@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -63,6 +64,159 @@ namespace Azure.ResourceManager.Network.Tests
             model.FrontEndIPConfiguration.Add(new WritableSubResource { Id = new ResourceIdentifier(ReferencePath) });
             using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
             Assert.That(document.RootElement.GetProperty("properties").GetProperty("frontEndIpConfiguration")[0].GetProperty("id").GetString(), Is.EqualTo(ReferencePath));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void DdosProtectionPlanPreservesInheritedResourceFields(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            string id = GroupPath + "/providers/Microsoft.Network/ddosProtectionPlans/plan";
+            var model = ModelReaderWriter.Read<DdosProtectionPlanData>(BinaryData.FromString($$$$"""
+                {"id":"{{{{id}}}}","name":"plan","type":"Microsoft.Network/ddosProtectionPlans","location":"westus","tags":{"owner":"sdk"},"systemData":{"createdBy":"creator"},"etag":"etag-value","future":"retained","properties":{"publicIPAddresses":[{"id":"{{{{ReferencePath}}}}"}],"virtualNetworks":[{"id":"{{{{ReferencePath}}}}"}]}}
+                """), options);
+            Assert.That(model.Id.ToString(), Is.EqualTo(id));
+            Assert.That(model.Name, Is.EqualTo("plan"));
+            Assert.That(model.ResourceType.ToString(), Is.EqualTo("Microsoft.Network/ddosProtectionPlans"));
+            Assert.That(model.Location, Is.EqualTo(new AzureLocation("westus")));
+            Assert.That(model.Tags["owner"], Is.EqualTo("sdk"));
+            Assert.That(model.SystemData.CreatedBy, Is.EqualTo("creator"));
+            Assert.That(model.ETag.ToString(), Is.EqualTo("etag-value"));
+            Assert.That(model.PublicIPAddresses[0].Id.ToString(), Is.EqualTo(ReferencePath));
+            Assert.That(model.VirtualNetworks[0].Id.ToString(), Is.EqualTo(ReferencePath));
+            model.Tags["owner"] = "updated";
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            Assert.That(document.RootElement.EnumerateObject().Select(property => property.Name), Is.Unique);
+            Assert.That(document.RootElement.GetProperty("location").GetString(), Is.EqualTo("westus"));
+            Assert.That(document.RootElement.GetProperty("tags").GetProperty("owner").GetString(), Is.EqualTo("updated"));
+            if (format == "J")
+            {
+                Assert.That(document.RootElement.GetProperty("id").GetString(), Is.EqualTo(id));
+                Assert.That(document.RootElement.GetProperty("future").GetString(), Is.EqualTo("retained"));
+                Assert.That(document.RootElement.GetProperty("properties").GetProperty("virtualNetworks")[0].GetProperty("id").GetString(), Is.EqualTo(ReferencePath));
+            }
+        }
+
+        [Test]
+        public void DdosProtectionPlanRetainsLocationConstructor()
+        {
+            Assert.That(typeof(DdosProtectionPlanData).BaseType, Is.EqualTo(typeof(Azure.ResourceManager.Models.TrackedResourceData)));
+            Assert.That(typeof(DdosProtectionPlanData).GetProperty("Name", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly), Is.Null);
+            ConstructorInfo constructor = typeof(DdosProtectionPlanData).GetConstructor(new[] { typeof(AzureLocation) });
+            Assert.That(constructor, Is.Not.Null);
+            var model = (DdosProtectionPlanData)constructor.Invoke(new object[] { new AzureLocation("westus") });
+            Assert.That(model.Tags, Is.Empty);
+            model.Tags["owner"] = "sdk";
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
+            Assert.That(model.Location, Is.EqualTo(new AzureLocation("westus")));
+            Assert.That(document.RootElement.GetProperty("location").GetString(), Is.EqualTo("westus"));
+            Assert.That(document.RootElement.GetProperty("tags").GetProperty("owner").GetString(), Is.EqualTo("sdk"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task DdosProtectionPlanRetainsNativeResourceGet(bool asynchronous)
+        {
+            string id = GroupPath + "/providers/Microsoft.Network/ddosProtectionPlans/plan";
+            var transport = MockTransport.FromMessageCallback(_ => new MockResponse(200).SetContent($$$$"""
+                {"id":"{{{{id}}}}","name":"plan","type":"Microsoft.Network/ddosProtectionPlans","location":"westus","tags":{"owner":"sdk"}}
+                """));
+            var resource = CreateClient(transport).GetDdosProtectionPlanResource(new ResourceIdentifier(id));
+            var response = asynchronous ? await resource.GetAsync() : resource.Get();
+            Assert.That(response.Value.Data.Id.ToString(), Is.EqualTo(id));
+            Assert.That(response.Value.Data.Location, Is.EqualTo(new AzureLocation("westus")));
+            Assert.That(response.Value.Data.Tags["owner"], Is.EqualTo("sdk"));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+        }
+
+        [TestCase(typeof(ConnectionAnalyzerData), "networkWatchers/watcher/connectionAnalyzers", "J")]
+        [TestCase(typeof(ConnectionAnalyzerData), "networkWatchers/watcher/connectionAnalyzers", "W")]
+        [TestCase(typeof(ExpressRouteProviderPortData), "expressRouteProviderPorts", "J")]
+        [TestCase(typeof(ExpressRouteProviderPortData), "expressRouteProviderPorts", "W")]
+        [TestCase(typeof(IpamPoolData), "networkManagers/manager/ipamPools", "J")]
+        [TestCase(typeof(IpamPoolData), "networkManagers/manager/ipamPools", "W")]
+        [TestCase(typeof(NetworkSecurityPerimeterData), "networkSecurityPerimeters", "J")]
+        [TestCase(typeof(NetworkSecurityPerimeterData), "networkSecurityPerimeters", "W")]
+        [TestCase(typeof(NetworkVerifierWorkspaceData), "networkManagers/manager/verifierWorkspaces", "J")]
+        [TestCase(typeof(NetworkVerifierWorkspaceData), "networkManagers/manager/verifierWorkspaces", "W")]
+        [TestCase(typeof(ServiceGatewayData), "serviceGateways", "J")]
+        [TestCase(typeof(ServiceGatewayData), "serviceGateways", "W")]
+        public void NativeTrackedResourcesPreserveInheritedAndDerivedFields(Type modelType, string resourcePath, string format)
+        {
+            Assert.That(modelType.BaseType, Is.EqualTo(typeof(TrackedResourceData)));
+            Assert.That(modelType.GetProperty("Name", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly), Is.Null);
+            Assert.That(modelType.GetProperty("SystemData", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly), Is.Null);
+            var options = new ModelReaderWriterOptions(format);
+            string scope = modelType == typeof(ExpressRouteProviderPortData) ? "/subscriptions/" + SubscriptionId : GroupPath;
+            var id = new ResourceIdentifier(scope + "/providers/Microsoft.Network/" + resourcePath + "/item");
+            string properties = NativeTrackedResourceProperties(modelType);
+            string serviceFields = modelType == typeof(ServiceGatewayData) ? ""","sku":{"name":"Standard"},"zones":["1"]""" : string.Empty;
+            var model = (TrackedResourceData)ModelReaderWriter.Read(BinaryData.FromString($$$$"""
+                {"id":"{{{{id}}}}","name":"item","type":"{{{{id.ResourceType}}}}","location":"westus","tags":{"owner":"sdk"},"systemData":{"createdBy":"creator"},"future":"retained"{{{{serviceFields}}}},"properties":{{{{properties}}}}}
+                """), modelType, options, AzureResourceManagerNetworkContext.Default);
+            Assert.That(model.Id, Is.EqualTo(id));
+            Assert.That(model.Name, Is.EqualTo("item"));
+            Assert.That(model.ResourceType, Is.EqualTo(id.ResourceType));
+            Assert.That(model.Location, Is.EqualTo(new AzureLocation("westus")));
+            Assert.That(model.SystemData.CreatedBy, Is.EqualTo("creator"));
+            Assert.That(model.Tags["owner"], Is.EqualTo("sdk"));
+            model.Tags["owner"] = "updated";
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write((object)model, options, AzureResourceManagerNetworkContext.Default));
+            JsonElement root = document.RootElement;
+            Assert.That(root.EnumerateObject().Select(property => property.Name), Is.Unique);
+            Assert.That(root.GetProperty("location").GetString(), Is.EqualTo("westus"));
+            Assert.That(root.GetProperty("tags").GetProperty("owner").GetString(), Is.EqualTo("updated"));
+            if (modelType == typeof(ServiceGatewayData))
+            {
+                Assert.That(root.GetProperty("sku").GetProperty("name").GetString(), Is.EqualTo("Standard"));
+                Assert.That(root.GetProperty("zones")[0].GetString(), Is.EqualTo("1"));
+            }
+            using JsonDocument expectedProperties = JsonDocument.Parse(properties);
+            JsonProperty expectedProperty = expectedProperties.RootElement.EnumerateObject().First();
+            bool readOnlyProperty = modelType == typeof(NetworkSecurityPerimeterData) || modelType == typeof(ServiceGatewayData);
+            bool includesProperty = root.GetProperty("properties").TryGetProperty(expectedProperty.Name, out JsonElement propertyValue);
+            Assert.That(includesProperty, Is.EqualTo(format == "J" || !readOnlyProperty));
+            if (includesProperty)
+            {
+                Assert.That(propertyValue.ToString(), Is.EqualTo(expectedProperty.Value.ToString()));
+            }
+            Assert.That(root.TryGetProperty("future", out JsonElement future), Is.EqualTo(format == "J"));
+            if (format == "J")
+            {
+                Assert.That(root.GetProperty("id").GetString(), Is.EqualTo(id.ToString()));
+                Assert.That(root.GetProperty("name").GetString(), Is.EqualTo("item"));
+                Assert.That(root.GetProperty("systemData").GetProperty("createdBy").GetString(), Is.EqualTo("creator"));
+                Assert.That(future.GetString(), Is.EqualTo("retained"));
+            }
+        }
+
+        [TestCase(typeof(ConnectionAnalyzerData))]
+        [TestCase(typeof(ExpressRouteProviderPortData))]
+        [TestCase(typeof(IpamPoolData))]
+        [TestCase(typeof(NetworkSecurityPerimeterData))]
+        [TestCase(typeof(NetworkVerifierWorkspaceData))]
+        [TestCase(typeof(ServiceGatewayData))]
+        public void NativeTrackedResourceConstructorsInitializeTags(Type modelType)
+        {
+            Type propertiesType = modelType == typeof(ConnectionAnalyzerData) ? typeof(ConnectionAnalyzerProperties)
+                : modelType == typeof(IpamPoolData) ? typeof(IpamPoolProperties) : null;
+            Type[] parameterTypes = propertiesType is null ? new[] { typeof(AzureLocation) } : new[] { typeof(AzureLocation), propertiesType };
+            ConstructorInfo constructor = modelType.GetConstructor(parameterTypes);
+            Assert.That(constructor, Is.Not.Null);
+            var options = new ModelReaderWriterOptions("W");
+            var location = new AzureLocation("westus");
+            object properties = propertiesType is null ? null : ModelReaderWriter.Read(
+                BinaryData.FromString(NativeTrackedResourceProperties(modelType)), propertiesType, options, AzureResourceManagerNetworkContext.Default);
+            object[] arguments = propertiesType is null ? new object[] { location } : new[] { location, properties };
+            var model = (TrackedResourceData)constructor.Invoke(arguments);
+            Assert.That(model.Location, Is.EqualTo(location));
+            Assert.That(model.Tags, Is.Empty);
+            model.Tags["owner"] = "sdk";
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write((object)model, options, AzureResourceManagerNetworkContext.Default));
+            Assert.That(document.RootElement.GetProperty("location").GetString(), Is.EqualTo("westus"));
+            Assert.That(document.RootElement.GetProperty("tags").GetProperty("owner").GetString(), Is.EqualTo("sdk"));
         }
 
         [Test]
@@ -313,6 +467,16 @@ namespace Azure.ResourceManager.Network.Tests
             }
             Assert.That(transport.Requests, Has.Count.EqualTo(3));
         }
+
+        private static string NativeTrackedResourceProperties(Type modelType) =>
+            modelType == typeof(ConnectionAnalyzerData)
+                ? """{"expiryInDays":7,"source":{"type":"ExternalAddress","address":"10.0.0.1"},"destination":{"type":"ExternalAddress","address":"10.0.0.2"},"diagnosticOperations":[]}"""
+                : modelType == typeof(IpamPoolData) ? """{"displayName":"review","addressPrefixes":["10.0.0.0/24"]}"""
+                : modelType == typeof(ExpressRouteProviderPortData) ? """{"peeringLocation":"review","portPairDescriptor":"pair"}"""
+                : modelType == typeof(NetworkSecurityPerimeterData) ? """{"perimeterGuid":"00000000-0000-0000-0000-000000000002"}"""
+                : modelType == typeof(ServiceGatewayData) ? """{"provisioningState":"Succeeded"}"""
+                : modelType == typeof(NetworkVerifierWorkspaceData) ? """{"description":"review"}"""
+                : throw new ArgumentException("Unexpected tracked-resource model.", nameof(modelType));
 
         private static void AssertReadOnlyView<T>(IReadOnlyList<T> values)
         {

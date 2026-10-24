@@ -34,33 +34,6 @@ namespace Azure.ResourceManager.Network
                 ? ModelReaderWriter.Read<SystemData>(systemData, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default)
                 : null;
 
-        internal static IDictionary<string, string> GetTags(IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            if (!TryGetValue(additionalBinaryDataProperties, "tags", out BinaryData tags))
-            {
-                return new ChangeTrackingDictionary<string, string>();
-            }
-
-            var result = new ChangeTrackingDictionary<string, string>();
-            using JsonDocument document = JsonDocument.Parse(tags);
-            if (document.RootElement.ValueKind != JsonValueKind.Object)
-            {
-                return result;
-            }
-
-            foreach (JsonProperty property in document.RootElement.EnumerateObject())
-            {
-                result.Add(property.Name, property.Value.ValueKind == JsonValueKind.Null ? null : property.Value.GetString());
-            }
-            return result;
-        }
-
-        internal static AzureLocation GetLocation(IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            string location = GetString(additionalBinaryDataProperties, "location");
-            return location is null ? default : new AzureLocation(location);
-        }
-
         internal static bool IsFrameworkResourceDataProperty(string propertyName)
             => propertyName is "id" or "name" or "type" or "systemData" or "tags" or "location";
 

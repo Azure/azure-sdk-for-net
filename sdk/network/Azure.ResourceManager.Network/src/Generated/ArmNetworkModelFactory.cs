@@ -3315,6 +3315,12 @@ namespace Azure.ResourceManager.Network.Models
             return new BastionSessionState(sessionId, message, state, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="portPairDescriptor"> The name of the port pair. </param>
         /// <param name="primaryAzurePort"> The name of the primary port. </param>
         /// <param name="secondaryAzurePort"> The name of the secondary port. </param>
@@ -3323,21 +3329,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="portBandwidthInMbps"> Bandwidth of the port in Mbps. </param>
         /// <param name="usedBandwidthInMbps"> Used Bandwidth of the port in Mbps. </param>
         /// <param name="remainingBandwidthInMbps"> Remaining Bandwidth of the port in Mbps. </param>
-        /// <param name="name"> The name of the provider port. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ExpressRouteProviderPortData"/> instance for mocking. </returns>
-        public static ExpressRouteProviderPortData ExpressRouteProviderPortData(string portPairDescriptor, string primaryAzurePort, string secondaryAzurePort, string peeringLocation = default, int? overprovisionFactor = default, int? portBandwidthInMbps = default, int? usedBandwidthInMbps = default, int? remainingBandwidthInMbps = default, string name = default, ETag? eTag = default)
+        public static ExpressRouteProviderPortData ExpressRouteProviderPortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string portPairDescriptor, string primaryAzurePort, string secondaryAzurePort, string peeringLocation, int? overprovisionFactor, int? portBandwidthInMbps, int? usedBandwidthInMbps, int? remainingBandwidthInMbps, ETag? eTag)
         {
-            return new ExpressRouteProviderPortData(portPairDescriptor is null && primaryAzurePort is null && secondaryAzurePort is null && peeringLocation is null && overprovisionFactor is null && portBandwidthInMbps is null && usedBandwidthInMbps is null && remainingBandwidthInMbps is null ? default : new ExpressRouteProviderPortProperties(
-                portPairDescriptor,
-                primaryAzurePort,
-                secondaryAzurePort,
-                peeringLocation,
-                overprovisionFactor,
-                portBandwidthInMbps,
-                usedBandwidthInMbps,
-                remainingBandwidthInMbps,
-                default), name, eTag, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExpressRouteProviderPortData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                portPairDescriptor is null && primaryAzurePort is null && secondaryAzurePort is null && peeringLocation is null && overprovisionFactor is null && portBandwidthInMbps is null && usedBandwidthInMbps is null && remainingBandwidthInMbps is null ? default : new ExpressRouteProviderPortProperties(
+                    portPairDescriptor,
+                    primaryAzurePort,
+                    secondaryAzurePort,
+                    peeringLocation,
+                    overprovisionFactor,
+                    portBandwidthInMbps,
+                    usedBandwidthInMbps,
+                    remainingBandwidthInMbps,
+                    default),
+                eTag,
+                default);
         }
 
         /// <summary> Response for list effective route API service call. </summary>
@@ -3542,16 +3558,32 @@ namespace Azure.ResourceManager.Network.Models
             return new TrafficDetectionRule(trafficType, packetsPerSecond, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        /// <param name="name"></param>
-        /// <param name="eTag"></param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.DdosProtectionPlanData"/> instance for mocking. </returns>
-        public static DdosProtectionPlanData DdosProtectionPlanData(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> virtualNetworks = default, string name = default, ETag? eTag = default)
+        public static DdosProtectionPlanData DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> virtualNetworks, ETag? eTag)
         {
-            return new DdosProtectionPlanData(resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, eTag, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DdosProtectionPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
+                eTag,
+                default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -5214,14 +5246,29 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyRuleCollectionGroupDraftData(id, default, name, resourceType, size is null && priority is null && ruleCollections is null ? default : new FirewallPolicyRuleCollectionGroupDraftProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), default));
         }
 
-        /// <summary> Instance of Pool resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="name"> Pool resource name. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
-        public static IpamPoolData IpamPoolData(IpamPoolProperties properties, ETag? eTag, string name)
+        public static IpamPoolData IpamPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IpamPoolProperties properties = default, ETag? etag = default)
         {
-            return new IpamPoolData(properties, eTag, name, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IpamPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                etag,
+                default);
         }
 
         /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
@@ -6557,13 +6604,28 @@ namespace Azure.ResourceManager.Network.Models
             return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIPConfigurationPropertiesFormat(provisioningState, default), name, containerNetworkInterfaceIpConfigurationType, eTag, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, string name)
+        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, Guid? perimeterGuid = default)
         {
-            return new NetworkSecurityPerimeterData(provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkSecurityPerimeterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default),
+                default);
         }
 
         /// <summary> Update tags request. </summary>
@@ -6637,15 +6699,29 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <summary> Instance of Verifier Workspace. </summary>
-        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
-        /// <param name="eTag"> String representing unique etag for the resource document. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <param name="etag"> String representing unique etag for the resource document. </param>
         /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
-        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(NetworkVerifierWorkspaceProperties properties, ETag? eTag, SystemData systemData, string name = default)
+        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkVerifierWorkspaceProperties properties = default, ETag? etag = default)
         {
-            return new NetworkVerifierWorkspaceData(properties, eTag, systemData, name, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkVerifierWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                etag,
+                default);
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>
@@ -7729,12 +7805,29 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines a connection analyzer resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the connection analyzer. </param>
         /// <returns> A new <see cref="Network.ConnectionAnalyzerData"/> instance for mocking. </returns>
-        public static ConnectionAnalyzerData ConnectionAnalyzerData(string eTag = default, ConnectionAnalyzerProperties properties = default)
+        public static ConnectionAnalyzerData ConnectionAnalyzerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eTag = default, ConnectionAnalyzerProperties properties = default)
         {
-            return new ConnectionAnalyzerData(eTag, properties, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectionAnalyzerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                eTag,
+                properties,
+                default);
         }
 
         /// <param name="source"> Source endpoint of the connection analyzer. </param>
@@ -10654,12 +10747,17 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="routeTargetAddress"> Route Target address of Service gateway. </param>
         /// <param name="routeTargetAddressV6"> Route Target address V6 of Service gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service gateway resource. </param>
-        /// <param name="name"> The name of the service gateway. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
@@ -10667,11 +10765,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <list type="bullet"><item><description>The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="Network.ServiceGatewayData"/> instance for mocking. </returns>
-        public static ServiceGatewayData ServiceGatewayData(VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, string name = default, ETag? eTag = default, ServiceGatewaySku sku = default, IEnumerable<string> zones = default)
+        public static ServiceGatewayData ServiceGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid, NetworkProvisioningState? provisioningState, ETag? eTag, ServiceGatewaySku sku, IEnumerable<string> zones)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
             return new ServiceGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 virtualNetwork is null && routeTargetAddress is null && routeTargetAddressV6 is null && resourceGuid is null && provisioningState is null ? default : new ServiceGatewayPropertiesFormat(
                     virtualNetwork,
                     routeTargetAddress,
@@ -10679,7 +10784,6 @@ namespace Azure.ResourceManager.Network.Models
                     resourceGuid,
                     provisioningState,
                     default),
-                name,
                 eTag,
                 sku,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -15796,12 +15900,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A DDoS protection plan in a resource group. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
@@ -15811,7 +15915,16 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DdosProtectionPlanData DdosProtectionPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> publicIPAddresses = default, IEnumerable<WritableSubResource> virtualNetworks = default)
         {
-            return new DdosProtectionPlanData(resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, etag, default);
+            return new DdosProtectionPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
+                etag,
+                default);
         }
 
         /// <summary> Differentiated Services Code Point configuration for any given network interface. </summary>
@@ -16281,12 +16394,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ExpressRouteProviderPort resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the provider port. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="portPairDescriptor"> The name of the port pair. </param>
         /// <param name="primaryAzurePort"> The name of the primary port. </param>
@@ -16300,16 +16413,25 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExpressRouteProviderPortData ExpressRouteProviderPortData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, string portPairDescriptor = default, string primaryAzurePort = default, string secondaryAzurePort = default, string peeringLocation = default, int? overprovisionFactor = default, int? portBandwidthInMbps = default, int? usedBandwidthInMbps = default, int? remainingBandwidthInMbps = default)
         {
-            return new ExpressRouteProviderPortData(portPairDescriptor is null && primaryAzurePort is null && secondaryAzurePort is null && peeringLocation is null && overprovisionFactor is null && portBandwidthInMbps is null && usedBandwidthInMbps is null && remainingBandwidthInMbps is null ? default : new ExpressRouteProviderPortProperties(
-                portPairDescriptor,
-                primaryAzurePort,
-                secondaryAzurePort,
-                peeringLocation,
-                overprovisionFactor,
-                portBandwidthInMbps,
-                usedBandwidthInMbps,
-                remainingBandwidthInMbps,
-                default), name, etag, default);
+            return new ExpressRouteProviderPortData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                portPairDescriptor is null && primaryAzurePort is null && secondaryAzurePort is null && peeringLocation is null && overprovisionFactor is null && portBandwidthInMbps is null && usedBandwidthInMbps is null && remainingBandwidthInMbps is null ? default : new ExpressRouteProviderPortProperties(
+                    portPairDescriptor,
+                    primaryAzurePort,
+                    secondaryAzurePort,
+                    peeringLocation,
+                    overprovisionFactor,
+                    portBandwidthInMbps,
+                    usedBandwidthInMbps,
+                    remainingBandwidthInMbps,
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> FirewallPolicy Resource. </summary>
@@ -16424,22 +16546,6 @@ namespace Azure.ResourceManager.Network.Models
                     explicitProxy,
                     intrusionDetection,
                     default));
-        }
-
-        /// <summary> Instance of Pool resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Pool resource name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IpamPoolData IpamPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IpamPoolProperties properties = default, ETag? etag = default)
-        {
-            return new IpamPoolData(properties, etag, name, default);
         }
 
         /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
@@ -16898,22 +17004,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIPConfigurationPropertiesFormat(provisioningState, default), name, containerNetworkInterfaceIPConfigurationType, etag, default);
         }
 
-        /// <summary> The Network Security Perimeter resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network security perimeter. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, Guid? perimeterGuid = default)
-        {
-            return new NetworkSecurityPerimeterData(provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
-        }
-
         /// <summary> The NSP resource association resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -16969,22 +17059,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default),
                 default);
-        }
-
-        /// <summary> Instance of Verifier Workspace. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
-        /// <param name="etag"> String representing unique etag for the resource document. </param>
-        /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkVerifierWorkspaceProperties properties = default, ETag? etag = default)
-        {
-            return new NetworkVerifierWorkspaceData(properties, etag, systemData, name, default);
         }
 
         /// <summary> NetworkVirtualAppliance Resource. </summary>
@@ -17370,12 +17444,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ServiceGateway resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the service gateway. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
@@ -17392,6 +17466,12 @@ namespace Azure.ResourceManager.Network.Models
         public static ServiceGatewayData ServiceGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ServiceGatewaySku sku = default, IEnumerable<string> zones = default, VirtualNetworkData virtualNetwork = default, RouteTargetAddressPropertiesFormat routeTargetAddress = default, RouteTargetAddressPropertiesFormat routeTargetAddressV6 = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default)
         {
             return new ServiceGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 virtualNetwork is null && routeTargetAddress is null && routeTargetAddressV6 is null && resourceGuid is null && provisioningState is null ? default : new ServiceGatewayPropertiesFormat(
                     virtualNetwork,
                     routeTargetAddress,
@@ -17399,7 +17479,6 @@ namespace Azure.ResourceManager.Network.Models
                     resourceGuid,
                     provisioningState,
                     default),
-                name,
                 etag,
                 sku,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -20105,18 +20184,27 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Instance of Pool resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Pool resource name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IpamPoolData IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties)
         {
-            return new IpamPoolData(properties, default, name, default);
+            return new IpamPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                default);
         }
 
         /// <summary> Properties of the load balancer. </summary>
@@ -20259,18 +20347,27 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Instance of Verifier Workspace. </summary>
-        /// <param name="id"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
         /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties)
         {
-            return new NetworkVerifierWorkspaceData(properties, default, systemData, name, default);
+            return new NetworkVerifierWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                default);
         }
 
         /// <summary> Virtual Network resource. </summary>
