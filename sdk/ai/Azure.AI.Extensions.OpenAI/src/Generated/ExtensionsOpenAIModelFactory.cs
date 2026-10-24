@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -625,7 +624,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -636,10 +634,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
+        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
         {
             return new AgentWorkflowPreviewActionResponseItem(
-                @type,
+                "workflow_action",
                 id,
                 agentReference,
                 responseId,
@@ -652,17 +650,16 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
         /// <param name="output"></param>
         /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
         {
             return new AgentStructuredOutputsResponseItem(
-                @type,
+                "structured_outputs",
                 id,
                 agentReference,
                 responseId,
@@ -671,7 +668,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -679,10 +675,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"></param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, Uri consentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, Uri consentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
-                @type,
+                "oauth_consent_request",
                 id,
                 agentReference,
                 responseId,
@@ -692,7 +688,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A Bing grounding tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -701,10 +696,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static BingGroundingToolCall BingGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static BingGroundingToolCall BingGroundingToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new BingGroundingToolCall(
-                @type,
+                "bing_grounding_call",
                 id,
                 agentReference,
                 responseId,
@@ -715,7 +710,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a Bing grounding tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -724,10 +718,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BingGroundingToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static BingGroundingToolCallOutput BingGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static BingGroundingToolCallOutput BingGroundingToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new BingGroundingToolCallOutput(
-                @type,
+                "bing_grounding_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -738,7 +732,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A SharePoint grounding tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -747,10 +740,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SharePointGroundingToolCall SharePointGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static SharePointGroundingToolCall SharePointGroundingToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new SharePointGroundingToolCall(
-                @type,
+                "sharepoint_grounding_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -761,7 +754,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a SharePoint grounding tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -770,10 +762,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SharePointGroundingToolCallOutput SharePointGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static SharePointGroundingToolCallOutput SharePointGroundingToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new SharePointGroundingToolCallOutput(
-                @type,
+                "sharepoint_grounding_preview_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -784,7 +776,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An Azure AI Search tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -793,10 +784,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AzureAISearchToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AzureAISearchToolCall AzureAISearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static AzureAISearchToolCall AzureAISearchToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new AzureAISearchToolCall(
-                @type,
+                "azure_ai_search_call",
                 id,
                 agentReference,
                 responseId,
@@ -807,7 +798,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of an Azure AI Search tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -816,10 +806,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AzureAISearchToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AzureAISearchToolCallOutput AzureAISearchToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static AzureAISearchToolCallOutput AzureAISearchToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new AzureAISearchToolCallOutput(
-                @type,
+                "azure_ai_search_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -830,7 +820,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A Bing custom search tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -839,10 +828,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BingCustomSearchToolCall BingCustomSearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static BingCustomSearchToolCall BingCustomSearchToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new BingCustomSearchToolCall(
-                @type,
+                "bing_custom_search_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -853,7 +842,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a Bing custom search tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -862,10 +850,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new BingCustomSearchToolCallOutput(
-                @type,
+                "bing_custom_search_preview_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -876,7 +864,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An OpenAPI tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -886,10 +873,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.OpenApiToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static OpenApiToolCall OpenApiToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        public static OpenApiToolCall OpenApiToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
         {
             return new OpenApiToolCall(
-                @type,
+                "openapi_call",
                 id,
                 agentReference,
                 responseId,
@@ -901,7 +888,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of an OpenAPI tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -911,10 +897,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.OpenApiToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static OpenApiToolCallOutput OpenApiToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        public static OpenApiToolCallOutput OpenApiToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new OpenApiToolCallOutput(
-                @type,
+                "openapi_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -926,7 +912,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A browser automation tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -935,10 +920,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static BrowserAutomationToolCall BrowserAutomationToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static BrowserAutomationToolCall BrowserAutomationToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCall(
-                @type,
+                "browser_automation_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -949,7 +934,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a browser automation tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -958,10 +942,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCallOutput(
-                @type,
+                "browser_automation_preview_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -972,7 +956,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A Fabric data agent tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -981,10 +964,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static FabricDataAgentToolCall FabricDataAgentToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static FabricDataAgentToolCall FabricDataAgentToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new FabricDataAgentToolCall(
-                @type,
+                "fabric_dataagent_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -995,7 +978,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a Fabric data agent tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1004,10 +986,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new FabricDataAgentToolCallOutput(
-                @type,
+                "fabric_dataagent_preview_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -1018,7 +1000,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An Azure Function tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1028,10 +1009,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AzureFunctionToolCall AzureFunctionToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        public static AzureFunctionToolCall AzureFunctionToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
         {
             return new AzureFunctionToolCall(
-                @type,
+                "azure_function_call",
                 id,
                 agentReference,
                 responseId,
@@ -1043,7 +1024,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of an Azure Function tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1053,10 +1033,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static AzureFunctionToolCallOutput AzureFunctionToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        public static AzureFunctionToolCallOutput AzureFunctionToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new AzureFunctionToolCallOutput(
-                @type,
+                "azure_function_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -1068,7 +1048,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1078,10 +1057,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.A2AToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static A2AToolCall A2AToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
+        public static A2AToolCall A2AToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
         {
             return new A2AToolCall(
-                @type,
+                "a2a_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -1093,7 +1072,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1103,10 +1081,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.A2AToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static A2AToolCallOutput A2AToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
+        public static A2AToolCallOutput A2AToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new A2AToolCallOutput(
-                @type,
+                "a2a_preview_call_output",
                 id,
                 agentReference,
                 responseId,
@@ -1118,7 +1096,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A memory search tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1126,12 +1103,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="memories"></param>
         /// <returns> A new <see cref="OpenAI.MemorySearchToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemorySearchToolCall MemorySearchToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, ToolCallStatus status = default, IEnumerable<MemoryOutputItem> memories = default)
+        public static MemorySearchToolCall MemorySearchToolCall(string id = default, AgentReference agentReference = default, string responseId = default, ToolCallStatus status = default, IEnumerable<MemoryOutputItem> memories = default)
         {
             memories ??= new ChangeTrackingList<MemoryOutputItem>();
 
             return new MemorySearchToolCall(
-                @type,
+                "memory_search_call",
                 id,
                 agentReference,
                 responseId,
@@ -1217,7 +1194,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A memory command tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1226,10 +1202,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.MemoryCommandToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryCommandToolCall MemoryCommandToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static MemoryCommandToolCall MemoryCommandToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new MemoryCommandToolCall(
-                @type,
+                "memory_command_preview_call",
                 id,
                 agentReference,
                 responseId,
@@ -1240,7 +1216,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The output of a memory command tool call. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
@@ -1248,10 +1223,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.MemoryCommandToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryCommandToolCallOutput MemoryCommandToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, ToolCallStatus status = default)
+        public static MemoryCommandToolCallOutput MemoryCommandToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, ToolCallStatus status = default)
         {
             return new MemoryCommandToolCallOutput(
-                @type,
+                "memory_command_preview_call_output",
                 id,
                 agentReference,
                 responseId,
