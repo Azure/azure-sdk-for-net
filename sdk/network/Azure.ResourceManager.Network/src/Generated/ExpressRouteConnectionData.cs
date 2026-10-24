@@ -135,6 +135,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> The ID of the ExpressRoute circuit peering. </summary>
         [WirePath("properties.expressRouteCircuitPeering.id")]
         public ResourceIdentifier ExpressRouteCircuitPeeringId

@@ -359,5 +359,15 @@ namespace Azure.ResourceManager.Network
                 Properties.RouteFilterId = value;
             }
         }
+
+        /// <summary> The ID of the ExpressRouteConnection. </summary>
+        [WirePath("properties.expressRouteConnection.id")]
+        public ResourceIdentifier ExpressRouteConnectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteConnectionId;
+            }
+        }
     }
 }

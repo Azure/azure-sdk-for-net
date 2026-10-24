@@ -29,11 +29,25 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         public void ExpressRouteCircuitPeeringReference()
         {
-            AssertReference<ExpressRouteCircuitPeeringData>(
-                "expressRouteConnection",
-                model => model.ExpressRouteConnectionId,
-                (model, id) => model.ExpressRouteConnectionId = id,
-                isReadOnly: true);
+            Assert.IsNull(typeof(ExpressRouteCircuitPeeringData).GetProperty(nameof(ExpressRouteCircuitPeeringData.ExpressRouteConnectionId)).SetMethod);
+            Assert.IsNull(new ExpressRouteCircuitPeeringData().ExpressRouteConnectionId);
+            var model = Read<ExpressRouteCircuitPeeringData>($$$$"""
+                {"properties":{"expressRouteConnection":{"id":"{{{{ReferenceId}}}}"}}}
+                """);
+            Assert.AreEqual(ReferenceId, model.ExpressRouteConnectionId.ToString());
+            using (var persisted = Write(model, ModelReaderWriterOptions.Json))
+            {
+                Assert.AreEqual(ReferenceId, persisted.RootElement.GetProperty("properties").GetProperty("expressRouteConnection").GetProperty("id").GetString());
+                Assert.AreEqual(ReferenceId, Read<ExpressRouteCircuitPeeringData>(persisted.RootElement.GetRawText()).ExpressRouteConnectionId.ToString());
+            }
+            using (var wire = Write(model))
+            {
+                Assert.IsFalse(wire.RootElement.GetProperty("properties").GetProperty("expressRouteConnection").TryGetProperty("id", out _));
+            }
+            foreach (string properties in new[] { "null", "{}", """{"expressRouteConnection":null}""", """{"expressRouteConnection":{}}""", """{"expressRouteConnection":{"id":null}}""" })
+            {
+                Assert.IsNull(Read<ExpressRouteCircuitPeeringData>("{\"properties\":" + properties + "}").ExpressRouteConnectionId);
+            }
         }
 
         [Test]

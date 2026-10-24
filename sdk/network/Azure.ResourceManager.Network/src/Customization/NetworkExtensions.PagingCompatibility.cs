@@ -16,12 +16,6 @@ namespace Azure.ResourceManager.Network
 {
     public static partial class NetworkExtensions
     {
-        /// <summary> Invokes the GetExpressRouteGatewaysAsync compatibility operation. </summary>
-        public static AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetExpressRouteGatewaysAsync(cancellationToken);
-        /// <summary> Invokes the GetExpressRouteGateways compatibility operation. </summary>
-        public static Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetExpressRouteGateways(cancellationToken);
         /// <summary> Invokes the GetAppGatewayAvailableWafRuleSetsAsync compatibility operation. </summary>
         public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
             => subscriptionResource.GetCachedClient(client => new Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);

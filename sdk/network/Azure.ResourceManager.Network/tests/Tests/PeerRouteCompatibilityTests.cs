@@ -27,19 +27,20 @@ namespace Azure.ResourceManager.Network.Tests
         public void PeerRouteListRetainsHistoricalWrapperShape()
         {
             Type type = typeof(PeerRouteList);
-            Assert.That(type.GetProperties().Select(property => property.Name), Is.EquivalentTo(new[] { "Value", "LocalAddress", "Network", "NextHop", "SourcePeer", "Origin", "AsPath", "Weight" }));
+            Assert.That(type.GetProperties().Select(property => property.Name), Is.EqualTo(new[] { "Value" }));
             Assert.That(type.GetProperty("Value").PropertyType, Is.EqualTo(typeof(IReadOnlyList<PeerRoute>)));
             Assert.That(type.GetProperty("Value").SetMethod, Is.Null);
             Assert.That(type.GetConstructors(), Is.Empty);
-            Assert.That(type.GetInterfaces(), Does.Contain(typeof(IJsonModel<PeerRouteList>)));
-            Assert.That(type.GetInterfaces(), Does.Contain(typeof(IPersistableModel<PeerRouteList>)));
+            Assert.That(type.GetInterfaces(), Is.Empty);
             Assert.That(type.GetProperties().All(property => property.SetMethod == null), Is.True);
             foreach (string name in new[] { "PersistableModelCreateCore", "PersistableModelWriteCore", "JsonModelCreateCore", "JsonModelWriteCore" })
             {
                 MethodInfo method = type.GetMethod(name, BindingFlags.Instance | BindingFlags.NonPublic);
-                Assert.That(method.IsFamily && method.IsVirtual, Is.True, name);
+                Assert.That(method, Is.Null, name);
             }
-            Assert.That(type.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This class is obsolete and will be removed in a future release, please use `PeerRoute` instead."));
+            Assert.That(type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic).Any(field => field.IsFamily || field.IsFamilyOrAssembly || field.IsFamilyAndAssembly), Is.False);
+            Assert.That(type.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).Select(constructor => constructor.GetParameters().Length), Is.EquivalentTo(new[] { 0, 1 }));
+            Assert.That(type.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This class is obsolete and will be removed in a future release"));
             Assert.That(type.GetCustomAttribute<ObsoleteAttribute>().IsError, Is.False);
             Assert.That(type.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
 
@@ -49,22 +50,21 @@ namespace Azure.ResourceManager.Network.Tests
             var routes = new[] { ModelReaderWriter.Read<PeerRoute>(BinaryData.FromString(RouteJson)) };
             var wrapper = (PeerRouteList)type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(IReadOnlyList<PeerRoute>) }, null).Invoke(new object[] { routes });
             Assert.That(wrapper.Value, Is.SameAs(routes));
-            Assert.That(wrapper.LocalAddress, Is.Null);
-            Assert.That(ModelReaderWriter.Write(wrapper).ToString(), Is.EqualTo("{}"));
         }
 
         [Test]
         public void ObsoleteListOperationsRemainUnsupported()
         {
             var resource = new TestBgpConnection();
-            Assert.Throws<NotSupportedException>(() => resource.GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetLearnedRoutesVirtualHubBgpConnection(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetAdvertisedRoutes(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetAdvertisedRoutesAsync(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetLearnedRoutes(WaitUntil.Completed, default));
-            Assert.Throws<NotSupportedException>(() => resource.GetLearnedRoutesAsync(WaitUntil.Completed, default));
+            const string message = "This method is obsolete and will be removed in a future release";
+            Assert.That(Assert.Throws<NotSupportedException>(() => resource.GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil.Completed)).Message, Is.EqualTo(message));
+            Assert.That(Assert.ThrowsAsync<NotSupportedException>(async () => await resource.GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed)).Message, Is.EqualTo(message));
+            Assert.That(Assert.Throws<NotSupportedException>(() => resource.GetLearnedRoutesVirtualHubBgpConnection(WaitUntil.Completed)).Message, Is.EqualTo(message));
+            Assert.That(Assert.ThrowsAsync<NotSupportedException>(async () => await resource.GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed)).Message, Is.EqualTo(message));
+            foreach (string name in new[] { "GetAdvertisedRoutes", "GetAdvertisedRoutesAsync", "GetLearnedRoutes", "GetLearnedRoutesAsync" })
+            {
+                Assert.That(typeof(BgpConnectionResource).GetMethod(name), Is.Null);
+            }
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     string suffix = asynchronous ? "Async" : "";
                     CheckOperation($"GetVirtualHubBgpConnection{action}Routes{suffix}", typeof(IDictionary<string, IList<PeerRoute>>), asynchronous, obsolete: false);
-                    CheckOperation($"Get{action}Routes{suffix}", typeof(IDictionary<string, IList<PeerRouteList>>), asynchronous, obsolete: true);
+                    Assert.That(typeof(BgpConnectionResource).GetMethod($"Get{action}Routes{suffix}"), Is.Null);
                     CheckOperation($"Get{action}RoutesVirtualHubBgpConnection{suffix}", typeof(PeerRouteList), asynchronous, obsolete: true);
                 }
             }
@@ -98,70 +98,16 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never), name);
                 Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().IsError, Is.False, name);
-                Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().Message, Does.Contain("GetVirtualHubBgpConnection"), name);
+                Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This method is obsolete and will be removed in a future release"), name);
+                Assert.That(method.GetParameters()[1].Name, Is.EqualTo("cancellationToken"), name);
+                Assert.That(method.GetParameters()[1].IsOptional, Is.True, name);
             }
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void CompatibilityWrapperRetainsScalarSerialization(string format)
-        {
-            var options = new ModelReaderWriterOptions(format);
-            var route = ModelReaderWriter.Read<PeerRouteList>(BinaryData.FromString(RouteJson.TrimEnd('}') + ",\"future\":{\"enabled\":true}}"), options);
-            AssertCompatibilityRoute(route);
-            Assert.That(route.Value, Is.Empty);
-            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(route, options).ToString());
-            if (format == "W")
-            {
-                Assert.That(json.RootElement.EnumerateObject(), Is.Empty);
-            }
-            else
-            {
-                Assert.That(json.RootElement.GetProperty("localAddress").GetString(), Is.EqualTo(route.LocalAddress));
-                Assert.That(json.RootElement.GetProperty("network").GetString(), Is.EqualTo(route.Network));
-                Assert.That(json.RootElement.GetProperty("nextHop").GetString(), Is.EqualTo(route.NextHop));
-                Assert.That(json.RootElement.GetProperty("sourcePeer").GetString(), Is.EqualTo(route.SourcePeer));
-                Assert.That(json.RootElement.GetProperty("origin").GetString(), Is.EqualTo(route.Origin));
-                Assert.That(json.RootElement.GetProperty("asPath").GetString(), Is.EqualTo(route.AsPath));
-                Assert.That(json.RootElement.GetProperty("weight").GetInt32(), Is.EqualTo(route.Weight));
-                Assert.That(json.RootElement.GetProperty("future").GetProperty("enabled").GetBoolean(), Is.True);
-                Assert.That(json.RootElement.TryGetProperty("value", out _), Is.False);
-            }
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(route, new ModelReaderWriterOptions("X")));
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<PeerRouteList>(BinaryData.FromString(RouteJson), new ModelReaderWriterOptions("X")));
-            var reader = new Utf8JsonReader(BinaryData.FromString(RouteJson).ToMemory().Span);
-            AssertCompatibilityRoute(((IJsonModel<PeerRouteList>)route).Create(ref reader, options));
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                ((IJsonModel<PeerRouteList>)route).Write(writer, options);
-            }
-            Assert.That(BinaryData.FromBytes(stream.ToArray()).ToString(), Is.EqualTo(json.RootElement.GetRawText()));
         }
 
         [Test]
-        public void CompatibilityFactoryPopulatesEveryScalarInReleasedParameterOrder()
+        public void PeerRouteListHasNoModelFactoryInHistoricalContract()
         {
-            MethodInfo method = typeof(ArmNetworkModelFactory).GetMethod("PeerRouteList");
-            Assert.That(method.GetParameters().Select(parameter => parameter.Name), Is.EqualTo(new[] { "localAddress", "network", "nextHop", "sourcePeer", "origin", "asPath", "weight" }));
-            Assert.That(method.GetParameters().All(parameter => parameter.IsOptional), Is.True);
-            Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().IsError, Is.False);
-            Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
-            var route = ArmNetworkModelFactory.PeerRouteList("192.0.2.1", "10.0.0.0/24", "192.0.2.2", "192.0.2.3", "IGP", "64512 64513", 42);
-            AssertCompatibilityRoute(route);
-            Assert.That(route.Value, Is.Empty);
-            Assert.That(ModelReaderWriter.Write(route).ToString(), Is.EqualTo(RouteJson));
-        }
-
-        private static void AssertCompatibilityRoute(PeerRouteList route)
-        {
-            Assert.That(route.LocalAddress, Is.EqualTo("192.0.2.1"));
-            Assert.That(route.Network, Is.EqualTo("10.0.0.0/24"));
-            Assert.That(route.NextHop, Is.EqualTo("192.0.2.2"));
-            Assert.That(route.SourcePeer, Is.EqualTo("192.0.2.3"));
-            Assert.That(route.Origin, Is.EqualTo("IGP"));
-            Assert.That(route.AsPath, Is.EqualTo("64512 64513"));
-            Assert.That(route.Weight, Is.EqualTo(42));
+            Assert.That(typeof(ArmNetworkModelFactory).GetMethod("PeerRouteList"), Is.Null);
         }
 #pragma warning restore CS0618
 
@@ -193,7 +139,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(typeof(PeerRoute).GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
             var method = typeof(ArmNetworkModelFactory).GetMethod("PeerRoute");
             Assert.That(method.GetParameters().Select(parameter => parameter.Name),
-                Is.EqualTo(new[] { "network", "nextHop", "sourcePeer", "origin", "asPath", "localAddress", "weight" }));
+                Is.EqualTo(new[] { "localAddress", "network", "nextHop", "sourcePeer", "origin", "asPath", "weight" }));
             AssertRoute(ArmNetworkModelFactory.PeerRoute(network: "10.0.0.0/24", nextHop: "192.0.2.2", sourcePeer: "192.0.2.3", origin: "IGP", asPath: "64512 64513", localAddress: "192.0.2.1", weight: 42));
         }
 

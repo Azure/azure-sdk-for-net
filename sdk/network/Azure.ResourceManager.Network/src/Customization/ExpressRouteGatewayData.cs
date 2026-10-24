@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -16,17 +16,6 @@ namespace Azure.ResourceManager.Network
         /// <inheritdoc cref="ExpressRouteConnectionList"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
-        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections => ExpressRouteConnectionList as IReadOnlyList<ExpressRouteConnectionData>;
-
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="VirtualHubId"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use VirtualHubId instead.")]
-        [WirePath("properties.virtualHub")]
-        public ResourceIdentifier VirtualHub
-        {
-            get => VirtualHubId;
-            set => VirtualHubId = value;
-        }
+        public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections => new ReadOnlyCollection<ExpressRouteConnectionData>(ExpressRouteConnectionList);
     }
 }

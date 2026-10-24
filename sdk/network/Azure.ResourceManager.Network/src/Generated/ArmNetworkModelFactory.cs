@@ -4381,20 +4381,27 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLinkData"/> instance for mocking. </returns>
-        public static ExpressRouteLinkData ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig)
+        public static ExpressRouteLinkData ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig, ETag? eTag)
         {
-            return new ExpressRouteLinkData(id, default, name, resourceType, routerName is null && interfaceName is null && patchPanelId is null && rackId is null && coloLocation is null && connectorType is null && adminState is null && provisioningState is null && macSecConfig is null ? default : new ExpressRouteLinkPropertiesFormat(
-                routerName,
-                interfaceName,
-                patchPanelId,
-                rackId,
-                coloLocation,
-                connectorType,
-                adminState,
-                provisioningState,
-                macSecConfig,
-                default));
+            return new ExpressRouteLinkData(
+                id,
+                default,
+                name,
+                resourceType,
+                routerName is null && interfaceName is null && patchPanelId is null && rackId is null && coloLocation is null && connectorType is null && adminState is null && provisioningState is null && macSecConfig is null ? default : new ExpressRouteLinkPropertiesFormat(
+                    routerName,
+                    interfaceName,
+                    patchPanelId,
+                    rackId,
+                    coloLocation,
+                    connectorType,
+                    adminState,
+                    provisioningState,
+                    macSecConfig,
+                    default),
+                eTag);
         }
 
         /// <summary> Definition of ExpressRouteLink Mac Security configuration. </summary>
@@ -10235,16 +10242,6 @@ namespace Azure.ResourceManager.Network.Models
                 default));
         }
 
-        /// <summary> List of ExpressRoute gateways. </summary>
-        /// <param name="value"> List of ExpressRoute gateways. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteGatewayList"/> instance for mocking. </returns>
-        public static ExpressRouteGatewayList ExpressRouteGatewayList(IEnumerable<ExpressRouteGatewayData> value = default)
-        {
-            value ??= new ChangeTrackingList<ExpressRouteGatewayData>();
-
-            return new ExpressRouteGatewayList((value ?? new ChangeTrackingList<ExpressRouteGatewayData>()).ToList(), default);
-        }
-
         /// <summary> The StopSiteFailoverTestParameterBody. </summary>
         /// <param name="stopParameters"> Parameters supplied to stop the failover simulation on the express route gateway. </param>
         /// <returns> A new <see cref="Models.StopSiteFailoverTestParameterBody"/> instance for mocking. </returns>
@@ -12336,16 +12333,6 @@ namespace Azure.ResourceManager.Network.Models
         public static P2SVpnConnectionHealth P2SVpnConnectionHealth(Uri sasUri = default)
         {
             return new P2SVpnConnectionHealth(sasUri, default);
-        }
-
-        /// <summary> ExpressRouteConnection list. </summary>
-        /// <param name="value"> The list of ExpressRoute connections. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteConnectionList"/> instance for mocking. </returns>
-        public static ExpressRouteConnectionList ExpressRouteConnectionList(IEnumerable<ExpressRouteConnectionData> value = default)
-        {
-            value ??= new ChangeTrackingList<ExpressRouteConnectionData>();
-
-            return new ExpressRouteConnectionList((value ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -15810,7 +15797,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A DDoS protection plan in a resource group. </summary>
         /// <param name="id"></param>
-        /// <param name="name"> The name of the DDoS protection plan. </param>
+        /// <param name="name"></param>
         /// <param name="resourceType"></param>
         /// <param name="systemData"></param>
         /// <param name="tags"></param>
@@ -16238,7 +16225,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routerName"> Name of Azure router associated with physical port. </param>
         /// <param name="interfaceName"> Name of Azure router interface. </param>
         /// <param name="patchPanelId"> Mapping between physical port to patch panel port. </param>
@@ -16252,17 +16239,23 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExpressRouteLinkData ExpressRouteLinkData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, string routerName = default, string interfaceName = default, string patchPanelId = default, string rackId = default, string coloLocation = default, ExpressRouteLinkConnectorType? connectorType = default, ExpressRouteLinkAdminState? adminState = default, NetworkProvisioningState? provisioningState = default, ExpressRouteLinkMacSecConfig macSecConfig = default)
         {
-            return new ExpressRouteLinkData(id, default, name, resourceType, routerName is null && interfaceName is null && patchPanelId is null && rackId is null && coloLocation is null && connectorType is null && adminState is null && provisioningState is null && macSecConfig is null ? default : new ExpressRouteLinkPropertiesFormat(
-                routerName,
-                interfaceName,
-                patchPanelId,
-                rackId,
-                coloLocation,
-                connectorType,
-                adminState,
-                provisioningState,
-                macSecConfig,
-                default));
+            return new ExpressRouteLinkData(
+                id,
+                default,
+                name,
+                resourceType,
+                routerName is null && interfaceName is null && patchPanelId is null && rackId is null && coloLocation is null && connectorType is null && adminState is null && provisioningState is null && macSecConfig is null ? default : new ExpressRouteLinkPropertiesFormat(
+                    routerName,
+                    interfaceName,
+                    patchPanelId,
+                    rackId,
+                    coloLocation,
+                    connectorType,
+                    adminState,
+                    provisioningState,
+                    macSecConfig,
+                    default),
+                etag);
         }
 
         /// <summary> ExpressRoute Port Authorization. </summary>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -75,6 +76,34 @@ namespace Azure.ResourceManager.Network
                     Properties = new DdosCustomPolicyPropertiesFormat();
                 }
                 return Properties.DetectionRules;
+            }
+        }
+
+        /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
+        [WirePath("properties.frontEndIpConfiguration")]
+        public IList<WritableSubResource> FrontEndIPConfiguration
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.FrontEndIPConfiguration;
+            }
+        }
+
+        /// <summary> The list of public IP addresses associated with the custom policy. This list is read-only. </summary>
+        [WirePath("properties.publicIPAddresses")]
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.PublicIPAddresses;
             }
         }
     }

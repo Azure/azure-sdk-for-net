@@ -78,6 +78,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The reference to the ExpressRoute connection resource using the authorization. </summary>
+        [WirePath("properties.connectionResourceUri")]
+        public Uri ConnectionResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionResourceUri;
+            }
+        }
+
         /// <summary> The provisioning state of the authorization resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
