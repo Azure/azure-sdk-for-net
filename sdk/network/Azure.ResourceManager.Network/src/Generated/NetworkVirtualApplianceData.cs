@@ -215,6 +215,48 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to VirtualApplianceSite. </summary>
+        [WirePath("properties.virtualApplianceSites")]
+        public IReadOnlyList<WritableSubResource> VirtualApplianceSites
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.VirtualApplianceSites;
+            }
+        }
+
+        /// <summary> List of references to VirtualApplianceConnections. </summary>
+        [WirePath("properties.virtualApplianceConnections")]
+        public IReadOnlyList<WritableSubResource> VirtualApplianceConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.VirtualApplianceConnections;
+            }
+        }
+
+        /// <summary> List of references to InboundSecurityRules. </summary>
+        [WirePath("properties.inboundSecurityRules")]
+        public IReadOnlyList<WritableSubResource> InboundSecurityRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.InboundSecurityRules;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

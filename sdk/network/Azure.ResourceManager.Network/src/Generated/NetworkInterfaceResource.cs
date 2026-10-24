@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsyncCollectionResultOfT(
                 _networkInterfaceLoadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new NetworkInterfaceLoadBalancersGetAllCollectionResultOfT(
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataCollectionResultOfT(
                 _networkInterfaceLoadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

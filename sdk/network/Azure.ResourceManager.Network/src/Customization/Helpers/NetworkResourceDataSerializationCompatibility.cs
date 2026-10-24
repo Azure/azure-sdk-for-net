@@ -12,6 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
+    // Retained for legacy model readers that recover ARM metadata from their additional-data storage.
     internal static class NetworkResourceDataSerializationCompatibility
     {
         internal static ResourceIdentifier GetId(IDictionary<string, BinaryData> additionalBinaryDataProperties)

@@ -1802,7 +1802,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsync0CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsync1CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -1830,7 +1830,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerData0CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerData1CollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
+    // Retained for legacy writable-list facades over generated NetworkSubResource storage.
     internal sealed class NetworkSubResourceList : IList<WritableSubResource>
     {
         private readonly IList<NetworkSubResource> _source;

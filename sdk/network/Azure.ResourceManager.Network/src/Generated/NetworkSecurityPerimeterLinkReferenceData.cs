@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
-        public NetworkSecurityPerimeterLinkReferenceData() : this(default)
+        public NetworkSecurityPerimeterLinkReferenceData()
         {
         }
 

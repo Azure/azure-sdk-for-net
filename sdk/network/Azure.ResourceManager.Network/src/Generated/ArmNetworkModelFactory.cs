@@ -490,10 +490,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkInterfaceTapConfigurationData"/> instance for mocking. </returns>
-        public static NetworkInterfaceTapConfigurationData NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState)
+        public static NetworkInterfaceTapConfigurationData NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new NetworkInterfaceTapConfigurationData(id, default, name, resourceType, virtualNetworkTap is null && provisioningState is null ? default : new NetworkInterfaceTapConfigurationPropertiesFormat(virtualNetworkTap, provisioningState, default));
+            return new NetworkInterfaceTapConfigurationData(
+                id,
+                default,
+                name,
+                resourceType,
+                virtualNetworkTap is null && provisioningState is null ? default : new NetworkInterfaceTapConfigurationPropertiesFormat(virtualNetworkTap, provisioningState, default),
+                eTag);
         }
 
         /// <summary> Reference to another subresource. </summary>
@@ -7144,8 +7151,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkWatcherData"/> instance for mocking. </returns>
-        public static NetworkWatcherData NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState)
+        public static NetworkWatcherData NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -7156,7 +7164,8 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default));
+                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default),
+                eTag);
         }
 
         /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
@@ -11442,17 +11451,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkManagerDeploymentStatusContent((regions ?? new ChangeTrackingList<string>()).ToList(), (deploymentTypes ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>()).ToList(), skipToken, default);
         }
 
-        /// <summary> A list of Network Manager Deployment Status. </summary>
-        /// <param name="value"> Gets a page of Network Manager Deployment Status. </param>
-        /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
-        /// <returns> A new <see cref="Models.NetworkManagerDeploymentStatusListResult"/> instance for mocking. </returns>
-        public static NetworkManagerDeploymentStatusListResult NetworkManagerDeploymentStatusListResult(IEnumerable<NetworkManagerDeploymentStatus> value = default, string skipToken = default)
-        {
-            value ??= new ChangeTrackingList<NetworkManagerDeploymentStatus>();
-
-            return new NetworkManagerDeploymentStatusListResult((value ?? new ChangeTrackingList<NetworkManagerDeploymentStatus>()).ToList(), skipToken, default);
-        }
-
         /// <summary> Network Manager Deployment Status. </summary>
         /// <param name="commitOn"> Commit Time. </param>
         /// <param name="region"> Region Name. </param>
@@ -13891,14 +13889,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
         /// <returns> A new <see cref="Network.NetworkInterfaceTapConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkInterfaceTapConfigurationData NetworkInterfaceTapConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, VirtualNetworkTapData virtualNetworkTap = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new NetworkInterfaceTapConfigurationData(id, default, name, resourceType, virtualNetworkTap is null && provisioningState is null ? default : new NetworkInterfaceTapConfigurationPropertiesFormat(virtualNetworkTap, provisioningState, default));
+            return new NetworkInterfaceTapConfigurationData(
+                id,
+                default,
+                name,
+                resourceType,
+                virtualNetworkTap is null && provisioningState is null ? default : new NetworkInterfaceTapConfigurationPropertiesFormat(virtualNetworkTap, provisioningState, default),
+                etag);
         }
 
         /// <summary> Frontend IP address of the load balancer. </summary>
@@ -17154,7 +17158,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
         /// <returns> A new <see cref="Network.NetworkWatcherData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -17167,7 +17171,8 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default));
+                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default),
+                etag);
         }
 
         /// <summary> Hop link. </summary>

@@ -17,36 +17,30 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT : AsyncPageable<LoadBalancerData>
+    internal partial class LoadBalancerDataAsync1CollectionResultOfT : AsyncPageable<LoadBalancerData>
     {
-        private readonly NetworkInterfaceLoadBalancers _client;
+        private readonly LoadBalancers _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _networkInterfaceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The NetworkInterfaceLoadBalancers client used to send requests. </param>
+        /// <summary> Initializes a new instance of LoadBalancerDataAsync1CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LoadBalancers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT(NetworkInterfaceLoadBalancers client, Guid subscriptionId, string resourceGroupName, string networkInterfaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadBalancerDataAsync1CollectionResultOfT(LoadBalancers client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _networkInterfaceName = networkInterfaceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LoadBalancerDataAsync1CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of LoadBalancerDataAsync1CollectionResultOfT as an enumerable collection. </returns>
         public override IAsyncEnumerable<Page<LoadBalancerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
@@ -65,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 {
                     yield break;
                 }
-                NetworkInterfaceLoadBalancerListResult result = NetworkInterfaceLoadBalancerListResult.FromResponse(response);
+                LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<LoadBalancerData>.FromValues((IReadOnlyList<LoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
@@ -81,7 +75,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkInterfaceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkInterfaceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
