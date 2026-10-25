@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
@@ -14,29 +16,59 @@ namespace Azure.ResourceManager.EdgeActions.Tests
 {
     public class EdgeActionsManagementTestBase : ManagementRecordedTestBase<EdgeActionsManagementTestEnvironment>
     {
-        protected ArmClient Client { get; private set; }
+        internal const string DeploymentCountProperty = "DeploymentCount";
+        private CancellationTokenSource _testTimeout;
 
-        protected EdgeActionsManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected ArmClient Client { get; private set; }
+        protected CancellationToken TestCancellationToken => _testTimeout.Token;
+
+        protected EdgeActionsManagementTestBase(bool isAsync, RecordedTestMode? mode = null)
         : base(isAsync, mode)
         {
-        }
-
-        protected EdgeActionsManagementTestBase(bool isAsync)
-            : base(isAsync)
-        {
+            IgnoredQueryParameters.Remove("api-version");
+            // Preserve distinct status/result paths while removing signed polling query values.
+            foreach (string parameter in new[] { "t", "c", "s", "h" })
+            {
+                UriRegexSanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(parameter, "Sanitized"));
+                HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter("Azure-AsyncOperation", parameter, "Sanitized"));
+                HeaderRegexSanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter("Location", parameter, "Sanitized"));
+            }
+            foreach (string header in new[] { "x-ms-correlation-request-id", "x-ms-routing-request-id", "x-ms-operation-identifier", "x-ms-original-request-ids", "X-MSEdge-Ref" })
+            {
+                SanitizedHeaders.Add(header);
+            }
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClientAsync()
         {
-            Client = GetArmClient();
+            var options = new ArmClientOptions();
+            Client = GetArmClient(options);
+            await TestEnvironment.InitializeLocalAzureCliAsync(options.Environment.Value);
+            int deploymentCount = (int?)TestContext.CurrentContext.Test.Properties.Get(DeploymentCountProperty) ?? 0;
+            _testTimeout = new CancellationTokenSource(GetTestTimeout(deploymentCount));
+        }
+
+        [TearDown]
+        public void DisposeTestTimeout()
+        {
+            _testTimeout?.Dispose();
+        }
+
+        internal static TimeSpan GetTestTimeout(int deploymentCount)
+        {
+            if (deploymentCount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(deploymentCount));
+            }
+            return TimeSpan.FromMinutes(deploymentCount == 0 ? 20 : checked(deploymentCount * 40 + 10));
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.EastUS);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input, TestCancellationToken);
             return lro.Value;
         }
     }

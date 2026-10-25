@@ -164,9 +164,17 @@ namespace Azure.Security.Attestation.Tests
             var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}"), AttestationClientOptions.ServiceVersion.V2020_10_01));
             var request = new AttestationRequest { Evidence = BinaryData.FromBytes(s_evidence) };
 
+            Assert.IsFalse(client.CanAttestTdxVm);
             Assert.Throws<NotSupportedException>(() => client.AttestTdxVm(request));
             Assert.ThrowsAsync<NotSupportedException>(() => client.AttestTdxVmAsync(request));
             Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void CanAttestTdxVmOnServiceVersion20250601()
+        {
+            Assert.IsTrue(new AttestationClient(new Uri(Endpoint), new MockCredential()).CanAttestTdxVm);
+            Assert.IsTrue(new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(AttestationClientOptions.ServiceVersion.V2025_06_01)).CanAttestTdxVm);
         }
 
         [Test]
@@ -356,7 +364,7 @@ namespace Azure.Security.Attestation.Tests
             TcbBaseline baseline = result.TcbBaselines.Single();
             Assert.AreEqual("16", baseline.TcbIdentifier);
             Assert.AreEqual(16, baseline.TcbEvaluationDataNumber);
-            Assert.AreEqual(new DateTimeOffset(2023, 8, 9, 0, 0, 0, TimeSpan.Zero), baseline.TcbReleaseOn);
+            Assert.AreEqual(new DateTimeOffset(2023, 8, 9, 0, 0, 0, TimeSpan.Zero), baseline.TcbReleasedOn);
             Assert.AreEqual("2.17", baseline.MinimumPswLinuxVersion);
             Assert.AreEqual("2.16", baseline.MinimumPswWindowsVersion);
             Assert.IsTrue(baseline.IsSelectedTcb);
@@ -368,9 +376,36 @@ namespace Azure.Security.Attestation.Tests
             var captured = new List<CapturedRequest>();
             var client = new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), Options(captured, "{}", AttestationClientOptions.ServiceVersion.V2020_10_01));
 
+            Assert.IsFalse(client.CanGetTcbBaselines);
             Assert.Throws<NotSupportedException>(() => client.GetTcbBaselines(AttestationType.SgxEnclave));
             Assert.ThrowsAsync<NotSupportedException>(() => client.GetTcbBaselinesAsync(AttestationType.SgxEnclave));
             Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void CanGetTcbBaselinesOnServiceVersion20250601()
+        {
+            Assert.IsTrue(new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential()).CanGetTcbBaselines);
+            Assert.IsTrue(new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(AttestationClientOptions.ServiceVersion.V2025_06_01)).CanGetTcbBaselines);
+        }
+
+        // Client properties are virtual so that the clients can be mocked.
+        [Test]
+        public void ClientPropertiesCanBeMocked()
+        {
+            var endpoint = new Uri(Endpoint);
+
+            var client = new Moq.Mock<AttestationClient>();
+            client.SetupGet(c => c.Endpoint).Returns(endpoint);
+            client.SetupGet(c => c.CanAttestTdxVm).Returns(true);
+            Assert.AreEqual(endpoint, client.Object.Endpoint);
+            Assert.IsTrue(client.Object.CanAttestTdxVm);
+
+            var administrationClient = new Moq.Mock<AttestationAdministrationClient>();
+            administrationClient.SetupGet(c => c.Endpoint).Returns(endpoint);
+            administrationClient.SetupGet(c => c.CanGetTcbBaselines).Returns(true);
+            Assert.AreEqual(endpoint, administrationClient.Object.Endpoint);
+            Assert.IsTrue(administrationClient.Object.CanGetTcbBaselines);
         }
 
         [Test]

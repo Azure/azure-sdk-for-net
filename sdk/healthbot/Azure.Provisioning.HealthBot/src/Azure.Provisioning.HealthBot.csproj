@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.HealthBot simplifies declarative resource provisioning for Azure Health Bot in .NET.</Description>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

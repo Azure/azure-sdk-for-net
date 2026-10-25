@@ -374,7 +374,17 @@ for (const tier of ["workflow", "skill", "live"]) test(`${tier} forwards only th
     assert.doesNotMatch(content, /eval-dashboard\.yml|EvalDashboardPublicationEnabled|System.DefinitionId|autoPublishDashboardResults|allowAzureStorageNetworkAccess/);
     const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
     assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
-    assert.doesNotMatch(content, /group: AzSDK_Eval_Variable_group/); assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
+    assert.doesNotMatch(content, /group:\s*AzSDK_Eval_Variable_group/);
+    assert.match(content, /template: \/eng\/common\/pipelines\/templates\/stages\/archetype-eval\.yml/);
+    const shard = await readFile(join(root, "pipelines/templates/jobs/eval-shard.yml"), "utf8");
+    assert.match(shard, /template: \/eng\/common\/pipelines\/templates\/steps\/login-to-copilot\.yml/);
+    const login = await readFile(join(root, "pipelines/templates/steps/login-to-copilot.yml"), "utf8");
+    assert.match(login, /template: \/eng\/common\/pipelines\/templates\/steps\/login-to-github\.yml/);
+    assert.match(login, /VariableNamePrefix:\s*COPILOT_GITHUB_TOKEN/);
+    assert.ok(login.includes("- ${{ split(variables['Build.Repository.Name'], '/')[1] }}"));
+    assert.match(login, /organization_copilot_requests:\s*read/);
+    assert.match(login, /metadata:\s*read/);
+    assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
     if (tier === "live") { assert.match(content, /UseAzSdkAuthentication: true/); assert.match(content, /failOnFailedTests: true/); }
     if (tier === "skill") assert.match(content, /vallyRoot: \.github\/skills/);
 });
