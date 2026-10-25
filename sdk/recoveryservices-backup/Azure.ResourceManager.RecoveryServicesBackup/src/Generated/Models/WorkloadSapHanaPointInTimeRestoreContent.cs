@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSapHanaPointInTimeRestoreContent : WorkloadSapHanaRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>. </summary>
-        public WorkloadSapHanaPointInTimeRestoreContent()
+        public WorkloadSapHanaPointInTimeRestoreContent() : base("AzureWorkloadSAPHanaPointInTimeRestoreRequest")
         {
         }
 
