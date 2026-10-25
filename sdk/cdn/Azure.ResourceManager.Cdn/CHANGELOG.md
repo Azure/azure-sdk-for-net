@@ -1,14 +1,18 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.6.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded api-version to 2026-10-01.
+- Added support for creating a rule set together with its rules in batch mode via `FrontDoorRuleSetData.BatchMode` and `FrontDoorRuleSetData.Rules`.
+- Added server TLS group configuration via `AfdServerTlsGroupPolicy` and `AfdServerTlsGroup`.
+- Added `CertificateNameCheckValidationMode` and `CustomCertificateSubjects` to Front Door origins.
+- Added `TokenDestinationHeader` to `OriginAuthenticationProperties`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed preview-only features introduced in 1.6.0-beta.1 (api-version 2025-09-01-preview) that are not part of the stable api-version 2026-10-01, including key groups, web agents, profile agents, deployment versions, and embedded WAF policies.
 
 ## 1.6.0-beta.1 (2026-06-02)
 
