@@ -4,19 +4,22 @@
 #nullable disable
 
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    [CodeGenSuppress("LoadBalancerFrontendIPConfigurationId")]
     public partial class PublicIPPrefixData
     {
+        // Preserve the 1.15.0 setter signature over the current service-populated, read-only reference.
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
-        [WirePath("properties.loadBalancerFrontendIPConfiguration")]
+        /// <remarks> The setter is retained for compatibility with version 1.15.0. Assignments have no effect because the current service model treats this reference as read-only. </remarks>
+        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
             get => Properties is null ? default : Properties.LoadBalancerFrontendIPConfigurationId;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
+            set
+            {
+                // The current service model does not accept this reference in requests.
+            }
         }
     }
 }

@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _subnetsClientDiagnostics;
         private readonly Subnets _subnetsRestClient;
-        private readonly ClientDiagnostics _resourceNavigationLinksClientDiagnostics;
-        private readonly ResourceNavigationLinks _resourceNavigationLinksRestClient;
-        private readonly ClientDiagnostics _serviceAssociationLinksClientDiagnostics;
-        private readonly ServiceAssociationLinks _serviceAssociationLinksRestClient;
         private readonly SubnetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks/subnets";
@@ -56,10 +52,6 @@ namespace Azure.ResourceManager.Network
             TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
-            _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
-            _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -294,6 +286,162 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of resource navigation links for a subnet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/resourceNavigationLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CSharpSubnetLinkOperations_ResourceNavigationLinksList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubnetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceNavigationLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceNavigationLink> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceNavigationLinkAsyncCollectionResultOfT(
+                _subnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SubnetResource.GetResourceNavigationLinks");
+        }
+
+        /// <summary>
+        /// Gets a list of resource navigation links for a subnet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/resourceNavigationLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CSharpSubnetLinkOperations_ResourceNavigationLinksList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubnetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceNavigationLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceNavigationLink> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceNavigationLinkCollectionResultOfT(
+                _subnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SubnetResource.GetResourceNavigationLinks");
+        }
+
+        /// <summary>
+        /// Gets a list of service association links for a subnet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/serviceAssociationLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CSharpSubnetLinkOperations_ServiceAssociationLinksList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubnetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceAssociationLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceAssociationLink> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceAssociationLinkAsyncCollectionResultOfT(
+                _subnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SubnetResource.GetServiceAssociationLinks");
+        }
+
+        /// <summary>
+        /// Gets a list of service association links for a subnet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/serviceAssociationLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CSharpSubnetLinkOperations_ServiceAssociationLinksList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubnetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceAssociationLink"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceAssociationLink> GetServiceAssociationLinks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceAssociationLinkCollectionResultOfT(
+                _subnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SubnetResource.GetServiceAssociationLinks");
         }
 
         /// <summary>

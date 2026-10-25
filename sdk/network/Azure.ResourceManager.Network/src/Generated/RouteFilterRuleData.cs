@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal RouteFilterRulePropertiesFormat Properties { get; set; }
 
+        /// <summary> Resource location. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

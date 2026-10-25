@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Network
             => (await RestartAsync(WaitUntil.Completed, networkVirtualApplianceInstanceIds, cancellationToken).ConfigureAwait(false)).GetRawResponse();
 
         // Project only the result model; all operation state and status requests belong to the native child operation.
+#pragma warning disable CS0618 // The operation deliberately retains the obsolete 1.15.0 result model.
         private sealed class InboundSecurityRuleOperation : ArmOperation<LegacyModels.InboundSecurityRule>
         {
             private readonly ArmOperation<InboundSecurityRuleResource> _operation;
@@ -85,5 +86,6 @@ namespace Azure.ResourceManager.Network
             public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
             public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
         }
+#pragma warning restore CS0618
     }
 }

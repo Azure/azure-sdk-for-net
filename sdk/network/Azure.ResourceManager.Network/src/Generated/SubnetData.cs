@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -149,6 +150,48 @@ namespace Azure.ResourceManager.Network
                     Properties = new SubnetPropertiesFormat();
                 }
                 return Properties.PrivateEndpoints;
+            }
+        }
+
+        /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
+        [WirePath("properties.ipConfigurations")]
+        public IReadOnlyList<NetworkIPConfiguration> IPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPConfigurations;
+            }
+        }
+
+        /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
+        [WirePath("properties.ipConfigurationProfiles")]
+        public IReadOnlyList<NetworkIPConfigurationProfile> IPConfigurationProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPConfigurationProfiles;
+            }
+        }
+
+        /// <summary> Array of IpAllocation which reference this subnet. </summary>
+        [WirePath("properties.ipAllocations")]
+        public IList<WritableSubResource> IPAllocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IPAllocations;
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -28,14 +29,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Security Partner Provider. </param>
-        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityPartnerProviderPropertiesFormat properties) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityPartnerProviderPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> Properties of the Security Partner Provider. </summary>
         [WirePath("properties")]
         internal SecurityPartnerProviderPropertiesFormat Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> The provisioning state of the Security Partner Provider resource. </summary>
         [WirePath("properties.provisioningState")]

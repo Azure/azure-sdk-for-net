@@ -48,6 +48,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SubnetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetSubnetResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
+        public static SubnetResource GetSubnetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetSubnetResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -1431,24 +1449,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkArmClient(client).GetVirtualNetworkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubnetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetSubnetResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
-        public static SubnetResource GetSubnetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetSubnetResource(id);
         }
 
         /// <summary>

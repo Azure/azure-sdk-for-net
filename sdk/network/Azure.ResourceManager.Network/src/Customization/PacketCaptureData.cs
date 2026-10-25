@@ -12,9 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    // Without suppression, the generator emits its default flattened Filters member. This replacement preserves the released
-    // read-only Filters API and safely delegates to the nested list while Properties.Filters owns serialization.
-    [CodeGenSuppress("Filters")]
     public partial class PacketCaptureData
     {
         // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
@@ -23,8 +20,17 @@ namespace Azure.ResourceManager.Network
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsContinuousCapture instead.")]
         public bool? ContinuousCapture => IsContinuousCapture;
 
-        /// <summary> Gets or sets the Filters compatibility property. </summary>
+        // 1.15.0 exposed a read-only view; the shared request properties must retain their writable filter list.
+        /// <summary> Gets the packet capture filters. </summary>
+        [CodeGenMember("Filters")]
+        [WirePath("properties.filters")]
         public IReadOnlyList<PacketCaptureFilter> Filters
-            => Properties is null ? default : new ReadOnlyCollection<PacketCaptureFilter>(Properties.Filters);
+        {
+            get
+            {
+                var properties = Properties;
+                return properties is null ? null : new ReadOnlyCollection<PacketCaptureFilter>(properties.Filters);
+            }
+        }
     }
 }

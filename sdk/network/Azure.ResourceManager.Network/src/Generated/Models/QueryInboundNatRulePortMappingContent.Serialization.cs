@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteStringValue(IPConfiguration);
+                writer.WriteObjectValue(IPConfiguration, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ResourceIdentifier ipConfiguration = default;
+            NetworkSubResource ipConfiguration = default;
             string ipAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = new ResourceIdentifier(prop.Value.GetString());
+                    ipConfiguration = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ipAddress"u8))

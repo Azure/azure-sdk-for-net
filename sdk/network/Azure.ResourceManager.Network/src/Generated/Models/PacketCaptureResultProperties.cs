@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The properties of a packet capture session. </summary>
-    internal partial class PacketCaptureResultProperties : PacketCaptureCreateOrUpdateContent
+    internal partial class PacketCaptureResultProperties : PacketCaptureParameters
     {
         /// <summary> Initializes a new instance of <see cref="PacketCaptureResultProperties"/>. </summary>
         /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>

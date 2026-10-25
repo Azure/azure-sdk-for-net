@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
+    // Retained until the remaining legacy read-only reference facades use their released native element types.
     internal sealed class ReadOnlyNetworkSubResourceList : IReadOnlyList<WritableSubResource>
     {
         private readonly IReadOnlyList<NetworkSubResource> _source;

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -41,6 +42,20 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The load balancer rules that use this probe. </summary>
+        [WirePath("properties.loadBalancingRules")]
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                return Properties.LoadBalancingRules;
+            }
+        }
 
         /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
         [WirePath("properties.protocol")]

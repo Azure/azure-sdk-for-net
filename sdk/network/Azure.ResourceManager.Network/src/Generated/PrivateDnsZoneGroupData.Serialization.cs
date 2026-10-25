@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Network
                 throw new FormatException($"The model {nameof(PrivateDnsZoneGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             ResourceType? resourceType = default;
+            ETag? eTag = default;
             PrivateDnsZoneGroupPropertiesFormat properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.Network
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -170,7 +185,13 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateDnsZoneGroupData(id, additionalBinaryDataProperties, name, resourceType, properties);
+            return new PrivateDnsZoneGroupData(
+                id,
+                additionalBinaryDataProperties,
+                name,
+                resourceType,
+                eTag,
+                properties);
         }
     }
 }

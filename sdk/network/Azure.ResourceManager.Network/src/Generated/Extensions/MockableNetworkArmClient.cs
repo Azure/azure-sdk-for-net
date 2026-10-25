@@ -29,6 +29,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="SubnetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
+        public virtual SubnetResource GetSubnetResource(ResourceIdentifier id)
+        {
+            SubnetResource.ValidateResourceId(id);
+            return new SubnetResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayResource"/> object. </returns>
@@ -720,15 +729,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VirtualNetworkResource.ValidateResourceId(id);
             return new VirtualNetworkResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SubnetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
-        public virtual SubnetResource GetSubnetResource(ResourceIdentifier id)
-        {
-            SubnetResource.ValidateResourceId(id);
-            return new SubnetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data. </summary>

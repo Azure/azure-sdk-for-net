@@ -78,6 +78,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> A list of service resources. </summary>
+        [WirePath("properties.serviceResources")]
+        public IList<ResourceIdentifier> ServiceResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyDefinitionPropertiesFormat();
+                }
+                return Properties.ServiceResources;
+            }
+        }
+
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

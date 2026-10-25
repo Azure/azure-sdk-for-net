@@ -124,6 +124,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The list of all referenced PublicIPAddresses. </summary>
+        [WirePath("properties.publicIPAddresses")]
+        public IReadOnlyList<SubResource> PublicIPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                return Properties.PublicIPAddresses;
+            }
+        }
+
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
         [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid
