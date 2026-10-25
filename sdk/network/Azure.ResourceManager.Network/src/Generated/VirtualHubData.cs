@@ -140,6 +140,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to Bgp Connections. </summary>
+        [WirePath("properties.bgpConnections")]
+        public IReadOnlyList<WritableSubResource> BgpConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.BgpConnections;
+            }
+        }
+
         /// <summary> List of references to IpConfigurations. </summary>
         [CodeGenMember("IPConfigurations")]
         [WirePath("properties.ipConfigurations")]
@@ -152,6 +166,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualHubProperties();
                 }
                 return Properties.IPConfigurations;
+            }
+        }
+
+        /// <summary> List of references to RouteMaps. </summary>
+        [WirePath("properties.routeMaps")]
+        public IReadOnlyList<WritableSubResource> RouteMaps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.RouteMaps;
             }
         }
 
@@ -383,7 +411,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List of all routes. </summary>
         [WirePath("properties.routeTable.routes")]
-        public IList<VirtualHubRoute> RouteTableRoutes
+        public IList<VirtualHubRoute> Routes
         {
             get
             {
@@ -391,7 +419,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualHubProperties();
                 }
-                return Properties.RouteTableRoutes;
+                return Properties.Routes;
             }
         }
 

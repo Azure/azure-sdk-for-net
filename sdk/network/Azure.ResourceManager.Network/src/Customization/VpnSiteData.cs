@@ -11,9 +11,10 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnSiteData
     {
-        // Lazily restore the supported flattened facade using the native change-tracking list.
+        // AddressSpace now also contains IPAM allocations, so it can no longer be safely flattened.
         /// <summary> Gets the address prefixes of the VPN site. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.addressSpace.addressPrefixes")]
         public IList<string> AddressPrefixes
         {
             get

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -60,6 +61,34 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualWanProperties();
                 }
                 Properties.DisableVpnEncryption = value;
+            }
+        }
+
+        /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
+        [WirePath("properties.virtualHubs")]
+        public IReadOnlyList<WritableSubResource> VirtualHubs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                return Properties.VirtualHubs;
+            }
+        }
+
+        /// <summary> List of VpnSites in the VirtualWAN. </summary>
+        [WirePath("properties.vpnSites")]
+        public IReadOnlyList<WritableSubResource> VpnSites
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                return Properties.VpnSites;
             }
         }
 

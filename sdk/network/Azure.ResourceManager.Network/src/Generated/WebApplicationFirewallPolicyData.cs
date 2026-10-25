@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -125,6 +126,48 @@ namespace Azure.ResourceManager.Network
                     Properties = new WebApplicationFirewallPolicyPropertiesFormat();
                 }
                 Properties.ManagedRules = value;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway http listeners. </summary>
+        [WirePath("properties.httpListeners")]
+        public IReadOnlyList<WritableSubResource> HttpListeners
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.HttpListeners;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway path rules. </summary>
+        [WirePath("properties.pathBasedRules")]
+        public IReadOnlyList<WritableSubResource> PathBasedRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.PathBasedRules;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway for containers. </summary>
+        [WirePath("properties.applicationGatewayForContainers")]
+        public IReadOnlyList<SubResource> ApplicationGatewayForContainers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.ApplicationGatewayForContainers;
             }
         }
 

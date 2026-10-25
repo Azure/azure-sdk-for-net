@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -89,6 +90,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new VpnServerConfigurationPolicyGroupProperties();
                 }
                 return Properties.PolicyMembers;
+            }
+        }
+
+        /// <summary> List of references to P2SConnectionConfigurations. </summary>
+        [WirePath("properties.p2SConnectionConfigurations")]
+        public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                return Properties.P2SConnectionConfigurations;
             }
         }
 

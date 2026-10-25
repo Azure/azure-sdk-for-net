@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of all routes. </summary>
         [WirePath("routeTable.routes")]
-        public IList<VirtualHubRoute> RouteTableRoutes
+        public IList<VirtualHubRoute> Routes
         {
             get
             {

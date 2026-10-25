@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -95,6 +96,20 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new VirtualNetworkGatewayPolicyGroupProperties();
                 }
                 return Properties.PolicyMembers;
+            }
+        }
+
+        /// <summary> List of references to vngClientConnectionConfigurations. </summary>
+        [WirePath("properties.vngClientConnectionConfigurations")]
+        public IReadOnlyList<WritableSubResource> VngClientConnectionConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPolicyGroupProperties();
+                }
+                return Properties.VngClientConnectionConfigurations;
             }
         }
 

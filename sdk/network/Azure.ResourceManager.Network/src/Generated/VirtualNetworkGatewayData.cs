@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> ActiveActive flag. </summary>
         [WirePath("properties.activeActive")]
-        public bool? ActiveActive
+        public bool? IsActive
         {
             get
             {
-                return Properties is null ? default : Properties.ActiveActive;
+                return Properties is null ? default : Properties.IsActive;
             }
             set
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
-                Properties.ActiveActive = value;
+                Properties.IsActive = value;
             }
         }
 

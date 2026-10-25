@@ -49,17 +49,18 @@ namespace Azure.ResourceManager.Network.Models
         public ETag? ETag { get; }
 
         /// <summary> Converts the compatibility model to the generated resource data model. </summary>
-        public static implicit operator InboundSecurityRuleData(InboundSecurityRule rule)
+        /// <param name="r"> The compatibility model to convert. </param>
+        public static implicit operator InboundSecurityRuleData(InboundSecurityRule r)
         {
-            if (rule is null)
+            if (r is null)
             {
                 return null;
             }
-            var additionalProperties = rule._additionalBinaryDataProperties is null
+            var additionalProperties = r._additionalBinaryDataProperties is null
                 ? new Dictionary<string, BinaryData>()
-                : new Dictionary<string, BinaryData>(rule._additionalBinaryDataProperties);
+                : new Dictionary<string, BinaryData>(r._additionalBinaryDataProperties);
             // Preserve the legacy conversion while assigning modeled metadata through the native constructor.
-            return new InboundSecurityRuleData(rule.Id, additionalProperties, rule.Name, rule.ResourceType, rule._properties, rule.ETag);
+            return new InboundSecurityRuleData(r.Id, additionalProperties, r.Name, r.ResourceType, r._properties, r.ETag);
         }
 
         InboundSecurityRule IJsonModel<InboundSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

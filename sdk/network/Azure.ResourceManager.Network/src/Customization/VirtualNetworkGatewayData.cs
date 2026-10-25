@@ -14,6 +14,16 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayData
     {
+        // Preserve the released property while the generated boolean uses the preferred IsActive name.
+        /// <inheritdoc cref="IsActive"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsActive instead.")]
+        public bool? Active
+        {
+            get => IsActive;
+            set => IsActive = value;
+        }
+
         // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -29,6 +39,7 @@ namespace Azure.ResourceManager.Network
 
         // Preserve the identifier API now that the internal reference uses WritableSubResource and is no longer ID-flattened.
         /// <summary> Resource ID. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.gatewayDefaultSite.id")]
         public ResourceIdentifier GatewayDefaultSiteId
         {
@@ -38,16 +49,6 @@ namespace Azure.ResourceManager.Network
                 GatewayDefaultSite ??= new WritableSubResource();
                 GatewayDefaultSite.Id = value;
             }
-        }
-
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="ActiveActive"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use ActiveActive instead.")]
-        public bool? Active
-        {
-            get => ActiveActive;
-            set => ActiveActive = value;
         }
     }
 }

@@ -3,23 +3,27 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualNetworkGatewayConnectionListEntity
     {
-        // Preserve the released WritableSubResource overload by copying its ID to LocalNetworkGateway2Id.
-        // Hide this compatibility overload from IntelliSense without depending on the generated serialization constructor.
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
-        /// <param name="localNetworkGateway2"> The local network gateway reference. </param>
+        /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
         /// <param name="connectionType"> The gateway connection type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public VirtualNetworkGatewayConnectionListEntity(WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType)
+        public VirtualNetworkGatewayConnectionListEntity(WritableSubResource virtualNetworkGateway1, VirtualNetworkGatewayConnectionType connectionType)
         {
+            Argument.AssertNotNull(virtualNetworkGateway1, nameof(virtualNetworkGateway1));
+
             ConnectionType = connectionType;
-            LocalNetworkGateway2Id = localNetworkGateway2?.Id;
+            // The released overload allows a non-null reference whose ID is null.
+            Properties.VirtualNetworkGateway1 = new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway1.Id, additionalBinaryDataProperties: null);
         }
     }
 }

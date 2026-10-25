@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateVirtualWanVpnServerConfigurationVpnProfileRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -29,6 +29,33 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="VirtualNetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkGatewayResource"/> object. </returns>
+        public virtual VirtualNetworkGatewayResource GetVirtualNetworkGatewayResource(ResourceIdentifier id)
+        {
+            VirtualNetworkGatewayResource.ValidateResourceId(id);
+            return new VirtualNetworkGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VpnServerConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VpnServerConfigurationResource"/> object. </returns>
+        public virtual VpnServerConfigurationResource GetVpnServerConfigurationResource(ResourceIdentifier id)
+        {
+            VpnServerConfigurationResource.ValidateResourceId(id);
+            return new VpnServerConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkResource"/> object. </returns>
+        public virtual VirtualNetworkResource GetVirtualNetworkResource(ResourceIdentifier id)
+        {
+            VirtualNetworkResource.ValidateResourceId(id);
+            return new VirtualNetworkResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="SubnetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubnetResource"/> object. </returns>
@@ -722,15 +749,6 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ServiceEndpointPolicyDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkResource"/> object. </returns>
-        public virtual VirtualNetworkResource GetVirtualNetworkResource(ResourceIdentifier id)
-        {
-            VirtualNetworkResource.ValidateResourceId(id);
-            return new VirtualNetworkResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="VirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkPeeringResource"/> object. </returns>
@@ -738,15 +756,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VirtualNetworkPeeringResource.ValidateResourceId(id);
             return new VirtualNetworkPeeringResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="VirtualNetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkGatewayResource"/> object. </returns>
-        public virtual VirtualNetworkGatewayResource GetVirtualNetworkGatewayResource(ResourceIdentifier id)
-        {
-            VirtualNetworkGatewayResource.ValidateResourceId(id);
-            return new VirtualNetworkGatewayResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualNetworkGatewayConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -828,15 +837,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VpnSiteLinkResource.ValidateResourceId(id);
             return new VpnSiteLinkResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="VpnServerConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VpnServerConfigurationResource"/> object. </returns>
-        public virtual VpnServerConfigurationResource GetVpnServerConfigurationResource(ResourceIdentifier id)
-        {
-            VpnServerConfigurationResource.ValidateResourceId(id);
-            return new VpnServerConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>

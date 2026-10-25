@@ -3,19 +3,18 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    [CodeGenSuppress("IPAllocations")]
     public partial class VirtualNetworkData
     {
-        /// <summary> Compatibility member. </summary>
+        // Native regeneration omits this released getter (CP0002); AddressSpace also contains IPAM allocations.
+        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.addressSpace.addressPrefixes")]
         public IList<string> AddressPrefixes
         {
             get
@@ -23,19 +22,6 @@ namespace Azure.ResourceManager.Network
                 AddressSpace ??= new VirtualNetworkAddressSpace();
                 return AddressSpace.AddressPrefixes;
             }
-        }
-
-        /// <summary> Compatibility member. </summary>
-        public IList<WritableSubResource> IPAllocations { get; } = new List<WritableSubResource>();
-
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="PrivateEndpointVnetPolicy"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointVnetPolicy instead.")]
-        public PrivateEndpointVnetPolicy? PrivateEndpointVNetPolicies
-        {
-            get => PrivateEndpointVnetPolicy;
-            set => PrivateEndpointVnetPolicy = value;
         }
     }
 }

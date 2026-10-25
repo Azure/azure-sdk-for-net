@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -131,6 +132,34 @@ namespace Azure.ResourceManager.Network
                     Properties = new VpnGatewayNatRuleProperties();
                 }
                 Properties.IPConfigurationId = value;
+            }
+        }
+
+        /// <summary> List of egress VpnSiteLinkConnections. </summary>
+        [WirePath("properties.egressVpnSiteLinkConnections")]
+        public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                return Properties.EgressVpnSiteLinkConnections;
+            }
+        }
+
+        /// <summary> List of ingress VpnSiteLinkConnections. </summary>
+        [WirePath("properties.ingressVpnSiteLinkConnections")]
+        public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayNatRuleProperties();
+                }
+                return Properties.IngressVpnSiteLinkConnections;
             }
         }
     }

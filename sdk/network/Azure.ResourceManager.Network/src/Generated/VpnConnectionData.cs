@@ -304,6 +304,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.remoteVpnSite.id")]
         public ResourceIdentifier RemoteVpnSiteId

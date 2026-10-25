@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The storage account for troubleshooting output. </param>
-        /// <param name="storagePath"> The absolute storage path. </param>
+        /// <param name="storageUri"> The absolute storage URI. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storagePath)
-            : this(targetResourceId, storageId, storagePath?.AbsoluteUri)
+        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
+            : this(targetResourceId, storageId, storageUri?.AbsoluteUri)
         {
         }
 

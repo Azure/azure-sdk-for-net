@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -119,6 +120,34 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
                 }
                 Properties.LocalNetworkGateway2 = value;
+            }
+        }
+
+        /// <summary> List of ingress NatRules. </summary>
+        [WirePath("properties.ingressNatRules")]
+        public IList<WritableSubResource> IngressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
+                }
+                return Properties.IngressNatRules;
+            }
+        }
+
+        /// <summary> List of egress NatRules. </summary>
+        [WirePath("properties.egressNatRules")]
+        public IList<WritableSubResource> EgressNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayConnectionPropertiesFormat();
+                }
+                return Properties.EgressNatRules;
             }
         }
 

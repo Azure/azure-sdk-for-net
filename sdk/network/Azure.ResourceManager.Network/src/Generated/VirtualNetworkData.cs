@@ -207,6 +207,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Array of IpAllocation which reference this VNET. </summary>
+        [WirePath("properties.ipAllocations")]
+        public IList<WritableSubResource> IPAllocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.IPAllocations;
+            }
+        }
+
         /// <summary> A collection of references to flow log resources. </summary>
         [WirePath("properties.flowLogs")]
         public IReadOnlyList<FlowLogData> FlowLogs
