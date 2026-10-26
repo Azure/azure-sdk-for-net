@@ -44,15 +44,11 @@ namespace Azure.ResourceManager.OperationTemplates
         public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            if (response.IsError)
-            {
-                return new ErrorResult<bool>(response, new RequestFailedException(response));
-            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case 404:
+                case >= 400 and < 500:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
@@ -62,15 +58,11 @@ namespace Azure.ResourceManager.OperationTemplates
         public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = pipeline.ProcessMessage(message, context);
-            if (response.IsError)
-            {
-                return new ErrorResult<bool>(response, new RequestFailedException(response));
-            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case 404:
+                case >= 400 and < 500:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
