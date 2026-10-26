@@ -9,8 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-    /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+    /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+    /// and phrase hints.
     /// </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentInputTranscription
@@ -52,8 +52,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
+        /// <param name="profanityFilter">
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentInputTranscription(string language, IList<string> languages, IList<string> keywords, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentInputTranscription(string language, IList<string> languages, IList<string> keywords, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, VoiceAgentProfanityFilterMode? profanityFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Languages = languages;
@@ -63,6 +72,7 @@ namespace Azure.AI.Projects.Agents
             Model = model;
             CustomSpeech = customSpeech;
             PhraseList = phraseList;
+            ProfanityFilter = profanityFilter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -103,5 +113,16 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional phrase hints that bias recognition toward domain terms. </summary>
         public IList<string> PhraseList { get; }
+
+        /// <summary>
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </summary>
+        public VoiceAgentProfanityFilterMode? ProfanityFilter { get; set; }
     }
 }
