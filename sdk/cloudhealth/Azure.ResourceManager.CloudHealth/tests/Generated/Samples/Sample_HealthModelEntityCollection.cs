@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.CloudHealth.Samples
                 Properties = new HealthModelEntityProperties
                 {
                     DisplayName = "My entity",
-                    CanvasPosition = new HealthModelEntityCoordinates(14F, 13F),
-                    Icon = new HealthModelEntityIcon("Custom")
+                    CanvasPosition = new EntityCoordinates(14F, 13F),
+                    Icon = new EntityIcon("Custom")
                     {
                         CustomData = "rcitntvapruccrhtxmkqjphbxunkz",
                     },
                     HealthObjective = 62F,
-                    Impact = HealthModelEntityImpact.Standard,
+                    Impact = EntityImpact.Standard,
                     Alerts = new EntityAlerts
                     {
                         Unhealthy = new EntityAlertConfiguration(EntityAlertSeverity.Sev1)
