@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -21,13 +22,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
         /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
         /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
+        /// <param name="connectivityMode"> The connectivity mode used to reach the EKM proxy. Defaults to "Public". In "PrivateEndpoint" mode, the host field holds the name of a private endpoint (peName) instead of a DNS name or IP address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultEkmConnection(string hostName, string pathPrefix, IList<BinaryData> serverCaCertificates, string serverSubjectCommonName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultEkmConnection(string hostName, string pathPrefix, IList<BinaryData> serverCaCertificates, string serverSubjectCommonName, EkmConnectivityMode? connectivityMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostName = hostName;
             PathPrefix = pathPrefix;
             ServerCaCertificates = serverCaCertificates;
             ServerSubjectCommonName = serverSubjectCommonName;
+            ConnectivityMode = connectivityMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,5 +57,8 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> The subject common name of the server certificate of EKM Proxy. </summary>
         public string ServerSubjectCommonName { get; set; }
+
+        /// <summary> The connectivity mode used to reach the EKM proxy. Defaults to "Public". In "PrivateEndpoint" mode, the host field holds the name of a private endpoint (peName) instead of a DNS name or IP address. </summary>
+        public EkmConnectivityMode? ConnectivityMode { get; set; }
     }
 }
