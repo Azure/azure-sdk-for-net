@@ -1,0 +1,5 @@
+directory: specification/ews/resource-manager/Microsoft.SecretSyncController/SecretSyncController
+commit: f6e1b604d81a11390b92bd9b824281ee7b4c2ac8
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories:
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
