@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.CloudHealth.Samples
             {
                 Properties = new ResourceMetricSignalDefinitionProperties(new EntitySignalEvaluationRule
                 {
-                    DegradedRule = new EntitySignalThresholdRuleV2(EntitySignalOperator.LessThan),
-                    UnhealthyRule = new EntitySignalThresholdRuleV2(EntitySignalOperator.LessThan),
-                }, "microsoft.compute/virtualMachines", "cpuusage", "PT1M", MetricAggregationType.None)
+                    DegradedRule = new EntitySignalThresholdRule(EntitySignalOperator.LessThan),
+                    UnhealthyRule = new EntitySignalThresholdRule(EntitySignalOperator.LessThan),
+                }, "microsoft.compute/virtualMachines", "cpuusage", "PT1M", HealthModelMetricAggregationType.None)
                 {
                     DimensionFilter = "node1",
                     DisplayName = "cpu usage",
-                    RefreshInterval = EntitySignalRefreshInterval.PT1M,
+                    RefreshInterval = EntitySignalRefreshInterval.OneMinute,
                     DataUnit = "byte",
                 },
             };
