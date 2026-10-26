@@ -16969,20 +16969,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag);
         }
 
-        /// <summary> An IP Configuration of the private endpoint. </summary>
-        /// <param name="name"> The name of the resource that is unique within a resource group. </param>
-        /// <param name="privateEndpointIPConfigurationType"></param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="privateIPAddress"></param>
-        /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
-        {
-            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, default, default), name, default, etag, default);
-        }
-
         /// <summary> Private link service resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
