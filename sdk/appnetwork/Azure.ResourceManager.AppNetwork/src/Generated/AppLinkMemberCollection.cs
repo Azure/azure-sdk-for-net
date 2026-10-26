@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMemberDataAsyncCollectionResultOfT(
                 _appLinkMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMembersGetByAppLinkCollectionResultOfT(
+            return new PageableWrapper<AppLinkMemberData, AppLinkMemberResource>(new AppLinkMemberDataCollectionResultOfT(
                 _appLinkMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

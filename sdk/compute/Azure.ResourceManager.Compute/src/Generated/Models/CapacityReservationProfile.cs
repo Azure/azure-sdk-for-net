@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? DisableCapacityReservationAssignment { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
+        public virtual ResourceIdentifier CapacityReservationGroupId
         {
             get
             {

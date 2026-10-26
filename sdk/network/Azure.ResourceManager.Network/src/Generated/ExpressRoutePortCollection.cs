@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRoutePortCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRoutePortResource.ResourceType, out string expressRoutePortApiVersion);
             _expressRoutePortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortResource.ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortApiVersion ?? "2026-01-01");
+            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetByResourceGroupAsyncCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortDataAsyncCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetByResourceGroupCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
+            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortDataCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>

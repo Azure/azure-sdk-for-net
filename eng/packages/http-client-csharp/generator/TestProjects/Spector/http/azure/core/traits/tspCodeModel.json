@@ -659,7 +659,6 @@
             "$id": "45",
             "name": "smokeTest",
             "isExactName": false,
-            "resourceName": "User",
             "doc": "Get a resource, sending and receiving headers.",
             "accessibility": "public",
             "parameters": [
@@ -1267,7 +1266,6 @@
             "$id": "93",
             "name": "repeatableAction",
             "isExactName": false,
-            "resourceName": "Traits",
             "doc": "Test for repeatable requests",
             "accessibility": "public",
             "parameters": [

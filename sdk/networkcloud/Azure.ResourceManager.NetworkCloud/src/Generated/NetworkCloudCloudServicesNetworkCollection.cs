@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudCloudServicesNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudCloudServicesNetworkResource.ResourceType, out string networkCloudCloudServicesNetworkApiVersion);
             _cloudServicesNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudCloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
-            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudCloudServicesNetworkApiVersion ?? "2026-07-01");
+            _cloudServicesNetworksRestClient = new CloudServicesNetworks(_cloudServicesNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/cloudServicesNetworks", out string cloudServicesNetworksApiVersionOverride) ? cloudServicesNetworksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkDataAsyncCollectionResultOfT(
                 _cloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new CloudServicesNetworksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudCloudServicesNetworkData, NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkDataCollectionResultOfT(
                 _cloudServicesNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

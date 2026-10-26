@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteCircuitCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteCircuitResource.ResourceType, out string expressRouteCircuitApiVersion);
             _expressRouteCircuitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitApiVersion ?? "2026-01-01");
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAsyncCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitDataAsyncCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
+            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitDataCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>

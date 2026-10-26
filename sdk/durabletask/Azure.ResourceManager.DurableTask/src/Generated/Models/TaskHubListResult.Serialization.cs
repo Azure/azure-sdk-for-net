@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TaskHubListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TaskHubListResult(value ?? new ChangeTrackingList<DurableTaskHubData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

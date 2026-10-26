@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkflowRunActionRepetitionDefinitionCollection(value, nextLink, additionalBinaryDataProperties);
+            return new WorkflowRunActionRepetitionDefinitionCollection(value ?? new ChangeTrackingList<WorkflowRunActionRepetitionDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

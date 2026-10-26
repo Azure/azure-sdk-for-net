@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetAllAsyncCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), context, "ReservationDetailCollection.GetAll"), data => new ReservationDetailResource(Client, data));
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailDataAsyncCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), context, "ReservationDetailCollection.GetAll"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetAllCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), context, "ReservationDetailCollection.GetAll"), data => new ReservationDetailResource(Client, data));
+            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailDataCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), context, "ReservationDetailCollection.GetAll"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsAsyncCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), reservationId, context, "ReservationDetailCollection.GetRevisions"), data => new ReservationDetailResource(Client, data));
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailDataAsync0CollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), reservationId, context, "ReservationDetailCollection.GetRevisions"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), reservationId, context, "ReservationDetailCollection.GetRevisions"), data => new ReservationDetailResource(Client, data));
+            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationDetailData0CollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Name), reservationId, context, "ReservationDetailCollection.GetRevisions"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>

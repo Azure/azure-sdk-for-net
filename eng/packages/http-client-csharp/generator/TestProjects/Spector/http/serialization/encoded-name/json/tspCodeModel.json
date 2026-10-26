@@ -151,7 +151,6 @@
                 "$id": "14",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -287,7 +286,6 @@
                 "$id": "20",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {

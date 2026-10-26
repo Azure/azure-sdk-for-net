@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListVirtualHubBgpConnectionResults(value, nextLink, additionalBinaryDataProperties);
+            return new ListVirtualHubBgpConnectionResults(value ?? new ChangeTrackingList<BgpConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

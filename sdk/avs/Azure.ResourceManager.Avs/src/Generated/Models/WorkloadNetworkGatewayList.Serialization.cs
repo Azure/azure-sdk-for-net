@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadNetworkGatewayList(value, nextLink, additionalBinaryDataProperties);
+            return new WorkloadNetworkGatewayList(value ?? new ChangeTrackingList<WorkloadNetworkGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

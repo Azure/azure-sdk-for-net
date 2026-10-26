@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
+    /// <summary> The legacy default enablement setting retained for compatibility. Use `MicrosoftCopilotToolsetDefaultConfig` for new integrations. </summary>
     public partial class GitHubCopilotToolsetDefaultConfig : IJsonModel<GitHubCopilotToolsetDefaultConfig>
     {
         /// <param name="data"> The data to parse. </param>

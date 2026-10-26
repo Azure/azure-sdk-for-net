@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudConnectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublicCloudConnectorResource.ResourceType, out string publicCloudConnectorApiVersion);
             _publicCloudConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorResource.ResourceType.Namespace, Diagnostics);
-            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
+            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridConnectivity/publicCloudConnectors", out string publicCloudConnectorsApiVersionOverride) ? publicCloudConnectorsApiVersionOverride : "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorDataAsyncCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorsGetByResourceGroupCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorData, PublicCloudConnectorResource>(new PublicCloudConnectorDataCollectionResultOfT(_publicCloudConnectorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorCollection.GetAll"), data => new PublicCloudConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImageTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ImageTemplateResource.ResourceType, out string imageTemplateApiVersion);
             _virtualMachineImageTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ImageTemplateResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateApiVersion ?? "2025-10-01");
+            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetByResourceGroupAsyncCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateDataAsyncCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new VirtualMachineImageTemplatesGetByResourceGroupCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
+            return new PageableWrapper<ImageTemplateData, ImageTemplateResource>(new ImageTemplateDataCollectionResultOfT(_virtualMachineImageTemplatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ImageTemplateCollection.GetAll"), data => new ImageTemplateResource(Client, data));
         }
 
         /// <summary>

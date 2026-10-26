@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceFabricList(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceFabricList(value ?? new ChangeTrackingList<DevTestLabServiceFabricData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

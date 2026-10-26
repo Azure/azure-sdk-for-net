@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialDataAsyncCollectionResultOfT(
                 _federatedIdentityCredentialsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllCollectionResultOfT(
+            return new PageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialDataCollectionResultOfT(
                 _federatedIdentityCredentialsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

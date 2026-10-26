@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ProgrammableConnectivity.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ProgrammableConnectivity
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperatorApiConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string operatorApiConnectionApiVersion);
             _operatorApiConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", ResourceType.Namespace, Diagnostics);
-            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operatorApiConnectionApiVersion ?? "2025-03-30-preview");
+            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgrammableConnectivity/operatorApiConnections", out string operatorApiConnectionsApiVersionOverride) ? operatorApiConnectionsApiVersionOverride : "2025-03-30-preview");
             ValidateResourceId(id);
         }
 
@@ -515,10 +515,9 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -558,10 +557,9 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

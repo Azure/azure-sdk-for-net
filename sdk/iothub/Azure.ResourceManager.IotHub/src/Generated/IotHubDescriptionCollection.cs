@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.IotHub
         {
             TryGetApiVersion(IotHubDescriptionResource.ResourceType, out string iotHubDescriptionApiVersion);
             _iotHubResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubDescriptionResource.ResourceType.Namespace, Diagnostics);
-            _iotHubResourceRestClient = new IotHubResource(_iotHubResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubDescriptionApiVersion ?? "2026-05-01-preview");
+            _iotHubResourceRestClient = new IotHubResource(
+                _iotHubResourceClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                iotHubDescriptionApiVersion ?? "2026-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +192,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +241,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +290,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +302,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetByResourceGroupAsyncCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
+            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubDescriptionDataAsyncCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +318,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +330,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetByResourceGroupCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
+            return new PageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubDescriptionDataCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +346,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +403,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,7 +460,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,7 +521,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

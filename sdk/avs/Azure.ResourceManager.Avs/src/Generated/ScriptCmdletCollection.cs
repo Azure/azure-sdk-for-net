@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScriptCmdletData, ScriptCmdletResource>(new ScriptCmdletsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScriptCmdletData, ScriptCmdletResource>(new ScriptCmdletDataAsyncCollectionResultOfT(
                 _scriptCmdletsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScriptCmdletData, ScriptCmdletResource>(new ScriptCmdletsGetAllCollectionResultOfT(
+            return new PageableWrapper<ScriptCmdletData, ScriptCmdletResource>(new ScriptCmdletDataCollectionResultOfT(
                 _scriptCmdletsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

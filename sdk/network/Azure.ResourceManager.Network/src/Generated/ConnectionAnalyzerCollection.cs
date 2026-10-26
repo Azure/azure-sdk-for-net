@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectionAnalyzerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConnectionAnalyzerResource.ResourceType, out string connectionAnalyzerApiVersion);
             _networkWatchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ConnectionAnalyzerResource.ResourceType.Namespace, Diagnostics);
-            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionAnalyzerApiVersion ?? "2026-01-01");
+            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionAnalyzerData, ConnectionAnalyzerResource>(new NetworkWatchersConnectionAnalyzersListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectionAnalyzerData, ConnectionAnalyzerResource>(new ConnectionAnalyzerDataAsyncCollectionResultOfT(
                 _networkWatchersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionAnalyzerData, ConnectionAnalyzerResource>(new NetworkWatchersConnectionAnalyzersListCollectionResultOfT(
+            return new PageableWrapper<ConnectionAnalyzerData, ConnectionAnalyzerResource>(new ConnectionAnalyzerDataCollectionResultOfT(
                 _networkWatchersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

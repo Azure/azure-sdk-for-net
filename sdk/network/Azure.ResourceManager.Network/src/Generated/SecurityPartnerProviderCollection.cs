@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityPartnerProviderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityPartnerProviderResource.ResourceType, out string securityPartnerProviderApiVersion);
             _securityPartnerProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProviderResource.ResourceType.Namespace, Diagnostics);
-            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityPartnerProviderApiVersion ?? "2026-01-01");
+            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetByResourceGroupAsyncCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
+            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderDataAsyncCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetByResourceGroupCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
+            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderDataCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>

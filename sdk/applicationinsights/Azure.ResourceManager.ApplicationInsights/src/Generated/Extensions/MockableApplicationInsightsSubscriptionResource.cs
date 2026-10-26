@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
 
         private ClientDiagnostics WebTestsClientDiagnostics => _webTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebTests WebTestsRestClient => _webTestsRestClient ??= new WebTests(WebTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-06-15");
+        private WebTests WebTestsRestClient => _webTestsRestClient ??= new WebTests(WebTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics WorkbooksClientDiagnostics => _workbooksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workbooks WorkbooksRestClient => _workbooksRestClient ??= new Workbooks(WorkbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-06-01");
+        private Workbooks WorkbooksRestClient => _workbooksRestClient ??= new Workbooks(WorkbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ComponentsClientDiagnostics => _componentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Components ComponentsRestClient => _componentsRestClient ??= new Components(ComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-02-02");
+        private Components ComponentsRestClient => _componentsRestClient ??= new Components(ComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedWorkbooksClientDiagnostics => _deletedWorkbooksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetAllAsyncCollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataAsync0CollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetAllCollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestData0CollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookDataAsyncCollectionResultOfT(
                 WorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category.ToString(),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookDataCollectionResultOfT(
                 WorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category.ToString(),
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetAllAsyncCollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentDataAsync0CollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetAllCollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentData0CollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedWorkbooksGetBySubscriptionAsyncCollectionResultOfT(
+            return new DeletedWorkbookAsyncCollectionResultOfT(
                 DeletedWorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category?.ToString(),
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedWorkbooksGetBySubscriptionCollectionResultOfT(
+            return new DeletedWorkbookCollectionResultOfT(
                 DeletedWorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category?.ToString(),

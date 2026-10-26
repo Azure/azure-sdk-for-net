@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resource-specific settings to update in a scheduled action. </summary>
+    /// <summary> Resource-specific settings to update in a recurring bulk action. </summary>
     public partial class ResourcePatchRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

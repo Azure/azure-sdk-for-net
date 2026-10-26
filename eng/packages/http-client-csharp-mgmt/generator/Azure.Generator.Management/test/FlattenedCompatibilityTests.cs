@@ -29,6 +29,193 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenedCompatibilityTests
     {
+        // Regression for #63717: a required, getter-only outer wrapper must not
+        // hide the mutable collection exposed by the inner model's lazy getter.
+        [Test]
+        public void RequiredGetterOnlyWrapperPreservesMutableFlattenedCollection()
+        {
+            var resourceId = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var requestProperties = InputFactory.Model("ReprotectRequestProperties", usage: usage, properties:
+                [InputFactory.Property("selectedResourceIds", InputFactory.Array(resourceId))]);
+            var reprotectContent = InputFactory.Model("ReprotectContent", usage: usage, properties:
+                [InputFactory.Property("reprotectRequestProperties", requestProperties)]);
+            var wrapper = InputFactory.Property("reprotectProperties", reprotectContent, isRequired: true);
+            Flatten(wrapper);
+            var input = InputFactory.Model("DrillRunReprotectContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, reprotectContent, requestProperties]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var internalWrapper = model.Properties.Single(p => p.Name == "ReprotectProperties");
+            Assert.That(internalWrapper.WireInfo!.IsRequired, Is.True);
+            Assert.That(internalWrapper.Body.HasSetter, Is.False,
+                "The regression requires a wrapper that callers cannot assign.");
+
+            var assembly = Compile(plugin.Object);
+            const string collectionName = "ReprotectRequestSelectedResourceIds";
+            var innerType = assembly.GetType("Samples.Models.ReprotectContent")!;
+            var inner = Activator.CreateInstance(innerType)!;
+            Assert.That(innerType.GetProperty(collectionName)!.GetValue(inner), Is.Not.Null,
+                "The inner model already exposes a usable lazy-initialized collection.");
+
+            var outerType = assembly.GetType("Samples.Models.DrillRunReprotectContent")!;
+            var outer = Activator.CreateInstance(outerType)!;
+            var collectionProperty = outerType.GetProperty(collectionName)!;
+            Assert.That(collectionProperty.SetMethod, Is.Null);
+            var ids = (IList<ResourceIdentifier>?)collectionProperty.GetValue(outer);
+            Assert.That(ids, Is.Not.Null,
+                "Public parameterless construction must expose a mutable collection, not null.");
+            var id = new ResourceIdentifier("/subscriptions/sub/resourceGroups/rg/providers/Test/widgets/a");
+            ids!.Add(id);
+            Assert.That(collectionProperty.GetValue(outer), Is.SameAs(ids));
+
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(outer, new ModelReaderWriterOptions("W")));
+            var serializedIds = json.RootElement.GetProperty("reprotectProperties")
+                .GetProperty("reprotectRequestProperties").GetProperty("selectedResourceIds");
+            Assert.That(serializedIds.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(serializedIds[0].GetString(), Is.EqualTo(id.ToString()));
+        }
+
+        [Test]
+        public void CollectionWrapperInitializerPreservesOptionalAndSerializationStates([Values] bool wrapperRequired)
+        {
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            var requestProperties = InputFactory.Model("ReprotectRequestProperties", usage: usage, properties:
+                [InputFactory.Property("selectedResourceIds", InputFactory.Array(InputPrimitiveType.String))]);
+            var reprotectContent = InputFactory.Model("ReprotectContent", usage: usage, properties:
+                [InputFactory.Property("reprotectRequestProperties", requestProperties)]);
+            var wrapper = InputFactory.Property("reprotectProperties", reprotectContent, isRequired: wrapperRequired);
+            Flatten(wrapper);
+            var input = InputFactory.Model("DrillRunReprotectContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, reprotectContent, requestProperties]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            var wrapperBody = (AutoPropertyBody)model.Properties.Single(p => p.Name == "ReprotectProperties").Body;
+            Assert.That(wrapperBody.InitializationExpression is not null, Is.EqualTo(wrapperRequired));
+            var assembly = Compile(plugin.Object);
+            var outerType = assembly.GetType("Samples.Models.DrillRunReprotectContent")!;
+            var innerType = assembly.GetType("Samples.Models.ReprotectContent")!;
+            var wrapperProperty = outerType.GetProperty("ReprotectProperties", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            if (!wrapperRequired)
+            {
+                var publiclyConstructed = Activator.CreateInstance(outerType)!;
+                Assert.That(wrapperProperty.GetValue(publiclyConstructed), Is.Null);
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(publiclyConstructed, new ModelReaderWriterOptions("W")));
+                Assert.That(json.RootElement.TryGetProperty("reprotectProperties", out _), Is.False,
+                    "The fix must not materialize an absent optional wrapper.");
+            }
+
+            // The full constructor used by deserialization must retain its supplied
+            // wrapper state, including null, rather than the public-construction default.
+            var fullConstructor = outerType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null,
+                [innerType, typeof(IDictionary<string, BinaryData>)], null)!;
+            Assert.That(fullConstructor, Is.Not.Null);
+            var absent = fullConstructor.Invoke([null, null]);
+            Assert.That(wrapperProperty.GetValue(absent), Is.Null);
+            if (wrapperRequired)
+            {
+                Assert.That(outerType.GetProperty("ReprotectRequestSelectedResourceIds")!.GetValue(absent), Is.Null);
+            }
+
+            var inner = Activator.CreateInstance(innerType)!;
+            var ids = (IList<string>)innerType.GetProperty("ReprotectRequestSelectedResourceIds")!.GetValue(inner)!;
+            ids.Add("selected-resource");
+            var populated = fullConstructor.Invoke([inner, null]);
+            Assert.That(wrapperProperty.GetValue(populated), Is.SameAs(inner));
+            using var populatedJson = JsonDocument.Parse(ModelReaderWriter.Write(populated, new ModelReaderWriterOptions("W")));
+            Assert.That(populatedJson.RootElement.GetProperty("reprotectProperties")
+                .GetProperty("reprotectRequestProperties").GetProperty("selectedResourceIds")[0].GetString(),
+                Is.EqualTo("selected-resource"));
+        }
+
+        [Test]
+        public void RequiredCollectionWrapperSupportsDirectFlattening(
+            [Values] bool safeFlatten, [Values] bool dictionary)
+        {
+            var (plugin, model) = CreateCollectionWrapperModel(safeFlatten, dictionary, wrapperRequired: true);
+            Visit(model);
+            var wrapper = model.Properties.Single(p => p.Name == "CollectionProperties");
+            Assert.That(wrapper.Body.HasSetter, Is.False);
+            Assert.That(((AutoPropertyBody)wrapper.Body).InitializationExpression, Is.Not.Null);
+            Assert.That(model.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .Signature.Parameters, Is.Empty);
+
+            var type = Compile(plugin.Object).GetType("Samples.Models.CollectionContent")!;
+            var instance = Activator.CreateInstance(type)!;
+            var property = type.GetProperty(safeFlatten ? "CollectionItems" : "Items")!;
+            var collection = property.GetValue(instance);
+            Assert.That(collection, Is.Not.Null);
+            Assert.That(property.SetMethod, Is.Null);
+            if (dictionary)
+            {
+                ((IDictionary<string, string>)collection!).Add("key", "value");
+            }
+            else
+            {
+                ((IList<string>)collection!).Add("value");
+            }
+            Assert.That(property.GetValue(instance), Is.SameAs(collection));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            var items = json.RootElement.GetProperty("collectionProperties").GetProperty("items");
+            Assert.That(dictionary ? items.GetProperty("key").GetString() : items[0].GetString(), Is.EqualTo("value"));
+        }
+
+        [Test]
+        public void CollectionWrapperJsonReaderPreservesWireState(
+            [Values] bool safeFlatten, [Values] bool dictionary, [Values] bool wrapperRequired)
+        {
+            var (plugin, model) = CreateCollectionWrapperModel(safeFlatten, dictionary, wrapperRequired);
+            Visit(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.CollectionContent")!;
+            var wrapper = type.GetProperty("CollectionProperties", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var collection = type.GetProperty(safeFlatten ? "CollectionItems" : "Items")!;
+            var options = new ModelReaderWriterOptions("J");
+            var populated = dictionary
+                ? """{"collectionProperties":{"items":{"key":"value"}}}"""
+                : """{"collectionProperties":{"items":["value"]}}""";
+            foreach (var payload in new[] { "{}", """{"collectionProperties":null}""", """{"collectionProperties":{}}""", populated })
+            {
+                var instance = ModelReaderWriter.Read(new BinaryData(payload), type, options)!;
+                using var inputJson = JsonDocument.Parse(payload);
+                var hasWrapper = inputJson.RootElement.TryGetProperty("collectionProperties", out var inputWrapper)
+                    && inputWrapper.ValueKind != JsonValueKind.Null;
+                Assert.That(wrapper.GetValue(instance) is not null, Is.EqualTo(hasWrapper), payload);
+                if (hasWrapper)
+                {
+                    var value = collection.GetValue(instance);
+                    Assert.That(value, Is.Not.Null, payload);
+                    var expectedCount = payload == populated ? 1 : 0;
+                    Assert.That(dictionary ? ((IDictionary<string, string>)value!).Count : ((IList<string>)value!).Count,
+                        Is.EqualTo(expectedCount), payload);
+                }
+                else if (wrapperRequired)
+                {
+                    Assert.That(collection.GetValue(instance), Is.Null,
+                        "Reading an absent required wrapper must retain the existing deserialization state.");
+                }
+
+                using var output = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+                var hasOutputWrapper = output.RootElement.TryGetProperty("collectionProperties", out var outputWrapper);
+                Assert.That(hasOutputWrapper, Is.EqualTo(hasWrapper || wrapperRequired), payload);
+                if (!hasWrapper && wrapperRequired)
+                {
+                    Assert.That(outputWrapper.ValueKind, Is.EqualTo(JsonValueKind.Null), payload);
+                }
+                else if (hasWrapper)
+                {
+                    Assert.That(outputWrapper.TryGetProperty("items", out var items), Is.EqualTo(payload == populated), payload);
+                    if (payload == populated)
+                    {
+                        Assert.That(dictionary ? items.GetProperty("key").GetString() : items[0].GetString(), Is.EqualTo("value"));
+                    }
+                }
+            }
+        }
+
         [Test]
         public void PreservesHistoricalLeafType(
             [Values] bool safeFlatten, [Values] bool previouslyNullable, [Values] bool wrapperRequired, [Values] bool leafRequired)
@@ -736,6 +923,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(overloads[0].Signature.Parameters.Single().Type.IsNullable, Is.False);
             Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(overloads[0]), Is.False,
                 "The shipped factory remains visible rather than becoming a hidden compatibility overload.");
+            Assert.That(overloads[0].Signature.Parameters.Single().DefaultValue, Is.Not.Null,
+                "A visible restored primary factory must preserve published omitted-argument calls.");
         }
 
         [Test]
@@ -939,6 +1128,276 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(method.BodyStatements!.ToDisplayString(), Does.Not.Contain("managedByResourceId"));
         }
 
+        // Regression for #63425: losing a value used by the historical factory is different
+        // from retaining a parameter that the historical implementation already discarded.
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        public void FactoryReportsNewlyDiscardedHistoricalValue(bool historicallyConsumed, bool metadataOnly)
+            => AssertHistoricalFactoryValue(historicallyConsumed, metadataOnly);
+
+        [Test]
+        public void SkippingUnsafeFactoryKeepsSafeHistoricalOverload()
+            => AssertHistoricalFactoryValue(true, true, "safe-sibling");
+
+        [Test]
+        public void UnsafeFactoryWarnsOnceAndContinuesWithSubsequentOverloads()
+            => AssertHistoricalFactoryValue(true, true, "multiple-losses");
+
+        [TestCase("custom")]
+        [TestCase("suppressed")]
+        [TestCase("suppressed-type")]
+        [TestCase("preview")]
+        [TestCase("preview-selection")]
+        [TestCase("mismatched-selection")]
+        [TestCase("missing-selection")]
+        [TestCase("alias")]
+        [TestCase("unknown-expression")]
+        public void HistoricalFactoryValidationRespectsExemptionsAndUnknownEvidence(string resolution)
+            => AssertHistoricalFactoryValue(true, true, resolution);
+
+        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null)
+        {
+            using var baselineProject = new FactoryBaselineProject(resolution switch
+            {
+                "preview-selection" => "1.0.0-beta.1",
+                "mismatched-selection" => "2.0.0",
+                "missing-selection" => null,
+                _ => "1.0.0"
+            });
+            using var baselineFile = new FileStream(Path.Combine(Path.GetTempPath(), $"factory-baseline-{Guid.NewGuid():N}.dll"),
+                FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read | FileShare.Delete, 4096, FileOptions.DeleteOnClose);
+            Compilation? lastContract = null;
+            Compilation? metadataContract = null;
+            Compilation GetLastContract() => lastContract ??= Helpers.BuildCompilation(
+            [
+                ("LastContract.cs", $$"""
+                [assembly: System.Reflection.AssemblyInformationalVersion("{{(resolution == "preview" ? "1.0.0-beta.1" : "1.0.0")}}")]
+                namespace Samples.Models
+                {
+                    public partial class VolumePatch
+                    {
+                        public long? SizeGiB { get; set; }
+                        public string ManagedByResourceId { get; set; }
+                        {{(resolution == "multiple-losses" ? "public string ManagedByTenantId { get; set; }" : "")}}
+                    }
+                }
+                namespace Samples
+                {
+                    public static partial class SamplesModelFactory
+                    {
+                        public static Samples.Models.VolumePatch VolumePatch(
+                            long? sizeGiB = default, string managedByResourceId = default{{(resolution == "multiple-losses" ? ", string managedByTenantId = default" : "")}})
+                            => new Samples.Models.VolumePatch
+                            {
+                                SizeGiB = sizeGiB,
+                                ManagedByResourceId = {{(historicallyConsumed ? "managedByResourceId" : "default")}}
+                                {{(resolution == "multiple-losses" ? ", ManagedByTenantId = managedByTenantId" : "")}}
+                            };
+                        {{(resolution is "safe-sibling" or "multiple-losses" ? "public static Samples.Models.VolumePatch VolumePatch(long sizeGiB) => new Samples.Models.VolumePatch { SizeGiB = sizeGiB };" : "")}}
+                        {{(resolution == "multiple-losses" ? "public static Samples.Models.VolumePatch VolumePatch(string managedByTenantId) => new Samples.Models.VolumePatch { ManagedByTenantId = managedByTenantId };" : "")}}
+                    }
+                }
+                """)
+            ]).WithAssemblyName("Samples");
+
+            Compilation GetBaseline()
+            {
+                if (!metadataOnly) return GetLastContract();
+                if (metadataContract is not null) return metadataContract;
+                var baselineEmit = GetLastContract().Emit(baselineFile);
+                Assert.That(baselineEmit.Success, Is.True, string.Join(Environment.NewLine, baselineEmit.Diagnostics));
+                baselineFile.Flush();
+                metadataContract = GetLastContract().RemoveAllSyntaxTrees().WithAssemblyName("MetadataContract")
+                    .AddReferences(MetadataReference.CreateFromFile(baselineFile.Name));
+                Assert.That(metadataContract.SyntaxTrees, Is.Empty,
+                    "Exercise the production metadata-only baseline path without historical source.");
+                return metadataContract;
+            }
+
+            // A scalar resource ID no longer has a lossless destination when managedBy
+            // becomes an array of objects; neither guessing nor silently discarding is safe.
+            var managed = InputFactory.Model("ManagedByInfo", properties:
+            [
+                InputFactory.Property("clientId", InputPrimitiveType.String),
+                InputFactory.Property("resourceIds", InputFactory.Array(InputPrimitiveType.String))
+            ]);
+            var properties = InputFactory.Model("VolumeProperties", properties:
+            [
+                InputFactory.Property("sizeGiB", InputPrimitiveType.Int64),
+                InputFactory.Property("managedBy", InputFactory.Array(managed))
+            ]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("VolumePatch", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties, managed],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: GetBaseline,
+                outputDirectory: baselineProject.Path);
+
+            // Prove whether the old body actually preserved the value instead of inferring
+            // that from the mere presence of a parameter in its public signature.
+            using var contractStream = new MemoryStream();
+            var emit = GetLastContract().WithAssemblyName("HistoricalFactory" + Guid.NewGuid().ToString("N")).Emit(contractStream);
+            Assert.That(emit.Success, Is.True, string.Join(Environment.NewLine, emit.Diagnostics));
+            var contractAssembly = Assembly.Load(contractStream.ToArray());
+            const string resourceId = "/subscriptions/sub/resourceGroups/rg/providers/Test/widgets/a";
+            var oldResult = contractAssembly.GetType("Samples.SamplesModelFactory")!
+                .GetMethod("VolumePatch", resolution == "multiple-losses"
+                    ? [typeof(long?), typeof(string), typeof(string)] : [typeof(long?), typeof(string)])!
+                .Invoke(null, resolution == "multiple-losses" ? [55L, resourceId, "tenant"] : [55L, resourceId])!;
+            Assert.That(oldResult.GetType().GetProperty("ManagedByResourceId")!.GetValue(oldResult),
+                Is.EqualTo(historicallyConsumed ? resourceId : null));
+
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+            Assert.That(factory.LastContractView!.Methods.Single(m => m.Signature.Name == "VolumePatch"
+                && m.Signature.Parameters.Any(parameter => parameter.Name == "managedByResourceId"))
+                .BodyStatements!.ToDisplayString(), Is.Empty,
+                "Contract providers retain signatures, not the old implementation's parameter usage.");
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            var primaryMethods = factory.Methods.Where(method => !ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)).ToArray();
+            var compatibility = factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                && method.Signature.Parameters.Any(parameter => parameter.Name == "managedByResourceId"));
+            var safeSibling = resolution is "safe-sibling" or "multiple-losses"
+                ? factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Parameters.Count == 1 && method.Signature.Parameters[0].Name == "sizeGiB")
+                : null;
+            var laterUnsafe = resolution == "multiple-losses"
+                ? factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Parameters.Count == 1 && method.Signature.Parameters[0].Name == "managedByTenantId")
+                : null;
+            if (laterUnsafe is not null)
+            {
+                // Make the outer-loop order explicit: unsafe, safe, then another unsafe overload.
+                factory.Update(methods: [compatibility, safeSibling!, laterUnsafe, .. primaryMethods]);
+            }
+            if (resolution == "custom")
+            {
+                var custom = new ContractView(factory.Name);
+                custom.ContractMethods = [new MethodProvider(compatibility.Signature, Return(Default), custom)];
+                ManagementMockHelpers.SetCustomCodeView(factory, custom);
+            }
+            if (resolution is "suppressed" or "suppressed-type")
+            {
+                var baseline = ApiCompatBaseline.Parse(resolution == "suppressed"
+                    ? ["MembersMustExist : Member 'Samples.SamplesModelFactory.VolumePatch(System.Nullable<System.Int64>, System.String)' does not exist in the implementation but it does exist in the contract."]
+                    : ["TypesMustExist : Type 'Samples.Models.VolumePatch' does not exist in the implementation but it does exist in the contract."]);
+                Assert.That(ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, compatibility.Signature), Is.False);
+                plugin.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(null, GetBaseline(), baseline));
+                Assert.That(ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, compatibility.Signature), Is.True);
+            }
+            if (resolution == "alias")
+            {
+                var declaration = Declare("saved", typeof(string),
+                    compatibility.Signature.Parameters.Single(p => p.Name == "managedByResourceId"), out var saved);
+                compatibility.Update(bodyStatements: new MethodBodyStatement[]
+                {
+                    declaration,
+                    Return(new InvokeMethodExpression(null, "PreserveViaAlias", [saved]))
+                });
+            }
+            if (resolution == "unknown-expression")
+            {
+                compatibility.Update(bodyStatements: Return(new TernaryConditionalExpression(True, Default, Default)));
+            }
+            var writtenFactory = plugin.Object.GetWriter(factory).Write().Content;
+            var shouldSkip = historicallyConsumed && resolution is null or "safe-sibling" or "multiple-losses";
+            Assert.That(factory.Methods.Contains(compatibility), Is.EqualTo(!shouldSkip),
+                "Warn and omit only the unsafe restoration, rather than emitting a factory that silently drops a GA value.");
+            foreach (var primary in primaryMethods)
+            {
+                Assert.That(factory.Methods, Does.Contain(primary), "Current factory overloads must remain available.");
+            }
+            if (safeSibling is not null)
+            {
+                Assert.That(factory.Methods, Does.Contain(safeSibling), "Other safe GA overloads must remain available.");
+                Assert.That(safeSibling.BodyStatements!.ToDisplayString(), Does.Contain("sizeGiB"));
+            }
+            if (laterUnsafe is not null)
+            {
+                Assert.That(factory.Methods, Does.Not.Contain(laterUnsafe), "The outer loop must continue past the first unsafe overload.");
+                Assert.That(writtenFactory, Does.Not.Contain("managedByTenantId"));
+            }
+            Assert.That(writtenFactory, shouldSkip ? Does.Not.Contain("managedByResourceId") : Does.Contain("managedByResourceId"));
+            var repeatedWrite = plugin.Object.GetWriter(factory).Write().Content;
+            Assert.That(repeatedWrite, Is.EqualTo(writtenFactory), "Writing again must not restore the rejected overload.");
+
+            Assert.That(compatibility.Signature.Parameters.Select(p => p.Name),
+                Does.Contain("managedByResourceId"));
+            var usage = HistoricalFactoryUsage.Read(GetBaseline(), factory.Type, "1.0.0", "Samples");
+            var key = HistoricalFactoryUsage.Key(compatibility.Signature);
+            Assert.That(usage.ContainsKey(key), Is.EqualTo(resolution != "preview"),
+                $"The stable baseline implementation must be understood. Key: {key}; known methods: {string.Join(", ", usage.Keys)}");
+            if (resolution != "preview")
+            {
+                Assert.That(usage[key].Contains("managedByResourceId"), Is.EqualTo(historicallyConsumed));
+                if (laterUnsafe is not null)
+                {
+                    Assert.That(usage[key], Does.Contain("managedByTenantId"), "Both lost values must have been preserved historically.");
+                    Assert.That(usage[HistoricalFactoryUsage.Key(laterUnsafe.Signature)], Does.Contain("managedByTenantId"));
+                }
+            }
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""),
+                "An unsafe factory restoration must not block generation.");
+            if (resolution is not (null or "safe-sibling" or "multiple-losses"))
+            {
+                Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"warning\""));
+                return;
+            }
+            var body = compatibility.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("sizeGiB"), "The still-mappable value must remain forwarded.");
+            Assert.That(body, Does.Not.Contain("managedByResourceId"),
+                "The changed wire shape has no unambiguous destination for the old scalar.");
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()).Contains("\"severity\":\"warning\""),
+                Is.EqualTo(historicallyConsumed),
+                "Warn about newly lost historical values, not parameters already discarded by the old factory. " +
+                $"Selected version: {HistoricalFactoryUsage.SelectedVersion(plugin.Object.Configuration.OutputDirectory, "Samples")}; " +
+                $"statements: {string.Join(", ", compatibility.BodyStatements!.Select(s => s.GetType().Name))}; body: {body}; " +
+                $"diagnostics: {Encoding.UTF8.GetString(diagnostics.ToArray())}");
+            if (historicallyConsumed)
+            {
+                var warnings = new List<string>();
+                foreach (var line in Encoding.UTF8.GetString(diagnostics.ToArray()).Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    using var notification = JsonDocument.Parse(line);
+                    var parameters = notification.RootElement.GetProperty("params");
+                    if (parameters.GetProperty("severity").GetString() == "warning")
+                    {
+                        Assert.That(parameters.GetProperty("code").GetString(), Is.EqualTo("general-warning"));
+                        warnings.Add(parameters.GetProperty("message").GetString()!);
+                    }
+                }
+                Assert.That(warnings, Has.Count.EqualTo(laterUnsafe is null ? 1 : 2), "Emit one warning per omitted overload.");
+                Assert.That(warnings[0], Does.Contain("Samples.SamplesModelFactory.VolumePatch"));
+                Assert.That(warnings[0], Does.Contain("parameter 'managedByResourceId'"));
+                Assert.That(warnings[0], Does.Not.Contain("parameter 'sizeGiB'"));
+                if (laterUnsafe is not null)
+                {
+                    Assert.That(warnings[0], Does.Not.Contain("parameter 'managedByTenantId'"), "Only report the first lost value in an overload.");
+                    Assert.That(warnings[1], Does.Contain("parameter 'managedByTenantId'"));
+                    Assert.That(warnings[1], Does.Not.Contain("managedByResourceId"), "This warning must identify the later overload.");
+                }
+            }
+        }
+
+        private sealed class FactoryBaselineProject : IDisposable
+        {
+            internal string Path { get; } = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"factory-project-{Guid.NewGuid():N}");
+            internal FactoryBaselineProject(string? version)
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(Path, "src"));
+                File.WriteAllText(System.IO.Path.Combine(Path, "src", "Samples.csproj"),
+                    $"<Project><PropertyGroup>{(version is null ? "" : $"<ApiCompatVersion>{version}</ApiCompatVersion>")}</PropertyGroup></Project>");
+            }
+            public void Dispose() => Directory.Delete(Path, recursive: true);
+        }
+
         [Test]
         public void FactoryGuardAndNamedDefaultDoNotPreserveTheValue()
         {
@@ -1000,6 +1459,25 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(body, Does.Contain("legacyTimestamp"));
             Assert.That(body, Does.Contain("count.GetValueOrDefault()"));
             Assert.That(body, Does.Contain("ToList()"));
+        }
+
+        private static (Moq.Mock<ManagementClientGenerator> Plugin, ModelProvider Model) CreateCollectionWrapperModel(
+            bool safeFlatten, bool dictionary, bool wrapperRequired)
+        {
+            const InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Json;
+            InputType collection = dictionary
+                ? new InputDictionaryType("dictionary", InputPrimitiveType.String, InputPrimitiveType.String)
+                : InputFactory.Array(InputPrimitiveType.String);
+            var properties = InputFactory.Model("CollectionProperties", usage: usage, properties:
+                [InputFactory.Property("items", collection)]);
+            var wrapper = InputFactory.Property("collectionProperties", properties, isRequired: wrapperRequired);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CollectionContent", usage: usage, properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties]);
+            return (plugin, plugin.Object.TypeFactory.CreateModel(input)!);
         }
 
         private static (Moq.Mock<ManagementClientGenerator> Plugin, ModelProvider Model, ModelProvider Inner) CreateCapacityModel(

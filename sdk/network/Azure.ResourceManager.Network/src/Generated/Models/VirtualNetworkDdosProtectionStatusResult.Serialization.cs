@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkDdosProtectionStatusResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkDdosProtectionStatusResult(value ?? new ChangeTrackingList<PublicIPDdosProtectionStatusResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
