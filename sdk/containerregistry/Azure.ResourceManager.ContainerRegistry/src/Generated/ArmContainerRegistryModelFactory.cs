@@ -1550,23 +1550,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> The ContainerRegistryImportSource. </summary>
-        /// <param name="resourceId"> The resource identifier of the source Azure Container Registry. </param>
-        /// <param name="registryAddress"></param>
-        /// <param name="credentials"> Credentials used when importing from a registry uri. </param>
-        /// <param name="sourceImage">
-        /// Repository name of the source image.
-        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
-        /// Specify an image by tag ('hello-world:latest').
-        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryImportSource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage)
-        {
-            return new ContainerRegistryImportSource(resourceId, default, credentials, sourceImage, default);
-        }
-
         /// <summary> The parameters for creating a webhook. </summary>
         /// <param name="tags"> The tags for the webhook. </param>
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
