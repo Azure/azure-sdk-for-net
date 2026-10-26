@@ -17,10 +17,8 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault service.
     /// </summary>
     [CodeGenType("KeyVaultRestClient")]
-    internal partial class KeyVaultRestClient : IDisposable
+    internal partial class KeyVaultRestClient
     {
-        private DisposableHttpPipeline _ownedPipeline;
-
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -41,13 +39,11 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            Pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
-            Pipeline = _ownedPipeline;
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();
         }
@@ -63,11 +59,9 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            Pipeline = HttpPipelineBuilder.Build(options.CloneForPipeline(), new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
-
-        public void Dispose() => Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
     }
 }

@@ -17,10 +17,9 @@ namespace Azure.Security.KeyVault.Administration
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     [CodeGenType("KeyVaultAccessControlRestClient")]
-    public partial class KeyVaultAccessControlClient : IDisposable
+    public partial class KeyVaultAccessControlClient
     {
         private readonly ClientDiagnostics _diagnostics;
-        private DisposableHttpPipeline _ownedPipeline;
 
         /// <summary>
         /// Gets the vault URI.
@@ -62,16 +61,14 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
             string apiVersion = options.GetVersionString();
 
-            _ownedPipeline = HttpPipelineBuilder.Build(
-                options,
+            Pipeline = HttpPipelineBuilder.Build(
+                options.CloneForPipeline(),
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 
             _diagnostics = new ClientDiagnostics(options, true);
             ClientDiagnostics = _diagnostics;
-            Pipeline = _ownedPipeline;
             _endpoint = vaultUri;
             _apiVersion = apiVersion;
         }
@@ -87,22 +84,9 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            Pipeline = HttpPipelineBuilder.Build(options.CloneForPipeline(), new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
-        /// </summary>
-        /// <remarks>
-        /// Reuse the client and dispose it after its operations and pageable enumeration have completed.
-        /// Caller-provided transports and credentials are not disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

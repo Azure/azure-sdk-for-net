@@ -13,6 +13,13 @@ namespace Azure.Security.KeyVault.Secrets
     /// </summary>
     public class SecretClientOptions : ClientOptions
     {
+        internal SecretClientOptions CloneForPipeline()
+        {
+            var clone = (SecretClientOptions)MemberwiseClone();
+            clone.Transport = KeyVaultTransport.Create(Transport);
+            return clone;
+        }
+
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see

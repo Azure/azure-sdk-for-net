@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeBasedAuthenticationPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTokenCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTransport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TenantTokenBindingCredential.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />

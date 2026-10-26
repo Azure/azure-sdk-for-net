@@ -35,11 +35,15 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
 
 ## Client lifetime and disposal
 
-Reuse Key Vault clients and resolvers for the lifetime of the workload rather than constructing a new instance for each request. Clients that create their own update-capable HTTP transport implement `IDisposable`; call `Dispose` when the client is no longer needed. Repeated calls to `Dispose` are safe. This releases client-owned pipeline resources without deleting certificates or clearing tenant eligibility in Azure.
+Reuse Key Vault clients and resolvers for the lifetime of the workload rather than constructing a new instance for each request. Clients are not disposable, and transport cleanup is automatic. The beta `IDisposable` implementations and virtual `Dispose` methods have been removed. Consumers of those beta APIs must remove client `using` statements and explicit `Dispose` calls. Derived clients must remove `Dispose` overrides and `base.Dispose()` calls, and manage resources they own independently. This is a breaking change for those beta consumers.
 
-Finish all requests, long-running operation polling, pageable enumeration, and use of response or cryptographic streams before disposing the client. Do not start new operations or dispose the client concurrently with operations. `CryptographyClient` instances returned by a `KeyClient` or `KeyResolver` borrow that parent's pipeline: disposing a child does not release the shared pipeline, and the parent must remain alive until all use of its children has completed.
+Bearer requests use the shared default transport, or the application's custom transport. Certificate-bound requests use an automatically managed pool of immutable certificate-specific transports. Each Key Vault package assembly limits the pool to 64 entries, including entries in use. Idle entries are retired after two minutes, checked every 30 seconds; no client `Dispose` call is needed.
 
-Clients do not dispose caller-supplied transports, HTTP clients, credentials, or key material. The application remains responsible for those resources. Disposal provides a cleanup path but does not replace the recommendation to reuse client instances.
+Read unbuffered or detached response streams to completion or dispose them. These streams retain a lease on their transport until consumption completes. If all entries are active, a request needing another certificate fails with `InvalidOperationException` rather than creating unbounded transports or falling back to bearer authentication. Finish or dispose outstanding streams before retrying. Buffered responses release their leases automatically.
+
+`CryptographyClient` instances returned by a `KeyClient` or `KeyResolver` retain their shared pipeline and remain usable independently of references to their parent or siblings. Clients never dispose caller-supplied transports, HTTP clients, credentials, certificates, or key material; the application remains responsible for their lifetime. Continue disposing response streams and caller-owned disposable resources when they are no longer needed; removing client disposal does not remove those responsibilities.
+
+Certificate-bound authentication requires the built-in platform transport and a binding certificate with a private key. Caller-provided transports, including wrapped `HttpClient` instances and custom application-wide defaults, continue to work for bearer authentication but fail with `NotSupportedException` when a bound token is returned. They are never rebound or replaced silently. Use the built-in transport for PoP; do not disable certificate or challenge validation to work around this error.
 
 ## Troubleshooting Authentication Issues
 
