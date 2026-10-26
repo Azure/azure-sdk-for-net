@@ -1,5 +1,5 @@
 directory: specification/cloudhealth/resource-manager/Microsoft.CloudHealth/CloudHealth
-commit: f410a9c4531c4dbea1b61ede19265e24712560ac
+commit: 9752dea5ba791218e33ddc751198df21e2ef731a
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
