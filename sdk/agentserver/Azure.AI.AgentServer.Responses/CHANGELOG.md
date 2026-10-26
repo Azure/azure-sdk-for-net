@@ -31,6 +31,10 @@
   their public constructors; and `WebSearchActionSearchSources.Url` is now a `Uri`.
 - The error model `Error` is renamed to `ApiError`; `ApiErrorResponse.Error` and the
   `ApiErrorResponse` constructor now use `ApiError`.
+- `ResponsesApiException` now takes and exposes `OpenAI.Responses.ResponseError` instead of the
+  generated `Models.Error`: both constructors and the `Error` property changed type. On the new
+  type `Code` is a `ResponseErrorCode` (was `string`), `Type` is now `Kind`, and `Details`,
+  `AdditionalInfo`, and `DebugInfo` are no longer exposed.
 
 ### Bugs Fixed
 
