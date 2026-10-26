@@ -50,6 +50,20 @@ The dashboard shows historical, published evaluation results. It requires the
 existing corporate network/sign-in access and does not prove this PR passed an
 Eval. This check neither queries the dashboard nor uploads results to it.
 
+## Warning grace period
+
+Coverage-warning comments announce that the warning will become a build blocker
+by **November 9, 2026**. Until enforcement is enabled, missing Eval coverage is
+warning-only: authors may proceed if all other required checks pass. Add or fix
+the affected Evals before the deadline.
+
+This change announces the timeline only. It does not enable blocking behavior or
+an automatic date-based switch. The November 9 checkpoint requires a separate
+change to promote coverage warnings to errors after reviewing the remaining gaps.
+Existing lint failures and tooling errors remain blocking throughout the grace period.
+Track that enforcement change in
+[#17402](https://github.com/Azure/azure-sdk-tools/issues/17402).
+
 ## Files and configuration
 
 ```text
@@ -155,6 +169,6 @@ coverage marker. A concurrency group serializes updates for each source branch.
 The reporter first becomes active **after its workflow and code reach the default
 branch**. Its live fork permissions and comment delivery still need a normal PR
 smoke check after merge; local fake-transport tests do not prove production delivery.
-No new PAT, service connection or repository settings are needed. After the team
-has reviewed warnings and addressed gaps, blocking enforcement can be discussed
-separately; this change does not make missing coverage fatal.
+No new PAT, service connection or repository settings are needed. Blocking
+enforcement is planned for the November 9 checkpoint in a separate change;
+this change does not make missing coverage fatal.

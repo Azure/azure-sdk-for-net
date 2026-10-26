@@ -77,6 +77,8 @@ test("removing the last Eval exits successfully with a warning and dashboard lin
     assert.equal(result.status, 0, result.stderr);
     assert.match(result.stdout, /coverage missing/);
     assert.ok(result.stdout.includes(config.dashboardUrl));
+    assert.match(result.stdout, /This warning will become a build blocker by \*\*November 9, 2026\*\*/);
+    assert.match(result.stdout, /warning-only; you may proceed if all other required checks pass/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
