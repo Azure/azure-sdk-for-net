@@ -622,3 +622,46 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?i)src/Custom'
+
+  - name: defer-apicompat-reported-signature-break
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets 1.0.0 shipped GA, and its project sets ApiCompatVersion 1.0.0. The
+      1.1.0-beta.1 PR deletes the GA-shipped WidgetClient.GetWidget(string widgetName) method and
+      its async counterpart without replacement and updates the API listings to match. The PR adds
+      no ApiCompat baseline entry, opt-out, or other suppression, so the CI build's ApiCompat
+      validation reports both removed members and fails the build. All other requirements are
+      satisfied. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: report-apicompat-baseline-suppression
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets 1.0.0 shipped GA, and its project sets ApiCompatVersion 1.0.0. The
+      1.1.0-beta.1 PR deletes the GA-shipped WidgetClient.GetWidget(string widgetName) method and
+      its async counterpart without replacement and updates the API listings to match. It also
+      adds entries for both removed members to eng/apicompatbaselines/Azure.Widgets.xml with no
+      stated justification, so the CI build's ApiCompat validation passes. All other requirements
+      are satisfied.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:GetWidget)[^\n]*🔴|🔴[^\n]*(?:GetWidget))'
+      - type: output-matches
+        config:
+          pattern: '(?i)apicompatbaselines|baseline|suppress'
