@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasClassicComputeVmContainer : IaasVmContainer
     {
         /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmContainer"/>. </summary>
-        public IaasClassicComputeVmContainer()
+        public IaasClassicComputeVmContainer() : base("Microsoft.ClassicCompute/virtualMachines")
         {
         }
 
