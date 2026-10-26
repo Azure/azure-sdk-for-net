@@ -6,7 +6,51 @@ This is the first stable release of this library.
 
 ### Features Added
 
-- Upgraded API version to 2026-11-01.
+- Upgraded API version from `2026-10-01-preview` to the stable `2026-11-01` version.
+
+### Breaking Changes
+
+The following changes apply when upgrading from `1.0.0-beta.6`.
+
+- Renamed the following public model types to align with the GA naming conventions. Update references to these types, including their constructors and the corresponding `ArmCloudHealthModelFactory` methods. Properties, method parameters, return types, and derived types that use these models now reference the new names.
+
+  | Previous name | GA name |
+  | --- | --- |
+  | `DependenciesSignalGroupV2` | `HealthModelDependenciesSignalGroup` |
+  | `DiscoveryError` | `HealthModelDiscoveryError` |
+  | `DiscoveryRuleRecommendedSignalsBehavior` | `HealthModelDiscoveryRuleRecommendedSignalsBehavior` |
+  | `DiscoveryRuleRelationshipDiscoveryBehavior` | `HealthModelDiscoveryRuleRelationshipDiscoveryBehavior` |
+  | `DiscoveryRuleSpecification` | `HealthModelDiscoveryRuleSpecification` |
+  | `EntityCoordinates` | `HealthModelEntityCoordinates` |
+  | `EntityIcon` | `HealthModelEntityIcon` |
+  | `EntityImpact` | `HealthModelEntityImpact` |
+  | `EntitySignalThresholdRuleV2` | `EntitySignalThresholdRule` |
+  | `ExternalSignal` | `HealthModelExternalSignal` |
+  | `MetricAggregationType` | `HealthModelMetricAggregationType` |
+  | `ResourceSignal` | `HealthModelResourceMetricSignal` |
+  | `ResourceSignals` | `HealthModelResourceSignals` |
+  | `SignalAggregationGroup` | `HealthModelSignalAggregationGroup` |
+  | `SignalConfiguration` | `HealthModelSignalConfiguration` |
+  | `SignalHistoryDataPoint` | `HealthModelSignalHistoryDataPoint` |
+  | `SignalInstanceProperties` | `HealthModelSignalInstanceProperties` |
+  | `SignalRecommendationConfiguration` | `HealthModelSignalRecommendationConfiguration` |
+  | `SignalStatus` | `HealthModelSignalStatus` |
+
+  The intermediate GA-generation names `CloudHealthMetricAggregationType`, `CloudHealthSignalConfiguration`, `CloudHealthSignalInstanceProperties`, and `CloudHealthSignalStatus` were also replaced by the corresponding `HealthModel` names above. The existing legacy types `DependenciesSignalGroupV1` and `EntitySignalThresholdRuleV1` retain their names.
+
+- Renamed the predefined `EntitySignalRefreshInterval` members to descriptive C# names. Their ISO-8601 wire values are unchanged.
+
+  | Previous member / wire value | GA member |
+  | --- | --- |
+  | `PT1M` | `OneMinute` |
+  | `PT5M` | `FiveMinutes` |
+  | `PT10M` | `TenMinutes` |
+  | `PT15M` | `FifteenMinutes` |
+  | `PT30M` | `ThirtyMinutes` |
+  | `PT1H` | `OneHour` |
+  | `PT2H` | `TwoHours` |
+
+- Changed `HealthModelSignalConfiguration.ApplicableResourceTypes` (previously `SignalConfiguration.ApplicableResourceTypes`) from `IList<string>` to `IList<Azure.Core.ResourceType>`. The corresponding `ArmCloudHealthModelFactory.HealthModelSignalConfiguration` method now accepts `IEnumerable<Azure.Core.ResourceType>` instead of `IEnumerable<string>` for `applicableResourceTypes`. Update callers to use `ResourceType` values.
 
 ## 1.0.0-beta.6 (2026-10-15)
 
