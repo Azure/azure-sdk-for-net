@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeMachineRunCommandApiVersion);
             _machineRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _machineRunCommandsRestClient = new MachineRunCommands(_machineRunCommandsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineRunCommandApiVersion ?? "2026-07-15");
+            _machineRunCommandsRestClient = new MachineRunCommands(_machineRunCommandsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineRunCommandApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

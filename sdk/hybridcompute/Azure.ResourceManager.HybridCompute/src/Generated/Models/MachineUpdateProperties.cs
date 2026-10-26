@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="identityKeyStore"> Identity key store type of the machine. </param>
         /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="clientPublicKey"> Public Key that the client provides to be used during initial resource onboarding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineUpdateProperties(HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId, string identityKeyStore, string tpmEkCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineUpdateProperties(HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId, string identityKeyStore, string tpmEkCertificate, string clientPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             OSProfile = osProfile;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             IdentityKeyStore = identityKeyStore;
             TpmEkCertificate = tpmEkCertificate;
+            ClientPublicKey = clientPublicKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,6 +79,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </summary>
         [WirePath("tpmEkCertificate")]
         public string TpmEkCertificate { get; set; }
+
+        /// <summary> Public Key that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("clientPublicKey")]
+        public string ClientPublicKey { get; set; }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         [WirePath("cloudMetadata.provider")]

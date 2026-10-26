@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string machinesApiVersionOverride) ? machinesApiVersionOverride : "2026-07-15");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string machinesApiVersionOverride) ? machinesApiVersionOverride : "2026-09-01");
             _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
             _privateLinkScopesRestClient = new PrivateLinkScopes(
                 _privateLinkScopesClientDiagnostics,
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                hybridComputeMachineApiVersion ?? "2026-07-15",
+                hybridComputeMachineApiVersion ?? "2026-09-01",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _networkProfileRestClient = new NetworkProfile(_networkProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
+            _networkProfileRestClient = new NetworkProfile(_networkProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-09-01");
             _hybridComputeClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _hybridComputeClientRestClient = new HybridComputeClient(_hybridComputeClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
+            _hybridComputeClientRestClient = new HybridComputeClient(_hybridComputeClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1415,6 +1415,39 @@ namespace Azure.ResourceManager.HybridCompute
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             return GetHybridComputeMachineRunCommands().Get(runCommandName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VmApplications in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of VmApplications and their operations over a VmApplicationResource. </returns>
+        public virtual VmApplicationCollection GetVmApplications()
+        {
+            return GetCachedClient(client => new VmApplicationCollection(client, Id));
+        }
+
+        /// <summary> Gets a VM application. </summary>
+        /// <param name="applicationName"> The name of the VM application. When creating the resource, this name must match the application name in the selected gallery reference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VmApplicationResource>> GetVmApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            return await GetVmApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a VM application. </summary>
+        /// <param name="applicationName"> The name of the VM application. When creating the resource, this name must match the application name in the selected gallery reference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VmApplicationResource> GetVmApplication(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            return GetVmApplications().Get(applicationName, cancellationToken);
         }
     }
 }
