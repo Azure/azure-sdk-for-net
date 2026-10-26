@@ -212,6 +212,44 @@ Describe 'Validated push destinations and retry branches' {
 }
 
 Describe 'Publication safety and checked commands' {
+    It 'overrides a conflicting user scope registry when publishing' {
+        $worktree = Join-Path $TestDrive registry-worktree
+        New-Item $worktree -ItemType Directory | Out-Null
+        '{"name":"registry-fixture","private":true}' | Set-Content (Join-Path $worktree package.json)
+        $userConfig = Join-Path $TestDrive user.npmrc
+        '@azure-typespec:registry=https://conflicting-registry.invalid/' | Set-Content $userConfig
+        $globalConfig = Join-Path $TestDrive global.npmrc
+        '' | Set-Content $globalConfig
+        . (Get-RunnerAssignment registry)
+        $archives = @([pscustomobject]@{ FullName = (Join-Path $TestDrive 'not-published.tgz') })
+        $tokens = $null
+        $errors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors)
+        $publish = @($ast.FindAll({
+            param($node)
+            $node -is [System.Management.Automation.Language.CommandAst] -and
+                $node.Extent.Text.StartsWith("Invoke-GeneratorSdkValidationCommand npm @('publish'")
+        }, $true))
+        $publish.Count | Should -Be 1
+        Mock Invoke-GeneratorSdkValidationCommand {
+            param($File, $Arguments, $WorkingDirectory)
+            $File | Should -BeExactly 'npm'
+            $Arguments[0] | Should -BeExactly 'publish'
+            # Query npm's effective scoped registry with the runner's actual CLI
+            # options, without publishing a package or accessing the network.
+            $options = @($Arguments | Select-Object -Skip 2)
+            Push-Location $WorkingDirectory
+            try {
+                $effectiveRegistry = & $File config get '@azure-typespec:registry' @options `
+                    --userconfig $userConfig --globalconfig $globalConfig
+                $LASTEXITCODE | Should -Be 0
+                $effectiveRegistry | Should -BeExactly $registry
+            }
+            finally { Pop-Location }
+        }
+        . ([scriptblock]::Create($publish[0].Extent.Text))
+        Should -Invoke Invoke-GeneratorSdkValidationCommand -Times 1 -Exactly
+    }
     It 'rejects local tarball paths in either emitter file' {
         $config = Join-Path $TestDrive emitter.json
         '{"dependencies":{"@azure-typespec/http-client-csharp-mgmt":"file:/tmp/generator.tgz"}}' | Set-Content $config

@@ -115,7 +115,8 @@ $archives = @(Get-ChildItem (Join-Path $artifacts packages) -Filter '*.tgz')
 if ($archives.Count -ne 1) { throw "Expected exactly one emitter tarball, found $($archives.Count)." }
 $overrides = Join-Path $artifacts 'packages/overrides.json'
 if ($PublishPackages) {
-    Invoke-GeneratorSdkValidationCommand npm @('publish', $archives[0].FullName, '--registry', $registry, '--access', 'public') $worktree | Out-Host
+    # Scoped registry settings take precedence over npm's default --registry.
+    Invoke-GeneratorSdkValidationCommand npm @('publish', $archives[0].FullName, '--registry', $registry, "--@azure-typespec:registry=$registry", '--access', 'public') $worktree | Out-Host
     # Publication is not rolled back if a later generation task fails.
     $receiptPath = Join-Path $OutputRoot run.json
     $receipt = Get-Content $receiptPath -Raw | ConvertFrom-Json
