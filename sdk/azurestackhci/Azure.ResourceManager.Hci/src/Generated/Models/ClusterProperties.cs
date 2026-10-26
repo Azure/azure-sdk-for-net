@@ -51,11 +51,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
         /// <param name="secretsLocations"> List of secret locations. </param>
         /// <param name="clusterPattern"> Supported Storage Type for HCI Cluster. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationOn, DateTimeOffset? lastSyncOn, DateTimeOffset? lastBillingOn, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationOn, DateTimeOffset? lastSyncOn, DateTimeOffset? lastBillingOn, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.Hci.Models
             ResourceProviderObjectId = resourceProviderObjectId;
             SecretsLocations = secretsLocations;
             ClusterPattern = clusterPattern;
+            SdnProperties = sdnProperties;
             LocalAvailabilityZones = localAvailabilityZones;
             IdentityProvider = identityProvider;
             StorageType = storageType;
@@ -192,6 +194,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Supported Storage Type for HCI Cluster. </summary>
         [WirePath("clusterPattern")]
         public ClusterPattern? ClusterPattern { get; }
+
+        /// <summary> Software Defined Networking Properties of the cluster. </summary>
+        [WirePath("sdnProperties")]
+        public ClusterSdnProperties SdnProperties { get; }
 
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("localAvailabilityZones")]

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -128,6 +129,69 @@ namespace Azure.Generator.Management.Visitors
                     // documentation regenerated when the overload was created.
                     method.Update(bodyStatements: updatedBodyStatements);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Warns and omits unsafe GA compatibility overloads after final body repair, without blocking generation.
+        /// Signatures alone cannot distinguish new losses from historically discarded arguments.
+        /// </summary>
+        internal static void RemoveUnsafeHistoricalFactoryOverloads(ModelFactoryProvider factory)
+        {
+            var contract = ManagementClientGenerator.Instance.SourceInputModel?.LastContract;
+            if (contract is null || !factory.Methods.Any(IsBackwardCompatMethod))
+            {
+                return;
+            }
+            var configuration = ManagementClientGenerator.Instance.Configuration;
+            var selectedVersion = HistoricalFactoryUsage.SelectedVersion(configuration.OutputDirectory, configuration.PackageName);
+            var historicalUsage = HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, configuration.PackageName);
+            var unsafeOverloads = new HashSet<MethodProvider>();
+            foreach (var method in factory.Methods.Where(IsBackwardCompatMethod))
+            {
+                if (ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, method.Signature)
+                    || factory.CustomCodeView?.Methods.Any(custom =>
+                        ModelFactoryVisitor.HasSameCSharpSignature(custom.Signature, method.Signature)) == true
+                    || !historicalUsage.TryGetValue(HistoricalFactoryUsage.Key(method.Signature), out var preserved))
+                {
+                    continue;
+                }
+
+                // Only an exact, generator-owned reconstruction establishes which inputs are
+                // definitely unmapped. Aliases, extra statements, and unsupported/custom return
+                // expressions are unknown, rather than being mistaken for absent references.
+                if (method.BodyStatements?
+                    .Where(statement => !ReferenceEquals(statement, MethodBodyStatement.Empty)
+                        && !ReferenceEquals(statement, MethodBodyStatement.EmptyLine)).ToArray() is not
+                    [ExpressionStatement { Expression: KeywordExpression { Keyword: "return", Expression: NewInstanceExpression returned } }]
+                    || returned.Type is null || !TryGetModelProvider(returned.Type, out var model))
+                {
+                    continue;
+                }
+                var mapping = BuildFactoryConstructorMapping(method, model);
+                if (New.Instance(returned.Type, mapping.Arguments).ToDisplayString() != returned.ToDisplayString())
+                {
+                    continue;
+                }
+                foreach (var parameter in method.Signature.Parameters)
+                {
+                    if (preserved.Contains(parameter.Name) && !mapping.MatchedParameters.Contains(parameter))
+                    {
+                        unsafeOverloads.Add(method);
+                        var parameters = string.Join(", ", method.Signature.Parameters.Select(p => $"{p.Type} {p.Name}"));
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning",
+                            $"Compatibility factory '{factory.Type.FullyQualifiedName}.{method.Signature.Name}({parameters})' was not restored: " +
+                            $"parameter '{parameter.Name}' reached the returned model in the previous GA implementation, " +
+                            "but the generator cannot infer a lossless mapping to the current model. " +
+                            "Provide an explicit compatibility customization or accept the missing overload in the ApiCompat baseline.",
+                            severity: EmitterDiagnosticSeverity.Warning);
+                        break;
+                    }
+                }
+            }
+            if (unsafeOverloads.Count > 0)
+            {
+                factory.Update(methods: factory.Methods.Where(method => !unsafeOverloads.Contains(method)));
             }
         }
 
@@ -264,22 +328,34 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
-            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            var mapping = BuildFactoryConstructorMapping(method, modelProvider);
+            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, mapping.ParameterDescriptions);
+            updatedMethod = new MethodProvider(
+                signature,
+                Return(New.Instance(method.Signature.ReturnType, mapping.Arguments)),
+                enclosingType);
+            return true;
+        }
+
+        private static FactoryConstructorMapping BuildFactoryConstructorMapping(MethodProvider method, ModelProvider model)
+        {
+            var constructorParameters = model.FullConstructor.Signature.Parameters;
             var directParameterNames = constructorParameters
                 .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, parameter.Property, out _))
                 .Select(parameter => parameter.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
             var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var matchedParameters = new HashSet<ParameterProvider>();
             var parameterDescriptions = new Dictionary<string, FormattableString>(StringComparer.Ordinal);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
-                    foreach (var parameterDocumentation in argument.ParameterDocumentation)
+                    matchedParameters.UnionWith(argument.MatchedParameters);
+                    foreach (var documentation in argument.ParameterDocumentation)
                     {
-                        parameterDescriptions.TryAdd(parameterDocumentation.Parameter.Name, parameterDocumentation.Description);
+                        parameterDescriptions.TryAdd(documentation.Parameter.Name, documentation.Description);
                     }
                 }
                 else
@@ -287,14 +363,13 @@ namespace Azure.Generator.Management.Visitors
                     arguments.Add(GetDefaultArgument(constructorParameter));
                 }
             }
-
-            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, parameterDescriptions);
-            updatedMethod = new MethodProvider(
-                signature,
-                Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType);
-            return true;
+            return new FactoryConstructorMapping(arguments, matchedParameters, parameterDescriptions);
         }
+
+        private record FactoryConstructorMapping(
+            IReadOnlyList<ValueExpression> Arguments,
+            IReadOnlySet<ParameterProvider> MatchedParameters,
+            IReadOnlyDictionary<string, FormattableString> ParameterDescriptions);
 
         /// <summary>
         /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
