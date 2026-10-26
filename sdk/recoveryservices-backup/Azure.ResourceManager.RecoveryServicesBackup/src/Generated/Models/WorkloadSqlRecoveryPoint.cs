@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlRecoveryPoint : WorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPoint"/>. </summary>
-        public WorkloadSqlRecoveryPoint()
+        public WorkloadSqlRecoveryPoint() : base("AzureWorkloadSQLRecoveryPoint")
         {
         }
 

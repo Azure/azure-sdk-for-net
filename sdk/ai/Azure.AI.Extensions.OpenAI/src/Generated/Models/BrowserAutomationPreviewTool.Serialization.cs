@@ -10,7 +10,12 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+    /// <summary>
+    /// The input definition information for a Browser Automation Tool, as used to configure an Agent.
+    /// BrowserAutomationPreviewTool is deprecated.
+    /// Please use BrowserAutomationTool instead.
+    /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+    /// </summary>
     public partial class BrowserAutomationPreviewTool : ResponseTool, IJsonModel<BrowserAutomationPreviewTool>
     {
         /// <param name="data"> The data to parse. </param>

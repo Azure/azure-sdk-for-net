@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class BackupServerContainer : DpmContainer
     {
         /// <summary> Initializes a new instance of <see cref="BackupServerContainer"/>. </summary>
-        public BackupServerContainer()
+        public BackupServerContainer() : base("AzureBackupServerContainer")
         {
         }
 
