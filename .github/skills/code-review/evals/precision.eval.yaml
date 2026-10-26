@@ -546,3 +546,79 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: report-repeated-issue-once
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR. The PR adds the internal
+      file `sdk/widgets/Azure.Widgets/src/WidgetsRestClient.cs` to the shipping library
+      Azure.Widgets. Its request builders each append a caller-supplied widget name with
+      `uri.AppendPath("/widgets/" + widgetName, false);`: `CreateGetWidgetRequest` at line 31,
+      `CreateDeleteWidgetRequest` at line 52, and `CreateUpdateWidgetRequest` at line 74. Widget
+      names may contain any character, including `/`, `?`, and `#`. The rest of the file is
+      correct, and no CI diagnostic covers these lines. Return only a JSON object with
+      `comments`, an array of the inline review comments you would post, each with `path`,
+      `line`, and `body`, and `summary`, the review body text you would post or an empty string.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)escap'
+      - type: output-matches
+        config:
+          pattern: '"line"\s*:\s*"?(?:31|52|74)\b'
+      - type: output-matches
+        config:
+          pattern: '(?i)\b52\b|DeleteWidget'
+      - type: output-matches
+        config:
+          pattern: '(?i)\b74\b|UpdateWidget'
+      - type: output-not-matches
+        config:
+          pattern: '(?s)"line"\s*:\s*"?(?:31|52|74)\b.*"line"\s*:\s*"?(?:31|52|74)\b'
+
+  - name: keep-distinct-issues-in-separate-comments
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR. The PR adds the internal
+      file `sdk/gadgets/Azure.Gadgets/src/GadgetsRestClient.cs` to the shipping library
+      Azure.Gadgets. At line 31, `CreateGetGadgetRequest` appends a caller-supplied gadget name
+      with `uri.AppendPath("/gadgets/" + gadgetName, false);`; gadget names may contain any
+      character, including `/`, `?`, and `#`. At line 96, `CreateBatchDeleteRequest` writes the
+      request body with `for (int i = 0; i <= names.Count; i++) writer.WriteStringValue(names[i]);`.
+      The rest of the file is correct, and no CI diagnostic covers these lines. Return only a JSON
+      object with `comments`, an array of the inline review comments you would post, each with
+      `path`, `line`, and `body`, and `summary`, the review body text you would post or an empty
+      string.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '"line"\s*:\s*"?31\b'
+      - type: output-matches
+        config:
+          pattern: '"line"\s*:\s*"?96\b'
+
+  - name: report-file-scope-finding
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR. The PR adds the hand-written
+      file `sdk/sprockets/Azure.Sprockets/src/Generated/SprocketClient.Custom.cs` to the
+      TypeSpec-generated shipping library Azure.Sprockets. It declares `public partial class
+      SprocketClient` at line 8 with two correct convenience methods. The generator deletes and
+      recreates `src/Generated` on every regeneration, and this library's hand-written partial
+      classes live under `src/Custom`. No CI diagnostic covers file placement. Return only a JSON
+      object with `comments`, an array of the inline review comments you would post, each with
+      `path`, `line`, and `body`, and `summary`, the review body text you would post or an empty
+      string.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)regenerat'
+      - type: output-matches
+        config:
+          pattern: '(?i)src/Custom'
