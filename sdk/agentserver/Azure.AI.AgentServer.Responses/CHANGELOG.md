@@ -23,6 +23,15 @@
   `ConversationReference` → `ResponseConversationOptions`, and
   `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Consumers must also
   suppress or acknowledge the OpenAI package's `OPENAI001` experimental diagnostic.
+- Several properties that carried JSON as a `string` are now `BinaryData` on the OpenAI types:
+  the arguments of function calls and MCP tool calls (`FunctionCallResponseItem.FunctionArguments`,
+  `McpToolCallItem.ToolArguments`, `McpToolCallApprovalRequestItem.ToolArguments`) together with
+  their streaming delta and done updates, and image generation results
+  (`ImageGenerationCallResponseItem.ImageResultBytes`,
+  `StreamingResponseImageGenerationCallPartialImageUpdate.PartialImageBytes`). Function call output
+  went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
+  previous model used `BinaryData`, so an output sent as an array of content parts is flattened
+  into one string by joining its text parts with `\n`, and non-text parts are dropped.
 - Regenerating against the updated Foundry spec also reshaped a few remaining generated models in
   `Azure.AI.AgentServer.Responses.Models`: `CreateResponseResponse`, `LocalShellCallStatus`,
   `LocalShellCallOutputStatusEnum`, and `ItemWebSearchToolCallStatus` were removed;
