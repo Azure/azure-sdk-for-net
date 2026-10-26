@@ -5,9 +5,3 @@
 ### Features Added
 
 - Initial preview of `Azure.Provisioning.Billing`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
