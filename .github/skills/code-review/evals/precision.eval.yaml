@@ -476,3 +476,73 @@ stimuli:
       - type: output-not-matches
         config:
           pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: review-consequence-of-dependency-version-bump
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return
+      findings only. The PR's only change bumps the long-approved dependency
+      `Microsoft.Azure.Widgets.Protocol` from `3.4.2` to `4.0.0`, its latest stable release, in
+      `eng/centralpackagemanagement/Directory.Packages.props`. Only the shipping library
+      Azure.Widgets references this package. The 4.0.0 release notes linked from the PR state:
+      "Behavior change: `FrameReader.ReadFrame()` now returns `null` at end of stream instead of
+      throwing `EndOfStreamException`." Unchanged Azure.Widgets code reads frames with
+      `while (true) { try { var frame = reader.ReadFrame(); Process(frame.Payload); } catch
+      (EndOfStreamException) { break; } }`. The library's CHANGELOG already records the
+      dependency update, and no CI diagnostic covers this change. If there is no finding, return
+      exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)ReadFrame|NullReferenceException|end of stream'
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ReadFrame|NullReferenceException|end of stream)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ReadFrame|NullReferenceException|end of stream))'
+
+  - name: ignore-unrelated-consumer-code-on-dependency-bump
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return
+      findings only. The PR's only change bumps the long-approved dependency
+      `Microsoft.Azure.Widgets.Protocol` from `3.4.2` to `3.4.3`, its latest stable release, in
+      `eng/centralpackagemanagement/Directory.Packages.props`. Only the shipping library
+      Azure.Widgets references this package. The 3.4.3 release notes linked from the PR state
+      only: "Fixed a race in `FrameWriter.Flush` under concurrent callers." Azure.Widgets uses
+      only `FrameReader` from this package and never uses `FrameWriter`. Its unchanged frame
+      loop, shipped two years ago, wraps `reader.ReadFrame()` in `catch (Exception) { }`. The
+      library's CHANGELOG already records the dependency update, and no CI diagnostic covers this
+      change. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
+
+  - name: no-speculative-advice-on-dependency-patch-bump
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return
+      findings only. The PR's only change bumps the long-approved dependency
+      `Microsoft.Azure.Widgets.Protocol` from `3.4.2` to `3.4.3`, its latest stable release, in
+      `eng/centralpackagemanagement/Directory.Packages.props`. Only the shipping library
+      Azure.Widgets references this package, which follows semantic versioning. No release
+      notes are linked. The library's CHANGELOG already records the dependency update, and no CI
+      diagnostic covers this change. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^\s*(🔴|🟡|ℹ️)'
