@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("impactedResources"u8);
                 writer.WriteStartArray();
-                foreach (UpgradeInsightImpactedResource item in ImpactedResources)
+                foreach (UpgradeInsightImpactedResourceInfo item in ImpactedResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             UpgradeIssueType? issueType = default;
             UpgradeIssueSeverity? severity = default;
             string message = default;
-            IReadOnlyList<UpgradeInsightImpactedResource> impactedResources = default;
+            IReadOnlyList<UpgradeInsightImpactedResourceInfo> impactedResources = default;
             IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<UpgradeInsightImpactedResource> array = new List<UpgradeInsightImpactedResource>();
+                    List<UpgradeInsightImpactedResourceInfo> array = new List<UpgradeInsightImpactedResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpgradeInsightImpactedResource.DeserializeUpgradeInsightImpactedResource(item, options));
+                        array.Add(UpgradeInsightImpactedResourceInfo.DeserializeUpgradeInsightImpactedResourceInfo(item, options));
                     }
                     impactedResources = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 issueType,
                 severity,
                 message,
-                impactedResources ?? new ChangeTrackingList<UpgradeInsightImpactedResource>(),
+                impactedResources ?? new ChangeTrackingList<UpgradeInsightImpactedResourceInfo>(),
                 recommendedActions ?? new ChangeTrackingList<UpgradeInsightRecommendedAction>(),
                 additionalBinaryDataProperties);
         }

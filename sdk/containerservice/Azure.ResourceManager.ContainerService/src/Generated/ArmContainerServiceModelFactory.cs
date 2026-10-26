@@ -3761,16 +3761,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// actions can be returned in the future without a breaking change.
         /// </param>
         /// <returns> A new <see cref="Models.DetectedUpgradeIssue"/> instance for mocking. </returns>
-        public static DetectedUpgradeIssue DetectedUpgradeIssue(UpgradeIssueType? issueType = default, UpgradeIssueSeverity? severity = default, string message = default, IEnumerable<UpgradeInsightImpactedResource> impactedResources = default, IEnumerable<UpgradeInsightRecommendedAction> recommendedActions = default)
+        public static DetectedUpgradeIssue DetectedUpgradeIssue(UpgradeIssueType? issueType = default, UpgradeIssueSeverity? severity = default, string message = default, IEnumerable<UpgradeInsightImpactedResourceInfo> impactedResources = default, IEnumerable<UpgradeInsightRecommendedAction> recommendedActions = default)
         {
-            impactedResources ??= new ChangeTrackingList<UpgradeInsightImpactedResource>();
+            impactedResources ??= new ChangeTrackingList<UpgradeInsightImpactedResourceInfo>();
             recommendedActions ??= new ChangeTrackingList<UpgradeInsightRecommendedAction>();
 
             return new DetectedUpgradeIssue(
                 issueType,
                 severity,
                 message,
-                (impactedResources ?? new ChangeTrackingList<UpgradeInsightImpactedResource>()).ToList(),
+                (impactedResources ?? new ChangeTrackingList<UpgradeInsightImpactedResourceInfo>()).ToList(),
                 (recommendedActions ?? new ChangeTrackingList<UpgradeInsightRecommendedAction>()).ToList(),
                 default);
         }
@@ -3779,33 +3779,33 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// A resource impacted by a detected upgrade issue. The concrete shape is determined
         /// by `kind`: an ARM resource is identified by its ARM resource ID, while a Kubernetes
         /// resource is identified by its namespace and name.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ArmImpactedResource"/> and <see cref="Models.KubernetesImpactedResource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UpgradeInsightArmImpactedResourceInfo"/> and <see cref="Models.UpgradeInsightKubernetesImpactedResourceInfo"/>.
         /// </summary>
         /// <param name="kind"> The category of the impacted resource. </param>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
-        /// <returns> A new <see cref="Models.UpgradeInsightImpactedResource"/> instance for mocking. </returns>
-        public static UpgradeInsightImpactedResource UpgradeInsightImpactedResource(string kind = default, string resourceType = default)
+        /// <returns> A new <see cref="Models.UpgradeInsightImpactedResourceInfo"/> instance for mocking. </returns>
+        public static UpgradeInsightImpactedResourceInfo UpgradeInsightImpactedResourceInfo(string kind = default, string resourceType = default)
         {
-            return new UnknownUpgradeInsightImpactedResource(kind is null ? default : new ImpactedResourceKind(kind), resourceType, default);
+            return new UnknownUpgradeInsightImpactedResourceInfo(kind is null ? default : new ImpactedResourceKind(kind), resourceType, default);
         }
 
         /// <summary> An Azure Resource Manager (ARM) resource impacted by a detected upgrade issue, identified by its ARM resource ID. </summary>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="resourceId"> The ARM resource ID of the impacted resource. </param>
-        /// <returns> A new <see cref="Models.ArmImpactedResource"/> instance for mocking. </returns>
-        public static ArmImpactedResource ArmImpactedResource(string resourceType = default, ResourceIdentifier resourceId = default)
+        /// <returns> A new <see cref="Models.UpgradeInsightArmImpactedResourceInfo"/> instance for mocking. </returns>
+        public static UpgradeInsightArmImpactedResourceInfo UpgradeInsightArmImpactedResourceInfo(string resourceType = default, ResourceIdentifier resourceId = default)
         {
-            return new ArmImpactedResource(ImpactedResourceKind.Arm, resourceType, default, resourceId);
+            return new UpgradeInsightArmImpactedResourceInfo(ImpactedResourceKind.Arm, resourceType, default, resourceId);
         }
 
         /// <summary> A Kubernetes resource impacted by a detected upgrade issue, identified by its namespace and name. </summary>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="namespace"> The Kubernetes namespace of the impacted resource, if applicable. </param>
         /// <param name="name"> The name of the impacted Kubernetes resource. </param>
-        /// <returns> A new <see cref="Models.KubernetesImpactedResource"/> instance for mocking. </returns>
-        public static KubernetesImpactedResource KubernetesImpactedResource(string resourceType = default, string @namespace = default, string name = default)
+        /// <returns> A new <see cref="Models.UpgradeInsightKubernetesImpactedResourceInfo"/> instance for mocking. </returns>
+        public static UpgradeInsightKubernetesImpactedResourceInfo UpgradeInsightKubernetesImpactedResourceInfo(string resourceType = default, string @namespace = default, string name = default)
         {
-            return new KubernetesImpactedResource(ImpactedResourceKind.Kubernetes, resourceType, default, @namespace, name);
+            return new UpgradeInsightKubernetesImpactedResourceInfo(ImpactedResourceKind.Kubernetes, resourceType, default, @namespace, name);
         }
 
         /// <summary> A recommended action to resolve a detected upgrade issue. </summary>

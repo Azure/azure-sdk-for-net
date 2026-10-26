@@ -15,51 +15,51 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> An Azure Resource Manager (ARM) resource impacted by a detected upgrade issue, identified by its ARM resource ID. </summary>
-    public partial class ArmImpactedResource : UpgradeInsightImpactedResource, IJsonModel<ArmImpactedResource>
+    public partial class UpgradeInsightArmImpactedResourceInfo : UpgradeInsightImpactedResourceInfo, IJsonModel<UpgradeInsightArmImpactedResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpgradeInsightImpactedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override UpgradeInsightImpactedResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightArmImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeArmImpactedResource(document.RootElement, options);
+                        return DeserializeUpgradeInsightArmImpactedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmImpactedResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeInsightArmImpactedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightArmImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ArmImpactedResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeInsightArmImpactedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmImpactedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UpgradeInsightArmImpactedResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmImpactedResource IPersistableModel<ArmImpactedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArmImpactedResource)PersistableModelCreateCore(data, options);
+        UpgradeInsightArmImpactedResourceInfo IPersistableModel<UpgradeInsightArmImpactedResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpgradeInsightArmImpactedResourceInfo)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmImpactedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpgradeInsightArmImpactedResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ArmImpactedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpgradeInsightArmImpactedResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightArmImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmImpactedResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeInsightArmImpactedResourceInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
@@ -85,24 +85,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmImpactedResource IJsonModel<ArmImpactedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ArmImpactedResource)JsonModelCreateCore(ref reader, options);
+        UpgradeInsightArmImpactedResourceInfo IJsonModel<UpgradeInsightArmImpactedResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpgradeInsightArmImpactedResourceInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpgradeInsightImpactedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override UpgradeInsightImpactedResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightArmImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmImpactedResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeInsightArmImpactedResourceInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmImpactedResource(document.RootElement, options);
+            return DeserializeUpgradeInsightArmImpactedResourceInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArmImpactedResource DeserializeArmImpactedResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static UpgradeInsightArmImpactedResourceInfo DeserializeUpgradeInsightArmImpactedResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArmImpactedResource(kind, resourceType, additionalBinaryDataProperties, resourceId);
+            return new UpgradeInsightArmImpactedResourceInfo(kind, resourceType, additionalBinaryDataProperties, resourceId);
         }
     }
 }

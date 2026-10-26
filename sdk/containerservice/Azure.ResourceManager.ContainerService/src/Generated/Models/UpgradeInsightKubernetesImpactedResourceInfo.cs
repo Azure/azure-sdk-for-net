@@ -12,20 +12,20 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A Kubernetes resource impacted by a detected upgrade issue, identified by its namespace and name. </summary>
-    public partial class KubernetesImpactedResource : UpgradeInsightImpactedResource
+    public partial class UpgradeInsightKubernetesImpactedResourceInfo : UpgradeInsightImpactedResourceInfo
     {
-        /// <summary> Initializes a new instance of <see cref="KubernetesImpactedResource"/>. </summary>
-        internal KubernetesImpactedResource()
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightKubernetesImpactedResourceInfo"/>. </summary>
+        internal UpgradeInsightKubernetesImpactedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesImpactedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightKubernetesImpactedResourceInfo"/>. </summary>
         /// <param name="kind"> The category of the impacted resource. </param>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="namespace"> The Kubernetes namespace of the impacted resource, if applicable. </param>
         /// <param name="name"> The name of the impacted Kubernetes resource. </param>
-        internal KubernetesImpactedResource(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @namespace, string name) : base(kind, resourceType, additionalBinaryDataProperties)
+        internal UpgradeInsightKubernetesImpactedResourceInfo(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @namespace, string name) : base(kind, resourceType, additionalBinaryDataProperties)
         {
             Namespace = @namespace;
             Name = name;

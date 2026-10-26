@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="DetectedUpgradeIssue"/>. </summary>
         internal DetectedUpgradeIssue()
         {
-            ImpactedResources = new ChangeTrackingList<UpgradeInsightImpactedResource>();
+            ImpactedResources = new ChangeTrackingList<UpgradeInsightImpactedResourceInfo>();
             RecommendedActions = new ChangeTrackingList<UpgradeInsightRecommendedAction>();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// actions can be returned in the future without a breaking change.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedUpgradeIssue(UpgradeIssueType? issueType, UpgradeIssueSeverity? severity, string message, IReadOnlyList<UpgradeInsightImpactedResource> impactedResources, IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedUpgradeIssue(UpgradeIssueType? issueType, UpgradeIssueSeverity? severity, string message, IReadOnlyList<UpgradeInsightImpactedResourceInfo> impactedResources, IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The Azure or Kubernetes resources impacted by this issue. A single issue can affect multiple resources (for example, one removed Kubernetes API version affecting several objects). </summary>
         [WirePath("impactedResources")]
-        public IReadOnlyList<UpgradeInsightImpactedResource> ImpactedResources { get; }
+        public IReadOnlyList<UpgradeInsightImpactedResourceInfo> ImpactedResources { get; }
 
         /// <summary>
         /// The recommended actions to resolve this issue. Today this always contains a

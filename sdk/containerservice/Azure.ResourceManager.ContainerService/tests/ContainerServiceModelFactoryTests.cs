@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerService.Models;
@@ -145,6 +146,46 @@ namespace Azure.ResourceManager.ContainerService.Tests
             };
             using var diskJson = JsonDocument.Parse(ModelReaderWriter.Write(disk).ToString());
             Assert.IsTrue(diskJson.RootElement.GetProperty("quickAttachDetach").GetProperty("enabled").GetBoolean());
+        }
+
+        [TestCase("Arm", typeof(UpgradeInsightArmImpactedResourceInfo))]
+        [TestCase("Kubernetes", typeof(UpgradeInsightKubernetesImpactedResourceInfo))]
+        public void UpgradeInsightPayloadNamesPreserveDiscriminator(string kind, Type expectedType)
+        {
+            var resourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Compute/virtualMachines/vm";
+            var json = BinaryData.FromString(
+                $"{{\"kind\":\"{kind}\",\"resourceType\":\"Pod\",\"resourceId\":\"{resourceId}\",\"namespace\":\"default\",\"name\":\"pod\"}}");
+            var payload = ModelReaderWriter.Read<UpgradeInsightImpactedResourceInfo>(json);
+
+            Assert.IsInstanceOf(expectedType, payload);
+            using var result = JsonDocument.Parse(ModelReaderWriter.Write(payload).ToString());
+            Assert.AreEqual(kind, result.RootElement.GetProperty("kind").GetString());
+            Assert.AreEqual("Pod", result.RootElement.GetProperty("resourceType").GetString());
+            if (payload is UpgradeInsightArmImpactedResourceInfo arm)
+            {
+                Assert.AreEqual(resourceId, arm.ResourceId.ToString());
+                Assert.AreEqual(resourceId, result.RootElement.GetProperty("resourceId").GetString());
+            }
+            else
+            {
+                var kubernetes = (UpgradeInsightKubernetesImpactedResourceInfo)payload;
+                Assert.AreEqual("default", kubernetes.Namespace);
+                Assert.AreEqual("pod", kubernetes.Name);
+                Assert.AreEqual("default", result.RootElement.GetProperty("namespace").GetString());
+                Assert.AreEqual("pod", result.RootElement.GetProperty("name").GetString());
+            }
+        }
+
+        [Test]
+        public void UpgradeInsightPayloadPreservesUnknownDiscriminator()
+        {
+            var payload = ModelReaderWriter.Read<UpgradeInsightImpactedResourceInfo>(
+                BinaryData.FromString("{\"kind\":\"Future\",\"resourceType\":\"Custom\",\"futureField\":\"value\"}"));
+
+            using var result = JsonDocument.Parse(ModelReaderWriter.Write(payload).ToString());
+            Assert.AreEqual("Future", result.RootElement.GetProperty("kind").GetString());
+            Assert.AreEqual("Custom", result.RootElement.GetProperty("resourceType").GetString());
+            Assert.AreEqual("value", result.RootElement.GetProperty("futureField").GetString());
         }
     }
 }

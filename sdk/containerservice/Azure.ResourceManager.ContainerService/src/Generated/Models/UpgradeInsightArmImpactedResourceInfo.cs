@@ -13,19 +13,19 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> An Azure Resource Manager (ARM) resource impacted by a detected upgrade issue, identified by its ARM resource ID. </summary>
-    public partial class ArmImpactedResource : UpgradeInsightImpactedResource
+    public partial class UpgradeInsightArmImpactedResourceInfo : UpgradeInsightImpactedResourceInfo
     {
-        /// <summary> Initializes a new instance of <see cref="ArmImpactedResource"/>. </summary>
-        internal ArmImpactedResource()
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightArmImpactedResourceInfo"/>. </summary>
+        internal UpgradeInsightArmImpactedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmImpactedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightArmImpactedResourceInfo"/>. </summary>
         /// <param name="kind"> The category of the impacted resource. </param>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The ARM resource ID of the impacted resource. </param>
-        internal ArmImpactedResource(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier resourceId) : base(kind, resourceType, additionalBinaryDataProperties)
+        internal UpgradeInsightArmImpactedResourceInfo(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier resourceId) : base(kind, resourceType, additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
         }

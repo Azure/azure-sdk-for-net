@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class UnknownUpgradeInsightImpactedResource : UpgradeInsightImpactedResource
+    internal partial class UnknownUpgradeInsightImpactedResourceInfo : UpgradeInsightImpactedResourceInfo
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownUpgradeInsightImpactedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownUpgradeInsightImpactedResourceInfo"/>. </summary>
         /// <param name="kind"> The category of the impacted resource. </param>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownUpgradeInsightImpactedResource(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", resourceType, additionalBinaryDataProperties)
+        internal UnknownUpgradeInsightImpactedResourceInfo(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", resourceType, additionalBinaryDataProperties)
         {
         }
     }

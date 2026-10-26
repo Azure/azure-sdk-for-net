@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// A resource impacted by a detected upgrade issue. The concrete shape is determined
     /// by `kind`: an ARM resource is identified by its ARM resource ID, while a Kubernetes
     /// resource is identified by its namespace and name.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ArmImpactedResource"/> and <see cref="KubernetesImpactedResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UpgradeInsightArmImpactedResourceInfo"/> and <see cref="UpgradeInsightKubernetesImpactedResourceInfo"/>.
     /// </summary>
-    public abstract partial class UpgradeInsightImpactedResource
+    public abstract partial class UpgradeInsightImpactedResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeInsightImpactedResource"/>. </summary>
-        private protected UpgradeInsightImpactedResource()
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightImpactedResourceInfo"/>. </summary>
+        private protected UpgradeInsightImpactedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeInsightImpactedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightImpactedResourceInfo"/>. </summary>
         /// <param name="kind"> The category of the impacted resource. </param>
         /// <param name="resourceType"> The type of the impacted resource (for example, Microsoft.Network/virtualNetworks/subnets or PodDisruptionBudget). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeInsightImpactedResource(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeInsightImpactedResourceInfo(ImpactedResourceKind kind, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ResourceType = resourceType;

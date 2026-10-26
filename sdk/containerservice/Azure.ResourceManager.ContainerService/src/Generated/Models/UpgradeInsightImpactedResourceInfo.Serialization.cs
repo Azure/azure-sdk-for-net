@@ -16,54 +16,54 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// A resource impacted by a detected upgrade issue. The concrete shape is determined
     /// by `kind`: an ARM resource is identified by its ARM resource ID, while a Kubernetes
     /// resource is identified by its namespace and name.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ArmImpactedResource"/> and <see cref="KubernetesImpactedResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UpgradeInsightArmImpactedResourceInfo"/> and <see cref="UpgradeInsightKubernetesImpactedResourceInfo"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownUpgradeInsightImpactedResource))]
-    public abstract partial class UpgradeInsightImpactedResource : IJsonModel<UpgradeInsightImpactedResource>
+    [PersistableModelProxy(typeof(UnknownUpgradeInsightImpactedResourceInfo))]
+    public abstract partial class UpgradeInsightImpactedResourceInfo : IJsonModel<UpgradeInsightImpactedResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeInsightImpactedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual UpgradeInsightImpactedResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpgradeInsightImpactedResource(document.RootElement, options);
+                        return DeserializeUpgradeInsightImpactedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeInsightImpactedResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeInsightImpactedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeInsightImpactedResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeInsightImpactedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpgradeInsightImpactedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UpgradeInsightImpactedResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeInsightImpactedResource IPersistableModel<UpgradeInsightImpactedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UpgradeInsightImpactedResourceInfo IPersistableModel<UpgradeInsightImpactedResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpgradeInsightImpactedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpgradeInsightImpactedResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpgradeInsightImpactedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpgradeInsightImpactedResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeInsightImpactedResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeInsightImpactedResourceInfo)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeInsightImpactedResource IJsonModel<UpgradeInsightImpactedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UpgradeInsightImpactedResourceInfo IJsonModel<UpgradeInsightImpactedResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeInsightImpactedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual UpgradeInsightImpactedResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeInsightImpactedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeInsightImpactedResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeInsightImpactedResourceInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradeInsightImpactedResource(document.RootElement, options);
+            return DeserializeUpgradeInsightImpactedResourceInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpgradeInsightImpactedResource DeserializeUpgradeInsightImpactedResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static UpgradeInsightImpactedResourceInfo DeserializeUpgradeInsightImpactedResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 switch (discriminator.GetString())
                 {
                     case "Arm":
-                        return ArmImpactedResource.DeserializeArmImpactedResource(element, options);
+                        return UpgradeInsightArmImpactedResourceInfo.DeserializeUpgradeInsightArmImpactedResourceInfo(element, options);
                     case "Kubernetes":
-                        return KubernetesImpactedResource.DeserializeKubernetesImpactedResource(element, options);
+                        return UpgradeInsightKubernetesImpactedResourceInfo.DeserializeUpgradeInsightKubernetesImpactedResourceInfo(element, options);
                 }
             }
-            return UnknownUpgradeInsightImpactedResource.DeserializeUnknownUpgradeInsightImpactedResource(element, options);
+            return UnknownUpgradeInsightImpactedResourceInfo.DeserializeUnknownUpgradeInsightImpactedResourceInfo(element, options);
         }
     }
 }
