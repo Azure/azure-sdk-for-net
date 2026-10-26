@@ -114,7 +114,7 @@ For every finding:
 - Recommend the smallest correct change.
 - Use 🔴 for correctness, security, or breaking changes; 🟡 for actionable non-critical repository
   violations; ℹ️ only for a question that must be answered before correctness can be determined.
-- Do not include rule IDs or process narration when the consequence explains the problem better.
+- Do not narrate the review process.
 
 When no candidate survives the evidence filter, leave no comments.
 

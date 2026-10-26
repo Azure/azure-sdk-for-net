@@ -560,7 +560,7 @@ runtime failure inside a customer's trimmed or native-AOT app.
 - The AOT defaults are set only when `IsShippingLibrary` is true, so non-shipping projects get
   no trim analysis at all — the same gap as the analyzer gate above, one property name over
 
-**Cite the consequence, not the rule number.** A suppression argument is won on what the warning
+**Cite the consequence, not just the rule number.** A suppression argument is won on what the warning
 protects against. Example: `AZC0150` means a `ModelReaderWriter.Read`/`Write` call is missing its
 `ModelReaderWriterContext` overload, so the library falls back to the reflection path and is no
 longer AOT/trim-safe — the fix is the context overload with a wired-up generated context.
