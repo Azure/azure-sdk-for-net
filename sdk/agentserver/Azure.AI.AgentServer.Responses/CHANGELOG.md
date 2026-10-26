@@ -32,12 +32,33 @@
   went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
   previous model used `BinaryData`, so an output sent as an array of content parts is flattened
   into one string by joining its text parts with `\n`, and non-text parts are dropped.
-- Regenerating against the updated Foundry spec also reshaped a few remaining generated models in
-  `Azure.AI.AgentServer.Responses.Models`: `CreateResponseResponse`, `LocalShellCallStatus`,
-  `LocalShellCallOutputStatusEnum`, and `ItemWebSearchToolCallStatus` were removed;
-  `CreateResponseRequestReasoningEffort` is replaced by the extensible `ReasoningEffort`;
-  `ConversationParam`, `WebSearchActionSearch`, and `MessageContentOutputTextContent` lost or changed
-  their public constructors; and `WebSearchActionSearchSources.Url` is now a `Uri`.
+- `CreateResponseRequest`, the argument of `ResponsesProvider.CreateResponseAsync`, is renamed to
+  `CreateResponsePersistRequest` (the old name is now used by a generated internal model). Its
+  `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are
+  `OpenAI.Responses.ResponseItem`, so custom `ResponsesProvider` implementations must update their
+  override.
+- Regenerating against the updated Foundry spec replaced several enums in
+  `Azure.AI.AgentServer.Responses.Models`. The `Status` of `ItemFieldFunctionShellCall`,
+  `ItemFieldFunctionShellCallOutput`, and `ItemFieldWebSearchToolCall` is now a
+  `FunctionShellCallStatus`, `FunctionShellCallOutputStatusEnum`, and `WebSearchCallStatus`
+  respectively, and `LocalShellCallStatus`, `LocalShellCallOutputStatusEnum`, and
+  `ItemWebSearchToolCallStatus` were removed. On `Reasoning`, `Effort` is now the extensible
+  `ReasoningEffort` (was `CreateResponseReasoningEffort`), and `GenerateSummary` and `Summary` are
+  now `CreateResponseRequestReasoningGenerateSummary` and `CreateResponseRequestReasoningSummary`
+  (were `CreateResponseReasoningGenerateSummary` and `CreateResponseReasoningSummary`).
+  `IncludeEnum.ComputerCallOutputOutputImageUrl` and `IncludeEnum.MessageInputImageImageUrl` are
+  renamed to `ComputerCallOutputOutputImageUri` and `MessageInputImageImageUri`.
+- `AgentId`, `ComputerScreenshotImage`, `ConversationParam`, and `ResponseIncompleteDetails` no
+  longer have public constructors, and their properties no longer have setters;
+  `ContextManagementParam.Type` also lost its setter. The type of
+  `ResponseIncompleteDetails.Reason` changed from `ResponseIncompleteDetailsReason?` to
+  `CreateResponseResponseIncompleteDetailsReason?`.
+- `MessageContentOutputTextContent` is now constructed from its text alone (the `annotations` and
+  `logprobs` constructor parameters were dropped), and its `Annotations` are
+  `OpenAI.Responses.ResponseMessageAnnotation`. `WebSearchActionSearch` now has a parameterless
+  constructor (was `WebSearchActionSearch(string query)`; set `Query` instead),
+  `WebSearchActionSearchSources.Url` and its constructor parameter are now a `Uri`, and
+  `CompactResource.CreatedAt` is renamed to `CreatedOn`.
 - The error model `Error` is renamed to `ApiError`; `ApiErrorResponse.Error` and the
   `ApiErrorResponse` constructor now use `ApiError`.
 - `ResponsesApiException` now takes and exposes `OpenAI.Responses.ResponseError` instead of the
