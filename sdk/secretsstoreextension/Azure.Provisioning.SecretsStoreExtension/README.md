@@ -17,6 +17,8 @@ dotnet add package Azure.Provisioning.SecretsStoreExtension --prerelease
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 Deploying these resources requires a Kubernetes cluster with the Secrets Store Extension and an Azure Arc custom location.
 
+### Authenticate the Client
+
 ## Key concepts
 
 This library allows you to define Secrets Store Extension resources declaratively in .NET and compile them into Bicep templates.
