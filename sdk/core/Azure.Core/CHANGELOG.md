@@ -1,18 +1,14 @@
 # Release History
 
-## 1.64.0-beta.1 (Unreleased)
+## 1.64.0 (2026-10-26)
 
 ### Features Added
 
 - Promoted AKS identity binding support in `WorkloadIdentityCredential` to general availability. `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` no longer requires suppressing experimental diagnostic `AZID0002`. Identity binding remains opt-in and isn't supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed CA certificate reloads for an already-used Kubernetes token proxy in `WorkloadIdentityCredential`, so subsequent requests use the new CA without throwing or retaining the old trust configuration.
-
-### Other Changes
 
 ## 1.63.0 (2026-09-25)
 
