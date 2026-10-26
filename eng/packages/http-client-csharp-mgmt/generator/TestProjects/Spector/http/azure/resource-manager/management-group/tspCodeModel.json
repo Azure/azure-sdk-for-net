@@ -1936,7 +1936,6 @@
                 "$id": "131",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ManagementGroupChildResource",
                 "doc": "Get a ManagementGroupChildResource",
                 "accessibility": "public",
                 "parameters": [
@@ -2220,7 +2219,6 @@
                 "$id": "146",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ManagementGroupChildResource",
                 "doc": "Create a ManagementGroupChildResource",
                 "accessibility": "public",
                 "parameters": [
@@ -2653,7 +2651,6 @@
                 "$id": "167",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "ManagementGroupChildResource",
                 "doc": "Update a ManagementGroupChildResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3032,7 +3029,6 @@
                 "$id": "186",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "ManagementGroupChildResource",
                 "doc": "Delete a ManagementGroupChildResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3270,7 +3266,6 @@
                 "$id": "199",
                 "name": "listByManagementGroup",
                 "isExactName": false,
-                "resourceName": "ManagementGroupChildResource",
                 "doc": "List ManagementGroupChildResource resources by scope",
                 "accessibility": "public",
                 "parameters": [

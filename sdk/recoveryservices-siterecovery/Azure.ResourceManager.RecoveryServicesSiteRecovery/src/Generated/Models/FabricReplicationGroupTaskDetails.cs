@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class FabricReplicationGroupTaskDetails : SiteRecoveryJobTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="FabricReplicationGroupTaskDetails"/>. </summary>
-        internal FabricReplicationGroupTaskDetails()
+        internal FabricReplicationGroupTaskDetails() : base("FabricReplicationGroupTaskDetails")
         {
         }
 
