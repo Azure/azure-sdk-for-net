@@ -1,10 +1,14 @@
 # Release History
 
-## 1.0.0-beta.31 (2026-10-26)
+## 1.0.0-beta.31 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- Released to provide the public `Azure.AI.AgentServer.Core` dependency required by `Azure.AI.AgentServer.Invocations` 1.0.0-beta.8.
 
 ## 1.0.0-beta.30 (2026-10-15)
 
