@@ -74,6 +74,9 @@ project's bearer-token provider and `VoiceAgents=V1Preview`, and does not reques
 subprotocol. Foundry starts the session from the stored agent definition; the client waits for
 `session.started` before returning. It does **not** send a duplicate `session.start`.
 
+Use an `https://` project endpoint, which connects through `wss://`. Live startup rejects
+unencrypted endpoints before requesting an authentication token.
+
 Use `ProjectsLiveSessionClientOptions.Store`, `AgentVersion`, and `StructuredInputs` for
 Foundry handshake options. `QueryString` and `Headers` allow additional supported parameters;
 managed authentication and API-version values cannot be overridden.
@@ -218,9 +221,9 @@ internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient s
     using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
     Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
     Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
-    Task closing = CloseAfterAudioAsync(session, feeding, flow.Token);
+    Task closing = CloseAfterAudioAsync(session, feeding, cancellationToken);
     Task first = await Task.WhenAny(receiving, closing);
-    if (first.IsFaulted || first.IsCanceled)
+    if (first == receiving || first.IsFaulted || first.IsCanceled)
     {
         flow.Cancel();
     }

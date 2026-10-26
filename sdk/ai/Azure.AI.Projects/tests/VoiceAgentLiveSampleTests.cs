@@ -246,6 +246,49 @@ public class VoiceAgentLiveSampleTests
             .And.Contain(code ?? "<not supplied>"));
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public void EarlySessionClosureCancelsAndObservesBlockedAudioProducer(bool streamAudio)
+    {
+        using ScriptedSession session = new(Closed()) { BlockAudio = true };
+        using MemoryStream output = new();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(5));
+
+        Assert.CatchAsync<OperationCanceledException>(() =>
+            Sample_VoiceAgent_Live.RunAudioConversationAsync(session, Array.Empty<byte>(), output,
+                TextWriter.Null, timeout.Token, streamAudio));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.AudioEnded, Is.True);
+            Assert.That(session.AudioToken.IsCancellationRequested, Is.True);
+            Assert.That(session.ReceiverEnded, Is.True);
+            Assert.That(timeout.IsCancellationRequested, Is.False, "Service closure must stop input without waiting for the caller's deadline.");
+        });
+    }
+
+    [Test]
+    public async Task SuccessfulAudioReceiverDoesNotCancelRemainingCloseHandshake()
+    {
+        using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}"""))
+        {
+            WaitForClose = true,
+            CloseDelay = TimeSpan.FromMilliseconds(100)
+        };
+        using MemoryStream output = new();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+
+        await Sample_VoiceAgent_Live.RunAudioConversationAsync(
+            session, Array.Empty<byte>(), output, TextWriter.Null, timeout.Token);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.CloseToken, Is.EqualTo(timeout.Token));
+            Assert.That(session.CloseToken.IsCancellationRequested, Is.False);
+            Assert.That(session.ReceiverEnded, Is.True);
+        });
+    }
+
     [Test]
     public void AudioReceiverFailureCancelsAndObservesProducer()
     {
@@ -623,9 +666,11 @@ public class VoiceAgentLiveSampleTests
         public bool WaitAfterEvents { get; set; }
         public bool WaitForClose { get; set; }
         public TimeSpan FirstAudioDelay { get; set; }
+        public TimeSpan CloseDelay { get; set; }
         public Exception AudioFailure { get; set; }
         public CancellationToken ReceiveToken { get; private set; }
         public CancellationToken AudioToken { get; private set; }
+        public CancellationToken CloseToken { get; private set; }
         public Action<int> BeforeEvent { get; set; }
 
         public override Task SendEventAsync(LiveClientEvent clientEvent, CancellationToken cancellationToken = default)
@@ -678,11 +723,15 @@ public class VoiceAgentLiveSampleTests
             }
         }
 
-        public override Task CloseAsync(CancellationToken cancellationToken = default)
+        public override async Task CloseAsync(CancellationToken cancellationToken = default)
         {
+            CloseToken = cancellationToken;
             cancellationToken.ThrowIfCancellationRequested();
             _closed.TrySetResult(true);
-            return Task.CompletedTask;
+            if (CloseDelay > TimeSpan.Zero)
+            {
+                await Task.Delay(CloseDelay, cancellationToken);
+            }
         }
 
         public override async IAsyncEnumerable<LiveServerEvent> ReceiveEventsAsync(

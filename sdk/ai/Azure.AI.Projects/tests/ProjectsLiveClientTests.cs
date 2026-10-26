@@ -27,6 +27,86 @@ namespace Azure.AI.Projects.Tests;
 
 public class ProjectsLiveClientTests
 {
+    [TestCase("http://127.0.0.1:1/api/projects/project")]
+    [TestCase("http://localhost:1/api/projects/project")]
+    [TestCase("http://[::1]:1/api/projects/project")]
+    [TestCase("http://example.test/api/projects/project")]
+    [TestCase("ws://127.0.0.1:1/api/projects/project")]
+    [TestCase("ws://localhost:1/api/projects/project")]
+    [TestCase("ws://[::1]:1/api/projects/project")]
+    [TestCase("ws://example.test/api/projects/project")]
+    [TestCase("ftp://127.0.0.1/api/projects/project")]
+    public void UnencryptedEndpointsAreRejectedBeforeAuthentication(string endpoint)
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri(endpoint), provider);
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain("wss"));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public void AuthenticationUsesTheProvidersSpecializedOptions()
+    {
+        FactoryGetTokenOptions created = null;
+        InvalidOperationException failure = new("Factory-options verification completed.");
+        LiveTestTokenProvider provider = new(_ => Task.FromException<AuthenticationToken>(failure), properties =>
+        {
+            Dictionary<string, object> normalized = properties.ToDictionary(pair => pair.Key, pair => pair.Value);
+            normalized["factory-normalized"] = "verified";
+            created = new FactoryGetTokenOptions(normalized);
+            return created;
+        });
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+
+        InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            project.ProjectsLiveClient.StartSessionAsync("agent"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual, Is.SameAs(failure));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.LastOptions, Is.SameAs(created).And.TypeOf<FactoryGetTokenOptions>());
+            Assert.That(provider.LastOptions.Properties["factory-normalized"], Is.EqualTo("verified"));
+            Assert.That(provider.AsyncCalls, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void UnsupportedAuthenticationFlowIsRejectedBeforeTokenAcquisition()
+    {
+        LiveTestTokenProvider provider = new(createOptions: _ => null);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            project.ProjectsLiveClient.StartSessionAsync("agent"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain("does not support"));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    private sealed class FactoryGetTokenOptions : GetTokenOptions
+    {
+        public FactoryGetTokenOptions(IReadOnlyDictionary<string, object> properties) : base(properties) { }
+    }
+
     [Test]
     public async Task FactoryIsCachedAcrossConcurrentCallersAndSharesProjectConfiguration()
     {
@@ -75,7 +155,7 @@ public class ProjectsLiveClientTests
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
         using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
-            project.ProjectsLiveClient.StartSessionAsync("settings-agent", cancellationToken: timeout.Token));
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "settings-agent", cancellationToken: timeout.Token));
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
 
         Assert.Multiple(() =>
@@ -121,7 +201,7 @@ public class ProjectsLiveClientTests
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
         using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
-            project.ProjectsLiveClient.StartSessionAsync(agentName, options, timeout.Token));
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, agentName, options, timeout.Token));
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
         string[] query = connection.Request.Url.Query.TrimStart('?').Split('&');
         string structured = query.Single(parameter => parameter.StartsWith("structured_inputs=", StringComparison.Ordinal));
@@ -163,7 +243,7 @@ public class ProjectsLiveClientTests
         ProjectsLiveSessionClientOptions options = useOptions ? new() { Store = false } : null;
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync(acknowledge: false);
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", options, timeout.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", options, timeout.Token);
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
         Task<BinaryData> firstClientCommand = LiveTestHelpers.ReceiveTextAsync(connection.Socket, timeout.Token);
 
@@ -193,8 +273,8 @@ public class ProjectsLiveClientTests
         Task<LiveLoopbackConnection> acceptingFirst = server.AcceptSessionAsync();
         Task<LiveLoopbackConnection> acceptingSecond = server.AcceptSessionAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> startingLeft = project.ProjectsLiveClient.StartSessionAsync("left", cancellationToken: timeout.Token);
-        Task<ProjectsLiveSessionClient> startingRight = project.ProjectsLiveClient.StartSessionAsync("right", cancellationToken: timeout.Token);
+        Task<ProjectsLiveSessionClient> startingLeft = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "left", cancellationToken: timeout.Token);
+        Task<ProjectsLiveSessionClient> startingRight = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "right", cancellationToken: timeout.Token);
         using ProjectsLiveSessionClient left = await LiveTestHelpers.AwaitAsync(startingLeft);
         using ProjectsLiveSessionClient right = await LiveTestHelpers.AwaitAsync(startingRight);
         LiveLoopbackConnection[] connections = await LiveTestHelpers.AwaitAsync(Task.WhenAll(acceptingFirst, acceptingSecond));
@@ -226,7 +306,7 @@ public class ProjectsLiveClientTests
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
         using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
-            project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token));
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: timeout.Token));
         await LiveTestHelpers.AwaitAsync(accepting);
         LiveServerEventLiveSessionStarted started = session.SessionStarted;
 
@@ -280,7 +360,7 @@ public class ProjectsLiveClientTests
         string query, bool setVersion, bool setInputs)
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         ProjectsLiveSessionClientOptions options = new() { QueryString = query, AgentVersion = setVersion ? "7" : null };
         if (setInputs)
         {
@@ -295,7 +375,7 @@ public class ProjectsLiveClientTests
     public void InvalidStructuredInputJsonIsRejectedBeforeAuthentication()
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         ProjectsLiveSessionClientOptions options = new();
         options.StructuredInputs.Add("invalid", BinaryData.FromString("{"));
 
@@ -312,7 +392,7 @@ public class ProjectsLiveClientTests
     public void ConflictingManagedQueryIsRejectedBeforeAuthentication(string query, bool? store)
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         ProjectsLiveSessionClientOptions options = new() { Store = store, QueryString = query };
 
         ArgumentException exception = Assert.ThrowsAsync<ArgumentException>(() =>
@@ -349,7 +429,7 @@ public class ProjectsLiveClientTests
     public void ManagedHandshakeHeadersCannotBeOverridden(string header)
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         ProjectsLiveSessionClientOptions options = new();
         options.Headers.Add(header, "not-allowed");
 
@@ -362,7 +442,7 @@ public class ProjectsLiveClientTests
     public void InvalidAgentNameIsRejectedBeforeAuthentication(string agentName)
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
 
         Assert.CatchAsync<ArgumentException>(() => project.ProjectsLiveClient.StartSessionAsync(agentName));
         Assert.That(provider.AsyncCalls, Is.Zero);
@@ -372,7 +452,7 @@ public class ProjectsLiveClientTests
     public void PreCanceledStartDoesNotAuthenticate()
     {
         LiveTestTokenProvider provider = new();
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         using CancellationTokenSource cancellation = new();
         cancellation.Cancel();
 
@@ -391,7 +471,7 @@ public class ProjectsLiveClientTests
             await Task.Delay(Timeout.Infinite, cancellationToken);
             throw new AssertionException("Authentication should have been canceled.");
         });
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         using CancellationTokenSource cancellation = LiveTestHelpers.CreateTimeout();
         Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: cancellation.Token);
         await LiveTestHelpers.AwaitAsync(entered.Task);
@@ -402,12 +482,15 @@ public class ProjectsLiveClientTests
         Assert.That(provider.LastCancellationToken.IsCancellationRequested, Is.True);
     }
 
-    [Test]
-    public void AuthenticationFailureIsPropagatedUnchanged()
+    [TestCase("https://example.test/api/projects/project")]
+    [TestCase("https://localhost:1/api/projects/project")]
+    [TestCase("wss://example.test/api/projects/project")]
+    [TestCase("wss://localhost:1/api/projects/project")]
+    public void AuthenticationFailureIsPropagatedUnchanged(string endpoint)
     {
         InvalidOperationException failure = new("Test authentication failure.");
         LiveTestTokenProvider provider = new(_ => Task.FromException<AuthenticationToken>(failure));
-        AIProjectClient project = new(new Uri("http://127.0.0.1:1/api/projects/project"), provider);
+        AIProjectClient project = new(new Uri(endpoint), provider);
 
         InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
             project.ProjectsLiveClient.StartSessionAsync("agent"));
@@ -422,7 +505,7 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
         Task<HttpListenerContext> request = server.GetRequestAsync();
         using CancellationTokenSource cancellation = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: cancellation.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: cancellation.Token);
         HttpListenerContext context = await LiveTestHelpers.AwaitAsync(request);
         Assert.That(context.Request.IsWebSocketRequest, Is.True);
 
@@ -438,7 +521,7 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync(acknowledge: false);
         using CancellationTokenSource cancellation = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: cancellation.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: cancellation.Token);
         await LiveTestHelpers.AwaitAsync(accepting);
 
         cancellation.Cancel();
@@ -454,7 +537,7 @@ public class ProjectsLiveClientTests
             new AIProjectClientOptions { NetworkTimeout = TimeSpan.FromSeconds(2) });
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync(acknowledge: false);
         using CancellationTokenSource cancellation = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: cancellation.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: cancellation.Token);
         await LiveTestHelpers.AwaitAsync(accepting);
 
         Assert.CatchAsync<OperationCanceledException>(async () => await LiveTestHelpers.AwaitAsync(starting));
@@ -468,7 +551,7 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
         Task<HttpListenerContext> request = server.GetRequestAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: timeout.Token);
         HttpListenerContext context = await LiveTestHelpers.AwaitAsync(request);
         context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
         context.Response.Close();
@@ -485,7 +568,7 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync(acknowledge: false);
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: timeout.Token);
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
         await LiveTestHelpers.SendTextAsync(connection.Socket, firstEvent, timeout.Token);
 
@@ -500,7 +583,7 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync(acknowledge: false);
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
-        Task<ProjectsLiveSessionClient> starting = project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token);
+        Task<ProjectsLiveSessionClient> starting = LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: timeout.Token);
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
         await connection.Socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "No session.", timeout.Token);
 
@@ -511,20 +594,29 @@ public class ProjectsLiveClientTests
 internal sealed class LiveTestTokenProvider : AuthenticationTokenProvider
 {
     private readonly Func<CancellationToken, Task<AuthenticationToken>> _getToken;
+    private readonly Func<IReadOnlyDictionary<string, object>, GetTokenOptions> _createOptions;
     private int _asyncCalls;
     private int _syncCalls;
+    private int _factoryCalls;
 
-    public LiveTestTokenProvider(Func<CancellationToken, Task<AuthenticationToken>> getToken = null)
+    public LiveTestTokenProvider(Func<CancellationToken, Task<AuthenticationToken>> getToken = null,
+        Func<IReadOnlyDictionary<string, object>, GetTokenOptions> createOptions = null)
     {
         _getToken = getToken;
+        _createOptions = createOptions;
     }
 
     public int AsyncCalls => Volatile.Read(ref _asyncCalls);
     public int SyncCalls => Volatile.Read(ref _syncCalls);
+    public int FactoryCalls => Volatile.Read(ref _factoryCalls);
     public GetTokenOptions LastOptions { get; private set; }
     public CancellationToken LastCancellationToken { get; private set; }
 
-    public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => new(properties);
+    public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
+    {
+        Interlocked.Increment(ref _factoryCalls);
+        return _createOptions != null ? _createOptions(properties) : new GetTokenOptions(properties);
+    }
 
     public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken)
     {
@@ -612,6 +704,24 @@ internal static class LiveTestHelpers
 {
     internal const string SessionStartedJson = """{"type":"session.started","event_id":"started-event","session":{"id":"live-session","model":"gpt-live-1","expires_at":2000000000,"status":"active"},"conversation_id":"foundry-conversation"}""";
     internal const string SessionClosedJson = """{"type":"session.closed","event_id":"closed-event","reason":"close_requested","session":{"id":"live-session","model":"gpt-live-1","expires_at":2000000000,"status":"active"},"usage":{"seconds":0}}""";
+
+    internal static Task<ProjectsLiveSessionClient> ConnectAsync(ProjectsLiveClient client, string agentName,
+        ProjectsLiveSessionClientOptions options = null, CancellationToken cancellationToken = default)
+    {
+        // Test the connection layer with fake loopback credentials; public startup always requires TLS.
+        FieldInfo apiVersion = typeof(ProjectsLiveClient).GetField("_apiVersion", BindingFlags.Instance | BindingFlags.NonPublic);
+        Uri uri = BuildEndpoint(client.Endpoint, agentName, (string)apiVersion.GetValue(client), options);
+        MethodInfo method = typeof(ProjectsLiveClient).GetMethod("ConnectAsync", BindingFlags.Instance | BindingFlags.NonPublic);
+        try
+        {
+            return (Task<ProjectsLiveSessionClient>)method.Invoke(client, new object[] { uri, options, cancellationToken });
+        }
+        catch (TargetInvocationException exception) when (exception.InnerException != null)
+        {
+            ExceptionDispatchInfo.Capture(exception.InnerException).Throw();
+            throw;
+        }
+    }
 
     internal static ProjectsLiveSessionClient CreateSession(WebSocket socket) =>
         (ProjectsLiveSessionClient)Activator.CreateInstance(typeof(ProjectsLiveSessionClient),

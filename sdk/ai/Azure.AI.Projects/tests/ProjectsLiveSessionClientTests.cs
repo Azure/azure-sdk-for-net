@@ -159,7 +159,7 @@ public class ProjectsLiveSessionClientTests
         Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
         using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
         using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
-            project.ProjectsLiveClient.StartSessionAsync("agent", cancellationToken: timeout.Token));
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", cancellationToken: timeout.Token));
         LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
         await using IAsyncEnumerator<LiveServerEvent> events = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator();
         Assert.That(await LiveTestHelpers.AwaitAsync(events.MoveNextAsync().AsTask()), Is.True);

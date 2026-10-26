@@ -516,9 +516,9 @@ public static class Sample_VoiceAgent_Live
         using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
         Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
-        Task closing = CloseAfterAudioAsync(session, feeding, flow.Token);
+        Task closing = CloseAfterAudioAsync(session, feeding, cancellationToken);
         Task first = await Task.WhenAny(receiving, closing);
-        if (first.IsFaulted || first.IsCanceled)
+        if (first == receiving || first.IsFaulted || first.IsCanceled)
         {
             flow.Cancel();
         }

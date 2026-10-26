@@ -65,6 +65,16 @@ public class ProjectsLiveClient
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         cancellationToken.ThrowIfCancellationRequested();
         Uri uri = BuildEndpoint(Endpoint, agentName, _apiVersion, options);
+        if (uri.Scheme != "wss")
+        {
+            throw new InvalidOperationException("Live authentication requires a TLS-protected wss endpoint.");
+        }
+        return await ConnectAsync(uri, options, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<ProjectsLiveSessionClient> ConnectAsync(
+        Uri uri, ProjectsLiveSessionClientOptions options, CancellationToken cancellationToken)
+    {
         using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         timeout.CancelAfter(_connectionTimeout);
         using DiagnosticScope scope = _diagnostics.CreateScope("ProjectsLiveClient.StartSession");
@@ -86,7 +96,12 @@ public class ProjectsLiveClient
                     socket.Options.SetRequestHeader(header.Key, header.Value);
                 }
             }
-            AuthenticationToken token = await _tokenProvider.GetTokenAsync(new GetTokenOptions(_tokenProperties), timeout.Token).ConfigureAwait(false);
+            GetTokenOptions tokenOptions = _tokenProvider.CreateTokenOptions(_tokenProperties);
+            if (tokenOptions == null)
+            {
+                throw new InvalidOperationException("The token provider does not support the Foundry Live authentication flow.");
+            }
+            AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, timeout.Token).ConfigureAwait(false);
             socket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.TokenValue}");
             socket.Options.SetRequestHeader("Foundry-Features", _experimentalHeaders);
             socket.Options.SetRequestHeader("x-ms-client-request-id", Guid.NewGuid().ToString());
