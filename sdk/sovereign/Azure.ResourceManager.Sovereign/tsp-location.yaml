@@ -1,0 +1,6 @@
+directory: specification/sovereign/resource-manager/Microsoft.Sovereign/Sovereign
+commit: d72ef4244fd7865e0ea08a24e0d27e72f79d6c9d
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
