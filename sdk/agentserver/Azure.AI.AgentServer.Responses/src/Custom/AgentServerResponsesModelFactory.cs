@@ -40,11 +40,14 @@ internal static partial class AgentServerResponsesModelFactory
         additionalInfo ??= new Dictionary<string, BinaryData>();
         debugInfo ??= new Dictionary<string, BinaryData>();
 
+        // Custom: the generated ApiError ctor also takes the spec's `misalignment` property. This internal
+        // factory doesn't expose it (nothing in the library creates it), so it is always passed as null.
         return new ApiError(
             code!,
             message!,
             @param!,
             @type!,
+            misalignment: null,
             details.ToList(),
             additionalInfo,
             debugInfo,

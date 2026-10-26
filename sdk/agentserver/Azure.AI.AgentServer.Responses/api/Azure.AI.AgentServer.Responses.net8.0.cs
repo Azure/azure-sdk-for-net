@@ -603,6 +603,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> DebugInfo { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.ApiError> Details { get { throw null; } }
         public string Message { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource Misalignment { get { throw null; } set { } }
         public string Param { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.ApiError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1213,7 +1214,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class DirectToolCallCallerParam : Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.DirectToolCallCallerParam>
     {
-        internal DirectToolCallCallerParam() { }
+        public DirectToolCallCallerParam() { }
         protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2317,6 +2318,55 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.Metadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.Metadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MisalignmentErrorDetailsResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>
+    {
+        public MisalignmentErrorDetailsResource() { }
+        public string DetailedExplanation { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType? ErrorType { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.MisalignmentSteer Steer { get { throw null; } set { } }
+        protected virtual Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorDetailsResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MisalignmentErrorType : System.IEquatable<Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MisalignmentErrorType(string value) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType Other { get { throw null; } }
+        public static Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType PotentiallyUnintendedDataAccess { get { throw null; } }
+        public static Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType PotentiallyUnintendedDataTransfer { get { throw null; } }
+        public static Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType PotentiallyUnintendedDestructiveActivity { get { throw null; } }
+        public bool Equals(Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType left, Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType right) { throw null; }
+        public static implicit operator Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType (string value) { throw null; }
+        public static implicit operator Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType left, Azure.AI.AgentServer.Responses.Models.MisalignmentErrorType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MisalignmentSteer : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>
+    {
+        public MisalignmentSteer(string message) { }
+        public string Message { get { throw null; } set { } }
+        protected virtual Azure.AI.AgentServer.Responses.Models.MisalignmentSteer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AgentServer.Responses.Models.MisalignmentSteer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.AgentServer.Responses.Models.MisalignmentSteer System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.MisalignmentSteer System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MisalignmentSteer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ModelRouterAttempt : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ModelRouterAttempt>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ModelRouterAttempt>
     {
         internal ModelRouterAttempt() { }
@@ -2534,12 +2584,14 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class OutputItemCustomToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
     {
-        public OutputItemCustomToolCall(string callId, string name, string input, OpenAI.Responses.FunctionCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
-        public string CallId { get { throw null; } }
-        public string Input { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public OpenAI.Responses.FunctionCallStatus Status { get { throw null; } }
+        public OutputItemCustomToolCall(string callId, string name, string input, Azure.AI.AgentServer.Responses.Models.FunctionCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public bool? Async { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.ToolCallCaller Caller { get { throw null; } set { } }
+        public string CallId { get { throw null; } set { } }
+        public string Input { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Namespace { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.FunctionCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2553,9 +2605,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class OutputItemCustomToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>
     {
         public OutputItemCustomToolCallOutput(string callId, System.BinaryData output, Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
-        public string CallId { get { throw null; } }
-        public System.BinaryData Output { get { throw null; } }
-        public Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum Status { get { throw null; } }
+        public Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam Caller { get { throw null; } set { } }
+        public string CallId { get { throw null; } set { } }
+        public System.BinaryData Output { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2602,8 +2655,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class ProgramToolCallCallerParam : Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ProgramToolCallCallerParam>
     {
-        internal ProgramToolCallCallerParam() { }
-        public string CallerId { get { throw null; } }
+        public ProgramToolCallCallerParam(string callerId) { }
+        public string CallerId { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.ToolCallCallerParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

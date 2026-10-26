@@ -63,7 +63,7 @@ public class OutputItemExtensionsTests
             callId: "call_custom",
             name: "my_tool",
             input: "{}",
-            status: OpenAI.Responses.FunctionCallStatus.InProgress);
+            status: Azure.AI.AgentServer.Responses.Models.FunctionCallStatus.InProgress);
         item.Id = "ct_001";
 
         Assert.That(item.GetId(), Is.EqualTo("ct_001"));

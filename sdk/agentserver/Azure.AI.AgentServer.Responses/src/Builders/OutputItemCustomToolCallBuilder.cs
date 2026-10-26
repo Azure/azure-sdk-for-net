@@ -53,7 +53,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: "",
-            status: global::OpenAI.Responses.FunctionCallStatus.InProgress);
+            status: global::Azure.AI.AgentServer.Responses.Models.FunctionCallStatus.InProgress);
         item.Id = _itemId;
         return EmitAdded(item);
     }
@@ -136,7 +136,7 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
             callId: _callId,
             name: _name,
             input: _finalInput ?? "",
-            status: global::OpenAI.Responses.FunctionCallStatus.Completed);
+            status: global::Azure.AI.AgentServer.Responses.Models.FunctionCallStatus.Completed);
         item.Id = _itemId;
         return EmitDone(item);
     }

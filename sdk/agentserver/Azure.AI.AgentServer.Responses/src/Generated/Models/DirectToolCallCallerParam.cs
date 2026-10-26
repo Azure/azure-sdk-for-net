@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class DirectToolCallCallerParam : ToolCallCallerParam
     {
         /// <summary> Initializes a new instance of <see cref="DirectToolCallCallerParam"/>. </summary>
-        internal DirectToolCallCallerParam() : base(ToolCallCallerParamType.Direct)
+        public DirectToolCallCallerParam() : base(ToolCallCallerParamType.Direct)
         {
         }
 

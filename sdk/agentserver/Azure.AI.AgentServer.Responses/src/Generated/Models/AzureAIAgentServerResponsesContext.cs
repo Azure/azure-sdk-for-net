@@ -18,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(AgentId))]
     [ModelReaderWriterBuildable(typeof(AgentReference))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultOutputItem))]
+    [ModelReaderWriterBuildable(typeof(ApiError))]
     [ModelReaderWriterBuildable(typeof(ApiErrorResponse))]
     [ModelReaderWriterBuildable(typeof(Models.ApplyPatchCreateFileOperation))]
     [ModelReaderWriterBuildable(typeof(Models.ApplyPatchDeleteFileOperation))]
@@ -107,6 +108,8 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(MessageContentReasoningTextContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentRefusalContent))]
     [ModelReaderWriterBuildable(typeof(Metadata))]
+    [ModelReaderWriterBuildable(typeof(MisalignmentErrorDetailsResource))]
+    [ModelReaderWriterBuildable(typeof(MisalignmentSteer))]
     [ModelReaderWriterBuildable(typeof(ModelRouterAttempt))]
     [ModelReaderWriterBuildable(typeof(ModelRouterAttemptError))]
     [ModelReaderWriterBuildable(typeof(ModelRouterAttemptResult))]
@@ -119,6 +122,8 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ModerationParam))]
     [ModelReaderWriterBuildable(typeof(ModerationPolicyParam))]
     [ModelReaderWriterBuildable(typeof(ModerationResultBody))]
+    [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCall))]
+    [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCallerParam))]
     [ModelReaderWriterBuildable(typeof(Prompt))]
@@ -138,7 +143,7 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ReasoningTextContent))]
     [ModelReaderWriterBuildable(typeof(ResponseConversation))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponseConversationOptions))]
+    [ModelReaderWriterBuildable(typeof(ConversationReference))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(Error))]
@@ -152,7 +157,7 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ResponseUsageInputTokensDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseInputTokenUsageDetails is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponseItem))]
+    [ModelReaderWriterBuildable(typeof(Item))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseItem is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseMessageAnnotation is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseMessageAnnotation))]
