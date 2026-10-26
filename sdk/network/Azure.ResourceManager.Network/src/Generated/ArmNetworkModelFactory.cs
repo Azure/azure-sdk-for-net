@@ -1334,9 +1334,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null && sharingScope is null && defaultOutboundAccess is null && ipamPoolPrefixAllocations is null && serviceGatewayId is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -1429,9 +1429,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SecurityRuleData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 description is null && protocol is null && sourcePortRange is null && destinationPortRange is null && sourceAddressPrefix is null && sourceAddressPrefixes is null && sourceApplicationSecurityGroups is null && destinationAddressPrefix is null && destinationAddressPrefixes is null && destinationApplicationSecurityGroups is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null ? default : new SecurityRulePropertiesFormat(
                     description,
                     protocol.GetValueOrDefault(),
@@ -1477,14 +1477,14 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
-        /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
+        /// <summary> Common resource representation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <returns> A new <see cref="Models.NetworkWritableResourceData"/> instance for mocking. </returns>
         public static NetworkWritableResourceData NetworkWritableResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new NetworkWritableResourceData(id, default, name, resourceType);
+            return new NetworkWritableResourceData(id, name, resourceType, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -1691,9 +1691,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new NetworkInterfaceIPConfigurationData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 gatewayLoadBalancerId is null && virtualNetworkTaps is null && applicationGatewayBackendAddressPools is null && loadBalancerBackendAddressPools is null && loadBalancerInboundNatRules is null && privateIPAddress is null && privateIPAddressPrefixLength is null && privateIPAllocationMethod is null && privateIPAddressVersion is null && subnet is null && primary is null && publicIPAddress is null && applicationSecurityGroups is null && provisioningState is null && privateLinkConnectionProperties is null ? default : new NetworkInterfaceIPConfigurationPropertiesFormat(
                     gatewayLoadBalancerId is null ? default : new NetworkSubResource(gatewayLoadBalancerId, default),
                     (virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>()).ToList(),
@@ -2418,9 +2418,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new RouteData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && nextHopType is null && nextHopIPAddress is null && nextHopIPAddresses is null && provisioningState is null && hasBgpOverride is null ? default : new RoutePropertiesFormat(
                     addressPrefix,
                     nextHopType.GetValueOrDefault(),
@@ -2577,9 +2577,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new ServiceDelegation(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 serviceName is null && actions is null && provisioningState is null ? default : new ServiceDelegationPropertiesFormat(serviceName, (actions ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
                 eTag);
         }
@@ -6444,7 +6444,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FirewallPolicyRuleCollectionInfo"/> instance for mocking. </returns>
         public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = default, string name = default, int? priority = default)
         {
-            return new UnknownFirewallPolicyRuleCollectionInfo(ruleCollectionType is null ? default : new FirewallPolicyRuleCollectionType(ruleCollectionType), name, priority, default);
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType is null ? default : new FirewallPolicyRuleCollectionType(ruleCollectionType), name, priority, default);
         }
 
         /// <param name="name"> The name of the rule collection. </param>
@@ -6716,16 +6716,6 @@ namespace Azure.ResourceManager.Network.Models
         public static PolicySignaturesOverridesForIdpsData PolicySignaturesOverridesForIdpsData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> signatures = default)
         {
             return new PolicySignaturesOverridesForIdpsData(id, name, resourceType, default, signatures is null ? default : new SignaturesOverridesProperties(signatures ?? new ChangeTrackingDictionary<string, string>(), default));
-        }
-
-        /// <summary> Common resource representation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.NetworkWritableResource"/> instance for mocking. </returns>
-        public static NetworkWritableResource NetworkWritableResource(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new NetworkWritableResource(id, name, resourceType, default);
         }
 
         /// <summary> Describes an object containing an array with a single item. </summary>
@@ -13153,9 +13143,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new VirtualNetworkPeeringData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && localAddressPrefixes is null && localVirtualNetworkAddressPrefixes is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
@@ -13326,9 +13316,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new VirtualNetworkPeeringData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
@@ -13683,9 +13673,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new NetworkInterfaceIPConfigurationData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 gatewayLoadBalancerId is null && virtualNetworkTaps is null && applicationGatewayBackendAddressPools is null && loadBalancerBackendAddressPools is null && loadBalancerInboundNatRules is null && privateIPAddress is null && privateIPAddressPrefixLength is null && privateIPAllocationMethod is null && privateIPAddressVersion is null && subnet is null && primary is null && publicIPAddress is null && applicationSecurityGroups is null && provisioningState is null && privateLinkConnectionProperties is null ? default : new NetworkInterfaceIPConfigurationPropertiesFormat(
                     gatewayLoadBalancerId is null ? default : new NetworkSubResource(gatewayLoadBalancerId, default),
                     (virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>()).ToList(),
@@ -13842,9 +13832,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null && sharingScope is null && defaultOutboundAccess is null && ipamPoolPrefixAllocations is null && serviceGatewayId is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -13939,9 +13929,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SecurityRuleData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 description is null && protocol is null && sourcePortRange is null && destinationPortRange is null && sourceAddressPrefix is null && sourceAddressPrefixes is null && sourceApplicationSecurityGroups is null && destinationAddressPrefix is null && destinationAddressPrefixes is null && destinationApplicationSecurityGroups is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null ? default : new SecurityRulePropertiesFormat(
                     description,
                     protocol.GetValueOrDefault(),
@@ -14352,9 +14342,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new RouteData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && nextHopType is null && nextHopIPAddress is null && provisioningState is null && hasBgpOverride is null ? default : new RoutePropertiesFormat(
                     addressPrefix,
                     nextHopType.GetValueOrDefault(),
@@ -14648,9 +14638,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new ServiceDelegation(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 serviceName is null && actions is null && provisioningState is null ? default : new ServiceDelegationPropertiesFormat(serviceName, (actions ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
                 etag);
         }
@@ -17368,9 +17358,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new VirtualNetworkPeeringData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
@@ -18667,9 +18657,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null && sharingScope is null && defaultOutboundAccess is null && ipamPoolPrefixAllocations is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -19722,9 +19712,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -20275,9 +20265,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null && sharingScope is null && defaultOutboundAccess is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -20830,9 +20820,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new NetworkInterfaceIPConfigurationData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 gatewayLoadBalancerId is null && virtualNetworkTaps is null && applicationGatewayBackendAddressPools is null && loadBalancerBackendAddressPools is null && loadBalancerInboundNatRules is null && privateIPAddress is null && privateIPAllocationMethod is null && privateIPAddressVersion is null && subnet is null && primary is null && publicIPAddress is null && applicationSecurityGroups is null && provisioningState is null && privateLinkConnectionProperties is null ? default : new NetworkInterfaceIPConfigurationPropertiesFormat(
                     gatewayLoadBalancerId is null ? default : new NetworkSubResource(gatewayLoadBalancerId, default),
                     (virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>()).ToList(),
@@ -20884,9 +20874,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new SubnetData(
                 id,
-                default,
                 name,
                 resourceType,
+                default,
                 addressPrefix is null && addressPrefixes is null && networkSecurityGroup is null && routeTable is null && natGatewayId is null && serviceEndpoints is null && serviceEndpointPolicies is null && privateEndpoints is null && ipConfigurations is null && ipConfigurationProfiles is null && ipAllocations is null && resourceNavigationLinks is null && serviceAssociationLinks is null && delegations is null && purpose is null && provisioningState is null && privateEndpointNetworkPolicy is null && privateLinkServiceNetworkPolicy is null && applicationGatewayIPConfigurations is null && defaultOutboundAccess is null ? default : new SubnetPropertiesFormat(
                     addressPrefix,
                     (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),

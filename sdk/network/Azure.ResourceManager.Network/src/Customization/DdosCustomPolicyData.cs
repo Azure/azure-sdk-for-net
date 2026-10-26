@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
         // Keep the persistent per-instance list shipped in 1.16.1/1.17 without adding wire serialization.
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version", false)]
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         public IList<ProtocolCustomSettings> ProtocolCustomSettings { get; } = new List<ProtocolCustomSettings>();
     }
 }

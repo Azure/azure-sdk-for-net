@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     // Basic/Standard were the obsolete 1.15 values; the mode values came from the incorrect 1.17 rename.
     /// <summary> The DDoS protection policy customizability of the public IP. Only standard coverage will have the ability to be customized. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type is obsolete and might be removed in a future version", false)]
+    [Obsolete("This struct is obsolete and will be removed in a future release", false)]
     public readonly partial struct DdosSettingsProtectionCoverage : IEquatable<DdosSettingsProtectionCoverage>
     {
         private readonly string _value;

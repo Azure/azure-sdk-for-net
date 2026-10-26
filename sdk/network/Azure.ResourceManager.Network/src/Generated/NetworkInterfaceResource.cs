@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NetworkInterfaceResource.GetAll"), data => new LoadBalancerResource(Client, data));
+                "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NetworkInterfaceResource.GetAll"), data => new LoadBalancerResource(Client, data));
+                "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

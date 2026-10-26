@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     // Retain the released type used by DdosCustomPolicyData.ProtocolCustomSettings.
     // It was already a compatibility stub in 1.15 and has no current TypeSpec serialization model.
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type is obsolete and might be removed in a future version", false)]
+    [Obsolete("This class is obsolete and will be removed in a future release", false)]
     public partial class ProtocolCustomSettings
     {
         /// <summary> Initializes a new instance of <see cref="ProtocolCustomSettings"/>. </summary>

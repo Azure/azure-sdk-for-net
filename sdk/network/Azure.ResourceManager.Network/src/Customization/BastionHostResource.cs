@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Invokes the asynchronous Bastion Host update operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdateAsync` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Bastion Host update operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdate` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
 
         /// <summary> Updates tags for this Bastion Host resource. </summary>

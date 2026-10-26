@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
         // Preserve the 1.15 behavioral alias, including null and unknown protection modes.
         /// <summary> Compatibility member. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version, use ProtectionMode instead", false)]
+        [Obsolete("This property is obsolete and might be removed in a future version, please use `ProtectionMode` instead", false)]
         public bool? ProtectedIP
         {
             get => ProtectionMode != DdosSettingsProtectionMode.Disabled;

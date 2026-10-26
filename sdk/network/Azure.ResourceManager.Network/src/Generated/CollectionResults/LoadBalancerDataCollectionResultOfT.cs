@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkInterfaceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkInterfaceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetworkInterfaceLoadBalancersRequest(nextLink, _subscriptionId, _resourceGroupName, _networkInterfaceName, _context) : _client.CreateGetNetworkInterfaceLoadBalancersRequest(_subscriptionId, _resourceGroupName, _networkInterfaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

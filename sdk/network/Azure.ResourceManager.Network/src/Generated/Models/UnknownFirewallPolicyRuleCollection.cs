@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownFirewallPolicyRuleCollectionInfo : FirewallPolicyRuleCollectionInfo
+    internal partial class UnknownFirewallPolicyRuleCollection : FirewallPolicyRuleCollectionInfo
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRuleCollectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRuleCollection"/>. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFirewallPolicyRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ruleCollectionType != default ? ruleCollectionType : "unknown", name, priority, additionalBinaryDataProperties)
+        internal UnknownFirewallPolicyRuleCollection(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ruleCollectionType != default ? ruleCollectionType : "unknown", name, priority, additionalBinaryDataProperties)
         {
         }
     }

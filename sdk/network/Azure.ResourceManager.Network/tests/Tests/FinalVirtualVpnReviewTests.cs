@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -18,6 +20,218 @@ namespace Azure.ResourceManager.Network.Tests
     public class FinalVirtualVpnReviewTests
     {
         private const string ReferenceId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet";
+
+        [TestCase("GetNetworkInterfaceLoadBalancers", typeof(Pageable<LoadBalancerResource>))]
+        [TestCase("GetNetworkInterfaceLoadBalancersAsync", typeof(AsyncPageable<LoadBalancerResource>))]
+        public void NetworkInterfaceLoadBalancerMethodsKeepReleasedNamesAndSignatures(string methodName, Type returnType)
+        {
+            MethodInfo method = typeof(NetworkInterfaceResource).GetMethod(
+                methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+                null, new[] { typeof(CancellationToken) }, null);
+            Assert.That(method, Is.Not.Null);
+            Assert.That(method.ReturnType, Is.EqualTo(returnType));
+            Assert.That(method.IsVirtual, Is.True);
+            Assert.That(method.IsFinal, Is.False);
+            Assert.That(method.GetParameters()[0].IsOptional, Is.True);
+        }
+
+        [Test]
+        public void FirewallRuleCollectionProxyKeepsReleasedTypeName()
+        {
+            Type modelType = typeof(FirewallPolicyRuleCollectionInfo);
+            CustomAttributeData proxy = modelType.GetCustomAttributesData().Single(
+                attribute => attribute.AttributeType == typeof(PersistableModelProxyAttribute));
+            Type proxyType = (Type)proxy.ConstructorArguments[0].Value;
+            Assert.That(proxyType.Name, Is.EqualTo("UnknownFirewallPolicyRuleCollection"));
+            Assert.That(proxyType.IsNotPublic, Is.True);
+            Assert.That(proxyType.BaseType, Is.EqualTo(modelType));
+            Assert.That(modelType.Assembly.GetType("Azure.ResourceManager.Network.Models.UnknownFirewallPolicyRuleCollectionInfo"), Is.Null);
+        }
+
+        [Test]
+        public void WritableResourceBaseKeepsReleasedStandaloneShape()
+        {
+            Type modelType = typeof(NetworkWritableResourceData);
+            Assert.That(modelType.BaseType, Is.EqualTo(typeof(object)));
+            Assert.That(modelType.Assembly.GetType("Azure.ResourceManager.Network.Models.NetworkWritableResource"), Is.Null);
+            foreach (string propertyName in new[] { "Id", "Name", "ResourceType" })
+            {
+                PropertyInfo property = modelType.GetProperty(propertyName);
+                Assert.That(property.DeclaringType, Is.EqualTo(modelType));
+                Assert.That(property.GetMethod.IsPublic, Is.True);
+                Assert.That(property.SetMethod.IsPublic, Is.True);
+            }
+            MethodInfo writer = modelType.GetMethod("JsonModelWriteCore", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            Assert.That(writer, Is.Not.Null);
+            Assert.That(writer.IsVirtual, Is.True);
+            Assert.That(writer.IsFinal, Is.False);
+            Assert.That(writer.GetBaseDefinition().DeclaringType, Is.EqualTo(modelType));
+        }
+
+        [TestCase(typeof(NetworkInterfaceIPConfigurationData))]
+        [TestCase(typeof(RouteData))]
+        [TestCase(typeof(SecurityRuleData))]
+        [TestCase(typeof(SubnetData))]
+        [TestCase(typeof(VirtualNetworkPeeringData))]
+        [TestCase(typeof(ServiceDelegation))]
+        [TestCase(typeof(PolicySignaturesOverridesForIdpsData))]
+        public void WritableResourcesUseTheSharedNativeBase(Type modelType)
+        {
+            Assert.That(modelType.BaseType, Is.EqualTo(typeof(NetworkWritableResourceData)));
+        }
+
+        [TestCase(typeof(NetworkWritableResourceData))]
+        [TestCase(typeof(NetworkInterfaceIPConfigurationData))]
+        [TestCase(typeof(RouteData))]
+        [TestCase(typeof(SecurityRuleData))]
+        [TestCase(typeof(SubnetData))]
+        [TestCase(typeof(VirtualNetworkPeeringData))]
+        [TestCase(typeof(ServiceDelegation))]
+        [TestCase(typeof(PolicySignaturesOverridesForIdpsData))]
+        public void WritableResourceHierarchyKeepsNativeMetadataWireStorage(Type modelType)
+        {
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                object model = ModelReaderWriter.Read(BinaryData.FromString(
+                    $$"""{"id":"{{ReferenceId}}","name":"before","type":"Microsoft.Network/virtualNetworks","futureMetadata":19}"""), modelType, options);
+                modelType.GetProperty("Id").SetValue(model, new ResourceIdentifier(ReferenceId + "/child"));
+                modelType.GetProperty("Name").SetValue(model, "after");
+                modelType.GetProperty("ResourceType").SetValue(model, new ResourceType("Microsoft.Network/virtualNetworks/subnets"));
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+                Assert.That(json.RootElement.GetProperty("id").GetString(), Is.EqualTo(ReferenceId + "/child"));
+                Assert.That(json.RootElement.GetProperty("name").GetString(), Is.EqualTo("after"));
+                Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo("Microsoft.Network/virtualNetworks/subnets"));
+                bool hasUnknownField = json.RootElement.TryGetProperty("futureMetadata", out JsonElement unknownField);
+                Assert.That(hasUnknownField, Is.EqualTo(format == "J"));
+                if (hasUnknownField)
+                    Assert.That(unknownField.GetInt32(), Is.EqualTo(19));
+            }
+        }
+
+        [TestCase(typeof(BastionHostResource), "Update", typeof(BastionHostData))]
+        [TestCase(typeof(BastionHostResource), "UpdateAsync", typeof(BastionHostData))]
+        [TestCase(typeof(VirtualHubResource), "GetEffectiveVirtualHubRoutes", typeof(EffectiveRoutesContent))]
+        [TestCase(typeof(VirtualHubResource), "GetEffectiveVirtualHubRoutesAsync", typeof(EffectiveRoutesContent))]
+        [TestCase(typeof(VirtualHubResource), "GetInboundRoutes", typeof(VirtualHubInboundRoutesContent))]
+        [TestCase(typeof(VirtualHubResource), "GetInboundRoutesAsync", typeof(VirtualHubInboundRoutesContent))]
+        [TestCase(typeof(VirtualHubResource), "GetOutboundRoutes", typeof(VirtualHubOutboundRoutesContent))]
+        [TestCase(typeof(VirtualHubResource), "GetOutboundRoutesAsync", typeof(VirtualHubOutboundRoutesContent))]
+        [TestCase(typeof(VirtualNetworkGatewayConnectionResource), "StartPacketCapture", typeof(VpnPacketCaptureStartParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayConnectionResource), "StartPacketCaptureAsync", typeof(VpnPacketCaptureStartParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayConnectionResource), "StopPacketCapture", typeof(VpnPacketCaptureStopParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayConnectionResource), "StopPacketCaptureAsync", typeof(VpnPacketCaptureStopParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "Generatevpnclientpackage", typeof(VpnClientParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "GeneratevpnclientpackageAsync", typeof(VpnClientParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "GenerateVpnProfile", typeof(VpnClientParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "GenerateVpnProfileAsync", typeof(VpnClientParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "StartPacketCapture", typeof(VpnPacketCaptureStartParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "StartPacketCaptureAsync", typeof(VpnPacketCaptureStartParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "StopPacketCapture", typeof(VpnPacketCaptureStopParameters))]
+        [TestCase(typeof(VirtualNetworkGatewayResource), "StopPacketCaptureAsync", typeof(VpnPacketCaptureStopParameters))]
+        public void LegacyOperationObsoleteMessagesMatchReleasedMetadata(Type resourceType, string methodName, Type contentType)
+        {
+            MethodInfo method = resourceType.GetMethod(methodName, new[] { typeof(WaitUntil), contentType, typeof(CancellationToken) });
+            Assert.That(method, Is.Not.Null);
+            ObsoleteAttribute obsolete = method.GetCustomAttribute<ObsoleteAttribute>();
+            Assert.That(obsolete, Is.Not.Null);
+            Assert.That(obsolete.Message, Is.EqualTo("This method is obsolete and will be removed in a future release"));
+            Assert.That(obsolete.IsError, Is.False);
+        }
+
+        [TestCase(typeof(DdosCustomPolicyData), "ProtocolCustomSettings", "This property is obsolete and will be removed in a future release")]
+        [TestCase(typeof(EffectiveNetworkSecurityGroup), "TagMap", "This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead")]
+        [TestCase(typeof(DdosSettings), "ProtectedIP", "This property is obsolete and might be removed in a future version, please use `ProtectionMode` instead")]
+        [TestCase(typeof(DdosSettings), "ProtectionCoverage", "This property is obsolete and might be removed in a future version")]
+        public void LegacyPropertyObsoleteMessagesPreserveReleasedPatternWithoutIncorrectGuidance(Type modelType, string propertyName, string expectedMessage)
+        {
+            PropertyInfo property = modelType.GetProperty(propertyName);
+            Assert.That(property, Is.Not.Null);
+            ObsoleteAttribute obsolete = property.GetCustomAttribute<ObsoleteAttribute>();
+            Assert.That(obsolete, Is.Not.Null);
+            Assert.That(obsolete.Message, Is.EqualTo(expectedMessage));
+            Assert.That(obsolete.IsError, Is.False);
+        }
+
+        [TestCase(typeof(DdosSettingsProtectionCoverage), "This struct is obsolete and will be removed in a future release")]
+        [TestCase(typeof(ProtocolCustomSettings), "This class is obsolete and will be removed in a future release")]
+        public void LegacyTypeObsoleteMessagesMatchReleasedMetadata(Type modelType, string expectedMessage)
+        {
+            ObsoleteAttribute obsolete = modelType.GetCustomAttribute<ObsoleteAttribute>();
+            Assert.That(obsolete, Is.Not.Null);
+            Assert.That(obsolete.Message, Is.EqualTo(expectedMessage));
+            Assert.That(obsolete.IsError, Is.False);
+        }
+
+        [TestCase(typeof(DdosCustomPolicyData), "PublicIPAddresses")]
+        [TestCase(typeof(DdosSettings), "DdosCustomPolicyId")]
+        public void GeneratedDdosPropertiesHaveNoCustomVisibilityOrDeprecation(Type modelType, string propertyName)
+        {
+            PropertyInfo property = modelType.GetProperty(propertyName);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property.GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
+            Assert.That(property.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+        }
+
+        [TestCase(typeof(FirewallPolicyData), "SnatPrivateRanges")]
+        [TestCase(typeof(ApplicationGatewaySslProfile), "VerifyClientCertIssuerDN")]
+        public void SupportedCompatibilityPropertiesAreHiddenWithoutDeprecation(Type modelType, string propertyName)
+        {
+            PropertyInfo property = modelType.GetProperty(propertyName);
+            Assert.That(property, Is.Not.Null);
+            EditorBrowsableAttribute visibility = property.GetCustomAttribute<EditorBrowsableAttribute>();
+            Assert.That(visibility, Is.Not.Null);
+            Assert.That(visibility.State, Is.EqualTo(EditorBrowsableState.Never));
+            Assert.That(property.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+        }
+
+        [Test]
+        public void GeneratedDdosPolicyReferencesKeepNativeWireStorage()
+        {
+            var policy = ModelReaderWriter.Read<DdosCustomPolicyData>(BinaryData.FromString(
+                $$"""{"properties":{"publicIPAddresses":[{"id":"{{ReferenceId}}"}] } }"""));
+            Assert.That(policy.PublicIPAddresses.Count, Is.EqualTo(1));
+            Assert.That(policy.PublicIPAddresses[0].Id.ToString(), Is.EqualTo(ReferenceId));
+            policy.PublicIPAddresses[0].Id = new ResourceIdentifier(ReferenceId + "2");
+            foreach (string format in new[] { "J", "W" })
+            {
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(policy, new ModelReaderWriterOptions(format)));
+                JsonElement properties = json.RootElement.GetProperty("properties");
+                bool included = properties.TryGetProperty("publicIPAddresses", out JsonElement references);
+                if (format == "J")
+                {
+                    Assert.That(included, Is.True);
+                    Assert.That(references[0].GetProperty("id").GetString(), Is.EqualTo(ReferenceId + "2"));
+                }
+                else
+                {
+                    Assert.That(included, Is.False);
+                }
+            }
+        }
+
+        [Test]
+        public void GeneratedDdosPolicyIdentifierPreservesItsParentAndNullHandling()
+        {
+            var settings = ModelReaderWriter.Read<DdosSettings>(BinaryData.FromString(
+                $$"""{"ddosCustomPolicy":{"id":"{{ReferenceId}}","futureSetting":17} }"""));
+            Assert.That(settings.DdosCustomPolicyId.ToString(), Is.EqualTo(ReferenceId));
+            settings.DdosCustomPolicyId = new ResourceIdentifier(ReferenceId + "2");
+            foreach (string format in new[] { "J", "W" })
+            {
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(settings, new ModelReaderWriterOptions(format)));
+                JsonElement reference = json.RootElement.GetProperty("ddosCustomPolicy");
+                Assert.That(reference.GetProperty("id").GetString(), Is.EqualTo(ReferenceId + "2"));
+                if (format == "J")
+                    Assert.That(reference.GetProperty("futureSetting").GetInt32(), Is.EqualTo(17));
+            }
+            settings.DdosCustomPolicyId = null;
+            Assert.That(settings.DdosCustomPolicyId, Is.Null);
+            var empty = new DdosSettings();
+            Assert.That(empty.DdosCustomPolicyId, Is.Null);
+            empty.DdosCustomPolicyId = null;
+            Assert.That(empty.DdosCustomPolicyId, Is.Null);
+        }
 
         [Test]
         public void ReleasedNamedArgumentsCompileAndPreserveForwarding()

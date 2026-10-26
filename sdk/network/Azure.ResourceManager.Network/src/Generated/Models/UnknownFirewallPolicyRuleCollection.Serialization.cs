@@ -13,10 +13,10 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownFirewallPolicyRuleCollectionInfo : FirewallPolicyRuleCollectionInfo, IJsonModel<FirewallPolicyRuleCollectionInfo>
+    internal partial class UnknownFirewallPolicyRuleCollection : FirewallPolicyRuleCollectionInfo, IJsonModel<FirewallPolicyRuleCollectionInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRuleCollectionInfo"/> for deserialization. </summary>
-        internal UnknownFirewallPolicyRuleCollectionInfo()
+        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRuleCollection"/> for deserialization. </summary>
+        internal UnknownFirewallPolicyRuleCollection()
         {
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownFirewallPolicyRuleCollectionInfo DeserializeUnknownFirewallPolicyRuleCollectionInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownFirewallPolicyRuleCollectionInfo(ruleCollectionType, name, priority, additionalBinaryDataProperties);
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority, additionalBinaryDataProperties);
         }
     }
 }

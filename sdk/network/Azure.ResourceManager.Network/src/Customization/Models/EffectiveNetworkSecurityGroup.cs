@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
         // TagToIPAddresses dictionary owns the tagMap wire binding.
         /// <summary> Compatibility member. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and might be removed in a future version, use TagToIPAddresses instead", false)]
+        [Obsolete("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public string TagMap { get; }
     }
 }

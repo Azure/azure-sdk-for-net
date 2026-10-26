@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Tests
                 var type = method.ReturnType;
                 if (!typeof(NetworkResourceData).IsAssignableFrom(type)
                     && !typeof(NetworkTrackedResourceData).IsAssignableFrom(type)
-                    && !typeof(NetworkWritableResource).IsAssignableFrom(type)
+                    && !typeof(NetworkWritableResourceData).IsAssignableFrom(type)
                     && type != typeof(EndpointServiceResult)
                     && type != typeof(ApplicationGatewayAdvancedRoutingMap)
                     && type != typeof(ApplicationGatewayAdvancedRoutingConditionSet)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         public void ResourceTypeIsPreferredTypedProperty()
         {
-            foreach (var modelType in new[] { typeof(NetworkResourceData), typeof(NetworkTrackedResourceData), typeof(EndpointServiceResult), typeof(NetworkWritableResource), typeof(PolicySignaturesOverridesForIdpsData) })
+            foreach (var modelType in new[] { typeof(NetworkResourceData), typeof(NetworkTrackedResourceData), typeof(EndpointServiceResult), typeof(NetworkWritableResourceData), typeof(PolicySignaturesOverridesForIdpsData) })
             {
                 var property = modelType.GetProperty("ResourceType");
                 Assert.AreEqual(typeof(ResourceType?), property.PropertyType, modelType.Name);

@@ -16,42 +16,42 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Gets the effective routes configured for the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubEffectiveRoutesAsync` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual async Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = default, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(await GetVirtualHubEffectiveRoutesAsync(waitUntil, content, cancellationToken).ConfigureAwait(false));
 
         /// <summary> Gets the effective routes configured for the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubEffectiveRoutes` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = default, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(GetVirtualHubEffectiveRoutes(waitUntil, content, cancellationToken));
 
         /// <summary> Gets the inbound routes on a connection to the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubInboundRoutesAsync` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual async Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(await GetVirtualHubInboundRoutesAsync(waitUntil, content, cancellationToken).ConfigureAwait(false));
 
         /// <summary> Gets the inbound routes on a connection to the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubInboundRoutes` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(GetVirtualHubInboundRoutes(waitUntil, content, cancellationToken));
 
         /// <summary> Gets the outbound routes on a connection to the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubOutboundRoutesAsync` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual async Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(await GetVirtualHubOutboundRoutesAsync(waitUntil, content, cancellationToken).ConfigureAwait(false));
 
         /// <summary> Gets the outbound routes on a connection to the virtual hub. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetVirtualHubOutboundRoutes` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [ForwardsClientCalls]
         public virtual ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
             => new UntypedRouteOperation(GetVirtualHubOutboundRoutes(waitUntil, content, cancellationToken));

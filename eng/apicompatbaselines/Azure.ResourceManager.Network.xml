@@ -1,58 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <!-- DdosCustomPolicyId represents a current, non-obsolete native TypeSpec field.
-       Remove the legacy Obsolete attribute whose TagToIPAddresses guidance refers to an unrelated model. -->
+  <!-- The generated writer now overrides NetworkSubResource's virtual method and remains overridable. -->
+  <Suppression>
+    <DiagnosticId>CP0012</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Network.Models.NetworkResourceData.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <!-- The generated writer now overrides NetworkWritableResourceData's virtual method and remains overridable. -->
+  <Suppression>
+    <DiagnosticId>CP0012</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsData.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <!-- Keep native properties fully generated without restoring their released Obsolete attributes. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.DdosCustomPolicyData.PublicIPAddresses:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
   <Suppression>
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.DdosCustomPolicyId:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
-  <!-- The supported client-auth field remains available through its historical flattened facade.
-       Hide the facade with EditorBrowsable(Never), but do not mark the live field obsolete. -->
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
-    <Target>P:Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile.VerifyClientCertIssuerDN:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
-  <!-- The still-supported static routes retain their historical flattened facade.
-       Hide that facade, without deprecating the native nested routing field. -->
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
-    <Target>P:Azure.ResourceManager.Network.Models.RoutingConfiguration.StaticRoutes:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
-  <!-- The supported SNAT ranges retain their connected flattened facade.
-       Hide it with EditorBrowsable(Never), without deprecating the live field. -->
+  <!-- Keep connected compatibility facades hidden with EditorBrowsable(Never)
+       without deprecating their still-supported behavior. -->
   <Suppression>
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.FirewallPolicyData.SnatPrivateRanges:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
-  <!-- Correct ProtectedIP's obsolete guidance to its connected ProtectionMode replacement.
-       The released TagToIPAddresses recommendation refers to an unrelated model. -->
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile.VerifyClientCertIssuerDN:[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <!-- Correct the released DDoS messages that incorrectly recommended TagToIPAddresses. -->
   <Suppression>
     <DiagnosticId>CP0015</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.ProtectedIP:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
-  <!-- These APIs were already disconnected compatibility stubs in 1.15.
-       Standardize their obsolete messages without recommending unrelated wire fields. -->
-  <Suppression>
-    <DiagnosticId>CP0015</DiagnosticId>
-    <Target>P:Azure.ResourceManager.Network.DdosCustomPolicyData.ProtocolCustomSettings:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
+  <!-- ProtectionCoverage has no current replacement; remove the incorrect recommendation. -->
   <Suppression>
     <DiagnosticId>CP0015</DiagnosticId>
     <Target>P:Azure.ResourceManager.Network.Models.DdosSettings.ProtectionCoverage:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0015</DiagnosticId>
-    <Target>T:Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0015</DiagnosticId>
-    <Target>T:Azure.ResourceManager.Network.Models.ProtocolCustomSettings:[T:System.ObsoleteAttribute]</Target>
-  </Suppression>
-  <!-- Standardize the historical unpopulated TagMap getter's obsolete message.
-       The native TagToIPAddresses dictionary retains the tagMap wire binding. -->
-  <Suppression>
-    <DiagnosticId>CP0015</DiagnosticId>
-    <Target>P:Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroup.TagMap:[T:System.ObsoleteAttribute]</Target>
   </Suppression>
 </Suppressions>
