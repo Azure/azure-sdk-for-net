@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -37,18 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("This property is obsolete and will be removed in a future release. Read MultiAdStatus from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MultiAdStatus? MultiAdStatus => throw new NotSupportedException("MultiAdStatus is no longer available on NetAppAccountPatch. Read it from NetAppAccountData instead.");
-
-        /// <summary> Domain for NFSv4 user ID mapping. </summary>
-        [CodeGenMember("NfsV4IDDomain")]
-        public string NfsV4IdDomain
-        {
-            get => Properties?.NfsV4IDDomain;
-            set
-            {
-                Properties ??= new AccountPropertiesPatch();
-                Properties.NfsV4IDDomain = value;
-            }
-        }
 
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfigPatch EntraIdConfig

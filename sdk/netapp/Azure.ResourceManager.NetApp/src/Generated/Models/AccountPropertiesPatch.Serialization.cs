@@ -13,6 +13,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    /// <summary> NetApp account patch properties. </summary>
     internal partial class AccountPropertiesPatch : IJsonModel<AccountPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
@@ -88,12 +89,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsDefined(NfsV4IDDomain, _nfsV4IDDomainIsDefined))
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
             {
-                if (NfsV4IDDomain != null)
+                if (NfsV4IdDomain != null)
                 {
                     writer.WritePropertyName("nfsV4IDDomain"u8);
-                    writer.WriteStringValue(NfsV4IDDomain);
+                    writer.WriteStringValue(NfsV4IdDomain);
                 }
                 else
                 {
@@ -149,8 +150,8 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             NetAppAccountEncryption encryption = default;
-            bool nfsV4IDDomainIsDefined = false;
-            string nfsV4IDDomain = default;
+            bool nfsV4IdDomainIsDefined = false;
+            string nfsV4IdDomain = default;
             LdapConfigurationPatch ldapConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("nfsV4IDDomain"u8))
                 {
-                    nfsV4IDDomainIsDefined = true;
+                    nfsV4IdDomainIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nfsV4IDDomain = null;
+                        nfsV4IdDomain = null;
                         continue;
                     }
-                    nfsV4IDDomain = prop.Value.GetString();
+                    nfsV4IdDomain = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ldapConfiguration"u8))
@@ -203,9 +204,9 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccountPropertiesPatch(activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption, nfsV4IDDomain, ldapConfiguration, additionalBinaryDataProperties)
+            return new AccountPropertiesPatch(activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption, nfsV4IdDomain, ldapConfiguration, additionalBinaryDataProperties)
             {
-                _nfsV4IDDomainIsDefined = nfsV4IDDomainIsDefined
+                _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
             };
         }
     }

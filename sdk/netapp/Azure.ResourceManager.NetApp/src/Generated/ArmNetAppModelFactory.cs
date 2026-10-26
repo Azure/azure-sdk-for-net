@@ -1831,6 +1831,34 @@ namespace Azure.ResourceManager.NetApp.Models
             return new BindPasswordKeyVaultConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
+        /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppAccountPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                activeDirectories is null && encryption is null && nfsV4IdDomain is null && ldapConfiguration is null ? default : new AccountPropertiesPatch((activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(), encryption, nfsV4IdDomain, ldapConfiguration, default),
+                default);
+        }
+
         /// <summary> LDAP configuration for PATCH operations (no default values). </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
