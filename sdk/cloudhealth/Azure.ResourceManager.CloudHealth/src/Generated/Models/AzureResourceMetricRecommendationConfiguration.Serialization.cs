@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Azure Resource Metric recommendation configuration. </summary>
-    public partial class AzureResourceMetricRecommendationConfiguration : SignalRecommendationConfiguration, IJsonModel<AzureResourceMetricRecommendationConfiguration>
+    public partial class AzureResourceMetricRecommendationConfiguration : HealthModelSignalRecommendationConfiguration, IJsonModel<AzureResourceMetricRecommendationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceMetricRecommendationConfiguration"/> for deserialization. </summary>
         internal AzureResourceMetricRecommendationConfiguration()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceMetricRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceMetricRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string metricNamespace = default;
             string metricName = default;
-            CloudHealthMetricAggregationType aggregationType = default;
+            HealthModelMetricAggregationType aggregationType = default;
             string timeGrain = default;
             string dimensionFilter = default;
             foreach (var prop in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (prop.NameEquals("aggregationType"u8))
                 {
-                    aggregationType = new CloudHealthMetricAggregationType(prop.Value.GetString());
+                    aggregationType = new HealthModelMetricAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))

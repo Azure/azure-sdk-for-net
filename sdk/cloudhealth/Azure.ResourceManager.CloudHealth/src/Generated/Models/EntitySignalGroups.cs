@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dependencies"> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </param>
         /// <param name="external"> List of signals which have been externally submitted for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalGroups(ResourceSignals azureResource, LogAnalyticsSignals azureLogAnalytics, MonitorWorkspaceSignals azureMonitorWorkspace, DependenciesSignalGroup dependencies, ExternalSignalGroup external, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySignalGroups(HealthModelResourceSignals azureResource, LogAnalyticsSignals azureLogAnalytics, MonitorWorkspaceSignals azureMonitorWorkspace, HealthModelDependenciesSignalGroup dependencies, ExternalSignalGroup external, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResource = azureResource;
             AzureLogAnalytics = azureLogAnalytics;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Azure Resource Signal Group. </summary>
-        public ResourceSignals AzureResource { get; set; }
+        public HealthModelResourceSignals AzureResource { get; set; }
 
         /// <summary> Log Analytics Signal Group. </summary>
         public LogAnalyticsSignals AzureLogAnalytics { get; set; }
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public MonitorWorkspaceSignals AzureMonitorWorkspace { get; set; }
 
         /// <summary> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </summary>
-        public DependenciesSignalGroup Dependencies { get; set; }
+        public HealthModelDependenciesSignalGroup Dependencies { get; set; }
 
         /// <summary> List of signals which have been externally submitted for this entity. </summary>
         internal ExternalSignalGroup External { get; }
 
         /// <summary> Signals assigned to this signal group. </summary>
-        public IReadOnlyList<ExternalSignal> ExternalSignals
+        public IReadOnlyList<HealthModelExternalSignal> ExternalSignals
         {
             get
             {

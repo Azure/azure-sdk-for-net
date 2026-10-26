@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Azure Resource Metric recommendation configuration. </summary>
-    public partial class AzureResourceMetricRecommendationConfiguration : SignalRecommendationConfiguration
+    public partial class AzureResourceMetricRecommendationConfiguration : HealthModelSignalRecommendationConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceMetricRecommendationConfiguration"/>. </summary>
         /// <param name="metricNamespace"> Metric namespace. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <param name="timeGrain"> Time range of the metric in ISO 8601 duration format (e.g. 'PT5M'). </param>
-        internal AzureResourceMetricRecommendationConfiguration(string metricNamespace, string metricName, CloudHealthMetricAggregationType aggregationType, string timeGrain) : base(SignalRecommendationKind.AzureResourceMetric)
+        internal AzureResourceMetricRecommendationConfiguration(string metricNamespace, string metricName, HealthModelMetricAggregationType aggregationType, string timeGrain) : base(SignalRecommendationKind.AzureResourceMetric)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <param name="timeGrain"> Time range of the metric in ISO 8601 duration format (e.g. 'PT5M'). </param>
         /// <param name="dimensionFilter"> Optional dimension filter to apply to the metric. </param>
-        internal AzureResourceMetricRecommendationConfiguration(SignalRecommendationKind signalKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, CloudHealthMetricAggregationType aggregationType, string timeGrain, string dimensionFilter) : base(signalKind, additionalBinaryDataProperties)
+        internal AzureResourceMetricRecommendationConfiguration(SignalRecommendationKind signalKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, HealthModelMetricAggregationType aggregationType, string timeGrain, string dimensionFilter) : base(signalKind, additionalBinaryDataProperties)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string MetricName { get; }
 
         /// <summary> Type of aggregation to apply to the metric. </summary>
-        public CloudHealthMetricAggregationType AggregationType { get; }
+        public HealthModelMetricAggregationType AggregationType { get; }
 
         /// <summary> Time range of the metric in ISO 8601 duration format (e.g. 'PT5M'). </summary>
         public string TimeGrain { get; }
