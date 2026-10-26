@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.EdgeActions.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="sku"> The sku type of the edge action. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The SKU of the Edge Action. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </param>
+        /// <param name="tags"> Resource tags. For PATCH requests, omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EdgeActionPatch(EdgeActionPropertiesUpdate properties, EdgeActionSkuTypeUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <summary> The resource-specific properties for this resource. </summary>
         public EdgeActionPropertiesUpdate Properties { get; set; }
 
-        /// <summary> The sku type of the edge action. </summary>
+        /// <summary> The SKU of the Edge Action. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </summary>
         public EdgeActionSkuTypeUpdate Sku { get; set; }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary> Resource tags. For PATCH requests, omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

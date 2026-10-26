@@ -2,7 +2,7 @@
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the `BrowserAutomationPreviewTool`.
 
-**Note:** This feature is in the preview of `BrowserAutomationTool`, please use `BrowserAutomationTool` instead.
+**Note:** This feature is in the preview of `BrowserAutomationTool` and is now deprecated, please use `BrowserAutomationTool` instead.
 
 ## Create Azure Playwright workspace
 
