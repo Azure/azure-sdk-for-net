@@ -69,9 +69,11 @@
 ### Bugs Fixed
 
 ### Other Changes
-- Request validation now covers the `cloud_computer_use_preview` and
-  `microsoft_copilot_toolset_preview` tool types from the Foundry spec, so a malformed
-  `microsoft_copilot_toolset_preview` tool is rejected instead of passing through unvalidated.
+- Request validation now covers eight more tool types from the Foundry spec (`a2a`,
+  `browser_automation`, `cloud_computer_use_preview`, `fabric_iq_preview`,
+  `github_copilot_toolset_preview`, `microsoft_copilot_toolset_preview`,
+  `programmatic_tool_calling`, and `web_iq_preview`), so a malformed tool of these types is
+  rejected instead of passing through unvalidated.
 
 ## 1.0.0-beta.9 (2026-10-15)
 
