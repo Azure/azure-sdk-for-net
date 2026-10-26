@@ -3,6 +3,10 @@
 ## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+- `ApiError` (the model carried by `ApiErrorResponse`) has a new optional `Misalignment` property
+  (`MisalignmentErrorDetailsResource`, `MisalignmentErrorType`, `MisalignmentSteer`), and
+  `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (plus `Async` on the
+  call), all following the Foundry spec.
 
 ### Breaking Changes
 - The package no longer emits its own copies of the OpenAI Responses models. Public handler,
@@ -25,6 +29,8 @@
   `CreateResponseRequestReasoningEffort` is replaced by the extensible `ReasoningEffort`;
   `ConversationParam`, `WebSearchActionSearch`, and `MessageContentOutputTextContent` lost or changed
   their public constructors; and `WebSearchActionSearchSources.Url` is now a `Uri`.
+- The error model `Error` is renamed to `ApiError`; `ApiErrorResponse.Error` and the
+  `ApiErrorResponse` constructor now use `ApiError`.
 
 ### Bugs Fixed
 
