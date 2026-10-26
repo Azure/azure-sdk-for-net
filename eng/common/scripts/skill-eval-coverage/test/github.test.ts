@@ -113,6 +113,11 @@ for (const covered of [true, false]) {
     assert.match(body, /Attempt.*1/);
     assert.ok(body.includes(head));
     assert.ok(f.calls.some((route) => route.includes("/git/blobs/")));
+    if (covered) assert.doesNotMatch(body, /This warning will become|you may proceed/);
+    else {
+      assert.match(body, /This warning will become a build blocker by \*\*November 9, 2026\*\*/);
+      assert.match(body, /warning-only; you may proceed if all other required checks pass/);
+    }
   });
 }
 
@@ -132,6 +137,7 @@ test("warning becomes covered by updating the same bot-owned comment", async () 
   assert.equal(f.writes[0].method, "PATCH");
   assert.equal(f.writes[0].route, "/repos/test/repo/issues/comments/21");
   assert.match(f.writes[0].body.body, /coverage present/);
+  assert.doesNotMatch(f.writes[0].body.body, /This warning will become|you may proceed/);
 });
 
 test("a later push reverting all skill changes clears the existing comment and retains dashboard links", async () => {

@@ -245,6 +245,12 @@ export function renderReport(report: CoverageReport | null, links: ReportLinks):
     hasCoverageWarnings(report) ? "⚠️ Skill Eval coverage missing" :
       active.length ? "✅ Skill Eval coverage present" : "ℹ️ No remaining affected skills to check";
   const lines = [COMMENT_MARKER, `## ${heading}`, ""];
+  if (report && hasCoverageWarnings(report)) {
+    lines.push(
+      "> **Grace period:** This warning will become a build blocker by **November 9, 2026**.",
+      "> For now, missing Eval coverage is warning-only; you may proceed if all other required checks pass.",
+      "> Add or fix the affected Evals before the deadline.", "");
+  }
   if (links.build) {
     const build = links.build;
     lines.push(`**Coverage/lint build:** ${links.runUrl ? link(`#${build.id}`, links.runUrl) : `#${build.id}`} · ` +

@@ -206,10 +206,19 @@ test("both coverage outcomes, deleted-only, and unknown results keep dashboard a
     assert.match(markdown, text ? /coverage present/ : /coverage missing/);
     assert.match(markdown, /does not run Evals/);
     assert.doesNotMatch(markdown, /Evals passed/);
+    if (text) assert.doesNotMatch(markdown, /This warning will become|you may proceed/);
+    else {
+      assert.match(markdown, /This warning will become a build blocker by \*\*November 9, 2026\*\*/);
+      assert.match(markdown, /warning-only; you may proceed if all other required checks pass/);
+      assert.match(markdown, /Add or fix the affected Evals before the deadline/);
+    }
   }
   const unknown = renderReport(null, { config });
   assert.match(unknown, /could not be determined/);
   assert.ok(unknown.includes(config.dashboardUrl));
+  assert.doesNotMatch(unknown, /This warning will become|you may proceed/);
+  const deleted = await checkCoverage(snapshot({}), config, [skill("deleted")]);
+  assert.doesNotMatch(renderReport(deleted, { config }), /This warning will become|you may proceed/);
 });
 
 test("untrusted paths are escaped in Markdown, including mentions and image syntax", async () => {

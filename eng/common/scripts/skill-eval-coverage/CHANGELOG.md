@@ -20,3 +20,7 @@
 - Move the two coverage workflows' action pins to a generated workflow dependency
   lockfile, keeping readable release versions, the same action commits, and scoped
   read-only verification. Other workflows and repository policies are unchanged.
+- Announce in coverage-warning comments that the warning will become a build
+  blocker by November 9, 2026, while allowing authors to proceed during the grace
+  period if other required checks pass. Track the separate enforcement change in
+  [#17402](https://github.com/Azure/azure-sdk-tools/issues/17402).
