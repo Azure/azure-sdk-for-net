@@ -114,6 +114,8 @@ For every finding:
 - Recommend the smallest correct change.
 - Use 🔴 for correctness, security, or breaking changes; 🟡 for actionable non-critical repository
   violations; ℹ️ only for a question that must be answered before correctness can be determined.
+  A marker on a rule in the reference files overrides this; an unmarked rule is graded by this
+  rubric and never defaults to ℹ️.
 - Do not narrate the review process.
 
 When no candidate survives the evidence filter, leave no comments.
