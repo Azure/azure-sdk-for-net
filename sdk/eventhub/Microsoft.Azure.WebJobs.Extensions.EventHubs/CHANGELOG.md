@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where stale checkpoints could prevent scale-in when `BatchCheckpointFrequency` was greater than 1. Pending processed events are now checkpointed after 10 minutes of inactivity so that the scale controller does not report backlog for events that have already been processed. ([#59801](https://github.com/Azure/azure-sdk-for-net/pull/59801))
+
 ### Other Changes
 
 ## 6.5.4 (2026-09-09)
