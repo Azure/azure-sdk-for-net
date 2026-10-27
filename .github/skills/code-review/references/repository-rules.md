@@ -633,7 +633,10 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
   `System.Text.Json`
 - Do not publicly expose types from dependencies unless those types also follow these
   guidelines
-- No native dependencies
+- Avoid native dependencies — `dotnet-problems-native-dependencies` is a SHOULD NOT, not a
+  ban. Surface every one the PR adds, even ones you judge acceptable, so a human makes the
+  call. Quote the stated reason, or note its absence, and ask which platforms its native
+  assets cover — on any other, calls into it fail at runtime 🟡
 
 **A library added from the template carries placeholder content that builds cleanly.**
 Nothing fails, so the only thing standing between a placeholder and a published package is
