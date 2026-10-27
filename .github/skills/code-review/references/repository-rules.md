@@ -29,9 +29,11 @@ its heading `{#id}` or requirement `id="…"`, and cite it as the page link plus
 When the guidelines and this file disagree, the published guidelines win — report the
 discrepancy so this file can be corrected.
 
-Precedence within the guidelines themselves: **more specific beats more general**. .NET SDK
-guidelines beat general Azure SDK guidelines; both are constrained by the .NET Framework
-Design Guidelines.
+Precedence within the guidelines themselves: **more specific beats more general**. Where the
+.NET SDK guidelines explicitly address a point, they win over both the general Azure SDK
+guidelines and the .NET Framework Design Guidelines (for example,
+`dotnet-service-return-model-collections`). Elsewhere the Framework Design Guidelines apply,
+ahead of the general Azure SDK guidelines.
 
 The guidelines' design principles, in priority order: **Idiomatic, Consistent, Approachable,
 Dependable.** Productivity is the primary value; completeness, extensibility, and performance
