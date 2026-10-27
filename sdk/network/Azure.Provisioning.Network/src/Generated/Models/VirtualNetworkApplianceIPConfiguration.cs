@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -16,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private VirtualNetworkApplianceIPConfigurationProperties _properties;
         private BicepValue<ETag> _eTag;
-        private BicepValue<ResourceType> _resourceType;
+        private BicepValue<string> _type;
 
         /// <summary> Creates a new VirtualNetworkApplianceIPConfiguration. </summary>
         public VirtualNetworkApplianceIPConfiguration()
@@ -43,13 +42,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ResourceType. </summary>
-        public BicepValue<ResourceType> ResourceType
+        /// <summary> Gets the Type. </summary>
+        public BicepValue<string> Type
         {
             get
             {
                 Initialize();
-                return _resourceType;
+                return _type;
             }
         }
 
@@ -68,7 +67,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<VirtualNetworkApplianceIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
+            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

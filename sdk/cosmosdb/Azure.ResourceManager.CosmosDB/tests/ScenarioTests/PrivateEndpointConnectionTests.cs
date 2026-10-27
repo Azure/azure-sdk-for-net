@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Status, actualValue.Data.ConnectionState.Status);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Description, actualValue.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.ActionsRequired, actualValue.Data.ConnectionState.ActionsRequired);
+            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
+            Assert.AreEqual(expectedValue.ConnectionState.ActionsRequired, actualValue.Data.ConnectionState.ActionsRequired);
         }
     }
 }

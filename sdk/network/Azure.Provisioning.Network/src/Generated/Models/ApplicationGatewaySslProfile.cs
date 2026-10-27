@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Resources;
 
@@ -18,7 +17,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewaySslProfilePropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
-        private BicepValue<ResourceType> _resourceType;
+        private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()
@@ -65,13 +64,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ResourceType. </summary>
-        public BicepValue<ResourceType> ResourceType
+        /// <summary> Gets the Type. </summary>
+        public BicepValue<string> Type
         {
             get
             {
                 Initialize();
-                return _resourceType;
+                return _type;
             }
         }
 
@@ -146,7 +145,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewaySslProfilePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
+            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

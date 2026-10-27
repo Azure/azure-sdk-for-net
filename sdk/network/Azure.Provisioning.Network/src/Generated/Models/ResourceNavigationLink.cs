@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -17,7 +16,7 @@ namespace Azure.Provisioning.Network
         private ResourceNavigationLinkFormat _properties;
         private BicepValue<string> _id;
         private BicepValue<ETag> _eTag;
-        private BicepValue<ResourceType> _resourceType;
+        private BicepValue<string> _type;
 
         /// <summary> Creates a new ResourceNavigationLink. </summary>
         public ResourceNavigationLink()
@@ -54,13 +53,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ResourceType. </summary>
-        public BicepValue<ResourceType> ResourceType
+        /// <summary> Gets the Type. </summary>
+        public BicepValue<string> Type
         {
             get
             {
                 Initialize();
-                return _resourceType;
+                return _type;
             }
         }
 
@@ -80,7 +79,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ResourceNavigationLinkFormat>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
+            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

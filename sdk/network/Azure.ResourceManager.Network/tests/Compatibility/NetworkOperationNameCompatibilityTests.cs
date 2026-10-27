@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Network.Tests
                 Assert.That(method.GetCustomAttribute<ObsoleteAttribute>()?.Message, Does.Contain(preferredName + suffix));
                 if (bodyName != null)
                 {
-                    Assert.That(parameters[^2].Name, Is.EqualTo(bodyName));
-                    Assert.That(parameters[^3].Name, Is.EqualTo(name.StartsWith("GetInbound", StringComparison.Ordinal) ? "waitUntil" : "location"));
+                    Assert.That(parameters[parameters.Length - 2].Name, Is.EqualTo(bodyName));
+                    Assert.That(parameters[parameters.Length - 3].Name, Is.EqualTo(name.StartsWith("GetInbound", StringComparison.Ordinal) ? "waitUntil" : "location"));
                 }
             }
         }
