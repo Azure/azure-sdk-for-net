@@ -187,6 +187,48 @@ internal class ResourceNameTests
         Assert.That(getter.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "scope" }));
     }
 
+    [Test]
+    public void PublishedCollectionAccessorIgnoresRetainedAlias(
+        [Values(false, true)] bool child,
+        [Values(false, true)] bool aliasFirst,
+        [Values(false, true)] bool legacy)
+    {
+        var (client, models) = InputResourceData.ClientWithResource(resourceName: "OS", resourceNameIsExplicit: false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource("OS", false);
+        ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
+            clients: () => child ? [parentClient, childClient] : [client]);
+        var getter = legacy ? "GetOs" : "GetAllOS";
+        var aliasName = legacy ? "GetAllOS" : "GetOs";
+        var parameters = child ? "string nestedTypeName" : "";
+        var arguments = child ? "nestedTypeName" : "";
+        var factory = $"public virtual global::Samples.OSCollection {getter}({parameters}) => throw null;";
+        var alias = $"public virtual global::Samples.OSCollection {aliasName}({parameters}) => {getter}({arguments});";
+        var members = aliasFirst ? $"{alias}\n{factory}" : $"{factory}\n{alias}";
+        var parentNamespace = child ? "Samples" : "Samples.Mocking";
+        var parentName = child ? "ParentTypeResource" : "MockableSamplesResourceGroupResource";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSResource { } public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {members} }} }}")
+        ]);
+        var customization = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {alias} }} }}")
+        ]);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
+            clients: () => child ? [parentClient, childClient] : [client],
+            customizationCompilation: () => customization, lastContractCompilation: () => contract);
+        var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "OS");
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+        var parent = child
+            ? (TypeProvider)plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "ParentType")
+            : plugin.Object.OutputLibrary.TypeProviders.OfType<MockableResourceProvider>()
+                .Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.Resources.ResourceGroupResource)));
+        Assert.That(parent.CustomCodeView!.Methods.Any(m => m.Signature.Name == aliasName), Is.True);
+        Assert.That(parent.Methods.Any(m => m.Signature.Name == getter &&
+            m.Signature.ReturnType?.Equals(resource.ResourceCollection!.Type) == true), Is.True,
+            "The retained alias must still have a generated forwarding target.");
+    }
+
     [TestCase(false)]
     [TestCase(true)]
     public void PublishedAccessorCasingIsUsedInExtensionLists(bool legacy)

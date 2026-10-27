@@ -17,6 +17,62 @@ import {
 } from "./test-util.js";
 
 describe("resource-name provenance", () => {
+  it.each(
+    [
+      ["armResourceRead", "get", "get"],
+      ["armResourceCreateOrUpdate", "createOrUpdate", "put"],
+      ["armResourceUpdate", "update", "patch"],
+      ["armResourceDelete", "delete", "delete"]
+    ].flatMap(([decorator, operation, verb]) =>
+      [
+        undefined,
+        "IpWidget",
+        ...(operation === "get" ? ["CustomIpWidget"] : [])
+      ].map((name) => ({
+        decorator,
+        operation,
+        verb,
+        name
+      }))
+    )
+  )(
+    "tracks @$decorator with name $name",
+    async ({ decorator, operation, verb, name }) => {
+      const host = await createEmitterTestHost();
+      const program = await typeSpecCompile(
+        `
+model WidgetProperties { size?: int32; }
+model IpWidget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<IpWidget>;
+}
+@armResourceOperations
+interface Widgets {
+  ${operation === "get" ? "" : "get is ArmResourceRead<IpWidget>;"}
+  @autoRoute
+  @${verb}
+  @${decorator}(IpWidget${name === undefined ? "" : `, "${name}"`})
+  ${operation}(...ResourceInstanceParameters<IpWidget>): IpWidget | ErrorResponse;
+}
+`,
+        host
+      );
+      expect(program.diagnostics.filter((d) => d.severity === "error")).toEqual(
+        []
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const schema = resolveArmResources(program, sdkContext);
+      expect(schema.resources).toHaveLength(1);
+      expect(
+        convertResourceMetadataToArguments(schema.resources[0].metadata)
+      ).toMatchObject({
+        resourceName: name ?? "IpWidget",
+        resourceNameIsExplicit: name !== undefined
+      });
+    }
+  );
+
   it.each([
     ["", "Widget", false],
     ['@@clientName(Widget, "CustomWidget", "csharp");', "CustomWidget", true],

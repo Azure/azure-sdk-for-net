@@ -74,7 +74,11 @@ import {
   isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
-  builtInResourceOperationName
+  builtInResourceOperationName,
+  armResourceReadName,
+  armResourceCreateOrUpdateName,
+  armResourceUpdateName,
+  armResourceDeleteName
 } from "./sdk-context-options.js";
 import {
   buildScopeInfo,
@@ -652,6 +656,17 @@ function getExplicitResourceNameFromOperations(
     const decorators = operation.decorators;
     for (const decorator of decorators) {
       const name = decorator.definition?.name;
+      if (
+        name === armResourceReadName ||
+        name === armResourceCreateOrUpdateName ||
+        name === armResourceUpdateName ||
+        name === armResourceDeleteName
+      ) {
+        const value = decorator.args[1]?.jsValue;
+        if (typeof value === "string" && value.length > 0) {
+          return value;
+        }
+      }
       if (
         name === extensionResourceOperationName ||
         name === legacyExtensionResourceOperationName ||

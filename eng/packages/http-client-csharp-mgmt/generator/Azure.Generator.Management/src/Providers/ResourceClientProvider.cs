@@ -122,16 +122,27 @@ namespace Azure.Generator.Management.Providers
             }
 
             var library = ManagementClientGenerator.Instance.OutputLibrary;
-            var parentContract = ParentResourceIdPattern is { } parentId
-                ? library.GetResourceById(parentId).LastContractView
+            TypeProvider? parent = ParentResourceIdPattern is { } parentId
+                ? library.GetResourceById(parentId)
                 : library.MockableResourceProviders.FirstOrDefault(p => IsExtensionResource
                     ? p.ArmCoreType.Equals(typeof(ArmClient))
-                    : p.ArmCoreType.Equals(TypeOfParentResource))?.LastContractView;
+                    : p.ArmCoreType.Equals(TypeOfParentResource));
             IReadOnlyList<ParameterProvider> factoryParameters = IsExtensionResource && ParentResourceIdPattern is null
                 ? [new ParameterProvider("scope", $"The resource scope.", typeof(ResourceIdentifier)), .. ResourceCollection.PathParameters]
                 : ResourceCollection.PathParameters;
             // A resource type alone cannot tell us which accessor casing was published.
-            var publishedGetter = parentContract?.Methods.FirstOrDefault(m =>
+            var publishedGetters = parent?.LastContractView?.Methods.Where(MatchesFactory).ToArray() ?? [];
+            if (publishedGetters.Length > 1)
+            {
+                // Retained aliases must keep forwarding to the generated accessor, regardless of declaration order.
+                var customGetters = parent?.CustomCodeView?.Methods.Where(MatchesFactory).Select(m => m.Signature.Name).ToHashSet() ?? [];
+                publishedGetters = publishedGetters.Where(m => !customGetters.Contains(m.Signature.Name)).ToArray();
+            }
+            return publishedGetters.Length == 1
+                ? publishedGetters[0].Signature.Name == derivedGetter
+                : UsesDerivedResourceName;
+
+            bool MatchesFactory(MethodProvider m) =>
                 m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
                 !m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
                 m.Signature.GenericArguments is not { Count: > 0 } &&
@@ -144,8 +155,7 @@ namespace Azure.Generator.Management.Providers
                     pair.First.IsRef == pair.Second.IsRef &&
                     pair.First.IsOut == pair.Second.IsOut &&
                     pair.First.IsIn == pair.Second.IsIn &&
-                    pair.First.IsParams == pair.Second.IsParams));
-            return publishedGetter is null ? UsesDerivedResourceName : publishedGetter.Signature.Name == derivedGetter;
+                    pair.First.IsParams == pair.Second.IsParams);
         }
 
         private string ResolveResourceName(string resourceName, ArmResourceMetadata metadata)

@@ -93,7 +93,9 @@ interface PrivateEndpointConnections {
 
 A model-level `@clientName` supplies the resource stem only when the model backs a single resource path. Shared models retain path-specific stems; use an interface `@clientName` or a Read operation's `resource-name` option to customize an individual path.
 
-Automatically derived stems use the shared C# acronym rules. Regeneration retains the casing of published collection accessors by inspecting the parent resource's or mockable scope's last-contract method. The match includes the instance method shape and collection path parameters, so unrelated customized overloads do not affect the accessor. Both newer names such as `GetAllOS` and legacy names such as `GetOs` remain stable.
+Explicit resource-name arguments on the public `@armResourceRead`, `@armResourceCreateOrUpdate`, `@armResourceUpdate`, and `@armResourceDelete` decorators retain their spelling. Omitting the argument leaves the stem automatically derived.
+
+Automatically derived stems use the shared C# acronym rules. Regeneration retains the casing of published collection accessors by inspecting the parent resource's or mockable scope's last-contract method. The match includes the instance method shape and collection path parameters, so unrelated customized overloads do not affect the accessor. If both accessor names match, current customizations distinguish retained aliases from the accessor that must still be generated. Both newer names such as `GetAllOS` and legacy names such as `GetOs` remain stable.
 
 **Diagnostics:** The emitter reports warnings for:
 
