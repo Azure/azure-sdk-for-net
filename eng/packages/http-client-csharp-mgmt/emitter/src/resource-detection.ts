@@ -36,7 +36,8 @@ import {
   SdkHttpOperation,
   SdkMethod,
   SdkModelType,
-  getClientNameOverride
+  getClientNameOverride,
+  getLibraryName
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -290,8 +291,11 @@ export function buildArmProviderSchema(
     const clientNameOverride = rawInterface
       ? getClientNameOverride(sdkContext, rawInterface, "csharp")
       : undefined;
-    if (clientNameOverride !== undefined) {
-      resourcePathToClientName.set(entry.instancePath.path, clientNameOverride);
+    if (rawInterface && clientNameOverride !== undefined) {
+      resourcePathToClientName.set(
+        entry.instancePath.path,
+        getLibraryName(sdkContext, rawInterface, "csharp")
+      );
     }
     resourcePathToClientNameIsExplicit.set(
       entry.instancePath.path,
@@ -313,7 +317,9 @@ export function buildArmProviderSchema(
 
     const rawModel = models.get(entry.modelId)?.__raw;
     const modelNameOverride = rawModel
-      ? getClientNameOverride(sdkContext, rawModel, "csharp")
+      ? getClientNameOverride(sdkContext, rawModel, "csharp") !== undefined
+        ? getLibraryName(sdkContext, rawModel, "csharp")
+        : undefined
       : undefined;
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,

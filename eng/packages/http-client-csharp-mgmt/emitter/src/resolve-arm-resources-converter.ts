@@ -66,7 +66,8 @@ import {
   SdkModelType,
   SdkHttpOperation,
   SdkMethod,
-  getClientNameOverride
+  getClientNameOverride,
+  getLibraryName
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -460,14 +461,19 @@ function convertResolvedResourceToMetadata(
   // different parent types — the emitter should not auto-generate disambiguated names.
   const modelNameOverride = hasMultiplePaths
     ? undefined
-    : getClientNameOverride(sdkContext, resolvedResource.type, "csharp");
+    : getClientNameOverride(sdkContext, resolvedResource.type, "csharp") !==
+        undefined
+      ? getLibraryName(sdkContext, resolvedResource.type, "csharp")
+      : undefined;
   let resourceName = modelNameOverride ?? resolvedResource.resourceName;
   let resourceNameIsExplicit = modelNameOverride !== undefined;
   const readOperation =
     resolvedResource.operations.lifecycle?.read?.[0]?.operation;
   const rawInterface = readOperation?.interface;
   const interfaceNameOverride = rawInterface
-    ? getClientNameOverride(sdkContext, rawInterface, "csharp")
+    ? getClientNameOverride(sdkContext, rawInterface, "csharp") !== undefined
+      ? getLibraryName(sdkContext, rawInterface, "csharp")
+      : undefined
     : undefined;
   if (hasMultiplePaths && interfaceNameOverride !== undefined) {
     resourceName = pluralize.singular(interfaceNameOverride);

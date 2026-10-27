@@ -76,6 +76,7 @@ interface Widgets {
   it.each([
     ["", "Widget", false],
     ['@@clientName(Widget, "CustomWidget", "csharp");', "CustomWidget", true],
+    ['@@clientName(Widget, exact("IpWidget"), "csharp");', "IpWidget", true],
     ['@@clientName(Widget, "CustomWidget");', "CustomWidget", true],
     ['@@clientName(Widget, "CustomWidget", "java");', "Widget", false],
     ['@@clientName(Widget, "CustomWidget", "!csharp");', "Widget", false],
@@ -142,9 +143,13 @@ ${decorators.replaceAll("@@clientOption", '#suppress "@azure-tools/typespec-clie
     }
   });
 
-  it.each(["csharp", "java"])(
-    "uses %s interface overrides only for multi-path stems",
-    async (scope) => {
+  it.each([
+    ["csharp", '"CustomWidgets"', "CustomWidget"],
+    ["csharp", 'exact("IpWidgets")', "IpWidget"],
+    ["java", '"CustomWidgets"', undefined]
+  ])(
+    "uses %s interface override %s only for multi-path stems",
+    async (scope, override, expected) => {
       const host = await createEmitterTestHost();
       const program = await typeSpecCompile(
         `
@@ -153,7 +158,7 @@ model Widget is TrackedResource<WidgetProperties> {
   ...ResourceNameParameter<Widget>;
 }
 @armResourceOperations
-@clientName("CustomWidgets", "${scope}")
+@clientName(${override}, "${scope}")
 interface Widgets {
   get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, Widget>;
 }
@@ -180,7 +185,7 @@ interface SubscriptionWidgets {
           (r) => r.metadata.scope.kind === "ResourceGroup"
         )!;
         if (scope === "csharp") {
-          expect(resource.metadata.resourceName).toBe("CustomWidget");
+          expect(resource.metadata.resourceName).toBe(expected);
         } else {
           expect(resource.metadata.resourceName).not.toContain("Custom");
         }
