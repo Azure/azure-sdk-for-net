@@ -51,8 +51,8 @@ on that basis.
 
 - **Surface every change outside a single `sdk/<area>` and state its reach.** "This changes
   X for every library in the repo" is the useful observation; "this doesn't belong in your
-  PR" is not. ℹ️ when the reach looks deliberate and correct, 🟡 when it is broader than the
-  PR's stated purpose, 🔴 when one library's convenience degrades the others
+  PR" is not. Reach that looks deliberate and correct → ℹ️; broader than the PR's stated
+  purpose → 🟡; one library's convenience degrading the others → 🔴
 - **A new file under `sdk/<area>` that silently overrides root configuration is the
   dangerous case** — nothing fails, CI stays green, and only review catches it. Ask whether
   the setting already exists at the root and what the local copy is diverging from. Applies
@@ -676,10 +676,10 @@ floor customers must satisfy and a node in their restore graph.
   an override can't pin a package the project doesn't directly reference
 - A dependency that should never reach customers — analyzers, source generators, build-time
   tooling — needs `PrivateAssets="all"`. Without it, it ships as a real dependency 🟡
-- 🟡 A `src` project taking a `ProjectReference` on a shipping library **in a different
+- A `src` project taking a `ProjectReference` on a shipping library **in a different
   `sdk/<service>/` directory** couples two independent release trains — the package cannot
   publish until the referenced one does, and it builds against code no customer can consume
-  yet. Use a `PackageReference` instead. Not a finding: references within a single service
+  yet 🟡. Use a `PackageReference` instead. Not a finding: references within a single service
   directory (`Azure.Storage.Blobs` → `Azure.Storage.Common`), which are the convention and
   become ordinary package dependencies at pack time; and generator references carrying
   `ReferenceOutputAssembly="false"` with `PackAsAnalyzer="true"`, which bundle a DLL rather
