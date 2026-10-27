@@ -45,12 +45,26 @@ infrastructure.Add(application);
 string bicep = infrastructure.Build().Compile().Single().Value;
 ```
 
+The generated resource contains this property:
+
+```bicep
+properties: {
+  parameters: json('{"enabled":true,"threshold":3,"items":["a","b"]}')
+}
+```
+
 Use `BinaryData.FromString` only when the string already contains a complete
 JSON document:
 
 ```C#
 application.Parameters = BinaryData.FromString(
     """{"enabled":true,"threshold":3}""");
+```
+
+This assignment produces:
+
+```bicep
+parameters: json('{"enabled":true,"threshold":3}')
 ```
 
 A CLR string and a serialized JSON string are different:
@@ -61,6 +75,14 @@ BinaryData jsonString = BinaryData.FromObjectAsJson("enabled");
 
 // JSON object value: { "enabled": true }
 BinaryData jsonObject = BinaryData.FromString("""{"enabled":true}""");
+```
+
+When assigned to a provisioning property, these values become the following
+Bicep expressions, respectively:
+
+```bicep
+json('"enabled"')
+json('{"enabled":true}')
 ```
 
 Azure.Provisioning does not parse the JSON payload. Invalid JSON does not fall
@@ -88,6 +110,15 @@ ArmApplication application = new("application")
 Infrastructure infrastructure = new();
 infrastructure.Add(application);
 string bicep = infrastructure.Build().Compile().Single().Value;
+```
+
+The generated resource contains the expression directly, without a `json(...)`
+wrapper or string quoting:
+
+```bicep
+properties: {
+  parameters: union({ enabled: true }, { retries: 3 })
+}
 ```
 
 Raw Bicep is emitted verbatim. Azure.Provisioning verifies that the bytes are
@@ -134,6 +165,23 @@ Infrastructure infrastructure = new();
 infrastructure.Add(featureFlag);
 infrastructure.Add(application);
 string bicep = infrastructure.Build().Compile().Single().Value;
+```
+
+The relevant generated Bicep is shown below. The parameter declaration is at
+the template root; the `properties` excerpt is inside the application resource:
+
+```bicep
+param featureFlag bool
+```
+
+```bicep
+properties: {
+  parameters: {
+    enabled: featureFlag
+    retryCount: 3
+    environment: 'production'
+  }
+}
 ```
 
 This produces a native Bicep object expression rather than a serialized JSON
