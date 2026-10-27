@@ -405,6 +405,180 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(json.RootElement.GetProperty("capacity").GetProperty("size").GetInt64(), Is.EqualTo(31L));
         }
 
+        // Regression for #63425: each historical constructor needs its own parameter
+        // types; one flattened property parameter cannot represent both T and T?.
+        [Test]
+        public void RestoresBothHistoricalConstructorNullabilities(
+            [Values] bool safeFlatten, [Values] bool wrapperRequired, [Values] bool nullableFirst)
+        {
+            var name = safeFlatten ? "CapacitySize" : "Size";
+            var parameterName = safeFlatten ? "capacitySize" : "size";
+            var nonNullableConstructor = $"public CapacityModel(string location, long {parameterName}) {{ }}";
+            var nullableConstructor = $"public CapacityModel(string location, long? {parameterName}) {{ }}";
+            var inner = InputFactory.Model("CapacityProperties", properties: [InputFactory.Property("size", InputPrimitiveType.Int64)]);
+            var wrapper = InputFactory.Property("capacity", inner, isRequired: wrapperRequired);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CapacityModel", properties:
+            [
+                InputFactory.Property("location", InputPrimitiveType.String, isRequired: true),
+                wrapper
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public partial class CapacityModel
+                        {
+                            {{(nullableFirst ? nullableConstructor : nonNullableConstructor)}}
+                            {{(nullableFirst ? nonNullableConstructor : nullableConstructor)}}
+                            public string Location { get; set; }
+                            public long? {{name}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            _ = plugin.Object.GetWriter(model).Write();
+
+            var signatures = model.Constructors.Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && c.Signature.Parameters.Count == 2).Select(c => c.Signature.Parameters[1].Type);
+            Assert.That(signatures, Is.EquivalentTo(new CSharpType[] { typeof(long), typeof(long?) }),
+                "Both historical signatures must survive without customization, regardless of declaration order.");
+            Assert.That(model.Properties.Single(p => p.Name == name).Type, Is.EqualTo(new CSharpType(typeof(long?))),
+                "Restoring an overload must not change the flattened property's public type.");
+            Assert.That(model.LastContractView!.Constructors.Select(c => c.Signature.Parameters[1].Type),
+                Is.EquivalentTo(new CSharpType[] { typeof(long), typeof(long?) }),
+                "Restoration must not mutate the historical constructor parameters.");
+
+            // Compilation writes the model again, exercising restoration's idempotence as well.
+            var type = Compile(plugin.Object).GetType("Samples.Models.CapacityModel")!;
+            var property = type.GetProperty(name)!;
+            foreach (var parameterType in new[] { typeof(long), typeof(long?) })
+            {
+                var constructor = type.GetConstructor([typeof(string), parameterType]);
+                Assert.That(constructor, Is.Not.Null);
+                foreach (var value in new[] { 0L, long.MinValue, long.MaxValue, 37L })
+                {
+                    var instance = constructor!.Invoke(["westus", value]);
+                    Assert.That(type.GetProperty("Location")!.GetValue(instance), Is.EqualTo("westus"));
+                    Assert.That(property.GetValue(instance), Is.EqualTo(value));
+                    using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+                    Assert.That(json.RootElement.GetProperty("capacity").GetProperty("size").GetInt64(), Is.EqualTo(value));
+                }
+                if (parameterType == typeof(long?))
+                {
+                    var instance = constructor!.Invoke(["westus", null]);
+                    Assert.That(property.GetValue(instance), Is.Null,
+                        "The nullable overload must preserve null rather than convert it to zero.");
+                }
+            }
+        }
+
+        [Test]
+        public void RestoringNonNullableConstructorPreservesParameterlessNull([Values] bool safeFlatten)
+        {
+            var name = safeFlatten ? "CapacitySize" : "Size";
+            var parameterName = safeFlatten ? "capacitySize" : "size";
+            var inner = InputFactory.Model("CapacityProperties", properties:
+            [
+                InputFactory.Property("size", new InputNullableType(InputPrimitiveType.Int64), isRequired: true)
+            ]);
+            var wrapper = InputFactory.Property("capacity", inner, isRequired: true);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CapacityModel", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public partial class CapacityModel
+                        {
+                            public CapacityModel() { }
+                            public CapacityModel(long {{parameterName}}) { }
+                            public CapacityModel(long? {{parameterName}}) { }
+                            public long? {{name}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+
+            var type = Compile(plugin.Object).GetType("Samples.Models.CapacityModel")!;
+            Assert.That(type.GetConstructor([typeof(long)]), Is.Not.Null,
+                "Preserving the parameterless constructor must not prevent restoring the historical T overload.");
+            Assert.That(type.GetConstructor([typeof(long?)]), Is.Not.Null);
+            Assert.That(type.GetProperty(name)!.GetValue(Activator.CreateInstance(type)), Is.Null,
+                "Restoring T must not rebind an existing this(default) initializer from T? to T and turn null into zero.");
+        }
+
+        [Test]
+        public void RestoringConstructorDoesNotChangeCustomInitializerBinding(
+            [Values] bool safeFlatten, [Values] bool customParameterless)
+        {
+            var name = safeFlatten ? "CapacitySize" : "Size";
+            var parameterName = safeFlatten ? "capacitySize" : "size";
+            var customConstructor = customParameterless
+                ? "public CapacityModel() : this(default) { }"
+                : $"public CapacityModel(int value) {{ {name} = 123; }}";
+            var customization = $$"""
+                namespace Samples.Models
+                {
+                    public partial class CapacityModel
+                    {
+                        {{customConstructor}}
+                    }
+                }
+                """;
+            var inner = InputFactory.Model("CapacityProperties", properties:
+            [
+                InputFactory.Property("size", new InputNullableType(InputPrimitiveType.Int64), isRequired: true)
+            ]);
+            var wrapper = InputFactory.Property("capacity", inner, isRequired: true);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CapacityModel", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                customizationSources: [customization],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public partial class CapacityModel
+                        {
+                            public CapacityModel() { }
+                            public CapacityModel(long {{parameterName}}) { }
+                            public CapacityModel(long? {{parameterName}}) { }
+                            public long? {{name}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+
+            var type = Compile(plugin.Object, customizationSource: customization).GetType("Samples.Models.CapacityModel")!;
+            var expectedValue = customParameterless ? (long?)null : 123L;
+            Assert.That(type.GetProperty(name)!.GetValue(Activator.CreateInstance(type)), Is.EqualTo(expectedValue),
+                "Do not rebind generated or custom initializers when customization makes their overload binding unknown.");
+        }
+
         [Test]
         public void MixedHistoricalConstructorNullabilityPreservesAvailableSignatures(
             [Values] bool safeFlatten, [Values] bool wrapperRequired, [Values] bool nullableFirst,
@@ -469,9 +643,9 @@ namespace Azure.Generator.Mgmt.Tests
                 .Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
                     && c.Signature.Parameters.Count == 2).ToArray();
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long?)))), Is.EqualTo(resolution is not ("partial-custom" or "baseline-nullable")));
-            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "custom" or "partial-custom" or "baseline-nullable"));
-            // A second T/T? signature may still be missing; this is tracked separately from
-            // restoring the signature that can be represented by the flattened property.
+            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "none" or "custom" or "partial-custom" or "baseline-nullable"));
+            // Restore T by forwarding to the generated T? overload. Custom constructors and
+            // accepted removals remain authoritative; never invent a nullable-to-nonnullable conversion.
             Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
@@ -1516,7 +1690,7 @@ namespace Azure.Generator.Mgmt.Tests
             return stream;
         }
 
-        private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false)
+        private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false, string? customizationSource = null)
         {
             var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider or EnumProvider
                 || (includeFactory && t is ModelFactoryProvider)
@@ -1534,6 +1708,10 @@ namespace Azure.Generator.Mgmt.Tests
                         }
                     }
                     """));
+            if (customizationSource is not null)
+            {
+                documents = documents.Append(("Customization.cs", customizationSource));
+            }
             var compilation = Helpers.BuildCompilation(documents)
                 .WithAssemblyName("FlattenedCompatibility" + Guid.NewGuid().ToString("N"))
                 .AddReferences(((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")!).Split(Path.PathSeparator)

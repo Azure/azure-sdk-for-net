@@ -68,6 +68,10 @@ namespace Azure.Generator.Management
             }
             else
             {
+                if (provider is ModelProvider model)
+                {
+                    FlattenedConstructorBackwardCompatHelper.RestoreNonNullableOverloads(model);
+                }
                 SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
