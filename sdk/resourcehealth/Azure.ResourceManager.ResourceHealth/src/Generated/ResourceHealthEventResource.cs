@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceType, out string resourceHealthEventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2026-07-01");
             _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
+            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthEventApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

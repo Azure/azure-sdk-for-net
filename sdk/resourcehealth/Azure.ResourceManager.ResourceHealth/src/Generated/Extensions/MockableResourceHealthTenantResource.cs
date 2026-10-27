@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of ResourceHealthMetadataEntities in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of ResourceHealthMetadataEntities and their operations over a ResourceHealthMetadataEntityResource. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

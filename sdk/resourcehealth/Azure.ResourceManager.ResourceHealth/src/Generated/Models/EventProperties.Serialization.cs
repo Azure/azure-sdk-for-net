@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("eventSubType"u8);
                 writer.WriteStringValue(EventSubType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(AdvisorRecommendations))
+            {
+                writer.WritePropertyName("advisorRecommendations"u8);
+                writer.WriteObjectValue(AdvisorRecommendations, options);
+            }
             if (Optional.IsDefined(EventSource))
             {
                 writer.WritePropertyName("eventSource"u8);
@@ -318,6 +323,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             ResourceHealthEventTypeValue? eventType = default;
             EventSubTypeValue? eventSubType = default;
+            ApiOperationLink advisorRecommendations = default;
             ResourceHealthEventSourceValue? eventSource = default;
             ResourceHealthEventStatusValue? status = default;
             string title = default;
@@ -370,6 +376,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         continue;
                     }
                     eventSubType = new EventSubTypeValue(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("advisorRecommendations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    advisorRecommendations = ApiOperationLink.DeserializeApiOperationLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("eventSource"u8))
@@ -664,6 +679,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new EventProperties(
                 eventType,
                 eventSubType,
+                advisorRecommendations,
                 eventSource,
                 status,
                 title,

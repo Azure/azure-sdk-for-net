@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceHealth
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceHealth
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-05-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-05-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary>
         /// Lists the current availability status for all the resources in the resource group.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
