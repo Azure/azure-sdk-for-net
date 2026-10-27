@@ -8,6 +8,7 @@
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -16,8 +17,9 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<AzureLocation> _location;
+        private SystemData _systemData;
         private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
         private ExpressRouteProviderPortProperties _properties;
         private BicepValue<string> _eTag;
 
@@ -53,13 +55,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Location. </summary>
-        public BicepValue<AzureLocation> Location
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _location;
+                return _systemData;
             }
         }
 
@@ -70,6 +72,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _tags;
+            }
+        }
+
+        /// <summary> Gets the Location. </summary>
+        public BicepValue<AzureLocation> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
             }
         }
 
@@ -171,8 +183,9 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<ExpressRouteProviderPortProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();

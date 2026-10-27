@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the operation to create a connection monitor. </summary>
-    internal partial class ConnectionMonitorCreateOrUpdateContent : ProvisionableConstruct
+    internal partial class ConnectionMonitorParameters : ProvisionableConstruct
     {
         private ConnectionMonitorSource _source;
         private ConnectionMonitorDestination _destination;
@@ -23,8 +23,8 @@ namespace Azure.Provisioning.Network
         private BicepList<ConnectionMonitorOutput> _outputs;
         private BicepValue<string> _notes;
 
-        /// <summary> Creates a new ConnectionMonitorCreateOrUpdateContent. </summary>
-        public ConnectionMonitorCreateOrUpdateContent()
+        /// <summary> Creates a new ConnectionMonitorParameters. </summary>
+        public ConnectionMonitorParameters()
         {
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for ConnectionMonitorCreateOrUpdateContent. </summary>
+        /// <summary> Define all the provisionable properties for ConnectionMonitorParameters. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ConnectionMonitorCreateOrUpdateContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ConnectionMonitorParameters that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

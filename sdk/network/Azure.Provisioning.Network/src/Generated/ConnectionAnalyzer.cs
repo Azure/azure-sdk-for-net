@@ -15,12 +15,12 @@ namespace Azure.Provisioning.Network
     /// <summary> Defines a connection analyzer resource. </summary>
     public partial class ConnectionAnalyzer : ProvisionableResource
     {
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<string> _id;
-        private BicepValue<string> _eTag;
-        private BicepValue<AzureLocation> _location;
-        private BicepDictionary<string> _tags;
         private SystemData _systemData;
+        private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
+        private BicepValue<string> _eTag;
         private ConnectionAnalyzerProperties _properties;
         private ResourceReference<NetworkWatcher> _parent;
 
@@ -29,6 +29,16 @@ namespace Azure.Provisioning.Network
         /// <param name="resourceVersion"> The resource API version. </param>
         public ConnectionAnalyzer(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/connectionAnalyzers", resourceVersion ?? "2026-01-01")
         {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -46,38 +56,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
-        {
-            get
-            {
-                Initialize();
-                return _eTag;
-            }
-        }
-
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
+                return _systemData;
             }
         }
 
@@ -96,13 +81,28 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<string> ETag
+        {
+            get
+            {
+                Initialize();
+                return _eTag;
             }
         }
 
@@ -140,12 +140,12 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<ConnectionAnalyzerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

@@ -474,11 +474,11 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Routes. </summary>
-        public BicepList<VirtualHubRoute> RouteTableRoutes
+        public BicepList<VirtualHubRoute> RouteRoutes
         {
             get
             {
-                return Properties is null ? default : Properties.RouteTableRoutes;
+                return Properties is null ? default : Properties.RouteRoutes;
             }
             set
             {
@@ -486,7 +486,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new VirtualHubProperties();
                 }
-                Properties.RouteTableRoutes = value;
+                Properties.RouteRoutes = value;
             }
         }
 

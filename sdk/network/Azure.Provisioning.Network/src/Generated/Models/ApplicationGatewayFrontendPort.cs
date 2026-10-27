@@ -16,7 +16,6 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayFrontendPortPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()
@@ -63,16 +62,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-        }
-
         /// <summary> Gets or sets the Port. </summary>
         public BicepValue<int> Port
         {
@@ -110,7 +99,6 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayFrontendPortPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -262,12 +262,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ActiveActive. </summary>
-        public BicepValue<bool> ActiveActive
+        /// <summary> Gets or sets the IsActive. </summary>
+        public BicepValue<bool> IsActive
         {
             get
             {
-                return Properties is null ? default : Properties.ActiveActive;
+                return Properties is null ? default : Properties.IsActive;
             }
             set
             {
@@ -275,7 +275,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
-                Properties.ActiveActive = value;
+                Properties.IsActive = value;
             }
         }
 

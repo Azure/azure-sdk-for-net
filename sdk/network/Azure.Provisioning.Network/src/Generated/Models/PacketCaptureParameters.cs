@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the create packet capture operation. </summary>
-    internal partial class PacketCaptureCreateOrUpdateContent : ProvisionableConstruct
+    internal partial class PacketCaptureParameters : ProvisionableConstruct
     {
         private BicepValue<string> _target;
         private PacketCaptureMachineScope _scope;
@@ -24,8 +24,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _isContinuousCapture;
         private PacketCaptureSettings _captureSettings;
 
-        /// <summary> Creates a new PacketCaptureCreateOrUpdateContent. </summary>
-        public PacketCaptureCreateOrUpdateContent()
+        /// <summary> Creates a new PacketCaptureParameters. </summary>
+        public PacketCaptureParameters()
         {
         }
 
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for PacketCaptureCreateOrUpdateContent. </summary>
+        /// <summary> Define all the provisionable properties for PacketCaptureParameters. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -196,7 +196,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PacketCaptureCreateOrUpdateContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for PacketCaptureParameters that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

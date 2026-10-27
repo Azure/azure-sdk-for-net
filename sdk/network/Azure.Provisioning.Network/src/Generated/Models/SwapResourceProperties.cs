@@ -13,25 +13,25 @@ namespace Azure.Provisioning.Network
     /// <summary> Swap resource properties. </summary>
     internal partial class SwapResourceProperties : ProvisionableConstruct
     {
-        private BicepValue<SwapSlotType> _slotType;
+        private BicepValue<SwapSlotType> _cloudServiceSwapSlotType;
 
         /// <summary> Creates a new SwapResourceProperties. </summary>
         public SwapResourceProperties()
         {
         }
 
-        /// <summary> Gets or sets the SlotType. </summary>
-        public BicepValue<SwapSlotType> SlotType
+        /// <summary> Gets or sets the CloudServiceSwapSlotType. </summary>
+        public BicepValue<SwapSlotType> CloudServiceSwapSlotType
         {
             get
             {
                 Initialize();
-                return _slotType;
+                return _cloudServiceSwapSlotType;
             }
             set
             {
                 Initialize();
-                _slotType.Assign(value);
+                _cloudServiceSwapSlotType.Assign(value);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _slotType = DefineProperty<SwapSlotType>(nameof(SlotType), new string[] { "slotType" });
+            _cloudServiceSwapSlotType = DefineProperty<SwapSlotType>(nameof(CloudServiceSwapSlotType), new string[] { "slotType" });
             DefineAdditionalProperties();
         }
 

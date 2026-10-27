@@ -277,23 +277,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the NetworkWatcherFlowAnalyticsConfiguration. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkWatcherFlowAnalyticsConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FlowLogPropertiesFormat();
-                }
-                Properties.NetworkWatcherFlowAnalyticsConfiguration = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FlowLog. </summary>
         protected override void DefineProvisionableProperties()
         {

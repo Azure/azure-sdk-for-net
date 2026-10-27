@@ -93,12 +93,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the SlotType. </summary>
-        public BicepValue<SwapSlotType> SwapResourceSlotType
+        /// <summary> Gets or sets the CloudServiceSwapSlotType. </summary>
+        public BicepValue<SwapSlotType> CloudServiceSwapSlotType
         {
             get
             {
-                return Properties is null ? default : Properties.SlotType;
+                return Properties is null ? default : Properties.CloudServiceSwapSlotType;
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new SwapResourceProperties();
                 }
-                Properties.SlotType = value;
+                Properties.CloudServiceSwapSlotType = value;
             }
         }
 

@@ -13,6 +13,7 @@
 ### Other Changes
 
 - Migrated code generation to TypeSpec.
+- Regenerated from Azure REST API specifications commit `e9f47c7976fdbeed1a378652b56b0766dae858a2`.
 
 ## 1.1.0 (2026-04-16)
 

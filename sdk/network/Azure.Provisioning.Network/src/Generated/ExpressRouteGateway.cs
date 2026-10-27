@@ -109,23 +109,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteConnections. </summary>
-        public BicepList<ExpressRouteConnection> ExpressRouteConnections
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteConnections;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteGatewayProperties();
-                }
-                Properties.ExpressRouteConnections = value;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

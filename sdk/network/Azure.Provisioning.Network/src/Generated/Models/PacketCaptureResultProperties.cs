@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.Network
 {
     /// <summary> The properties of a packet capture session. </summary>
-    internal partial class PacketCaptureResultProperties : PacketCaptureCreateOrUpdateContent
+    internal partial class PacketCaptureResultProperties : PacketCaptureParameters
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
 

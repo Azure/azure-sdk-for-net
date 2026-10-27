@@ -19,8 +19,8 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
         private DdosProtectionPlanPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
 
@@ -56,21 +56,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
-        }
-
         /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
@@ -83,6 +68,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
             }
         }
 
@@ -169,8 +169,8 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DdosProtectionPlanPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();

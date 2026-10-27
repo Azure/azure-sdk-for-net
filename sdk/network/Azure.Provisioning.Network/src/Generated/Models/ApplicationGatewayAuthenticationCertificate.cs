@@ -17,7 +17,6 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayAuthenticationCertificatePropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()
@@ -64,16 +63,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-        }
-
         /// <summary> Gets or sets the Data. </summary>
         public BicepValue<BinaryData> Data
         {
@@ -111,7 +100,6 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayAuthenticationCertificatePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

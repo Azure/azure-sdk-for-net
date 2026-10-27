@@ -102,23 +102,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayPrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
