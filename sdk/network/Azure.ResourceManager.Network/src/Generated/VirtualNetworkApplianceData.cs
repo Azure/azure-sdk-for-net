@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
         [WirePath("properties.bandwidthInGbps")]
-        public string BandwidthInGbps
+        public double? BandwidthGbps
         {
             get
             {
-                return Properties is null ? default : Properties.BandwidthInGbps;
+                return Properties is null ? default : Properties.BandwidthGbps;
             }
             set
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkAppliancePropertiesFormat();
                 }
-                Properties.BandwidthInGbps = value;
+                Properties.BandwidthGbps = value;
             }
         }
 

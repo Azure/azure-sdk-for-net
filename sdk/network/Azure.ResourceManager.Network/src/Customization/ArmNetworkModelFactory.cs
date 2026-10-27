@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     // The generated 1.15.0 object-valued health factory adapter otherwise discards the supplied configuration ID.
     [CodeGenSuppress("LoadBalancerHealthPerRulePerBackendAddress", typeof(string), typeof(NetworkInterfaceIPConfigurationData), typeof(string), typeof(string))]
     // The renamed numeric wire property must not consume or discard the legacy string input.
+    [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(string), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData))]
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
     // The compatibility generator otherwise drops the released active argument after the IsActive rename.
@@ -27,6 +28,54 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(VirtualNetworkAddressSpace), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a virtual network appliance using the released string bandwidth factory signature. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? etag = default, string bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default)
+        {
+            VirtualNetworkApplianceData model = VirtualNetworkApplianceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                bandwidthGbps: default,
+                ipConfigurations: ipConfigurations,
+                privateIPAddressVersion: default,
+                provisioningState: provisioningState,
+                resourceGuid: resourceGuid,
+                subnet: subnet,
+                eTag: etag);
+            model.BandwidthInGbps = bandwidthInGbps;
+            return model;
+        }
+
+        /// <summary> NetworkVirtualApplianceConnection resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="namePropertiesName"> The name of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the NetworkVirtualApplianceConnection resource. </param>
+        /// <param name="asn"> Network Virtual Appliance ASN. </param>
+        /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
+        /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
+        /// <param name="enableInternetSecurity"> Enable internet security. </param>
+        /// <param name="routingConfiguration"></param>
+        /// <returns> A new <see cref="Network.NetworkVirtualApplianceConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use the overload accepting RoutingConfiguration instead.")]
+        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IEnumerable<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration)
+        {
+            return new NetworkVirtualApplianceConnectionData(id, default, name, resourceType, namePropertiesName is null && provisioningState is null && asn is null && tunnelIdentifier is null && bgpPeerAddress is null && enableInternetSecurity is null ? default : new NetworkVirtualApplianceConnectionProperties(
+                namePropertiesName,
+                provisioningState,
+                asn,
+                tunnelIdentifier,
+                (bgpPeerAddress ?? new ChangeTrackingList<string>()).ToList(),
+                enableInternetSecurity,
+                default,
+                default));
+        }
+
         /// <summary> Initializes a virtual network gateway using the released flattened factory signature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, ResourceIdentifier gatewayDefaultSiteId, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, IEnumerable<string> customRoutesAddressPrefixes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState)

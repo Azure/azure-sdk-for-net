@@ -97,7 +97,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(legacy.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
             var factories = typeof(ArmNetworkModelFactory).GetMethods().Where(m => m.Name == "NetworkVirtualApplianceConnectionData").ToArray();
             MethodInfo legacyFactory = factories.Single(m => m.GetParameters().Last().ParameterType == typeof(RoutingConfigurationNfv));
-            Assert.That(legacyFactory.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+            Assert.That(legacyFactory.GetCustomAttribute<ObsoleteAttribute>().Message,
+                Is.EqualTo("This method is obsolete. Please use the overload accepting RoutingConfiguration instead."));
+            Assert.That(legacyFactory.GetCustomAttribute<ObsoleteAttribute>().IsError, Is.False);
             Assert.That(legacyFactory.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
             Assert.That(factories.Single(m => m.GetParameters().Last().ParameterType == typeof(RoutingConfiguration))
                 .GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
@@ -189,6 +191,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(json.RootElement.GetProperty("properties").GetProperty("routingConfiguration")
                 .GetProperty("associatedRouteTable").GetProperty("id").GetString(), Is.EqualTo(RouteId));
         }
-    #pragma warning restore CS0618
+#pragma warning restore CS0618
     }
 }

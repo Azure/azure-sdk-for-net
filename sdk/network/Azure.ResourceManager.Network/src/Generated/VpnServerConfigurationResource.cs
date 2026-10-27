@@ -396,11 +396,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationRadiusSecrets. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/listRadiusSecrets. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_ConfigurationRadiusSecrets. </description>
+        /// <description> VpnServerConfigurations_ListRadiusSecrets. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -434,11 +434,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationRadiusSecrets. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/listRadiusSecrets. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_ConfigurationRadiusSecrets. </description>
+        /// <description> VpnServerConfigurations_ListRadiusSecrets. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

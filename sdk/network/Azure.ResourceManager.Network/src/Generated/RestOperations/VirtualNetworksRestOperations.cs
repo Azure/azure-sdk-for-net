@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendPath("/effectiveConnectivityConfigurations", false);
+            uri.AppendPath("/listNetworkManagerEffectiveConnectivityConfigurations", false);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualNetworks") ?? "2026-01-01", true);
             if (top != null)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendPath("/effectiveSecurityAdminRules", false);
+            uri.AppendPath("/listNetworkManagerEffectiveSecurityAdminRules", false);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualNetworks") ?? "2026-01-01", true);
             if (top != null)
             {

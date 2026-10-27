@@ -215,33 +215,12 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnServerConfigurations/", false);
             uri.AppendPath(vpnServerConfigurationName, true);
-            uri.AppendPath("/configurationRadiusSecrets", false);
+            uri.AppendPath("/listRadiusSecrets", false);
             uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/vpnServerConfigurations") ?? "2026-01-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetRadiusSecretsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string vpnServerConfigurationName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/vpnServerConfigurations") ?? "2026-01-01");
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;

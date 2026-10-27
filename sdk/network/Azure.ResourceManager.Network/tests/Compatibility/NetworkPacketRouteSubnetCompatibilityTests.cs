@@ -275,43 +275,36 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public async Task NativeSubnetLinkActionsFollowTheServiceNextLink(
+        public async Task NativeSubnetLinkActionsPreserveReleasedSinglePageContract(
             [Values(false, true)] bool associations, [Values(false, true)] bool async)
         {
             const string subscription = "00000000-0000-0000-0000-000000000001";
             const string subnetId = "/subscriptions/" + subscription + "/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet";
             string action = associations ? "serviceAssociationLinks" : "resourceNavigationLinks";
             string nextLink = "https://management.azure.com" + subnetId + "/" + action + "?continuation=next";
-            var first = new MockResponse(200).SetContent(
+            var response = new MockResponse(200).SetContent(
                 $$$"""{"value":[{"id":"{{{subnetId}}}/{{{action}}}/first","name":"first","properties":{}}],"nextLink":"{{{nextLink}}}"}""");
-            var second = new MockResponse(200).SetContent(
-                $$$"""{"value":[{"id":"{{{subnetId}}}/{{{action}}}/second","name":"second","properties":{}}]}""");
             int requests = 0;
             var client = new ArmClient(new MockCredential(), subscription, new ArmClientOptions
             {
                 Transport = MockTransport.FromMessageCallback(message =>
                 {
                     requests++;
-                    Assert.That(requests, Is.LessThanOrEqualTo(2));
+                    Assert.That(requests, Is.EqualTo(1));
                     Assert.That(message.Request.Method, Is.EqualTo(RequestMethod.Get));
                     Assert.That(message.Request.Uri.ToUri().AbsolutePath, Is.EqualTo(subnetId + "/" + action));
-                    if (requests == 2)
-                    {
-                        Assert.That(message.Request.Uri.ToUri().GetLeftPart(UriPartial.Path), Is.EqualTo(nextLink.Split('?')[0]));
-                        Assert.That(message.Request.Uri.ToUri().Query, Does.Contain("continuation=next"));
-                    }
-                    return requests == 1 ? first : second;
+                    return response;
                 })
             });
             var subnet = client.GetSubnetResource(new ResourceIdentifier(subnetId));
             if (associations)
-                await AssertTwoPages(subnet.GetServiceAssociationLinks(), subnet.GetServiceAssociationLinksAsync(), async, first, second);
+                await AssertSinglePage(subnet.GetServiceAssociationLinks(), subnet.GetServiceAssociationLinksAsync(), async, response);
             else
-                await AssertTwoPages(subnet.GetResourceNavigationLinks(), subnet.GetResourceNavigationLinksAsync(), async, first, second);
-            Assert.That(requests, Is.EqualTo(2));
+                await AssertSinglePage(subnet.GetResourceNavigationLinks(), subnet.GetResourceNavigationLinksAsync(), async, response);
+            Assert.That(requests, Is.EqualTo(1));
         }
 
-        private static async Task AssertTwoPages<T>(Pageable<T> sync, AsyncPageable<T> async, bool useAsync, Response first, Response second)
+        private static async Task AssertSinglePage<T>(Pageable<T> sync, AsyncPageable<T> async, bool useAsync, Response response)
         {
             var pages = new List<Page<T>>();
             if (useAsync)
@@ -319,12 +312,10 @@ namespace Azure.ResourceManager.Network.Tests
                 await foreach (Page<T> page in async.AsPages()) pages.Add(page);
             }
             else pages.AddRange(sync.AsPages());
-            Assert.That(pages, Has.Count.EqualTo(2));
-            Assert.That(pages.Select(p => p.Values.Count), Is.EqualTo(new[] { 1, 1 }));
-            Assert.That(pages[0].ContinuationToken, Does.Contain("continuation=next"));
-            Assert.That(pages[1].ContinuationToken, Is.Null);
-            Assert.That(pages[0].GetRawResponse(), Is.SameAs(first));
-            Assert.That(pages[1].GetRawResponse(), Is.SameAs(second));
+            Assert.That(pages, Has.Count.EqualTo(1));
+            Assert.That(pages[0].Values, Has.Count.EqualTo(1));
+            Assert.That(pages[0].ContinuationToken, Is.Null);
+            Assert.That(pages[0].GetRawResponse(), Is.SameAs(response));
         }
 
         private sealed class RecordingPolicyResource : PolicySignaturesOverridesForIdpsResource

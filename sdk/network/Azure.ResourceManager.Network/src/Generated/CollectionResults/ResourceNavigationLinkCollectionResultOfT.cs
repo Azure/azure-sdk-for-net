@@ -49,30 +49,17 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of ResourceNavigationLinkCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ResourceNavigationLink>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
-            while (true)
-            {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
-                {
-                    yield break;
-                }
-                ResourceNavigationLinksListResult result = ResourceNavigationLinksListResult.FromResponse(response);
-                nextPage = result.NextLink;
-                yield return Page<ResourceNavigationLink>.FromValues((IReadOnlyList<ResourceNavigationLink>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
+            Response response = GetNextResponse(pageSizeHint, null);
+            ResourceNavigationLinksListResult result = ResourceNavigationLinksListResult.FromResponse(response);
+            yield return Page<ResourceNavigationLink>.FromValues((IReadOnlyList<ResourceNavigationLink>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetResourceNavigationLinksRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context) : _client.CreateGetResourceNavigationLinksRequest(_subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context);
+            HttpMessage message = _client.CreateGetResourceNavigationLinksRequest(_subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/effectiveConnectivityConfigurations. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_EffectiveConnectivityConfigurations. </description>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -443,11 +443,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/effectiveConnectivityConfigurations. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_EffectiveConnectivityConfigurations. </description>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -488,11 +488,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/effectiveSecurityAdminRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveSecurityAdminRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_EffectiveSecurityAdminRules. </description>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveSecurityAdminRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -533,11 +533,11 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/effectiveSecurityAdminRules. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveSecurityAdminRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CSharpFinalNetworkListOperations_EffectiveSecurityAdminRules. </description>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveSecurityAdminRules. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

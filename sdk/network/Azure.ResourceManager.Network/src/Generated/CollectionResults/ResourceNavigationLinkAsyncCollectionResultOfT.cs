@@ -60,31 +60,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async IAsyncEnumerable<Page<ResourceNavigationLink>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
-            while (true)
-            {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
-                if (response is null)
-                {
-                    yield break;
-                }
-                ResourceNavigationLinksListResult result = ResourceNavigationLinksListResult.FromResponse(response);
-                nextPage = result.NextLink;
-                yield return Page<ResourceNavigationLink>.FromValues((IReadOnlyList<ResourceNavigationLink>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
+            Response response = await GetNextResponseAsync(pageSizeHint, null, cancellationToken).ConfigureAwait(false);
+            ResourceNavigationLinksListResult result = ResourceNavigationLinksListResult.FromResponse(response);
+            yield return Page<ResourceNavigationLink>.FromValues((IReadOnlyList<ResourceNavigationLink>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetResourceNavigationLinksRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context) : _client.CreateGetResourceNavigationLinksRequest(_subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context);
+            HttpMessage message = _client.CreateGetResourceNavigationLinksRequest(_subscriptionId, _resourceGroupName, _virtualNetworkName, _subnetName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

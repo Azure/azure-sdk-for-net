@@ -46,30 +46,17 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of RadiusAuthServerCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<RadiusAuthServer>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
-            while (true)
-            {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
-                {
-                    yield break;
-                }
-                RadiusAuthServerListResult result = RadiusAuthServerListResult.FromResponse(response);
-                nextPage = result.NextLink;
-                yield return Page<RadiusAuthServer>.FromValues((IReadOnlyList<RadiusAuthServer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
+            Response response = GetNextResponse(pageSizeHint, null);
+            RadiusAuthServerListResult result = RadiusAuthServerListResult.FromResponse(response);
+            yield return Page<RadiusAuthServer>.FromValues((IReadOnlyList<RadiusAuthServer>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRadiusSecretsRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualNetworkGatewayName, _context) : _client.CreateGetRadiusSecretsRequest(_subscriptionId, _resourceGroupName, _virtualNetworkGatewayName, _context);
+            HttpMessage message = _client.CreateGetRadiusSecretsRequest(_subscriptionId, _resourceGroupName, _virtualNetworkGatewayName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

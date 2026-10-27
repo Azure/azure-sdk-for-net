@@ -252,30 +252,6 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetResourceNavigationLinksRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetServiceAssociationLinksRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -292,30 +268,6 @@ namespace Azure.ResourceManager.Network
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetServiceAssociationLinksRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

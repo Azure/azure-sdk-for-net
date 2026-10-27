@@ -410,20 +410,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> List of all routes. </summary>
-        [WirePath("properties.routeTable.routes")]
-        public IList<VirtualHubRoute> Routes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualHubProperties();
-                }
-                return Properties.Routes;
-            }
-        }
-
         /// <summary> The minimum number of scale units for VirtualHub Router. </summary>
         [WirePath("properties.virtualRouterAutoScaleConfiguration.minCapacity")]
         public int? VirtualRouterAutoScaleMinCapacity

@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 var options = new ModelReaderWriterOptions(format);
                 using JsonDocument applianceJson = JsonDocument.Parse(ModelReaderWriter.Write(appliance, options));
-                Assert.That(applianceJson.RootElement.GetProperty("properties").GetProperty("bandwidthInGbps").GetString(), Is.EqualTo("100.0"));
+                Assert.That(applianceJson.RootElement.GetProperty("properties").GetProperty("bandwidthInGbps").GetDouble(), Is.EqualTo(100.0));
                 using JsonDocument hubJson = JsonDocument.Parse(ModelReaderWriter.Write(hub, options));
                 Assert.That(hubJson.RootElement.GetProperty("properties").GetProperty("routeTable").GetProperty("routes").GetArrayLength(), Is.EqualTo(1));
                 using JsonDocument gatewayJson = JsonDocument.Parse(ModelReaderWriter.Write(gateway, options));
@@ -477,11 +477,61 @@ namespace Azure.ResourceManager.Network.Tests
                 resourceType: new ResourceType("Microsoft.Network/virtualNetworkAppliances"),
                 etag: new ETag("tag"),
                 bandwidthInGbps: "100.0");
-            Assert.That(appliance.BandwidthInGbps, Is.EqualTo("100.0"));
+            Assert.That(appliance.BandwidthInGbps, Is.EqualTo("100"));
+            Assert.That(appliance.BandwidthGbps, Is.EqualTo(100.0));
             Assert.That(appliance.ResourceType.ToString(), Is.EqualTo("Microsoft.Network/virtualNetworkAppliances"));
             Assert.That(appliance.ETag, Is.EqualTo(new ETag("tag")));
             using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(appliance));
-            Assert.That(json.RootElement.GetProperty("properties").GetProperty("bandwidthInGbps").GetString(), Is.EqualTo("100.0"));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("bandwidthInGbps").GetDouble(), Is.EqualTo(100.0));
+        }
+
+        [Test]
+        [SetCulture("fr-FR")]
+        public void LegacyApplianceBandwidthUsesInvariantNumericStorage()
+        {
+            var appliance = ModelReaderWriter.Read<VirtualNetworkApplianceData>(
+                BinaryData.FromString("""{"properties":{"bandwidthInGbps":12.5}}"""));
+            Assert.That(appliance.BandwidthInGbps, Is.EqualTo("12.5"));
+            Assert.That(appliance.BandwidthGbps, Is.EqualTo(12.5));
+
+            appliance.BandwidthInGbps = "100.0";
+            Assert.That(appliance.BandwidthInGbps, Is.EqualTo("100"));
+            Assert.That(appliance.BandwidthGbps, Is.EqualTo(100.0));
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(appliance));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("bandwidthInGbps").GetDouble(), Is.EqualTo(100.0));
+
+            appliance.BandwidthInGbps = null;
+            Assert.That(appliance.BandwidthInGbps, Is.Null);
+            Assert.That(appliance.BandwidthGbps, Is.Null);
+        }
+
+        [Test]
+        public void LegacyApplianceBandwidthRejectsInvalidInputWithoutChangingStorage()
+        {
+            var appliance = new VirtualNetworkApplianceData { BandwidthGbps = 12.5 };
+            Assert.Throws<FormatException>(() => appliance.BandwidthInGbps = "invalid");
+            Assert.That(appliance.BandwidthGbps, Is.EqualTo(12.5));
+        }
+
+        [Test]
+        public void ReleasedHubRoutesUseGeneratedWireStorage()
+        {
+            PropertyInfo property = typeof(VirtualHubData).GetProperty(nameof(VirtualHubData.Routes));
+            Assert.That(property.GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
+            Assert.That(property.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+            Assert.That(typeof(VirtualHubData).GetProperty("RouteRoutes"), Is.Null);
+
+            var route = new VirtualHubRoute();
+            var factoryHub = ArmNetworkModelFactory.VirtualHubData(routes: new[] { route });
+            Assert.That(factoryHub.Routes, Is.EqualTo(new[] { route }));
+
+            // The legacy factory's unset IPv6 collection is a separate pre-existing serialization issue.
+            var hub = new VirtualHubData();
+            Assert.That(hub.Routes, Is.Empty);
+            Assert.That(hub.Routes, Is.SameAs(hub.Routes));
+            hub.Routes.Add(route);
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(hub));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("routeTable").GetProperty("routes").GetArrayLength(), Is.EqualTo(1));
         }
 
         [Test]

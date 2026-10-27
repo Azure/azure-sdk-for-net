@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(RouteTable))
+            if (Optional.IsDefined(Route))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable, options);
+                writer.WriteObjectValue(Route, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource azureFirewall = default;
             NetworkSubResource securityPartnerProvider = default;
             string addressPrefix = default;
-            VirtualHubRouteTable routeTable = default;
+            VirtualHubRouteTable route = default;
             NetworkProvisioningState? provisioningState = default;
             string securityProviderName = default;
             IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S = default;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(prop.Value, options);
+                    route = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Network.Models
                 azureFirewall,
                 securityPartnerProvider,
                 addressPrefix,
-                routeTable,
+                route,
                 provisioningState,
                 securityProviderName,
                 virtualHubRouteTableV2S ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
