@@ -168,7 +168,7 @@ internal static class SchemaOracle
     {
         type = type.Trim();
         string mismatch = $"{path}: expected {type}, got {value.GetRawText()}";
-        if (type.StartsWith('"'))
+        if (type.StartsWith("\""))
             return value.ValueKind == JsonValueKind.String && value.GetString() == type.Trim('"') ? null : mismatch;
         if (type.Contains('|'))
             return type.Split('|').Any(t => ValidateType(value, t, path) == null) ? null : mismatch;
@@ -199,7 +199,7 @@ internal static class SchemaOracle
             }
             return null;
         }
-        if (type.StartsWith("Record<") && type.EndsWith('>'))
+        if (type.StartsWith("Record<") && type.EndsWith(">"))
         {
             if (value.ValueKind != JsonValueKind.Object)
                 return mismatch;

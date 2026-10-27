@@ -299,10 +299,11 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                 ResourceStatement stmt = ResourceStatement.DeserializeResourceStatement(resProp.Value);
                 DeserializedResource resource = new(stmt);
                 infra.Add(resource);
-                if (!resources.TryAdd(resource.BicepIdentifier, resource))
+                if (resources.ContainsKey(resource.BicepIdentifier))
                 {
                     throw new FormatException($"InfraNode contains duplicate resource identifier '{resource.BicepIdentifier}'.");
                 }
+                resources.Add(resource.BicepIdentifier, resource);
             }
 
             foreach (DeserializedResource resource in resources.Values)
