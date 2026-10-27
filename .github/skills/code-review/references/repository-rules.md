@@ -171,8 +171,9 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   `Task<ClientResult<T>>`/`Task<ClientResult>` on `System.ClientModel` — match whichever stack
   the library already uses, never mix them
 - A `protected` parameterless constructor exists for mocking on clients **and** subclients
-- Simplest constructor takes only what's needed to connect and uses **no default parameter
-  values**
+- Simplest constructor takes only the parameters required to connect to the service (an
+  endpoint and credential, or a connection string) and uses **no default parameter values**.
+  The constructor analyzers deliberately pass a trailing `options = null`, so CI won't flag it
 - Constructors must not read the client's own `virtual` properties — a mocked/uninitialized
   virtual can return the wrong value. Use the parameter or a local instead
 - Options type is `<Client>Options : ClientOptions`, has **no default constructor**, and its
