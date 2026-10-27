@@ -87,14 +87,12 @@ on that basis.
 
 ## CODEOWNERS and Labels
 
-- **A brand-new library directory gets no ownership validation at all.**
-  `Test-CodeownersForArtifacts` explicitly skips "packages whose directory is brand new on
-  the target branch", and the linter pipeline only triggers on PRs that touch
-  `.github/CODEOWNERS` — so an onboarding PR that simply never adds an entry trips nothing,
-  and the library ships with no reviewer and no issue-support routing. The remedy is *not* a
-  hand-edit in the PR: the `Client Libraries` section is protected, and CI rejects changes to
-  it from anyone but `azure-sdk-automation[bot]`. Point the author at the registration
-  process at https://aka.ms/azsdk/codeowners 🟡
+- **A new library needs a `.github/CODEOWNERS` entry that covers its path, and nothing in CI
+  checks for one.** The codeowners linter only runs on PRs that touch `.github/CODEOWNERS`,
+  and no build step verifies package ownership. A path that matches only the `/sdk/`
+  catch-all leaves the library with the core team as reviewers and no issue-support routing.
+  Ask for the entry in this PR, in the area it belongs to and placed per the ordering rule
+  below 🟡
 - **Ordering decides ownership: the last matching pattern wins, so a specific path placed
   above a broader one is dead.** The file's own header states the rule — less specific
   earlier, more specific later. `/sdk/foo/Azure.Foo.Core/` listed above a plain `/sdk/foo/`
