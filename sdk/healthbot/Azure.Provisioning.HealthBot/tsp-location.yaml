@@ -1,0 +1,4 @@
+directory: specification/healthbot/resource-manager/Microsoft.HealthBot/HealthBot
+commit: 3f04b3048bca8f252d35351568dffc0d2f6e4cee
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json

@@ -39,7 +39,8 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             Func<Compilation?>? customizationCompilation = null,
             Func<Compilation?>? lastContractCompilation = null,
             string? configurationJson = null,
-            ApiCompatBaseline? apiCompatBaseline = null)
+            ApiCompatBaseline? apiCompatBaseline = null,
+            string? outputDirectory = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -71,7 +72,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
-            object?[] parameters = [_configFilePath, configurationJson];
+            object?[] parameters = [outputDirectory ?? _configFilePath, configurationJson];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
             var mockPluginInstance = new Mock<ManagementClientGenerator>(mockGeneratorContext.Object) { CallBase = true };

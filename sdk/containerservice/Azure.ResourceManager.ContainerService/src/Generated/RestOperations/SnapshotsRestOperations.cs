@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerService/snapshots", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

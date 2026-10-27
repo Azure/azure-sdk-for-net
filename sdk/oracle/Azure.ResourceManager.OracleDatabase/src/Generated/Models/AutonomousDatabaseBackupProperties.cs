@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="timeEnded"> The date and time the backup completed. </param>
         /// <param name="backupType"> The type of backup. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="backupDestination"> The destination where this backup is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupProperties(string databaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string databaseBackupOcid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutonomousDatabaseBackupProperties(string databaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string databaseBackupOcid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, BackupDestinationType? backupDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseOcid = databaseOcid;
             DatabaseSizeInTbs = databaseSizeInTbs;
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             TimeEnded = timeEnded;
             BackupType = backupType;
             ProvisioningState = provisioningState;
+            BackupDestination = backupDestination;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -107,5 +109,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The destination where this backup is stored. </summary>
+        public BackupDestinationType? BackupDestination { get; }
     }
 }

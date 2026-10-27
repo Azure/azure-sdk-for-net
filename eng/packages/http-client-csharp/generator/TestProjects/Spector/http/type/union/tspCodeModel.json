@@ -2323,7 +2323,6 @@
                 "$id": "165",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2420,7 +2419,6 @@
                 "$id": "169",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "StringsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2607,7 +2605,6 @@
                 "$id": "179",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringExtensible",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2704,7 +2701,6 @@
                 "$id": "183",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "StringExtensible",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2891,7 +2887,6 @@
                 "$id": "193",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringExtensibleNamed",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2988,7 +2983,6 @@
                 "$id": "197",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "StringExtensibleNamed",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3175,7 +3169,6 @@
                 "$id": "207",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "IntsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3272,7 +3265,6 @@
                 "$id": "211",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "IntsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3459,7 +3451,6 @@
                 "$id": "221",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "FloatsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3556,7 +3547,6 @@
                 "$id": "225",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "FloatsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3743,7 +3733,6 @@
                 "$id": "235",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3840,7 +3829,6 @@
                 "$id": "239",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "ModelsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4027,7 +4015,6 @@
                 "$id": "249",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EnumsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4124,7 +4111,6 @@
                 "$id": "253",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "EnumsOnly",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4311,7 +4297,6 @@
                 "$id": "263",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StringAndArray",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4408,7 +4393,6 @@
                 "$id": "267",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "StringAndArray",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4595,7 +4579,6 @@
                 "$id": "277",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "MixedLiterals",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4692,7 +4675,6 @@
                 "$id": "281",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "MixedLiterals",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4879,7 +4861,6 @@
                 "$id": "291",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "MixedTypes",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4976,7 +4957,6 @@
                 "$id": "295",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "MixedTypes",
                 "accessibility": "public",
                 "parameters": [
                   {

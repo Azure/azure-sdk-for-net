@@ -4,10 +4,12 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BrowserAutomationPreviewTool : ResponseTool, IJsonModel<BrowserAutomationPreviewTool>
     {
         // The generated parameterless deserialization constructor did not chain to the required

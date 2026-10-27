@@ -230,7 +230,6 @@
                 "$id": "22",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Basic",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -402,7 +401,6 @@
                 "$id": "31",
                 "name": "receive",
                 "isExactName": false,
-                "resourceName": "Basic",
                 "accessibility": "public",
                 "parameters": [
                   {

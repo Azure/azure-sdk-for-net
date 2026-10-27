@@ -37,6 +37,7 @@ steps:
           language = $env:LANGUAGE
           kind = $env:KIND
           ref = $env:REF
+          sourceCommit = $env:SOURCE_COMMIT
           result = 'Failed'
           artifactName = $env:ARTIFACT_NAME
           buildId = $env:BUILD_ID
@@ -53,8 +54,10 @@ steps:
     env:
       ${{ if eq(parameters.kind, 'base') }}:
         CALLBACK_PROOF: $(BaseCallbackProof)
+        SOURCE_COMMIT: $(ApiReviewBaseCommit)
       ${{ if eq(parameters.kind, 'target') }}:
         CALLBACK_PROOF: $(TargetCallbackProof)
+        SOURCE_COMMIT: $(ApiReviewTargetCommit)
       CALLBACK_RESOURCE_URL: $(CompletionCallbackResourceUrl)
       API_REVIEW_HUB_ENDPOINT: $(ApiReviewHubEndpoint)
       OPERATION_ID: $(ApiReviewOperationId)

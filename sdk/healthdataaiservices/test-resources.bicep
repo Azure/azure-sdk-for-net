@@ -1,9 +1,3 @@
-// "id": "/subscriptions/d12535ed-5958-4ce6-8350-b17b3af1d6b1/resourceGroups/oro-billing-exhaust-test/providers/Microsoft.HealthDataAIServices/DeidServices/deid-billing-test",
-// "name": "deid-billing-test",
-// "type": "microsoft.healthdataaiservices/deidservices",
-// "location": "East US 2 EUAP",
-// "tags": {},
-
 @minLength(10)
 param testApplicationOid string
 

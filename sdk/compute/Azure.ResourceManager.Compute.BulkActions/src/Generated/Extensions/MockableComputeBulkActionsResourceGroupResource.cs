@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> An object representing collection of LocationBasedBulkCreateCustoms and their operations over a LocationBasedBulkCreateCustomResource. </returns>
         public virtual LocationBasedBulkCreateCustomCollection GetLocationBasedBulkCreateCustoms(AzureLocation location)
         {
-            return GetCachedClient(client => new LocationBasedBulkCreateCustomCollection(client, Id, location));
+            return new LocationBasedBulkCreateCustomCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <returns> An object representing collection of LocationBasedBulkCreates and their operations over a LocationBasedBulkCreateResource. </returns>
         public virtual LocationBasedBulkCreateCollection GetLocationBasedBulkCreates(AzureLocation location)
         {
-            return GetCachedClient(client => new LocationBasedBulkCreateCollection(client, Id, location));
+            return new LocationBasedBulkCreateCollection(Client, Id, location);
         }
 
         /// <summary>
