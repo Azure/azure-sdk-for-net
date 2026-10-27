@@ -187,6 +187,25 @@ namespace Azure.Security.KeyVault
             return true;
         }
 
+        private static void VerifyChallengeResource(Request request, string scope)
+        {
+            if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
+            {
+                throw new InvalidOperationException("The challenge contains an invalid scope.");
+            }
+
+            // UserInfo can be empty for an authority such as https://@host, so check the authority delimiter.
+            if (scopeUri.GetComponents(UriComponents.StrongAuthority, UriFormat.UriEscaped).IndexOf('@') >= 0)
+            {
+                throw new InvalidOperationException("The challenge scope must not contain user information.");
+            }
+
+            if (!request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
+            }
+        }
+
         /// <inheritdoc />
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
