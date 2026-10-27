@@ -310,6 +310,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "open-api",
                 Description = "Test Open API"
             },
+#pragma warning disable CS0618 // Preserve test coverage for the legacy browser automation tool.
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
@@ -318,6 +319,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "browser-automation",
                 Description = "Test browser automation"
             },
+#pragma warning restore CS0618
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.BROWSER_AUTOMATION_NAME)
@@ -366,8 +368,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             await client.DeleteAsync(name);
         }
-        catch (ClientResultException e)
-        {
+        catch (ClientResultException e) {
             if (e.Status != 404)
             {
                 throw;
@@ -436,7 +437,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
                     break;
                 }
-                catch (ClientResultException e) {
+                catch (ClientResultException e)
+                {
                     if (e.Status != 409)
                     {
                         throw;
