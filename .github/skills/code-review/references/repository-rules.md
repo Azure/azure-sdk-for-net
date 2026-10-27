@@ -18,13 +18,16 @@ Supporting documents, fetch when the diff touches their area:
 | Implementation (pipeline, policies, retries, logging, diagnostics) | <https://azure.github.io/azure-sdk/dotnet_implementation.html> |
 | Language-independent SDK rules | <https://azure.github.io/azure-sdk/general_introduction.html> |
 | Azure.Core requirements | <https://azure.github.io/azure-sdk/general_azurecore.html> |
-| .NET Framework Design Guidelines | <https://aka.ms/fxdg3> |
-| .NET breaking change rules | <https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md> |
+| Standard method verbs (the .NET page's Markdown source only `include`s this table) | <https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/tables/net_standard_verbs.yaml> |
 
 **How to use them:** do not try to read a whole document. Identify which areas the diff
 touches (client shape, models, LRO, paging, versioning, packaging, dependencies…), then fetch
-the matching section and check against it. When the guidelines and this file disagree, the
-published guidelines win — report the discrepancy so this file can be corrected.
+the matching section and check against it. Fetch a page's Markdown source, not its HTML:
+`https://azure.github.io/azure-sdk/<lang>_<page>.html` is
+`https://raw.githubusercontent.com/Azure/azure-sdk/main/docs/<lang>/<page>.md`. Find a section by
+its heading `{#id}` or requirement `id="…"`, and cite it as the page link plus `#<id>`.
+When the guidelines and this file disagree, the published guidelines win — report the
+discrepancy so this file can be corrected.
 
 Precedence within the guidelines themselves: **more specific beats more general**. .NET SDK
 guidelines beat general Azure SDK guidelines; both are constrained by the .NET Framework

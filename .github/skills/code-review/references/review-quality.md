@@ -43,7 +43,7 @@ never-shipped contracts may change. Continue checking changed APIs against other
 design, correctness, and repository rules.
 
 For an established GA contract, classify by what changed and how it manifests. Use
-[dotnet/runtime's breaking-change rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-changes.md)
+[dotnet/runtime's breaking-change rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md)
 as the authoritative source for what qualifies in each category and why — it covers both
 source/binary-compatibility changes and behavioral changes. Do not re-derive examples from
 memory; consult it for borderline cases.
