@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
-    /// <summary> The SKU type for update operations. </summary>
+    /// <summary> The SKU fields in the update model. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </summary>
     public partial class EdgeActionSkuTypeUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

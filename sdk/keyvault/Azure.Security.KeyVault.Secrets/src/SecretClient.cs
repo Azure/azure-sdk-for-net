@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
     public class SecretClient : IDisposable
     {
-        private const string OTelSecretNameKey    = "az.keyvault.secret.name";
+        private const string OTelSecretNameKey = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
 
         private readonly Uri _vaultUri;
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new SecretClientOptions();
-            _vaultUri    = vaultUri;
+            _vaultUri = vaultUri;
             _diagnostics = new ClientDiagnostics(options);
 
             // Build the HttpPipeline directly from the customer's SecretClientOptions
@@ -88,7 +88,8 @@ namespace Azure.Security.KeyVault.Secrets
             : this(
                 (settings ?? throw new ArgumentNullException(nameof(settings))).VaultUri,
                 settings.CredentialProvider as TokenCredential,
-                settings.Options) { }
+                settings.Options)
+        { }
 
         /// <summary>The vault URI used to construct this client.</summary>
         public virtual Uri VaultUri => _vaultUri;
@@ -681,7 +682,8 @@ namespace Azure.Security.KeyVault.Secrets
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
-            try { return await _generated.PurgeDeletedSecretAsync(name, cancellationToken).ConfigureAwait(false); }
+            try
+            { return await _generated.PurgeDeletedSecretAsync(name, cancellationToken).ConfigureAwait(false); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -705,7 +707,8 @@ namespace Azure.Security.KeyVault.Secrets
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
-            try { return _generated.PurgeDeletedSecret(name, cancellationToken); }
+            try
+            { return _generated.PurgeDeletedSecret(name, cancellationToken); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -825,9 +828,10 @@ namespace Azure.Security.KeyVault.Secrets
             SecretClientOptions.ServiceVersion.V7_2 => "7.2",
             SecretClientOptions.ServiceVersion.V7_3 => "7.3",
             SecretClientOptions.ServiceVersion.V7_4 => "7.4",
-            SecretClientOptions.ServiceVersion.V7_5        => "7.5",
-            SecretClientOptions.ServiceVersion.V7_6        => "7.6",
+            SecretClientOptions.ServiceVersion.V7_5 => "7.5",
+            SecretClientOptions.ServiceVersion.V7_6 => "7.6",
             SecretClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
+            SecretClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,
@@ -876,13 +880,15 @@ namespace Azure.Security.KeyVault.Secrets
                     scope.Start();
                     try
                     {
-                        if (!e.MoveNext()) { scope.Dispose(); yield break; }
+                        if (!e.MoveNext())
+                        { scope.Dispose(); yield break; }
                         page = e.Current;
                     }
                     catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                     scope.Dispose();
                     var values = new System.Collections.Generic.List<TOut>(page.Values.Count);
-                    foreach (TIn v in page.Values) values.Add(_map(v));
+                    foreach (TIn v in page.Values)
+                        values.Add(_map(v));
                     yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
                 }
             }
@@ -908,13 +914,15 @@ namespace Azure.Security.KeyVault.Secrets
                         scope.Start();
                         try
                         {
-                            if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
+                            if (!await e.MoveNextAsync().ConfigureAwait(false))
+                            { scope.Dispose(); yield break; }
                             page = e.Current;
                         }
                         catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                         scope.Dispose();
                         var values = new System.Collections.Generic.List<TOut>(page.Values.Count);
-                        foreach (TIn v in page.Values) values.Add(_map(v));
+                        foreach (TIn v in page.Values)
+                            values.Add(_map(v));
                         yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
                     }
                 }

@@ -61,7 +61,50 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName);
             var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
             var vmId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            var vmData = ArmComputeModelFactory.VirtualMachineData(id: vmId, name: vmName, hardwareProfile: null, availabilitySetId: setId, interconnectBlockId: null);
+            var vmData = ArmComputeModelFactory.VirtualMachineData(
+                id: vmId,
+                name: vmName,
+                resourceType: default,
+                systemData: default,
+                tags: default,
+                location: default,
+                hardwareProfile: null,
+                scheduledEventsPolicy: default,
+                storageProfile: default,
+                additionalCapabilities: default,
+                osProfile: default,
+                networkProfile: default,
+                securityProfile: default,
+                priority: default,
+                evictionPolicy: default,
+                provisioningState: default,
+                instanceView: default,
+                licenseType: default,
+                vmId: default,
+                extensionsTimeBudget: default,
+                platformFaultDomain: default,
+                scheduledEventsProfile: default,
+                userData: default,
+                capacityReservation: default,
+                timeCreated: default,
+                bootDiagnostics: default,
+                availabilitySetId: setId,
+                virtualMachineScaleSetId: default,
+                proximityPlacementGroupId: default,
+                billingMaxPrice: default,
+                hostId: default,
+                hostGroupId: default,
+                interconnectBlockId: null,
+                galleryApplications: default,
+                isEnabled: default,
+                plan: default,
+                resources: default,
+                identity: default,
+                zones: default,
+                extendedLocation: default,
+                managedBy: default,
+                eTag: default,
+                placement: default);
             #endregion
 
             #region mocking setup

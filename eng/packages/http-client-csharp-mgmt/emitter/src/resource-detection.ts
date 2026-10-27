@@ -369,6 +369,7 @@ export function buildArmProviderSchema(
       const explicitName = resourcePathToExplicitName.get(resourcePath);
       if (explicitName) {
         resource.metadata.resourceName = explicitName;
+        resource.metadata.resourceNameIsExplicit = true;
         continue;
       }
       if (list.length > 1) {

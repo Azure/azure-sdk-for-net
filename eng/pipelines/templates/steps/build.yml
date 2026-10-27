@@ -63,13 +63,18 @@ steps:
       # Reset SkipDevBuildNumber as empty
       $skipDevBuildNumber = ""
       echo "##vso[task.setvariable variable=SkipDevBuildNumber]$skipDevBuildNumber"
-      Write-Host "SkipDevBuildNumber: [$(SkipDevBuildNumber)]"
       $skipDevBuildNumber = "false"
-      # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
-      # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
-      if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
+      # Auto-release eligibility is resolved after signing, so internal main CI must build release-capable
+      # packages. The release stages still enforce the merged PR label and changed-package gates.
+      $autoReleaseBuild = '$(Build.Reason)' -eq 'IndividualCI' -and
+        '$(Build.SourceBranch)' -eq 'refs/heads/main' -and
+        '$(System.TeamProject)' -eq 'internal' -and
+        '$(Build.Repository.Name)' -ne 'Azure/azure-sdk-for-net-pr' -and
+        '$(Skip.Release)' -ne 'true'
+      if (('$(Build.Reason)' -eq 'Manual' -or $autoReleaseBuild) -and '$(SetDevVersion)' -ne 'true') {
         $skipDevBuildNumber = "true"
       }
+      Write-Host "SkipDevBuildNumber: [$skipDevBuildNumber]"
       $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
       echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
     displayName: "Setup .NET specific versioning properties"
