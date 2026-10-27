@@ -551,6 +551,7 @@ namespace Azure.AI.Extensions.OpenAI
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.ObsoleteAttribute("This legacy Browser Automation tool is deprecated and is no longer available. Please use the latest Browser Automation tool instead. See https://aka.ms/bat/docs.")]
     public partial class BrowserAutomationPreviewTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>
     {
         public BrowserAutomationPreviewTool(Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions browserAutomationPreview) : base (default(OpenAI.Responses.ResponseToolKind)) { }

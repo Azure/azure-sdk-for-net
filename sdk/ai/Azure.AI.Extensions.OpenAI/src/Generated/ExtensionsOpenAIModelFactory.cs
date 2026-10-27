@@ -335,11 +335,15 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         [Experimental("AAIP001")]
         public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview = default)
         {
             return new BrowserAutomationPreviewTool("browser_automation_preview", browserAutomationPreview, additionalBinaryDataProperties: null);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>

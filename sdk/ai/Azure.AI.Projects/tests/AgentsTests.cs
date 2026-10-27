@@ -501,7 +501,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -535,7 +537,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",

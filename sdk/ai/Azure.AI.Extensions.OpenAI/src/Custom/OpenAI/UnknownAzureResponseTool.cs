@@ -37,7 +37,9 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.BingCustomSearchPreview] = (typeof(BingCustomSearchPreviewTool), BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool),
             [ResponseToolKind.BingGrounding] = (typeof(BingGroundingTool), BingGroundingTool.DeserializeBingGroundingTool),
             [ResponseToolKind.BrowserAutomation] = (typeof(BrowserAutomationTool), BrowserAutomationTool.DeserializeBrowserAutomationTool),
+#pragma warning disable CS0618 // Legacy BrowserAutomationPreviewTool is still deserialized for compatibility.
             [ResponseToolKind.BrowserAutomationPreview] = (typeof(BrowserAutomationPreviewTool), BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool),
+#pragma warning restore CS0618
             [ResponseToolKind.CaptureStructuredOutputs] = (typeof(CaptureStructuredOutputsTool), CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool),
             [ResponseToolKind.FabricIQPreview] = (typeof(FabricIQPreviewTool), FabricIQPreviewTool.DeserializeFabricIQPreviewTool),
             [ResponseToolKind.MemorySearchPreview] = (typeof(MemorySearchPreviewTool), MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool),

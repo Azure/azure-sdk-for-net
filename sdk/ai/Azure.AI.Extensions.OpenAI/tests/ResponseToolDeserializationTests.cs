@@ -29,7 +29,9 @@ public class ResponseToolDeserializationTests
         yield return Case(ResponseToolKind.BingCustomSearchPreview, typeof(BingCustomSearchPreviewTool));
         yield return Case(ResponseToolKind.BingGrounding, typeof(BingGroundingTool));
         yield return Case(ResponseToolKind.BrowserAutomation, typeof(BrowserAutomationTool));
+#pragma warning disable CS0618 // Preserve deserialization coverage for the legacy browser automation tool.
         yield return Case(ResponseToolKind.BrowserAutomationPreview, typeof(BrowserAutomationPreviewTool));
+#pragma warning restore CS0618
         yield return Case(ResponseToolKind.CaptureStructuredOutputs, typeof(CaptureStructuredOutputsTool));
         yield return Case(ResponseToolKind.FabricIQPreview, typeof(FabricIQPreviewTool));
         yield return Case(ResponseToolKind.MemorySearchPreview, typeof(MemorySearchPreviewTool));
@@ -149,10 +151,12 @@ public class ResponseToolDeserializationTests
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions("browser-automation")
             )),
+#pragma warning disable CS0618 // Preserve deserialization coverage for the legacy browser automation tool.
             "browser_automation_preview" => new BrowserAutomationPreviewTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions("browser-automation-preview")
             )),
+#pragma warning restore CS0618
             "fabric_iq_preview" => new FabricIQPreviewTool(projectConnectionId: sample_connectioin)
             {
                 RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
