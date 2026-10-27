@@ -1,41 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Core.Pipeline;
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
-using System.IO;
 using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault
 {
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
-        private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
-        private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
-        private const string TokenBindingValidationFailure = "[MtlsCnfClaimRequestDataValidationFailed]";
         private readonly bool _verifyChallengeResource;
-        private readonly TenantTokenBindingCredential _credential;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
         /// </summary>
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification)
-            : this(new TenantTokenBindingCredential(credential), disableChallengeResourceVerification)
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
         {
-        }
-
-        private ChallengeBasedAuthenticationPolicy(TenantTokenBindingCredential credential, bool disableChallengeResourceVerification)
-            : base(credential, Array.Empty<string>())
-        {
-            _credential = credential;
             _verifyChallengeResource = !disableChallengeResourceVerification;
         }
 
@@ -68,15 +55,7 @@ namespace Azure.Security.KeyVault
                 }
 
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(
-                    challenge.Scopes,
-                    parentRequestId: message.Request.ClientRequestId,
-                    tenantId: challenge.TenantId,
-                    isCaeEnabled: true,
-                    isProofOfPossessionEnabled: true,
-                    requestUri: message.Request.Uri.ToUri(),
-                    requestMethod: message.Request.Method.ToString());
-                context = _credential.GetEffectiveRequestContext(context);
+                var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -86,7 +65,6 @@ namespace Azure.Security.KeyVault
                     AuthenticateAndAuthorizeRequest(message, context);
                 }
 
-                UpdateTokenBoundAuthHeader(message);
                 return;
             }
 
@@ -196,16 +174,7 @@ namespace Azure.Security.KeyVault
                 s_challengeCache[authority] = challenge;
             }
 
-            var context = new TokenRequestContext(
-                challenge.Scopes,
-                parentRequestId: message.Request.ClientRequestId,
-                tenantId: challenge.TenantId,
-                isCaeEnabled: true,
-                claims: claims,
-                isProofOfPossessionEnabled: true,
-                requestUri: message.Request.Uri.ToUri(),
-                requestMethod: message.Request.Method.ToString());
-            context = _credential.GetEffectiveRequestContext(context);
+            var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true, claims: claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -215,40 +184,7 @@ namespace Azure.Security.KeyVault
                 AuthenticateAndAuthorizeRequest(message, context);
             }
 
-            UpdateTokenBoundAuthHeader(message);
             return true;
-        }
-
-        private static void UpdateTokenBoundAuthHeader(HttpMessage message)
-        {
-            if (message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorization)
-                && authorization.StartsWith(MtlsPoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
-            }
-            else
-            {
-                message.Request.Headers.Remove(TokenBoundAuthHeaderName);
-            }
-        }
-
-        private static void VerifyChallengeResource(Request request, string scope)
-        {
-            if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
-            {
-                throw new InvalidOperationException("The challenge contains an invalid scope.");
-            }
-
-            // UserInfo can be empty for an authority such as https://@host, so check the authority delimiter.
-            if (scopeUri.GetComponents(UriComponents.StrongAuthority, UriFormat.UriEscaped).IndexOf('@') >= 0)
-            {
-                throw new InvalidOperationException("The challenge scope must not contain user information.");
-            }
-
-            if (!request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
-            }
         }
 
         /// <inheritdoc />
@@ -265,11 +201,6 @@ namespace Azure.Security.KeyVault
 
         private async ValueTask ProcessAsyncInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (message.ResponseClassifier is not TokenBindingResponseClassifier)
-            {
-                message.ResponseClassifier = new TokenBindingResponseClassifier(message.ResponseClassifier);
-            }
-
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
@@ -284,14 +215,6 @@ namespace Azure.Security.KeyVault
             {
                 AuthorizeRequest(message);
                 ProcessNext(message, pipeline);
-            }
-
-            await BufferTokenBindingFailureResponseAsync(message, async).ConfigureAwait(false);
-            if (TokenBindingResponseClassifier.IsTokenBindingValidationFailure(message))
-            {
-                // Let the outer RetryPolicy enforce the configured retry count and delay instead of
-                // treating the binding failure as an authentication challenge and resending here.
-                return;
             }
 
             // Check if we have received a challenge or we have not yet issued the first request.
@@ -336,104 +259,6 @@ namespace Azure.Security.KeyVault
                     }
                 }
                 // If we get a second CAE challenge, an unlikely scenario, we do not attempt to re-authenticate.
-            }
-
-            await BufferTokenBindingFailureResponseAsync(message, async).ConfigureAwait(false);
-        }
-
-        private static async ValueTask BufferTokenBindingFailureResponseAsync(HttpMessage message, bool async)
-        {
-            if (message.Response.Status != (int)HttpStatusCode.Unauthorized
-                || !message.Request.Headers.Contains(TokenBoundAuthHeaderName)
-                || message.Response.ContentStream is not { CanSeek: false } content)
-            {
-                return;
-            }
-
-            MemoryStream buffered = new();
-            try
-            {
-                if (async)
-                {
-                    await content.CopyToAsync(buffered, 81920, message.CancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    content.CopyTo(buffered);
-                }
-
-                buffered.Position = 0;
-                message.Response.ContentStream = buffered;
-            }
-            catch
-            {
-                buffered.Dispose();
-                throw;
-            }
-            finally
-            {
-                content.Dispose();
-            }
-        }
-
-        private sealed class TokenBindingResponseClassifier : ResponseClassifier
-        {
-            private readonly ResponseClassifier _inner;
-
-            public TokenBindingResponseClassifier(ResponseClassifier inner)
-            {
-                _inner = inner;
-            }
-
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                if (IsTokenBindingValidationFailure(message))
-                {
-                    return true;
-                }
-
-                return _inner.IsRetriableResponse(message);
-            }
-
-            public override bool IsRetriableException(Exception exception)
-                => _inner.IsRetriableException(exception);
-
-            public override bool IsRetriable(HttpMessage message, Exception exception)
-                => _inner.IsRetriable(message, exception);
-
-            public override bool IsErrorResponse(HttpMessage message)
-                => _inner.IsErrorResponse(message);
-
-            internal static bool IsTokenBindingValidationFailure(HttpMessage message)
-            {
-                if (message.Response.Status != (int)HttpStatusCode.Unauthorized
-                    || !message.Request.Headers.Contains(TokenBoundAuthHeaderName)
-                    || message.Response.ContentStream is not { CanSeek: true } content)
-                {
-                    return false;
-                }
-
-                long position = content.Position;
-                try
-                {
-                    content.Position = 0;
-                    using JsonDocument document = JsonDocument.Parse(content);
-
-                    return document.RootElement.ValueKind == JsonValueKind.Object
-                        && document.RootElement.TryGetProperty("error", out JsonElement error)
-                        && error.ValueKind == JsonValueKind.Object
-                        && error.TryGetProperty("message", out JsonElement errorMessage)
-                        && errorMessage.ValueKind == JsonValueKind.String
-                        && errorMessage.GetString()?.IndexOf(TokenBindingValidationFailure, StringComparison.Ordinal) >= 0;
-                }
-                catch (JsonException)
-                {
-                    return false;
-                }
-                finally
-                {
-                    content.Position = position;
-                }
             }
         }
 
