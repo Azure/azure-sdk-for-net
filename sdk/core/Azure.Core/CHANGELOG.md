@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
+
 ### Other Changes
 
 ## 1.64.0 (2026-10-26)
@@ -18,7 +20,6 @@
 
 ### Bugs Fixed
 
-- Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
 - Fixed CA certificate reloads for an already-used Kubernetes token proxy in `WorkloadIdentityCredential`, so subsequent requests use the new CA without throwing or retaining the old trust configuration.
 
 ## 1.63.0 (2026-09-25)
