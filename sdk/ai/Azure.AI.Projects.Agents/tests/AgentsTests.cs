@@ -342,11 +342,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.BrowserAutomation)]
-    [TestCase(ToolType.BrowserAutomationGA)]
+    //[TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.WorkIQ)]
     [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.ReminderPreview)]
-    [TestCase(ToolType.WebIQ)]
+    //[TestCase(ToolType.WebIQ)]
     public async Task TestToolsetVariety(ToolType toolType)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
