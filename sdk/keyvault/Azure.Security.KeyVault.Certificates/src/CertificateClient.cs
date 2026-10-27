@@ -1871,7 +1871,6 @@ namespace Azure.Security.KeyVault.Certificates
             CertificateClientOptions.ServiceVersion.V7_5 => "7.5",
             CertificateClientOptions.ServiceVersion.V7_6 => "7.6",
             CertificateClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
-            CertificateClientOptions.ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
             CertificateClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),

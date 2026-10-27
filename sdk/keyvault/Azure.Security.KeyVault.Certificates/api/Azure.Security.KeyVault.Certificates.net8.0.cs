@@ -96,8 +96,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_5 = 5,
             V7_6 = 6,
             V2025_07_01 = 7,
-            V2026_03_01_Preview = 8,
-            V2026_04_01 = 9,
+            V2026_04_01 = 8,
         }
     }
     public partial class CertificateContact
