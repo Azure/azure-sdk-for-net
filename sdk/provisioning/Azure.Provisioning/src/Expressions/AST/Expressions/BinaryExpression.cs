@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="left">The left operand.</param>
 /// <param name="op">The binary operator.</param>
 /// <param name="right">The right operand.</param>
-public class BinaryExpression(BicepExpression left, BinaryBicepOperator op, BicepExpression right) : BicepExpression
+public partial class BinaryExpression(BicepExpression left, BinaryBicepOperator op, BicepExpression right) : BicepExpression
 {
     /// <summary>
     /// Gets the left operand expression.
