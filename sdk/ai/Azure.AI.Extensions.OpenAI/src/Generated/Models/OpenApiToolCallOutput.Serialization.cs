@@ -4,7 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using OpenAI.Responses;
 
@@ -23,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenApiToolCallOutput(document.RootElement, options);
+                        return DeserializeOpenApiToolCallOutput(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OpenApiToolCallOutput)} does not support reading '{options.Format}' format.");
@@ -57,6 +57,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OpenApiToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -72,11 +80,18 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OpenApiToolCallOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("call_id"u8);
-            writer.WriteStringValue(CallId);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Output))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.call_id"u8))
+            {
+                writer.WritePropertyName("call_id"u8);
+                writer.WriteStringValue(CallId);
+            }
+            if (!Patch.Contains("$.name"u8))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Output) && !Patch.Contains("$.output"u8))
             {
                 writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
@@ -88,33 +103,14 @@ namespace Azure.AI.Extensions.OpenAI
                 }
 #endif
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(ResponseIdInternal))
+            if (!Patch.Contains("$.status"u8))
             {
-                writer.WritePropertyName("response_id"u8);
-                writer.WriteStringValue(ResponseIdInternal);
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentReferenceInternal))
-            {
-                writer.WritePropertyName("agent_reference"u8);
-                writer.WriteObjectValue(AgentReferenceInternal, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,12 +127,13 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OpenApiToolCallOutput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenApiToolCallOutput(document.RootElement, options);
+            return DeserializeOpenApiToolCallOutput(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenApiToolCallOutput DeserializeOpenApiToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenApiToolCallOutput DeserializeOpenApiToolCallOutput(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,9 +147,9 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             BinaryData output = default;
             ToolCallStatus status = default;
-            string responseIdInternal = default;
-            AgentReference agentReferenceInternal = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -171,7 +168,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -203,24 +200,7 @@ namespace Azure.AI.Extensions.OpenAI
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseIdInternal = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReferenceInternal = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new OpenApiToolCallOutput(
                 @type,
@@ -231,9 +211,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 output,
                 status,
-                responseIdInternal,
-                agentReferenceInternal,
-                additionalBinaryDataProperties);
+                patch);
         }
     }
 }

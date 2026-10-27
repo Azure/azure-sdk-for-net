@@ -2,7 +2,7 @@
 
 #nullable disable
 
-using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
@@ -13,16 +13,19 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class MemorySearchToolCall : ResponseItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public MemorySearchToolCall(ToolCallStatus status) : base("memory_search_call")
         {
             Status = status;
             Memories = new ChangeTrackingList<MemoryOutputItem>();
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> The status of the tool call. </summary>
         public ToolCallStatus Status { get; set; }

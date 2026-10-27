@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using OpenAI.Responses;
 
@@ -23,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemorySearchToolCall(document.RootElement, options);
+                        return DeserializeMemorySearchToolCall(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MemorySearchToolCall)} does not support reading '{options.Format}' format.");
@@ -57,6 +58,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MemorySearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -72,18 +81,36 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(MemorySearchToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
-            if (Optional.IsCollectionDefined(Memories))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.status"u8))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.ToSerialString());
+            }
+            if (Patch.Contains("$.memories"u8))
+            {
+                if (!Patch.IsRemoved("$.memories"u8))
+                {
+                    writer.WritePropertyName("memories"u8);
+                    Patch.WriteTo(writer, "$.memories"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(Memories))
             {
                 if (Memories != null)
                 {
                     writer.WritePropertyName("memories"u8);
                     writer.WriteStartArray();
-                    foreach (MemoryOutputItem item in Memories)
+                    bool hasPatch = Patch.Contains("$"u8, "memories"u8);
+                    for (int i = 0; i < Memories.Count; i++)
                     {
-                        writer.WriteObjectValue(item, options);
+                        if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.memories[{i}]")) || Memories[i] != null && Memories[i].Patch.IsRemoved("$"u8))
+                        {
+                            continue;
+                        }
+                        writer.WriteObjectValue(Memories[i], options);
                     }
+                    Patch.WriteTo(writer, "$.memories"u8);
                     writer.WriteEndArray();
                 }
                 else
@@ -91,31 +118,9 @@ namespace Azure.AI.Extensions.OpenAI
                     writer.WriteNull("memories"u8);
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResponseIdInternal))
-            {
-                writer.WritePropertyName("response_id"u8);
-                writer.WriteStringValue(ResponseIdInternal);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentReferenceInternal))
-            {
-                writer.WritePropertyName("agent_reference"u8);
-                writer.WriteObjectValue(AgentReferenceInternal, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -132,12 +137,13 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(MemorySearchToolCall)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemorySearchToolCall(document.RootElement, options);
+            return DeserializeMemorySearchToolCall(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MemorySearchToolCall DeserializeMemorySearchToolCall(JsonElement element, ModelReaderWriterOptions options)
+        internal static MemorySearchToolCall DeserializeMemorySearchToolCall(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,9 +155,9 @@ namespace Azure.AI.Extensions.OpenAI
             string responseId = default;
             ToolCallStatus status = default;
             IList<MemoryOutputItem> memories = new ChangeTrackingList<MemoryOutputItem>();
-            string responseIdInternal = default;
-            AgentReference agentReferenceInternal = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -193,29 +199,12 @@ namespace Azure.AI.Extensions.OpenAI
                     List<MemoryOutputItem> array = new List<MemoryOutputItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MemoryOutputItem.DeserializeMemoryOutputItem(item, options));
+                        array.Add(MemoryOutputItem.DeserializeMemoryOutputItem(item, item.GetUtf8Bytes(), options));
                     }
                     memories = array;
                     continue;
                 }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseIdInternal = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReferenceInternal = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new MemorySearchToolCall(
                 @type,
@@ -224,9 +213,109 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 status,
                 memories,
-                responseIdInternal,
-                agentReferenceInternal,
-                additionalBinaryDataProperties);
+                patch);
         }
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+            value = default;
+
+            if (local.StartsWith("memories"u8))
+            {
+                int propertyLength = "memories"u8.Length;
+                ReadOnlySpan<byte> currentSlice = local.Slice(propertyLength);
+                if (Memories == null)
+                {
+                    return false;
+                }
+                if (currentSlice.IsEmpty)
+                {
+                    return TryResolveMemoriesArray(out value);
+                }
+                if (!currentSlice.TryGetIndex(out int index, out int bytesConsumed) || index >= Memories.Count)
+                {
+                    return false;
+                }
+                if (Memories[index] == null)
+                {
+                    return false;
+                }
+                return Memories[index].Patch.TryGetEncodedValue([.. "$"u8, .. currentSlice.Slice(bytesConsumed)], out value);
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+
+            if (local.StartsWith("memories"u8))
+            {
+                int propertyLength = "memories"u8.Length;
+                ReadOnlySpan<byte> currentSlice = local.Slice(propertyLength);
+                if (Memories == null)
+                {
+                    return false;
+                }
+                if (!currentSlice.TryGetIndex(out int index, out int bytesConsumed) || index >= Memories.Count)
+                {
+                    return false;
+                }
+                if (Memories[index] == null)
+                {
+                    return false;
+                }
+                Memories[index].Patch.Set([.. "$"u8, .. currentSlice.Slice(bytesConsumed)], value);
+                return true;
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary></summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool TryResolveMemoriesArray(out JsonPatch.EncodedValue value)
+        {
+            value = default;
+            BinaryData data = ModelReaderWriter.Write(ActiveMemories(), ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
+            JsonPatch tempPatch = new JsonPatch();
+            tempPatch.Set("$"u8, data.ToMemory().Span);
+            return tempPatch.TryGetEncodedValue("$"u8, out value);
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary></summary>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private IEnumerable<MemoryOutputItem> ActiveMemories()
+        {
+            if (!Optional.IsCollectionDefined(Memories))
+            {
+                yield break;
+            }
+            bool hasPatch = Patch.Contains("$"u8, "memories"u8);
+            for (int i = 0; i < Memories.Count; i++)
+            {
+                if ((!hasPatch || !Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.memories[{i}]"))) && (Memories[i] == null || !Memories[i].Patch.IsRemoved("$"u8)))
+                {
+                    yield return Memories[i];
+                }
+            }
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
     }
 }

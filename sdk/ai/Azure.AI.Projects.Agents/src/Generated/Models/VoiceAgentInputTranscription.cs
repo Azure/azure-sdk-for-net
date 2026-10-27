@@ -11,6 +11,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary>
     /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
     /// and phrase hints.
+    /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+    /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+    /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+    /// `profanity_filter`.
     /// </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentInputTranscription
@@ -19,7 +23,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInputTranscription"/>. </summary>
-        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </param>
         public VoiceAgentInputTranscription(VoiceAgentInputTranscriptionModel model)
         {
             Languages = new ChangeTrackingList<string>();
@@ -32,8 +36,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInputTranscription"/>. </summary>
         /// <param name="language">
         /// The language of the input audio. Supplying the input language in
-        ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
-        ///   will improve accuracy and latency.
+        /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
+        /// will improve accuracy and latency. Optional for other transcription models; required and must be
+        /// nonempty when `model` is `azure-speech-streaming` (such as `en-US`; comma-separated locales are
+        /// supported).
         /// </param>
         /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
@@ -49,12 +55,12 @@ namespace Azure.AI.Projects.Agents
         ///   Higher values can improve transcription accuracy at the cost of latency.
         ///   Only supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
-        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <param name="profanityFilter">
         /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
-        /// (`azure-speech`), including Custom Speech.
+        /// (`azure-speech` and `azure-speech-streaming`), including Custom Speech.
         /// Set this property before the session starts. If omitted, the transcription provider's default applies.
         /// You cannot change the mode during a session.
         /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
@@ -78,8 +84,10 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The language of the input audio. Supplying the input language in
-        ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
-        ///   will improve accuracy and latency.
+        /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
+        /// will improve accuracy and latency. Optional for other transcription models; required and must be
+        /// nonempty when `model` is `azure-speech-streaming` (such as `en-US`; comma-separated locales are
+        /// supported).
         /// </summary>
         public string Language { get; set; }
 
@@ -105,7 +113,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public VoiceAgentAudioInputConfigTranscriptionDelay? Delay { get; set; }
 
-        /// <summary> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </summary>
+        /// <summary> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </summary>
         public VoiceAgentInputTranscriptionModel Model { get; set; }
 
         /// <summary> Optional customer custom speech deployment configuration, keyed by locale. </summary>
@@ -116,7 +124,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
-        /// (`azure-speech`), including Custom Speech.
+        /// (`azure-speech` and `azure-speech-streaming`), including Custom Speech.
         /// Set this property before the session starts. If omitted, the transcription provider's default applies.
         /// You cannot change the mode during a session.
         /// Filtering affects transcript events and the text sent to cascaded models. It does not change input

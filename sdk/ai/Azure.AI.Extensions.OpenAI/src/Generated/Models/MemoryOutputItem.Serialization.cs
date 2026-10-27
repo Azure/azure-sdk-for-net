@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryOutputItem(document.RootElement, options);
+                        return DeserializeMemoryOutputItem(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support reading '{options.Format}' format.");
@@ -64,6 +64,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MemoryOutputItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -78,31 +86,33 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("memory_id"u8);
-            writer.WriteStringValue(MemoryId);
-            writer.WritePropertyName("updated_at"u8);
-            writer.WriteNumberValue(UpdatedAt, "U");
-            writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope);
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.memory_id"u8))
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("memory_id"u8);
+                writer.WriteStringValue(MemoryId);
             }
+            if (!Patch.Contains("$.updated_at"u8))
+            {
+                writer.WritePropertyName("updated_at"u8);
+                writer.WriteNumberValue(UpdatedAt, "U");
+            }
+            if (!Patch.Contains("$.scope"u8))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (!Patch.Contains("$.content"u8))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (!Patch.Contains("$.kind"u8))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.ToString());
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,12 +129,13 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryOutputItem(document.RootElement, options);
+            return DeserializeMemoryOutputItem(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MemoryOutputItem DeserializeMemoryOutputItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static MemoryOutputItem DeserializeMemoryOutputItem(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,14 +146,14 @@ namespace Azure.AI.Extensions.OpenAI
                 switch (discriminator.GetString())
                 {
                     case "chat_summary":
-                        return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
+                        return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, data, options);
                     case "procedural":
-                        return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
+                        return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, data, options);
                     case "user_profile":
-                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
+                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, data, options);
                 }
             }
-            return UnknownMemoryOutputItem.DeserializeUnknownMemoryOutputItem(element, options);
+            return UnknownMemoryOutputItem.DeserializeUnknownMemoryOutputItem(element, data, options);
         }
     }
 }
