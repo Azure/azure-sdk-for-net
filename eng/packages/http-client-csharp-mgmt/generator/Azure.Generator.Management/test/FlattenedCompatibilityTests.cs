@@ -923,6 +923,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(overloads[0].Signature.Parameters.Single().Type.IsNullable, Is.False);
             Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(overloads[0]), Is.False,
                 "The shipped factory remains visible rather than becoming a hidden compatibility overload.");
+            Assert.That(overloads[0].Signature.Parameters.Single().DefaultValue, Is.Not.Null,
+                "A visible restored primary factory must preserve published omitted-argument calls.");
         }
 
         [Test]
@@ -1124,6 +1126,276 @@ namespace Azure.Generator.Mgmt.Tests
             _ = plugin.Object.GetWriter(factory).Write();
             Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
             Assert.That(method.BodyStatements!.ToDisplayString(), Does.Not.Contain("managedByResourceId"));
+        }
+
+        // Regression for #63425: losing a value used by the historical factory is different
+        // from retaining a parameter that the historical implementation already discarded.
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        public void FactoryReportsNewlyDiscardedHistoricalValue(bool historicallyConsumed, bool metadataOnly)
+            => AssertHistoricalFactoryValue(historicallyConsumed, metadataOnly);
+
+        [Test]
+        public void SkippingUnsafeFactoryKeepsSafeHistoricalOverload()
+            => AssertHistoricalFactoryValue(true, true, "safe-sibling");
+
+        [Test]
+        public void UnsafeFactoryWarnsOnceAndContinuesWithSubsequentOverloads()
+            => AssertHistoricalFactoryValue(true, true, "multiple-losses");
+
+        [TestCase("custom")]
+        [TestCase("suppressed")]
+        [TestCase("suppressed-type")]
+        [TestCase("preview")]
+        [TestCase("preview-selection")]
+        [TestCase("mismatched-selection")]
+        [TestCase("missing-selection")]
+        [TestCase("alias")]
+        [TestCase("unknown-expression")]
+        public void HistoricalFactoryValidationRespectsExemptionsAndUnknownEvidence(string resolution)
+            => AssertHistoricalFactoryValue(true, true, resolution);
+
+        private static void AssertHistoricalFactoryValue(bool historicallyConsumed, bool metadataOnly, string? resolution = null)
+        {
+            using var baselineProject = new FactoryBaselineProject(resolution switch
+            {
+                "preview-selection" => "1.0.0-beta.1",
+                "mismatched-selection" => "2.0.0",
+                "missing-selection" => null,
+                _ => "1.0.0"
+            });
+            using var baselineFile = new FileStream(Path.Combine(Path.GetTempPath(), $"factory-baseline-{Guid.NewGuid():N}.dll"),
+                FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read | FileShare.Delete, 4096, FileOptions.DeleteOnClose);
+            Compilation? lastContract = null;
+            Compilation? metadataContract = null;
+            Compilation GetLastContract() => lastContract ??= Helpers.BuildCompilation(
+            [
+                ("LastContract.cs", $$"""
+                [assembly: System.Reflection.AssemblyInformationalVersion("{{(resolution == "preview" ? "1.0.0-beta.1" : "1.0.0")}}")]
+                namespace Samples.Models
+                {
+                    public partial class VolumePatch
+                    {
+                        public long? SizeGiB { get; set; }
+                        public string ManagedByResourceId { get; set; }
+                        {{(resolution == "multiple-losses" ? "public string ManagedByTenantId { get; set; }" : "")}}
+                    }
+                }
+                namespace Samples
+                {
+                    public static partial class SamplesModelFactory
+                    {
+                        public static Samples.Models.VolumePatch VolumePatch(
+                            long? sizeGiB = default, string managedByResourceId = default{{(resolution == "multiple-losses" ? ", string managedByTenantId = default" : "")}})
+                            => new Samples.Models.VolumePatch
+                            {
+                                SizeGiB = sizeGiB,
+                                ManagedByResourceId = {{(historicallyConsumed ? "managedByResourceId" : "default")}}
+                                {{(resolution == "multiple-losses" ? ", ManagedByTenantId = managedByTenantId" : "")}}
+                            };
+                        {{(resolution is "safe-sibling" or "multiple-losses" ? "public static Samples.Models.VolumePatch VolumePatch(long sizeGiB) => new Samples.Models.VolumePatch { SizeGiB = sizeGiB };" : "")}}
+                        {{(resolution == "multiple-losses" ? "public static Samples.Models.VolumePatch VolumePatch(string managedByTenantId) => new Samples.Models.VolumePatch { ManagedByTenantId = managedByTenantId };" : "")}}
+                    }
+                }
+                """)
+            ]).WithAssemblyName("Samples");
+
+            Compilation GetBaseline()
+            {
+                if (!metadataOnly) return GetLastContract();
+                if (metadataContract is not null) return metadataContract;
+                var baselineEmit = GetLastContract().Emit(baselineFile);
+                Assert.That(baselineEmit.Success, Is.True, string.Join(Environment.NewLine, baselineEmit.Diagnostics));
+                baselineFile.Flush();
+                metadataContract = GetLastContract().RemoveAllSyntaxTrees().WithAssemblyName("MetadataContract")
+                    .AddReferences(MetadataReference.CreateFromFile(baselineFile.Name));
+                Assert.That(metadataContract.SyntaxTrees, Is.Empty,
+                    "Exercise the production metadata-only baseline path without historical source.");
+                return metadataContract;
+            }
+
+            // A scalar resource ID no longer has a lossless destination when managedBy
+            // becomes an array of objects; neither guessing nor silently discarding is safe.
+            var managed = InputFactory.Model("ManagedByInfo", properties:
+            [
+                InputFactory.Property("clientId", InputPrimitiveType.String),
+                InputFactory.Property("resourceIds", InputFactory.Array(InputPrimitiveType.String))
+            ]);
+            var properties = InputFactory.Model("VolumeProperties", properties:
+            [
+                InputFactory.Property("sizeGiB", InputPrimitiveType.Int64),
+                InputFactory.Property("managedBy", InputFactory.Array(managed))
+            ]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("VolumePatch", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties, managed],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: GetBaseline,
+                outputDirectory: baselineProject.Path);
+
+            // Prove whether the old body actually preserved the value instead of inferring
+            // that from the mere presence of a parameter in its public signature.
+            using var contractStream = new MemoryStream();
+            var emit = GetLastContract().WithAssemblyName("HistoricalFactory" + Guid.NewGuid().ToString("N")).Emit(contractStream);
+            Assert.That(emit.Success, Is.True, string.Join(Environment.NewLine, emit.Diagnostics));
+            var contractAssembly = Assembly.Load(contractStream.ToArray());
+            const string resourceId = "/subscriptions/sub/resourceGroups/rg/providers/Test/widgets/a";
+            var oldResult = contractAssembly.GetType("Samples.SamplesModelFactory")!
+                .GetMethod("VolumePatch", resolution == "multiple-losses"
+                    ? [typeof(long?), typeof(string), typeof(string)] : [typeof(long?), typeof(string)])!
+                .Invoke(null, resolution == "multiple-losses" ? [55L, resourceId, "tenant"] : [55L, resourceId])!;
+            Assert.That(oldResult.GetType().GetProperty("ManagedByResourceId")!.GetValue(oldResult),
+                Is.EqualTo(historicallyConsumed ? resourceId : null));
+
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+            Assert.That(factory.LastContractView!.Methods.Single(m => m.Signature.Name == "VolumePatch"
+                && m.Signature.Parameters.Any(parameter => parameter.Name == "managedByResourceId"))
+                .BodyStatements!.ToDisplayString(), Is.Empty,
+                "Contract providers retain signatures, not the old implementation's parameter usage.");
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            var primaryMethods = factory.Methods.Where(method => !ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)).ToArray();
+            var compatibility = factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                && method.Signature.Parameters.Any(parameter => parameter.Name == "managedByResourceId"));
+            var safeSibling = resolution is "safe-sibling" or "multiple-losses"
+                ? factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Parameters.Count == 1 && method.Signature.Parameters[0].Name == "sizeGiB")
+                : null;
+            var laterUnsafe = resolution == "multiple-losses"
+                ? factory.Methods.Single(method => ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Parameters.Count == 1 && method.Signature.Parameters[0].Name == "managedByTenantId")
+                : null;
+            if (laterUnsafe is not null)
+            {
+                // Make the outer-loop order explicit: unsafe, safe, then another unsafe overload.
+                factory.Update(methods: [compatibility, safeSibling!, laterUnsafe, .. primaryMethods]);
+            }
+            if (resolution == "custom")
+            {
+                var custom = new ContractView(factory.Name);
+                custom.ContractMethods = [new MethodProvider(compatibility.Signature, Return(Default), custom)];
+                ManagementMockHelpers.SetCustomCodeView(factory, custom);
+            }
+            if (resolution is "suppressed" or "suppressed-type")
+            {
+                var baseline = ApiCompatBaseline.Parse(resolution == "suppressed"
+                    ? ["MembersMustExist : Member 'Samples.SamplesModelFactory.VolumePatch(System.Nullable<System.Int64>, System.String)' does not exist in the implementation but it does exist in the contract."]
+                    : ["TypesMustExist : Type 'Samples.Models.VolumePatch' does not exist in the implementation but it does exist in the contract."]);
+                Assert.That(ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, compatibility.Signature), Is.False);
+                plugin.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(null, GetBaseline(), baseline));
+                Assert.That(ModelFactoryVisitor.IsRemovalAcceptedInBaseline(factory, compatibility.Signature), Is.True);
+            }
+            if (resolution == "alias")
+            {
+                var declaration = Declare("saved", typeof(string),
+                    compatibility.Signature.Parameters.Single(p => p.Name == "managedByResourceId"), out var saved);
+                compatibility.Update(bodyStatements: new MethodBodyStatement[]
+                {
+                    declaration,
+                    Return(new InvokeMethodExpression(null, "PreserveViaAlias", [saved]))
+                });
+            }
+            if (resolution == "unknown-expression")
+            {
+                compatibility.Update(bodyStatements: Return(new TernaryConditionalExpression(True, Default, Default)));
+            }
+            var writtenFactory = plugin.Object.GetWriter(factory).Write().Content;
+            var shouldSkip = historicallyConsumed && resolution is null or "safe-sibling" or "multiple-losses";
+            Assert.That(factory.Methods.Contains(compatibility), Is.EqualTo(!shouldSkip),
+                "Warn and omit only the unsafe restoration, rather than emitting a factory that silently drops a GA value.");
+            foreach (var primary in primaryMethods)
+            {
+                Assert.That(factory.Methods, Does.Contain(primary), "Current factory overloads must remain available.");
+            }
+            if (safeSibling is not null)
+            {
+                Assert.That(factory.Methods, Does.Contain(safeSibling), "Other safe GA overloads must remain available.");
+                Assert.That(safeSibling.BodyStatements!.ToDisplayString(), Does.Contain("sizeGiB"));
+            }
+            if (laterUnsafe is not null)
+            {
+                Assert.That(factory.Methods, Does.Not.Contain(laterUnsafe), "The outer loop must continue past the first unsafe overload.");
+                Assert.That(writtenFactory, Does.Not.Contain("managedByTenantId"));
+            }
+            Assert.That(writtenFactory, shouldSkip ? Does.Not.Contain("managedByResourceId") : Does.Contain("managedByResourceId"));
+            var repeatedWrite = plugin.Object.GetWriter(factory).Write().Content;
+            Assert.That(repeatedWrite, Is.EqualTo(writtenFactory), "Writing again must not restore the rejected overload.");
+
+            Assert.That(compatibility.Signature.Parameters.Select(p => p.Name),
+                Does.Contain("managedByResourceId"));
+            var usage = HistoricalFactoryUsage.Read(GetBaseline(), factory.Type, "1.0.0", "Samples");
+            var key = HistoricalFactoryUsage.Key(compatibility.Signature);
+            Assert.That(usage.ContainsKey(key), Is.EqualTo(resolution != "preview"),
+                $"The stable baseline implementation must be understood. Key: {key}; known methods: {string.Join(", ", usage.Keys)}");
+            if (resolution != "preview")
+            {
+                Assert.That(usage[key].Contains("managedByResourceId"), Is.EqualTo(historicallyConsumed));
+                if (laterUnsafe is not null)
+                {
+                    Assert.That(usage[key], Does.Contain("managedByTenantId"), "Both lost values must have been preserved historically.");
+                    Assert.That(usage[HistoricalFactoryUsage.Key(laterUnsafe.Signature)], Does.Contain("managedByTenantId"));
+                }
+            }
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""),
+                "An unsafe factory restoration must not block generation.");
+            if (resolution is not (null or "safe-sibling" or "multiple-losses"))
+            {
+                Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"warning\""));
+                return;
+            }
+            var body = compatibility.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("sizeGiB"), "The still-mappable value must remain forwarded.");
+            Assert.That(body, Does.Not.Contain("managedByResourceId"),
+                "The changed wire shape has no unambiguous destination for the old scalar.");
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()).Contains("\"severity\":\"warning\""),
+                Is.EqualTo(historicallyConsumed),
+                "Warn about newly lost historical values, not parameters already discarded by the old factory. " +
+                $"Selected version: {HistoricalFactoryUsage.SelectedVersion(plugin.Object.Configuration.OutputDirectory, "Samples")}; " +
+                $"statements: {string.Join(", ", compatibility.BodyStatements!.Select(s => s.GetType().Name))}; body: {body}; " +
+                $"diagnostics: {Encoding.UTF8.GetString(diagnostics.ToArray())}");
+            if (historicallyConsumed)
+            {
+                var warnings = new List<string>();
+                foreach (var line in Encoding.UTF8.GetString(diagnostics.ToArray()).Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    using var notification = JsonDocument.Parse(line);
+                    var parameters = notification.RootElement.GetProperty("params");
+                    if (parameters.GetProperty("severity").GetString() == "warning")
+                    {
+                        Assert.That(parameters.GetProperty("code").GetString(), Is.EqualTo("general-warning"));
+                        warnings.Add(parameters.GetProperty("message").GetString()!);
+                    }
+                }
+                Assert.That(warnings, Has.Count.EqualTo(laterUnsafe is null ? 1 : 2), "Emit one warning per omitted overload.");
+                Assert.That(warnings[0], Does.Contain("Samples.SamplesModelFactory.VolumePatch"));
+                Assert.That(warnings[0], Does.Contain("parameter 'managedByResourceId'"));
+                Assert.That(warnings[0], Does.Not.Contain("parameter 'sizeGiB'"));
+                if (laterUnsafe is not null)
+                {
+                    Assert.That(warnings[0], Does.Not.Contain("parameter 'managedByTenantId'"), "Only report the first lost value in an overload.");
+                    Assert.That(warnings[1], Does.Contain("parameter 'managedByTenantId'"));
+                    Assert.That(warnings[1], Does.Not.Contain("managedByResourceId"), "This warning must identify the later overload.");
+                }
+            }
+        }
+
+        private sealed class FactoryBaselineProject : IDisposable
+        {
+            internal string Path { get; } = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"factory-project-{Guid.NewGuid():N}");
+            internal FactoryBaselineProject(string? version)
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(Path, "src"));
+                File.WriteAllText(System.IO.Path.Combine(Path, "src", "Samples.csproj"),
+                    $"<Project><PropertyGroup>{(version is null ? "" : $"<ApiCompatVersion>{version}</ApiCompatVersion>")}</PropertyGroup></Project>");
+            }
+            public void Dispose() => Directory.Delete(Path, recursive: true);
         }
 
         [Test]

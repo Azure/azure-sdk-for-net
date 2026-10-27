@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.AppContainers.Mocking
 
         private ClientDiagnostics ContainerAppsSessionPoolsClientDiagnostics => _containerAppsSessionPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/sessionPools", out string apiVersion) ? apiVersion : "2026-07-01");
 
         private ClientDiagnostics SandboxGroupsClientDiagnostics => _sandboxGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(SandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(SandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/sandboxGroups", out string apiVersion0) ? apiVersion0 : "2026-07-01");
 
         private ClientDiagnostics ContainerAppsClientDiagnostics => _containerAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/containerApps", out string apiVersion1) ? apiVersion1 : "2026-07-01");
 
         private ClientDiagnostics ConnectedEnvironmentsClientDiagnostics => _connectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/connectedEnvironments", out string apiVersion2) ? apiVersion2 : "2026-07-01");
 
         private ClientDiagnostics ContainerAppManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/managedEnvironments", out string apiVersion3) ? apiVersion3 : "2026-07-01");
 
         private ClientDiagnostics ContainerAppJobsClientDiagnostics => _containerAppJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion4) ? apiVersion4 : null);
 
         private ClientDiagnostics AppClientClientDiagnostics => _appClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

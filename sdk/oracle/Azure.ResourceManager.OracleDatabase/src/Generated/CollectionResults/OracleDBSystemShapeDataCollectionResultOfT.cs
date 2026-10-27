@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class OracleDBSystemShapeDataCollectionResultOfT : Pageable<OracleDBSystemShapeData>
     {
-        private readonly DbSystemShapes _client;
+        private readonly DBSystemShapes _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly string _zone;
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OracleDBSystemShapeDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DbSystemShapes client used to send requests. </param>
+        /// <param name="client"> The DBSystemShapes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OracleDBSystemShapeDataCollectionResultOfT(DbSystemShapes client, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OracleDBSystemShapeDataCollectionResultOfT(DBSystemShapes client, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> The pages of OracleDBSystemShapeDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OracleDBSystemShapeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

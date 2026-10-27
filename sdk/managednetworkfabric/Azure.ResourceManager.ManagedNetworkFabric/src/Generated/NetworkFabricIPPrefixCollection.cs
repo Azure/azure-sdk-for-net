@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPPrefixCollection : ArmCollection, IEnumerable<NetworkFabricIPPrefixResource>, IAsyncEnumerable<NetworkFabricIPPrefixResource>
     {
         private readonly ClientDiagnostics _ipPrefixesClientDiagnostics;
-        private readonly IpPrefixes _ipPrefixesRestClient;
+        private readonly IPPrefixes _ipPrefixesRestClient;
 
         /// <summary> Initializes a new instance of NetworkFabricIPPrefixCollection for mocking. </summary>
         protected NetworkFabricIPPrefixCollection()
@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFabricIPPrefixResource.ResourceType, out string networkFabricIPPrefixApiVersion);
             _ipPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _ipPrefixesRestClient = new IpPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
+            _ipPrefixesRestClient = new IPPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/ipPrefixes", out string ipPrefixesApiVersionOverride) ? ipPrefixesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -23,6 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         private const string AppServiceSiteName = "WEBSITE_SITE_NAME";
         private const string AppServiceInstanceId = "WEBSITE_INSTANCE_ID";
         private const string AppServiceStampName = "WEBSITE_HOME_STAMPNAME";
+        private const string AppServiceOwnerName = "WEBSITE_OWNER_NAME";
+        private const string AppServiceResourceGroup = "WEBSITE_RESOURCE_GROUP";
+        private const string AppServiceSlotName = "WEBSITE_SLOT_NAME";
         private const string ContainerAppName = "CONTAINER_APP_NAME";
 
         // A mock transmitter is registered for this connection string so these tests never upload. A real
@@ -38,6 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             AppServiceSiteName,
             AppServiceInstanceId,
             AppServiceStampName,
+            AppServiceOwnerName,
+            AppServiceResourceGroup,
+            AppServiceSlotName,
             ContainerAppName,
             ContainerAppReplicaName,
         ];
@@ -76,9 +82,28 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             AssertAttribute(resource, "service.name", "otel-service-name");
 
-            // Proves the App Service detector's other attributes survive. cloud.platform cannot be used: the VM
-            // detector runs after it and overwrites that value wherever IMDS answers, including Azure-hosted CI.
+            // Proves the App Service detector's other attributes survive. The VM detector is skipped on App Service,
+            // so cloud.platform is not overwritten even where IMDS answers, including Azure-hosted CI.
             AssertAttribute(resource, "azure.app.service.stamp", "app-service-stamp");
+            AssertAttribute(resource, "cloud.platform", "azure.app_service");
+        }
+
+        [Fact]
+        public void AppServiceDetectorAddsAccountResourceGroupAndDeploymentEnvironment()
+        {
+            const string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+            Environment.SetEnvironmentVariable(AppServiceOwnerName, subscriptionId + "+my-rg-westuswebspace");
+            Environment.SetEnvironmentVariable(AppServiceResourceGroup, "my-rg");
+            Environment.SetEnvironmentVariable(AppServiceSlotName, "staging");
+
+            var resource = CreateResource();
+
+            AssertAttribute(resource, "cloud.account.id", subscriptionId);
+            AssertAttribute(resource, "azure.resource_group.name", "my-rg");
+            AssertAttribute(resource, "cloud.resource_id", $"/subscriptions/{subscriptionId}/resourceGroups/my-rg/providers/Microsoft.Web/sites/app-service-site-name");
+            AssertAttribute(resource, "deployment.environment.name", "staging");
+            Assert.DoesNotContain(resource.Attributes, attribute => attribute.Key == "deployment.environment");
         }
 
         [Fact]
@@ -120,9 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var resource = CreateResource();
 
             AssertAttribute(resource, "service.name", expectedServiceName);
-            // These values reflect the currently vendored OpenTelemetry.Resources.Azure and will change to
-            // azure.app_service and azure.container_apps when re-vendored from 1.18.0-beta.2 or later.
-            AssertAttribute(resource, "cloud.platform", "azure_container_apps");
+            AssertAttribute(resource, "cloud.platform", "azure.container_apps");
         }
 
         [Fact]

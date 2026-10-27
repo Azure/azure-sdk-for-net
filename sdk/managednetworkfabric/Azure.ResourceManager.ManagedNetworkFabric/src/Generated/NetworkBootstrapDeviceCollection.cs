@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkBootstrapDeviceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkBootstrapDeviceResource.ResourceType, out string networkBootstrapDeviceApiVersion);
             _networkBootstrapDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkBootstrapDeviceResource.ResourceType.Namespace, Diagnostics);
-            _networkBootstrapDevicesRestClient = new NetworkBootstrapDevices(_networkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkBootstrapDeviceApiVersion ?? "2025-07-15");
+            _networkBootstrapDevicesRestClient = new NetworkBootstrapDevices(_networkBootstrapDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkBootstrapDevices", out string networkBootstrapDevicesApiVersionOverride) ? networkBootstrapDevicesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

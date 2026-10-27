@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             return new ComputeSkuMixPlacementGenerateResult(
                 id,
-                placementChoices,
+                placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>(),
                 validUntilOn,
                 partialFulfillmentReason,
                 capacityLimits ?? new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>(),

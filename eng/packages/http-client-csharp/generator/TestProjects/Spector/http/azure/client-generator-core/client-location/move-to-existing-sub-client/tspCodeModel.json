@@ -69,7 +69,6 @@
                 "$id": "7",
                 "name": "getAdminInfo",
                 "isExactName": false,
-                "resourceName": "AdminOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -110,7 +109,6 @@
                 "$id": "9",
                 "name": "deleteUser",
                 "isExactName": false,
-                "resourceName": "UserOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -201,7 +199,6 @@
                 "$id": "15",
                 "name": "getUser",
                 "isExactName": false,
-                "resourceName": "UserOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

@@ -37,9 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityTopologyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityTopologyResource.ResourceType, out string securityTopologyApiVersion);
             _topologyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityTopologyResource.ResourceType.Namespace, Diagnostics);
-            _topologyResourcesRestClient = new TopologyResources(_topologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityTopologyApiVersion ?? "2020-01-01");
+            _topologyResourcesRestClient = new TopologyResources(_topologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

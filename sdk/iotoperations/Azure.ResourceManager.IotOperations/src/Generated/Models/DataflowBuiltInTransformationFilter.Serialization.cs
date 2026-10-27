@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataflowBuiltInTransformationFilter(@type, description, inputs, expression, additionalBinaryDataProperties);
+            return new DataflowBuiltInTransformationFilter(@type, description, inputs ?? new ChangeTrackingList<string>(), expression, additionalBinaryDataProperties);
         }
     }
 }

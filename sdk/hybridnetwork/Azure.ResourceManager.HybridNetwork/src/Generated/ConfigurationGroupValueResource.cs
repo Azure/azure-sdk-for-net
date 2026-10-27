@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfigurationGroupValueResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string configurationGroupValueApiVersion);
             _configurationGroupValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _configurationGroupValuesRestClient = new ConfigurationGroupValues(_configurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, configurationGroupValueApiVersion ?? "2025-03-30");
+            _configurationGroupValuesRestClient = new ConfigurationGroupValues(_configurationGroupValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/configurationGroupValues", out string configurationGroupValuesApiVersionOverride) ? configurationGroupValuesApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 

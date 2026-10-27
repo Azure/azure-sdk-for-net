@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="failureThresholdPercentage"> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </param>
         /// <returns> A new <see cref="PolicyInsights.PolicyRemediationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, ResourceDiscoveryMode? resourceDiscoveryMode = default, string provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, IEnumerable<AzureLocation> filterLocations = default, RemediationDeploymentSummary deploymentStatus = default, string statusMessage = default, string correlationId = default, int? resourceCount = default, int? parallelDeployments = default, float? failureThresholdPercentage = default)
+        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, IEnumerable<AzureLocation> filterLocations, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, float? failureThresholdPercentage)
         {
             return new PolicyRemediationData(
                 id,
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="evaluationDetails"></param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, PolicyEvaluationDetails evaluationDetails)
         {
             return new PolicyEvaluationResult(policyInfo, evaluationResult, default, default, default);
         }

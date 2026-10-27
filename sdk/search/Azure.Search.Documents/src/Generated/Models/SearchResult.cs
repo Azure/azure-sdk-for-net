@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private double? _rerankerScore;
-        internal bool _rerankerScoreIsDefined;
+        private bool _rerankerScoreIsDefined;
         private double? _rerankerBoostedScore;
-        internal bool _rerankerBoostedScoreIsDefined;
+        private bool _rerankerBoostedScoreIsDefined;
         private DocumentDebugInfo _documentDebugInfo;
-        internal bool _documentDebugInfoIsDefined;
+        private bool _documentDebugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         public SearchResult()

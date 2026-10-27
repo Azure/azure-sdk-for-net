@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertTemplateListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AlertTemplateListResult(value ?? new ChangeTrackingList<SapMonitorAlertTemplateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

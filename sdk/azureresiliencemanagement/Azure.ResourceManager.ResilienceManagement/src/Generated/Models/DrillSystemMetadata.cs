@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillSystemMetadata"/>. </summary>
         /// <param name="initialConfig"> Indicates if the Initial system configuration of the Drill is complete or not. </param>
-        internal DrillSystemMetadata(InitialConfig initialConfig)
+        internal DrillSystemMetadata(DrillInitialConfig initialConfig)
         {
             InitialConfig = initialConfig;
-            ResourceTypeCategories = new ChangeTrackingList<ResourceTypeCategories>();
+            ResourceTypeCategories = new ChangeTrackingList<DrillResourceTypeCategory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillSystemMetadata"/>. </summary>
         /// <param name="initialConfig"> Indicates if the Initial system configuration of the Drill is complete or not. </param>
         /// <param name="resourceTypeCategories"> An indication whether a intrested resource type is present in drill resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillSystemMetadata(InitialConfig initialConfig, IReadOnlyList<ResourceTypeCategories> resourceTypeCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillSystemMetadata(DrillInitialConfig initialConfig, IReadOnlyList<DrillResourceTypeCategory> resourceTypeCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InitialConfig = initialConfig;
             ResourceTypeCategories = resourceTypeCategories;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Indicates if the Initial system configuration of the Drill is complete or not. </summary>
-        public InitialConfig InitialConfig { get; }
+        public DrillInitialConfig InitialConfig { get; }
 
         /// <summary> An indication whether a intrested resource type is present in drill resource. </summary>
-        public IReadOnlyList<ResourceTypeCategories> ResourceTypeCategories { get; }
+        public IReadOnlyList<DrillResourceTypeCategory> ResourceTypeCategories { get; }
     }
 }

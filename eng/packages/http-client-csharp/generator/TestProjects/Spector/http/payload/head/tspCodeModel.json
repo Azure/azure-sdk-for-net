@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "contentTypeHeaderInResponse",
             "isExactName": false,
-            "resourceName": "Head",
             "accessibility": "public",
             "parameters": [],
             "responses": [

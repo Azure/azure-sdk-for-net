@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
 
         private ClientDiagnostics SchedulersClientDiagnostics => _schedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
+        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List Schedulers by subscription
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

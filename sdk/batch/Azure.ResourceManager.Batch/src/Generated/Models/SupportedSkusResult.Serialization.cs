@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SupportedSkusResult(value, nextLink, additionalBinaryDataProperties);
+            return new SupportedSkusResult(value ?? new ChangeTrackingList<BatchSupportedSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

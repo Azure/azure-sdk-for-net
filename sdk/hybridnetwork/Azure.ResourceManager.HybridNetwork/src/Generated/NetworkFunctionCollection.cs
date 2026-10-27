@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFunctionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkFunctionResource.ResourceType, out string networkFunctionApiVersion);
             _networkFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionResource.ResourceType.Namespace, Diagnostics);
-            _networkFunctionsRestClient = new NetworkFunctions(_networkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFunctionApiVersion ?? "2025-03-30");
+            _networkFunctionsRestClient = new NetworkFunctions(_networkFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/networkFunctions", out string networkFunctionsApiVersionOverride) ? networkFunctionsApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 

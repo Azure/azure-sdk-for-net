@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(SearchServiceLimits)} does not support writing '{format}' format.");
             }
-            if (_maxFieldsPerIndexIsDefined || Optional.IsDefined(MaxFieldsPerIndex))
+            if (Optional.IsDefined(MaxFieldsPerIndex, _maxFieldsPerIndexIsDefined))
             {
                 if (MaxFieldsPerIndex != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFieldsPerIndex"u8);
                 }
             }
-            if (_maxFieldNestingDepthPerIndexIsDefined || Optional.IsDefined(MaxFieldNestingDepthPerIndex))
+            if (Optional.IsDefined(MaxFieldNestingDepthPerIndex, _maxFieldNestingDepthPerIndexIsDefined))
             {
                 if (MaxFieldNestingDepthPerIndex != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFieldNestingDepthPerIndex"u8);
                 }
             }
-            if (_maxComplexCollectionFieldsPerIndexIsDefined || Optional.IsDefined(MaxComplexCollectionFieldsPerIndex))
+            if (Optional.IsDefined(MaxComplexCollectionFieldsPerIndex, _maxComplexCollectionFieldsPerIndexIsDefined))
             {
                 if (MaxComplexCollectionFieldsPerIndex != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxComplexCollectionFieldsPerIndex"u8);
                 }
             }
-            if (_maxComplexObjectsInCollectionsPerDocumentIsDefined || Optional.IsDefined(MaxComplexObjectsInCollectionsPerDocument))
+            if (Optional.IsDefined(MaxComplexObjectsInCollectionsPerDocument, _maxComplexObjectsInCollectionsPerDocumentIsDefined))
             {
                 if (MaxComplexObjectsInCollectionsPerDocument != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxComplexObjectsInCollectionsPerDocument"u8);
                 }
             }
-            if (_maxStoragePerIndexInBytesIsDefined || Optional.IsDefined(MaxStoragePerIndexInBytes))
+            if (Optional.IsDefined(MaxStoragePerIndexInBytes, _maxStoragePerIndexInBytesIsDefined))
             {
                 if (MaxStoragePerIndexInBytes != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxStoragePerIndex"u8);
                 }
             }
-            if (_maxCumulativeIndexerRuntimeSecondsIsDefined || Optional.IsDefined(MaxCumulativeIndexerRuntimeSeconds))
+            if (Optional.IsDefined(MaxCumulativeIndexerRuntimeSeconds, _maxCumulativeIndexerRuntimeSecondsIsDefined))
             {
                 if (MaxCumulativeIndexerRuntimeSeconds != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxCumulativeIndexerRuntimeSeconds"u8);
                 }
             }
-            if (_maxVectorIndexSizePerIndexInBytesIsDefined || Optional.IsDefined(MaxVectorIndexSizePerIndexInBytes))
+            if (Optional.IsDefined(MaxVectorIndexSizePerIndexInBytes, _maxVectorIndexSizePerIndexInBytesIsDefined))
             {
                 if (MaxVectorIndexSizePerIndexInBytes != null)
                 {

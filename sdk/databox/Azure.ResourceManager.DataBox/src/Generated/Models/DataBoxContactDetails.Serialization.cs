@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 phone,
                 phoneExtension,
                 mobile,
-                emailList,
+                emailList ?? new ChangeTrackingList<string>(),
                 notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
                 additionalBinaryDataProperties);
         }
