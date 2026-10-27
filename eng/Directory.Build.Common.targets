@@ -339,10 +339,11 @@
     <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
-    <!-- Compute set of projects that intersect with the PackageReference's -->
-    <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
-    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
-    <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
+    <!-- Match package IDs as case-insensitive keys instead of treating the full project list as exclusion patterns. -->
+    <_NotPackageReferences Include="@(PossibleProjectsToConvert)" />
+    <_NotPackageReferences Remove="@(PackageReference)" MatchOnMetadata="Identity" MatchOnMetadataOptions="CaseInsensitive" />
+    <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(ExcludeFromProjectReferenceToConversion)" />
+    <ProjectsToConvert Remove="@(_NotPackageReferences)" MatchOnMetadata="Identity" MatchOnMetadataOptions="CaseInsensitive" />
 
     <!-- Remove PackageReferences -->
     <PackageReference Remove="@(ProjectsToConvert)" />
