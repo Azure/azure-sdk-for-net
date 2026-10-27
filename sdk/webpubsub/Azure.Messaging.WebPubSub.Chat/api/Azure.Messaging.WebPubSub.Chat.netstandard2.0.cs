@@ -41,7 +41,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.Messaging.WebPubSub.Chat.ChatTopicState? State { get { throw null; } set { } }
+        public Azure.Messaging.WebPubSub.Chat.ChatTopicState State { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         protected virtual Azure.Messaging.WebPubSub.Chat.ChatTopic JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -153,9 +153,11 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatMessageContent : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent>
     {
-        public WebPubSubChatMessageContent() { }
-        public System.BinaryData Binary { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
+        internal WebPubSubChatMessageContent() { }
+        public System.BinaryData Binary { get { throw null; } }
+        public string Text { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent FromBinary(System.BinaryData binary) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent FromText(string text) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,7 +170,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public static partial class WebPubSubChatModelFactory
     {
-        public static Azure.Messaging.WebPubSub.Chat.ChatTopic ChatTopic(string id = null, string title = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string createdBy = null, Azure.Messaging.WebPubSub.Chat.ChatTopicState? state = default(Azure.Messaging.WebPubSub.Chat.ChatTopicState?), string conversationId = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.ChatTopic ChatTopic(string id = null, string title = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string createdBy = null, Azure.Messaging.WebPubSub.Chat.ChatTopicState state = default(Azure.Messaging.WebPubSub.Chat.ChatTopicState), string conversationId = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.ChatUserRoom ChatUserRoom(string id = null, string title = null, string defaultConversation = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation WebPubSubChatConversation(string id = null, string parentRoom = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage WebPubSubChatMessage(string id = null, string createdBy = null, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ETag etag = default(Azure.ETag)) { throw null; }

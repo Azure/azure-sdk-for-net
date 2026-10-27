@@ -254,7 +254,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 string updatedText = $"{messageText} updated";
                 var updatedMessage = new UpdateMessageOptions
                 {
-                    Content = new WebPubSubChatMessageContent { Text = updatedText }
+                    Content = WebPubSubChatMessageContent.FromText(updatedText)
                 };
                 WebPubSubChatMessage updated = await _client.UpdateMessageAsync(conversationId, messageId, updatedMessage);
                 Assert.That(updated.Content.Text, Is.EqualTo(updatedText));

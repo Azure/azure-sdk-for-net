@@ -396,7 +396,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatUpdateMessage
             var updatedMessage = new UpdateMessageOptions
             {
-                Content = new WebPubSubChatMessageContent { Text = "Updated message text" }
+                Content = WebPubSubChatMessageContent.FromText("Updated message text")
             };
 
             client.UpdateMessage(

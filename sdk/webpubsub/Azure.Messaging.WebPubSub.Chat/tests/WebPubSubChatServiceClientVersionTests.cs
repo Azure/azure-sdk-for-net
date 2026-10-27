@@ -180,19 +180,21 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         [TestCase(200)]
         [TestCase(201)]
-        public async Task CreateOrReplaceTopicOmitsUnsetState(int status)
+        public async Task CreateOrReplaceTopicDefaultsToNormalState(int status)
         {
             var transport = new MockTransport(JsonResponse(status, TopicJson));
             var topic = new ChatTopic("Announcements");
-            Assert.That(topic.State, Is.Null);
+            Assert.That(topic.State, Is.EqualTo(ChatTopicState.Normal));
+            Assert.That(typeof(ChatTopic).GetProperty(nameof(ChatTopic.State)).PropertyType, Is.EqualTo(typeof(ChatTopicState)));
 
             ChatTopic result = await CreateClient(transport).CreateOrReplaceTopicAsync("room1", "topic1", topic);
 
             AssertTopic(result);
             AssertTopicRequest(transport.SingleRequest, RequestMethod.Put);
             using JsonDocument body = await ReadBodyAsync(transport.SingleRequest);
-            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "title" }));
+            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "title", "state" }));
             Assert.That(body.RootElement.GetProperty("title").GetString(), Is.EqualTo("Announcements"));
+            Assert.That(body.RootElement.GetProperty("state").GetString(), Is.EqualTo("Normal"));
         }
 
         [TestCase("Normal")]
@@ -306,6 +308,66 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             AssertHeader(transport.SingleRequest, "Content-Type", "application/merge-patch+json");
         }
 
+        [TestCase("")]
+        [TestCase("Hello")]
+        [TestCase("\u4f60\u597d\n\"Chat\"")]
+        public void MessageContentFromTextPreservesOnlyText(string text)
+        {
+            WebPubSubChatMessageContent content = WebPubSubChatMessageContent.FromText(text);
+
+            Assert.That(content.Text, Is.EqualTo(text));
+            Assert.That(content.Binary, Is.Null);
+            using JsonDocument body = JsonDocument.Parse(ModelReaderWriter.Write(content));
+            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "text" }));
+            Assert.That(body.RootElement.GetProperty("text").GetString(), Is.EqualTo(text));
+            WebPubSubChatMessageContent restored = ModelReaderWriter.Read<WebPubSubChatMessageContent>(ModelReaderWriter.Write(content));
+            Assert.That(restored.Text, Is.EqualTo(text));
+            Assert.That(restored.Binary, Is.Null);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void MessageContentFromBinaryPreservesOnlyBinary(bool empty)
+        {
+            byte[] bytes = empty ? Array.Empty<byte>() : new byte[] { 0, 1, 2, 255 };
+            WebPubSubChatMessageContent content = WebPubSubChatMessageContent.FromBinary(BinaryData.FromBytes(bytes));
+
+            Assert.That(content.Text, Is.Null);
+            Assert.That(content.Binary.ToArray(), Is.EqualTo(bytes));
+            using JsonDocument body = JsonDocument.Parse(ModelReaderWriter.Write(content));
+            Assert.That(body.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "binary" }));
+            Assert.That(body.RootElement.GetProperty("binary").GetString(), Is.EqualTo(Convert.ToBase64String(bytes)));
+            WebPubSubChatMessageContent restored = ModelReaderWriter.Read<WebPubSubChatMessageContent>(ModelReaderWriter.Write(content));
+            Assert.That(restored.Text, Is.Null);
+            Assert.That(restored.Binary.ToArray(), Is.EqualTo(bytes));
+        }
+
+        [Test]
+        public void MessageContentFactoriesRequireNonNullContent()
+        {
+            Assert.Throws<ArgumentNullException>(() => WebPubSubChatMessageContent.FromText(null));
+            Assert.Throws<ArgumentNullException>(() => WebPubSubChatMessageContent.FromBinary(null));
+        }
+
+        [Test]
+        public void MessageContentHasNoPublicConstructorOrSetters()
+        {
+            Assert.That(typeof(WebPubSubChatMessageContent).GetConstructors(), Is.Empty);
+            Assert.That(typeof(WebPubSubChatMessageContent).GetProperty(nameof(WebPubSubChatMessageContent.Text)).CanWrite, Is.False);
+            Assert.That(typeof(WebPubSubChatMessageContent).GetProperty(nameof(WebPubSubChatMessageContent.Binary)).CanWrite, Is.False);
+        }
+
+        [Test]
+        public void MessageContentPersistencePreservesUnknownProperties()
+        {
+            const string json = """{"text":"Hello","futureProperty":{"value":42}}""";
+            WebPubSubChatMessageContent content = ModelReaderWriter.Read<WebPubSubChatMessageContent>(BinaryData.FromString(json));
+
+            using JsonDocument body = JsonDocument.Parse(ModelReaderWriter.Write(content));
+            Assert.That(body.RootElement.GetProperty("text").GetString(), Is.EqualTo("Hello"));
+            Assert.That(body.RootElement.GetProperty("futureProperty").GetProperty("value").GetInt32(), Is.EqualTo(42));
+        }
+
         [TestCase("content", """{"content":{"text":"Edited"}}""")]
         [TestCase("creator", """{"createdBy":"bob"}""")]
         [TestCase("both", """{"createdBy":"bob","content":{"text":"Edited"}}""")]
@@ -329,18 +391,16 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
             if (fields == "content" || fields == "both")
             {
-                options.Content = new WebPubSubChatMessageContent { Text = "Edited" };
+                options.Content = WebPubSubChatMessageContent.FromText("Edited");
             }
             if (fields == "binary" || fields == "emptyBinary")
             {
-                options.Content = new WebPubSubChatMessageContent
-                {
-                    Binary = BinaryData.FromBytes(fields == "binary" ? new byte[] { 1, 2, 3 } : Array.Empty<byte>())
-                };
+                options.Content = WebPubSubChatMessageContent.FromBinary(
+                    BinaryData.FromBytes(fields == "binary" ? new byte[] { 1, 2, 3 } : Array.Empty<byte>()));
             }
             if (fields == "emptyText")
             {
-                options.Content = new WebPubSubChatMessageContent { Text = string.Empty };
+                options.Content = WebPubSubChatMessageContent.FromText(string.Empty);
             }
             if (fields == "clearCreator" || fields == "clearBoth")
             {
@@ -349,7 +409,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
             if (fields == "clearContent" || fields == "clearBoth")
             {
-                options.Content = new WebPubSubChatMessageContent { Text = "Edited" };
+                options.Content = WebPubSubChatMessageContent.FromText("Edited");
                 options.Content = null;
             }
 
@@ -405,7 +465,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 else
                 {
                     await client.UpdateMessageAsync("c.room1.default", "123",
-                        new UpdateMessageOptions { Content = new WebPubSubChatMessageContent { Text = "Edited" } });
+                        new UpdateMessageOptions { Content = WebPubSubChatMessageContent.FromText("Edited") });
                 }
             });
             Assert.That(exception.Status, Is.EqualTo(status));

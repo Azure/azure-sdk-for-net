@@ -26,7 +26,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="conversationId"> Conversation associated with this topic. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTopic(string id, string title, DateTimeOffset createdOn, string createdBy, ChatTopicState? state, string conversationId, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatTopic(string id, string title, DateTimeOffset createdOn, string createdBy, ChatTopicState state, string conversationId, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Title = title;

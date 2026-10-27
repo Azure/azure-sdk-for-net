@@ -46,7 +46,7 @@ message. Leaving `CreatedBy` unset preserves the original creator:
 ```C# Snippet:WebPubSubChatUpdateMessage
 var updatedMessage = new UpdateMessageOptions
 {
-    Content = new WebPubSubChatMessageContent { Text = "Updated message text" }
+    Content = WebPubSubChatMessageContent.FromText("Updated message text")
 };
 
 client.UpdateMessage(
@@ -55,8 +55,11 @@ client.UpdateMessage(
     updatedMessage);
 ```
 
-`Content` replaces the entire existing content. Supply either `Text` or `Binary`;
-switching to binary does not require clearing the previous text separately.
+`Content` replaces the entire existing content. Create it with
+`WebPubSubChatMessageContent.FromText(text)` or
+`WebPubSubChatMessageContent.FromBinary(binaryData)`, choosing one content type.
+The `Text` and `Binary` properties are read-only. Switching to binary does not
+require clearing the previous text separately.
 Leaving a property unset preserves its value, whereas explicitly assigning null
 clears it (`CreatedBy` becomes an empty string, and `Content` becomes empty text).
 For example, `new UpdateMessageOptions { Content = null }` clears only the body.

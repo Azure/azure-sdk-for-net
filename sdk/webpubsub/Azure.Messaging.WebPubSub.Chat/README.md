@@ -2,8 +2,6 @@
 
 Azure Web PubSub Chat provides rooms, membership, roles, topics, and persistent
 message history for real-time chat applications hosted on Azure Web PubSub.
-This library supports service API versions `2026-08-01-preview` (the default)
-and `2026-02-01-preview`.
 
 Use the client library for Azure Web PubSub Chat to:
 
@@ -84,9 +82,7 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 // </ChatDotNet_AuthenticateWithConnectionString>
 ```
 
-Both clients use `2026-08-01-preview` by default for Chat resource operations.
-When using a token credential, `GetClientAccessUri` obtains a client token through
-the separate Web PubSub token API using `2024-12-01`. Connection-string and
+Connection-string and
 access-key clients generate the client token locally.
 
 If you store the endpoint and access key separately, use `AzureKeyCredential`:
@@ -100,29 +96,40 @@ var client = new WebPubSubChatServiceClient(
 
 ## Key concepts
 
-- **Client:** `WebPubSubChatServiceClient` targets one resource endpoint and
-  hub. Client instances are thread-safe and should be reused.
-- **Rooms and users:** Rooms contain members. A `WebPubSubHumanChatUser` has a
-  user role, and each membership has a room role. `BuiltInChatRoles` provides
-  service-defined roles; `ChatPermission` defines permissions for custom roles.
-- **Topics and conversations:** Each room has a default conversation. Topics
-  belong to a room and have their own conversation IDs. Topic IDs are supplied
-  by the caller; the service returns conversation IDs, creator metadata,
-  timestamps, and ETags.
-- **Topic lifecycle:** States include `Normal`, `Archived`, and `SoftDeleted`.
-  Deleting a topic is a soft delete, not permanent removal. Unknown future
-  states are preserved by the extensible `ChatTopicState` type.
-- **Conditional writes:** Use a resource's ETag in `MatchConditions.IfMatch`
-  to avoid overwriting another writer's changes. `IfNoneMatch = ETag.All`
-  creates a resource only when it does not already exist.
-- **Pagination:** `Pageable<T>` and `AsyncPageable<T>` fetch more pages as you
-  enumerate them. `maxPageSize` is a page-size request, not a total-result
-  limit. Save the opaque `Page<T>.ContinuationToken` and pass it to `AsPages`
-  to resume enumeration.
-- **Real-time messaging:** This server library manages Chat resources and
-  history. Sending and receiving live chat messages requires a real-time
-  client using the service's Chat protocol; it is not a REST publish operation
-  on this client.
+### Hub
+
+A hub is a logical collection of WebSocket connections. A chat hub adds built-in rooms, member management, message persistence, and chat-specific APIs.
+
+This SDK applies only to chat hubs. Chat must be enabled on the target hub before the SDK can manage roles, users, rooms, members, conversations, or messages.
+
+### Role and permission
+
+A role is a named collection of Chat permissions. User role names start with `user.`, and room role names start with `room.`. Do not combine user and room permissions in one role.
+
+User roles control operations such as creating rooms. Room roles control what a member can do in a particular room, such as publishing messages or reading message history.
+
+### User
+
+A user represents an identity participating in chat, such as a human end user or an application. Client access credentials associate WebSocket connections with a user ID.
+
+### Room
+
+A room groups users together and is the primary organizational unit for chat interactions. Every room has an automatically created default conversation.
+
+### Room member
+
+A room member represents a user added to a room. Membership controls which users can receive and send messages in the room. In the service API, each room member is assigned a room role.
+
+### Conversation and message history
+
+A conversation is an ordered message stream within a room. Every room has a default conversation, and additional named conversations can be created through topics.
+
+Messages sent to a conversation are delivered in real time to the room's connected members. The chat service manages ordering and persistence, allowing members to load message history after reconnecting or joining later. The service client can list, update, and delete persisted messages.
+
+### Topic
+
+A topic represents a named conversation within a room. Topics can be created,
+renamed, archived, and soft deleted independently of the room's default conversation.
 
 ## Examples
 
