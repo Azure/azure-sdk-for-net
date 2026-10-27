@@ -150,23 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("rules"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    rules = array;
+                    DeserializeRules(prop, ref rules);
                     continue;
                 }
                 if (options.Format != "W")
