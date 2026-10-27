@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("Data")]
     public partial class ApplicationGatewayTrustedRootCertificate
     {
-        /// <summary> Gets or sets the Data compatibility property. </summary>
+        /// <summary> Gets or sets JSON-backed certificate data. Use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions)"/> with the certificate string, or <see cref="BinaryData.FromString(string)"/> with a quoted JSON string. </summary>
         [Azure.ResourceManager.Network.WirePath("properties.data")]
         public BinaryData Data
         {

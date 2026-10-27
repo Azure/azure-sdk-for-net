@@ -11,7 +11,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of SSL certificates of application gateway. </summary>
     internal partial class VpnClientRootCertificatePropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,11 +18,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificatePropertiesFormat"/>. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
         public VpnClientRootCertificatePropertiesFormat(BinaryData publicCertData)
         {
-            Argument.AssertNotNull(publicCertData, nameof(publicCertData));
-
             PublicCertData = publicCertData;
         }
 

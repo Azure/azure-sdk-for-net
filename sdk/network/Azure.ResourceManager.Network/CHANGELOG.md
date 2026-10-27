@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Restored JSON-backed `BinaryData` certificate values for Application Gateway and VPN client root certificates, fixing PEM response deserialization and double Base64 encoding of certificate uploads after the TypeSpec migration.
+
 ### Other Changes
 
 ## 1.18.0-beta.1 (2026-09-20)

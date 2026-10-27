@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             PublicCertData = publicCertData;
         }
-        /// <summary> Gets or sets the PublicCertData compatibility property. </summary>
+        /// <summary> Gets or sets JSON-backed public certificate data. Use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions)"/> with the certificate string, or <see cref="BinaryData.FromString(string)"/> with a quoted JSON string. </summary>
 
         [Azure.ResourceManager.Network.WirePath("properties.publicCertData")]
         public BinaryData PublicCertData

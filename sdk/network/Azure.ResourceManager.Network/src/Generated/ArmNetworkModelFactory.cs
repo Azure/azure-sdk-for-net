@@ -188,92 +188,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkSubResource(id, default);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayAuthenticationCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayAuthenticationCertificate ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id = default, string name = default, string @type = default, BinaryData data = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ApplicationGatewayAuthenticationCertificate(
-                id,
-                default,
-                name,
-                @type,
-                data is null && provisioningState is null ? default : new ApplicationGatewayAuthenticationCertificatePropertiesFormat(data, provisioningState, default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
-        /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedRootCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayTrustedRootCertificate ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id = default, string name = default, string @type = default, BinaryData data = default, string keyVaultSecretId = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ApplicationGatewayTrustedRootCertificate(
-                id,
-                default,
-                name,
-                @type,
-                data is null && keyVaultSecretId is null && provisioningState is null ? default : new ApplicationGatewayTrustedRootCertificatePropertiesFormat(data, keyVaultSecretId, provisioningState, default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="data"> Certificate public data. </param>
-        /// <param name="validatedCertData"> Validated certificate data. </param>
-        /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
-        /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayTrustedClientCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewayTrustedClientCertificate ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id = default, string name = default, string @type = default, BinaryData data = default, BinaryData validatedCertData = default, string clientCertIssuerDN = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ApplicationGatewayTrustedClientCertificate(
-                id,
-                default,
-                name,
-                @type,
-                data is null && validatedCertData is null && clientCertIssuerDN is null && provisioningState is null ? default : new ApplicationGatewayTrustedClientCertificatePropertiesFormat(data, validatedCertData, clientCertIssuerDN, provisioningState, default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
-        /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
-        /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
-        /// <param name="hsm"> Managed HSM properties of the Application Gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewaySslCertificate"/> instance for mocking. </returns>
-        public static ApplicationGatewaySslCertificate ApplicationGatewaySslCertificate(ResourceIdentifier id = default, string name = default, string @type = default, BinaryData data = default, string password = default, BinaryData publicCertData = default, string keyVaultSecretId = default, ApplicationGatewayManagedHsm hsm = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ApplicationGatewaySslCertificate(
-                id,
-                default,
-                name,
-                @type,
-                data is null && password is null && publicCertData is null && keyVaultSecretId is null && hsm is null && provisioningState is null ? default : new ApplicationGatewaySslCertificatePropertiesFormat(
-                    data,
-                    password,
-                    publicCertData,
-                    keyVaultSecretId,
-                    hsm,
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
         /// <summary> Managed HSM properties of an application gateway. </summary>
         /// <param name="keyId"> Key identifier of a key stored in Managed HSM. </param>
         /// <param name="publicCertData"> Base-64 encoded value of a base-64 public certificate. </param>
@@ -8680,24 +8594,6 @@ namespace Azure.ResourceManager.Network.Models
                 aadIssuer,
                 (vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>()).ToList(),
                 default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="publicCertData"> The certificate public data. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.VpnClientRootCertificate"/> instance for mocking. </returns>
-        public static VpnClientRootCertificate VpnClientRootCertificate(ResourceIdentifier id = default, string name = default, string @type = default, BinaryData publicCertData = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new VpnClientRootCertificate(
-                id,
-                default,
-                name,
-                @type,
-                publicCertData is null && provisioningState is null ? default : new VpnClientRootCertificatePropertiesFormat(publicCertData, provisioningState, default),
-                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>

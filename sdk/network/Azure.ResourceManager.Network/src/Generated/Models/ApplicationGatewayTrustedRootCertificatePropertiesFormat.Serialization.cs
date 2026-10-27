@@ -13,7 +13,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Trusted Root certificates properties of an application gateway. </summary>
     internal partial class ApplicationGatewayTrustedRootCertificatePropertiesFormat : IJsonModel<ApplicationGatewayTrustedRootCertificatePropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data, "D");
+                SerializeData(writer, options);
             }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
@@ -139,11 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeCertificateData(prop, ref data);
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretId"u8))
