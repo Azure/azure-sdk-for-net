@@ -15,6 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please use BrowserAutomationTool instead.
     /// See https://aka.ms/bat/docs for more information on Browser automation tool.
     /// </summary>
+    [Obsolete("This legacy Browser Automation tool is deprecated and is no longer available. Please use the latest Browser Automation tool instead. See https://aka.ms/bat/docs.")]
     [Experimental("AAIP001")]
     public partial class BrowserAutomationPreviewTool : ResponseTool
     {
