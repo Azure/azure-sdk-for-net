@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core.Amqp;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
 using Microsoft.Azure.Amqp;
@@ -25,8 +26,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public static void SetMessageAsParent(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (MessagingClientDiagnostics.TryExtractTraceContext(
-                    message.ApplicationProperties,
+            if (scope.IsEnabled &&
+                TryExtractTraceContext(
+                    message,
                     out string traceparent,
                     out string tracestate))
             {
@@ -70,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
-                    AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                    AddLinkedDiagnostics(scope, message);
                 }
 
                 if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource)
@@ -98,10 +100,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (scope.IsEnabled)
+            if (scope.IsEnabled &&
+                TryExtractTraceContext(
+                    message,
+                    out string traceparent,
+                    out string tracestate))
             {
-                AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                scope.AddLink(traceparent, tracestate);
             }
+        }
+
+        /// <summary>
+        ///   Extracts the trace context from a received message's application properties without allocating
+        ///   a read-only wrapper over them, or creating the underlying dictionary if the message has none.
+        /// </summary>
+        private static bool TryExtractTraceContext(ServiceBusReceivedMessage message, out string traceparent, out string tracestate)
+        {
+            AmqpAnnotatedMessage amqpMessage = message.AmqpMessage;
+
+            if (!amqpMessage.HasSection(AmqpMessageSection.ApplicationProperties))
+            {
+                traceparent = null;
+                tracestate = null;
+                return false;
+            }
+
+            return MessagingClientDiagnostics.TryExtractTraceContext(
+                amqpMessage.ApplicationProperties,
+                out traceparent,
+                out tracestate);
         }
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusMessage> messages)
@@ -117,17 +144,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
-            }
-        }
-
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
-        {
-            if (MessagingClientDiagnostics.TryExtractTraceContext(
-                    properties,
-                    out string traceparent,
-                    out string tracestate))
-            {
-                scope.AddLink(traceparent, tracestate);
             }
         }
 
