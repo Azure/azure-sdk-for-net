@@ -60,11 +60,6 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     private bool _isExisting = false;
 
     /// <summary>
-    /// Sets the existing resource flag during deserialization hydration.
-    /// </summary>
-    internal void SetExistingInternal() => IsExistingResource = true;
-
-    /// <summary>
     /// Declares explicit dependencies on other resources.
     /// </summary>
     /// <remarks>
@@ -155,12 +150,6 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 
-        // check if the resource has a condition
-        if (!BicepMetadata.Condition.IsEmpty)
-        {
-            body = new IfConditionExpression(BicepMetadata.Condition.Compile(), body);
-        }
-
         // Create a resource declaration
         ResourceStatement resource = BicepSyntax.Declare.Resource(
             BicepIdentifier,
@@ -182,7 +171,13 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         }
         if (BicepMetadata.BatchSize.HasValue)
         {
-            resource = resource.Decorate("batchSize", IntLiteralExpression.Create(BicepMetadata.BatchSize.Value));
+            resource = resource.Decorate("batchSize", BicepSyntax.Value(BicepMetadata.BatchSize.Value));
+        }
+
+        // Apply condition if specified
+        if (!BicepMetadata.Condition.IsEmpty)
+        {
+            resource.Condition = BicepMetadata.Condition.Compile();
         }
 
         yield return resource;

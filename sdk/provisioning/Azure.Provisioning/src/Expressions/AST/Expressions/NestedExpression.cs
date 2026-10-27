@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="value">The parent expression.</param>
 /// <param name="nestedMember">The nested resource member name.</param>
-public partial class NestedExpression(BicepExpression value, string nestedMember) : BicepExpression
+public class NestedExpression(BicepExpression value, string nestedMember) : BicepExpression
 {
     /// <summary>
     /// Gets the parent expression.

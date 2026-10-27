@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep comment statement.
 /// </summary>
 /// <param name="comment">The comment text.</param>
-public partial class CommentStatement(string comment) : BicepStatement
+public class CommentStatement(string comment) : BicepStatement
 {
     /// <summary>
     /// Gets the comment text.

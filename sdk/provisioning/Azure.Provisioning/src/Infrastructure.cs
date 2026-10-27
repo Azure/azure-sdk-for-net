@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,7 @@ namespace Azure.Provisioning;
 /// A friendly name that can also be used as a file name if compiling to a
 /// module.
 /// </param>
-public partial class Infrastructure(string bicepName = "main") : Provisionable
+public class Infrastructure(string bicepName = "main") : Provisionable
 {
     /// <summary>
     /// A friendly name that can also be used as a file name if compiling to a
@@ -36,7 +36,7 @@ public partial class Infrastructure(string bicepName = "main") : Provisionable
 
     /// <inheritdoc/>
     public override IEnumerable<Provisionable> GetProvisionableResources() => _resources;
-    private readonly ProvisionableCollection _resources = new(); // Owner set via Add
+    private readonly List<Provisionable> _resources = [];
 
     /// <summary>
     /// Adds a provisionable construct to this Infrastructure.
@@ -48,8 +48,6 @@ public partial class Infrastructure(string bicepName = "main") : Provisionable
     /// </remarks>
     public virtual void Add(Provisionable resource)
     {
-        _resources.Owner ??= this;
-
         if (resource is ProvisionableConstruct construct &&
             construct.ParentInfrastructure != this)
         {
