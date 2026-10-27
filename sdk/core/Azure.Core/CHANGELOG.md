@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Reduced allocations when creating diagnostic scopes, including when distributed tracing is not being collected.
+
 ## 1.64.0 (2026-10-26)
 
 ### Features Added

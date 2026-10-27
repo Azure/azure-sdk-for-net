@@ -312,6 +312,37 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public void ScopesUseActivitySourceForTheirClientName()
+        {
+            using var firstClientListener = new TestActivitySourceListener("Azure.Clients.FirstClient");
+            using var secondClientListener = new TestActivitySourceListener("Azure.Clients.SecondClient");
+            using var noClientListener = new TestActivitySourceListener("Azure.Clients.Operation");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+
+            // Create each scope more than once, as the ActivitySource for each scope name is cached.
+            for (int i = 0; i < 2; i++)
+            {
+                foreach (string name in new[] { "FirstClient.Operation", "SecondClient.Operation", "FirstClient.OtherOperation", "Operation" })
+                {
+                    using DiagnosticScope scope = clientDiagnostics.CreateScope(name);
+                    scope.Start();
+                }
+            }
+
+            CollectionAssert.AreEqual(
+                new[] { "FirstClient.Operation", "FirstClient.OtherOperation", "FirstClient.Operation", "FirstClient.OtherOperation" },
+                firstClientListener.Activities.Select(activity => activity.OperationName));
+            CollectionAssert.AreEqual(
+                new[] { "SecondClient.Operation", "SecondClient.Operation" },
+                secondClientListener.Activities.Select(activity => activity.OperationName));
+            CollectionAssert.AreEqual(
+                new[] { "Operation", "Operation" },
+                noClientListener.Activities.Select(activity => activity.OperationName));
+        }
+
+        [Test]
         public void CanSetActivitySourceAndDiagnosticSourceActivitiesTogether()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
