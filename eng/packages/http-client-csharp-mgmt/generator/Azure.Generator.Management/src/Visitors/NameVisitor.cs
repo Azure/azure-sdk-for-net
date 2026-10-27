@@ -71,9 +71,9 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         type = base.PreVisitModel(model, type);
-        if (type is null)
+        if (type is null || model.IsExactName || inputLibrary.ClientNameOverriddenModels.Contains(model))
         {
-            return null;
+            return type;
         }
 
         if (TryTransformUrlToUri(type.Name, out var newName))
@@ -91,18 +91,13 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
-            // When the same model is also used as the Create body we always rename to
-            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
-            // consistent across the SDK surface.
             if (isAlsoUsedInCreate)
             {
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
                 type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
-            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            else
             {
-                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: NormalizeRequestModelName(model, type, newName));
             }
@@ -113,9 +108,7 @@ internal class NameVisitor : ScmLibraryVisitor
     private static string NormalizeRequestModelName(InputModelType model, ModelProvider type, string name)
     {
         var plugin = ManagementClientGenerator.Instance;
-        if (model.IsExactName ||
-            plugin.InputLibrary.ClientNameOverriddenModels.Contains(model) ||
-            plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
+        if (plugin.InputLibrary.IsResourceUpdateModelNameExplicit(model))
         {
             return name;
         }

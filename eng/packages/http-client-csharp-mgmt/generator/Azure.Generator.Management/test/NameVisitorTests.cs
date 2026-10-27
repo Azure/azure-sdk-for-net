@@ -63,14 +63,16 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type.Name, Is.EqualTo(expected + (sharedBody ? "CreateOrUpdateContent" : "Patch")));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void StructuralRequestModelReferencesUseFinalName(bool sharedBody)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void StructuralRequestModelReferencesUseFinalName(bool sharedBody, bool clientNameOverride)
         {
-            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody);
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody, clientNameOverride: clientNameOverride);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var type = plugin.Object.TypeFactory.CreateModel(models[1])!;
-            var expected = "IPAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch");
+            var expected = clientNameOverride ? "PatchType" : "IPAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch");
             var modelText = plugin.Object.GetWriter(type).Write().Content;
             var serializationText = plugin.Object.GetWriter(type.SerializationProviders.Single()).Write().Content;
             var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
@@ -134,7 +136,7 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
             Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
-                Is.EqualTo("IpAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch")));
+                Is.EqualTo(exactResource ? "IpAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch") : "PatchType"));
         }
 
         [TestCase(false, false)]
@@ -158,13 +160,31 @@ namespace Azure.Generator.Mgmt.Tests
 
         [TestCase(false)]
         [TestCase(true)]
-        public void StructuralRequestModelRetainsClientNameOverrideRules(bool sharedBody)
+        public void StructuralRequestModelPreservesClientNameOverride(bool sharedBody)
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody, clientNameOverride: true);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
             Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
-                Is.EqualTo(sharedBody ? "IpAddressCreateOrUpdateContent" : "PatchType"));
+                Is.EqualTo("PatchType"));
+        }
+
+        [TestCase("TestModelUrl", false)]
+        [TestCase("TestModelUrl", true)]
+        [TestCase("Sku", false)]
+        [TestCase("Sku", true)]
+        public void OrdinaryModelPreservesExplicitName(string name, bool exactName)
+        {
+            var model = InputFactory.Model(name, decorators: exactName
+                ? []
+                : [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]);
+            if (exactName)
+            {
+                typeof(InputType).GetProperty(nameof(InputType.IsExactName))!.SetValue(model, true);
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+
+            Assert.That(plugin.Object.TypeFactory.CreateModel(model)!.Name, Is.EqualTo(name));
         }
 
         [TestCase(false)]
