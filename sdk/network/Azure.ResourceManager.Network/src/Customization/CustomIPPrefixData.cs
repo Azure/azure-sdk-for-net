@@ -24,7 +24,17 @@ namespace Azure.ResourceManager.Network
             get
             {
                 var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
-                return WritableSubResourceCollectionCompatibility.AsReadOnlyList(properties.ChildCustomIPPrefixes);
+                var children = properties.ChildCustomIPPrefixes;
+                if (children is null)
+                {
+                    return null;
+                }
+                var result = new WritableSubResource[children.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = children[i] is null ? null : new WritableSubResource { Id = children[i].Id };
+                }
+                return result;
             }
         }
 
@@ -53,7 +63,17 @@ namespace Azure.ResourceManager.Network
             get
             {
                 var properties = Properties ??= new CustomIPPrefixPropertiesFormat();
-                return WritableSubResourceCollectionCompatibility.AsReadOnlyList(properties.PublicIPPrefixes);
+                var publicPrefixes = properties.PublicIPPrefixes;
+                if (publicPrefixes is null)
+                {
+                    return null;
+                }
+                var result = new WritableSubResource[publicPrefixes.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = publicPrefixes[i] is null ? null : new WritableSubResource { Id = publicPrefixes[i].Id };
+                }
+                return result;
             }
         }
 

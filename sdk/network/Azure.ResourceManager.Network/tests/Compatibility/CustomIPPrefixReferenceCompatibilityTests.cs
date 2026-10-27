@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void UpdatedNativeReferencesAreVisibleWithoutReplacingStorage()
+        public void UpdatedNativeReferencesAreVisibleInNewSnapshotsWithoutReplacingStorage()
         {
             CustomIPPrefixData model = ReadModel();
             object properties = Properties.GetValue(model);
@@ -92,11 +92,32 @@ namespace Azure.ResourceManager.Network.Tests
             publicPrefixes.Add(new NetworkSubResource { Id = new ResourceIdentifier(thirdPublic) });
             string[] expectedChildren = { updatedChild, ChildIds[1], thirdChild };
             string[] expectedPublic = { updatedPublic, PublicIds[1], thirdPublic };
-            Assert.That(childView.Select(item => item.Id.ToString()), Is.EqualTo(expectedChildren));
-            Assert.That(publicView.Select(item => item.Id.ToString()), Is.EqualTo(expectedPublic));
+            Assert.That(childView.Select(item => item.Id.ToString()), Is.EqualTo(ChildIds));
+            Assert.That(publicView.Select(item => item.Id.ToString()), Is.EqualTo(PublicIds));
             AssertReferences(model, expectedChildren, expectedPublic);
             Assert.That(Properties.GetValue(model), Is.SameAs(properties));
             AssertPersistence(model, expectedChildren, expectedPublic);
+        }
+
+        [TestCase("ChildCustomIPPrefixList", "ChildCustomIPPrefixes")]
+        [TestCase("PublicIPPrefixes", "PublicIPPrefixes")]
+        public void ReferenceSnapshotsContainFreshIdOnlyProjectionsWithoutWriteback(string name, string nativeName)
+        {
+            CustomIPPrefixData model = ReadModel();
+            PropertyInfo property = typeof(CustomIPPrefixData).GetProperty(name);
+            var snapshot = (IReadOnlyList<WritableSubResource>)property.GetValue(model);
+            var freshSnapshot = (IReadOnlyList<WritableSubResource>)property.GetValue(model);
+            Assert.That(freshSnapshot, Is.Not.SameAs(snapshot));
+            Assert.That(freshSnapshot[0], Is.Not.SameAs(snapshot[0]));
+            Assert.That(snapshot[0].Id, Is.EqualTo(GetNativeList(model, nativeName)[0].Id));
+            using (JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(snapshot[0], ModelReaderWriterOptions.Json)))
+            {
+                Assert.That(json.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "id" }));
+            }
+            snapshot[0].Id = new ResourceIdentifier(Prefix + "customIPPrefixes/local");
+            Assert.That(freshSnapshot[0].Id, Is.EqualTo(GetNativeList(model, nativeName)[0].Id));
+            AssertReferences(model, ChildIds, PublicIds);
+            AssertPersistence(model, ChildIds, PublicIds);
         }
 
         [Test]

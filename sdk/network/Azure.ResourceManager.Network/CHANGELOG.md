@@ -2,29 +2,23 @@
 
 ## 1.18.0-beta.2 (Unreleased)
 
+The changes below are described relative to version 1.15.0. Previously published releases after 1.15.0, including 1.16.1 and 1.17.0, are planned for retraction.
+
 ### Features Added
+
+- Upgraded API version from 2025-05-01 to 2026-01-01.
+- Added resource APIs for address prefix sets, connection analyzers, connection policies, ExpressRoute LAGs, firewall policy Kubernetes selector groups, identity integration authentication policies, interconnect groups, and network manager configuration commits.
+- Added models for Application Gateway advanced routing conditions, maps, and rules.
+- Added strongly typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-- Restored native `AzureLocation` parameters for location-scoped subscription and resource-group operations, retaining the string overloads as obsolete compatibility methods hidden from IntelliSense.
-- Restored preferred management model property names while retaining obsolete forwarding aliases for the previous names.
-- Restored strongly typed `ResourceType` metadata and connected compatibility setters and typed model-factory inputs to the serialized values, retaining the string `Type` aliases present in 1.17.0. Generated legacy factory overloads accepting string `type` still discard that input; use the typed `resourceType` overloads instead.
-- Preserved resource-reference wire formats and deserialization of renamed required properties.
-- Restored `WritableSubResource` types for virtual hub IP configurations, virtual network gateway default sites, and virtual network peering references.
-- Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.
-- Restored the writable `P2SConnectionConfiguration.ConfigurationPolicyGroups` collection and its serialization; `ConfigurationPolicyGroupAssociations` now provides an obsolete read-only view of the same collection.
-- Restored `P2SConnectionConfiguration.VpnClientAddressPrefixes` as a forwarding accessor to `VpnClientAddressPool.AddressPrefixes`.
-- Restored `PfsGroup.Pfs` to use the `PFSMM` wire value and retained `PFSMM` as an obsolete forwarding alias.
-- Restored the preferred TLS enum names while retaining obsolete aliases with the same wire values.
-- Fixed `PolicySettings.CaptchaCookieExpirationInMins` to forward to `CaptchaExpirationInMins`, so assignments are included in service requests.
+- This release contains breaking changes compared with versions 1.16.1 and 1.17.0.
 
 ### Other Changes
 
-- Marked the unsupported `NetworkVirtualApplianceConnectionData.ConnectionRoutingConfiguration` compatibility property obsolete and hidden from IntelliSense; use `RoutingConfiguration` instead.
-- Marked the unsupported `P2SConnectionConfiguration.RoutingConfiguration` compatibility property obsolete and hidden from IntelliSense.
-- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense.
+- Migrated code generation from AutoRest to TypeSpec.
+- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense. The legacy property forwards to the replacement property for serialization.
 
 ## 1.18.0-beta.1 (2026-09-20)
 
