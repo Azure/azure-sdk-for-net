@@ -62,12 +62,18 @@ on that basis.
   is expected. Judge whether the content is genuinely needed standalone ℹ️
 - **Any csproj property that overrides a repo-wide default gets surfaced, with its
   justification.** `eng/Directory.Build.Common.props` sets these centrally so every library
-  moves together; a local override opts one library out of that. Restating the central value
-  verbatim (e.g. `<LangVersion>latest</LangVersion>`, already the default) is dead weight to
-  delete. A *different* value is a decision — `LangVersion` `12` holds the library back from
-  newer language features, `preview` opts into unstable ones. Raise every override and quote
-  the stated reason so the human reviewer can judge it; no stated reason is itself the
-  finding 🟡
+  moves together; a local override opts one library out of that. A *different* value is a
+  decision — `LangVersion` `12` holds the library back from newer language features,
+  `preview` opts into unstable ones. Raise every override and quote the stated reason so the
+  human reviewer can judge it; no stated reason is itself the finding 🟡
+- **A csproj property that restates the central value verbatim is still an override.**
+  `<LangVersion>latest</LangVersion>` changes nothing today, but when the central default
+  changes, this library silently keeps the old one 🔴. Delete it, after confirming the project
+  gets that value without the line — central props are evaluated before the project body, and
+  many are conditional on project type, so a
+  `<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>` that follows a local
+  `<RequiredTargetFrameworks>` is what applies that override. If the line came from
+  `sdk/template` or generator scaffolding, say so; the source needs the same fix
 - **`eng/common` is synced from `Azure/azure-sdk-tools` — its own README says so.** An edit
   made there is overwritten by the next sync, so the change is silently lost and the review
   that approved it was wasted. It belongs in `azure-sdk-tools` 🔴
