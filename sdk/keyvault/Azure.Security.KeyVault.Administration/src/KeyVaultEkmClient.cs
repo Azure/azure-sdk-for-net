@@ -15,10 +15,8 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
-    public partial class KeyVaultEkmClient : IDisposable
+    public partial class KeyVaultEkmClient
     {
-        private DisposableHttpPipeline _ownedPipeline;
-
         /// <summary>
         /// Gets the vault URI.
         /// </summary>
@@ -46,13 +44,9 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _ownedPipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
-            Pipeline = _ownedPipeline;
+                new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
             _endpoint = vaultUri;
             _apiVersion = options.GetVersionString();
         }
@@ -71,19 +65,6 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Releases the HTTP pipeline resources owned by this client.
-        /// </summary>
-        /// <remarks>
-        /// Reuse the client and dispose it after its operations have completed.
-        /// Caller-provided transports and credentials are not disposed.
-        /// </remarks>
-        public virtual void Dispose()
-        {
-            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

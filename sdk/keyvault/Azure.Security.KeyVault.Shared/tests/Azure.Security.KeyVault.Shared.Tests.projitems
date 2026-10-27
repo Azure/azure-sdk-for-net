@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeCacheVerificationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeResourceVerificationTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ClientDisposalTestsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContinuousAccessEvaluationTestsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEventListener.cs" />
