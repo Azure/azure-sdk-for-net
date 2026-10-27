@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
@@ -25,6 +27,17 @@ namespace Azure.AI.VoiceLive.Tests
         private const string CustomHeaderValue = "preserved-header";
         private const string DestinationPath = "/custom-prefix/voice-live/redirect-destination";
         private const string Command = "{\"type\":\"response.create\",\"event_id\":\"redirect-positive-control\"}";
+
+        private static bool UsesNetStandardSdk =>
+            typeof(VoiceLiveClient).Assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName == ".NETStandard,Version=v2.0";
+
+#if NET8_0
+        [Test]
+        public void Net8UsesNetStandardSdkAsset()
+        {
+            Assert.That(UsesNetStandardSdk, Is.True, "The .NET 8 CI configuration must exercise the netstandard2.0 SDK asset.");
+        }
+#endif
 
         public enum SessionCreation
         {
@@ -61,10 +74,11 @@ namespace Azure.AI.VoiceLive.Tests
                 yield return InvalidUpgrade.MissingConnection;
                 yield return InvalidUpgrade.WrongConnection;
                 yield return InvalidUpgrade.UnexpectedSubprotocol;
-#if NETFRAMEWORK
-                // The legacy handshake must reject unsolicited extensions; native ClientWebSocket ignores them.
-                yield return InvalidUpgrade.UnexpectedExtensions;
-#endif
+                if (UsesNetStandardSdk)
+                {
+                    // The legacy handshake must reject unsolicited extensions; native ClientWebSocket ignores them.
+                    yield return InvalidUpgrade.UnexpectedExtensions;
+                }
             }
         }
 

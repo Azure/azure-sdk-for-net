@@ -40,6 +40,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         internal Exception? Failure { get; private set; }
         internal string? ReceivedCommand { get; private set; }
         internal WebSocketCloseStatus? CloseStatus { get; private set; }
+        internal bool AcceptProxyTunnels { get; set; }
 
         internal Func<Request, Stream, CancellationToken, Task> Handler { get; set; }
             = (request, stream, cancellationToken) => WriteResponseAsync(stream, 400, null, cancellationToken);
@@ -163,6 +164,12 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
                     _shutdown.Token.ThrowIfCancellationRequested();
                     using NetworkStream stream = connection.GetStream();
                     Request request = await ReadRequestAsync(stream, _shutdown.Token).ConfigureAwait(false);
+                    if (AcceptProxyTunnels && request.Method == "CONNECT")
+                    {
+                        byte[] established = Encoding.ASCII.GetBytes("HTTP/1.1 200 Connection Established\r\n\r\n");
+                        await stream.WriteAsync(established, 0, established.Length, _shutdown.Token).ConfigureAwait(false);
+                        request = await ReadRequestAsync(stream, _shutdown.Token).ConfigureAwait(false);
+                    }
                     _requests.Enqueue(request);
                     await Handler(request, stream, _shutdown.Token).ConfigureAwait(false);
                 }
@@ -211,7 +218,10 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
                     headers.Add(lines[i].Substring(0, separator), lines[i].Substring(separator + 1).Trim());
                 }
 
-                return new Request(requestLine[0], new Uri(Address, requestLine[1]), headers);
+                Uri requestUri = requestLine[0] == "CONNECT"
+                    ? new Uri("http://" + requestLine[1])
+                    : new Uri(new Uri("http://" + headers["Host"]), requestLine[1]);
+                return new Request(requestLine[0], requestUri, headers);
             }
 
             throw new InvalidDataException("The loopback request headers exceeded 16384 bytes.");

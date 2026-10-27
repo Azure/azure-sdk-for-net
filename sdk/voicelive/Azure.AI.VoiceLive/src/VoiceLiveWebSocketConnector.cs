@@ -19,13 +19,6 @@ namespace Azure.AI.VoiceLive
 {
     internal static class VoiceLiveWebSocketConnector
     {
-        private static readonly HttpMessageInvoker s_invoker = new HttpMessageInvoker(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            UseCookies = false,
-            UseProxy = false
-        });
-
         internal static async Task<WebSocket> ConnectAsync(
             Uri endpoint,
             IDictionary<string, string> headers,
@@ -37,8 +30,14 @@ namespace Azure.AI.VoiceLive
                 throw new ArgumentException("The WebSocket endpoint must be an absolute ws or wss URI.", nameof(endpoint));
             }
 
+            using var invoker = new HttpMessageInvoker(new HttpClientHandler
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            });
+
 #if NETSTANDARD2_0
-            return await ConnectLegacyAsync(endpoint, headers, cancellationToken).ConfigureAwait(false);
+            return await ConnectLegacyAsync(endpoint, headers, invoker, cancellationToken).ConfigureAwait(false);
 #else
             var webSocket = new ClientWebSocket();
             try
@@ -48,7 +47,7 @@ namespace Azure.AI.VoiceLive
                     webSocket.Options.SetRequestHeader(header.Key, header.Value);
                 }
 
-                await webSocket.ConnectAsync(endpoint, s_invoker, cancellationToken).ConfigureAwait(false);
+                await webSocket.ConnectAsync(endpoint, invoker, cancellationToken).ConfigureAwait(false);
                 return webSocket;
             }
             catch (Exception)
@@ -63,6 +62,7 @@ namespace Azure.AI.VoiceLive
         private static async Task<WebSocket> ConnectLegacyAsync(
             Uri endpoint,
             IDictionary<string, string> headers,
+            HttpMessageInvoker invoker,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -125,7 +125,7 @@ namespace Azure.AI.VoiceLive
                     request.Headers.Add("Sec-WebSocket-Version", "13");
                     request.Headers.Add("Sec-WebSocket-Key", key);
 
-                    var result = await s_invoker.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                    var result = await invoker.SendAsync(request, cancellationToken).ConfigureAwait(false);
                     response = result;
                     cancellationToken.ThrowIfCancellationRequested();
                     ValidateResponse(result.StatusCode, key,
