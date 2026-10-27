@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes
         private static ResponseClassifier _pipelineMessageClassifier200201;
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
-        private static ResponseClassifier _pipelineMessageClassifier204;
+        private static ResponseClassifier _pipelineMessageClassifier204404;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204404 => _pipelineMessageClassifier204404 ??= new StatusCodeClassifier(stackalloc ushort[] { 204, 404 });
 
         internal HttpMessage CreateCreateOrUpdateSynonymMapRequest(string synonymMapName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
@@ -241,7 +241,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
@@ -514,7 +514,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
@@ -675,7 +675,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
@@ -836,7 +836,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
@@ -1124,7 +1124,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
