@@ -34,11 +34,12 @@
   (`ImageGenerationCallResponseItem.ImageResultBytes`,
   `StreamingResponseImageGenerationCallPartialImageUpdate.PartialImageBytes`). Function call output
   went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
-  previous model used `BinaryData`, so an output sent as an array of content parts is flattened
-  into one string by joining its text parts with `\n`, and non-text parts are dropped.
-  `ResponseEventStream.OutputItemFunctionCallOutput` keeps its `BinaryData` parameter but now sends
-  the UTF-8 text of that value as the string output, so pass the text itself rather than a
-  JSON-quoted string literal.
+  previous model used `BinaryData`. When the output is sent as an array of content parts,
+  `FunctionOutput` returns the newline-joined text of its text parts, while the original array
+  (including `input_image` and `input_file` parts) is kept and sent back as-is when the item is
+  serialized, stored or replayed. `ResponseEventStream.OutputItemFunctionCallOutput` still takes
+  `BinaryData` as JSON: a JSON string is sent as its value and an array of content parts is sent
+  as an array; any other value is sent as its UTF-8 text.
 - `CreateResponseRequest`, the argument of `ResponsesProvider.CreateResponseAsync`, is renamed to
   `CreateResponsePersistRequest` (the old name is now used by a generated internal model). Its
   `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are

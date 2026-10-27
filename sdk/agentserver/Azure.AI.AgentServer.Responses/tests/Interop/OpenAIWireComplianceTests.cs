@@ -431,8 +431,12 @@ public class OpenAIWireComplianceTests
 
         Assert.That(items, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        // Array-form output is flattened to its text parts: the canonical shape is a string.
+        // FunctionOutput exposes the text parts; the array itself is kept for serialization.
         Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("Result text"));
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(
+            System.ClientModel.Primitives.ModelReaderWriter.Write(fco).ToString())!;
+        Assert.That(wire["output"], Is.InstanceOf<System.Text.Json.Nodes.JsonArray>());
+        Assert.That((string?)wire["output"]![0]!["text"], Is.EqualTo("Result text"));
     }
 
     [Test]

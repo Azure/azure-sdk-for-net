@@ -594,16 +594,22 @@ public class ResponseEventStream
     /// </summary>
     /// <param name="callId">The call ID of the function call this output is for.</param>
     /// <param name="output">
-    /// The output of the function call. Its UTF-8 text is sent as the item's string output, so
-    /// pass the text itself (for example a JSON document as its JSON text), not a JSON-quoted
-    /// string literal.
+    /// The output of the function call as JSON: either a JSON string, or an array of
+    /// <c>input_text</c>, <c>input_image</c> and <c>input_file</c> content parts, which is sent
+    /// as an array. A value that is not valid JSON is sent as text.
     /// </param>
     /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
     public IEnumerable<ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, BinaryData output)
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
         var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
-        var item = new OutputItemFunctionToolCallOutput(callId, output.ToString()) { Id = itemId };
+        var text = FunctionCallOutputParts.FromJson(output, out var parts);
+        var item = new OutputItemFunctionToolCallOutput(callId, text) { Id = itemId };
+        if (parts is not null)
+        {
+            FunctionCallOutputParts.SetParts(item, parts);
+        }
+
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }

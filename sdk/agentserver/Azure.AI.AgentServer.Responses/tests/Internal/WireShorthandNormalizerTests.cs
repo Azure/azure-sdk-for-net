@@ -15,28 +15,6 @@ public class WireShorthandNormalizerTests
     }
 
     [Test]
-    public void FunctionCallOutput_ArrayOutput_IsFlattenedToItsTextParts()
-    {
-        var node = Normalize("""
-        {
-          "input": [
-            {
-              "type": "function_call_output",
-              "call_id": "call_1",
-              "output": [
-                { "type": "input_text", "text": "first" },
-                { "type": "input_image", "image_url": "https://example.com/a.png" },
-                { "type": "input_text", "text": "second" }
-              ]
-            }
-          ]
-        }
-        """);
-
-        Assert.That((string?)node["input"]![0]!["output"], Is.EqualTo("first\nsecond"));
-    }
-
-    [Test]
     public void FunctionCallOutput_StringOutput_IsLeftAlone()
     {
         var node = Normalize("""
@@ -46,8 +24,9 @@ public class WireShorthandNormalizerTests
         Assert.That((string?)node["input"]![0]!["output"], Is.EqualTo("done"));
     }
 
-    // Only the function call output has a string-only canonical shape. The OpenAI models read the
-    // other array outputs natively, so flattening them would drop their payload.
+    // Array outputs are left as sent. The OpenAI models read most of them natively, and
+    // ModelJson reads the function_call_output array without losing its non-text parts.
+    [TestCase("""{"type":"function_call_output","call_id":"call_1","output":[{"type":"input_text","text":"first"},{"type":"input_image","image_url":"https://example.com/a.png"}]}""")]
     [TestCase("""{"type":"shell_call_output","call_id":"call_1","output":[{"stdout":"a\n","stderr":"","outcome":{"type":"exit","exit_code":0}}]}""")]
     [TestCase("""{"type":"custom_tool_call_output","call_id":"call_1","output":[{"type":"input_text","text":"result"},{"type":"input_image","image_url":"https://example.com/a.png"}]}""")]
     [TestCase("""{"call_id":"call_1","output":[{"type":"input_text","text":"result"}]}""")]

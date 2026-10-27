@@ -162,10 +162,20 @@ public static class ResponseItemAttributionExtensions
         }
 
         /// <summary> Gets or sets the <c>output_index</c> carried by updates that do not model it directly. </summary>
-        public int OutputIndex
+        public int? OutputIndex
         {
-            get => GetInt32(ref update.Patch, OutputIndexPath.Span) ?? 0;
-            set => update.Patch.Set(OutputIndexPath.Span, value);
+            get => GetInt32(ref update.Patch, OutputIndexPath.Span);
+            set
+            {
+                if (value is null)
+                {
+                    update.Patch.Remove(OutputIndexPath.Span);
+                }
+                else
+                {
+                    update.Patch.Set(OutputIndexPath.Span, value.Value);
+                }
+            }
         }
 
         /// <summary> Gets or sets the <c>delta</c> carried by updates that do not model it directly. </summary>

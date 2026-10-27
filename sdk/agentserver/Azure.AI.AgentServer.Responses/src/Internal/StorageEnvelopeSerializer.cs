@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -85,29 +84,26 @@ internal static class StorageEnvelopeSerializer
     /// <summary>
     /// Deserializes a JSON string into a <see cref="Response"/>.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
     public static ResponseObject DeserializeResponse(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelReaderWriter.Read<ResponseObject>(data, JsonOptions)
+        return ModelJson.Read<ResponseObject>(data, JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize Response from storage.");
     }
 
     /// <summary>
     /// Deserializes a JSON string into an <see cref="AgentsPagedResultOutputItem"/>.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
     public static AgentsPagedResultOutputItem DeserializePagedItems(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelReaderWriter.Read<AgentsPagedResultOutputItem>(data, JsonOptions)
+        return ModelJson.Read<AgentsPagedResultOutputItem>(data, JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize AgentsPagedResultOutputItem from storage.");
     }
 
     /// <summary>
     /// Deserializes a JSON array of nullable <see cref="OutputItem"/> objects.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
     public static IEnumerable<OutputItem?> DeserializeItemsArray(string json)
     {
         using var doc = JsonDocument.Parse(json);
@@ -120,7 +116,7 @@ internal static class StorageEnvelopeSerializer
                 continue;
             }
             var itemData = BinaryData.FromString(element.GetRawText());
-            result.Add(ModelReaderWriter.Read<OutputItem>(itemData, JsonOptions));
+            result.Add(ModelJson.Read<OutputItem>(itemData, JsonOptions));
         }
         return result;
     }

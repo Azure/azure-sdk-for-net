@@ -16,7 +16,7 @@ internal static class OpenAIJson
 {
     public static T Read<T>(BinaryData json)
         where T : class, IJsonModel<T>
-        => ModelReaderWriter.Read<T>(json)!;
+        => Azure.AI.AgentServer.Responses.Internal.ModelJson.Read<T>(json)!;
 
     public static T Read<T>(string json)
         where T : class, IJsonModel<T>

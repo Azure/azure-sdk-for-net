@@ -414,6 +414,38 @@ public class ConvenienceGeneratorTests
         Assert.That(doc.RootElement.GetProperty("output").GetString(), Is.EqualTo("{\"temp\":72}"));
     }
 
+    [Test]
+    public void OutputItemFunctionCallOutput_JsonStringLiteral_SendsItsValue()
+    {
+        var stream = CreateStream();
+
+        var events = stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromObjectAsJson("72 degrees")).ToList();
+
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
+        Assert.That(fco.FunctionOutput, Is.EqualTo("72 degrees"));
+        using var doc = JsonDocument.Parse(ModelJson.Write(done.Item).ToMemory());
+        Assert.That(doc.RootElement.GetProperty("output").GetString(), Is.EqualTo("72 degrees"));
+    }
+
+    [Test]
+    public void OutputItemFunctionCallOutput_ContentPartArray_SendsArray()
+    {
+        var stream = CreateStream();
+        var parts = "[{\"type\":\"input_text\",\"text\":\"see image\"},{\"type\":\"input_image\",\"image_url\":\"https://example.com/a.png\"}]";
+
+        var events = stream.OutputItemFunctionCallOutput("call_1", BinaryData.FromString(parts)).ToList();
+
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
+        Assert.That(fco.FunctionOutput, Is.EqualTo("see image"));
+        using var doc = JsonDocument.Parse(ModelJson.Write(done.Item).ToMemory());
+        var output = doc.RootElement.GetProperty("output");
+        Assert.That(output.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(output.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(output[1].GetProperty("type").GetString(), Is.EqualTo("input_image"));
+    }
+
     // ──────────────────────────────────────────────────────────
     //  Output-Item Convenience – McpApprovalRequest
     // ──────────────────────────────────────────────────────────

@@ -12,7 +12,8 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// The OpenAI client only ever emits the canonical form, so its reader is strict.
 /// This server accepts requests from arbitrary callers and must therefore normalize
 /// <c>input</c>, message <c>content</c>, <c>conversation</c>, and <c>instructions</c>
-/// before model binding.
+/// before model binding. The array form of a <c>function_call_output</c> item's
+/// <c>output</c> is left as sent; <see cref="ModelJson"/> reads it without losing parts.
 /// </para>
 /// </summary>
 internal static class WireShorthandNormalizer
@@ -70,7 +71,6 @@ internal static class WireShorthandNormalizer
 
         InferItemType(item);
         NormalizeMessageContent(item);
-        NormalizeFunctionCallOutput(item);
     }
 
     /// <summary>
@@ -85,33 +85,6 @@ internal static class WireShorthandNormalizer
         }
 
         item["type"] = "message";
-    }
-
-    /// <summary>
-    /// A function call output may be sent as an array of content parts. The canonical shape
-    /// is a plain string, so the text parts are flattened into one. Other items keep an array
-    /// output as sent: <c>custom_tool_call_output</c> reads its content parts natively, and
-    /// <c>shell_call_output</c> carries structured stdout, stderr and outcome entries.
-    /// </summary>
-    private static void NormalizeFunctionCallOutput(JsonObject item)
-    {
-        if (item["type"] is not JsonValue type || !type.TryGetValue<string>(out var itemType) ||
-            itemType != "function_call_output" || item["output"] is not JsonArray parts)
-        {
-            return;
-        }
-
-        var texts = new List<string>();
-        foreach (var part in parts)
-        {
-            if (part is JsonObject partObject && partObject["text"] is JsonValue partText &&
-                partText.TryGetValue<string>(out var s))
-            {
-                texts.Add(s);
-            }
-        }
-
-        item["output"] = string.Join("\n", texts);
     }
 
     /// <summary>

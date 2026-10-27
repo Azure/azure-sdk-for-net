@@ -369,7 +369,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string? get_Delta(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_Input(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_ItemId(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
-        public static int get_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
+        public static int? get_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update) { throw null; }
         public static string? get_OutputText(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string? get_ResponseId(OpenAI.Responses.ResponseItem item) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? get_Status(OpenAI.Responses.McpToolCallItem mcpCall) { throw null; }
@@ -385,7 +385,7 @@ namespace Azure.AI.AgentServer.Responses
         public static void set_Delta(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_Input(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
         public static void set_ItemId(OpenAI.Responses.StreamingResponseUpdate update, string? value) { }
-        public static void set_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update, int value) { }
+        public static void set_OutputIndex(OpenAI.Responses.StreamingResponseUpdate update, int? value) { }
         public static void set_ResponseId(OpenAI.Responses.ResponseItem item, string? value) { }
         public static void set_Status(OpenAI.Responses.McpToolCallItem mcpCall, Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? value) { }
         public sealed partial class <G>$18D35430E41928A72CE2C2B20C1EB7D6
@@ -435,7 +435,7 @@ namespace Azure.AI.AgentServer.Responses
             public string? Delta { get { throw null; } set { } }
             public string? Input { get { throw null; } set { } }
             public string? ItemId { get { throw null; } set { } }
-            public int OutputIndex { get { throw null; } set { } }
+            public int? OutputIndex { get { throw null; } set { } }
             public static partial class <M>$89F88CE85944EB7F58B3316EF3164959
             {
                 public static void <Extension>$(OpenAI.Responses.StreamingResponseUpdate update) { }

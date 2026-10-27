@@ -15,6 +15,10 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// reflection-based overloads dispatch on the runtime type and are therefore the only correct
 /// choice here. This package is not trim/AOT-annotated, so the analyzer's AOT concern does not apply.
 /// </para>
+/// <para>
+/// Reads also accept the array form of a <c>function_call_output</c> item's <c>output</c>;
+/// see <see cref="FunctionCallOutputParts"/>.
+/// </para>
 /// </summary>
 internal static class ModelJson
 {
@@ -37,9 +41,16 @@ internal static class ModelJson
     public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = null)
         where T : class
     {
+        var flattened = FunctionCallOutputParts.Flatten(ref data);
 #pragma warning disable AZC0150
-        return ModelReaderWriter.Read<T>(data, options ?? ModelReaderWriterOptions.Json);
+        var model = ModelReaderWriter.Read<T>(data, options ?? ModelReaderWriterOptions.Json);
 #pragma warning restore AZC0150
+        if (flattened is not null)
+        {
+            FunctionCallOutputParts.Restore(model, flattened);
+        }
+
+        return model;
     }
 
     /// <summary>Reads a model of the given runtime type.</summary>
@@ -49,8 +60,15 @@ internal static class ModelJson
     /// <returns>The deserialized model, or <see langword="null"/>.</returns>
     public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = null)
     {
+        var flattened = FunctionCallOutputParts.Flatten(ref data);
 #pragma warning disable AZC0150
-        return ModelReaderWriter.Read(data, returnType, options ?? ModelReaderWriterOptions.Json);
+        var model = ModelReaderWriter.Read(data, returnType, options ?? ModelReaderWriterOptions.Json);
 #pragma warning restore AZC0150
+        if (flattened is not null)
+        {
+            FunctionCallOutputParts.Restore(model, flattened);
+        }
+
+        return model;
     }
 }
