@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="addRecommendedSignals"> Whether to add all recommended signals to the discovered entities. </param>
         /// <param name="specification"> Specification of the discovery rule defining how entities are discovered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSetting"/> or <paramref name="specification"/> is null. </exception>
-        public HealthModelDiscoveryRuleProperties(string authenticationSetting, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, DiscoveryRuleSpecification specification)
+        public HealthModelDiscoveryRuleProperties(string authenticationSetting, HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, HealthModelDiscoveryRuleSpecification specification)
         {
             Argument.AssertNotNull(authenticationSetting, nameof(authenticationSetting));
             Argument.AssertNotNull(specification, nameof(specification));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="error"> Error details if the last discovery operation failed. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState, string displayName, string authenticationSetting, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, DiscoveryRuleSpecification specification, ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal, DiscoveryError error, string entityName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState, string displayName, string authenticationSetting, HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, HealthModelDiscoveryRuleSpecification specification, ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal, HealthModelDiscoveryError error, string entityName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string AuthenticationSetting { get; set; }
 
         /// <summary> Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted. </summary>
-        public DiscoveryRuleRelationshipDiscoveryBehavior DiscoverRelationships { get; set; }
+        public HealthModelDiscoveryRuleRelationshipDiscoveryBehavior DiscoverRelationships { get; set; }
 
         /// <summary> Whether to add all recommended signals to the discovered entities. </summary>
-        public DiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get; set; }
+        public HealthModelDiscoveryRuleRecommendedSignalsBehavior AddRecommendedSignals { get; set; }
 
         /// <summary> Specification of the discovery rule defining how entities are discovered. </summary>
-        public DiscoveryRuleSpecification Specification { get; set; }
+        public HealthModelDiscoveryRuleSpecification Specification { get; set; }
 
         /// <summary> Whether to automatically add a signal for the Azure resource's availability state from Azure Resource Health to the discovered entities. Defaults to `Enabled`: discovery rules updated via this API version without setting this field will begin emitting a Resource Health availability signal. Pass `Disabled` to preserve pre-`2026-05-01-preview` behavior. </summary>
         public ResourceHealthAvailabilityStateSignalBehavior? AddResourceHealthSignal { get; set; }
 
         /// <summary> Error details if the last discovery operation failed. </summary>
-        public DiscoveryError Error { get; }
+        public HealthModelDiscoveryError Error { get; }
 
         /// <summary> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </summary>
         public string EntityName { get; }
