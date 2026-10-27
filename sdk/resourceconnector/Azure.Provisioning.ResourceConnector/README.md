@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.ResourceConnector --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
 ## Key concepts
 
 This library allows you to define Azure Resource Connector appliances declaratively in .NET and compile them into Bicep templates for deployment to Azure.
