@@ -29282,6 +29282,7 @@
                 },
                 "singletonResourceName": "default",
                 "resourceName": "FooConfiguration",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -30173,6 +30174,7 @@
                   "scopeResourceType": "Microsoft.Resources/tenants"
                 },
                 "resourceName": "BestPractice",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -30254,6 +30256,7 @@
                 },
                 "parentResourceId": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                 "resourceName": "BestPracticeVersion",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -30795,6 +30798,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "TrafficProfile",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -30852,6 +30856,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                 "resourceName": "TrafficEndpoint",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -31027,6 +31032,7 @@
                   "scopeResourceType": "Microsoft.Compute/virtualMachines"
                 },
                 "resourceName": "PolicyVmAssignment",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -31095,6 +31101,7 @@
                   "scopeResourceType": "Microsoft.HybridCompute/machines"
                 },
                 "resourceName": "PolicyArcAssignment",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -31300,6 +31307,7 @@
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
                 },
                 "resourceName": "PublicSharedConfig",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-04-01",
@@ -31983,6 +31991,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
                 "resourceName": "EventGridTopicPrivateEndpointConnection",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -32042,6 +32051,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
                 "resourceName": "EventGridDomainPrivateEndpointConnection",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

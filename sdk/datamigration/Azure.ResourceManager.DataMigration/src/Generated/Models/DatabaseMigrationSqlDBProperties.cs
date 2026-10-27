@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class DatabaseMigrationSqlDBProperties : DatabaseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBProperties"/>. </summary>
-        public DatabaseMigrationSqlDBProperties()
+        public DatabaseMigrationSqlDBProperties() : base("SqlDb")
         {
             TableList = new ChangeTrackingList<string>();
         }

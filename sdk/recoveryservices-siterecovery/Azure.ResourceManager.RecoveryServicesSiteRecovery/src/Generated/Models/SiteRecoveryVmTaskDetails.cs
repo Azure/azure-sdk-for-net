@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class SiteRecoveryVmTaskDetails : SiteRecoveryJobTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmTaskDetails"/>. </summary>
-        internal SiteRecoveryVmTaskDetails()
+        internal SiteRecoveryVmTaskDetails() : base("VirtualMachineTaskDetails")
         {
         }
 
