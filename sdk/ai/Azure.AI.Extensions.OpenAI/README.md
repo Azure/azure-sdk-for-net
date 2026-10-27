@@ -1579,7 +1579,7 @@ await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName:
 #### Browser automation preview tool
 
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
-This tool was released to preview the functionality, please use the stable version of the tool.
+This tool was released to preview the functionality and is now deprecated, please use the stable version of the tool.
 
 `BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the Browser Automation connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 

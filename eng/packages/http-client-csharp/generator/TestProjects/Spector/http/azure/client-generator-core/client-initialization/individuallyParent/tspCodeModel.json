@@ -241,7 +241,6 @@
                 "$id": "21",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -381,7 +380,6 @@
                 "$id": "31",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -507,7 +505,6 @@
                 "$id": "37",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithPathClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -632,7 +629,6 @@
                 "$id": "45",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -769,7 +765,6 @@
                 "$id": "55",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -892,7 +887,6 @@
                 "$id": "61",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithQueryClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1014,7 +1008,6 @@
                 "$id": "69",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1151,7 +1144,6 @@
                 "$id": "79",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1219,7 +1211,6 @@
                 "$id": "83",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithHeaderClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1341,7 +1332,6 @@
                 "$id": "91",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1524,7 +1514,6 @@
                 "$id": "105",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1618,7 +1607,6 @@
                 "$id": "111",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMultipleClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1769,7 +1757,6 @@
                 "$id": "121",
                 "name": "withQuery",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1954,7 +1941,6 @@
                 "$id": "135",
                 "name": "getStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2071,7 +2057,6 @@
                 "$id": "143",
                 "name": "deleteStandalone",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithMixedClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2242,7 +2227,6 @@
                 "$id": "155",
                 "name": "withAliasedName",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2334,7 +2318,6 @@
                 "$id": "161",
                 "name": "withOriginalName",
                 "isExactName": false,
-                "resourceName": "IndividuallyParentNestedWithParamAliasClient",
                 "accessibility": "public",
                 "parameters": [
                   {

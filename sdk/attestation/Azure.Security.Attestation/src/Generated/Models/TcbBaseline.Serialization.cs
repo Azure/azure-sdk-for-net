@@ -86,10 +86,10 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("tcbEvaluationDataNumber"u8);
                 writer.WriteNumberValue(TcbEvaluationDataNumber.Value);
             }
-            if (Optional.IsDefined(TcbReleaseOn))
+            if (Optional.IsDefined(TcbReleasedOn))
             {
                 writer.WritePropertyName("tcbReleaseDate"u8);
-                writer.WriteStringValue(TcbReleaseOn.Value, "O");
+                writer.WriteStringValue(TcbReleasedOn.Value, "O");
             }
             if (Optional.IsDefined(MinimumPswLinuxVersion))
             {
@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation
             }
             string tcbIdentifier = default;
             int? tcbEvaluationDataNumber = default;
-            DateTimeOffset? tcbReleaseOn = default;
+            DateTimeOffset? tcbReleasedOn = default;
             string minimumPswLinuxVersion = default;
             string minimumPswWindowsVersion = default;
             bool? isSelectedTcb = default;
@@ -177,7 +177,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    tcbReleaseOn = prop.Value.GetDateTimeOffset("O");
+                    tcbReleasedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("minimumPswLinuxVersion"u8))
@@ -207,7 +207,7 @@ namespace Azure.Security.Attestation
             return new TcbBaseline(
                 tcbIdentifier,
                 tcbEvaluationDataNumber,
-                tcbReleaseOn,
+                tcbReleasedOn,
                 minimumPswLinuxVersion,
                 minimumPswWindowsVersion,
                 isSelectedTcb,
