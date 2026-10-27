@@ -44,7 +44,7 @@ that is more capable.
 
 ## Shared Configuration and Cross-Library Impact
 
-Cross-cutting work is normal in this repository — a generator roll, a central package bump,
+Cross-cutting work is normal in this repository — a generator update, a central package bump,
 an analyzer rollout. It is not the reviewer's job to police what may be changed together.
 It is the reviewer's job to notice when a change reaches past one library and to review it
 on that basis.
