@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task DeleteTest()
         {
             await Connection.DeleteAsync(WaitUntil.Completed);
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetTest()
         {
             AppConfigurationPrivateEndpointConnectionResource connection = await Connection.GetAsync();
