@@ -78,7 +78,7 @@ finding.
 
 ### H2 — Follow the .NET Framework Design Guidelines
 
-Reference: <https://aka.ms/fxdg3>
+Reference: <https://learn.microsoft.com/dotnet/standard/design-guidelines/>
 
 Apply them as written. The checks below are the ones most often missed — they are a starting
 point, not the full set. Consult the source document when the diff touches an area not
