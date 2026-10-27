@@ -1,12 +1,22 @@
 # Release History
 
-## 1.0.0 (2026-10-15)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2026-10-27)
 
 This is the first stable release of this library.
 
 ### Features Added
 
-- Upgraded API version to 2026-11-01.
+- Upgraded API version from `2026-10-01-preview` to the stable `2026-11-01` version.
 
 ## 1.0.0-beta.6 (2026-10-15)
 

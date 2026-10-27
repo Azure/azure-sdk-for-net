@@ -80,7 +80,7 @@ internal sealed class ResponsesStartupLogger : IHostedService
         {
             _logger.LogWarning(
                 "Responses resilience is disabled; stored responses run in-process and are not recovered after an ungraceful crash. " +
-                "Call SetResilientTasksEnabled() or enable ResilientBackground to opt in.");
+                "Enable ResilientBackground or SteerableConversations, or call SetResilientTasksEnabled() to opt in.");
         }
 
         return Task.CompletedTask;

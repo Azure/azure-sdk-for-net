@@ -496,7 +496,6 @@
             "$id": "43",
             "name": "clientName",
             "isExactName": false,
-            "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -537,7 +536,6 @@
             "$id": "45",
             "name": "parameter",
             "isExactName": false,
-            "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [
               {
@@ -674,7 +672,6 @@
                 "$id": "55",
                 "name": "client",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -810,7 +807,6 @@
                 "$id": "61",
                 "name": "language",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -946,7 +942,6 @@
                 "$id": "67",
                 "name": "compatibleWithEncodedName",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1132,7 +1127,6 @@
                 "$id": "77",
                 "name": "request",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1223,7 +1217,6 @@
                 "$id": "83",
                 "name": "response",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -1326,7 +1319,6 @@
                 "$id": "90",
                 "name": "client",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1462,7 +1454,6 @@
                 "$id": "96",
                 "name": "language",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1648,7 +1639,6 @@
                 "$id": "106",
                 "name": "unionEnumName",
                 "isExactName": false,
-                "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1782,7 +1772,6 @@
                 "$id": "112",
                 "name": "unionEnumMemberName",
                 "isExactName": false,
-                "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
                   {
