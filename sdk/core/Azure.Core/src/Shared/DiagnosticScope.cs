@@ -174,7 +174,7 @@ namespace Azure.Core.Pipeline
         private class ActivityAdapter : IDisposable
         {
             private readonly ActivitySource? _activitySource;
-            private readonly DiagnosticSource _diagnosticSource;
+            private readonly DiagnosticListener _diagnosticSource;
             private readonly string _activityName;
             private readonly System.Diagnostics.ActivityKind _kind;
             private readonly object? _diagnosticSourceArgs;
@@ -189,7 +189,7 @@ namespace Azure.Core.Pipeline
             private string? _tracestate;
             private string? _displayName;
 
-            public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+            public ActivityAdapter(ActivitySource? activitySource, DiagnosticListener diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
@@ -357,7 +357,12 @@ namespace Azure.Core.Pipeline
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency on the ActivityAdapter.Start() method, or the responsibility is on the user of this struct since the struct constructor is marked with RequiresUnreferencedCode.")]
             private void WriteStartEvent()
             {
-                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+                // Writing to a DiagnosticListener without any subscribers is a no-op, so avoid allocating the event name,
+                // which is the case when activities are only being collected through the ActivitySource.
+                if (_diagnosticSource.IsEnabled())
+                {
+                    _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+                }
             }
 
             public void SetDisplayName(string displayName)
@@ -443,7 +448,10 @@ namespace Azure.Core.Pipeline
                 if (activity.Duration == TimeSpan.Zero)
                     activity.SetEndTime(DateTime.UtcNow);
 
-                _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
+                if (_diagnosticSource.IsEnabled())
+                {
+                    _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
+                }
 
                 activity.Dispose();
 
