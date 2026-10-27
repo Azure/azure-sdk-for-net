@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The type of a detected upgrade issue. </summary>
-    public readonly partial struct UpgradeIssueType : IEquatable<UpgradeIssueType>
+    public readonly partial struct ContainerServiceUpgradeIssueType : IEquatable<ContainerServiceUpgradeIssueType>
     {
         private readonly string _value;
         /// <summary> A restrictive PodDisruptionBudget prevents node drain during upgrade. See https://aka.ms/aks/upgrade-insights/pdb-constraint for remediation guidance. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Compute quota for the node pool VM SKU is insufficient to accommodate surge nodes during upgrade. See https://aka.ms/aks/upgrade-insights/quota-exceeded for remediation guidance. </summary>
         private const string QuotaExceededValue = "QuotaExceeded";
         /// <summary> The cluster is using deprecated Kubernetes APIs that are removed in the target version. See https://aka.ms/aks/upgrade-insights/api-breaking-change for remediation guidance. </summary>
-        private const string APIBreakingChangeValue = "APIBreakingChange";
+        private const string ApiBreakingChangeValue = "APIBreakingChange";
         /// <summary> An add-on or system component is not compatible with the target Kubernetes version. See https://aka.ms/aks/upgrade-insights/component-version-mismatch for remediation guidance. </summary>
         private const string ComponentVersionMismatchValue = "ComponentVersionMismatch";
         /// <summary> The cluster is running a Kubernetes version that is no longer supported. See https://aka.ms/aks/upgrade-insights/unsupported-kubernetes-version for remediation guidance. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The cluster node image has not been upgraded within the required compliance interval. See https://aka.ms/aks/upgrade-insights/node-image-out-of-sla for remediation guidance. </summary>
         private const string NodeImageOutOfSLAValue = "NodeImageOutOfSLA";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeIssueType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUpgradeIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpgradeIssueType(string value)
+        public ContainerServiceUpgradeIssueType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> A restrictive PodDisruptionBudget prevents node drain during upgrade. See https://aka.ms/aks/upgrade-insights/pdb-constraint for remediation guidance. </summary>
-        public static UpgradeIssueType PDBConstraint { get; } = new UpgradeIssueType(PDBConstraintValue);
+        public static ContainerServiceUpgradeIssueType PDBConstraint { get; } = new ContainerServiceUpgradeIssueType(PDBConstraintValue);
 
         /// <summary> The cluster subnet does not have sufficient available IP addresses for surge nodes during upgrade. See https://aka.ms/aks/upgrade-insights/subnet-ip-exhaustion for remediation guidance. </summary>
-        public static UpgradeIssueType SubnetIPExhausted { get; } = new UpgradeIssueType(SubnetIPExhaustedValue);
+        public static ContainerServiceUpgradeIssueType SubnetIPExhausted { get; } = new ContainerServiceUpgradeIssueType(SubnetIPExhaustedValue);
 
         /// <summary> Compute quota for the node pool VM SKU is insufficient to accommodate surge nodes during upgrade. See https://aka.ms/aks/upgrade-insights/quota-exceeded for remediation guidance. </summary>
-        public static UpgradeIssueType QuotaExceeded { get; } = new UpgradeIssueType(QuotaExceededValue);
+        public static ContainerServiceUpgradeIssueType QuotaExceeded { get; } = new ContainerServiceUpgradeIssueType(QuotaExceededValue);
 
         /// <summary> The cluster is using deprecated Kubernetes APIs that are removed in the target version. See https://aka.ms/aks/upgrade-insights/api-breaking-change for remediation guidance. </summary>
-        public static UpgradeIssueType APIBreakingChange { get; } = new UpgradeIssueType(APIBreakingChangeValue);
+        public static ContainerServiceUpgradeIssueType ApiBreakingChange { get; } = new ContainerServiceUpgradeIssueType(ApiBreakingChangeValue);
 
         /// <summary> An add-on or system component is not compatible with the target Kubernetes version. See https://aka.ms/aks/upgrade-insights/component-version-mismatch for remediation guidance. </summary>
-        public static UpgradeIssueType ComponentVersionMismatch { get; } = new UpgradeIssueType(ComponentVersionMismatchValue);
+        public static ContainerServiceUpgradeIssueType ComponentVersionMismatch { get; } = new ContainerServiceUpgradeIssueType(ComponentVersionMismatchValue);
 
         /// <summary> The cluster is running a Kubernetes version that is no longer supported. See https://aka.ms/aks/upgrade-insights/unsupported-kubernetes-version for remediation guidance. </summary>
-        public static UpgradeIssueType UnsupportedKubernetesVersion { get; } = new UpgradeIssueType(UnsupportedKubernetesVersionValue);
+        public static ContainerServiceUpgradeIssueType UnsupportedKubernetesVersion { get; } = new ContainerServiceUpgradeIssueType(UnsupportedKubernetesVersionValue);
 
         /// <summary> The cluster node image has not been upgraded within the required compliance interval. See https://aka.ms/aks/upgrade-insights/node-image-out-of-sla for remediation guidance. </summary>
-        public static UpgradeIssueType NodeImageOutOfSLA { get; } = new UpgradeIssueType(NodeImageOutOfSLAValue);
+        public static ContainerServiceUpgradeIssueType NodeImageOutOfSLA { get; } = new ContainerServiceUpgradeIssueType(NodeImageOutOfSLAValue);
 
-        /// <summary> Determines if two <see cref="UpgradeIssueType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceUpgradeIssueType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpgradeIssueType left, UpgradeIssueType right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceUpgradeIssueType left, ContainerServiceUpgradeIssueType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeIssueType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceUpgradeIssueType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpgradeIssueType left, UpgradeIssueType right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceUpgradeIssueType left, ContainerServiceUpgradeIssueType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceUpgradeIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeIssueType(string value) => new UpgradeIssueType(value);
+        public static implicit operator ContainerServiceUpgradeIssueType(string value) => new ContainerServiceUpgradeIssueType(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceUpgradeIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeIssueType?(string value) => value == null ? null : new UpgradeIssueType(value);
+        public static implicit operator ContainerServiceUpgradeIssueType?(string value) => value == null ? null : new ContainerServiceUpgradeIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeIssueType other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceUpgradeIssueType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceUpgradeIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

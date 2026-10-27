@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </summary>
-    public readonly partial struct MultiInstanceGpuStrategy : IEquatable<MultiInstanceGpuStrategy>
+    public readonly partial struct AgentPoolMultiInstanceGpuStrategy : IEquatable<AgentPoolMultiInstanceGpuStrategy>
     {
         private readonly string _value;
         /// <summary> No MIG partitioning is applied; the GPU is exposed as a single unified whole-device instance. Specifying this value removes any previously active MIG strategy. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Each GPU in the pool can host heterogeneous partitions of different sizes simultaneously (`nvidia.com/mig.strategy: mixed`). The exact partition mix per GPU is declared via `nvidia.migProfiles`. </summary>
         private const string MixedValue = "Mixed";
 
-        /// <summary> Initializes a new instance of <see cref="MultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MultiInstanceGpuStrategy(string value)
+        public AgentPoolMultiInstanceGpuStrategy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> No MIG partitioning is applied; the GPU is exposed as a single unified whole-device instance. Specifying this value removes any previously active MIG strategy. </summary>
-        public static MultiInstanceGpuStrategy None { get; } = new MultiInstanceGpuStrategy(NoneValue);
+        public static AgentPoolMultiInstanceGpuStrategy None { get; } = new AgentPoolMultiInstanceGpuStrategy(NoneValue);
 
         /// <summary> All MIG partitions on every GPU in the pool are the same size (`nvidia.com/mig.strategy: single`). The uniform partition size is controlled by `nvidia.migProfiles` (exactly one element required). </summary>
-        public static MultiInstanceGpuStrategy Single { get; } = new MultiInstanceGpuStrategy(SingleValue);
+        public static AgentPoolMultiInstanceGpuStrategy Single { get; } = new AgentPoolMultiInstanceGpuStrategy(SingleValue);
 
         /// <summary> Each GPU in the pool can host heterogeneous partitions of different sizes simultaneously (`nvidia.com/mig.strategy: mixed`). The exact partition mix per GPU is declared via `nvidia.migProfiles`. </summary>
-        public static MultiInstanceGpuStrategy Mixed { get; } = new MultiInstanceGpuStrategy(MixedValue);
+        public static AgentPoolMultiInstanceGpuStrategy Mixed { get; } = new AgentPoolMultiInstanceGpuStrategy(MixedValue);
 
-        /// <summary> Determines if two <see cref="MultiInstanceGpuStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolMultiInstanceGpuStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MultiInstanceGpuStrategy left, MultiInstanceGpuStrategy right) => left.Equals(right);
+        public static bool operator ==(AgentPoolMultiInstanceGpuStrategy left, AgentPoolMultiInstanceGpuStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MultiInstanceGpuStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolMultiInstanceGpuStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MultiInstanceGpuStrategy left, MultiInstanceGpuStrategy right) => !left.Equals(right);
+        public static bool operator !=(AgentPoolMultiInstanceGpuStrategy left, AgentPoolMultiInstanceGpuStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiInstanceGpuStrategy(string value) => new MultiInstanceGpuStrategy(value);
+        public static implicit operator AgentPoolMultiInstanceGpuStrategy(string value) => new AgentPoolMultiInstanceGpuStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="MultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MultiInstanceGpuStrategy?(string value) => value == null ? null : new MultiInstanceGpuStrategy(value);
+        public static implicit operator AgentPoolMultiInstanceGpuStrategy?(string value) => value == null ? null : new AgentPoolMultiInstanceGpuStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MultiInstanceGpuStrategy other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentPoolMultiInstanceGpuStrategy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MultiInstanceGpuStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentPoolMultiInstanceGpuStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

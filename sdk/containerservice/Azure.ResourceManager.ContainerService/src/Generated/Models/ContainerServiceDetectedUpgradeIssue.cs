@@ -12,19 +12,19 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A detected upgrade issue for a managed cluster. </summary>
-    public partial class DetectedUpgradeIssue
+    public partial class ContainerServiceDetectedUpgradeIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedUpgradeIssue"/>. </summary>
-        internal DetectedUpgradeIssue()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDetectedUpgradeIssue"/>. </summary>
+        internal ContainerServiceDetectedUpgradeIssue()
         {
             ImpactedResources = new ChangeTrackingList<UpgradeInsightImpactedResourceInfo>();
             RecommendedActions = new ChangeTrackingList<UpgradeInsightRecommendedAction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedUpgradeIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDetectedUpgradeIssue"/>. </summary>
         /// <param name="issueType"> The type of the detected upgrade issue. </param>
         /// <param name="severity"> The severity of the detected issue. </param>
         /// <param name="message"> A human-readable description of the issue and why it may block or risk the upgrade. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// actions can be returned in the future without a breaking change.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedUpgradeIssue(UpgradeIssueType? issueType, UpgradeIssueSeverity? severity, string message, IReadOnlyList<UpgradeInsightImpactedResourceInfo> impactedResources, IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceDetectedUpgradeIssue(ContainerServiceUpgradeIssueType? issueType, ContainerServiceUpgradeIssueSeverity? severity, string message, IReadOnlyList<UpgradeInsightImpactedResourceInfo> impactedResources, IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The type of the detected upgrade issue. </summary>
         [WirePath("issueType")]
-        public UpgradeIssueType? IssueType { get; }
+        public ContainerServiceUpgradeIssueType? IssueType { get; }
 
         /// <summary> The severity of the detected issue. </summary>
         [WirePath("severity")]
-        public UpgradeIssueSeverity? Severity { get; }
+        public ContainerServiceUpgradeIssueSeverity? Severity { get; }
 
         /// <summary> A human-readable description of the issue and why it may block or risk the upgrade. </summary>
         [WirePath("message")]

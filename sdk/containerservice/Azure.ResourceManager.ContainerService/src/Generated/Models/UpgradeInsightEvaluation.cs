@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="UpgradeInsightEvaluation"/>. </summary>
         internal UpgradeInsightEvaluation()
         {
-            DetectedIssues = new ChangeTrackingList<DetectedUpgradeIssue>();
+            DetectedIssues = new ChangeTrackingList<ContainerServiceDetectedUpgradeIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpgradeInsightEvaluation"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="evaluatedOn"> The UTC time at which the upgrade insight evaluation was performed. </param>
         /// <param name="detectedIssues"> The list of detected upgrade issues, if any. Empty or absent for a `Passed` status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeInsightEvaluation(UpgradeInsightStatus status, DateTimeOffset evaluatedOn, IReadOnlyList<DetectedUpgradeIssue> detectedIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeInsightEvaluation(UpgradeInsightStatus status, DateTimeOffset evaluatedOn, IReadOnlyList<ContainerServiceDetectedUpgradeIssue> detectedIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             EvaluatedOn = evaluatedOn;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The list of detected upgrade issues, if any. Empty or absent for a `Passed` status. </summary>
         [WirePath("detectedIssues")]
-        public IReadOnlyList<DetectedUpgradeIssue> DetectedIssues { get; }
+        public IReadOnlyList<ContainerServiceDetectedUpgradeIssue> DetectedIssues { get; }
     }
 }

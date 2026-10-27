@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </summary>
         [WirePath("agentSandboxProfile.enabled")]
-        public bool? AgentSandboxProfileEnabled
+        public bool? IsAgentSandboxProfileEnabled
         {
             get
             {
-                return AgentSandboxProfile is null ? default : AgentSandboxProfile.Enabled;
+                return AgentSandboxProfile is null ? default : AgentSandboxProfile.IsAgentSandboxProfileEnabled;
             }
             set
             {
@@ -467,17 +467,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     AgentSandboxProfile = new ManagedClusterAgentSandboxProfile();
                 }
-                AgentSandboxProfile.Enabled = value;
+                AgentSandboxProfile.IsAgentSandboxProfileEnabled = value;
             }
         }
 
         /// <summary> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </summary>
         [WirePath("podSnapshotProfile.enabled")]
-        public bool? PodSnapshotProfileEnabled
+        public bool? IsPodSnapshotProfileEnabled
         {
             get
             {
-                return PodSnapshotProfile is null ? default : PodSnapshotProfile.Enabled;
+                return PodSnapshotProfile is null ? default : PodSnapshotProfile.IsPodSnapshotProfileEnabled;
             }
             set
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     PodSnapshotProfile = new ManagedClusterPodSnapshotProfile();
                 }
-                PodSnapshotProfile.Enabled = value;
+                PodSnapshotProfile.IsPodSnapshotProfileEnabled = value;
             }
         }
 
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
         [WirePath("nodeDisruptionProfile.nodeDisruptionPolicy")]
-        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        public AgentPoolNodeDisruptionPolicy? NodeDisruptionPolicy
         {
             get
             {

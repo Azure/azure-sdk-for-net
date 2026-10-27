@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="migStrategy"> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </param>
         /// <param name="migProfiles"> The ordered list of MIG (Multi-Instance GPU) partition profiles to assign to each supported NVIDIA GPU. When `migStrategy` is `Single`, exactly one profile must be specified. When `migStrategy` is `Mixed`, one or more profiles may be specified and the combination is validated against the supported MIG geometry for the agent pool's GPU VM size. The same value may appear more than once to request multiple partitions of that size. This field is mutually exclusive with the top-level `gpuInstanceProfile` property. For more information, see https://aka.ms/aks/managed-gpu. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNvidiaGpuProfile(GpuManagementMode? managementMode, NvidiaDriverMode? driverMode, MultiInstanceGpuStrategy? migStrategy, IList<GpuInstanceProfile> migProfiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNvidiaGpuProfile(GpuManagementMode? managementMode, AgentPoolNvidiaDriverMode? driverMode, AgentPoolMultiInstanceGpuStrategy? migStrategy, IList<GpuInstanceProfile> migProfiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagementMode = managementMode;
             DriverMode = driverMode;
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Kubernetes device plugin. DRA installs the NVIDIA DRA driver.
         /// </summary>
         [WirePath("driverMode")]
-        public NvidiaDriverMode? DriverMode { get; set; }
+        public AgentPoolNvidiaDriverMode? DriverMode { get; set; }
 
         /// <summary> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </summary>
         [WirePath("migStrategy")]
-        public MultiInstanceGpuStrategy? MigStrategy { get; set; }
+        public AgentPoolMultiInstanceGpuStrategy? MigStrategy { get; set; }
 
         /// <summary> The ordered list of MIG (Multi-Instance GPU) partition profiles to assign to each supported NVIDIA GPU. When `migStrategy` is `Single`, exactly one profile must be specified. When `migStrategy` is `Mixed`, one or more profiles may be specified and the combination is validated against the supported MIG geometry for the agent pool's GPU VM size. The same value may appear more than once to request multiple partitions of that size. This field is mutually exclusive with the top-level `gpuInstanceProfile` property. For more information, see https://aka.ms/aks/managed-gpu. </summary>
         [WirePath("migProfiles")]

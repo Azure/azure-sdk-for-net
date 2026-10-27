@@ -17,6 +17,35 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerServiceModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAccessProfile"/> for mocking. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAccessProfile"/> instance for mocking. </returns>
+        public static ManagedClusterAccessProfile ManagedClusterAccessProfile(
+            ResourceIdentifier id = null,
+            string name = null,
+            ResourceType resourceType = default,
+            SystemData systemData = null,
+            IDictionary<string, string> tags = null,
+            AzureLocation location = default,
+            byte[] kubeConfig = null)
+        {
+            return new ManagedClusterAccessProfile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kubeConfig is null ? null : new AccessProfile(kubeConfig, null),
+                null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceAgentPoolData"/> for mocking. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

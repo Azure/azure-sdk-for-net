@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentSandboxProfile"/>. </summary>
-        /// <param name="enabled"> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </param>
+        /// <param name="isAgentSandboxProfileEnabled"> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAgentSandboxProfile(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAgentSandboxProfile(bool? isAgentSandboxProfileEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsAgentSandboxProfileEnabled = isAgentSandboxProfileEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsAgentSandboxProfileEnabled { get; set; }
     }
 }

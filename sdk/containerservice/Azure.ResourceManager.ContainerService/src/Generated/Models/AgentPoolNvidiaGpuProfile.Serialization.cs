@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             GpuManagementMode? managementMode = default;
-            NvidiaDriverMode? driverMode = default;
-            MultiInstanceGpuStrategy? migStrategy = default;
+            AgentPoolNvidiaDriverMode? driverMode = default;
+            AgentPoolMultiInstanceGpuStrategy? migStrategy = default;
             IList<GpuInstanceProfile> migProfiles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    driverMode = new NvidiaDriverMode(prop.Value.GetString());
+                    driverMode = new AgentPoolNvidiaDriverMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migStrategy"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    migStrategy = new MultiInstanceGpuStrategy(prop.Value.GetString());
+                    migStrategy = new AgentPoolMultiInstanceGpuStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migProfiles"u8))

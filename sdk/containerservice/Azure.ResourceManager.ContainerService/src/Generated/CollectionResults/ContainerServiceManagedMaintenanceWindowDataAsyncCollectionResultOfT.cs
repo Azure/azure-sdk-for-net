@@ -17,7 +17,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class MaintenanceWindowDataAsyncCollectionResultOfT : AsyncPageable<MaintenanceWindowData>
+    internal partial class ContainerServiceManagedMaintenanceWindowDataAsyncCollectionResultOfT : AsyncPageable<ContainerServiceManagedMaintenanceWindowData>
     {
         private readonly MaintenanceWindows _client;
         private readonly Guid _subscriptionId;
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ContainerService
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MaintenanceWindowDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ContainerServiceManagedMaintenanceWindowDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MaintenanceWindows client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MaintenanceWindowDataAsyncCollectionResultOfT(MaintenanceWindows client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainerServiceManagedMaintenanceWindowDataAsyncCollectionResultOfT(MaintenanceWindows client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ContainerService
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MaintenanceWindowDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerServiceManagedMaintenanceWindowDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MaintenanceWindowDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<MaintenanceWindowData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ContainerServiceManagedMaintenanceWindowDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<ContainerServiceManagedMaintenanceWindowData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<MaintenanceWindowData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<ContainerServiceManagedMaintenanceWindowData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 MaintenanceWindowResourceListResult result = MaintenanceWindowResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<MaintenanceWindowData>.FromValues((IReadOnlyList<MaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceManagedMaintenanceWindowData>.FromValues((IReadOnlyList<ContainerServiceManagedMaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

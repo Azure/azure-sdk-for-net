@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The severity of a detected upgrade issue. </summary>
-    public readonly partial struct UpgradeIssueSeverity : IEquatable<UpgradeIssueSeverity>
+    public readonly partial struct ContainerServiceUpgradeIssueSeverity : IEquatable<ContainerServiceUpgradeIssueSeverity>
     {
         private readonly string _value;
         /// <summary> The issue will block the upgrade from completing successfully. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The issue may cause problems with client applications or services on the cluster but will not necessarily prevent the upgrade from completing. </summary>
         private const string WarningValue = "Warning";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeIssueSeverity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUpgradeIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpgradeIssueSeverity(string value)
+        public ContainerServiceUpgradeIssueSeverity(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The issue will block the upgrade from completing successfully. </summary>
-        public static UpgradeIssueSeverity Blocking { get; } = new UpgradeIssueSeverity(BlockingValue);
+        public static ContainerServiceUpgradeIssueSeverity Blocking { get; } = new ContainerServiceUpgradeIssueSeverity(BlockingValue);
 
         /// <summary> The issue may cause problems with client applications or services on the cluster but will not necessarily prevent the upgrade from completing. </summary>
-        public static UpgradeIssueSeverity Warning { get; } = new UpgradeIssueSeverity(WarningValue);
+        public static ContainerServiceUpgradeIssueSeverity Warning { get; } = new ContainerServiceUpgradeIssueSeverity(WarningValue);
 
-        /// <summary> Determines if two <see cref="UpgradeIssueSeverity"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceUpgradeIssueSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpgradeIssueSeverity left, UpgradeIssueSeverity right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceUpgradeIssueSeverity left, ContainerServiceUpgradeIssueSeverity right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeIssueSeverity"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceUpgradeIssueSeverity"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpgradeIssueSeverity left, UpgradeIssueSeverity right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceUpgradeIssueSeverity left, ContainerServiceUpgradeIssueSeverity right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeIssueSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceUpgradeIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeIssueSeverity(string value) => new UpgradeIssueSeverity(value);
+        public static implicit operator ContainerServiceUpgradeIssueSeverity(string value) => new ContainerServiceUpgradeIssueSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeIssueSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceUpgradeIssueSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeIssueSeverity?(string value) => value == null ? null : new UpgradeIssueSeverity(value);
+        public static implicit operator ContainerServiceUpgradeIssueSeverity?(string value) => value == null ? null : new ContainerServiceUpgradeIssueSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeIssueSeverity other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceUpgradeIssueSeverity other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeIssueSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceUpgradeIssueSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

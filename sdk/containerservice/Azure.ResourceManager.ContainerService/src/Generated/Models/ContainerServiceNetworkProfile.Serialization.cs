@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IList<ContainerServiceIPFamily> networkIPFamilies = default;
-            PodLinkLocalAccess? podLinkLocalAccess = default;
+            AgentPoolPodLinkLocalAccess? podLinkLocalAccess = default;
             ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    podLinkLocalAccess = new PodLinkLocalAccess(prop.Value.GetString());
+                    podLinkLocalAccess = new AgentPoolPodLinkLocalAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kubeProxyConfig"u8))

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NodeImageVersion item in Value)
+            foreach (ContainerServiceNodeImageVersion item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<NodeImageVersion> value = default;
+            IList<ContainerServiceNodeImageVersion> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NodeImageVersion> array = new List<NodeImageVersion>();
+                    List<ContainerServiceNodeImageVersion> array = new List<ContainerServiceNodeImageVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
+                        array.Add(ContainerServiceNodeImageVersion.DeserializeContainerServiceNodeImageVersion(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NodeImageVersionsListResult(value ?? new ChangeTrackingList<NodeImageVersion>(), nextLink, additionalBinaryDataProperties);
+            return new NodeImageVersionsListResult(value ?? new ChangeTrackingList<ContainerServiceNodeImageVersion>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

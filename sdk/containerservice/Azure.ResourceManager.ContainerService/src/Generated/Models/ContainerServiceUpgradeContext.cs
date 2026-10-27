@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// Kubernetes version — this context is reported per upgrade type rather than once
     /// for the whole cluster.
     /// </summary>
-    public partial class UpgradeContext
+    public partial class ContainerServiceUpgradeContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeContext"/>. </summary>
-        internal UpgradeContext()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUpgradeContext"/>. </summary>
+        internal ContainerServiceUpgradeContext()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUpgradeContext"/>. </summary>
         /// <param name="currentUpgradeStrategy"> The strategy currently used to perform this type of upgrade (manual or auto-upgrade). </param>
         /// <param name="nextMaintenanceWindow"> The next scheduled automatic upgrade maintenance window for this upgrade type, if auto-upgrade is configured. </param>
         /// <param name="lastSuccessfulUpgradeOn">
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// cached results do not go stale.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeContext(UpgradeInsightStrategy? currentUpgradeStrategy, UpgradeInsightMaintenanceWindow nextMaintenanceWindow, DateTimeOffset? lastSuccessfulUpgradeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceUpgradeContext(UpgradeInsightStrategy? currentUpgradeStrategy, UpgradeInsightMaintenanceWindow nextMaintenanceWindow, DateTimeOffset? lastSuccessfulUpgradeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentUpgradeStrategy = currentUpgradeStrategy;
             NextMaintenanceWindow = nextMaintenanceWindow;

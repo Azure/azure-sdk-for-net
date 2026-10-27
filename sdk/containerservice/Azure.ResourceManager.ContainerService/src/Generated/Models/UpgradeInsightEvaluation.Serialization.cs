@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("detectedIssues"u8);
                 writer.WriteStartArray();
-                foreach (DetectedUpgradeIssue item in DetectedIssues)
+                foreach (ContainerServiceDetectedUpgradeIssue item in DetectedIssues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             UpgradeInsightStatus status = default;
             DateTimeOffset evaluatedOn = default;
-            IReadOnlyList<DetectedUpgradeIssue> detectedIssues = default;
+            IReadOnlyList<ContainerServiceDetectedUpgradeIssue> detectedIssues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<DetectedUpgradeIssue> array = new List<DetectedUpgradeIssue>();
+                    List<ContainerServiceDetectedUpgradeIssue> array = new List<ContainerServiceDetectedUpgradeIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DetectedUpgradeIssue.DeserializeDetectedUpgradeIssue(item, options));
+                        array.Add(ContainerServiceDetectedUpgradeIssue.DeserializeContainerServiceDetectedUpgradeIssue(item, options));
                     }
                     detectedIssues = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpgradeInsightEvaluation(status, evaluatedOn, detectedIssues ?? new ChangeTrackingList<DetectedUpgradeIssue>(), additionalBinaryDataProperties);
+            return new UpgradeInsightEvaluation(status, evaluatedOn, detectedIssues ?? new ChangeTrackingList<ContainerServiceDetectedUpgradeIssue>(), additionalBinaryDataProperties);
         }
     }
 }

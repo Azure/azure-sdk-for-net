@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string currentKubernetesVersion = default;
             KubernetesVersionSupportStatus? kubernetesVersionSupportStatus = default;
             DateTimeOffset? kubernetesVersionEndOfSupportOn = default;
-            UpgradeContext context = default;
+            ContainerServiceUpgradeContext context = default;
             UpgradeInsightEvaluation evaluation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    context = UpgradeContext.DeserializeUpgradeContext(prop.Value, options);
+                    context = ContainerServiceUpgradeContext.DeserializeContainerServiceUpgradeContext(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluation"u8))

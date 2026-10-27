@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="NodeImageVersionsListResult"/>. </summary>
         /// <param name="value"> The NodeImageVersion items on this page. </param>
-        internal NodeImageVersionsListResult(IEnumerable<NodeImageVersion> value)
+        internal NodeImageVersionsListResult(IEnumerable<ContainerServiceNodeImageVersion> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="value"> The NodeImageVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeImageVersionsListResult(IList<NodeImageVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeImageVersionsListResult(IList<ContainerServiceNodeImageVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The NodeImageVersion items on this page. </summary>
         [WirePath("value")]
-        public IList<NodeImageVersion> Value { get; }
+        public IList<ContainerServiceNodeImageVersion> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

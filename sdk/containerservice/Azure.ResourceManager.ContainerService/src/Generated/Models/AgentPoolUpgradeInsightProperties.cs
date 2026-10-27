@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </param>
         /// <param name="context"> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </param>
         /// <param name="evaluation"> The evaluation result, including overall status, evaluation time, and any detected issues. </param>
-        internal AgentPoolUpgradeInsightProperties(ContainerServiceProvisioningState? provisioningState, UpgradeType upgradeType, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentPoolName, string targetKubernetesVersion, string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, UpgradeContext context, UpgradeInsightEvaluation evaluation) : base(provisioningState, upgradeType, lastEvaluatedOn, expiresOn, additionalBinaryDataProperties)
+        internal AgentPoolUpgradeInsightProperties(ContainerServiceProvisioningState? provisioningState, UpgradeType upgradeType, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentPoolName, string targetKubernetesVersion, string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, ContainerServiceUpgradeContext context, UpgradeInsightEvaluation evaluation) : base(provisioningState, upgradeType, lastEvaluatedOn, expiresOn, additionalBinaryDataProperties)
         {
             AgentPoolName = agentPoolName;
             TargetKubernetesVersion = targetKubernetesVersion;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </summary>
         [WirePath("context")]
-        public UpgradeContext Context { get; }
+        public ContainerServiceUpgradeContext Context { get; }
 
         /// <summary> The evaluation result, including overall status, evaluation time, and any detected issues. </summary>
         [WirePath("evaluation")]

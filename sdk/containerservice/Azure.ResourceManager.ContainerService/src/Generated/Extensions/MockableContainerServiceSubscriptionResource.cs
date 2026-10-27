@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindowsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowDataAsync0CollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceManagedMaintenanceWindowData, ContainerServiceManagedMaintenanceWindowResource>(new ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedMaintenanceWindows"), data => new ContainerServiceManagedMaintenanceWindowResource(Client, data));
         }
 
         /// <summary>
@@ -388,14 +388,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceWindowResource> GetMaintenanceWindows(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindows(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowData0CollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
+            return new PageableWrapper<ContainerServiceManagedMaintenanceWindowData, ContainerServiceManagedMaintenanceWindowResource>(new ContainerServiceManagedMaintenanceWindowData0CollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetContainerServiceManagedMaintenanceWindows"), data => new ContainerServiceManagedMaintenanceWindowResource(Client, data));
         }
 
         /// <summary>
@@ -677,14 +677,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NodeImageVersion> GetNodeImageVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceNodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceNodeImageVersion> GetNodeImageVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeImageVersionAsyncCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
+            return new ContainerServiceNodeImageVersionAsyncCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
         }
 
         /// <summary>
@@ -706,14 +706,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NodeImageVersion> GetNodeImageVersions(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceNodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceNodeImageVersion> GetNodeImageVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeImageVersionCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
+            return new ContainerServiceNodeImageVersionCollectionResultOfT(ContainerServiceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerServiceSubscriptionResource.GetNodeImageVersions");
         }
 
         /// <summary>

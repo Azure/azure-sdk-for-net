@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string targetKubernetesVersion = default;
-            ScopeEvaluationResult controlPlane = default;
+            UpgradeInsightScopeEvaluationResult controlPlane = default;
             IReadOnlyList<AgentPoolScopeEvaluation> agentPools = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    controlPlane = ScopeEvaluationResult.DeserializeScopeEvaluationResult(prop.Value, options);
+                    controlPlane = UpgradeInsightScopeEvaluationResult.DeserializeUpgradeInsightScopeEvaluationResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentPools"u8))

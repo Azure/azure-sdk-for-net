@@ -21,36 +21,36 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a MaintenanceWindow along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceWindowResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceWindows method.
+    /// A class representing a ContainerServiceManagedMaintenanceWindow along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerServiceManagedMaintenanceWindows method.
     /// </summary>
-    public partial class MaintenanceWindowResource : ArmResource
+    public partial class ContainerServiceManagedMaintenanceWindowResource : ArmResource
     {
         private readonly ClientDiagnostics _maintenanceWindowsClientDiagnostics;
         private readonly MaintenanceWindows _maintenanceWindowsRestClient;
-        private readonly MaintenanceWindowData _data;
+        private readonly ContainerServiceManagedMaintenanceWindowData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/maintenanceWindows";
 
-        /// <summary> Initializes a new instance of MaintenanceWindowResource for mocking. </summary>
-        protected MaintenanceWindowResource()
+        /// <summary> Initializes a new instance of ContainerServiceManagedMaintenanceWindowResource for mocking. </summary>
+        protected ContainerServiceManagedMaintenanceWindowResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceWindowResource(ArmClient client, MaintenanceWindowData data) : this(client, data.Id)
+        internal ContainerServiceManagedMaintenanceWindowResource(ArmClient client, ContainerServiceManagedMaintenanceWindowData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceWindowResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceManagedMaintenanceWindowResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _maintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
             _maintenanceWindowsRestClient = new MaintenanceWindows(_maintenanceWindowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/maintenanceWindows", out string maintenanceWindowsApiVersionOverride) ? maintenanceWindowsApiVersionOverride : "2026-08-02-preview");
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaintenanceWindowData Data
+        public virtual ContainerServiceManagedMaintenanceWindowData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceWindowResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Get");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
+                Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceWindowResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Get");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
+                Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="properties"> Parameters supplied to the Update maintenance window Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceWindowResource>> UpdateAsync(ContainerServiceTagsObject properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> UpdateAsync(ContainerServiceTagsObject properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Update");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Update");
             scope.Start();
             try
             {
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
+                Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="properties"> Parameters supplied to the Update maintenance window Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<MaintenanceWindowResource> Update(ContainerServiceTagsObject properties, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> Update(ContainerServiceTagsObject properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Update");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Update");
             scope.Start();
             try
             {
@@ -279,12 +279,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
+                Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Delete");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Delete");
             scope.Start();
             try
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceWindowResource"/>. </description>
+        /// <description> <see cref="ContainerServiceManagedMaintenanceWindowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.Delete");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.Delete");
             scope.Start();
             try
             {
@@ -396,12 +396,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceWindowResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.AddTag");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.AddTag");
             scope.Start();
             try
             {
@@ -416,19 +416,19 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<MaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -444,12 +444,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<MaintenanceWindowResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.AddTag");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.AddTag");
             scope.Start();
             try
             {
@@ -464,19 +464,19 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<MaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -491,11 +491,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceWindowResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.SetTags");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.SetTags");
             scope.Start();
             try
             {
@@ -510,15 +510,15 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<MaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,11 +533,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<MaintenanceWindowResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.SetTags");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.SetTags");
             scope.Start();
             try
             {
@@ -552,15 +552,15 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<MaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -575,11 +575,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceWindowResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.RemoveTag");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.RemoveTag");
             scope.Start();
             try
             {
@@ -594,19 +594,19 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<MaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -621,11 +621,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<MaintenanceWindowResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceManagedMaintenanceWindowResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("MaintenanceWindowResource.RemoveTag");
+            using DiagnosticScope scope = _maintenanceWindowsClientDiagnostics.CreateScope("ContainerServiceManagedMaintenanceWindowResource.RemoveTag");
             scope.Start();
             try
             {
@@ -640,19 +640,19 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
-                    return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerServiceManagedMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerServiceManagedMaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<MaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ContainerServiceManagedMaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// version the scope is currently running, the upgrade context, and the evaluation
     /// result. All fields are server-computed and read-only.
     /// </summary>
-    public partial class ScopeEvaluationResult
+    public partial class UpgradeInsightScopeEvaluationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScopeEvaluationResult"/>. </summary>
-        internal ScopeEvaluationResult()
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightScopeEvaluationResult"/>. </summary>
+        internal UpgradeInsightScopeEvaluationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScopeEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeInsightScopeEvaluationResult"/>. </summary>
         /// <param name="currentKubernetesVersion"> The Kubernetes version the scope was evaluated from (the upgrade source version the scope is currently running). Lets consumers read the result as "from X to targetKubernetesVersion" and detect a stale cached record by comparing against the live cluster version. Populated for Kubernetes version upgrades. </param>
         /// <param name="kubernetesVersionSupportStatus"> The support status of the Kubernetes version the scope is currently running (not the target version). Populated for Kubernetes version upgrades. </param>
         /// <param name="kubernetesVersionEndOfSupportOn">
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="context"> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </param>
         /// <param name="evaluation"> The evaluation result, including overall status, evaluation time, and any detected issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScopeEvaluationResult(string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, UpgradeContext context, UpgradeInsightEvaluation evaluation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeInsightScopeEvaluationResult(string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, ContainerServiceUpgradeContext context, UpgradeInsightEvaluation evaluation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentKubernetesVersion = currentKubernetesVersion;
             KubernetesVersionSupportStatus = kubernetesVersionSupportStatus;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </summary>
         [WirePath("context")]
-        public UpgradeContext Context { get; }
+        public ContainerServiceUpgradeContext Context { get; }
 
         /// <summary> The evaluation result, including overall status, evaluation time, and any detected issues. </summary>
         [WirePath("evaluation")]

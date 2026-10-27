@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> node image version profile for given major.minor.patch release. </summary>
-    public partial class NodeImageVersion
+    public partial class ContainerServiceNodeImageVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NodeImageVersion"/>. </summary>
-        internal NodeImageVersion()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodeImageVersion"/>. </summary>
+        internal ContainerServiceNodeImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodeImageVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodeImageVersion"/>. </summary>
         /// <param name="os"> The operating system of the node image. Example: AKSUbuntu. </param>
         /// <param name="sku"> The SKU or flavor of the node image. Example: 2004gen2containerd. </param>
         /// <param name="version"> major.minor.patch version of the node image version release. Example: 2024.02.02. </param>
         /// <param name="fullName"> The OS + SKU + version of the node image. Example: AKSUbuntu-1804gen2containerd-2024.02.02. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeImageVersion(string os, string sku, string version, string fullName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceNodeImageVersion(string os, string sku, string version, string fullName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OS = os;
             Sku = sku;

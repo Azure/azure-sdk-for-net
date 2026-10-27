@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MaintenanceWindowData item in Value)
+            foreach (ContainerServiceManagedMaintenanceWindowData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<MaintenanceWindowData> value = default;
+            IList<ContainerServiceManagedMaintenanceWindowData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MaintenanceWindowData> array = new List<MaintenanceWindowData>();
+                    List<ContainerServiceManagedMaintenanceWindowData> array = new List<ContainerServiceManagedMaintenanceWindowData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindowData.DeserializeMaintenanceWindowData(item, options));
+                        array.Add(ContainerServiceManagedMaintenanceWindowData.DeserializeContainerServiceManagedMaintenanceWindowData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenanceWindowResourceListResult(value ?? new ChangeTrackingList<MaintenanceWindowData>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceWindowResourceListResult(value ?? new ChangeTrackingList<ContainerServiceManagedMaintenanceWindowData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

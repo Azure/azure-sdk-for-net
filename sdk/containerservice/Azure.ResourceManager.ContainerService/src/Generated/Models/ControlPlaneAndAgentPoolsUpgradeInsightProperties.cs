@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="targetKubernetesVersion"> The target Kubernetes version that was evaluated for all scopes. </param>
         /// <param name="controlPlane"> The readiness evaluation for the control plane Kubernetes version upgrade. </param>
         /// <param name="agentPools"> The readiness evaluation for each agent pool Kubernetes version upgrade, one entry per agent pool. </param>
-        internal ControlPlaneAndAgentPoolsUpgradeInsightProperties(ContainerServiceProvisioningState? provisioningState, UpgradeType upgradeType, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetKubernetesVersion, ScopeEvaluationResult controlPlane, IReadOnlyList<AgentPoolScopeEvaluation> agentPools) : base(provisioningState, upgradeType, lastEvaluatedOn, expiresOn, additionalBinaryDataProperties)
+        internal ControlPlaneAndAgentPoolsUpgradeInsightProperties(ContainerServiceProvisioningState? provisioningState, UpgradeType upgradeType, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string targetKubernetesVersion, UpgradeInsightScopeEvaluationResult controlPlane, IReadOnlyList<AgentPoolScopeEvaluation> agentPools) : base(provisioningState, upgradeType, lastEvaluatedOn, expiresOn, additionalBinaryDataProperties)
         {
             TargetKubernetesVersion = targetKubernetesVersion;
             ControlPlane = controlPlane;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The readiness evaluation for the control plane Kubernetes version upgrade. </summary>
         [WirePath("controlPlane")]
-        public ScopeEvaluationResult ControlPlane { get; }
+        public UpgradeInsightScopeEvaluationResult ControlPlane { get; }
 
         /// <summary> The readiness evaluation for each agent pool Kubernetes version upgrade, one entry per agent pool. </summary>
         [WirePath("agentPools")]

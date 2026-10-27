@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServiceMaintenanceConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowResource"/> object. </returns>
-        public virtual MaintenanceWindowResource GetMaintenanceWindowResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> object. </returns>
+        public virtual ContainerServiceManagedMaintenanceWindowResource GetContainerServiceManagedMaintenanceWindowResource(ResourceIdentifier id)
         {
-            MaintenanceWindowResource.ValidateResourceId(id);
-            return new MaintenanceWindowResource(Client, id);
+            ContainerServiceManagedMaintenanceWindowResource.ValidateResourceId(id);
+            return new ContainerServiceManagedMaintenanceWindowResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedClusterNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

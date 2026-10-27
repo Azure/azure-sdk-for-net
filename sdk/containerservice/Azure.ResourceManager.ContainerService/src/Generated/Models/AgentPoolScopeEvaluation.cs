@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="context"> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </param>
         /// <param name="evaluation"> The evaluation result, including overall status, evaluation time, and any detected issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolScopeEvaluation(string agentPoolName, string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, UpgradeContext context, UpgradeInsightEvaluation evaluation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolScopeEvaluation(string agentPoolName, string currentKubernetesVersion, KubernetesVersionSupportStatus? kubernetesVersionSupportStatus, DateTimeOffset? kubernetesVersionEndOfSupportOn, ContainerServiceUpgradeContext context, UpgradeInsightEvaluation evaluation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPoolName = agentPoolName;
             CurrentKubernetesVersion = currentKubernetesVersion;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Contextual information about how this upgrade is managed, such as the upgrade strategy, next maintenance window, and last successful upgrade time. </summary>
         [WirePath("context")]
-        public UpgradeContext Context { get; }
+        public ContainerServiceUpgradeContext Context { get; }
 
         /// <summary> The evaluation result, including overall status, evaluation time, and any detected issues. </summary>
         [WirePath("evaluation")]

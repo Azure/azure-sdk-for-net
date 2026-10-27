@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Specifies the default seccomp profile applied to all workloads. If not specified, 'Unconfined' will be used by default. </summary>
-    public readonly partial struct SeccompDefault : IEquatable<SeccompDefault>
+    public readonly partial struct ContainerServiceSeccompDefault : IEquatable<ContainerServiceSeccompDefault>
     {
         private readonly string _value;
         /// <summary> No seccomp profile is applied, allowing all system calls. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The default seccomp profile for container runtime is applied, which restricts certain system calls for enhanced security. </summary>
         private const string RuntimeDefaultValue = "RuntimeDefault";
 
-        /// <summary> Initializes a new instance of <see cref="SeccompDefault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSeccompDefault"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SeccompDefault(string value)
+        public ContainerServiceSeccompDefault(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> No seccomp profile is applied, allowing all system calls. </summary>
-        public static SeccompDefault Unconfined { get; } = new SeccompDefault(UnconfinedValue);
+        public static ContainerServiceSeccompDefault Unconfined { get; } = new ContainerServiceSeccompDefault(UnconfinedValue);
 
         /// <summary> The default seccomp profile for container runtime is applied, which restricts certain system calls for enhanced security. </summary>
-        public static SeccompDefault RuntimeDefault { get; } = new SeccompDefault(RuntimeDefaultValue);
+        public static ContainerServiceSeccompDefault RuntimeDefault { get; } = new ContainerServiceSeccompDefault(RuntimeDefaultValue);
 
-        /// <summary> Determines if two <see cref="SeccompDefault"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceSeccompDefault"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SeccompDefault left, SeccompDefault right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceSeccompDefault left, ContainerServiceSeccompDefault right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SeccompDefault"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceSeccompDefault"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SeccompDefault left, SeccompDefault right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceSeccompDefault left, ContainerServiceSeccompDefault right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SeccompDefault"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceSeccompDefault"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeccompDefault(string value) => new SeccompDefault(value);
+        public static implicit operator ContainerServiceSeccompDefault(string value) => new ContainerServiceSeccompDefault(value);
 
-        /// <summary> Converts a string to a <see cref="SeccompDefault"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceSeccompDefault"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SeccompDefault?(string value) => value == null ? null : new SeccompDefault(value);
+        public static implicit operator ContainerServiceSeccompDefault?(string value) => value == null ? null : new ContainerServiceSeccompDefault(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SeccompDefault other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceSeccompDefault other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SeccompDefault other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceSeccompDefault other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

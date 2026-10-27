@@ -12,6 +12,65 @@ namespace Azure.ResourceManager.ContainerService.Tests
     public class ContainerServiceModelFactoryTests
     {
         [Test]
+        public void ManagedClusterAccessProfilePreservesOptionalFactoryParameters()
+        {
+            var profile = ArmContainerServiceModelFactory.ManagedClusterAccessProfile();
+
+            Assert.IsNull(profile.KubeConfig);
+            Assert.IsNotNull(profile.Tags);
+            foreach (var parameter in typeof(ArmContainerServiceModelFactory)
+                .GetMethod(nameof(ArmContainerServiceModelFactory.ManagedClusterAccessProfile))
+                .GetParameters())
+            {
+                Assert.IsTrue(parameter.IsOptional, parameter.Name);
+            }
+        }
+
+        [Test]
+        public void ManagedClusterAccessProfilePreservesNamedKubeConfig()
+        {
+            var kubeConfig = new byte[] { 1, 2, 3 };
+            var profile = ArmContainerServiceModelFactory.ManagedClusterAccessProfile(kubeConfig: kubeConfig);
+
+            CollectionAssert.AreEqual(kubeConfig, profile.KubeConfig);
+            Assert.IsNotNull(profile.Tags);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void PreviewBooleanNamesPreserveWireNames(bool enabled)
+        {
+            var cluster = new ContainerServiceManagedClusterData(Azure.Core.AzureLocation.EastUS)
+            {
+                IsAgentSandboxProfileEnabled = enabled,
+                IsPodSnapshotProfileEnabled = enabled
+            };
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(cluster).ToString());
+            var properties = json.RootElement.GetProperty("properties");
+
+            Assert.AreEqual(enabled, properties.GetProperty("agentSandboxProfile").GetProperty("enabled").GetBoolean());
+            Assert.AreEqual(enabled, properties.GetProperty("podSnapshotProfile").GetProperty("enabled").GetBoolean());
+            var roundTrip = ModelReaderWriter.Read<ContainerServiceManagedClusterData>(BinaryData.FromString(json.RootElement.GetRawText()));
+            Assert.AreEqual(enabled, roundTrip.IsAgentSandboxProfileEnabled);
+            Assert.AreEqual(enabled, roundTrip.IsPodSnapshotProfileEnabled);
+        }
+
+        [Test]
+        public void PreviewNamingOverridesPreserveWireValues()
+        {
+            Assert.AreEqual("APIBreakingChange", ContainerServiceUpgradeIssueType.ApiBreakingChange.ToString());
+            Assert.AreEqual(
+                "Microsoft.ContainerService/maintenanceWindows",
+                ContainerServiceManagedMaintenanceWindowResource.ResourceType.ToString());
+            var location = ModelReaderWriter.Read<ContainerServiceVmSkuLocationInfo>(
+                BinaryData.FromString("{\"location\":\"eastus\"}"));
+
+            Assert.AreEqual(Azure.Core.AzureLocation.EastUS, location.Location);
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(location).ToString());
+            Assert.AreEqual("eastus", json.RootElement.GetProperty("location").GetString());
+        }
+
+        [Test]
         public void AgentPoolUpgradeProfileDataDefaults()
         {
             var profile = ArmContainerServiceModelFactory.AgentPoolUpgradeProfileData();

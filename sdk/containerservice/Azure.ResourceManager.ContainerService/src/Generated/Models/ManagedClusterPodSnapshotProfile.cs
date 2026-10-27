@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodSnapshotProfile"/>. </summary>
-        /// <param name="enabled"> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </param>
+        /// <param name="isPodSnapshotProfileEnabled"> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPodSnapshotProfile(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterPodSnapshotProfile(bool? isPodSnapshotProfileEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsPodSnapshotProfileEnabled = isPodSnapshotProfileEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsPodSnapshotProfileEnabled { get; set; }
     }
 }

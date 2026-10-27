@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> A detected upgrade issue for a managed cluster. </summary>
-    public partial class DetectedUpgradeIssue : IJsonModel<DetectedUpgradeIssue>
+    public partial class ContainerServiceDetectedUpgradeIssue : IJsonModel<ContainerServiceDetectedUpgradeIssue>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DetectedUpgradeIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceDetectedUpgradeIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceDetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDetectedUpgradeIssue(document.RootElement, options);
+                        return DeserializeContainerServiceDetectedUpgradeIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectedUpgradeIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceDetectedUpgradeIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceDetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DetectedUpgradeIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceDetectedUpgradeIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DetectedUpgradeIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceDetectedUpgradeIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectedUpgradeIssue IPersistableModel<DetectedUpgradeIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceDetectedUpgradeIssue IPersistableModel<ContainerServiceDetectedUpgradeIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DetectedUpgradeIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceDetectedUpgradeIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DetectedUpgradeIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceDetectedUpgradeIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceDetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedUpgradeIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceDetectedUpgradeIssue)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(IssueType))
             {
@@ -128,31 +128,31 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectedUpgradeIssue IJsonModel<DetectedUpgradeIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceDetectedUpgradeIssue IJsonModel<ContainerServiceDetectedUpgradeIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DetectedUpgradeIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceDetectedUpgradeIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceDetectedUpgradeIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedUpgradeIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceDetectedUpgradeIssue)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDetectedUpgradeIssue(document.RootElement, options);
+            return DeserializeContainerServiceDetectedUpgradeIssue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DetectedUpgradeIssue DeserializeDetectedUpgradeIssue(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceDetectedUpgradeIssue DeserializeContainerServiceDetectedUpgradeIssue(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            UpgradeIssueType? issueType = default;
-            UpgradeIssueSeverity? severity = default;
+            ContainerServiceUpgradeIssueType? issueType = default;
+            ContainerServiceUpgradeIssueSeverity? severity = default;
             string message = default;
             IReadOnlyList<UpgradeInsightImpactedResourceInfo> impactedResources = default;
             IReadOnlyList<UpgradeInsightRecommendedAction> recommendedActions = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    issueType = new UpgradeIssueType(prop.Value.GetString());
+                    issueType = new ContainerServiceUpgradeIssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    severity = new UpgradeIssueSeverity(prop.Value.GetString());
+                    severity = new ContainerServiceUpgradeIssueSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DetectedUpgradeIssue(
+            return new ContainerServiceDetectedUpgradeIssue(
                 issueType,
                 severity,
                 message,

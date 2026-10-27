@@ -17,34 +17,31 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class NodeImageVersionAsyncCollectionResultOfT : AsyncPageable<NodeImageVersion>
+    internal partial class ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT : AsyncPageable<ContainerServiceManagedMaintenanceWindowData>
     {
-        private readonly ContainerServiceOperationGroup _client;
+        private readonly MaintenanceWindows _client;
         private readonly Guid _subscriptionId;
-        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NodeImageVersionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ContainerServiceOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MaintenanceWindows client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NodeImageVersionAsyncCollectionResultOfT(ContainerServiceOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT(MaintenanceWindows client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NodeImageVersionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NodeImageVersionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<NodeImageVersion>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ContainerServiceManagedMaintenanceWindowDataAsync0CollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<ContainerServiceManagedMaintenanceWindowData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<NodeImageVersion>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<ContainerServiceManagedMaintenanceWindowData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -62,9 +59,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                NodeImageVersionsListResult result = NodeImageVersionsListResult.FromResponse(response);
+                MaintenanceWindowResourceListResult result = MaintenanceWindowResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NodeImageVersion>.FromValues((IReadOnlyList<NodeImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceManagedMaintenanceWindowData>.FromValues((IReadOnlyList<ContainerServiceManagedMaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -78,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeImageVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetNodeImageVersionsRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

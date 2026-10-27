@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. If not specified, the default is 'IMDS'. </summary>
-    public readonly partial struct PodLinkLocalAccess : IEquatable<PodLinkLocalAccess>
+    public readonly partial struct AgentPoolPodLinkLocalAccess : IEquatable<AgentPoolPodLinkLocalAccess>
     {
         private readonly string _value;
         /// <summary> Pods with hostNetwork=false can access Azure Instance Metadata Service (IMDS) without restriction. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Pods with hostNetwork=false cannot access Azure Instance Metadata Service (IMDS). </summary>
         private const string NoneValue = "None";
 
-        /// <summary> Initializes a new instance of <see cref="PodLinkLocalAccess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolPodLinkLocalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PodLinkLocalAccess(string value)
+        public AgentPoolPodLinkLocalAccess(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Pods with hostNetwork=false can access Azure Instance Metadata Service (IMDS) without restriction. </summary>
-        public static PodLinkLocalAccess Imds { get; } = new PodLinkLocalAccess(ImdsValue);
+        public static AgentPoolPodLinkLocalAccess Imds { get; } = new AgentPoolPodLinkLocalAccess(ImdsValue);
 
         /// <summary> Pods with hostNetwork=false cannot access Azure Instance Metadata Service (IMDS). </summary>
-        public static PodLinkLocalAccess None { get; } = new PodLinkLocalAccess(NoneValue);
+        public static AgentPoolPodLinkLocalAccess None { get; } = new AgentPoolPodLinkLocalAccess(NoneValue);
 
-        /// <summary> Determines if two <see cref="PodLinkLocalAccess"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolPodLinkLocalAccess"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PodLinkLocalAccess left, PodLinkLocalAccess right) => left.Equals(right);
+        public static bool operator ==(AgentPoolPodLinkLocalAccess left, AgentPoolPodLinkLocalAccess right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PodLinkLocalAccess"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolPodLinkLocalAccess"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PodLinkLocalAccess left, PodLinkLocalAccess right) => !left.Equals(right);
+        public static bool operator !=(AgentPoolPodLinkLocalAccess left, AgentPoolPodLinkLocalAccess right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PodLinkLocalAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolPodLinkLocalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodLinkLocalAccess(string value) => new PodLinkLocalAccess(value);
+        public static implicit operator AgentPoolPodLinkLocalAccess(string value) => new AgentPoolPodLinkLocalAccess(value);
 
-        /// <summary> Converts a string to a <see cref="PodLinkLocalAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolPodLinkLocalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PodLinkLocalAccess?(string value) => value == null ? null : new PodLinkLocalAccess(value);
+        public static implicit operator AgentPoolPodLinkLocalAccess?(string value) => value == null ? null : new AgentPoolPodLinkLocalAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PodLinkLocalAccess other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentPoolPodLinkLocalAccess other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PodLinkLocalAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentPoolPodLinkLocalAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
