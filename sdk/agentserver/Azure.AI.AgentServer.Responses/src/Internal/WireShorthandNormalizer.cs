@@ -89,11 +89,14 @@ internal static class WireShorthandNormalizer
 
     /// <summary>
     /// A function call output may be sent as an array of content parts. The canonical shape
-    /// is a plain string, so the text parts are flattened into one.
+    /// is a plain string, so the text parts are flattened into one. Other items keep an array
+    /// output as sent: <c>custom_tool_call_output</c> reads its content parts natively, and
+    /// <c>shell_call_output</c> carries structured stdout, stderr and outcome entries.
     /// </summary>
     private static void NormalizeFunctionCallOutput(JsonObject item)
     {
-        if (item["output"] is not JsonArray parts)
+        if (item["type"] is not JsonValue type || !type.TryGetValue<string>(out var itemType) ||
+            itemType != "function_call_output" || item["output"] is not JsonArray parts)
         {
             return;
         }

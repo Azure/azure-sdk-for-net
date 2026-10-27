@@ -114,7 +114,7 @@ Available convenience generators (commonly used):
 | Method | Description |
 |--------|-------------|
 | `OutputItemMessage(string)` | Emits a complete text message output item |
-| `OutputItemMessage(string, IEnumerable<Annotation>)` | Emits a text message with file annotations |
+| `OutputItemMessage(string, IEnumerable<ResponseMessageAnnotation>)` | Emits a text message with file annotations |
 | `OutputItemMessage(IAsyncEnumerable<string>, CancellationToken)` | Streams tokens as `response.output_text.delta` events |
 | `OutputItemFunctionCall(name, callId, arguments)` | Emits a complete function call output item |
 | `OutputItemFunctionCallOutput(callId, output)` | Emits a function call output (no deltas) |

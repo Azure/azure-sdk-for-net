@@ -391,7 +391,7 @@ It provides:
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
 | **Internal metadata** | `InternalMetadata` — response-scoped, framework-internal string metadata persisted with snapshots and stripped from client payloads |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
-| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, and more |
 
 ### Method Naming Conventions
 
@@ -737,24 +737,24 @@ yield return text.EmitDelta("Here are your files.");
 yield return text.EmitTextDone("Here are your files.");
 
 // Annotations are emitted after text is finalized
-yield return text.EmitAnnotationAdded(new FilePath(fileId: "/reports/summary.pdf", index: 0));
-yield return text.EmitAnnotationAdded(new UrlCitationBody(
-    url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"));
+yield return text.EmitAnnotationAdded(new FilePathMessageAnnotation("/reports/summary.pdf", 0));
+yield return text.EmitAnnotationAdded(new UriCitationMessageAnnotation(
+    new Uri("https://example.com/docs"), 0, 19, "Docs"));
 
 yield return text.EmitDone();
 yield return message.EmitDone();
 ```
 
-Or use the `TextContent(string, IEnumerable<Annotation>)` convenience on `OutputItemMessageBuilder` to handle the full sequence in one call:
+Or use the `TextContent(string, IEnumerable<ResponseMessageAnnotation>)` convenience on `OutputItemMessageBuilder` to handle the full sequence in one call:
 
 ```csharp
 var message = stream.AddOutputItemMessage();
 yield return message.EmitAdded();
 
-foreach (var evt in message.TextContent("Here are your files.", new Annotation[]
+foreach (var evt in message.TextContent("Here are your files.", new ResponseMessageAnnotation[]
 {
-    new FilePath(fileId: "/reports/summary.pdf", index: 0),
-    new UrlCitationBody(url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"),
+    new FilePathMessageAnnotation("/reports/summary.pdf", 0),
+    new UriCitationMessageAnnotation(new Uri("https://example.com/docs"), 0, 19, "Docs"),
 }))
     yield return evt;
 
@@ -955,16 +955,11 @@ For simple output items that only need an added → done pair, convenience gener
 | `OutputItemImageGenCall(resultBase64)` | Image generation result (with status transitions) |
 | `OutputItemComputerCall(callId, action, pendingSafetyChecks, status)` | Computer tool call |
 | `OutputItemComputerCallOutput(callId, output)` | Computer tool call output |
-| `OutputItemLocalShellCall(callId, action, status)` | Local shell tool call |
-| `OutputItemLocalShellCallOutput(output)` | Local shell tool call output |
-| `OutputItemFunctionShellCall(callId, action, status, environment)` | Function shell call |
-| `OutputItemFunctionShellCallOutput(callId, status, output, maxOutputLength?)` | Function shell call output |
 | `OutputItemApplyPatchCall(callId, status, operation)` | Apply-patch tool call |
 | `OutputItemApplyPatchCallOutput(callId, status)` | Apply-patch tool call output |
 | `OutputItemCustomToolCallOutput(callId, output)` | Custom tool call output |
 | `OutputItemMcpApprovalRequest(serverLabel, name, arguments)` | MCP approval request |
 | `OutputItemMcpApprovalResponse(approvalRequestId, approve)` | MCP approval response |
-| `OutputItemCompaction(encryptedContent)` | Compaction item |
 
 Example:
 
@@ -1378,7 +1373,7 @@ throw new BadRequestException("Unsupported model", "model");
 **Why the library doesn't auto-complete**:
 - A silent completion could mask bugs — the handler may have forgotten to emit output
 - The library fails loudly so programming errors surface during development
-- Allows passing `ResponseUsage` data (see [Token Usage Reporting](#token-usage-reporting) below)
+- Allows passing `ResponseTokenUsage` data (see [Token Usage Reporting](#token-usage-reporting) below)
 - Lets you choose the right terminal status (`completed`, `failed`, or `incomplete`)
 - Makes handler intent unambiguous to readers of your code
 
@@ -1398,14 +1393,14 @@ var message = stream.AddOutputItemMessage();
 // ... partial output ...
 yield return message.EmitDone();
 
-yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
+yield return stream.EmitIncomplete(ResponseIncompleteStatusReason.MaxOutputTokens);
 ```
 
 The `incomplete` status is **handler-driven** — the library does not automatically detect truncation. Your handler decides when to signal it.
 
 ### Token Usage Reporting
 
-All three terminal methods accept an optional `ResponseUsage?` parameter for reporting token consumption. If no usage is provided, the `usage` field is omitted from the response.
+All three terminal methods accept an optional `ResponseTokenUsage?` parameter for reporting token consumption. If no usage is provided, the `usage` field is omitted from the response.
 
 ```csharp
 // Completed with usage
@@ -1415,18 +1410,20 @@ yield return stream.EmitCompleted(usage);
 yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", usage);
 
 // Incomplete with usage
-yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
+yield return stream.EmitIncomplete(ResponseIncompleteStatusReason.MaxOutputTokens, usage);
 ```
 
-Create `ResponseUsage` directly:
+Create `ResponseTokenUsage` (from the `OpenAI.Responses` namespace) with an object initializer:
 
 ```csharp
-var usage = new ResponseUsage(
-    inputTokens: 150,
-    inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens: 0),
-    outputTokens: 42,
-    outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens: 0),
-    totalTokens: 192);
+var usage = new ResponseTokenUsage
+{
+    InputTokenCount = 150,
+    InputTokenDetails = new ResponseInputTokenUsageDetails { CachedTokenCount = 0 },
+    OutputTokenCount = 42,
+    OutputTokenDetails = new ResponseOutputTokenUsageDetails { ReasoningTokenCount = 0 },
+    TotalTokenCount = 192,
+};
 yield return stream.EmitCompleted(usage);
 ```
 

@@ -146,6 +146,16 @@ public class PolymorphicValidatorTests
         XAssert.Contains(result.Errors, e => e.Path == "$.conversation");
     }
 
+    // CreateResponsePayloadValidator rejects "conversation": [] — an array is neither of the two accepted shapes
+    [Test]
+    public void CreateResponse_ConversationArray_ReturnsError()
+    {
+        var result = ValidateCreateResponse("""{"model": "gpt-4o", "conversation": []}""");
+
+        Assert.That(result.IsValid, Is.False);
+        XAssert.Contains(result.Errors, e => e.Path == "$.conversation");
+    }
+
     // =======================================================================
     // US3 — Reject Invalid Tool-Specific Polymorphic Properties
     // =======================================================================

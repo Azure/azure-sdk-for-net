@@ -108,7 +108,7 @@ public class StreamingUpstreamHandler : ResponseHandler
         if (upstreamFailed)
         {
             response.Status = ResponseStatus.Failed;
-            response.Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Upstream request failed");
+            response.Error = new OpenAI.Responses.ResponseError { Code = ResponseErrorCode.ServerError, Message = "Upstream request failed" };
             yield return new StreamingResponseFailedUpdate { SequenceNumber = (int)(seq++), Response = response };
         }
         else

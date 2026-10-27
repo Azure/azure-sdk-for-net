@@ -17,7 +17,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with annotations in one call. Each `FilePath` annotation takes a `fileId` (a file path or any identifier your file store uses) and an `index`:
+Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with annotations in one call. Each `FilePathMessageAnnotation` takes a `fileId` (a file path or any identifier your file store uses) and an `index`:
 
 ```C# Snippet:Responses_Sample15_FileAnnotationsHandler
 public class FileAnnotationsHandler : ResponseHandler

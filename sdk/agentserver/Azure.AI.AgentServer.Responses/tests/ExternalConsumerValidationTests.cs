@@ -73,7 +73,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ErrorPath()
     {
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "failed");
+        var error = new OpenAI.Responses.ResponseError { Code = ResponseErrorCode.ServerError, Message = "failed" };
         var response = new ResponseObject { Id = "resp_err", Model = "gpt-4o" };
         response.Error = error;
         var evt = new ResponseFailedEvent { SequenceNumber = (int)(5), Response = response };
@@ -112,7 +112,7 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseError()
     {
-        var error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "test");
+        var error = new OpenAI.Responses.ResponseError { Code = ResponseErrorCode.ServerError, Message = "test" };
         Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }

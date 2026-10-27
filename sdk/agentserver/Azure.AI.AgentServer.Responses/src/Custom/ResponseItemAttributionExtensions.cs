@@ -30,6 +30,15 @@ namespace Azure.AI.AgentServer.Responses;
 /// Extensions implements its own accessors. If Extensions later exposes settable equivalents,
 /// this type should be deleted in favour of them.
 /// </para>
+/// <para>
+/// Because both packages extend <see cref="ResponseItem"/> with <c>ResponseId</c> and
+/// <c>AgentReference</c>, a file that imports both <c>Azure.AI.AgentServer.Responses</c> and
+/// <c>Azure.AI.Extensions.OpenAI</c> gets compiler error CS9339 (ambiguous extension) when it
+/// reads or assigns either member on a <see cref="ResponseItem"/>. Import only one of the two
+/// namespaces in that file, declare <c>using Azure.AI.AgentServer.Responses;</c> inside the
+/// enclosing namespace so it takes precedence, or name <c>AgentReference</c> through a using
+/// alias or its fully qualified name instead of importing <c>Azure.AI.Extensions.OpenAI</c>.
+/// </para>
 /// </remarks>
 public static class ResponseItemAttributionExtensions
 {

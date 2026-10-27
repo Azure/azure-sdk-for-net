@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -397,6 +398,44 @@ public class ConvenienceGeneratorTests
         var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
         Assert.That(fco.CallId, Is.EqualTo("call_1"));
         Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72 degrees"));
+    }
+
+    [Test]
+    public void OutputItemFunctionCallOutput_SerializesOutputAsString()
+    {
+        var stream = CreateStream();
+        var output = BinaryData.FromString("{\"temp\":72}");
+
+        var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
+
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        using var doc = JsonDocument.Parse(ModelJson.Write(done.Item).ToMemory());
+        Assert.That(doc.RootElement.GetProperty("output").ValueKind, Is.EqualTo(JsonValueKind.String));
+        Assert.That(doc.RootElement.GetProperty("output").GetString(), Is.EqualTo("{\"temp\":72}"));
+    }
+
+    // ──────────────────────────────────────────────────────────
+    //  Output-Item Convenience – McpApprovalRequest
+    // ──────────────────────────────────────────────────────────
+
+    [Test]
+    public void OutputItemMcpApprovalRequest_EmitsAddedAndDoneWithArgumentsAsJsonString()
+    {
+        var stream = CreateStream();
+
+        var events = stream.OutputItemMcpApprovalRequest("my_server", "dangerous_fn", "{\"path\":\"/tmp\"}").ToList();
+
+        Assert.That(events, Has.Count.EqualTo(2));
+        XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
+        var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
+        var request = XAssert.IsType<OutputItemMcpApprovalRequest>(done.Item);
+        Assert.That(request.ServerLabel, Is.EqualTo("my_server"));
+        Assert.That(request.ToolName, Is.EqualTo("dangerous_fn"));
+
+        // The wire field is a string that holds the JSON text, not a nested JSON object.
+        using var doc = JsonDocument.Parse(ModelJson.Write(request).ToMemory());
+        Assert.That(doc.RootElement.GetProperty("arguments").ValueKind, Is.EqualTo(JsonValueKind.String));
+        Assert.That(doc.RootElement.GetProperty("arguments").GetString(), Is.EqualTo("{\"path\":\"/tmp\"}"));
     }
 
     // ──────────────────────────────────────────────────────────

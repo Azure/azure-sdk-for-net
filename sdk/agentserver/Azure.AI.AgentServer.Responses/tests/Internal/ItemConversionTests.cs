@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -106,6 +108,81 @@ public class ItemConversionTests
         var result = ItemConversion.ToOutputItem(message, responseId);
 
         Assert.That(result!.Id, Does.Contain(partitionKey));
+    }
+
+    // The shell, compaction and output message items have no typed model in
+    // OpenAI.Responses.ResponseItem, so they reach ItemConversion as opaque items and are
+    // recognized by their wire type. The custom tool items are typed OpenAI items. None of them
+    // may be dropped from the persisted input items.
+    private static IEnumerable<TestCaseData> PersistedItemCases()
+    {
+        yield return new TestCaseData(
+            """{"type":"output_message","id":"client_id","role":"assistant","status":"completed","content":[{"type":"output_text","text":"hi","annotations":[]}]}""",
+            "om_").SetName("OutputMessage");
+        yield return new TestCaseData(
+            """{"type":"shell_call","id":"client_id","call_id":"call_1","action":{"commands":["ls"]},"status":"completed"}""",
+            "lsh_").SetName("ShellCall");
+        yield return new TestCaseData(
+            """{"type":"shell_call_output","id":"client_id","call_id":"call_1","output":[],"status":"completed"}""",
+            "lsho_").SetName("ShellCallOutput");
+        yield return new TestCaseData(
+            """{"type":"local_shell_call","id":"client_id","call_id":"call_1","action":{"type":"exec","command":["ls"],"env":{}},"status":"completed"}""",
+            "lsh_").SetName("LocalShellCall");
+        yield return new TestCaseData(
+            """{"type":"local_shell_call_output","id":"client_id","output":"done","status":"completed"}""",
+            "lsho_").SetName("LocalShellCallOutput");
+        yield return new TestCaseData(
+            """{"type":"compaction","id":"client_id","encrypted_content":"opaque"}""",
+            "cmp_").SetName("Compaction");
+        yield return new TestCaseData(
+            """{"type":"custom_tool_call","id":"client_id","call_id":"call_1","name":"lookup","input":"query"}""",
+            "ctc_").SetName("CustomToolCall");
+        yield return new TestCaseData(
+            """{"type":"custom_tool_call_output","id":"client_id","call_id":"call_1","output":[{"type":"input_text","text":"result"},{"type":"input_image","image_url":"https://example.com/a.png","detail":"auto"}]}""",
+            "ctco_").SetName("CustomToolCallOutputWithContentParts");
+    }
+
+    [TestCaseSource(nameof(PersistedItemCases))]
+    public void ToOutputItem_PersistedItemKinds_AreKeptWithTheirPayload(string json, string expectedPrefix)
+    {
+        var item = ModelJson.Read<Item>(BinaryData.FromString(json), ModelReaderWriterOptions.Json)!;
+
+        var result = ItemConversion.ToOutputItem(item, PartitionKeyHint);
+
+        Assert.That(result, Is.Not.Null);
+        XAssert.StartsWith(expectedPrefix, result!.Id);
+        Assert.That(item.Id, Is.EqualTo("client_id"), "The source item must not be mutated.");
+
+        var expected = JsonNode.Parse(json)!;
+        expected["id"] = result.Id;
+        var actual = JsonNode.Parse(ModelJson.Write(result, ModelReaderWriterOptions.Json).ToString())!;
+        Assert.That(JsonNode.DeepEquals(actual, expected), Is.True, actual.ToJsonString());
+    }
+
+    // OpenAI's CustomToolCallOutputItem writes a plain string output back as a single input_text
+    // part, so the text is compared instead of the whole payload.
+    [Test]
+    public void ToOutputItem_CustomToolCallOutputWithStringOutput_KeepsTheText()
+    {
+        var item = ModelJson.Read<Item>(
+            BinaryData.FromString("""{"type":"custom_tool_call_output","id":"client_id","call_id":"call_1","output":"result"}"""),
+            ModelReaderWriterOptions.Json)!;
+
+        var result = ItemConversion.ToOutputItem(item, PartitionKeyHint);
+
+        Assert.That(result, Is.Not.Null);
+        XAssert.StartsWith("ctco_", result!.Id);
+        Assert.That(ModelJson.Write(result, ModelReaderWriterOptions.Json).ToString(), Does.Contain("result"));
+    }
+
+    [Test]
+    public void ToOutputItem_UnrecognizedItemType_ReturnsNull()
+    {
+        var item = ModelJson.Read<Item>(
+            BinaryData.FromString("""{"type":"not_a_real_item_type","id":"x_1"}"""),
+            ModelReaderWriterOptions.Json)!;
+
+        Assert.That(ItemConversion.ToOutputItem(item, PartitionKeyHint), Is.Null);
     }
 
     [Test]

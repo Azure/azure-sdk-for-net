@@ -88,8 +88,8 @@ public static class OutputItemExtensions
                 id = m.Id;
                 return true;
 
-            // The shell and compaction items are request-side only (the ItemField union in the
-            // spec); they never appear as response output items.
+            // OpenAI.Responses.ResponseItem has no typed models for the shell and compaction
+            // items, so those resolve through the JSON fallback below.
             case OutputItemApplyPatchToolCall m:
                 id = m.Id;
                 return true;

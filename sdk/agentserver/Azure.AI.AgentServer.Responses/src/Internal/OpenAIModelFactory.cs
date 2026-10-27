@@ -12,14 +12,15 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Constructs OpenAI response models that expose no accessible constructor.
+/// Constructs OpenAI response models from their wire form.
 /// </summary>
 /// <remarks>
-/// Several <c>OpenAI.Responses</c> models (notably <see cref="OpenAI.Responses.ResponseError"/> and
-/// <see cref="ResponseIncompleteStatusDetails"/>) declare every constructor <c>internal</c>
-/// and every property get-only, because the OpenAI library only ever materializes them
-/// while reading a service response. This server implementation has to produce them, so
-/// they are round-tripped through the public model-reader instead.
+/// The OpenAI library only materializes some <c>OpenAI.Responses</c> models while reading a
+/// service response, so a few of them (for example <see cref="OpenAI.Responses.ResponseToolChoice"/>)
+/// declare only <c>internal</c> constructors and get-only properties, and the shared
+/// <see cref="StreamingResponseUpdate"/> base exposes no public constructor. This server
+/// implementation has to produce them, so they are round-tripped through the public model-reader
+/// instead. The error and incomplete-details helpers use the same path.
 /// </remarks>
 internal static class OpenAIModelFactory
 {
@@ -88,10 +89,9 @@ internal static class OpenAIModelFactory
     /// <returns>A populated <see cref="StreamingResponseUpdate"/>.</returns>
     /// <remarks>
     /// A handful of event kinds (the audio events and the custom-tool-call input events) have no
-    /// dedicated <c>Streaming*Update</c> subclass. They cannot be subclassed here either, because
-    /// <see cref="StreamingResponseUpdate"/>'s only constructor is <c>private protected</c>. The
-    /// event is therefore materialized from its wire form; the properties remain reachable through
-    /// <c>Patch</c>.
+    /// dedicated <c>Streaming*Update</c> subclass, and <see cref="StreamingResponseUpdate"/> itself
+    /// exposes no public constructor. The event is therefore materialized from its wire form; the
+    /// properties remain reachable through <c>Patch</c>.
     /// </remarks>
     public static StreamingResponseUpdate CreateStreamingUpdate(
         string type,

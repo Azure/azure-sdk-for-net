@@ -36,6 +36,9 @@
   went the other way: `FunctionCallOutputResponseItem.FunctionOutput` is a `string` where the
   previous model used `BinaryData`, so an output sent as an array of content parts is flattened
   into one string by joining its text parts with `\n`, and non-text parts are dropped.
+  `ResponseEventStream.OutputItemFunctionCallOutput` keeps its `BinaryData` parameter but now sends
+  the UTF-8 text of that value as the string output, so pass the text itself rather than a
+  JSON-quoted string literal.
 - `CreateResponseRequest`, the argument of `ResponsesProvider.CreateResponseAsync`, is renamed to
   `CreateResponsePersistRequest` (the old name is now used by a generated internal model). Its
   `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are
@@ -65,6 +68,16 @@
   `CompactResource.CreatedAt` is renamed to `CreatedOn`.
 - The error model `Error` is renamed to `ApiError`; `ApiErrorResponse.Error` and the
   `ApiErrorResponse` constructor now use `ApiError`.
+- `ResponseEventStream` no longer has the builders for local-shell, function-shell, and compaction
+  output items: `AddOutputItemLocalShellCall`, `AddOutputItemLocalShellCallOutput`,
+  `AddOutputItemFunctionShellCall`, `AddOutputItemFunctionShellCallOutput`, and
+  `AddOutputItemCompaction`, plus the matching `OutputItemLocalShellCall`,
+  `OutputItemLocalShellCallOutput`, `OutputItemFunctionShellCall`,
+  `OutputItemFunctionShellCallOutput`, and `OutputItemCompaction` convenience methods. The models
+  they emitted (`OutputItemLocalShellToolCall`, `OutputItemLocalShellToolCallOutput`,
+  `OutputItemFunctionShellCall`, `OutputItemFunctionShellCallOutput`, and
+  `OutputItemCompactionBody`) were removed too. `OpenAI.Responses.ResponseItem` has no item types
+  for these kinds, so there is no typed replacement.
 - `ResponsesApiException` now takes and exposes `OpenAI.Responses.ResponseError` instead of the
   generated `Models.Error`: both constructors and the `Error` property changed type. On the new
   type `Code` is a `ResponseErrorCode` (was `string`), `Type` is now `Kind`, and `Details`,
@@ -73,6 +86,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+- The package now depends on `OpenAI` 2.14.0 or later and on `Azure.AI.Extensions.OpenAI`,
+  because their types appear in its public API. Applications that pin an older `OpenAI` version
+  must raise it.
 - Request validation now covers eight more tool types from the Foundry spec (`a2a`,
   `browser_automation`, `cloud_computer_use_preview`, `fabric_iq_preview`,
   `github_copilot_toolset_preview`, `microsoft_copilot_toolset_preview`,

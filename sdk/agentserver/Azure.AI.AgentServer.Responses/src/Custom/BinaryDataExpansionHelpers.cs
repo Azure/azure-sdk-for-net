@@ -24,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 internal static class BinaryDataExpansionHelpers
 {
     /// <summary>
-    /// Expands a BinaryData ToolChoice into a typed <see cref="ToolChoiceParam"/>.
+    /// Expands the OpenAI tool choice into a typed <see cref="ToolChoiceParam"/>.
     /// </summary>
     internal static ToolChoiceParam? ExpandToolChoice(ResponseToolChoice? toolChoice)
     {
@@ -58,7 +58,7 @@ internal static class BinaryDataExpansionHelpers
     }
 
     /// <summary>
-    /// Expands a BinaryData Input into a typed list of <see cref="Item"/>.
+    /// Returns the OpenAI input items as a list of <see cref="Item"/>.
     /// </summary>
     internal static List<Item> ExpandInput(IList<Item>? input)
     {
@@ -67,13 +67,13 @@ internal static class BinaryDataExpansionHelpers
             return new List<Item>();
         }
 
-        // Input items are already the OpenAI item type; the string shorthand and the
-        // per-item content shorthand are normalized by the OpenAI reader on the way in.
+        // Input items are already the OpenAI item type. The string shorthand and the per-item
+        // content shorthand were expanded by WireShorthandNormalizer before the request was bound.
         return new List<Item>(input);
     }
 
     /// <summary>
-    /// Expands a BinaryData Conversation into a typed <see cref="ConversationParam"/>.
+    /// Expands the OpenAI conversation options into a typed <see cref="ConversationParam"/>.
     /// </summary>
     internal static ConversationParam? ExpandConversation(ResponseConversationOptions? conversation)
     {
@@ -95,7 +95,7 @@ internal static class BinaryDataExpansionHelpers
     }
 
     /// <summary>
-    /// Expands a BinaryData Content into a typed list of <see cref="MessageContent"/>.
+    /// Expands the OpenAI message content parts into a typed list of <see cref="MessageContent"/>.
     /// </summary>
     internal static List<MessageContent> ExpandContent(IList<ResponseContentPart>? content)
     {

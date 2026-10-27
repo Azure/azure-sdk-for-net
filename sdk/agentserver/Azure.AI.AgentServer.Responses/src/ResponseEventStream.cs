@@ -593,7 +593,11 @@ public class ResponseEventStream
     /// <c>output_item.done</c>.
     /// </summary>
     /// <param name="callId">The call ID of the function call this output is for.</param>
-    /// <param name="output">The output data from the function call.</param>
+    /// <param name="output">
+    /// The output of the function call. Its UTF-8 text is sent as the item's string output, so
+    /// pass the text itself (for example a JSON document as its JSON text), not a JSON-quoted
+    /// string literal.
+    /// </param>
     /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
     public IEnumerable<ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, BinaryData output)
     {

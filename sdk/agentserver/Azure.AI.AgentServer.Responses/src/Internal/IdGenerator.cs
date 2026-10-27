@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Security.Cryptography;
+using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Internal;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -252,6 +254,9 @@ internal static class IdGenerator
             FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
             Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
             Models.OutputItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
+            // Request items read as OpenAI's own custom tool types, not the response-side models above.
+            OpenAI.Responses.CustomToolCallItem => NewCustomToolCallItemId(partitionKeyHint),
+            OpenAI.Responses.CustomToolCallOutputItem => NewCustomToolCallOutputItemId(partitionKeyHint),
             ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
             ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
             ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
@@ -266,11 +271,47 @@ internal static class IdGenerator
             MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
             ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
             ItemReferenceParam => null, // resolved externally
+            _ => NewUntypedItemId(item, partitionKeyHint),
+        };
+    }
 
-            // The shell and compaction items exist only on the request side of the spec
-            // (the ItemField union); they are never response items, so they fall through.
+    // OpenAI.Responses.ResponseItem has no typed models for the shell, compaction and output
+    // message items; they deserialize to internal catch-all item types that the switch above
+    // cannot match. Recognize them by their wire type so they keep their type-prefixed IDs and
+    // stay persisted with the other input items. Any other unrecognized item is not convertible.
+    private static string? NewUntypedItemId(Item item, string? partitionKeyHint)
+        => ReadWireType(item) switch
+        {
+            "output_message" => NewOutputMessageItemId(partitionKeyHint),
+            "shell_call" => NewFunctionShellCallItemId(partitionKeyHint),
+            "shell_call_output" => NewFunctionShellCallOutputItemId(partitionKeyHint),
+            "local_shell_call" => NewLocalShellCallItemId(partitionKeyHint),
+            "local_shell_call_output" => NewLocalShellCallOutputItemId(partitionKeyHint),
+            "compaction" => NewCompactionItemId(partitionKeyHint),
             _ => null,
         };
+
+    private static string? ReadWireType(Item item)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(ModelJson.Write(item).ToMemory());
+            return document.RootElement.TryGetProperty("type", out var type) && type.ValueKind == JsonValueKind.String
+                ? type.GetString()
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+        catch (NotSupportedException)
+        {
+            return null;
+        }
     }
 
     // ─── Utility methods ────────────────────────────────────────────
