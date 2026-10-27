@@ -425,36 +425,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityId, default);
         }
 
-        /// <summary> The resource management error response. </summary>
-        /// <param name="additionalInfo"> The error additional info. </param>
-        /// <param name="code"> The error code. </param>
-        /// <param name="details"> The error details. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <returns> A new <see cref="Models.Error"/> instance for mocking. </returns>
-        public static Error Error(IEnumerable<ErrorAdditionalInfo> additionalInfo = default, string code = default, IEnumerable<Error> details = default, string message = default, string target = default)
-        {
-            additionalInfo ??= new ChangeTrackingList<ErrorAdditionalInfo>();
-            details ??= new ChangeTrackingList<Error>();
-
-            return new Error(
-                (additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>()).ToList(),
-                code,
-                (details ?? new ChangeTrackingList<Error>()).ToList(),
-                message,
-                target,
-                default);
-        }
-
-        /// <summary> The resource management error additional info. </summary>
-        /// <param name="type"> The additional info type. </param>
-        /// <param name="info"> The additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
-        public static ErrorAdditionalInfo ErrorAdditionalInfo(string @type = default, BinaryData info = default)
-        {
-            return new ErrorAdditionalInfo(@type, info, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -542,7 +512,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
         /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
-        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, BackupVaultEncryptionSettings encryptionSettings)
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, ImmutabilitySettings immutabilitySettings = default, BackupVaultEncryptionSettings encryptionSettings = default)
         {
             return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, encryptionSettings, default);
         }
@@ -1578,7 +1548,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
         /// <param name="immutabilityProperties"> Immutability properties of the recovery point. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState, RecoveryPointImmutabilityProperties immutabilityProperties)
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default, RecoveryPointImmutabilityProperties immutabilityProperties = default)
         {
             recoveryPointDataStoresDetails ??= new ChangeTrackingList<RecoveryPointDataStoreDetail>();
 
@@ -1998,183 +1968,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime, default);
         }
 
-        /// <summary> Cross-tenant vault mapping resource for cross-tenant restore. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> CrossTenantVaultMapping properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.CrossTenantVaultMappingData"/> instance for mocking. </returns>
-        public static CrossTenantVaultMappingData CrossTenantVaultMappingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CrossTenantVaultMappingProperties properties = default)
-        {
-            return new CrossTenantVaultMappingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Cross-tenant vault mapping properties for cross-tenant restore. </summary>
-        /// <param name="sourceVaultId"> ARM resource ID of the source backup vault whose data can be restored across tenants. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which the MUA (LAC) check will be performed. </param>
-        /// <param name="sourceTenantId"> Tenant ID of the source vault in the cross-tenant vault mapping. </param>
-        /// <param name="provisioningState"> Provisioning state of the cross-tenant vault mapping. </param>
-        /// <returns> A new <see cref="Models.CrossTenantVaultMappingProperties"/> instance for mocking. </returns>
-        public static CrossTenantVaultMappingProperties CrossTenantVaultMappingProperties(ResourceIdentifier sourceVaultId = default, IEnumerable<string> resourceGuardOperationRequests = default, string sourceTenantId = default, DataProtectionBackupProvisioningState? provisioningState = default)
-        {
-            resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
-
-            return new CrossTenantVaultMappingProperties(sourceVaultId, (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(), sourceTenantId, provisioningState, default);
-        }
-
-        /// <param name="crossTenantVaultMappingRemoveRequestResourceGuardOperationRequests"> ResourceGuardOperationRequests on which the MUA (LAC) check will be performed for the remove. </param>
-        /// <returns> A new <see cref="Models.CrossTenantVaultMappingRemoveContent"/> instance for mocking. </returns>
-        public static CrossTenantVaultMappingRemoveContent CrossTenantVaultMappingRemoveContent(IEnumerable<string> crossTenantVaultMappingRemoveRequestResourceGuardOperationRequests = default)
-        {
-            return new CrossTenantVaultMappingRemoveContent(crossTenantVaultMappingRemoveRequestResourceGuardOperationRequests is null ? default : new CrossTenantVaultMappingRemoveRequestProperties((crossTenantVaultMappingRemoveRequestResourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <summary> Response for the cross-tenant vault mapping status check, from the source vault side. </summary>
-        /// <param name="mappingName"> Name of the cross-tenant vault mapping, if the source vault is mapped. </param>
-        /// <param name="mappingState"> Current state of the cross-tenant vault mapping. </param>
-        /// <returns> A new <see cref="Models.CrossTenantVaultMappingStatusResult"/> instance for mocking. </returns>
-        public static CrossTenantVaultMappingStatusResult CrossTenantVaultMappingStatusResult(string mappingName = default, VaultMappingState? mappingState = default)
-        {
-            return new CrossTenantVaultMappingStatusResult(mappingName, mappingState, default);
-        }
-
-        /// <summary>
-        /// BackupInstance resource as returned by the cross-tenant read surface; its
-        /// properties exclude SecretStoreResource.value.
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Proxy Resource tags. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.CrossTenantBackupInstanceResourceData"/> instance for mocking. </returns>
-        public static CrossTenantBackupInstanceResourceData CrossTenantBackupInstanceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CrossTenantBackupInstance properties = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CrossTenantBackupInstanceResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary>
-        /// Cross-tenant read projection of BackupInstance. Spreads the shared model so new
-        /// fields flow through automatically; only datasourceAuthCredentials is re-typed to
-        /// the value-less CrossTenantAuthCredentials chain.
-        /// </summary>
-        /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
-        /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
-        /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
-        /// <param name="policyInfo"> Gets or sets the policy information. </param>
-        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
-        /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
-        /// <param name="resourceProtectionErrorDetails"> Specifies the protection error of the resource. </param>
-        /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
-        /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
-        /// <param name="identityDetails">
-        /// Contains information of the Identity Details for the BI.
-        /// If it is null, default will be considered as System Assigned.
-        /// </param>
-        /// <param name="objectType"></param>
-        /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
-        /// <returns> A new <see cref="Models.CrossTenantBackupInstance"/> instance for mocking. </returns>
-        public static CrossTenantBackupInstance CrossTenantBackupInstance(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, DataProtectionBackupUserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default, CrossTenantAuthCredentials dataSourceAuthCredentials = default)
-        {
-            resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
-
-            return new CrossTenantBackupInstance(
-                friendlyName,
-                dataSourceInfo,
-                dataSourceSetInfo,
-                policyInfo,
-                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
-                protectionStatus,
-                currentProtectionState,
-                resourceProtectionErrorDetails,
-                provisioningState,
-                validationType,
-                identityDetails,
-                objectType,
-                dataSourceAuthCredentials,
-                default);
-        }
-
-        /// <summary>
-        /// Cross-tenant projection of the authentication-credentials discriminated base,
-        /// forked so its secret-store subtype references the value-less
-        /// CrossTenantSecretStoreResource. Mirror any new AuthCredentials subtype here.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CrossTenantSecretStoreBasedAuthCredentials"/>.
-        /// </summary>
-        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <returns> A new <see cref="Models.CrossTenantAuthCredentials"/> instance for mocking. </returns>
-        public static CrossTenantAuthCredentials CrossTenantAuthCredentials(string objectType = default)
-        {
-            return new UnknownCrossTenantAuthCredentials(objectType, default);
-        }
-
-        /// <summary>
-        /// Cross-tenant projection of SecretStoreBasedAuthCredentials whose secret store
-        /// omits `value`.
-        /// </summary>
-        /// <param name="secretStoreResource"> Secret store resource (cross-tenant read projection, without `value`). </param>
-        /// <returns> A new <see cref="Models.CrossTenantSecretStoreBasedAuthCredentials"/> instance for mocking. </returns>
-        public static CrossTenantSecretStoreBasedAuthCredentials CrossTenantSecretStoreBasedAuthCredentials(CrossTenantSecretStoreResource secretStoreResource = default)
-        {
-            return new CrossTenantSecretStoreBasedAuthCredentials("SecretStoreBasedAuthCredentials", default, secretStoreResource);
-        }
-
-        /// <summary>
-        /// Cross-tenant projection of SecretStoreResource used only by the cross-tenant
-        /// backup-instance read surface: the shared model minus `value` (a write-time
-        /// credential the service never returns). Spread keeps uri/secretStoreType in sync.
-        /// </summary>
-        /// <param name="uri"> Uri to get to the resource. </param>
-        /// <param name="secretStoreType"> Gets or sets the type of secret store. </param>
-        /// <returns> A new <see cref="Models.CrossTenantSecretStoreResource"/> instance for mocking. </returns>
-        public static CrossTenantSecretStoreResource CrossTenantSecretStoreResource(Uri uri = default, SecretStoreType secretStoreType = default)
-        {
-            return new CrossTenantSecretStoreResource(uri, secretStoreType, default);
-        }
-
-        /// <summary> Operation Resource. </summary>
-        /// <param name="endsOn"> End time of the operation. </param>
-        /// <param name="error">
-        /// Required if status == failed or status == canceled. This is the OData v4 error format, used by the RPC and will go into the v2.2 Azure REST API guidelines.
-        /// The full set of optional properties (e.g. inner errors / details) can be found in the `Error Response` section.
-        /// </param>
-        /// <param name="id"> It should match what is used to GET the operation result. </param>
-        /// <param name="name"> It must match the last segment of the `id` field, and will typically be a GUID / system generated value. </param>
-        /// <param name="properties"> End time of the operation. </param>
-        /// <param name="startsOn"> Start time of the operation. </param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="Models.OperationResource"/> instance for mocking. </returns>
-        public static OperationResource OperationResource(DateTimeOffset? endsOn = default, Error error = default, string id = default, string name = default, DataProtectionOperationExtendedInfo properties = default, DateTimeOffset? startsOn = default, string status = default)
-        {
-            return new OperationResource(
-                endsOn,
-                error,
-                id,
-                name,
-                properties,
-                startsOn,
-                status,
-                default);
-        }
-
         /// <summary> CheckNameAvailability Request. </summary>
         /// <param name="name"> Resource name for which availability needs to be checked. </param>
         /// <param name="resourceType"> Describes the Resource type: Microsoft.DataProtection/BackupVaults. </param>
@@ -2313,7 +2106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
         /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, BackupVaultImmutabilityState? immutabilityState = default, BackupVaultEncryptionSettings encryptionSettings = default)
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, BackupVaultImmutabilityState? immutabilityState, BackupVaultEncryptionSettings encryptionSettings)
         {
             return new BackupVaultSecuritySettings(softDeleteSettings, immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), encryptionSettings, default);
         }
@@ -2332,7 +2125,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default)
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState)
         {
             return new DataProtectionBackupDiscreteRecoveryPointProperties(
                 "AzureBackupDiscreteRecoveryPoint",

@@ -19,29 +19,32 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     internal partial class DataProtectionBackupJobDataAsync0CollectionResultOfT : AsyncPageable<DataProtectionBackupJobData>
     {
-        private readonly BackupJobsFromDppCrossTenantVault _client;
-        private readonly Guid _subscriptionId;
+        private readonly FetchCrossRegionRestoreJobsOperationGroup _client;
         private readonly string _resourceGroupName;
-        private readonly string _vaultName;
-        private readonly string _mappingName;
+        private readonly Guid _subscriptionId;
+        private readonly AzureLocation _location;
+        private readonly RequestContent _content;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DataProtectionBackupJobDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The BackupJobsFromDppCrossTenantVault client used to send requests. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="client"> The FetchCrossRegionRestoreJobsOperationGroup client used to send requests. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="vaultName"> The name of the BackupVaultResource. </param>
-        /// <param name="mappingName"> The name of the CrossTenantVaultMapping. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DataProtectionBackupJobDataAsync0CollectionResultOfT(BackupJobsFromDppCrossTenantVault client, Guid subscriptionId, string resourceGroupName, string vaultName, string mappingName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DataProtectionBackupJobDataAsync0CollectionResultOfT(FetchCrossRegionRestoreJobsOperationGroup client, string resourceGroupName, Guid subscriptionId, AzureLocation location, RequestContent content, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _vaultName = vaultName;
-            _mappingName = mappingName;
+            _subscriptionId = subscriptionId;
+            _location = location;
+            _content = content;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -85,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _mappingName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _mappingName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCrossRegionRestoreJobsRequest(nextLink, _resourceGroupName, _subscriptionId, _location, _content, _filter, _context) : _client.CreateGetCrossRegionRestoreJobsRequest(_resourceGroupName, _subscriptionId, _location, _content, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

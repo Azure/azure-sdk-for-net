@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary></summary>
-    public partial class RecoveryPointFromDppCrossTenantVaultResource : IJsonModel<DataProtectionBackupRecoveryPointData>
+    public partial class DataProtectionBackupRecoveryPointResource : IJsonModel<DataProtectionBackupRecoveryPointData>
     {
         private static IJsonModel<DataProtectionBackupRecoveryPointData> s_dataDeserializationInstance;
 

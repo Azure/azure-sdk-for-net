@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a AzureBackupRecoveryPointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AzureBackupRecoveryPointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupInstanceResource"/> using the GetAzureBackupRecoveryPointResources method.
+    /// A class representing a DataProtectionBackupRecoveryPoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupRecoveryPointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupInstanceResource"/> using the GetDataProtectionBackupRecoveryPoints method.
     /// </summary>
-    public partial class AzureBackupRecoveryPointResource : ArmResource
+    public partial class DataProtectionBackupRecoveryPointResource : ArmResource
     {
         private readonly ClientDiagnostics _azureBackupRecoveryPointResourcesClientDiagnostics;
         private readonly AzureBackupRecoveryPointResources _azureBackupRecoveryPointResourcesRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints";
 
-        /// <summary> Initializes a new instance of AzureBackupRecoveryPointResource for mocking. </summary>
-        protected AzureBackupRecoveryPointResource()
+        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointResource for mocking. </summary>
+        protected DataProtectionBackupRecoveryPointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBackupRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AzureBackupRecoveryPointResource(ArmClient client, DataProtectionBackupRecoveryPointData data) : this(client, data.Id)
+        internal DataProtectionBackupRecoveryPointResource(ArmClient client, DataProtectionBackupRecoveryPointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBackupRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AzureBackupRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataProtectionBackupRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string azureBackupRecoveryPointResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dataProtectionBackupRecoveryPointApiVersion);
             _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureBackupRecoveryPointResourceApiVersion ?? "2026-08-31-preview");
+            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -105,18 +105,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AzureBackupRecoveryPointResource"/>. </description>
+        /// <description> <see cref="DataProtectionBackupRecoveryPointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AzureBackupRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionBackupRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResource.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AzureBackupRecoveryPointResource"/>. </description>
+        /// <description> <see cref="DataProtectionBackupRecoveryPointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AzureBackupRecoveryPointResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionBackupRecoveryPointResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("AzureBackupRecoveryPointResource.Get");
+            using DiagnosticScope scope = _azureBackupRecoveryPointResourcesClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
