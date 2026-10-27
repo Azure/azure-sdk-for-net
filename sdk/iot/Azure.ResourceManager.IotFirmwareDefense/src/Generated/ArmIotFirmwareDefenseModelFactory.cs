@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FirmwareProvisioningState? provisioningState, IotFirmwareDefenseSku sku)
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FirmwareProvisioningState? provisioningState = default, IotFirmwareDefenseSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku, IDictionary<string, string> tags)
+        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="fixedInVersions"> The component versions in which this weakness was fixed, if any. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, string effectiveVectorString, ExploitMaturityLevel? effectiveExploitMaturity, IEnumerable<CvssScore> cvssScores, IEnumerable<CveLink> links, string description, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, FirmwareProvisioningState? provisioningState = default)
+        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, FirmwareProvisioningState? provisioningState = default)
         {
             return new CveResult(
                 id,
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="strippedFlag"></param>
         /// <returns> A new <see cref="Models.BinaryHardeningResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BinaryHardeningResult BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, string architecture = default, string filePath = default, string @class = default, string runpath = default, string rpath = default, bool? nxFlag = default, bool? pieFlag = default, bool? relroFlag = default, bool? canaryFlag = default, bool? strippedFlag = default)
+        public static BinaryHardeningResult BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, string architecture, string filePath, string @class, string runpath, string rpath, bool? nxFlag, bool? pieFlag, bool? relroFlag, bool? canaryFlag, bool? strippedFlag)
         {
             return new BinaryHardeningResult(
                 id,
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance. </param>
         /// <returns> A new <see cref="Models.CryptoCertificateResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CryptoCertificateResult CryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName = default, CryptoCertificateEntity subject = default, CryptoCertificateEntity issuer = default, DateTimeOffset? issuedOn = default, DateTimeOffset? expireOn = default, string role = default, string signatureAlgorithm = default, long? keySize = default, string keyAlgorithm = default, string encoding = default, string serialNumber = default, string fingerprint = default, IEnumerable<string> usage = default, IEnumerable<string> filePaths = default, CryptoPairedKey pairedKey = default, bool? isExpired = default, bool? isSelfSigned = default, bool? isWeakSignature = default, bool? isShortKeySize = default)
+        public static CryptoCertificateResult CryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IEnumerable<string> usage, IEnumerable<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize)
         {
             return new CryptoCertificateResult(
                 id,
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm according to NIST guidance. </param>
         /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, string keyType, long? keySize = default, string keyAlgorithm = default, IEnumerable<string> usage = default, IEnumerable<string> filePaths = default, CryptoPairedKey pairedKey = default, bool? isShortKeySize = default)
+        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IEnumerable<string> usage, IEnumerable<string> filePaths, CryptoPairedKey pairedKey, bool? isShortKeySize)
         {
             return new CryptoKeyResult(
                 id,
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="description"> The CVE description. </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, CveComponent component = default, string severity = default, string namePropertiesName = default, string cvssScore = default, string cvssVersion = default, string cvssV2Score = default, string cvssV3Score = default, IEnumerable<CveLink> links = default, string description = default)
+        public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, CveComponent component, string severity, string namePropertiesName, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, IEnumerable<CveLink> links, string description)
         {
             return new CveResult(
                 id,
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="provisioningState"></param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = default)
+        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState)
         {
             return new FirmwareAnalysisWorkspacePatch(default, default, default);
         }
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="unknown"></param>
         /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CveSummary CveSummary(long? critical = default, long? high = default, long? medium = default, long? low = default, long? unknown = default)
+        public static CveSummary CveSummary(long? critical, long? high, long? medium, long? low, long? unknown)
         {
             return new CveSummary(
                 FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures,
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="strippedPercentage"></param>
         /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = default, int? nxPercentage = default, int? piePercentage = default, int? relroPercentage = default, int? canaryPercentage = default, int? strippedPercentage = default)
+        public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles, int? nxPercentage, int? piePercentage, int? relroPercentage, int? canaryPercentage, int? strippedPercentage)
         {
             return new BinaryHardeningSummary(
                 FirmwareAnalysisSummaryType.BinaryHardening,
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="shortKeySize"></param>
         /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates = default, long? pairedKeys = default, long? expired = default, long? expiringSoon = default, long? weakSignature = default, long? selfSigned = default, long? shortKeySize = default)
+        public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize)
         {
             return new CryptoCertificateSummary(
                 FirmwareAnalysisSummaryType.CryptoCertificate,
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="shortKeySize"></param>
         /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CryptoKeySummary CryptoKeySummary(long? totalKeys = default, long? publicKeys = default, long? privateKeys = default, long? pairedKeys = default, long? shortKeySize = default)
+        public static CryptoKeySummary CryptoKeySummary(long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize)
         {
             return new CryptoKeySummary(
                 FirmwareAnalysisSummaryType.CryptoKey,
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotFirmwareDefenseSku sku = default, FirmwareProvisioningState? provisioningState = default)
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotFirmwareDefenseSku sku, FirmwareProvisioningState? provisioningState)
         {
             return new FirmwareAnalysisWorkspaceData(
                 id,
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, FirmwareProvisioningState? provisioningState = default)
+        public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IEnumerable<CvssScore> cvssScores, IEnumerable<CveLink> links, string description, FirmwareProvisioningState? provisioningState)
         {
             return new CveResult(
                 id,
