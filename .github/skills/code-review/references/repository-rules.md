@@ -74,9 +74,6 @@ on that basis.
   `<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>` that follows a local
   `<RequiredTargetFrameworks>` is what applies that override. If the line came from
   `sdk/template` or generator scaffolding, say so; the source needs the same fix
-- **`eng/common` is synced from `Azure/azure-sdk-tools` — its own README says so.** An edit
-  made there is overwritten by the next sync, so the change is silently lost and the review
-  that approved it was wasted. It belongs in `azure-sdk-tools` 🔴
 - C# and PowerShell are the only languages the repository has tooling and process to keep
   safe and current. A script in another language, or a build entry point outside standard
   .NET tooling, adds a supply-chain surface with no owner and no freshness story 🟡
