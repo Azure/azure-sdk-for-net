@@ -3,6 +3,10 @@
 ## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+- Either `ResilientBackground` or `SteerableConversations` now activates the Core
+  durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
+  deployments retain durable task bookkeeping but mark interrupted background responses
+  failed instead of re-invoking their handlers.
 - `ApiError` (the model carried by `ApiErrorResponse`) has a new optional `Misalignment` property
   (`MisalignmentErrorDetailsResource`, `MisalignmentErrorType`, `MisalignmentSteer`), and
   `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (plus `Async` on the

@@ -16,12 +16,11 @@ the server crashes mid-response:
 - Stream events are preserved for client reconnection.
 - Conversation state is maintained across crashes.
 
-When `ResilientBackground` is `false` and the application has not explicitly called
+When both Responses options are `false` and the application has not explicitly called
 `SetResilientTasksEnabled()`, stored responses still execute and persist normally, but they
 run in-process: no task store is initialized and an ungraceful crash does not recover or
-mark the in-flight response. Applications may explicitly enable Core tasks while leaving
-`ResilientBackground` false; those requests use durable tasks with mark-failed recovery
-rather than handler re-invocation.
+mark the in-flight response. Enabling `SteerableConversations` alone (or explicitly enabling
+Core tasks) activates durable tasks with mark-failed recovery rather than handler re-invocation.
 
 **Opting in (`ResilientBackground = true`) gets you the framework half for
 free**: re-invocation on restart, event replay for reconnecting clients, and
@@ -31,12 +30,13 @@ this way still produces a correct response (it just re-runs the whole turn). The
 repeat non-idempotent side effects — is optional work you take on when you want
 it; see [Choosing a resume strategy](#choosing-a-resume-strategy).
 
-> **Default**: `ResilientBackground` defaults to `false`. Without the opt-in, a
-> crash mid-handler leaves the response in the "crash-failed" state: the
-> next-lifetime recovery scanner marks it `failed` (`server_error`,
-> `shutdown_reason = crash_recovery`) instead of re-invoking the handler. Set
-> `ResilientBackground = true` on `ResponsesServerOptions` to engage the
-> re-invoke recovery path.
+> **Default**: Both Responses feature flags default to `false`; without an
+> explicit Core opt-in, stored work runs in-process and there is no task-based
+> crash recovery. When steering or an explicit Core opt-in enables the runtime
+> while `ResilientBackground` remains `false`, the next-lifetime recovery
+> scanner marks interrupted work `failed` (`server_error`,
+> `shutdown_reason = crash_recovery`) without re-invoking its handler. Set
+> `ResilientBackground = true` for handler re-invocation.
 
 ## What the Framework Provides (Zero Code)
 
@@ -106,7 +106,8 @@ When steering is enabled:
 | `SteerableConversations` | `false` | Enable multi-turn steering with queued follow-up turns. |
 
 `ResilientBackground` and `SteerableConversations` are **independent** options.
-Enabling steering does not require resilience and vice versa.
+Either one enables the Core task runtime; enabling steering does not enable
+handler re-invocation on recovery.
 
 ## Configuration Matrix
 

@@ -63,7 +63,6 @@ public sealed class EffectiveOptionsProtocolTests
                 configureAfterResponsesServices: services =>
                     services.Configure<ResponsesServerOptions>(options =>
                     {
-                        options.ResilientBackground = true;
                         options.SteerableConversations = true;
                     }));
             using HttpClient client = factory.CreateClient();

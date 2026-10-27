@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
             string authenticationSetting = default;
-            DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
-            DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
-            DiscoveryRuleSpecification specification = default;
+            HealthModelDiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
+            HealthModelDiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
+            HealthModelDiscoveryRuleSpecification specification = default;
             ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal = default;
-            DiscoveryError error = default;
+            HealthModelDiscoveryError error = default;
             string entityName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (prop.NameEquals("discoverRelationships"u8))
                 {
-                    discoverRelationships = new DiscoveryRuleRelationshipDiscoveryBehavior(prop.Value.GetString());
+                    discoverRelationships = new HealthModelDiscoveryRuleRelationshipDiscoveryBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("addRecommendedSignals"u8))
                 {
-                    addRecommendedSignals = new DiscoveryRuleRecommendedSignalsBehavior(prop.Value.GetString());
+                    addRecommendedSignals = new HealthModelDiscoveryRuleRecommendedSignalsBehavior(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("specification"u8))
                 {
-                    specification = DiscoveryRuleSpecification.DeserializeDiscoveryRuleSpecification(prop.Value, options);
+                    specification = HealthModelDiscoveryRuleSpecification.DeserializeHealthModelDiscoveryRuleSpecification(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addResourceHealthSignal"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    error = DiscoveryError.DeserializeDiscoveryError(prop.Value, options);
+                    error = HealthModelDiscoveryError.DeserializeHealthModelDiscoveryError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("entityName"u8))
