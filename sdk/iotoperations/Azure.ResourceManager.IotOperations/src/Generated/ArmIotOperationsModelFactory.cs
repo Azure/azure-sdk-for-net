@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default)
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState)
         {
             return new IotOperationsDataflowProfileProperties(
                 diagnostics,
@@ -2287,7 +2287,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsBrokerProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced = default, BrokerCardinality cardinality = default, BrokerDiagnostics diagnostics = default, DiskBackedMessageBuffer diskBackedMessageBuffer = default, IotOperationsOperationalMode? generateResourceLimitsCpu = default, BrokerMemoryProfile? memoryProfile = default, BrokerPersistence persistence = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, IotOperationsOperationalMode? generateResourceLimitsCpu, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState)
         {
             return new IotOperationsBrokerProperties(
                 advanced,
@@ -2311,7 +2311,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState)
         {
             return new IotOperationsDataflowProfileProperties(
                 diagnostics,
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowOperationProperties> operations = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IEnumerable<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState)
         {
             return new IotOperationsDataflowProperties(
                 mode,
@@ -2351,7 +2351,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowGraphProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode = default, IotOperationsOperationalMode? requestDiskPersistence = default, IEnumerable<DataflowGraphNode> nodes = default, IEnumerable<DataflowGraphNodeConnection> nodeConnections = default, IotOperationsProvisioningState? provisioningState = default, ResourceHealthState? healthState = default)
+        public static IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode, IotOperationsOperationalMode? requestDiskPersistence, IEnumerable<DataflowGraphNode> nodes, IEnumerable<DataflowGraphNodeConnection> nodeConnections, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState)
         {
             return new IotOperationsDataflowGraphProperties(
                 mode,
@@ -2372,7 +2372,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="tagDigestSettings"> Optional image tag or digest. If not specified, the default tag is `latest`. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateRuntimeImageConfigurationSettings"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AkriConnectorTemplateRuntimeImageConfigurationSettings AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName = default, AkriConnectorsImagePullPolicy? imagePullPolicy = default, int? replicas = default, AkriConnectorsRegistrySettings registrySettings = default, AkriConnectorsTagDigestSettings tagDigestSettings = default)
+        public static AkriConnectorTemplateRuntimeImageConfigurationSettings AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName, AkriConnectorsImagePullPolicy? imagePullPolicy, int? replicas, AkriConnectorsRegistrySettings registrySettings, AkriConnectorsTagDigestSettings tagDigestSettings)
         {
             return new AkriConnectorTemplateRuntimeImageConfigurationSettings(
                 imageName,
@@ -2390,7 +2390,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsAkriConnectorProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotOperationsAkriConnectorProperties IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState = default, IEnumerable<AkriConnectorAllocatedDevice> allocatedDevices = default, ResourceHealthState? healthState = default)
+        public static IotOperationsAkriConnectorProperties IotOperationsAkriConnectorProperties(IotOperationsProvisioningState? provisioningState, IEnumerable<AkriConnectorAllocatedDevice> allocatedDevices, ResourceHealthState? healthState)
         {
             return new IotOperationsAkriConnectorProperties(provisioningState, (allocatedDevices ?? new ChangeTrackingList<AkriConnectorAllocatedDevice>()).ToList(), default, healthState, default);
         }

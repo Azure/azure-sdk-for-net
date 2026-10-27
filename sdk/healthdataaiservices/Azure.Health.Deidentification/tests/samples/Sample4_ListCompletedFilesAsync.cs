@@ -26,8 +26,19 @@ namespace Azure.Health.Deidentification.Samples
                 new DeidentificationClientOptions()
             );
 
+            // Create and complete a job so there are documents to list; kept outside the snippet.
+            string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
+            string jobName = $"net-sample-{Guid.NewGuid():N}".Substring(0, 23);
+            DeidentificationJob job = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "example_patient_1/"),
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/") { Overwrite = true },
+                OperationType = DeidentificationOperationType.Redact,
+            };
+            await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job);
+
             #region Snippet:AzHealthDeidSample4Async_ListCompletedFiles
-            AsyncPageable<DeidentificationDocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
+            AsyncPageable<DeidentificationDocumentDetails> files = client.GetJobDocumentsAsync(jobName);
 
             await foreach (DeidentificationDocumentDetails file in files)
             {

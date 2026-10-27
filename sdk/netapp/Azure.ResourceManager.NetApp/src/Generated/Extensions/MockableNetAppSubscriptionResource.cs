@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> An object representing collection of NetAppSubscriptionQuotaItems and their operations over a NetAppSubscriptionQuotaItemResource. </returns>
         public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems(AzureLocation location)
         {
-            return GetCachedClient(client => new NetAppSubscriptionQuotaItemCollection(client, Id, location));
+            return new NetAppSubscriptionQuotaItemCollection(Client, Id, location);
         }
 
         /// <summary>

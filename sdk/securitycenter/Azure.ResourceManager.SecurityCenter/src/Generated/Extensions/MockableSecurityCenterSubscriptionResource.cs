@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityOperators and their operations over a SecurityOperatorResource. </returns>
         public virtual SecurityOperatorCollection GetSecurityOperators(string pricingName)
         {
-            return GetCachedClient(client => new SecurityOperatorCollection(client, Id, pricingName));
+            return new SecurityOperatorCollection(Client, Id, pricingName);
         }
 
         /// <summary>

@@ -3443,7 +3443,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaces and their operations over a VirtualMachineScaleSetNetworkInterfaceResource. </returns>
         public virtual VirtualMachineScaleSetNetworkInterfaceCollection GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, string virtualmachineIndex)
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetNetworkInterfaceCollection(client, Id, virtualMachineScaleSetName, virtualmachineIndex));
+            return new VirtualMachineScaleSetNetworkInterfaceCollection(Client, Id, virtualMachineScaleSetName, virtualmachineIndex);
         }
 
         /// <summary>

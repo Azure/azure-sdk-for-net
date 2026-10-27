@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Log Analytics Query recommendation configuration. </summary>
-    public partial class LogAnalyticsQueryRecommendationConfiguration : SignalRecommendationConfiguration, IJsonModel<LogAnalyticsQueryRecommendationConfiguration>
+    public partial class LogAnalyticsQueryRecommendationConfiguration : HealthModelSignalRecommendationConfiguration, IJsonModel<LogAnalyticsQueryRecommendationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryRecommendationConfiguration"/> for deserialization. </summary>
         internal LogAnalyticsQueryRecommendationConfiguration()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
