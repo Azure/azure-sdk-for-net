@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     // Keep the released model in Models: only the replacement *Data resource type is generated.
-    // The persistence adapters in the serialization partial preserve ResourceType, not the complete legacy payload.
     /// <summary> Compatibility type for available SSL options info. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This model is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
@@ -21,18 +20,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
         {
-            PredefinedPolicies = new List<WritableSubResource>();
-            AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>();
-            AvailableProtocols = new List<ApplicationGatewaySslProtocol>();
+            PredefinedPolicies = new ChangeTrackingList<WritableSubResource>();
+            AvailableCipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
         // Adapt the generated resource result to the released model using the base's native metadata storage.
         internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols)
-            : base(id, name, resourceType, location, tags, default)
+            : this(id, name, resourceType, location, tags ?? new ChangeTrackingDictionary<string, string>(), default,
+                new List<WritableSubResource>(predefinedPolicies ?? Array.Empty<WritableSubResource>()), defaultPolicy,
+                new List<ApplicationGatewaySslCipherSuite>(availableCipherSuites ?? Array.Empty<ApplicationGatewaySslCipherSuite>()),
+                new List<ApplicationGatewaySslProtocol>(availableProtocols ?? Array.Empty<ApplicationGatewaySslProtocol>()))
         {
-            PredefinedPolicies = new List<WritableSubResource>(predefinedPolicies ?? Array.Empty<WritableSubResource>());
-            AvailableCipherSuites = new List<ApplicationGatewaySslCipherSuite>(availableCipherSuites ?? Array.Empty<ApplicationGatewaySslCipherSuite>());
-            AvailableProtocols = new List<ApplicationGatewaySslProtocol>(availableProtocols ?? Array.Empty<ApplicationGatewaySslProtocol>());
+        }
+
+        internal ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WritableSubResource> predefinedPolicies, ApplicationGatewaySslPolicyName? defaultPolicy, IList<ApplicationGatewaySslCipherSuite> availableCipherSuites, IList<ApplicationGatewaySslProtocol> availableProtocols)
+            : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
+        {
+            PredefinedPolicies = predefinedPolicies;
+            AvailableCipherSuites = availableCipherSuites;
+            AvailableProtocols = availableProtocols;
             DefaultPolicy = defaultPolicy;
         }
 
@@ -55,11 +62,6 @@ namespace Azure.ResourceManager.Network.Models
             ResourceType resourceType = data.ResourceType ?? new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions");
             return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, resourceType, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
         }
-
-        // ApiCompat CP0002: 1.17.0 requires the non-nullable ResourceType.get, not the inherited nullable getter.
-        // Read the base's native storage rather than duplicating metadata.
-        /// <summary> The resource type. </summary>
-        public new ResourceType ResourceType => base.ResourceType ?? default;
 
         private static string GetNameFromId(ResourceIdentifier id)
         {

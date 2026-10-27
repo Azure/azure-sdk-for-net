@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class ApplicationGatewayPrivateLinkResource : NetworkResourceData
     {
     }

@@ -9,7 +9,6 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     // The obsolete 1.15 custom-policy enum is distinct from the generated DdosTrafficType.
-    // TcpSyn was accidentally added to this legacy type by the 1.17 client-name mapping.
     /// <summary> The protocol for which the DDoS protection policy is being customized. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This struct is obsolete and will be removed in a future release", false)]
@@ -31,8 +30,6 @@ namespace Azure.ResourceManager.Network.Models
         public static DdosCustomPolicyProtocol Udp { get; } = new DdosCustomPolicyProtocol("Udp");
         /// <summary> Syn. </summary>
         public static DdosCustomPolicyProtocol Syn { get; } = new DdosCustomPolicyProtocol("Syn");
-        /// <summary> TcpSyn. </summary>
-        public static DdosCustomPolicyProtocol TcpSyn { get; } = new DdosCustomPolicyProtocol("TcpSyn");
 
         /// <summary> Determines if two <see cref="DdosCustomPolicyProtocol"/> values are the same. </summary>
         public static bool operator ==(DdosCustomPolicyProtocol left, DdosCustomPolicyProtocol right) => left.Equals(right);
@@ -40,8 +37,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(DdosCustomPolicyProtocol left, DdosCustomPolicyProtocol right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="DdosCustomPolicyProtocol"/>. </summary>
         public static implicit operator DdosCustomPolicyProtocol(string value) => new DdosCustomPolicyProtocol(value);
-        /// <summary> Converts a string to a nullable <see cref="DdosCustomPolicyProtocol"/>. </summary>
-        public static implicit operator DdosCustomPolicyProtocol?(string value) => value == null ? null : new DdosCustomPolicyProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

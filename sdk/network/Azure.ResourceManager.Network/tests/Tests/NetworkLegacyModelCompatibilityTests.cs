@@ -44,10 +44,9 @@ namespace Azure.ResourceManager.Network.Tests
             AssertDeprecated(type.GetProperty(name));
         }
 
-        [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.VirtualNetworkInherited))]
-        [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Enabled))]
-        [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Disabled))]
-        [TestCase(typeof(DdosCustomPolicyProtocol), nameof(DdosCustomPolicyProtocol.TcpSyn))]
+        [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Basic))]
+        [TestCase(typeof(DdosSettingsProtectionCoverage), nameof(DdosSettingsProtectionCoverage.Standard))]
+        [TestCase(typeof(DdosCustomPolicyProtocol), nameof(DdosCustomPolicyProtocol.Syn))]
         [TestCase(typeof(ProtocolCustomSettings), nameof(ProtocolCustomSettings.Protocol))]
         [TestCase(typeof(ProtocolCustomSettings), nameof(ProtocolCustomSettings.TriggerSensitivityOverride))]
         [TestCase(typeof(ConnectionMonitorQueryResult), nameof(ConnectionMonitorQueryResult.SourceStatus))]
@@ -60,6 +59,31 @@ namespace Azure.ResourceManager.Network.Tests
             PropertyInfo property = type.GetProperty(name);
             Assert.That(property.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
             Assert.That(property.GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
+        }
+
+        [TestCase(typeof(DdosSettingsProtectionCoverage), "VirtualNetworkInherited")]
+        [TestCase(typeof(DdosSettingsProtectionCoverage), "Enabled")]
+        [TestCase(typeof(DdosSettingsProtectionCoverage), "Disabled")]
+        [TestCase(typeof(DdosCustomPolicyProtocol), "TcpSyn")]
+        [TestCase(typeof(PacketCaptureData), "ContinuousCapture")]
+        [TestCase(typeof(SubnetData), "PrivateEndpointNetworkPolicies")]
+        [TestCase(typeof(SubnetData), "PrivateLinkServiceNetworkPolicies")]
+        [TestCase(typeof(VirtualNetworkPeeringData), "PeerCompleteVnets")]
+        public void MigrationDoesNotInventLegacyAliases(Type type, string name)
+        {
+            Assert.That(type.GetProperty(name), Is.Null);
+        }
+
+        [TestCase(typeof(DdosSettingsProtectionCoverage))]
+        [TestCase(typeof(DdosCustomPolicyProtocol))]
+        public void LegacyEnumsDoNotIntroduceNullableStringConversions(Type type)
+        {
+            Type nullableType = typeof(Nullable<>).MakeGenericType(type);
+            foreach (MethodInfo method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+            {
+                if (method.Name == "op_Implicit")
+                    Assert.That(method.ReturnType, Is.Not.EqualTo(nullableType));
+            }
         }
 
         [Test]

@@ -4,22 +4,37 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility type for connection state snapshots. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This legacy query snapshot is not supported by the current connection monitor API.")]
-    public partial class ConnectionStateSnapshot : IJsonModel<ConnectionStateSnapshot>, IPersistableModel<ConnectionStateSnapshot>
+    public partial class ConnectionStateSnapshot
     {
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
         public ConnectionStateSnapshot()
         {
-            Hops = Array.Empty<ConnectivityHopInfo>();
+            Hops = new ChangeTrackingList<ConnectivityHopInfo>();
+        }
+
+        internal ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHopInfo> hops, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NetworkConnectionState = networkConnectionState;
+            StartOn = startOn;
+            EndOn = endOn;
+            EvaluationState = evaluationState;
+            AvgLatencyInMs = avgLatencyInMs;
+            MinLatencyInMs = minLatencyInMs;
+            MaxLatencyInMs = maxLatencyInMs;
+            ProbesSent = probesSent;
+            ProbesFailed = probesFailed;
+            Hops = hops;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Connection state. </summary>
@@ -51,14 +66,5 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Connectivity hops. </summary>
         public IReadOnlyList<ConnectivityHopInfo> Hops { get; }
-
-        ConnectionStateSnapshot IJsonModel<ConnectionStateSnapshot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ConnectionStateSnapshot();
-        void IJsonModel<ConnectionStateSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        ConnectionStateSnapshot IPersistableModel<ConnectionStateSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => new ConnectionStateSnapshot();
-        string IPersistableModel<ConnectionStateSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 }

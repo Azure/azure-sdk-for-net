@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class VngClientConnectionConfiguration : NetworkResourceData
     {
         // Lazily restore the supported flattened facade using the native change-tracking list.

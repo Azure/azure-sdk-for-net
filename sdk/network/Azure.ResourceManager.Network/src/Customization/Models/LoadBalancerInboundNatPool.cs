@@ -10,10 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class LoadBalancerInboundNatPool : NetworkResourceData
     {
         /// <summary> Gets or sets the transport protocol. </summary>
-        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.Protocol"/> instead. </remarks>
+        /// <remarks>
+        /// Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.Protocol"/> instead.
+        /// This nullable facade represents an absent <see cref="Properties"/> object; the underlying member is required and non-nullable.
+        /// Assigning <see langword="null"/> has no effect and leaves <see cref="Properties"/> unchanged.
+        /// Unlike version 1.15.0, a null assignment does not reset the underlying value to its default.
+        /// </remarks>
         // ApiCompat 1.17.0 CP0002: restore Protocol.get and Protocol.set.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.protocol")]
@@ -31,7 +37,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the first frontend port in the range. </summary>
-        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.FrontendPortRangeStart"/> instead. </remarks>
+        /// <remarks>
+        /// Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.FrontendPortRangeStart"/> instead.
+        /// This nullable facade represents an absent <see cref="Properties"/> object; the underlying member is required and non-nullable.
+        /// Assigning <see langword="null"/> has no effect and leaves <see cref="Properties"/> unchanged.
+        /// Unlike version 1.15.0, a null assignment does not reset the underlying value to its default.
+        /// </remarks>
         // ApiCompat 1.17.0 CP0002: restore FrontendPortRangeStart.get and FrontendPortRangeStart.set.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.frontendPortRangeStart")]
@@ -49,7 +60,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the last frontend port in the range. </summary>
-        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.FrontendPortRangeEnd"/> instead. </remarks>
+        /// <remarks>
+        /// Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.FrontendPortRangeEnd"/> instead.
+        /// This nullable facade represents an absent <see cref="Properties"/> object; the underlying member is required and non-nullable.
+        /// Assigning <see langword="null"/> has no effect and leaves <see cref="Properties"/> unchanged.
+        /// Unlike version 1.15.0, a null assignment does not reset the underlying value to its default.
+        /// </remarks>
         // ApiCompat 1.17.0 CP0002: restore FrontendPortRangeEnd.get and FrontendPortRangeEnd.set.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.frontendPortRangeEnd")]
@@ -67,7 +83,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the backend port. </summary>
-        /// <remarks> Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.BackendPort"/> instead. </remarks>
+        /// <remarks>
+        /// Use <see cref="Properties"/>.<see cref="LoadBalancerInboundNatPoolProperties.BackendPort"/> instead.
+        /// This nullable facade represents an absent <see cref="Properties"/> object; the underlying member is required and non-nullable.
+        /// Assigning <see langword="null"/> has no effect and leaves <see cref="Properties"/> unchanged.
+        /// Unlike version 1.15.0, a null assignment does not reset the underlying value to its default.
+        /// </remarks>
         // ApiCompat 1.17.0 CP0002: restore BackendPort.get and BackendPort.set.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.backendPort")]

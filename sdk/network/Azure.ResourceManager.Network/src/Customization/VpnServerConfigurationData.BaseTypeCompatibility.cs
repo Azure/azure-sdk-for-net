@@ -12,5 +12,6 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
+    // Native generation loses the released NetworkTrackedResourceData inheritance (ApiCompat CP0007).
     public partial class VpnServerConfigurationData : NetworkTrackedResourceData { }
 }

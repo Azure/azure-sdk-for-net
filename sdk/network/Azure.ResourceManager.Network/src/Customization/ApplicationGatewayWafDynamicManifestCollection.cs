@@ -135,67 +135,6 @@ namespace Azure.ResourceManager.Network
             return Response.FromValue(response.HasValue, response.GetRawResponse());
         }
 
-        // Named overloads preserve released signatures; the service exposes only the literal /dafault singleton.
-        /// <summary> Gets the regional singleton manifest. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetMessage)]
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewayWafDynamicManifestResource> Get(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return Get(cancellationToken);
-        }
-
-        /// <summary> Gets the regional singleton manifest. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetAsyncMessage)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return GetAsync(cancellationToken);
-        }
-
-        /// <summary> Gets the regional singleton manifest if it exists. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetMessage)]
-        [ForwardsClientCalls]
-        public virtual NullableResponse<ApplicationGatewayWafDynamicManifestResource> GetIfExists(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return GetIfExists(cancellationToken);
-        }
-
-        /// <summary> Gets the regional singleton manifest if it exists. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetAsyncMessage)]
-        [ForwardsClientCalls]
-        public virtual Task<NullableResponse<ApplicationGatewayWafDynamicManifestResource>> GetIfExistsAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return GetIfExistsAsync(cancellationToken);
-        }
-
-        /// <summary> Checks whether the regional singleton manifest exists. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetMessage)]
-        [ForwardsClientCalls]
-        public virtual Response<bool> Exists(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return Exists(cancellationToken);
-        }
-
-        /// <summary> Checks whether the regional singleton manifest exists. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete(GetAsyncMessage)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<bool>> ExistsAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-            return ExistsAsync(cancellationToken);
-        }
-
         IEnumerator<ApplicationGatewayWafDynamicManifestResource> IEnumerable<ApplicationGatewayWafDynamicManifestResource>.GetEnumerator()
             => GetAll().GetEnumerator();
 

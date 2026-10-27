@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class ApplicationGatewaySslProfile : NetworkResourceData
     {
         // This was already a handwritten flattened facade in 1.15, not a generated leaf.

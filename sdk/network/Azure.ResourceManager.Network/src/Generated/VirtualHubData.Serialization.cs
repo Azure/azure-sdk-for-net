@@ -16,7 +16,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VirtualHub Resource. </summary>
-    public partial class VirtualHubData : NetworkTrackedResourceData, IJsonModel<VirtualHubData>
+    public partial class VirtualHubData : TrackedResourceWithSettableIdOptionalLocation, IJsonModel<VirtualHubData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -142,6 +142,7 @@ namespace Azure.ResourceManager.Network
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             VirtualHubProperties properties = default;
             ETag? eTag = default;
             string kind = default;
@@ -200,6 +201,11 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,6 +241,7 @@ namespace Azure.ResourceManager.Network
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
+                @type,
                 properties,
                 eTag,
                 kind);

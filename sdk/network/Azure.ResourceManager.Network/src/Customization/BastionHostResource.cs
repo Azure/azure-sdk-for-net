@@ -19,17 +19,19 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network
 {
     // Restores released Bastion update APIs for backward compatibility. The NetworkTagsObject overloads adapt to the
-    // canonical generated BastionHostPatch operations; the unsupported BastionHostData overloads retain their signatures.
+    // canonical generated BastionHostPatch operations; full-data overloads preserve the released create-or-update PUT.
     public partial class BastionHostResource
     {
         /// <summary> Invokes the asynchronous Bastion Host update operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
+            => new BastionHostCollection(Client, Id.Parent).CreateOrUpdateAsync(waitUntil, Id.Name, data, cancellationToken);
         /// <summary> Invokes the Bastion Host update operation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
+            => new BastionHostCollection(Client, Id.Parent).CreateOrUpdate(waitUntil, Id.Name, data, cancellationToken);
 
         /// <summary> Updates tags for this Bastion Host resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait until the operation completes; <see cref="WaitUntil.Started"/> otherwise. </param>

@@ -131,37 +131,20 @@ namespace Azure.ResourceManager.Network.Models
         public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = default, IEnumerable<string> rules = default)
             => new ManagedRuleSetRuleGroup(ruleGroupName, (rules ?? new ChangeTrackingList<string>()).ToList());
 
-        // This released legacy model has no generated factory; set its typed base storage beneath the read-only getter.
-        // This metadata repair does not add support for the other currently unassigned envelope arguments.
+        // This released legacy model has no generated factory; its constructor preserves metadata and legacy collections.
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is deprecated and it will be removed in a future version. Please use ApplicationGatewayAvailableSslOptionsInfoData instead.")]
         public static ApplicationGatewayAvailableSslOptionsInfo ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<WritableSubResource> predefinedPolicies = default, ApplicationGatewaySslPolicyName? defaultPolicy = default, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites = default, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols = default)
-        {
-            var result = new ApplicationGatewayAvailableSslOptionsInfo();
-            ((NetworkTrackedResourceData)result).ResourceType = resourceType;
-            foreach (var item in predefinedPolicies ?? Enumerable.Empty<WritableSubResource>())
-            {
-                result.PredefinedPolicies.Add(item);
-            }
-            foreach (var item in availableCipherSuites ?? Enumerable.Empty<ApplicationGatewaySslCipherSuite>())
-            {
-                result.AvailableCipherSuites.Add(item);
-            }
-            foreach (var item in availableProtocols ?? Enumerable.Empty<ApplicationGatewaySslProtocol>())
-            {
-                result.AvailableProtocols.Add(item);
-            }
-            result.DefaultPolicy = defaultPolicy;
-            return result;
-        }
+            => new ApplicationGatewayAvailableSslOptionsInfo(id, name, resourceType, location, tags,
+                predefinedPolicies, defaultPolicy, availableCipherSuites, availableProtocols);
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorQueryResult"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
         public static ConnectionMonitorQueryResult ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus = default, IEnumerable<ConnectionStateSnapshot> states = default)
         {
-            return new ConnectionMonitorQueryResult();
+            return new ConnectionMonitorQueryResult(sourceStatus, (states ?? Array.Empty<ConnectionStateSnapshot>()).ToList(), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionStateSnapshot"/>. </summary>
@@ -169,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
         [Obsolete("This legacy query snapshot is not supported by the current connection monitor API.")]
         public static ConnectionStateSnapshot ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EvaluationState? evaluationState = default, long? avgLatencyInMs = default, long? minLatencyInMs = default, long? maxLatencyInMs = default, long? probesSent = default, long? probesFailed = default, IEnumerable<ConnectivityHopInfo> hops = default)
         {
-            return new ConnectionStateSnapshot();
+            return new ConnectionStateSnapshot(networkConnectionState, startOn, endOn, evaluationState, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed, (hops ?? Array.Empty<ConnectivityHopInfo>()).ToList(), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>

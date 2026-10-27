@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync("default");
+            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

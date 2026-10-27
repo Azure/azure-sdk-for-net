@@ -78,7 +78,10 @@ namespace Azure.ResourceManager.Network.Tests
         {
 #pragma warning disable CS0618 // This type is intentionally retained for binary compatibility.
             var resourceType = new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions");
+            var id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default");
             var options = ArmNetworkModelFactory.ApplicationGatewayAvailableSslOptionsInfo(
+                id: id,
+                name: "default",
                 resourceType: resourceType,
                 predefinedPolicies: new[] { new WritableSubResource() },
                 defaultPolicy: ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501,
@@ -91,8 +94,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(options.ResourceType, Is.EqualTo(resourceType));
             BinaryData data = ModelReaderWriter.Write(options, ModelReaderWriterOptions.Json);
             var roundTrip = ModelReaderWriter.Read<ApplicationGatewayAvailableSslOptionsInfo>(data, ModelReaderWriterOptions.Json);
+            Assert.That(roundTrip.Id, Is.EqualTo(id));
+            Assert.That(roundTrip.Name, Is.EqualTo("default"));
             Assert.That(roundTrip.ResourceType, Is.EqualTo(resourceType));
             Type type = typeof(ApplicationGatewayAvailableSslOptionsInfo);
+            Assert.That(type.GetProperty("ResourceType").DeclaringType, Is.EqualTo(typeof(NetworkTrackedResourceData)));
+            Assert.That(type.GetProperty("ResourceType").PropertyType, Is.EqualTo(typeof(ResourceType?)));
             Assert.That(type.GetCustomAttribute<ObsoleteAttribute>(), Is.Not.Null);
             Assert.That(type.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
 #pragma warning restore CS0618

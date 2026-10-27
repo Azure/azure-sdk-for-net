@@ -4,22 +4,29 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility type for connection monitor query results. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This legacy query result is not supported by the current connection monitor API.")]
-    public partial class ConnectionMonitorQueryResult : IJsonModel<ConnectionMonitorQueryResult>, IPersistableModel<ConnectionMonitorQueryResult>
+    public partial class ConnectionMonitorQueryResult
     {
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
         public ConnectionMonitorQueryResult()
         {
-            States = Array.Empty<ConnectionStateSnapshot>();
+            States = new ChangeTrackingList<ConnectionStateSnapshot>();
+        }
+
+        internal ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus, IReadOnlyList<ConnectionStateSnapshot> states, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceStatus = sourceStatus;
+            States = states;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source status. </summary>
@@ -27,14 +34,5 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Connection state snapshots. </summary>
         public IReadOnlyList<ConnectionStateSnapshot> States { get; }
-
-        ConnectionMonitorQueryResult IJsonModel<ConnectionMonitorQueryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new ConnectionMonitorQueryResult();
-        void IJsonModel<ConnectionMonitorQueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
-        ConnectionMonitorQueryResult IPersistableModel<ConnectionMonitorQueryResult>.Create(BinaryData data, ModelReaderWriterOptions options) => new ConnectionMonitorQueryResult();
-        string IPersistableModel<ConnectionMonitorQueryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
-
-        /// <summary> Writes the model as JSON. </summary>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 }

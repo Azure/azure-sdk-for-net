@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -31,6 +32,96 @@ namespace Azure.ResourceManager.Network.Tests
         private const string ReferencePath = GroupPath + "/providers/Microsoft.Network/virtualNetworks/vnet";
         private const string PortPath = GroupPath + "/providers/Microsoft.Network/expressRoutePorts/port";
         private const string PolicyPath = GroupPath + "/providers/Microsoft.Network/firewallPolicies/policy";
+
+        [TestCase(typeof(NetworkGroupData))]
+        [TestCase(typeof(NetworkGroupStaticMemberData))]
+        [TestCase(typeof(NetworkManagerRoutingConfigurationData))]
+        [TestCase(typeof(NetworkManagerRoutingRuleData))]
+        [TestCase(typeof(NetworkManagerSecurityUserConfigurationData))]
+        [TestCase(typeof(NetworkManagerSecurityUserRuleData))]
+        [TestCase(typeof(NetworkSecurityPerimeterAccessRuleData))]
+        [TestCase(typeof(NetworkSecurityPerimeterAssociationData))]
+        [TestCase(typeof(NetworkSecurityPerimeterLinkData))]
+        [TestCase(typeof(NetworkSecurityPerimeterLinkReferenceData))]
+        [TestCase(typeof(NetworkSecurityPerimeterLoggingConfigurationData))]
+        [TestCase(typeof(NetworkSecurityPerimeterProfileData))]
+        [TestCase(typeof(ReachabilityAnalysisIntentData))]
+        [TestCase(typeof(ReachabilityAnalysisRunData))]
+        [TestCase(typeof(RouteMapData))]
+        [TestCase(typeof(ScopeConnectionData))]
+        [TestCase(typeof(SecurityAdminConfigurationData))]
+        [TestCase(typeof(StaticCidrData))]
+        public void NativePersistenceReplacesUnnecessaryCreateCoreOverrides(Type modelType)
+        {
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                object model = ModelReaderWriter.Read(
+                    BinaryData.FromString($$$$"""{"id":"{{{{ReferencePath}}}}","name":"native","properties":{},"futureField":7}"""),
+                    modelType, options, AzureResourceManagerNetworkContext.Default);
+                Assert.That(model.GetType(), Is.EqualTo(modelType));
+                Assert.That(modelType.GetProperty("Id").GetValue(model), Is.EqualTo(new ResourceIdentifier(ReferencePath)));
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, options, AzureResourceManagerNetworkContext.Default));
+                Assert.That(json.RootElement.TryGetProperty("futureField", out JsonElement unknown), Is.EqualTo(format == "J"));
+                if (format == "J")
+                    Assert.That(unknown.GetInt32(), Is.EqualTo(7));
+            }
+        }
+
+        [TestCase(typeof(P2SVpnGatewayData), "p2sVpnGateways", "vpnGatewayScaleUnit", "2")]
+        [TestCase(typeof(RouteFilterData), "routeFilters", "rules", "[]")]
+        [TestCase(typeof(VirtualHubData), "virtualHubs", "addressPrefix", "\"10.0.0.0/24\"")]
+        [TestCase(typeof(VpnGatewayData), "vpnGateways", "vpnGatewayScaleUnit", "2")]
+        [TestCase(typeof(VpnSiteData), "vpnSites", "isSecuritySite", "true")]
+        public void NativeIntermediateBasePreservesReleasedEnvelope(Type modelType, string resourcePath, string property, string value)
+        {
+            Assert.That(typeof(NetworkTrackedResourceData).IsAssignableFrom(modelType), Is.True);
+            var id = new ResourceIdentifier(GroupPath + "/providers/Microsoft.Network/" + resourcePath + "/item");
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                var model = (NetworkTrackedResourceData)ModelReaderWriter.Read(
+                    BinaryData.FromString($$$$"""{"id":"{{{{id}}}}","name":"item","type":"{{{{id.ResourceType}}}}","location":"westus","tags":{"owner":"sdk"},"etag":"etag-value","future":7,"properties":{"{{{{property}}}}":{{{{value}}}}}}"""),
+                    modelType, options, AzureResourceManagerNetworkContext.Default);
+                Assert.That(model.Id, Is.EqualTo(id));
+                Assert.That(model.Name, Is.EqualTo("item"));
+                Assert.That(model.ResourceType, Is.EqualTo(id.ResourceType));
+                Assert.That(model.Location, Is.EqualTo(new AzureLocation("westus")));
+                Assert.That(model.Tags["owner"], Is.EqualTo("sdk"));
+                Assert.That(modelType.GetProperty("ETag").GetValue(model).ToString(), Is.EqualTo("etag-value"));
+                model.Tags["owner"] = "updated";
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write((object)model, options, AzureResourceManagerNetworkContext.Default));
+                Assert.That(json.RootElement.EnumerateObject().Select(item => item.Name), Is.Unique);
+                Assert.That(json.RootElement.GetProperty("tags").GetProperty("owner").GetString(), Is.EqualTo("updated"));
+                Assert.That(json.RootElement.GetProperty("properties").GetProperty(property).GetRawText(), Is.EqualTo(value));
+                Assert.That(json.RootElement.TryGetProperty("future", out _), Is.EqualTo(format == "J"));
+                if (format == "J")
+                    Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo(id.ResourceType.ToString()));
+            }
+
+            MethodInfo[] factories = typeof(ArmNetworkModelFactory).GetMethods()
+                .Where(method => method.ReturnType == modelType && method.GetParameters().All(parameter => parameter.IsOptional)).ToArray();
+            Assert.That(factories, Is.Not.Empty);
+            foreach (MethodInfo factory in factories)
+            {
+                object[] arguments = factory.GetParameters().Select(parameter => parameter.Name switch
+                {
+                    "id" => (object)id,
+                    "name" => "item",
+                    "resourceType" => id.ResourceType,
+                    "location" => new AzureLocation("westus"),
+                    "tags" => new Dictionary<string, string> { ["owner"] = "sdk" },
+                    _ => parameter.DefaultValue
+                }).ToArray();
+                var model = (NetworkTrackedResourceData)factory.Invoke(null, arguments);
+                Assert.That(model.Id, Is.EqualTo(id));
+                Assert.That(model.Name, Is.EqualTo("item"));
+                Assert.That(model.ResourceType, Is.EqualTo(id.ResourceType));
+                Assert.That(model.Tags["owner"], Is.EqualTo("sdk"));
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write((object)model, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default));
+                Assert.That(json.RootElement.EnumerateObject().Select(item => item.Name), Is.Unique);
+            }
+        }
 
         [TestCase("J")]
         [TestCase("W")]
@@ -755,13 +846,15 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void UnreleasedConstructorIsAbsentAndRequiredUpdateAliasesAreHidden()
+        public void UnreleasedDraftUpdateHelpersArePrivateAndReleasedAliasesRemainHidden()
         {
             Assert.That(typeof(ExpressRoutePortsLocationData).GetConstructor(Type.EmptyTypes), Is.Not.Null);
             Assert.That(typeof(ExpressRoutePortsLocationData).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(bool) }, null), Is.Null);
             foreach (string name in new[] { "Update", "UpdateAsync" })
             {
-                Assert.That(typeof(FirewallPolicyDraftResource).GetMethod(name, new[] { typeof(WaitUntil), typeof(FirewallPolicyDraftData), typeof(CancellationToken) }).GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
+                Type[] signature = { typeof(WaitUntil), typeof(FirewallPolicyDraftData), typeof(CancellationToken) };
+                Assert.That(typeof(FirewallPolicyDraftResource).GetMethod(name, signature), Is.Null);
+                Assert.That(typeof(FirewallPolicyDraftResource).GetMethod(name, BindingFlags.Instance | BindingFlags.NonPublic, null, signature, null)?.IsPrivate, Is.True);
                 MethodInfo method = typeof(FirewallPolicyResource).GetMethod(name, new[] { typeof(WaitUntil), typeof(FirewallPolicyData), typeof(CancellationToken) });
                 Assert.That(method.GetCustomAttribute<EditorBrowsableAttribute>().State, Is.EqualTo(EditorBrowsableState.Never));
                 Assert.That(method.GetCustomAttribute<ObsoleteAttribute>().Message, Is.EqualTo("This method is obsolete and will be removed in a future release"));
@@ -771,22 +864,130 @@ namespace Azure.ResourceManager.Network.Tests
 
         [TestCase(false)]
         [TestCase(true)]
-        public async Task RequiredDraftUpdateAliasForwardsToNativeCreateOrUpdate(bool asynchronous)
+        public async Task DraftTagsUsePrivateUpdateHelpersAndNativeCreateOrUpdate(bool asynchronous)
         {
             string id = PolicyPath + "/firewallPolicyDrafts/default";
             using var cancellation = new CancellationTokenSource();
             var transport = MockTransport.FromMessageCallback(message =>
             {
                 Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
-                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{id}}}}","name":"default","properties":{"provisioningState":"Succeeded"}}""");
+                if (message.Request.Uri.ToUri().AbsolutePath.EndsWith("/providers/Microsoft.Resources", StringComparison.OrdinalIgnoreCase))
+                    return new MockResponse(200).SetContent($$$$"""{"id":"{{{{message.Request.Uri.ToUri().AbsolutePath}}}}","namespace":"Microsoft.Resources","resourceTypes":[]}""");
+                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{id}}}}","name":"default","tags":{},"properties":{"provisioningState":"Succeeded"}}""");
             });
             var resource = CreateClient(transport).GetFirewallPolicyDraftResource(new ResourceIdentifier(id));
+            var response = asynchronous
+                ? await resource.AddTagAsync("review", "sdk", cancellation.Token)
+                : resource.AddTag("review", "sdk", cancellation.Token);
+            Assert.That(response.Value.Id.ToString(), Is.EqualTo(id));
+            var request = transport.Requests.Single(request => request.Method == RequestMethod.Put);
+            Assert.That(request.Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+            using var stream = new MemoryStream();
+            request.Content.WriteTo(stream, cancellation.Token);
+            using JsonDocument body = JsonDocument.Parse(stream.ToArray());
+            Assert.That(body.RootElement.GetProperty("tags").GetProperty("review").GetString(), Is.EqualTo("sdk"));
+        }
+
+        [TestCase(false, WaitUntil.Started)]
+        [TestCase(true, WaitUntil.Started)]
+        [TestCase(false, WaitUntil.Completed)]
+        [TestCase(true, WaitUntil.Completed)]
+        public async Task BastionFullDataUpdatesUseNativePut(bool asynchronous, WaitUntil waitUntil)
+        {
+            string id = GroupPath + "/providers/Microsoft.Network/bastionHosts/host";
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                return new MockResponse(200).SetContent($$$$"""{"id":"{{{{id}}}}","name":"host","location":"westus","properties":{"provisioningState":"Succeeded"}}""");
+            });
+            var resource = CreateClient(transport).GetBastionHostResource(new ResourceIdentifier(id));
+            var data = new BastionHostData { Location = AzureLocation.WestUS };
+            data.Tags["review"] = "sdk";
             var operation = asynchronous
-                ? await resource.UpdateAsync(WaitUntil.Completed, new FirewallPolicyDraftData(), cancellation.Token)
-                : resource.Update(WaitUntil.Completed, new FirewallPolicyDraftData(), cancellation.Token);
-            Assert.That(operation.Value.Id.ToString(), Is.EqualTo(id));
-            Assert.That(transport.Requests.Single().Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(transport.Requests.Single().Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+                ? await resource.UpdateAsync(waitUntil, data, cancellation.Token)
+                : resource.Update(waitUntil, data, cancellation.Token);
+            Assert.That(operation.HasCompleted, Is.EqualTo(waitUntil == WaitUntil.Completed));
+            if (waitUntil == WaitUntil.Completed)
+                Assert.That(operation.Value.Id.ToString(), Is.EqualTo(id));
+            var request = transport.Requests.Single();
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(request.Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+            using var stream = new MemoryStream();
+            request.Content.WriteTo(stream, cancellation.Token);
+            using JsonDocument body = JsonDocument.Parse(stream.ToArray());
+            Assert.That(body.RootElement.GetProperty("location").GetString(), Is.EqualTo("westus"));
+            Assert.That(body.RootElement.GetProperty("tags").GetProperty("review").GetString(), Is.EqualTo("sdk"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void BastionFullDataUpdatesPropagateCancellation(bool asynchronous)
+        {
+            using var cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                message.CancellationToken.ThrowIfCancellationRequested();
+                return new MockResponse(200);
+            });
+            var resource = CreateClient(transport).GetBastionHostResource(
+                new ResourceIdentifier(GroupPath + "/providers/Microsoft.Network/bastionHosts/host"));
+            var data = new BastionHostData();
+            if (asynchronous)
+                Assert.CatchAsync<OperationCanceledException>(async () => await resource.UpdateAsync(WaitUntil.Completed, data, cancellation.Token));
+            else
+                Assert.Catch<OperationCanceledException>(() => resource.Update(WaitUntil.Completed, data, cancellation.Token));
+        }
+
+        [TestCase(false, "add")]
+        [TestCase(true, "add")]
+        [TestCase(false, "remove")]
+        [TestCase(true, "remove")]
+        [TestCase(false, "replace")]
+        [TestCase(true, "replace")]
+        public async Task LocationTagsUseReleasedArmTagResourceBehavior(bool asynchronous, string operation)
+        {
+            string id = "/subscriptions/" + SubscriptionId + "/providers/Microsoft.Network/ExpressRoutePortsLocations/westus";
+            string tagPath = id + "/providers/Microsoft.Resources/tags/default";
+            using var cancellation = new CancellationTokenSource();
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                if (message.Request.Method == RequestMethod.Delete)
+                    return new MockResponse(200);
+                return new MockResponse(200).SetContent(message.Request.Uri.ToUri().AbsolutePath == tagPath
+                    ? $$$$"""{"id":"{{{{tagPath}}}}","name":"default","properties":{"tags":{"existing":"keep","remove":"old"}}}"""
+                    : $$$$"""{"id":"{{{{id}}}}","name":"westus"}""");
+            });
+            var resource = CreateClient(transport).GetExpressRoutePortsLocationResource(new ResourceIdentifier(id));
+            Response<ExpressRoutePortsLocationResource> response;
+            if (operation == "add")
+                response = asynchronous ? await resource.AddTagAsync("review", "sdk", cancellation.Token) : resource.AddTag("review", "sdk", cancellation.Token);
+            else if (operation == "remove")
+                response = asynchronous ? await resource.RemoveTagAsync("remove", cancellation.Token) : resource.RemoveTag("remove", cancellation.Token);
+            else
+            {
+                var tags = new Dictionary<string, string> { ["review"] = "sdk" };
+                response = asynchronous ? await resource.SetTagsAsync(tags, cancellation.Token) : resource.SetTags(tags, cancellation.Token);
+            }
+            Assert.That(response.Value.Id.ToString(), Is.EqualTo(id));
+            Assert.That(transport.Requests.Last().Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests.Last().Uri.ToUri().AbsolutePath, Is.EqualTo(id));
+            Assert.That(transport.Requests.Select(request => request.Method), Is.EqualTo(operation == "replace"
+                ? new[] { RequestMethod.Delete, RequestMethod.Get, RequestMethod.Put, RequestMethod.Get }
+                : new[] { RequestMethod.Get, RequestMethod.Put, RequestMethod.Get }));
+            var request = transport.Requests.Single(request => request.Method == RequestMethod.Put);
+            Assert.That(request.Uri.ToUri().AbsolutePath, Is.EqualTo(tagPath));
+            using var stream = new MemoryStream();
+            request.Content.WriteTo(stream, cancellation.Token);
+            using JsonDocument body = JsonDocument.Parse(stream.ToArray());
+            JsonElement values = body.RootElement.GetProperty("properties").GetProperty("tags");
+            Assert.That(values.TryGetProperty("existing", out _), Is.EqualTo(operation != "replace"));
+            Assert.That(values.TryGetProperty("remove", out _), Is.EqualTo(operation == "add"));
+            Assert.That(values.TryGetProperty("review", out JsonElement review), Is.EqualTo(operation != "remove"));
+            if (operation != "remove")
+                Assert.That(review.GetString(), Is.EqualTo("sdk"));
         }
 
         [TestCase(false)]

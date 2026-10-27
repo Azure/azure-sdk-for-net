@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // Native generation loses the released NetworkResourceData inheritance (ApiCompat CP0007).
     public partial class P2SConnectionConfiguration : NetworkResourceData
     {
         // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.

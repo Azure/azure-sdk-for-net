@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("name")]
         public string Name { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public ResourceType? ResourceType { get; }
+
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }

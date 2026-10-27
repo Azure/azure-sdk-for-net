@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -77,16 +76,6 @@ namespace Azure.ResourceManager.Network
                 RemoteVirtualNetwork ??= new WritableSubResource();
                 RemoteVirtualNetwork.Id = value;
             }
-        }
-
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="AreCompleteVnetsPeered"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use AreCompleteVnetsPeered instead.")]
-        public bool? PeerCompleteVnets
-        {
-            get => AreCompleteVnetsPeered;
-            set => AreCompleteVnetsPeered = value;
         }
     }
 }
