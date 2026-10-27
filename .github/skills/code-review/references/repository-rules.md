@@ -59,7 +59,7 @@ on that basis.
   to any such file, not a fixed list 🟡
 - Standalone projects under the root `/samples` tree are exempt from the override rules —
   they are exported and built outside the repository, so carrying their own configuration
-  is expected. Judge whether the content is genuinely needed standalone
+  is expected. Judge whether the content is genuinely needed standalone ℹ️
 - **Any csproj property that overrides a repo-wide default gets surfaced, with its
   justification.** `eng/Directory.Build.Common.props` sets these centrally so every library
   moves together; a local override opts one library out of that. Restating the central value
