@@ -20,11 +20,17 @@ namespace Azure.Messaging.ServiceBus
         private readonly ReceiverManager _manager;
         private readonly ServiceBusReceiver _receiver;
         private readonly CancellationTokenSource _lockRenewalCancellationSource;
-        private readonly ConcurrentDictionary<Task, byte> _renewalTasks = new();
+        private readonly ConcurrentDictionary<Task, byte> _renewalTasks;
         private readonly bool _autoRenew;
         private readonly ProcessMessageEventArgs _processMessageEventArgs;
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new();
+        // An instance is created for every message dispatched by the processor and typically tracks only the trigger message,
+        // with any additional writes coming from the message handler, so avoid the default concurrency level which allocates
+        // a lock object per processor core.
+        private const int TrackingConcurrencyLevel = 1;
+        private const int TrackingCapacity = 1;
+
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new(TrackingConcurrencyLevel, TrackingCapacity);
 
         /// <summary>
         /// For mocking.
@@ -46,6 +52,7 @@ namespace Azure.Messaging.ServiceBus
                 Messages[processMessageEventArgs.Message] = default;
                 if (_autoRenew)
                 {
+                    _renewalTasks = new ConcurrentDictionary<Task, byte>(TrackingConcurrencyLevel, TrackingCapacity);
                     _lockRenewalCancellationSource = new CancellationTokenSource();
                     _renewalTasks[_manager.RenewMessageLockAsync(_processMessageEventArgs, processMessageEventArgs.Message, _lockRenewalCancellationSource)] = default;
                 }

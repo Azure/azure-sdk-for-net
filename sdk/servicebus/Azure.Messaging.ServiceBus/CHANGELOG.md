@@ -14,6 +14,8 @@
 
 ### Other Changes
 
+- Reduced allocations for each message processed by `ServiceBusProcessor` and `ServiceBusSessionProcessor`.
+
 ## 7.21.0 (2026-10-06)
 
 ### Features Added
