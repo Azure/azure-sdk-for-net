@@ -60,7 +60,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 EnableBgp = false,
-                ActiveActive = false,
+                IsActive = false,
                 EnableHighBandwidthVpnGateway = false,
                 DisableIPSecReplayProtection = false,
                 Sku = new VirtualNetworkGatewaySku
@@ -173,7 +173,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
                 GatewayType = VirtualNetworkGatewayType.ExpressRoute,
                 VpnType = VpnType.PolicyBased,
                 EnableBgp = false,
-                ActiveActive = false,
+                IsActive = false,
                 DisableIPSecReplayProtection = false,
                 Sku = new VirtualNetworkGatewaySku
                 {

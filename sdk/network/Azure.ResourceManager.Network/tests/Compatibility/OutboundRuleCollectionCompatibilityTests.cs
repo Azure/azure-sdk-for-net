@@ -24,6 +24,19 @@ namespace Azure.ResourceManager.Network.Tests
             AssertUsableCollection(new OutboundRuleData(), 0);
         }
 
+        [TestCase(0)]
+        [TestCase(1)]
+        public void NativeFactoryOutboundRuleHasUsableFrontendCollection(int expectedCount)
+        {
+            var data = ArmNetworkModelFactory.OutboundRuleData(
+                frontendIPConfigurations: expectedCount == 0 ? null : new[] { new WritableSubResource { Id = new ResourceIdentifier(FrontendId) } },
+                backendAddressPoolId: new ResourceIdentifier(BackendId),
+                protocol: LoadBalancerOutboundRuleProtocol.All);
+
+            Assert.That(data.BackendAddressPoolId, Is.EqualTo(new ResourceIdentifier(BackendId)));
+            AssertUsableCollection(data, expectedCount);
+        }
+
         // Network 1.15.0 normalizes missing/null collections even in incomplete responses.
         [TestCase("{}", 0)]
         [TestCase("{\"properties\":null}", 0)]
@@ -34,9 +47,11 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase("{\"properties\":{" + RequiredProperties + ",\"frontendIPConfigurations\":[{\"id\":\"" + FrontendId + "\"}]}}", 1)]
         public void DeserializeOutboundRuleHasUsableFrontendCollection(string json, int expectedCount)
         {
-            var data = ModelReaderWriter.Read<OutboundRuleData>(BinaryData.FromString(json));
-
-            AssertUsableCollection(data, expectedCount);
+            foreach (string format in new[] { "J", "W" })
+            {
+                var data = ModelReaderWriter.Read<OutboundRuleData>(BinaryData.FromString(json), new ModelReaderWriterOptions(format));
+                AssertUsableCollection(data, expectedCount);
+            }
         }
 
         [TestCase("J")]

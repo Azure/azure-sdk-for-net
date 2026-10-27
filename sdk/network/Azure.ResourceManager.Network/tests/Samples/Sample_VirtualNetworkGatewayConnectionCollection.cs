@@ -54,7 +54,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 EnableBgp = false,
-                ActiveActive = false,
+                IsActive = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
                     Tier = VirtualNetworkGatewaySkuTier.VpnGw1,

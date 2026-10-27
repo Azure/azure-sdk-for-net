@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -32,6 +33,56 @@ namespace Azure.ResourceManager.Network.Tests
              "inboundRouteMap":{"resourceUri":"https://example.test/maps/in"},
              "outboundRouteMap":{"resourceUri":"https://example.test/maps/out"}}
             """;
+
+        [Test]
+        public void P2SConnectionFactoryPreservesRoutingInWireFormat()
+        {
+            const string routeTableId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualHubs/hub/hubRouteTables/table";
+            var routingConfiguration = new RoutingConfiguration
+            {
+                AssociatedRouteTableId = new ResourceIdentifier(routeTableId),
+                PropagatedRouteTables = new PropagatedRouteTable
+                {
+                    Labels = { "label1", "label2" },
+                    Ids =
+                    {
+                        new WritableSubResource { Id = new ResourceIdentifier(routeTableId + "1") },
+                        new WritableSubResource { Id = new ResourceIdentifier(routeTableId + "2") },
+                        new WritableSubResource { Id = new ResourceIdentifier(routeTableId + "3") },
+                    },
+                },
+                VnetRoutes = new VnetRoute(),
+            };
+            var gateway = new P2SVpnGatewayData
+            {
+                P2SConnectionConfigurations =
+                {
+                    ArmNetworkModelFactory.P2SConnectionConfiguration(
+                        vpnClientAddressPool: new VirtualNetworkAddressSpace { AddressPrefixes = { "101.3.0.0/16" } },
+                        routingConfiguration: routingConfiguration),
+                },
+            };
+
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            ((IJsonModel<P2SVpnGatewayData>)gateway).Write(writer, new ModelReaderWriterOptions("W"));
+            writer.Flush();
+            using var document = JsonDocument.Parse(stream.ToArray());
+            var connection = document.RootElement.GetProperty("properties").GetProperty("p2SConnectionConfigurations")[0].GetProperty("properties");
+            Assert.AreEqual("101.3.0.0/16", connection.GetProperty("vpnClientAddressPool").GetProperty("addressPrefixes")[0].GetString());
+            var routing = connection.GetProperty("routingConfiguration");
+            Assert.AreEqual(routeTableId, routing.GetProperty("associatedRouteTable").GetProperty("id").GetString());
+            var propagated = routing.GetProperty("propagatedRouteTables");
+            Assert.AreEqual(2, propagated.GetProperty("labels").GetArrayLength());
+            Assert.AreEqual("label1", propagated.GetProperty("labels")[0].GetString());
+            Assert.AreEqual("label2", propagated.GetProperty("labels")[1].GetString());
+            Assert.AreEqual(3, propagated.GetProperty("ids").GetArrayLength());
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.AreEqual(routeTableId + (i + 1), propagated.GetProperty("ids")[i].GetProperty("id").GetString());
+            }
+            Assert.AreEqual(JsonValueKind.Object, routing.GetProperty("vnetRoutes").ValueKind);
+        }
 
         [Test]
         public void NativeAndNfvModelsHaveIndependentReleasedContracts()
@@ -185,11 +236,15 @@ namespace Azure.ResourceManager.Network.Tests
                 routingConfiguration: routing, enableInternetSecurity: true, configurationPolicyGroupAssociations: null,
                 previousConfigurationPolicyGroupAssociations: null, provisioningState: null);
             Assert.That(model.RoutingConfiguration, Is.SameAs(routing));
-            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model));
-            Assert.That(json.RootElement.GetProperty("properties").GetProperty("vpnClientAddressPool")
-                .GetProperty("addressPrefixes")[0].GetString(), Is.EqualTo("10.2.0.0/24"));
-            Assert.That(json.RootElement.GetProperty("properties").GetProperty("routingConfiguration")
-                .GetProperty("associatedRouteTable").GetProperty("id").GetString(), Is.EqualTo(RouteId));
+            Assert.That(model.VpnClientAddressPool.IpamPoolPrefixAllocations, Is.Not.Null.And.Empty);
+            foreach (string format in new[] { "J", "W" })
+            {
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions(format)));
+                Assert.That(json.RootElement.GetProperty("properties").GetProperty("vpnClientAddressPool")
+                    .GetProperty("addressPrefixes")[0].GetString(), Is.EqualTo("10.2.0.0/24"));
+                Assert.That(json.RootElement.GetProperty("properties").GetProperty("routingConfiguration")
+                    .GetProperty("associatedRouteTable").GetProperty("id").GetString(), Is.EqualTo(RouteId));
+            }
         }
 #pragma warning restore CS0618
     }

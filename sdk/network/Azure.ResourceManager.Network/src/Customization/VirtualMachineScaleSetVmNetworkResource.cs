@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
@@ -85,6 +87,7 @@ namespace Azure.ResourceManager.Network
         // returns NIC resources; both released VM-scoped methods project .Data to retain NetworkInterfaceData elements.
         /// <summary> Gets all network interfaces in a virtual machine scale set virtual machine. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
@@ -95,6 +98,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network interfaces in a virtual machine scale set virtual machine. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
@@ -110,6 +114,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -140,6 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceData>> GetNetworkInterfaceDataAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -152,6 +159,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceData> GetNetworkInterfaceData(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -167,6 +175,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceIPConfigurationData>> GetIPConfigurationDataAsync(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -181,6 +190,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceIPConfigurationData> GetIPConfigurationData(string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -198,6 +208,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PublicIPAddressData>> GetPublicIPAddressDataAsync(string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
@@ -216,6 +227,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<PublicIPAddressData> GetPublicIPAddressData(string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));

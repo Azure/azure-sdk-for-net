@@ -25,6 +25,20 @@ namespace Azure.ResourceManager.Network.Tests
             {"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/networkVirtualAppliances/nva/inboundSecurityRules/rule","name":"rule","type":"Microsoft.Network/networkVirtualAppliances/inboundSecurityRules","etag":"etag-value","futureEnvelope":17,"properties":{"ruleType":"Permanent","rules":[{"name":"allow","protocol":"TCP","sourceAddressPrefix":"10.0.0.0/24","destinationPortRange":443,"destinationPortRanges":["443-444"],"appliesOn":["public-ip"]}],"provisioningState":"Succeeded","futureProperty":true}}
             """;
 
+        // API version 2026-01-01 changes the rules wire field from string[] to int32[].
+        [Test]
+        public void DeserializeManagedRuleSetRuleGroupWithIntegerRuleIds()
+        {
+            using var sr = new StreamReader(Path.Combine("TestData", "ManagedRuleSetRuleGroup.json"));
+            using var jsonContent = JsonDocument.Parse(sr.BaseStream);
+            var data = ManagedRuleSetRuleGroup.DeserializeManagedRuleSetRuleGroup(jsonContent.RootElement, ModelReaderWriterOptions.Json);
+
+            Assert.NotNull(data.RuleIds);
+            Assert.AreEqual(6, data.RuleIds.Count);
+
+            CollectionAssert.AreEqual(new[] { 920100, 920110, 920120, 920130, 920140, 920150 }, data.RuleIds);
+        }
+
         [TestCase(typeof(InboundSecurityRule))]
         [TestCase(typeof(NetworkConnectionState))]
         public void RetiredCompatibilityModelsAreDeprecatedAndHidden(Type type)

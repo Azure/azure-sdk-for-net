@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.Network.Samples
                 TunnelIdentifier = 0L,
                 BgpPeerAddress = { "169.254.16.13", "169.254.16.14" },
                 EnableInternetSecurity = false,
-                RoutingConfiguration = new RoutingConfigurationNfv
+                ConnectionRoutingConfiguration = new RoutingConfiguration
                 {
                     AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
-                    PropagatedRouteTables = new PropagatedRouteTableNfv
+                    PropagatedRouteTables = new PropagatedRouteTable
                     {
                         Labels = { "label1" },
-                        Ids = {new RoutingConfigurationNfvSubResource
+                        Ids = {new WritableSubResource
 {
-ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1", UriKind.Relative),
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
 }},
                     },
                     InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),

@@ -16,6 +16,45 @@ namespace Azure.ResourceManager.Network
 {
     public static partial class NetworkExtensions
     {
+        // Keep the released overloads dispatching to the same signatures on the mockable client.
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// To mock this method, mock <see cref="MockableNetworkResourceGroupResource.GetLoadBalancerAsync(string, string, CancellationToken)"/> instead.
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+#pragma warning disable AZC0002 // Making the trailing CancellationToken optional would introduce an ambiguous call with the new overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetLoadBalancerAsync(loadBalancerName, expand, cancellationToken);
+        }
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// To mock this method, mock <see cref="MockableNetworkResourceGroupResource.GetLoadBalancer(string, string, CancellationToken)"/> instead.
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+#pragma warning disable AZC0002 // Making the trailing CancellationToken optional would introduce an ambiguous call with the new overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetLoadBalancer(loadBalancerName, expand, cancellationToken);
+        }
+#pragma warning restore AZC0002
+
         // Preserve the obsolete 1.15.0 AsyncAsync spelling; the active pageable API is generated natively.
         /// <summary> Gets the available application gateway WAF rule sets. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

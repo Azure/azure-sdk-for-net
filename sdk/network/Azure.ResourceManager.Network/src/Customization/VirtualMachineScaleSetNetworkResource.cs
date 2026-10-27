@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network
         // ResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces[Async] extensions.
         /// <summary> Gets all network interfaces in a virtual machine scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Gets all network interfaces in a virtual machine scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
@@ -77,6 +79,7 @@ namespace Azure.ResourceManager.Network
         // Preserve the released facade methods as direct forwards to those new generated extensions.
         /// <summary> Gets all public IP addresses in a virtual machine scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Gets all public IP addresses in a virtual machine scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken = default)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));

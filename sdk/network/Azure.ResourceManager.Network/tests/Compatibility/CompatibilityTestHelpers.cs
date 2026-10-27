@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -54,8 +55,11 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         internal static object InvokeFactory(MethodInfo factory, string parameterName, object value)
+            => InvokeFactory(factory, new Dictionary<string, object> { [parameterName] = value });
+
+        internal static object InvokeFactory(MethodInfo factory, IReadOnlyDictionary<string, object> values)
         {
-            object[] arguments = factory.GetParameters().Select(parameter => parameter.Name == parameterName ? value
+            object[] arguments = factory.GetParameters().Select(parameter => values.TryGetValue(parameter.Name, out object value) ? value
                 : parameter.HasDefaultValue ? parameter.DefaultValue
                 : parameter.ParameterType.IsValueType ? Activator.CreateInstance(parameter.ParameterType) : null).ToArray();
             return factory.Invoke(null, arguments);

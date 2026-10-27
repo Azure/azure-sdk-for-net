@@ -103,20 +103,18 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             MethodInfo[] factories = typeof(ArmNetworkModelFactory).GetMethods()
-                .Where(method => method.ReturnType == modelType && method.GetParameters().All(parameter => parameter.IsOptional)).ToArray();
+                .Where(method => method.ReturnType == modelType).ToArray();
             Assert.That(factories, Is.Not.Empty);
             foreach (MethodInfo factory in factories)
             {
-                object[] arguments = factory.GetParameters().Select(parameter => parameter.Name switch
+                var model = (NetworkTrackedResourceData)CompatibilityTestHelpers.InvokeFactory(factory, new Dictionary<string, object>
                 {
-                    "id" => (object)id,
-                    "name" => "item",
-                    "resourceType" => id.ResourceType,
-                    "location" => new AzureLocation("westus"),
-                    "tags" => new Dictionary<string, string> { ["owner"] = "sdk" },
-                    _ => parameter.DefaultValue
-                }).ToArray();
-                var model = (NetworkTrackedResourceData)factory.Invoke(null, arguments);
+                    ["id"] = id,
+                    ["name"] = "item",
+                    ["resourceType"] = id.ResourceType,
+                    ["location"] = new AzureLocation("westus"),
+                    ["tags"] = new Dictionary<string, string> { ["owner"] = "sdk" },
+                });
                 Assert.That(model.Id, Is.EqualTo(id));
                 Assert.That(model.Name, Is.EqualTo("item"));
                 Assert.That(model.ResourceType, Is.EqualTo(id.ResourceType));

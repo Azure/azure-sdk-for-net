@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -8764,47 +8763,5 @@ namespace Azure.ResourceManager.Network
 
             return GetMockableNetworkManagementGroupResource(managementGroupResource).GetManagementGroupNetworkManagerConnection(networkManagerConnectionName, cancellationToken);
         }
-
-        /// <summary>
-        /// Gets the specified load balancer.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetLoadBalancerAsync(string, string, LoadBalancerDetailLevel?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand, CancellationToken cancellationToken)
-        {
-            return resourceGroupResource.GetLoadBalancerAsync(loadBalancerName: loadBalancerName, expand: expand, detailLevel: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-
-        /// <summary>
-        /// Gets the specified load balancer.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetLoadBalancer(string, string, LoadBalancerDetailLevel?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand, CancellationToken cancellationToken)
-        {
-            return resourceGroupResource.GetLoadBalancer(loadBalancerName: loadBalancerName, expand: expand, detailLevel: default, cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

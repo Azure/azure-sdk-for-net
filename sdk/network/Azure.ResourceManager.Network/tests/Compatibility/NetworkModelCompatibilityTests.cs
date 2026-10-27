@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
@@ -18,6 +19,16 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string GatewayId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/localNetworkGateways/gateway";
         private const string NetworkId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/network";
+
+        // This is the test for fix of issue: https://github.com/Azure/azure-sdk-for-net/issues/46767
+        [Test]
+        public void DeserializeChangeNumber()
+        {
+            using var sr = new StreamReader(Path.Combine("TestData", "ServiceTags.json"));
+            using var jsonContent = JsonDocument.Parse(sr.BaseStream);
+            var data = AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(jsonContent.RootElement, ModelReaderWriterOptions.Json);
+            Assert.NotNull(data.ChangeNumber);
+        }
 
         [TestCase(typeof(ReachabilityAnalysisIntentProperties))]
         [TestCase(typeof(ReachabilityAnalysisRunProperties))]

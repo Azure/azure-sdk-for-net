@@ -28,6 +28,38 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(VirtualNetworkAddressSpace), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new <see cref="Network.OutboundRuleData"/> instance for mocking. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
+        /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
+        /// <param name="provisioningState"> The provisioning state of the outbound rule resource. </param>
+        /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.OutboundRuleData"/> instance for mocking. </returns>
+        public static OutboundRuleData OutboundRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, int? allocatedOutboundPorts = default, IEnumerable<WritableSubResource> frontendIPConfigurations = default, NetworkProvisioningState? provisioningState = default, LoadBalancerOutboundRuleProtocol? protocol = default, bool? enableTcpReset = default, int? idleTimeoutInMinutes = default, ResourceIdentifier backendAddressPoolId = default, ETag? eTag = default)
+        {
+            return new OutboundRuleData(
+                id,
+                default,
+                name,
+                resourceType,
+                allocatedOutboundPorts is null && frontendIPConfigurations is null && backendAddressPoolId is null && provisioningState is null && protocol is null && enableTcpReset is null && idleTimeoutInMinutes is null ? default : new OutboundRulePropertiesFormat(
+                    allocatedOutboundPorts,
+                    (frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    new NetworkSubResource(backendAddressPoolId, default),
+                    provisioningState,
+                    protocol.GetValueOrDefault(),
+                    enableTcpReset,
+                    idleTimeoutInMinutes,
+                    default),
+                eTag);
+        }
+
         /// <summary> Initializes a virtual network appliance using the released string bandwidth factory signature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? etag = default, string bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default)

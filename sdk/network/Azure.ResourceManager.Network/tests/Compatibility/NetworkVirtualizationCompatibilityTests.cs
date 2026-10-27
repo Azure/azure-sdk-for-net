@@ -522,7 +522,16 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(typeof(VirtualHubData).GetProperty("RouteRoutes"), Is.Null);
 
             var route = new VirtualHubRoute();
-            var factoryHub = ArmNetworkModelFactory.VirtualHubData(routes: new[] { route });
+            var factoryHub = ArmNetworkModelFactory.VirtualHubData(
+                id: default, name: default, resourceType: default, location: default, tags: default,
+                etag: default, kind: default, virtualWanId: default, vpnGatewayId: default,
+                p2sVpnGatewayId: default, expressRouteGatewayId: default, azureFirewallId: default,
+                securityPartnerProviderId: default, addressPrefix: default, routes: new[] { route },
+                provisioningState: default, securityProviderName: default, virtualHubRouteTableV2S: default,
+                sku: default, routingState: default, bgpConnections: default, ipConfigurations: default,
+                routeMaps: default, virtualRouterAsn: default, virtualRouterIPs: default,
+                allowBranchToBranchTraffic: default, preferredRoutingGateway: default,
+                hubRoutingPreference: default, virtualRouterAutoScaleMinCapacity: default);
             Assert.That(factoryHub.Routes, Is.EqualTo(new[] { route }));
 
             // The legacy factory's unset IPv6 collection is a separate pre-existing serialization issue.

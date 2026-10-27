@@ -54,25 +54,25 @@ namespace Azure.ResourceManager.Network.Samples
                         {
                             AddressPrefixes = { "101.3.0.0/16" },
                         },
-                        routingConfiguration: new RoutingConfigurationNfv
+                        routingConfiguration: new RoutingConfiguration
                         {
                             AssociatedRouteTableId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
-                            PropagatedRouteTables = new PropagatedRouteTableNfv
+                            PropagatedRouteTables = new PropagatedRouteTable
                             {
                                 Labels = { "label1", "label2" },
                                 Ids =
                                 {
-                                    new RoutingConfigurationNfvSubResource
+                                    new WritableSubResource
                                     {
-                                        ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1", UriKind.Relative),
+                                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
                                     },
-                                    new RoutingConfigurationNfvSubResource
+                                    new WritableSubResource
                                     {
-                                        ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable2", UriKind.Relative),
+                                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable2"),
                                     },
-                                    new RoutingConfigurationNfvSubResource
+                                    new WritableSubResource
                                     {
-                                        ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable3", UriKind.Relative),
+                                        Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable3"),
                                     },
                                 },
                             },

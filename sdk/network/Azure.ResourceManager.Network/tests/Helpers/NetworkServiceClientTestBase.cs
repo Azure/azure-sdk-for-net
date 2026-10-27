@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     },
                     LegacyMode = Convert.ToInt32(true)
                 },
-                RouteFilter = { Id = filter.Id }
+                RouteFilterId = filter.Id
             };
 
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);

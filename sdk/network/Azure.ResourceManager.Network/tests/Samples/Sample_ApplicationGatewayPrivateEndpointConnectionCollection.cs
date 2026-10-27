@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string connectionName = "connection1";
             ApplicationGatewayPrivateEndpointConnectionData data = new ApplicationGatewayPrivateEndpointConnectionData
             {
-                PrivateLinkServiceConnectionState = new NetworkPrivateLinkServiceConnectionState
+                ConnectionState = new NetworkPrivateLinkServiceConnectionState
                 {
                     Status = "Approved",
                     Description = "approved it for some reason.",
