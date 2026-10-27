@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource networkSecurityGroup = default;
             EffectiveNetworkSecurityGroupAssociation association = default;
             IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
-            string tagMap = default;
+            IReadOnlyDictionary<string, IList<string>> tagToIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,35 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("tagMap"u8))
                 {
-                    tagMap = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in prop0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
+                            }
+                            dictionary.Add(prop0.Name, array);
+                        }
+                    }
+                    tagToIPAddresses = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagMap, additionalBinaryDataProperties);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagToIPAddresses ?? new ChangeTrackingDictionary<string, IList<string>>(), additionalBinaryDataProperties);
         }
     }
 }

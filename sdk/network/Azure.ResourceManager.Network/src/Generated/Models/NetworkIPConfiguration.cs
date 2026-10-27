@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
+        public NetworkIPConfiguration()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the IP configuration. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, IPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal NetworkIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, IPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
-        public NetworkIPConfiguration() : this(default)
-        {
-        }
-
         /// <summary> Properties of the IP configuration. </summary>
         [WirePath("properties")]
-        internal IPConfigurationPropertiesFormat Properties { get; }
+        internal IPConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="LoadBalancerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="sku"> The load balancer SKU. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancerPropertiesFormat properties, ETag? eTag, ExtendedLocation extendedLocation, LoadBalancerSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancerPropertiesFormat properties, ETag? eTag, ExtendedLocation extendedLocation, LoadBalancerSku sku) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableFloatingIP = default;
             bool? enableTcpReset = default;
             NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("frontendIPConfiguration"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
     }
 }

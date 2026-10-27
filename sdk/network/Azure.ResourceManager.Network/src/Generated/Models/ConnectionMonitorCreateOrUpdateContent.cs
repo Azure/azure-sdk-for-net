@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -20,71 +21,115 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorCreateOrUpdateContent"/>. </summary>
         public ConnectionMonitorCreateOrUpdateContent()
         {
-            Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
-            TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
-            TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
-            Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
+
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorCreateOrUpdateContent"/>. </summary>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
+        /// <param name="properties"> Properties of the connection monitor. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorCreateOrUpdateContent(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IList<ConnectionMonitorEndpoint> endpoints, IList<ConnectionMonitorTestConfiguration> testConfigurations, IList<ConnectionMonitorTestGroup> testGroups, IList<ConnectionMonitorOutput> outputs, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorCreateOrUpdateContent(AzureLocation? location, IDictionary<string, string> tags, ConnectionMonitorParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Source = source;
-            Destination = destination;
-            AutoStart = autoStart;
-            MonitoringIntervalInSeconds = monitoringIntervalInSeconds;
-            Endpoints = endpoints;
-            TestConfigurations = testConfigurations;
-            TestGroups = testGroups;
-            Outputs = outputs;
-            Notes = notes;
+            Location = location;
+            Tags = tags;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of the connection monitor. </summary>
+        [WirePath("properties")]
+        internal ConnectionMonitorParameters Properties { get; } = new ConnectionMonitorParameters();
+
         /// <summary> Describes the source of connection monitor. </summary>
-        [WirePath("source")]
-        public ConnectionMonitorSource Source { get; set; }
+        [WirePath("properties.source")]
+        public ConnectionMonitorSource Source
+        {
+            get
+            {
+                return Properties.Source;
+            }
+        }
 
         /// <summary> Describes the destination of connection monitor. </summary>
-        [WirePath("destination")]
-        public ConnectionMonitorDestination Destination { get; set; }
+        [WirePath("properties.destination")]
+        public ConnectionMonitorDestination Destination
+        {
+            get
+            {
+                return Properties.Destination;
+            }
+        }
 
         /// <summary> Determines if the connection monitor will start automatically once created. </summary>
-        [WirePath("autoStart")]
-        public bool? AutoStart { get; set; }
+        [WirePath("properties.autoStart")]
+        public bool? AutoStart
+        {
+            get
+            {
+                return Properties.AutoStart;
+            }
+        }
 
         /// <summary> Monitoring interval in seconds. </summary>
-        [WirePath("monitoringIntervalInSeconds")]
-        public int? MonitoringIntervalInSeconds { get; set; }
+        [WirePath("properties.monitoringIntervalInSeconds")]
+        public int? MonitoringIntervalInSeconds
+        {
+            get
+            {
+                return Properties.MonitoringIntervalInSeconds;
+            }
+        }
 
         /// <summary> List of connection monitor endpoints. </summary>
-        [WirePath("endpoints")]
-        public IList<ConnectionMonitorEndpoint> Endpoints { get; } = new ChangeTrackingList<ConnectionMonitorEndpoint>();
+        [WirePath("properties.endpoints")]
+        public IList<ConnectionMonitorEndpoint> Endpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoints;
+            }
+        }
 
         /// <summary> List of connection monitor test configurations. </summary>
-        [WirePath("testConfigurations")]
-        public IList<ConnectionMonitorTestConfiguration> TestConfigurations { get; } = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
+        [WirePath("properties.testConfigurations")]
+        public IList<ConnectionMonitorTestConfiguration> TestConfigurations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TestConfigurations;
+            }
+        }
 
         /// <summary> List of connection monitor test groups. </summary>
-        [WirePath("testGroups")]
-        public IList<ConnectionMonitorTestGroup> TestGroups { get; } = new ChangeTrackingList<ConnectionMonitorTestGroup>();
+        [WirePath("properties.testGroups")]
+        public IList<ConnectionMonitorTestGroup> TestGroups
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TestGroups;
+            }
+        }
 
         /// <summary> List of connection monitor outputs. </summary>
-        [WirePath("outputs")]
-        public IList<ConnectionMonitorOutput> Outputs { get; } = new ChangeTrackingList<ConnectionMonitorOutput>();
+        [WirePath("properties.outputs")]
+        public IList<ConnectionMonitorOutput> Outputs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Outputs;
+            }
+        }
 
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
-        [WirePath("notes")]
-        public string Notes { get; set; }
+        [WirePath("properties.notes")]
+        public string Notes
+        {
+            get
+            {
+                return Properties.Notes;
+            }
+        }
     }
 }

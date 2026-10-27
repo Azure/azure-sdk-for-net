@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Radius. </summary>
         private const string RadiusValue = "Radius";
         /// <summary> AAD. </summary>
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="VpnAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>

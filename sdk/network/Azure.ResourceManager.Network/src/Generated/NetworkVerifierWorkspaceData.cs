@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -20,23 +21,25 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/>. </summary>
-        public NetworkVerifierWorkspaceData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
         /// <param name="eTag"> String representing unique etag for the resource document. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="name"> The name of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVerifierWorkspaceData(NetworkVerifierWorkspaceProperties properties, ETag? eTag, SystemData systemData, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
-            SystemData = systemData;
-            Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/>. </summary>
+        public NetworkVerifierWorkspaceData() : this(default)
+        {
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>

@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(TrackedResourceWithSettableIdOptionalLocation)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -105,10 +110,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -127,7 +133,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -160,6 +170,11 @@ namespace Azure.ResourceManager.Network.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -168,10 +183,11 @@ namespace Azure.ResourceManager.Network.Models
             return new TrackedResourceWithSettableIdOptionalLocation(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                @type);
         }
     }
 }

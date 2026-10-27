@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format, options);
+                writer.WriteObjectValue<Models.FlowLogFormatParameters>(Format, options);
             }
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
             string recordTypes = default;
             bool? enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
+            Models.FlowLogFormatParameters format = default;
             TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(prop.Value, options);
+                    format = Models.FlowLogFormatParameters.DeserializeFlowLogFormatParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("flowAnalyticsConfiguration"u8))

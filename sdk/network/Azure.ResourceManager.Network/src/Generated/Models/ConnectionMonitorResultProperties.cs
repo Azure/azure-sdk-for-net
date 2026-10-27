@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the properties of a connection monitor. </summary>
-    public partial class ConnectionMonitorResultProperties : ConnectionMonitorCreateOrUpdateContent
+    public partial class ConnectionMonitorResultProperties : ConnectionMonitorParameters
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorResultProperties"/>. </summary>
         internal ConnectionMonitorResultProperties()

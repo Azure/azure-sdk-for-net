@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkAppliancePropertiesFormat)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BandwidthInGbps))
+            if (Optional.IsDefined(BandwidthGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
-                writer.WriteNumberValue(BandwidthInGbps.Value);
+                writer.WriteNumberValue(BandwidthGbps.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            double? bandwidthInGbps = default;
+            double? bandwidthGbps = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
             VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bandwidthInGbps = prop.Value.GetDouble();
+                    bandwidthGbps = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("ipConfigurations"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new VirtualNetworkAppliancePropertiesFormat(
-                bandwidthInGbps,
+                bandwidthGbps,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>(),
                 privateIPAddressVersion,
                 provisioningState,

@@ -26,76 +26,110 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(target, nameof(target));
             Argument.AssertNotNull(storageLocation, nameof(storageLocation));
 
-            Target = target;
-            StorageLocation = storageLocation;
-            Filters = new ChangeTrackingList<PacketCaptureFilter>();
+            Properties = new PacketCaptureParameters(target, storageLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureCreateOrUpdateContent"/>. </summary>
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
+        /// <param name="properties"> Properties of the packet capture. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureCreateOrUpdateContent(string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IList<PacketCaptureFilter> filters, bool? continuousCapture, PacketCaptureSettings captureSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PacketCaptureCreateOrUpdateContent(PacketCaptureParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Target = target;
-            Scope = scope;
-            TargetType = targetType;
-            BytesToCapturePerPacket = bytesToCapturePerPacket;
-            TotalBytesPerSession = totalBytesPerSession;
-            TimeLimitInSeconds = timeLimitInSeconds;
-            StorageLocation = storageLocation;
-            Filters = filters;
-            ContinuousCapture = continuousCapture;
-            CaptureSettings = captureSettings;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of the packet capture. </summary>
+        [WirePath("properties")]
+        internal PacketCaptureParameters Properties { get; }
+
         /// <summary> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </summary>
-        [WirePath("target")]
-        public string Target { get; set; }
+        [WirePath("properties.target")]
+        public string Target
+        {
+            get
+            {
+                return Properties.Target;
+            }
+        }
 
         /// <summary> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </summary>
-        [WirePath("scope")]
-        public PacketCaptureMachineScope Scope { get; set; }
+        [WirePath("properties.scope")]
+        public PacketCaptureMachineScope Scope
+        {
+            get
+            {
+                return Properties.Scope;
+            }
+        }
 
         /// <summary> Target type of the resource provided. </summary>
-        [WirePath("targetType")]
-        public PacketCaptureTargetType? TargetType { get; set; }
+        [WirePath("properties.targetType")]
+        public PacketCaptureTargetType? TargetType
+        {
+            get
+            {
+                return Properties.TargetType;
+            }
+        }
 
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
-        [WirePath("bytesToCapturePerPacket")]
-        public long? BytesToCapturePerPacket { get; set; }
+        [WirePath("properties.bytesToCapturePerPacket")]
+        public long? BytesToCapturePerPacket
+        {
+            get
+            {
+                return Properties.BytesToCapturePerPacket;
+            }
+        }
 
         /// <summary> Maximum size of the capture output. </summary>
-        [WirePath("totalBytesPerSession")]
-        public long? TotalBytesPerSession { get; set; }
+        [WirePath("properties.totalBytesPerSession")]
+        public long? TotalBytesPerSession
+        {
+            get
+            {
+                return Properties.TotalBytesPerSession;
+            }
+        }
 
         /// <summary> Maximum duration of the capture session in seconds. </summary>
-        [WirePath("timeLimitInSeconds")]
-        public int? TimeLimitInSeconds { get; set; }
+        [WirePath("properties.timeLimitInSeconds")]
+        public int? TimeLimitInSeconds
+        {
+            get
+            {
+                return Properties.TimeLimitInSeconds;
+            }
+        }
 
         /// <summary> The storage location for a packet capture session. </summary>
-        [WirePath("storageLocation")]
-        public PacketCaptureStorageLocation StorageLocation { get; set; }
+        [WirePath("properties.storageLocation")]
+        public PacketCaptureStorageLocation StorageLocation
+        {
+            get
+            {
+                return Properties.StorageLocation;
+            }
+        }
 
         /// <summary> A list of packet capture filters. </summary>
-        [WirePath("filters")]
-        public IList<PacketCaptureFilter> Filters { get; } = new ChangeTrackingList<PacketCaptureFilter>();
-
-        /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
-        [WirePath("continuousCapture")]
-        public bool? ContinuousCapture { get; set; }
+        [WirePath("properties.filters")]
+        public IList<PacketCaptureFilter> Filters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Filters;
+            }
+        }
 
         /// <summary> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </summary>
-        [WirePath("captureSettings")]
-        public PacketCaptureSettings CaptureSettings { get; set; }
+        [WirePath("properties.captureSettings")]
+        public PacketCaptureSettings CaptureSettings
+        {
+            get
+            {
+                return Properties.CaptureSettings;
+            }
+        }
     }
 }

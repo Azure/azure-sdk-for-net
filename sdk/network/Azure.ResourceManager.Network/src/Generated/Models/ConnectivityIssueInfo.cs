@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectivityIssueInfo"/>. </summary>
         internal ConnectivityIssueInfo()
         {
-            Context = new ChangeTrackingList<IDictionary<string, string>>();
+            Contexts = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityIssueInfo"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
-        /// <param name="type"> The type of issue. </param>
-        /// <param name="context"> Provides additional context on the issue. </param>
+        /// <param name="connectivityIssueType"> The type of issue. </param>
+        /// <param name="contexts"> Provides additional context on the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityIssueInfo(IssueOrigin? origin, IssueSeverity? severity, ConnectivityIssueType? @type, IReadOnlyList<IDictionary<string, string>> context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityIssueInfo(IssueOrigin? origin, IssueSeverity? severity, ConnectivityIssueType? connectivityIssueType, IReadOnlyList<IDictionary<string, string>> contexts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Origin = origin;
             Severity = severity;
-            Type = @type;
-            Context = context;
+            ConnectivityIssueType = connectivityIssueType;
+            Contexts = contexts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,13 +45,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The severity of the issue. </summary>
         [WirePath("severity")]
         public IssueSeverity? Severity { get; }
-
-        /// <summary> The type of issue. </summary>
-        [WirePath("type")]
-        public ConnectivityIssueType? Type { get; }
-
-        /// <summary> Provides additional context on the issue. </summary>
-        [WirePath("context")]
-        public IReadOnlyList<IDictionary<string, string>> Context { get; }
     }
 }

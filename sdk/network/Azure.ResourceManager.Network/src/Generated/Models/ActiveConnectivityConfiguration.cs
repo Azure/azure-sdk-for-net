@@ -25,17 +25,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="properties"> Properties of a network manager connectivity configuration. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="commitOn"> Deployment time string. </param>
+        /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, ConnectivityConfigurationProperties properties, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? commitOn, AzureLocation? region) : base(id, properties, configurationGroups, additionalBinaryDataProperties)
+        internal ActiveConnectivityConfiguration(string id, ConnectivityConfigurationProperties properties, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? committedOn, AzureLocation? region) : base(id, properties, configurationGroups, additionalBinaryDataProperties)
         {
-            CommitOn = commitOn;
+            CommittedOn = committedOn;
             Region = region;
         }
-
-        /// <summary> Deployment time string. </summary>
-        [WirePath("commitTime")]
-        public DateTimeOffset? CommitOn { get; }
 
         /// <summary> Deployment region. </summary>
         [WirePath("region")]

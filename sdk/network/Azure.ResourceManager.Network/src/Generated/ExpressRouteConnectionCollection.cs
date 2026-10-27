@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteConnectionResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteGatewayResource"/>.
     /// To get a <see cref="ExpressRouteConnectionCollection"/> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource"/>.
     /// </summary>
-    public partial class ExpressRouteConnectionCollection : ArmCollection
+    public partial class ExpressRouteConnectionCollection : ArmCollection, IEnumerable<ExpressRouteConnectionResource>, IAsyncEnumerable<ExpressRouteConnectionResource>
     {
         private readonly ClientDiagnostics _expressRouteConnectionsClientDiagnostics;
         private readonly ExpressRouteConnections _expressRouteConnectionsRestClient;

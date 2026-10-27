@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="azureFirewall"> The azureFirewall associated with this VirtualHub. </param>
         /// <param name="securityPartnerProvider"> The securityPartnerProvider associated with this VirtualHub. </param>
         /// <param name="addressPrefix"> Address-prefix for this VirtualHub. </param>
-        /// <param name="routeTable"> The routeTable associated with this virtual hub. </param>
+        /// <param name="route"> The routeTable associated with this virtual hub. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub resource. </param>
         /// <param name="securityProviderName"> The Security Provider name. </param>
         /// <param name="virtualHubRouteTableV2S"> List of all virtual hub route table v2s associated with this VirtualHub. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hubRoutingPreference"> The hubRoutingPreference of this VirtualHub. </param>
         /// <param name="virtualRouterAutoScaleConfiguration"> The VirtualHub Router autoscale configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<NetworkSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, string addressPrefixV6, IList<string> virtualRouterIpsV6, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable route, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<NetworkSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, string addressPrefixV6, IList<string> virtualRouterIpsV6, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualWan = virtualWan;
             VpnGateway = vpnGateway;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             AzureFirewall = azureFirewall;
             SecurityPartnerProvider = securityPartnerProvider;
             AddressPrefix = addressPrefix;
-            RouteTable = routeTable;
+            Route = route;
             ProvisioningState = provisioningState;
             SecurityProviderName = securityProviderName;
             VirtualHubRouteTableV2S = virtualHubRouteTableV2S;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The routeTable associated with this virtual hub. </summary>
         [WirePath("routeTable")]
-        internal VirtualHubRouteTable RouteTable { get; set; }
+        internal VirtualHubRouteTable Route { get; set; }
 
         /// <summary> The provisioning state of the virtual hub resource. </summary>
         [WirePath("provisioningState")]
@@ -291,15 +291,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of all routes. </summary>
         [WirePath("routeTable.routes")]
-        public IList<VirtualHubRoute> RouteTableRoutes
+        public IList<VirtualHubRoute> RouteRoutes
         {
             get
             {
-                if (RouteTable is null)
+                if (Route is null)
                 {
-                    RouteTable = new VirtualHubRouteTable();
+                    Route = new VirtualHubRouteTable();
                 }
-                return RouteTable.Routes;
+                return Route.Routes;
             }
         }
 

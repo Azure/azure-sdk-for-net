@@ -71,15 +71,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault";
-            return new ResourceIdentifier(resourceId);
-        }
-
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)

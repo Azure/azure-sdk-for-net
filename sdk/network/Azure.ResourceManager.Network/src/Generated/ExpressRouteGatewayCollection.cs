@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteGatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="ExpressRouteGatewayCollection"/> instance call the GetExpressRouteGateways method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ExpressRouteGatewayCollection : ArmCollection
+    public partial class ExpressRouteGatewayCollection : ArmCollection, IEnumerable<ExpressRouteGatewayResource>, IAsyncEnumerable<ExpressRouteGatewayResource>
     {
         private readonly ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
         private readonly ExpressRouteGateways _expressRouteGatewaysRestClient;
@@ -37,9 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteGatewayResource.ResourceType, out string expressRouteGatewayApiVersion);
             _expressRouteGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGatewayResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion ?? "2026-01-01");
+            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -501,6 +501,17 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ExpressRouteGatewayResource> IEnumerable<ExpressRouteGatewayResource>.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ExpressRouteGatewayResource> IAsyncEnumerable<ExpressRouteGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

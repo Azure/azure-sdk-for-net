@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -52,122 +51,6 @@ namespace Azure.ResourceManager.Network
             if (id.ResourceType != NetworkWatcherResource.ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkWatcherResource.ResourceType), nameof(id));
-            }
-        }
-
-        /// <summary>
-        /// Create and start a packet capture on the specified VM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkWatchers_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="content"> Parameters that define the create packet capture operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PacketCaptureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packetCaptureName, PacketCaptureContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _packetCapturesClientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
-                    new PacketCaptureResourceOperationSource(Client),
-                    _packetCapturesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create and start a packet capture on the specified VM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkWatchers_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="content"> Parameters that define the create packet capture operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PacketCaptureResource> CreateOrUpdate(WaitUntil waitUntil, string packetCaptureName, PacketCaptureContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _packetCapturesClientDiagnostics.CreateScope("PacketCaptureCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
-                    new PacketCaptureResourceOperationSource(Client),
-                    _packetCapturesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
 

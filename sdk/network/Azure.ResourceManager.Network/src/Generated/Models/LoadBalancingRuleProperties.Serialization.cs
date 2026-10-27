@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? disableOutboundSnat = default;
             bool? enableConnectionTracking = default;
             NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("frontendIPConfiguration"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network.Models
                 disableOutboundSnat,
                 enableConnectionTracking,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
     }
 }

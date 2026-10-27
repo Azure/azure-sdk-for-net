@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteProviderPortResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="ExpressRouteProviderPortCollection"/> instance call the GetExpressRouteProviderPorts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ExpressRouteProviderPortCollection : ArmCollection
+    public partial class ExpressRouteProviderPortCollection : ArmCollection, IEnumerable<ExpressRouteProviderPortResource>, IAsyncEnumerable<ExpressRouteProviderPortResource>
     {
         private readonly ClientDiagnostics _expressRouteProviderPortsClientDiagnostics;
         private readonly ExpressRouteProviderPorts _expressRouteProviderPortsRestClient;
+        private readonly ClientDiagnostics _expressRouteProviderPortsLocationClientDiagnostics;
+        private readonly ExpressRouteProviderPortsLocation _expressRouteProviderPortsLocationRestClient;
 
         /// <summary> Initializes a new instance of ExpressRouteProviderPortCollection for mocking. </summary>
         protected ExpressRouteProviderPortCollection()
@@ -40,6 +43,8 @@ namespace Azure.ResourceManager.Network
             TryGetApiVersion(ExpressRouteProviderPortResource.ResourceType, out string expressRouteProviderPortApiVersion);
             _expressRouteProviderPortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
             _expressRouteProviderPortsRestClient = new ExpressRouteProviderPorts(_expressRouteProviderPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion ?? "2026-01-01");
+            _expressRouteProviderPortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
+            _expressRouteProviderPortsLocationRestClient = new ExpressRouteProviderPortsLocation(_expressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -385,6 +390,17 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ExpressRouteProviderPortResource> IEnumerable<ExpressRouteProviderPortResource>.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ExpressRouteProviderPortResource> IAsyncEnumerable<ExpressRouteProviderPortResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

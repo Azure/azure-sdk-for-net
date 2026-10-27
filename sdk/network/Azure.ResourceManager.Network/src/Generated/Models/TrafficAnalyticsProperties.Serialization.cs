@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NetworkWatcherFlowAnalyticsConfiguration))
+            if (Optional.IsDefined(TrafficAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(NetworkWatcherFlowAnalyticsConfiguration, options);
+                writer.WriteObjectValue(TrafficAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default;
+            TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(prop.Value, options);
+                    trafficAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, additionalBinaryDataProperties);
+            return new TrafficAnalyticsProperties(trafficAnalyticsConfiguration, additionalBinaryDataProperties);
         }
     }
 }

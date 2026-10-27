@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> HTTP configuration of the connectivity check. </summary>
         [WirePath("protocolConfiguration.HTTPConfiguration")]
-        public NetworkHttpConfiguration ProtocolHTTPConfiguration
+        public NetworkHttpConfiguration ProtocolHttpConfiguration
         {
             get
             {
-                return ProtocolConfiguration is null ? default : ProtocolConfiguration.HTTPConfiguration;
+                return ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpConfiguration;
             }
             set
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     ProtocolConfiguration = new ProtocolConfiguration();
                 }
-                ProtocolConfiguration.HTTPConfiguration = value;
+                ProtocolConfiguration.HttpConfiguration = value;
             }
         }
     }

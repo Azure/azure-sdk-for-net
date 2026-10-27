@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _subnetsClientDiagnostics;
         private readonly Subnets _subnetsRestClient;
-        private readonly ClientDiagnostics _resourceNavigationLinksClientDiagnostics;
-        private readonly ResourceNavigationLinks _resourceNavigationLinksRestClient;
-        private readonly ClientDiagnostics _serviceAssociationLinksClientDiagnostics;
-        private readonly ServiceAssociationLinks _serviceAssociationLinksRestClient;
         private readonly SubnetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks/subnets";
@@ -56,10 +52,6 @@ namespace Azure.ResourceManager.Network
             TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
-            _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
-            _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

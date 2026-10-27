@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.Network
     public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
+        public PeerExpressRouteCircuitConnectionData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the peer express route circuit connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PeerExpressRouteCircuitConnectionPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, PeerExpressRouteCircuitConnectionPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
-        public PeerExpressRouteCircuitConnectionData() : this(default)
-        {
-        }
-
         /// <summary> Properties of the peer express route circuit connection. </summary>
         [WirePath("properties")]
-        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; }
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

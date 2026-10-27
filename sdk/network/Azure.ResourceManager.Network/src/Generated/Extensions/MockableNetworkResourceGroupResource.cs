@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Network.Mocking
     {
         private ClientDiagnostics _privateLinkServicesClientDiagnostics;
         private PrivateLinkServices _privateLinkServicesRestClient;
-        private ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
-        private ExpressRouteGateways _expressRouteGatewaysRestClient;
         private ClientDiagnostics _publicIPAddressesOperationGroupClientDiagnostics;
         private PublicIPAddressesOperationGroup _publicIPAddressesOperationGroupRestClient;
         private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
@@ -57,10 +55,6 @@ namespace Azure.ResourceManager.Network.Mocking
             Endpoint,
             "2026-01-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-
-        private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -3532,11 +3526,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3544,7 +3538,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3588,11 +3582,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3600,7 +3594,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3614,172 +3608,6 @@ namespace Azure.ResourceManager.Network.Mocking
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServicesByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AutoApprovedPrivateLinkServiceAsync0CollectionResultOfT(
-                PrivateLinkServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServicesByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroup(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AutoApprovedPrivateLinkService0CollectionResultOfT(
-                PrivateLinkServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteGatewayList>> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteGatewayList> GetByResourceGroup(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {
@@ -3864,240 +3692,6 @@ namespace Azure.ResourceManager.Network.Mocking
                 virtualMachineScaleSetName,
                 context,
                 "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetPublicIPAddresses");
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailableResourceGroupDelegationsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailableDelegationAsyncCollectionResultOfT(
-                AvailableResourceGroupDelegationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations");
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailableResourceGroupDelegationsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailableDelegationCollectionResultOfT(
-                AvailableResourceGroupDelegationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations");
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailableServiceAliasesOperationGroup_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailableServiceAliasAsync0CollectionResultOfT(
-                AvailableServiceAliasesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailableServiceAliasesOperationGroup_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailableServiceAlias0CollectionResultOfT(
-                AvailableServiceAliasesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailablePrivateEndpointTypesOperationGroup_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailablePrivateEndpointTypeAsync0CollectionResultOfT(
-                AvailablePrivateEndpointTypesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AvailablePrivateEndpointTypesOperationGroup_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AvailablePrivateEndpointType0CollectionResultOfT(
-                AvailablePrivateEndpointTypesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                location,
-                context,
-                "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup");
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogPropertiesFormat(ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowLogPropertiesFormat(ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, Models.FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetResourceGuid = targetResourceGuid;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Parameters that define the flow log format. </summary>
         [WirePath("format")]
-        public FlowLogFormatParameters Format { get; set; }
+        public Models.FlowLogFormatParameters Format { get; set; }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("flowAnalyticsConfiguration")]
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get
             {
-                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
                 }
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
     }

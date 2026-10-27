@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,9 +122,10 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             ApplicationGatewayPrivateLinkResourceProperties properties = default;
             ETag? eTag = default;
+            string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -138,7 +144,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -159,6 +169,11 @@ namespace Azure.ResourceManager.Network.Models
                     eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -168,9 +183,10 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 additionalBinaryDataProperties,
                 name,
-                @type,
+                resourceType,
                 properties,
-                eTag);
+                eTag,
+                @type);
         }
     }
 }

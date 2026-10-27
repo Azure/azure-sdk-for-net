@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The public IP address SKU. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        internal PublicIPAddressData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicIPAddressPropertiesFormat properties, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicIPAddressPropertiesFormat properties, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? eTag, IList<string> zones) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;

@@ -14,11 +14,11 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the properties of a connection monitor. </summary>
-    public partial class ConnectionMonitorResultProperties : ConnectionMonitorCreateOrUpdateContent, IJsonModel<ConnectionMonitorResultProperties>
+    public partial class ConnectionMonitorResultProperties : ConnectionMonitorParameters, IJsonModel<ConnectionMonitorResultProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConnectionMonitorCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ConnectionMonitorParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConnectionMonitorCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ConnectionMonitorParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

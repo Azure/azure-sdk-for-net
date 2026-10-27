@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the virtual network appliance. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VirtualNetworkApplianceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkAppliancePropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal VirtualNetworkApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkAppliancePropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -43,6 +43,24 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
+        [WirePath("properties.bandwidthInGbps")]
+        public double? BandwidthGbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BandwidthGbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                Properties.BandwidthGbps = value;
+            }
+        }
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("properties.ipConfigurations")]

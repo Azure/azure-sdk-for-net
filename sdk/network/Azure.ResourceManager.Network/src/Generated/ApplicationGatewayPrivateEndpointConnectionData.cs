@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway private endpoint connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayPrivateEndpointConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayPrivateEndpointConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -49,24 +49,6 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.PrivateEndpoint;
-            }
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayPrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
             }
         }
 

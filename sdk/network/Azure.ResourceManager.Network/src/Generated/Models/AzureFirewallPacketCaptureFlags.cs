@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,16 +22,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlags"/>. </summary>
-        /// <param name="type"> Flags to capture. </param>
+        /// <param name="flagsType"> Flags to capture. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? flagsType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            FlagsType = flagsType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Flags to capture. </summary>
-        [WirePath("type")]
-        public AzureFirewallPacketCaptureFlagsType? Type { get; set; }
     }
 }

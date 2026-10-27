@@ -2659,42 +2659,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the list of SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetAllAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<SwapResourceListResult>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableNetworkArmClient(client).GetAllAsync(scope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the list of SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetAll(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<SwapResourceListResult> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetAll(scope, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of ApplicationGateways in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -5606,7 +5570,7 @@ namespace Azure.ResourceManager.Network
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityAsync(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5615,18 +5579,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility(WaitUntil, AzureLocation, CheckPrivateLinkServiceVisibilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5635,83 +5599,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroup(waitUntil, location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroup(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroup(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetByResourceGroupAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ExpressRouteGatewayList>> GetByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetByResourceGroupAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetByResourceGroup(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ExpressRouteGatewayList> GetByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetByResourceGroup(cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).CheckPrivateLinkServiceVisibility(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -5750,120 +5642,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetPublicIPAddresses(virtualMachineScaleSetName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegationsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroupAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroupAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -7918,148 +7696,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Lists all available server variables.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableServerVariablesAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<string> GetAvailableServerVariablesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariablesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available server variables.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableServerVariables(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<string> GetAvailableServerVariables(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServerVariables(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available request headers.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableRequestHeadersAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<string> GetAvailableRequestHeadersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeadersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available request headers.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableRequestHeaders(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<string> GetAvailableRequestHeaders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableRequestHeaders(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available response headers.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableResponseHeadersAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<string> GetAvailableResponseHeadersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeadersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available response headers.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableResponseHeaders(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<string> GetAvailableResponseHeaders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableResponseHeaders(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available web application firewall rule sets.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableWafRuleSetsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ApplicationGatewayAvailableWafRuleSetsResult>> GetAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableWafRuleSetsAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists all available web application firewall rule sets.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableWafRuleSets(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ApplicationGatewayAvailableWafRuleSetsResult> GetAvailableWafRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableWafRuleSets(cancellationToken);
-        }
-
-        /// <summary>
         /// Swaps VIPs between two load balancers.
         /// <item>
         /// <term> Mocking. </term>
@@ -8140,78 +7776,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServicesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAutoApprovedPrivateLinkServicesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServices(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAutoApprovedPrivateLinkServices(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways under a given subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ExpressRouteGatewayList>> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNetworkSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways under a given subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ExpressRouteGatewayList> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
-        }
-
-        /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
         /// <item>
         /// <term> Mocking. </term>
@@ -8247,118 +7811,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteProviderPortsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ExpressRouteProviderPortListResult>> GetExpressRouteProviderPortsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteProviderPortsAsync(filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteProviderPorts(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ExpressRouteProviderPortListResult> GetExpressRouteProviderPorts(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteProviderPorts(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableDelegationsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableDelegationsAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableDelegations(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableDelegation> GetAvailableDelegations(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableDelegations(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableServiceAliasesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServiceAliasesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableServiceAliases(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableServiceAliases(location, cancellationToken);
         }
 
         /// <summary>
@@ -8398,44 +7850,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// List what values of endpoint services are available for use.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableEndpointServicesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableEndpointServicesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List what values of endpoint services are available for use.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailableEndpointServices(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EndpointServiceResult> GetAvailableEndpointServices(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailableEndpointServices(location, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets all the available express route service providers.
         /// <item>
         /// <term> Mocking. </term>
@@ -8469,44 +7883,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteServiceProviders(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetNetworkSecurityPerimeterAssociableResourceTypesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypes(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetNetworkSecurityPerimeterAssociableResourceTypes(location, cancellationToken);
         }
 
         /// <summary>
@@ -8545,82 +7921,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTagsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetNetworkSecurityPerimeterServiceTagsAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetNetworkSecurityPerimeterServiceTags(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAvailablePrivateEndpointTypes(location, cancellationToken);
         }
 
         /// <summary>
@@ -8693,86 +7993,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetServiceTag(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources with pagination.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAllServiceTagInformationAsync(string, bool?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
-        /// <param name="tagName"> Return tag information for a particular tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.ServiceTagInformation> GetAllServiceTagInformationAsync(this SubscriptionResource subscriptionResource, string location, bool? noAddressPrefixes = default, string tagName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAllServiceTagInformationAsync(location, noAddressPrefixes, tagName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources with pagination.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAllServiceTagInformation(string, bool?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
-        /// <param name="tagName"> Return tag information for a particular tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.ServiceTagInformation> GetAllServiceTagInformation(this SubscriptionResource subscriptionResource, string location, bool? noAddressPrefixes = default, string tagName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAllServiceTagInformation(location, noAddressPrefixes, tagName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List network usages for a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetUsagesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List network usages for a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetUsages(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
         /// <summary>

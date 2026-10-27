@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityHopInfo"/>. </summary>
-        /// <param name="type"> The type of the hop. </param>
+        /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityHopInfo(string @type, string id, string address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssueInfo> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityHopInfo(string connectivityHopType, string id, string address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssueInfo> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ConnectivityHopType = connectivityHopType;
             Id = id;
             Address = address;
             ResourceId = resourceId;
@@ -52,10 +52,6 @@ namespace Azure.ResourceManager.Network.Models
             Issues = issues;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of the hop. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The ID of the hop. </summary>
         [WirePath("id")]

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="CloudServiceSwapResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="CloudServiceSwapCollection"/> instance call the GetCloudServiceSwaps method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class CloudServiceSwapCollection : ArmCollection
+    public partial class CloudServiceSwapCollection : ArmCollection, IEnumerable<CloudServiceSwapResource>, IAsyncEnumerable<CloudServiceSwapResource>
     {
         private readonly ClientDiagnostics _vipSwapClientDiagnostics;
         private readonly VipSwap _vipSwapRestClient;

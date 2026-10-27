@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nrpResourceUri"> NRP Resource URI of the connection. </param>
         /// <param name="name"> Connection Name. </param>
         /// <param name="status"> The current status of the connection. </param>
-        /// <param name="lastUpdatedTime"> Time when the connection was last updated. </param>
+        /// <param name="lastUpdatedOn"> Time when the connection was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri, string name, FailoverConnectionStatus? status, string lastUpdatedTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteFailoverConnectionResourceDetails(Uri nrpResourceUri, string name, FailoverConnectionStatus? status, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NrpResourceUri = nrpResourceUri;
             Name = name;
             Status = status;
-            LastUpdatedTime = lastUpdatedTime;
+            LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,9 +48,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The current status of the connection. </summary>
         [WirePath("status")]
         public FailoverConnectionStatus? Status { get; }
-
-        /// <summary> Time when the connection was last updated. </summary>
-        [WirePath("lastUpdatedTime")]
-        public string LastUpdatedTime { get; }
     }
 }

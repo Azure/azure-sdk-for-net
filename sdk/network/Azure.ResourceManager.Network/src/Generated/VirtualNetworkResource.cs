@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _virtualNetworksClientDiagnostics;
         private readonly VirtualNetworks _virtualNetworksRestClient;
-        private readonly ClientDiagnostics _effectiveConfigurationsClientDiagnostics;
-        private readonly EffectiveConfigurations _effectiveConfigurationsRestClient;
         private readonly VirtualNetworkData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks";
@@ -54,11 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-            _effectiveConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _effectiveConfigurationsRestClient = new EffectiveConfigurations(_effectiveConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

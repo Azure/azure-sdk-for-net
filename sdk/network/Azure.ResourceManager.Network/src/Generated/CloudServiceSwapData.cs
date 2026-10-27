@@ -40,23 +40,5 @@ namespace Azure.ResourceManager.Network
         /// <summary> Swap resource properties. </summary>
         [WirePath("properties")]
         internal SwapResourceProperties Properties { get; set; }
-
-        /// <summary> Specifies slot info on a cloud service. </summary>
-        [WirePath("properties.slotType")]
-        public SwapSlotType? SwapResourceSlotType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SlotType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SwapResourceProperties();
-                }
-                Properties.SlotType = value;
-            }
-        }
     }
 }

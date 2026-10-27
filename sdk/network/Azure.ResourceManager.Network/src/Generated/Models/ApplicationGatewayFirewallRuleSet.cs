@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFirewallRuleSet : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
+        public ApplicationGatewayFirewallRuleSet()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the application gateway firewall rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayFirewallRuleSetPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayFirewallRuleSetPropertiesFormat properties) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
-        public ApplicationGatewayFirewallRuleSet() : this(default)
-        {
-        }
-
         /// <summary> Properties of the application gateway firewall rule set. </summary>
         [WirePath("properties")]
-        internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; }
+        internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; set; }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
         [WirePath("properties.provisioningState")]
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> The rule groups of the web application firewall rule set. </summary>
@@ -63,7 +71,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RuleGroups;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.RuleGroups;
             }
         }
 
@@ -73,7 +85,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Tiers;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayFirewallRuleSetPropertiesFormat();
+                }
+                return Properties.Tiers;
             }
         }
     }
