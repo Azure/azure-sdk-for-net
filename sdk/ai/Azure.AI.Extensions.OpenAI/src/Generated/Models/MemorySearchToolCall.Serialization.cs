@@ -104,7 +104,7 @@ namespace Azure.AI.Extensions.OpenAI
                     bool hasPatch = Patch.Contains("$"u8, "memories"u8);
                     for (int i = 0; i < Memories.Count; i++)
                     {
-                        if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.memories[{i}]")) || Memories[i] != null && Memories[i].Patch.IsRemoved("$"u8))
+                        if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.memories[{i}]")))
                         {
                             continue;
                         }
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -199,7 +199,7 @@ namespace Azure.AI.Extensions.OpenAI
                     List<MemoryOutputItem> array = new List<MemoryOutputItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MemoryOutputItem.DeserializeMemoryOutputItem(item, item.GetUtf8Bytes(), options));
+                        array.Add(MemoryOutputItem.DeserializeMemoryOutputItem(item, options));
                     }
                     memories = array;
                     continue;
@@ -215,107 +215,5 @@ namespace Azure.AI.Extensions.OpenAI
                 memories,
                 patch);
         }
-
-        /// <summary></summary>
-        /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
-        {
-            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-            value = default;
-
-            if (local.StartsWith("memories"u8))
-            {
-                int propertyLength = "memories"u8.Length;
-                ReadOnlySpan<byte> currentSlice = local.Slice(propertyLength);
-                if (Memories == null)
-                {
-                    return false;
-                }
-                if (currentSlice.IsEmpty)
-                {
-                    return TryResolveMemoriesArray(out value);
-                }
-                if (!currentSlice.TryGetIndex(out int index, out int bytesConsumed) || index >= Memories.Count)
-                {
-                    return false;
-                }
-                if (Memories[index] == null)
-                {
-                    return false;
-                }
-                return Memories[index].Patch.TryGetEncodedValue([.. "$"u8, .. currentSlice.Slice(bytesConsumed)], out value);
-            }
-            return false;
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary></summary>
-        /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
-        {
-            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-
-            if (local.StartsWith("memories"u8))
-            {
-                int propertyLength = "memories"u8.Length;
-                ReadOnlySpan<byte> currentSlice = local.Slice(propertyLength);
-                if (Memories == null)
-                {
-                    return false;
-                }
-                if (!currentSlice.TryGetIndex(out int index, out int bytesConsumed) || index >= Memories.Count)
-                {
-                    return false;
-                }
-                if (Memories[index] == null)
-                {
-                    return false;
-                }
-                Memories[index].Patch.Set([.. "$"u8, .. currentSlice.Slice(bytesConsumed)], value);
-                return true;
-            }
-            return false;
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary></summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private bool TryResolveMemoriesArray(out JsonPatch.EncodedValue value)
-        {
-            value = default;
-            BinaryData data = ModelReaderWriter.Write(ActiveMemories(), ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
-            JsonPatch tempPatch = new JsonPatch();
-            tempPatch.Set("$"u8, data.ToMemory().Span);
-            return tempPatch.TryGetEncodedValue("$"u8, out value);
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary></summary>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private IEnumerable<MemoryOutputItem> ActiveMemories()
-        {
-            if (!Optional.IsCollectionDefined(Memories))
-            {
-                yield break;
-            }
-            bool hasPatch = Patch.Contains("$"u8, "memories"u8);
-            for (int i = 0; i < Memories.Count; i++)
-            {
-                if ((!hasPatch || !Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.memories[{i}]"))) && (Memories[i] == null || !Memories[i].Patch.IsRemoved("$"u8)))
-                {
-                    yield return Memories[i];
-                }
-            }
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
     }
 }

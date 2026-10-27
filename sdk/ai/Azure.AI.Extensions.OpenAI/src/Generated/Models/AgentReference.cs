@@ -2,39 +2,29 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentReference. </summary>
     public partial class AgentReference
     {
-        [Experimental("SCME0001")]
-        private JsonPatch _patch;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentReference"/>. </summary>
         /// <param name="type"></param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
-        /// <param name="patch"></param>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        internal AgentReference(string @type, string name, string version, in JsonPatch patch)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentReference(string @type, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;
             Version = version;
-            _patch = patch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary> Gets the Patch. </summary>
-        [JsonIgnore]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCME0001")]
-        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> Gets the Type. </summary>
         public string Type { get; } = "agent_reference";

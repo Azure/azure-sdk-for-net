@@ -18,14 +18,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public MemorySearchToolCall(ToolCallStatus status) : base("memory_search_call")
         {
             Status = status;
             Memories = new ChangeTrackingList<MemoryOutputItem>();
-            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> The status of the tool call. </summary>
         public ToolCallStatus Status { get; set; }

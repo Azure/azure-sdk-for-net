@@ -150,7 +150,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))

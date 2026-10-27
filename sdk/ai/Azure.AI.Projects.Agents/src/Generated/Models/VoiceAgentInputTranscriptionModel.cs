@@ -11,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary>
     /// The input-audio transcription model identifier. This is a model name, not a Foundry deployment name. Mirrors the transcription models supported by the managed
     /// voice backend, covering the OpenAI Realtime transcription models plus the Azure and MAI models.
-    /// `azure-speech-streaming` is supported for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`.
     /// Additional values may be added over time.
     /// </summary>
     [Experimental("AAIP001")]
@@ -36,8 +35,6 @@ namespace Azure.AI.Projects.Agents
         private const string MaiTranscribeValue = "mai-transcribe";
         /// <summary> Azure AI Speech to text. </summary>
         private const string AzureSpeechValue = "azure-speech";
-        /// <summary> Azure AI Speech streaming transcription for cascaded text-model conversations only. Requires a nonempty `language`, such as `en-US`; comma-separated locales are supported. Supports `custom_speech`, `phrase_list`, and `profanity_filter`. Not supported with realtime speech-to-speech models. </summary>
-        private const string AzureSpeechStreamingValue = "azure-speech-streaming";
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInputTranscriptionModel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -75,9 +72,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Azure AI Speech to text. </summary>
         public static VoiceAgentInputTranscriptionModel AzureSpeech { get; } = new VoiceAgentInputTranscriptionModel(AzureSpeechValue);
-
-        /// <summary> Azure AI Speech streaming transcription for cascaded text-model conversations only. Requires a nonempty `language`, such as `en-US`; comma-separated locales are supported. Supports `custom_speech`, `phrase_list`, and `profanity_filter`. Not supported with realtime speech-to-speech models. </summary>
-        public static VoiceAgentInputTranscriptionModel AzureSpeechStreaming { get; } = new VoiceAgentInputTranscriptionModel(AzureSpeechStreamingValue);
 
         /// <summary> Determines if two <see cref="VoiceAgentInputTranscriptionModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

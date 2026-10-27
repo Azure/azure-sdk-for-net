@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel.Primitives;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;

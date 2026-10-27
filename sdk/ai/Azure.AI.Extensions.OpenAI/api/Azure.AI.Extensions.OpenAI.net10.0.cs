@@ -58,9 +58,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public AgentReference(string name, string version = null) { }
         public string Name { get { throw null; } set { } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public ref System.ClientModel.Primitives.JsonPatch Patch { get { throw null; } }
         public string Type { get { throw null; } }
         public string Version { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.AgentReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1010,9 +1007,6 @@ namespace Azure.AI.Extensions.OpenAI
         internal MemoryOutputItem() { }
         public string Content { get { throw null; } set { } }
         public string MemoryId { get { throw null; } set { } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public ref System.ClientModel.Primitives.JsonPatch Patch { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public System.DateTimeOffset UpdatedAt { get { throw null; } set { } }
         protected virtual Azure.AI.Extensions.OpenAI.MemoryOutputItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

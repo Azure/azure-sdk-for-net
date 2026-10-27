@@ -3,10 +3,8 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -17,8 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public abstract partial class MemoryOutputItem
     {
-        [Experimental("SCME0001")]
-        private JsonPatch _patch;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MemoryOutputItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
@@ -41,24 +39,16 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
-        /// <param name="patch"></param>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        internal MemoryOutputItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, in JsonPatch patch)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MemoryOutputItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemoryId = memoryId;
             UpdatedAt = updatedAt;
             Scope = scope;
             Content = content;
             Kind = kind;
-            _patch = patch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary> Gets the Patch. </summary>
-        [JsonIgnore]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCME0001")]
-        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> The unique ID of the memory item. </summary>
         public string MemoryId { get; set; }

@@ -624,7 +624,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.AgentReference"/> instance for mocking. </returns>
         public static AgentReference AgentReference(string name = default, string version = default)
         {
-            return new AgentReference("agent_reference", name, version, default);
+            return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
@@ -1140,7 +1140,7 @@ namespace Azure.AI.Extensions.OpenAI
                 scope,
                 content,
                 new MemoryItemKind(kind),
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
@@ -1158,7 +1158,7 @@ namespace Azure.AI.Extensions.OpenAI
                 scope,
                 content,
                 MemoryItemKind.UserProfile,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory item containing a summary extracted from conversations. </summary>
@@ -1176,7 +1176,7 @@ namespace Azure.AI.Extensions.OpenAI
                 scope,
                 content,
                 MemoryItemKind.ChatSummary,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory item containing a procedure extracted from conversations. </summary>
@@ -1194,7 +1194,7 @@ namespace Azure.AI.Extensions.OpenAI
                 scope,
                 content,
                 MemoryItemKind.Procedural,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory command tool call. </summary>
