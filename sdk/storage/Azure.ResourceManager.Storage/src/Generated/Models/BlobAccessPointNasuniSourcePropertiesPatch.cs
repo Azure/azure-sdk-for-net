@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sourceType"> The source type. This value determines the remaining shape of the source object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
-        /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        internal BlobAccessPointNasuniSourcePropertiesPatch(BlobAccessPointSourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointConnectionPropertiesPatch connection, BlobAccessPointRemoteAuthPropertiesPatch auth) : base(sourceType, additionalBinaryDataProperties)
+        /// <param name="authentication"> Details for authenticating to the backing data source. </param>
+        internal BlobAccessPointNasuniSourcePropertiesPatch(BlobAccessPointSourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobAccessPointConnectionPropertiesPatch connection, BlobAccessPointRemoteAuthenticationPropertiesPatch authentication) : base(sourceType, additionalBinaryDataProperties)
         {
             Connection = connection;
-            Auth = auth;
+            Authentication = authentication;
         }
 
         /// <summary> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Details for authenticating to the backing data source. </summary>
         [WirePath("auth")]
-        public BlobAccessPointRemoteAuthPropertiesPatch Auth { get; set; }
+        public BlobAccessPointRemoteAuthenticationPropertiesPatch Authentication { get; set; }
     }
 }

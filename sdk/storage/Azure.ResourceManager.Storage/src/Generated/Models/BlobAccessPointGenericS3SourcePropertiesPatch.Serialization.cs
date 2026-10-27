@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection, options);
             }
-            if (Optional.IsDefined(Auth))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth, options);
+                writer.WriteObjectValue(Authentication, options);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobAccessPointSourceType sourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BlobAccessPointConnectionPropertiesPatch connection = default;
-            BlobAccessPointRemoteAuthPropertiesPatch auth = default;
+            BlobAccessPointRemoteAuthenticationPropertiesPatch authentication = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    auth = BlobAccessPointRemoteAuthPropertiesPatch.DeserializeBlobAccessPointRemoteAuthPropertiesPatch(prop.Value, options);
+                    authentication = BlobAccessPointRemoteAuthenticationPropertiesPatch.DeserializeBlobAccessPointRemoteAuthenticationPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BlobAccessPointGenericS3SourcePropertiesPatch(sourceType, additionalBinaryDataProperties, connection, auth);
+            return new BlobAccessPointGenericS3SourcePropertiesPatch(sourceType, additionalBinaryDataProperties, connection, authentication);
         }
     }
 }

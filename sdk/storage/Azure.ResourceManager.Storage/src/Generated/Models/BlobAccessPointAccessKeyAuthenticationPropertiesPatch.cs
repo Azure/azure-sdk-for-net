@@ -12,29 +12,21 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> S3 access-key authentication properties. </summary>
-    public partial class BlobAccessPointAccessKeyAuthProperties : BlobAccessPointRemoteAuthProperties
+    public partial class BlobAccessPointAccessKeyAuthenticationPropertiesPatch : BlobAccessPointRemoteAuthenticationPropertiesPatch
     {
-        /// <summary> Initializes a new instance of <see cref="BlobAccessPointAccessKeyAuthProperties"/>. </summary>
-        /// <param name="accessKeyId"> The access key ID. </param>
-        /// <param name="secretAccessKey"> The secret access key. This value is never returned by read or list operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accessKeyId"/> or <paramref name="secretAccessKey"/> is null. </exception>
-        public BlobAccessPointAccessKeyAuthProperties(string accessKeyId, string secretAccessKey) : base(BlobAccessPointRemoteAuthType.AccessKey)
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPointAccessKeyAuthenticationPropertiesPatch"/>. </summary>
+        public BlobAccessPointAccessKeyAuthenticationPropertiesPatch() : base(BlobAccessPointRemoteAuthenticationType.AccessKey)
         {
-            Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
-            Argument.AssertNotNull(secretAccessKey, nameof(secretAccessKey));
-
-            AccessKeyId = accessKeyId;
-            SecretAccessKey = secretAccessKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobAccessPointAccessKeyAuthProperties"/>. </summary>
-        /// <param name="authType"> The authentication type. This value determines the remaining shape of the authentication object. </param>
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPointAccessKeyAuthenticationPropertiesPatch"/>. </summary>
+        /// <param name="authenticationType"> The authentication type. This value determines the remaining shape of the authentication object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accessKeyId"> The access key ID. </param>
         /// <param name="secretAccessKey"> The secret access key. This value is never returned by read or list operations. </param>
         /// <param name="signingRegion"> The region used by the request-signing algorithm. Defaults to 'us-east-1' when not specified. </param>
         /// <param name="hostOverride"> The host used when computing request signatures. The endpoint host is used by default. </param>
-        internal BlobAccessPointAccessKeyAuthProperties(BlobAccessPointRemoteAuthType authType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string accessKeyId, string secretAccessKey, string signingRegion, string hostOverride) : base(authType, additionalBinaryDataProperties)
+        internal BlobAccessPointAccessKeyAuthenticationPropertiesPatch(BlobAccessPointRemoteAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string accessKeyId, string secretAccessKey, string signingRegion, string hostOverride) : base(authenticationType, additionalBinaryDataProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
