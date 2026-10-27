@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- WebSocket connections no longer follow redirects, preventing API keys and other handshake headers from being forwarded to redirect destinations.
+
 ### Other Changes
 
 ## 1.2.0 (2026-08-06)
