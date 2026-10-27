@@ -200,8 +200,9 @@ entries that no longer match a real diff accumulate silently and nothing will fl
 - **A library picks one client stack and uses its abstractions throughout.** New AI/Foundry
   libraries build on `System.ClientModel` rather than `Azure.Core`, because their surface
   overlaps the `OpenAI` types — and that choice carries into authentication: the SCM
-  token-provider abstraction, not `TokenCredential`. **Name the parameter for the abstraction it
-  actually takes** — a token provider called `credential` misdescribes its own type 🟡
+  token-provider abstraction, not `TokenCredential` 🟡
+- **Name the parameter for the abstraction it actually takes** — a token provider called
+  `credential` misdescribes its own type 🟡
 - **Environment variables are not the mechanism to reach for** 🟡. A new setting should arrive
   through the `ClientSettings` pattern and the host's configuration, not
   `Environment.GetEnvironmentVariable`. `Azure.Identity` reads env vars extensively because that
