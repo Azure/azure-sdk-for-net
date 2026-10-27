@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadPointInTimeRecoveryPoint : WorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadPointInTimeRecoveryPoint"/>. </summary>
-        public WorkloadPointInTimeRecoveryPoint()
+        public WorkloadPointInTimeRecoveryPoint() : base("AzureWorkloadPointInTimeRecoveryPoint")
         {
             TimeRanges = new ChangeTrackingList<PointInTimeRange>();
         }

@@ -6,6 +6,9 @@
 - Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
 
 ### Breaking Changes
+- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
+
+- Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
 
 ### Bugs Fixed
 
