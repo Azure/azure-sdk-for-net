@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
     {
         private readonly string _value;
         /// <summary> One Minute. </summary>
-        private const string PT1MValue = "PT1M";
+        private const string OneMinuteValue = "PT1M";
         /// <summary> Five Minutes. </summary>
-        private const string PT5MValue = "PT5M";
+        private const string FiveMinutesValue = "PT5M";
         /// <summary> Ten Minutes. </summary>
-        private const string PT10MValue = "PT10M";
+        private const string TenMinutesValue = "PT10M";
         /// <summary> Fifteen Minutes. </summary>
-        private const string PT15MValue = "PT15M";
+        private const string FifteenMinutesValue = "PT15M";
         /// <summary> Thirty Minutes. </summary>
-        private const string PT30MValue = "PT30M";
+        private const string ThirtyMinutesValue = "PT30M";
         /// <summary> One Hour. </summary>
-        private const string PT1HValue = "PT1H";
+        private const string OneHourValue = "PT1H";
         /// <summary> Two Hours. </summary>
-        private const string PT2HValue = "PT2H";
+        private const string TwoHoursValue = "PT2H";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalRefreshInterval"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,25 +41,25 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> One Minute. </summary>
-        public static EntitySignalRefreshInterval PT1M { get; } = new EntitySignalRefreshInterval(PT1MValue);
+        public static EntitySignalRefreshInterval OneMinute { get; } = new EntitySignalRefreshInterval(OneMinuteValue);
 
         /// <summary> Five Minutes. </summary>
-        public static EntitySignalRefreshInterval PT5M { get; } = new EntitySignalRefreshInterval(PT5MValue);
+        public static EntitySignalRefreshInterval FiveMinutes { get; } = new EntitySignalRefreshInterval(FiveMinutesValue);
 
         /// <summary> Ten Minutes. </summary>
-        public static EntitySignalRefreshInterval PT10M { get; } = new EntitySignalRefreshInterval(PT10MValue);
+        public static EntitySignalRefreshInterval TenMinutes { get; } = new EntitySignalRefreshInterval(TenMinutesValue);
 
         /// <summary> Fifteen Minutes. </summary>
-        public static EntitySignalRefreshInterval PT15M { get; } = new EntitySignalRefreshInterval(PT15MValue);
+        public static EntitySignalRefreshInterval FifteenMinutes { get; } = new EntitySignalRefreshInterval(FifteenMinutesValue);
 
         /// <summary> Thirty Minutes. </summary>
-        public static EntitySignalRefreshInterval PT30M { get; } = new EntitySignalRefreshInterval(PT30MValue);
+        public static EntitySignalRefreshInterval ThirtyMinutes { get; } = new EntitySignalRefreshInterval(ThirtyMinutesValue);
 
         /// <summary> One Hour. </summary>
-        public static EntitySignalRefreshInterval PT1H { get; } = new EntitySignalRefreshInterval(PT1HValue);
+        public static EntitySignalRefreshInterval OneHour { get; } = new EntitySignalRefreshInterval(OneHourValue);
 
         /// <summary> Two Hours. </summary>
-        public static EntitySignalRefreshInterval PT2H { get; } = new EntitySignalRefreshInterval(PT2HValue);
+        public static EntitySignalRefreshInterval TwoHours { get; } = new EntitySignalRefreshInterval(TwoHoursValue);
 
         /// <summary> Determines if two <see cref="EntitySignalRefreshInterval"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
