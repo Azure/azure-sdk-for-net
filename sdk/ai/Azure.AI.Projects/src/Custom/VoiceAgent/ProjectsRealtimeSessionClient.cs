@@ -115,7 +115,11 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         }
         try
         {
-            GetTokenOptions tokenOptions = new(_tokenProperties);
+            GetTokenOptions tokenOptions = _tokenProvider.CreateTokenOptions(_tokenProperties);
+            if (tokenOptions == null)
+            {
+                throw new InvalidOperationException("The token provider does not support the Foundry Realtime authentication flow.");
+            }
             AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
 
             // No "User-Agent" here: RealtimeSessionClient.ConnectAsync applies every entry in this

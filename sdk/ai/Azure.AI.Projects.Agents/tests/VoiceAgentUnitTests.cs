@@ -5,12 +5,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using NUnit.Framework;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents.Tests;
 #pragma warning disable AAIP001
 #pragma warning disable AAIP002, OPENAI002
 public class VoiceAgentUnitTests
 {
+    [Test]
+    public void SemanticVadEagernessSerializesAsTheOpenAIStringValue(
+        [Values("auto", "low", "medium", "high", "future_eagerness")] string eagerness,
+        [Values("J", "W")] string format)
+    {
+        VoiceAgentSemanticVadTurnDetection detection = new()
+        {
+            Eagerness = new RealtimeSemanticVadEagernessLevel(eagerness),
+            CreateResponse = true
+        };
+
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
+            detection, new ModelReaderWriterOptions(format), AzureAIProjectsAgentsContext.Default));
+
+        Assert.That(document.RootElement.GetProperty("type").GetString(), Is.EqualTo("semantic_vad"));
+        Assert.That(document.RootElement.GetProperty("eagerness").GetString(), Is.EqualTo(eagerness));
+        Assert.That(document.RootElement.GetProperty("create_response").GetBoolean(), Is.True);
+    }
+
+    [Test]
+    public void SemanticVadEagernessDeserializesFromTheOpenAIStringValue(
+        [Values("auto", "low", "medium", "high", "future_eagerness")] string eagerness,
+        [Values("J", "W")] string format)
+    {
+        VoiceAgentSemanticVadTurnDetection detection = ModelReaderWriter.Read<VoiceAgentSemanticVadTurnDetection>(
+            BinaryData.FromString($$"""{"type":"semantic_vad","eagerness":"{{eagerness}}","create_response":true}"""),
+            new ModelReaderWriterOptions(format), AzureAIProjectsAgentsContext.Default);
+
+        Assert.That(detection.Eagerness?.ToString(), Is.EqualTo(eagerness));
+        Assert.That(detection.CreateResponse, Is.True);
+    }
+
+    [Test]
+    public void SemanticVadEagernessRemainsOptional([Values("J", "W")] string format)
+    {
+        ModelReaderWriterOptions options = new(format);
+        VoiceAgentSemanticVadTurnDetection detection = ModelReaderWriter.Read<VoiceAgentSemanticVadTurnDetection>(
+            BinaryData.FromString("""{"type":"semantic_vad","eagerness":null}"""), options, AzureAIProjectsAgentsContext.Default);
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
+            detection, options, AzureAIProjectsAgentsContext.Default));
+
+        Assert.That(detection.Eagerness, Is.Null);
+        Assert.That(document.RootElement.TryGetProperty("eagerness", out _), Is.False);
+    }
+
     [TestCase("completed")]
     [TestCase("in_progress")]
     [TestCase("failed")]

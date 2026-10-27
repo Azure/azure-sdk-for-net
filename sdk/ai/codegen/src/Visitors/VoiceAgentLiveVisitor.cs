@@ -40,6 +40,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
     private CSharpType _responseItemType;
     private CSharpType _realtimeStatusType;
     private CSharpType _realtimeModalityType;
+    private CSharpType _semanticVadEagernessType;
 
     protected internal static void Configure(InputNamespace input)
     {
@@ -153,6 +154,20 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
             invocation == "WriteObjectValue" &&
             ((expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeResponseStatus") ||
              argument is VariableExpression { Type.Name: "RealtimeOutputModality" }))
+        {
+            return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
+                expression.Arguments[0].Invoke(nameof(ToString)));
+        }
+        if (method.Signature.Name == "DeserializeVoiceAgentSemanticVadTurnDetection" && invocation == "Read" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel" &&
+            argument is InvokeMethodExpression eagernessBytes && eagernessBytes.InstanceReference != null)
+        {
+            _semanticVadEagernessType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeSemanticVadEagernessLevel");
+            return New.Instance(_semanticVadEagernessType, eagernessBytes.InstanceReference.Invoke(nameof(JsonElement.GetString)));
+        }
+        if (method.EnclosingType.Name == "VoiceAgentSemanticVadTurnDetection" &&
+            method.Signature.Name == "JsonModelWriteCore" && invocation == "WriteObjectValue" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel")
         {
             return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
                 expression.Arguments[0].Invoke(nameof(ToString)));

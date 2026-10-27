@@ -10,6 +10,24 @@ generic `/realtime` endpoint.
 Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME` to a
 realtime-capable model deployment name before running this sample.
 
+## Authentication
+
+Voice Agent connections use the project's authentication token provider. Realtime startup
+uses the provider's options factory, including any specialized options or normalized
+properties, and rejects an unsupported authentication flow before requesting a token.
+
+`ProjectsRealtimeClient` is an agent-scoped WebSocket adapter, not a general-purpose OpenAI
+Realtime REST client. Its inherited client-secret creation methods are not mapped to Voice
+Agent endpoints. Do not assume that `RealtimeSessionClientOptions.ClientSecret` provides
+ephemeral authentication for this Voice Agent connection path.
+
+The separate [Azure OpenAI ephemeral-token flow](https://learn.microsoft.com/azure/foundry/openai/how-to/realtime-audio-webrtc#step-1-set-up-service-to-procure-ephemeral-token)
+uses `/openai/v1/realtime/client_secrets` and does not take an `api-version` query parameter.
+Availability of that API, and authentication using its issued secret, must be verified
+against the corresponding service; it is not demonstrated by this Voice Agent sample.
+
+## Create and use a voice agent
+
 1. Create the client and a temporary text-modality voice agent.
 
 ```C# Snippet:Sample_VoiceAgent_Create

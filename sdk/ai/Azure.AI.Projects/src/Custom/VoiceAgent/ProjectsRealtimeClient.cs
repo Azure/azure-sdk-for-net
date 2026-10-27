@@ -17,6 +17,11 @@ namespace Azure.AI.Projects;
 /// <summary>
 /// The extended real time client.
 /// </summary>
+/// <remarks>
+/// Use this client for agent-scoped Voice Agent WebSocket sessions. OpenAI Realtime REST methods
+/// inherited from <see cref="RealtimeClient"/>, including client-secret creation, are not mapped
+/// to Voice Agent endpoints and do not establish support for Voice Agent ephemeral authentication.
+/// </remarks>
 [Experimental("AAIP002")]
 public class ProjectsRealtimeClient : RealtimeClient
 {

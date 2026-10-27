@@ -36,6 +36,68 @@ public class VoiceAgentLiveConversationSampleTests
     private static readonly byte[] RecordingBytes = { 2, 7, 1, 8, 2, 8 };
 
     [Test]
+    public async Task StoredSampleWaitsForPersistenceInsteadOfTreatingSocketClosureAsCompletion()
+    {
+        PersistenceClient history = new("in_progress", "in_progress", "completed");
+        using CancellationTokenSource cancellation = new(TimeSpan.FromSeconds(10));
+
+        await Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, cancellation.Token);
+
+        Assert.That(history.Reads, Is.EqualTo(3));
+        Assert.That(cancellation.IsCancellationRequested, Is.False);
+    }
+
+    [Test]
+    public async Task AlreadyCompletedPersistenceDoesNotPollAgain()
+    {
+        PersistenceClient history = new("completed");
+        await Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, CancellationToken.None);
+        Assert.That(history.Reads, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void FailedPersistenceStopsBeforeDownloadingOrDeleting()
+    {
+        PersistenceClient history = new("failed", "completed");
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, CancellationToken.None));
+        Assert.That(error.Message, Does.Contain("failed"));
+        Assert.That(history.Reads, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void CallerCancellationStopsPendingPersistence()
+    {
+        using CancellationTokenSource cancellation = new();
+        PersistenceClient history = new("in_progress") { AfterRead = cancellation.Cancel };
+
+        Assert.CatchAsync<OperationCanceledException>(() =>
+            Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, cancellation.Token));
+        Assert.That(history.Reads, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void PrecancelledPersistenceWaitDoesNotSendARequest()
+    {
+        using CancellationTokenSource cancellation = new();
+        cancellation.Cancel();
+        PersistenceClient history = new("completed");
+
+        Assert.CatchAsync<OperationCanceledException>(() =>
+            Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, cancellation.Token));
+        Assert.That(history.Reads, Is.Zero);
+    }
+
+    [Test]
+    public void PersistenceWaitRejectsAMismatchedConversation()
+    {
+        PersistenceClient history = new("completed") { ReturnedId = "different-conversation" };
+        Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Sample_VoiceAgent_Live.WaitForPersistenceAsync(history, AgentName, ConversationId, CancellationToken.None));
+        Assert.That(history.Reads, Is.EqualTo(1));
+    }
+
+    [Test]
     public async Task AllOverloadsReadEveryResourcePageAndDeleteOnlyAfterDownloads(
         [Values("Read", "ReadAsync", "ReadProtocol", "ReadProtocolAsync")] string sample,
         [Values(false, true)] bool deleteConversation,
@@ -501,6 +563,26 @@ public class VoiceAgentLiveConversationSampleTests
         {
             Assert.That(message.CancellationToken, Is.EqualTo(expectedToken), "Every page and resource must use the caller's token.");
             return ProcessNextAsync(message, pipeline, currentIndex);
+        }
+    }
+
+    private sealed class PersistenceClient(params string[] states) : BetaVoiceAgentsLiveConversations
+    {
+        private readonly Queue<string> _states = new(states);
+        public int Reads { get; private set; }
+        public string ReturnedId { get; set; } = ConversationId;
+        public Action AfterRead { get; set; }
+
+        public override Task<ClientResult<VoiceAgentLiveConversation>> GetLiveAgentConversationAsync(
+            string agentName, string conversationId, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Reads++;
+            string state = _states.Count > 1 ? _states.Dequeue() : _states.Peek();
+            VoiceAgentLiveConversation model = ModelReaderWriter.Read<VoiceAgentLiveConversation>(
+                BinaryData.FromString(Conversation(ReturnedId, state)), ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+            AfterRead?.Invoke();
+            return Task.FromResult(ClientResult.FromValue(model, new MockPipelineResponse(200)));
         }
     }
 

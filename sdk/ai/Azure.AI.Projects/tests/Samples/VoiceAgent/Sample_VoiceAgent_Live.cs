@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -301,6 +302,7 @@ public static class Sample_VoiceAgent_Live
                 }
             }
             BetaVoiceAgentsLiveConversations history = project.AgentAdministrationClient.GetBetaVoiceAgentEndpointLiveConversations();
+            await WaitForPersistenceAsync(history, agentName, conversationId, cancellationToken);
             Console.WriteLine($"History shares agent pipeline: {ReferenceEquals(history.Pipeline, project.AgentAdministrationClient.Pipeline)}");
             Console.WriteLine($"Reading stored Live conversation {conversationId} using the {(protocol ? "protocol" : "typed")} {(synchronous ? "sync" : "async")} APIs.");
             if (synchronous)
@@ -330,6 +332,36 @@ public static class Sample_VoiceAgent_Live
         finally
         {
             await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceAgent_Live_Persistence
+    internal static async Task WaitForPersistenceAsync(
+        BetaVoiceAgentsLiveConversations history, string agentName, string conversationId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        using CancellationTokenSource finalization = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        finalization.CancelAfter(TimeSpan.FromSeconds(30));
+        while (true)
+        {
+            ClientResult<VoiceAgentLiveConversation> result = await history.GetLiveAgentConversationAsync(
+                agentName, conversationId, finalization.Token);
+            VoiceAgentLiveConversation conversation = result.Value;
+            Console.WriteLine($"GET persistence status: HTTP {result.GetRawResponse().Status}; {conversation.Status}");
+            if (conversation.Id != conversationId)
+            {
+                throw new InvalidOperationException("The persisted Live conversation id does not match the stored session.");
+            }
+            if (conversation.Status == VoiceConversationStatus.Completed)
+            {
+                return;
+            }
+            if (conversation.Status != VoiceConversationStatus.InProgress)
+            {
+                throw new InvalidOperationException($"Stored Live conversation persistence finalization failed with status '{conversation.Status}'.");
+            }
+            await Task.Delay(TimeSpan.FromMilliseconds(500), finalization.Token);
         }
     }
     #endregion

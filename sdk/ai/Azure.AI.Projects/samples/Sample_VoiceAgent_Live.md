@@ -595,7 +595,9 @@ and should not present those heuristics as guaranteed speech completion.
 
 The end-to-end sample below creates a temporary Live agent with `Store = true` in both its
 definition and connection options, sends actual speech, receives audio, confirms native and
-transport finalization, and only then calls the [REST samples](Sample_VoiceAgent_Live_Conversations.md).
+transport finalization, waits up to 30 seconds for persistence to reach `completed`, and only
+then calls the [REST samples](Sample_VoiceAgent_Live_Conversations.md). The wait observes caller
+cancellation and fails immediately if persistence reports `failed`.
 It uses `SessionStarted.ConversationId`, **not** the native `SessionStarted.Session.Id`.
 The REST sample downloads item audio and the merged recording before deleting this sample's
 conversation. The temporary agent is deleted in `finally`, including on a REST failure.
@@ -630,6 +632,7 @@ public static async Task StoredConversationAsync(string projectEndpoint, string 
             }
         }
         BetaVoiceAgentsLiveConversations history = project.AgentAdministrationClient.GetBetaVoiceAgentEndpointLiveConversations();
+        await WaitForPersistenceAsync(history, agentName, conversationId, cancellationToken);
         Console.WriteLine($"History shares agent pipeline: {ReferenceEquals(history.Pipeline, project.AgentAdministrationClient.Pipeline)}");
         Console.WriteLine($"Reading stored Live conversation {conversationId} using the {(protocol ? "protocol" : "typed")} {(synchronous ? "sync" : "async")} APIs.");
         if (synchronous)
@@ -659,6 +662,39 @@ public static async Task StoredConversationAsync(string projectEndpoint, string 
     finally
     {
         await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+    }
+}
+```
+
+The persistence check is bounded and caller-cancellable; it does not treat transport
+closure as completed storage finalization:
+
+```C# Snippet:Sample_VoiceAgent_Live_Persistence
+internal static async Task WaitForPersistenceAsync(
+    BetaVoiceAgentsLiveConversations history, string agentName, string conversationId, CancellationToken cancellationToken)
+{
+    cancellationToken.ThrowIfCancellationRequested();
+    using CancellationTokenSource finalization = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+    finalization.CancelAfter(TimeSpan.FromSeconds(30));
+    while (true)
+    {
+        ClientResult<VoiceAgentLiveConversation> result = await history.GetLiveAgentConversationAsync(
+            agentName, conversationId, finalization.Token);
+        VoiceAgentLiveConversation conversation = result.Value;
+        Console.WriteLine($"GET persistence status: HTTP {result.GetRawResponse().Status}; {conversation.Status}");
+        if (conversation.Id != conversationId)
+        {
+            throw new InvalidOperationException("The persisted Live conversation id does not match the stored session.");
+        }
+        if (conversation.Status == VoiceConversationStatus.Completed)
+        {
+            return;
+        }
+        if (conversation.Status != VoiceConversationStatus.InProgress)
+        {
+            throw new InvalidOperationException($"Stored Live conversation persistence finalization failed with status '{conversation.Status}'.");
+        }
+        await Task.Delay(TimeSpan.FromMilliseconds(500), finalization.Token);
     }
 }
 ```
