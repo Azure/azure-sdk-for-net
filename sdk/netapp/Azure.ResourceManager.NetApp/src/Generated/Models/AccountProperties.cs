@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _disableShowmount;
-        internal bool _disableShowmountIsDefined;
+        private bool _disableShowmountIsDefined;
         private string _nfsV4IdDomain;
-        internal bool _nfsV4IdDomainIsDefined;
+        private bool _nfsV4IdDomainIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccountProperties"/>. </summary>
         public AccountProperties()

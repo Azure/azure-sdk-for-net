@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An object representing collection of DataProtectionDeletedBackupVaults and their operations over a DataProtectionDeletedBackupVaultResource. </returns>
         public virtual DataProtectionDeletedBackupVaultCollection GetDataProtectionDeletedBackupVaults(AzureLocation location)
         {
-            return GetCachedClient(client => new DataProtectionDeletedBackupVaultCollection(client, Id, location));
+            return new DataProtectionDeletedBackupVaultCollection(Client, Id, location);
         }
 
         /// <summary>

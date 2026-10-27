@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _targetResourceId;
-        internal bool _targetResourceIdIsDefined;
+        private bool _targetResourceIdIsDefined;
         private DateTimeOffset? _lastComplianceStatusCheckedOn;
-        internal bool _lastComplianceStatusCheckedOnIsDefined;
+        private bool _lastComplianceStatusCheckedOnIsDefined;
         private string _parameterHash;
-        internal bool _parameterHashIsDefined;
+        private bool _parameterHashIsDefined;
         private string _assignmentHash;
-        internal bool _assignmentHashIsDefined;
+        private bool _assignmentHashIsDefined;
         private GuestConfigurationProvisioningState? _provisioningState;
-        internal bool _provisioningStateIsDefined;
+        private bool _provisioningStateIsDefined;
         private string _resourceType;
-        internal bool _resourceTypeIsDefined;
+        private bool _resourceTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
         public GuestConfigurationAssignmentProperties()

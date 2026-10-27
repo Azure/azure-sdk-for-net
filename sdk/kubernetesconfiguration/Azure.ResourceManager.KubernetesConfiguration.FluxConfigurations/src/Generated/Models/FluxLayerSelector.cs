@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _mediaType;
-        internal bool _mediaTypeIsDefined;
+        private bool _mediaTypeIsDefined;
         private FluxConfigurationOperationType? _operation;
-        internal bool _operationIsDefined;
+        private bool _operationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxLayerSelector"/>. </summary>
         public FluxLayerSelector()

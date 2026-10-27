@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,28 @@ namespace Azure.Storage.Blobs.Test
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
 
             Assert.AreEqual(expectedUri, actualUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.blob.core.windows.net/container/blob" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=b&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var blobUriBuilder = new BlobUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = blobUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
         }
 
         [RecordedTest]

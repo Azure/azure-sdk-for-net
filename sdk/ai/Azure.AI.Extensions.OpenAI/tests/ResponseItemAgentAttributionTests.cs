@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -34,6 +36,7 @@ public class ResponseItemAgentAttributionTests
         yield return Case(ResponseItemKind.BingGroundingCallOutput, typeof(BingGroundingToolCallOutput));
         yield return Case(ResponseItemKind.AzureAISearchCall, typeof(AzureAISearchToolCall));
         yield return Case(ResponseItemKind.A2APreviewCall, typeof(A2AToolCall));
+        yield return Case(ResponseItemKind.A2APreviewCallOutput, typeof(A2AToolCallOutput));
         yield return Case(ResponseItemKind.StructuredOutputs, typeof(AgentStructuredOutputsResponseItem));
 
         static TestCaseData Case(ResponseItemKind discriminator, Type expectedType)
@@ -82,6 +85,16 @@ public class ResponseItemAgentAttributionTests
             AzureAIExtensionsOpenAIContext.Default);
 
         BinaryData rewritten = ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
+
+        using JsonDocument document = JsonDocument.Parse(rewritten);
+        JsonProperty[] properties = document.RootElement.EnumerateObject().ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(properties.Count(property => property.NameEquals("agent_reference")), Is.EqualTo(1),
+                "agent_reference must be serialized exactly once.");
+            Assert.That(properties.Count(property => property.NameEquals("response_id")), Is.EqualTo(1),
+                "response_id must be serialized exactly once.");
+        });
 
         ResponseItem roundTripped = ModelReaderWriter.Read<ResponseItem>(
             rewritten,

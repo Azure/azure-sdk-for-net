@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
-            if (_acceptedTermsIsDefined || Optional.IsDefined(AcceptedTerms))
+            if (Optional.IsDefined(AcceptedTerms, _acceptedTermsIsDefined))
             {
                 if (AcceptedTerms != null)
                 {

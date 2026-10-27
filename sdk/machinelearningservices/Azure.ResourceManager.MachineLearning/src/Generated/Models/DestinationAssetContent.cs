@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _destinationName;
-        internal bool _destinationNameIsDefined;
+        private bool _destinationNameIsDefined;
         private string _destinationVersion;
-        internal bool _destinationVersionIsDefined;
+        private bool _destinationVersionIsDefined;
         private string _registryName;
-        internal bool _registryNameIsDefined;
+        private bool _registryNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DestinationAssetContent"/>. </summary>
         public DestinationAssetContent()

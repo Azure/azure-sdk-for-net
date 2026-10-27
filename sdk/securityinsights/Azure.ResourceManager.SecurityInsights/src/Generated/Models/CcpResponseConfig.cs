@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _successStatusValue;
-        internal bool _successStatusValueIsDefined;
+        private bool _successStatusValueIsDefined;
         private bool? _hasCsvBoundary;
-        internal bool _hasCsvBoundaryIsDefined;
+        private bool _hasCsvBoundaryIsDefined;
         private bool? _hasCsvHeader;
-        internal bool _hasCsvHeaderIsDefined;
+        private bool _hasCsvHeaderIsDefined;
         private bool? _isConvertChildPropertiesToArray;
-        internal bool _isConvertChildPropertiesToArrayIsDefined;
+        private bool _isConvertChildPropertiesToArrayIsDefined;
         private string _csvEscape;
-        internal bool _csvEscapeIsDefined;
+        private bool _csvEscapeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CcpResponseConfig"/>. </summary>
         /// <param name="eventsJsonPaths"> The json paths, '$' char is the json root. </param>

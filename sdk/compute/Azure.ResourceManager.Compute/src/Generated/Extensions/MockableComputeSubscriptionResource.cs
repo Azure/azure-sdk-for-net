@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> An object representing collection of VirtualMachineExtensionImages and their operations over a VirtualMachineExtensionImageResource. </returns>
         public virtual VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(AzureLocation location, string publisherName)
         {
-            return GetCachedClient(client => new VirtualMachineExtensionImageCollection(client, Id, location, publisherName));
+            return new VirtualMachineExtensionImageCollection(Client, Id, location, publisherName);
         }
 
         /// <summary>

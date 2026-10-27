@@ -204,7 +204,6 @@
             "$id": "16",
             "name": "test",
             "isExactName": false,
-            "resourceName": "MadeOptional",
             "accessibility": "public",
             "parameters": [
               {

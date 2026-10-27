@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,13 +11,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 {
     public partial class ExadbVmClusterProperties
     {
+        /// <summary> The FQDN of the DNS record for the SCAN IP addresses associated with the VM cluster. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("ScanDnsNameV2")]
+        public string ScanDnsName { get; }
+
+        /// <summary> The hostname for the Exadata VM cluster on Exascale Infrastructure in earlier API versions. </summary>
+        // Retain the legacy property for compatibility without replacing or aliasing HostnameV2.
+        public string Hostname { get => HostnameV2; set => HostnameV2 = value; }
+
         /// <summary> Initializes a new instance of <see cref="ExadbVmClusterProperties"/>. </summary>
         /// <param name="vnetId"> VNET for network connectivity. </param>
         /// <param name="subnetId"> Client subnet. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="enabledEcpuCount"> The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="exascaleDBStorageVaultId"> The Azure Resource ID of the Exadata Database Storage Vault. </param>
-        /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="hostname"> The hostname for the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="shape"> The shape of the Exadata VM cluster on Exascale Infrastructure resource. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure. </param>

@@ -69,7 +69,6 @@
             "$id": "6",
             "name": "queryApiVersion",
             "isExactName": false,
-            "resourceName": "Query",
             "doc": "Query api version parameter.",
             "accessibility": "public",
             "parameters": [

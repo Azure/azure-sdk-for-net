@@ -125,9 +125,31 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
             ForEach-Object { "$_" }
 
-        [Array]::IndexOf($messages, "API Review Hub") | Should BeLessThan ([Array]::IndexOf($messages, "APIView"))
-        [Array]::IndexOf($messages, "APIView") | Should BeLessThan ([Array]::IndexOf($messages, "Overall"))
-        ($messages -join [Environment]::NewLine) | Should Match "Overall\r?\n  Status: APPROVED\r?\n  Source: APIView\r?\n  Reason: approved"
+        foreach ($heading in @("Approval Results", "API Review Hub", "APIView", "Overall")) {
+            @($messages | Where-Object { $_ -eq "$heading (azure-test 1.0.0)" }).Count | Should Be 1
+        }
+        [Array]::IndexOf($messages, "API Review Hub (azure-test 1.0.0)") | Should BeLessThan ([Array]::IndexOf($messages, "APIView (azure-test 1.0.0)"))
+        [Array]::IndexOf($messages, "APIView (azure-test 1.0.0)") | Should BeLessThan ([Array]::IndexOf($messages, "Overall (azure-test 1.0.0)"))
+        ($messages -join [Environment]::NewLine) | Should Match "Overall \(azure-test 1\.0\.0\)\r?\n  Status: APPROVED\r?\n  Source: APIView\r?\n  Reason: approved"
+    }
+
+    It "includes each package name and version in all summary headings when checking multiple packages" {
+        $secondPackageInfoPath = Join-Path $TestDrive "azure-other.json"
+        @{
+            Name = "azure-other"
+            Version = "2.0.0b1"
+        } | ConvertTo-Json | Set-Content $secondPackageInfoPath
+        $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":true,"finalSource":"APIView","reason":"approved","reviewHub":{"isApproved":false,"reason":"repositoryNotSupported","statusCode":200},"apiView":{"isApproved":true,"reason":"approved","statusCode":200}}}'
+
+        $messages = @(& $scriptPath -PackageInfoFiles @($packageInfoPath, $secondPackageInfoPath) 6>&1) |
+            ForEach-Object { "$_" }
+
+        foreach ($package in @("azure-test 1.0.0", "azure-other 2.0.0b1")) {
+            foreach ($heading in @("Approval Results", "API Review Hub", "APIView", "Overall")) {
+                @($messages | Where-Object { $_ -eq "$heading ($package)" }).Count | Should Be 1
+            }
+        }
+        $global:CapturedAzSdkInvocations.Count | Should Be 2
     }
 
     It "includes raw output when azsdk returns malformed output" {

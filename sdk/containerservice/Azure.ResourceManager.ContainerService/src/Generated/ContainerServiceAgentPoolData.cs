@@ -815,6 +815,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> GPU settings for the Agent Pool. </summary>
+        [WirePath("properties.gpuProfile")]
+        public AgentPoolGpuProfile GpuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GpuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.GpuProfile = value;
+            }
+        }
+
         /// <summary> The status of nodes in a VirtualMachines agent pool. </summary>
         [WirePath("properties.virtualMachineNodesStatus")]
         public IList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAzureDataLakeGen1Datastore : MachineLearningDatastoreProperties
     {
         private string _resourceGroup;
-        internal bool _resourceGroupIsDefined;
+        private bool _resourceGroupIsDefined;
         private string _subscriptionId;
-        internal bool _subscriptionIdIsDefined;
+        private bool _subscriptionIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

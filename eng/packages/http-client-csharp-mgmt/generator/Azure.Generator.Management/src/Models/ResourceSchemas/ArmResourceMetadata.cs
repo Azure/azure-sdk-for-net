@@ -35,6 +35,8 @@ public record ArmResourceMetadata(
     IReadOnlyList<string> ApiVersions,
     IReadOnlyList<ArmResourceRbacRole> RbacRoles)
 {
+    internal bool ResourceNameIsExplicit { get; init; }
+
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<RequestPathPattern> childResourceIds)
     {
@@ -118,6 +120,9 @@ public record ArmResourceMetadata(
             childResourceIds,
             nameConstraints,
             apiVersions,
-            rbacRoles);
+            rbacRoles)
+        {
+            ResourceNameIsExplicit = element.TryGetProperty("resourceNameIsExplicit", out var explicitNameElement) && explicitNameElement.GetBoolean()
+        };
     }
 }

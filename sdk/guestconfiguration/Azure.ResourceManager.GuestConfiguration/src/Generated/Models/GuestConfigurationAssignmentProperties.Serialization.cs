@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && (_targetResourceIdIsDefined || Optional.IsDefined(TargetResourceId)))
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId, _targetResourceIdIsDefined))
             {
                 if (TargetResourceId != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && (_lastComplianceStatusCheckedOnIsDefined || Optional.IsDefined(LastComplianceStatusCheckedOn)))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusCheckedOn, _lastComplianceStatusCheckedOnIsDefined))
             {
                 if (LastComplianceStatusCheckedOn != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("latestReportId"u8);
                 writer.WriteStringValue(LatestReportId);
             }
-            if (options.Format != "W" && (_parameterHashIsDefined || Optional.IsDefined(ParameterHash)))
+            if (options.Format != "W" && Optional.IsDefined(ParameterHash, _parameterHashIsDefined))
             {
                 if (ParameterHash != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (options.Format != "W" && (_assignmentHashIsDefined || Optional.IsDefined(AssignmentHash)))
+            if (options.Format != "W" && Optional.IsDefined(AssignmentHash, _assignmentHashIsDefined))
             {
                 if (AssignmentHash != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentHash"u8);
                 }
             }
-            if (options.Format != "W" && (_provisioningStateIsDefined || Optional.IsDefined(ProvisioningState)))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState, _provisioningStateIsDefined))
             {
                 if (ProvisioningState != null)
                 {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("provisioningState"u8);
                 }
             }
-            if (options.Format != "W" && (_resourceTypeIsDefined || Optional.IsDefined(ResourceType)))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType, _resourceTypeIsDefined))
             {
                 if (ResourceType != null)
                 {

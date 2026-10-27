@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Discovery rule specification for an Azure Resource Graph query. </summary>
-    public partial class ResourceGraphQuerySpecification : DiscoveryRuleSpecification, IJsonModel<ResourceGraphQuerySpecification>
+    public partial class ResourceGraphQuerySpecification : HealthModelDiscoveryRuleSpecification, IJsonModel<ResourceGraphQuerySpecification>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceGraphQuerySpecification"/> for deserialization. </summary>
         internal ResourceGraphQuerySpecification()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DiscoveryRuleSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HealthModelDiscoveryRuleSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResourceGraphQuerySpecification>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DiscoveryRuleSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HealthModelDiscoveryRuleSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResourceGraphQuerySpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

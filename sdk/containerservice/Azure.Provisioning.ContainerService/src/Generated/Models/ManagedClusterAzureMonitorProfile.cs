@@ -10,9 +10,11 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
-    internal partial class ManagedClusterAzureMonitorProfile : ProvisionableConstruct
+    public partial class ManagedClusterAzureMonitorProfile : ProvisionableConstruct
     {
         private ManagedClusterMonitorProfileMetrics _metrics;
+        private ManagedClusterAzureMonitorProfileContainerInsights _containerInsights;
+        private ManagedClusterAzureMonitorProfileAppMonitoring _appMonitoring;
 
         /// <summary> Creates a new ManagedClusterAzureMonitorProfile. </summary>
         public ManagedClusterAzureMonitorProfile()
@@ -34,11 +36,43 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ContainerInsights. </summary>
+        public ManagedClusterAzureMonitorProfileContainerInsights ContainerInsights
+        {
+            get
+            {
+                Initialize();
+                return _containerInsights;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _containerInsights, value);
+            }
+        }
+
+        /// <summary> Gets or sets the AppMonitoring. </summary>
+        public ManagedClusterAzureMonitorProfileAppMonitoring AppMonitoring
+        {
+            get
+            {
+                Initialize();
+                return _appMonitoring;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _appMonitoring, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedClusterAzureMonitorProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _metrics = DefineModelProperty<ManagedClusterMonitorProfileMetrics>(nameof(Metrics), new string[] { "metrics" });
+            _containerInsights = DefineModelProperty<ManagedClusterAzureMonitorProfileContainerInsights>(nameof(ContainerInsights), new string[] { "containerInsights" });
+            _appMonitoring = DefineModelProperty<ManagedClusterAzureMonitorProfileAppMonitoring>(nameof(AppMonitoring), new string[] { "appMonitoring" });
             DefineAdditionalProperties();
         }
 

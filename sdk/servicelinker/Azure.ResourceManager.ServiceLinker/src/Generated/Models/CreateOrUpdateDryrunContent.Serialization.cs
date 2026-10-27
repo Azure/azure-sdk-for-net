@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (_vNetSolutionIsDefined || Optional.IsDefined(VNetSolution))
+            if (Optional.IsDefined(VNetSolution, _vNetSolutionIsDefined))
             {
                 if (VNetSolution != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("vNetSolution"u8);
                 }
             }
-            if (_secretStoreIsDefined || Optional.IsDefined(SecretStore))
+            if (Optional.IsDefined(SecretStore, _secretStoreIsDefined))
             {
                 if (SecretStore != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("secretStore"u8);
                 }
             }
-            if (_scopeIsDefined || Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope, _scopeIsDefined))
             {
                 if (Scope != null)
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("scope"u8);
                 }
             }
-            if (_publicNetworkSolutionIsDefined || Optional.IsDefined(PublicNetworkSolution))
+            if (Optional.IsDefined(PublicNetworkSolution, _publicNetworkSolutionIsDefined))
             {
                 if (PublicNetworkSolution != null)
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("publicNetworkSolution"u8);
                 }
             }
-            if (_configurationInfoIsDefined || Optional.IsDefined(ConfigurationInfo))
+            if (Optional.IsDefined(ConfigurationInfo, _configurationInfoIsDefined))
             {
                 if (ConfigurationInfo != null)
                 {

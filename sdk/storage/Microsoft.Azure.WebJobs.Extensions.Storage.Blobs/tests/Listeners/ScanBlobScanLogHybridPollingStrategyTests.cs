@@ -464,6 +464,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         }
 
         [Test]
+        [Ignore("Wall-clock-dependent continuation polling misses a deferred blob, see: https://github.com/Azure/azure-sdk-for-net/issues/63781")]
         public async Task ExecuteAsync_PollNewBlobsAsync_ContinuationTokenUpdatedBlobs()
         {
             // Arrange

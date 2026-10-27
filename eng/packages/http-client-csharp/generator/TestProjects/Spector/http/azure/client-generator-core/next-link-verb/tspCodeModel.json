@@ -168,7 +168,6 @@
             "$id": "13",
             "name": "listItems",
             "isExactName": false,
-            "resourceName": "NextLinkVerb",
             "accessibility": "public",
             "parameters": [
               {

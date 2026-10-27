@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support writing '{format}' format.");
             }
-            if (_propertiesIsDefined || Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties, _propertiesIsDefined))
             {
                 if (Properties != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (_statusIsDefined || Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status, _statusIsDefined))
             {
                 if (Status != null)
                 {

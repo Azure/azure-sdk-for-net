@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningSasDatastoreSecrets)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_sasTokenIsDefined || Optional.IsDefined(SasToken))
+            if (Optional.IsDefined(SasToken, _sasTokenIsDefined))
             {
                 if (SasToken != null)
                 {

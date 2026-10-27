@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (options.Format != "W" && (_revisionIsDefined || Optional.IsDefined(Revision)))
+            if (options.Format != "W" && Optional.IsDefined(Revision, _revisionIsDefined))
             {
                 if (Revision != null)
                 {
