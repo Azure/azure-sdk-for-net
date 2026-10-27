@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IgnoreMissingVnetServiceEndpoint. </summary>
+        /// <summary> Gets the IgnoreMissingVnetServiceEndpoint. </summary>
         public BicepValue<bool> IgnoreMissingVnetServiceEndpoint
         {
             get
             {
                 Initialize();
                 return _ignoreMissingVnetServiceEndpoint;
-            }
-            set
-            {
-                Initialize();
-                _ignoreMissingVnetServiceEndpoint.Assign(value);
             }
         }
 

@@ -33,7 +33,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new CosmosDBAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2026-03-15")
+        internal CosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -80,14 +80,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -95,14 +90,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _location;
             }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal CosmosDBAccountProperties Properties
         {
             get
@@ -110,14 +100,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the Identity. </summary>
+        /// <summary> Gets the Identity. </summary>
         public ManagedServiceIdentity Identity
         {
             get
@@ -125,25 +110,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _identity;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _identity, value);
-            }
         }
 
-        /// <summary> Gets or sets the Kind. </summary>
+        /// <summary> Gets the Kind. </summary>
         public BicepValue<CosmosDBAccountKind> Kind
         {
             get
             {
                 Initialize();
                 return _kind;
-            }
-            set
-            {
-                Initialize();
-                _kind.Assign(value);
             }
         }
 
@@ -155,14 +130,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 return Properties is null ? default : Properties.DatabaseAccountOfferType;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DatabaseAccountOfferType = value;
-            }
         }
 
         /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
@@ -172,14 +139,6 @@ namespace Azure.Provisioning.CosmosDB
             get
             {
                 return Properties is null ? default : Properties.Locations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.Locations = value;
             }
         }
 
@@ -198,11 +157,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -211,96 +166,52 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.DocumentEndpoint;
+                return Properties is null ? default : Properties.DocumentEndpoint;
             }
         }
 
-        /// <summary> Gets or sets the IPRules. </summary>
+        /// <summary> Gets the IPRules. </summary>
         public BicepList<CosmosDBIPAddressOrRange> IPRules
         {
             get
             {
                 return Properties is null ? default : Properties.IPRules;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IPRules = value;
-            }
         }
 
-        /// <summary> Gets or sets the IsVirtualNetworkFilterEnabled. </summary>
+        /// <summary> Gets the IsVirtualNetworkFilterEnabled. </summary>
         public BicepValue<bool> IsVirtualNetworkFilterEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsVirtualNetworkFilterEnabled;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IsVirtualNetworkFilterEnabled = value;
-            }
         }
 
-        /// <summary> Gets or sets the EnableAutomaticFailover. </summary>
+        /// <summary> Gets the EnableAutomaticFailover. </summary>
         public BicepValue<bool> EnableAutomaticFailover
         {
             get
             {
                 return Properties is null ? default : Properties.EnableAutomaticFailover;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableAutomaticFailover = value;
-            }
         }
 
-        /// <summary> Gets or sets the ConsistencyPolicy. </summary>
+        /// <summary> Gets the ConsistencyPolicy. </summary>
         public ConsistencyPolicy ConsistencyPolicy
         {
             get
             {
                 return Properties is null ? default : Properties.ConsistencyPolicy;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.ConsistencyPolicy = value;
-            }
         }
 
-        /// <summary> Gets or sets the Capabilities. </summary>
+        /// <summary> Gets the Capabilities. </summary>
         public BicepList<CosmosDBAccountCapability> Capabilities
         {
             get
             {
                 return Properties is null ? default : Properties.Capabilities;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.Capabilities = value;
             }
         }
 
@@ -309,11 +220,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.WriteLocations;
+                return Properties is null ? default : Properties.WriteLocations;
             }
         }
 
@@ -322,11 +229,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.ReadLocations;
+                return Properties is null ? default : Properties.ReadLocations;
             }
         }
 
@@ -335,181 +238,97 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.FailoverPolicies;
+                return Properties is null ? default : Properties.FailoverPolicies;
             }
         }
 
-        /// <summary> Gets or sets the VirtualNetworkRules. </summary>
+        /// <summary> Gets the VirtualNetworkRules. </summary>
         public BicepList<CosmosDBVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {
                 return Properties is null ? default : Properties.VirtualNetworkRules;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.VirtualNetworkRules = value;
-            }
         }
 
-        /// <summary> Gets or sets the EnableMultipleWriteLocations. </summary>
+        /// <summary> Gets the EnableMultipleWriteLocations. </summary>
         public BicepValue<bool> EnableMultipleWriteLocations
         {
             get
             {
                 return Properties is null ? default : Properties.EnableMultipleWriteLocations;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableMultipleWriteLocations = value;
-            }
         }
 
-        /// <summary> Gets or sets the EnableCassandraConnector. </summary>
+        /// <summary> Gets the EnableCassandraConnector. </summary>
         public BicepValue<bool> EnableCassandraConnector
         {
             get
             {
                 return Properties is null ? default : Properties.EnableCassandraConnector;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableCassandraConnector = value;
-            }
         }
 
-        /// <summary> Gets or sets the ConnectorOffer. </summary>
+        /// <summary> Gets the ConnectorOffer. </summary>
         public BicepValue<ConnectorOffer> ConnectorOffer
         {
             get
             {
                 return Properties is null ? default : Properties.ConnectorOffer;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.ConnectorOffer = value;
-            }
         }
 
-        /// <summary> Gets or sets the DisableKeyBasedMetadataWriteAccess. </summary>
+        /// <summary> Gets the DisableKeyBasedMetadataWriteAccess. </summary>
         public BicepValue<bool> DisableKeyBasedMetadataWriteAccess
         {
             get
             {
                 return Properties is null ? default : Properties.DisableKeyBasedMetadataWriteAccess;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DisableKeyBasedMetadataWriteAccess = value;
-            }
         }
 
-        /// <summary> Gets or sets the KeyVaultKeyUri. </summary>
+        /// <summary> Gets the KeyVaultKeyUri. </summary>
         public BicepValue<Uri> KeyVaultKeyUri
         {
             get
             {
                 return Properties is null ? default : Properties.KeyVaultKeyUri;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.KeyVaultKeyUri = value;
-            }
         }
 
-        /// <summary> Gets or sets the DefaultIdentity. </summary>
+        /// <summary> Gets the DefaultIdentity. </summary>
         public BicepValue<string> DefaultIdentity
         {
             get
             {
                 return Properties is null ? default : Properties.DefaultIdentity;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DefaultIdentity = value;
-            }
         }
 
-        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        /// <summary> Gets the PublicNetworkAccess. </summary>
         public BicepValue<CosmosDBPublicNetworkAccess> PublicNetworkAccess
         {
             get
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.PublicNetworkAccess = value;
-            }
         }
 
-        /// <summary> Gets or sets the IsFreeTierEnabled. </summary>
+        /// <summary> Gets the IsFreeTierEnabled. </summary>
         public BicepValue<bool> IsFreeTierEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsFreeTierEnabled;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IsFreeTierEnabled = value;
-            }
         }
 
-        /// <summary> Gets or sets the IsAnalyticalStorageEnabled. </summary>
+        /// <summary> Gets the IsAnalyticalStorageEnabled. </summary>
         public BicepValue<bool> IsAnalyticalStorageEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsAnalyticalStorageEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IsAnalyticalStorageEnabled = value;
             }
         }
 
@@ -518,130 +337,70 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.InstanceId;
+                return Properties is null ? default : Properties.InstanceId;
             }
         }
 
-        /// <summary> Gets or sets the CreateMode. </summary>
+        /// <summary> Gets the CreateMode. </summary>
         public BicepValue<CosmosDBAccountCreateMode> CreateMode
         {
             get
             {
                 return Properties is null ? default : Properties.CreateMode;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.CreateMode = value;
-            }
         }
 
-        /// <summary> Gets or sets the RestoreParameters. </summary>
+        /// <summary> Gets the RestoreParameters. </summary>
         public CosmosDBAccountRestoreParameters RestoreParameters
         {
             get
             {
                 return Properties is null ? default : Properties.RestoreParameters;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.RestoreParameters = value;
-            }
         }
 
-        /// <summary> Gets or sets the BackupPolicy. </summary>
+        /// <summary> Gets the BackupPolicy. </summary>
         public CosmosDBAccountBackupPolicy BackupPolicy
         {
             get
             {
                 return Properties is null ? default : Properties.BackupPolicy;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.BackupPolicy = value;
-            }
         }
 
-        /// <summary> Gets or sets the Cors. </summary>
+        /// <summary> Gets the Cors. </summary>
         public BicepList<CosmosDBAccountCorsPolicy> Cors
         {
             get
             {
                 return Properties is null ? default : Properties.Cors;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.Cors = value;
-            }
         }
 
-        /// <summary> Gets or sets the NetworkAclBypass. </summary>
+        /// <summary> Gets the NetworkAclBypass. </summary>
         public BicepValue<NetworkAclBypass> NetworkAclBypass
         {
             get
             {
                 return Properties is null ? default : Properties.NetworkAclBypass;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.NetworkAclBypass = value;
-            }
         }
 
-        /// <summary> Gets or sets the NetworkAclBypassResourceIds. </summary>
+        /// <summary> Gets the NetworkAclBypassResourceIds. </summary>
         public BicepList<ResourceIdentifier> NetworkAclBypassResourceIds
         {
             get
             {
                 return Properties is null ? default : Properties.NetworkAclBypassResourceIds;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.NetworkAclBypassResourceIds = value;
-            }
         }
 
-        /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        /// <summary> Gets the DisableLocalAuth. </summary>
         public BicepValue<bool> DisableLocalAuth
         {
             get
             {
                 return Properties is null ? default : Properties.DisableLocalAuth;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DisableLocalAuth = value;
             }
         }
 
@@ -654,71 +413,39 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the EnablePartitionMerge. </summary>
+        /// <summary> Gets the EnablePartitionMerge. </summary>
         public BicepValue<bool> EnablePartitionMerge
         {
             get
             {
                 return Properties is null ? default : Properties.EnablePartitionMerge;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnablePartitionMerge = value;
-            }
         }
 
-        /// <summary> Gets or sets the EnableBurstCapacity. </summary>
+        /// <summary> Gets the EnableBurstCapacity. </summary>
         public BicepValue<bool> EnableBurstCapacity
         {
             get
             {
                 return Properties is null ? default : Properties.EnableBurstCapacity;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableBurstCapacity = value;
-            }
         }
 
-        /// <summary> Gets or sets the MinimalTlsVersion. </summary>
+        /// <summary> Gets the MinimalTlsVersion. </summary>
         public BicepValue<CosmosDBMinimalTlsVersion> MinimalTlsVersion
         {
             get
             {
                 return Properties is null ? default : Properties.MinimalTlsVersion;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.MinimalTlsVersion = value;
-            }
         }
 
-        /// <summary> Gets or sets the CustomerManagedKeyStatus. </summary>
+        /// <summary> Gets the CustomerManagedKeyStatus. </summary>
         public BicepValue<string> CustomerManagedKeyStatus
         {
             get
             {
                 return Properties is null ? default : Properties.CustomerManagedKeyStatus;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.CustomerManagedKeyStatus = value;
             }
         }
 
@@ -727,130 +454,70 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.KeyVaultKeyUriVersion;
+                return Properties is null ? default : Properties.KeyVaultKeyUriVersion;
             }
         }
 
-        /// <summary> Gets or sets the EnablePriorityBasedExecution. </summary>
+        /// <summary> Gets the EnablePriorityBasedExecution. </summary>
         public BicepValue<bool> EnablePriorityBasedExecution
         {
             get
             {
                 return Properties is null ? default : Properties.EnablePriorityBasedExecution;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnablePriorityBasedExecution = value;
-            }
         }
 
-        /// <summary> Gets or sets the DefaultPriorityLevel. </summary>
+        /// <summary> Gets the DefaultPriorityLevel. </summary>
         public BicepValue<DefaultPriorityLevel> DefaultPriorityLevel
         {
             get
             {
                 return Properties is null ? default : Properties.DefaultPriorityLevel;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DefaultPriorityLevel = value;
-            }
         }
 
-        /// <summary> Gets or sets the EnablePerRegionPerPartitionAutoscale. </summary>
+        /// <summary> Gets the EnablePerRegionPerPartitionAutoscale. </summary>
         public BicepValue<bool> EnablePerRegionPerPartitionAutoscale
         {
             get
             {
                 return Properties is null ? default : Properties.EnablePerRegionPerPartitionAutoscale;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnablePerRegionPerPartitionAutoscale = value;
-            }
         }
 
-        /// <summary> Gets or sets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
+        /// <summary> Gets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
         public BicepValue<bool> IsHierarchicalPartitionKeyIdLastLevelEnforced
         {
             get
             {
                 return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
-            }
         }
 
-        /// <summary> Gets or sets the ServerVersion. </summary>
+        /// <summary> Gets the ServerVersion. </summary>
         public BicepValue<CosmosDBServerVersion> ApiServerVersion
         {
             get
             {
                 return Properties is null ? default : Properties.ApiServerVersion;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.ApiServerVersion = value;
-            }
         }
 
-        /// <summary> Gets or sets the SchemaType. </summary>
+        /// <summary> Gets the SchemaType. </summary>
         public BicepValue<AnalyticalStorageSchemaType> AnalyticalStorageSchemaType
         {
             get
             {
                 return Properties is null ? default : Properties.AnalyticalStorageSchemaType;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.AnalyticalStorageSchemaType = value;
-            }
         }
 
-        /// <summary> Gets or sets the TotalThroughputLimit. </summary>
+        /// <summary> Gets the TotalThroughputLimit. </summary>
         public BicepValue<int> CapacityTotalThroughputLimit
         {
             get
             {
                 return Properties is null ? default : Properties.CapacityTotalThroughputLimit;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.CapacityTotalThroughputLimit = value;
             }
         }
 
@@ -862,7 +529,7 @@ namespace Azure.Provisioning.CosmosDB
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<CosmosDBAccountProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<CosmosDBAccountKind>(nameof(Kind), new string[] { "kind" });

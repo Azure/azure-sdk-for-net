@@ -21,7 +21,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SecuritySubAssessmentProperties _properties;
-        private ResourceReference<SecurityAssessment> _parent;
+        private ResourceReference<SecurityAssessmentResponsesScopeParameterSecurityAssessment> _parent;
 
         /// <summary> Creates a new SecuritySubAssessment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -76,7 +76,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public SecurityAssessment Parent
+        public SecurityAssessmentResponsesScopeParameterSecurityAssessment Parent
         {
             get
             {
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SecuritySubAssessmentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SecurityAssessment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SecurityAssessmentResponsesScopeParameterSecurityAssessment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

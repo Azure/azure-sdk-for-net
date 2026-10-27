@@ -2077,24 +2077,6 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class MachineLearningFeature : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal MachineLearningFeature() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningFeatureSetVersion Parent { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningFeatureProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.MachineLearning.MachineLearningFeature FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_12_01;
-            public static readonly string V2026_03_01;
-            public static readonly string V2026_05_01;
-        }
-    }
     public enum MachineLearningFeatureLag
     {
         None = 0,
@@ -2964,41 +2946,6 @@ namespace Azure.Provisioning.MachineLearning
             public static readonly string V2026_05_01;
         }
     }
-    public partial class MachineLearningRegistryComponentContainer : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public MachineLearningRegistryComponentContainer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningRegistry Parent { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningComponentContainerProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.MachineLearning.MachineLearningRegistryComponentContainer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_12_01;
-            public static readonly string V2026_03_01;
-            public static readonly string V2026_05_01;
-        }
-    }
-    public partial class MachineLearningRegistryComponentVersion : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public MachineLearningRegistryComponentVersion(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningRegistryComponentContainer Parent { get { throw null; } set { } }
-        public Azure.Provisioning.MachineLearning.MachineLearningComponentVersionProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.MachineLearning.MachineLearningRegistryComponentVersion FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_12_01;
-            public static readonly string V2026_03_01;
-            public static readonly string V2026_05_01;
-        }
-    }
     public partial class MachineLearningRegistryDataContainer : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MachineLearningRegistryDataContainer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -3682,6 +3629,41 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<string> SecurityToken { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MachineLearninRegistryComponentContainer : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public MachineLearninRegistryComponentContainer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningRegistry Parent { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningComponentContainerProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.MachineLearning.MachineLearninRegistryComponentContainer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_12_01;
+            public static readonly string V2026_03_01;
+            public static readonly string V2026_05_01;
+        }
+    }
+    public partial class MachineLearninRegistryComponentVersion : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public MachineLearninRegistryComponentVersion(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearninRegistryComponentContainer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningComponentVersionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.MachineLearning.MachineLearninRegistryComponentVersion FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_12_01;
+            public static readonly string V2026_03_01;
+            public static readonly string V2026_05_01;
+        }
     }
     public partial class ManagedComputeIdentity : Azure.Provisioning.MachineLearning.MonitorComputeIdentityBase
     {
@@ -4375,6 +4357,24 @@ namespace Azure.Provisioning.MachineLearning
         Coco = 1,
         Voc = 2,
         CocoVoc = 3,
+    }
+    public partial class VersionsFeatures : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal VersionsFeatures() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningFeatureSetVersion Parent { get { throw null; } set { } }
+        public Azure.Provisioning.MachineLearning.MachineLearningFeatureProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.MachineLearning.VersionsFeatures FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_12_01;
+            public static readonly string V2026_03_01;
+            public static readonly string V2026_05_01;
+        }
     }
     public partial class VolumeDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

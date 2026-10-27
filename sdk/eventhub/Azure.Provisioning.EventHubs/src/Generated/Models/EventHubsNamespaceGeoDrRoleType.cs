@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.EventHubs
 {
     /// <summary> GeoDR Role Types. </summary>
-    internal enum EventHubsNamespaceGeoDrRoleType
+    public enum EventHubsNamespaceGeoDrRoleType
     {
         /// <summary> Primary. </summary>
         Primary = 0,

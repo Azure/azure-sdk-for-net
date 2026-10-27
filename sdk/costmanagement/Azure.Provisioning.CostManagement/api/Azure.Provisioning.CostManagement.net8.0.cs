@@ -181,22 +181,6 @@ namespace Azure.Provisioning.CostManagement
         Dimension = 0,
         Tag = 1,
     }
-    public partial class CostAllocationRule : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public CostAllocationRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.CostAllocationRuleProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.CostManagement.CostAllocationRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_03_01;
-        }
-    }
     public partial class CostAllocationRuleDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CostAllocationRuleDetails() { }
@@ -573,6 +557,22 @@ namespace Azure.Provisioning.CostManagement
         ReservationTransactions = 5,
         ReservationRecommendations = 6,
         ReservationDetails = 7,
+    }
+    public partial class ExternalResourceCostAllocationRule : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ExternalResourceCostAllocationRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CostManagement.CostAllocationRuleProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CostManagement.ExternalResourceCostAllocationRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_03_01;
+        }
     }
     public enum FilterItemNames
     {

@@ -40,6 +40,24 @@ namespace Azure.Provisioning.Maps
     {
         Gen2 = 0,
     }
+    public partial class MapsAccountMapsPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public MapsAccountMapsPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Maps.MapsAccount Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.Maps.MapsPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Maps.MapsPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Maps.MapsAccountMapsPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_01_PREVIEW;
+        }
+    }
     public partial class MapsAccountProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MapsAccountProperties() { }
@@ -48,7 +66,7 @@ namespace Azure.Provisioning.Maps
         public Azure.Provisioning.Maps.MapsEncryption Encryption { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Maps.MapsLinkedResource> LinkedResources { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Maps.MapsLocationItem> Locations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Maps.MapsPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Maps.MapsAccountMapsPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Maps.MapsPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> UniqueId { get { throw null; } }
@@ -122,24 +140,6 @@ namespace Azure.Provisioning.Maps
         public MapsLocationItem() { }
         public Azure.Provisioning.BicepValue<string> LocationName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class MapsPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public MapsPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Maps.MapsAccount Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.Maps.MapsPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Maps.MapsPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Maps.MapsPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_10_01_PREVIEW;
-        }
     }
     public enum MapsPrivateEndpointConnectionProvisioningState
     {

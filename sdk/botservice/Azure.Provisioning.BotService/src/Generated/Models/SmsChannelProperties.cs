@@ -24,7 +24,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the Phone. </summary>
+        /// <summary> Gets the Phone. </summary>
         public BicepValue<string> Phone
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _phone;
             }
-            set
-            {
-                Initialize();
-                _phone.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccountSID. </summary>
+        /// <summary> Gets the AccountSID. </summary>
         public BicepValue<string> AccountSID
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _accountSID;
             }
-            set
-            {
-                Initialize();
-                _accountSID.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AuthToken. </summary>
+        /// <summary> Gets the AuthToken. </summary>
         public BicepValue<string> AuthToken
         {
             get
@@ -62,14 +52,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _authToken;
             }
-            set
-            {
-                Initialize();
-                _authToken.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsValidated. </summary>
+        /// <summary> Gets the IsValidated. </summary>
         public BicepValue<bool> IsValidated
         {
             get
@@ -77,14 +62,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isValidated;
             }
-            set
-            {
-                Initialize();
-                _isValidated.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -92,22 +72,17 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for SmsChannelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _phone = DefineProperty<string>(nameof(Phone), new string[] { "phone" }, isRequired: true);
-            _accountSID = DefineProperty<string>(nameof(AccountSID), new string[] { "accountSID" }, isRequired: true);
+            _phone = DefineProperty<string>(nameof(Phone), new string[] { "phone" });
+            _accountSID = DefineProperty<string>(nameof(AccountSID), new string[] { "accountSID" });
             _authToken = DefineProperty<string>(nameof(AuthToken), new string[] { "authToken" });
             _isValidated = DefineProperty<bool>(nameof(IsValidated), new string[] { "isValidated" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 

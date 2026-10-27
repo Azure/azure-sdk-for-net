@@ -1065,18 +1065,24 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VnetResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class AppServiceVirtualNetworkRoute : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class AppServiceVirtualNetworkRoute : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppServiceVirtualNetworkRoute() { }
+        public AppServiceVirtualNetworkRoute() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AppServiceVirtualNetworkRoute(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> EndAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.AppServicePlanVirtualNetworkConnection Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceVirtualNetworkRouteType> RouteType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartAddress { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.AppServiceVirtualNetworkRoute FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_03_01;
+        }
     }
     public enum AppServiceVirtualNetworkRouteType
     {
@@ -3040,6 +3046,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSiteConfig Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Reference { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } }
@@ -6395,6 +6402,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSiteConfig Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Reference { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } }
@@ -6971,6 +6979,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSiteSlotConfig Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Reference { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } }
@@ -6994,6 +7003,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSiteSlotConfig Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Reference { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } }

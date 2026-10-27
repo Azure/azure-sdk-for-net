@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new StorageTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public StorageTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2026-06-01")
+        internal StorageTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -64,18 +64,13 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the TableProperties. </summary>
+        /// <summary> Gets the TableProperties. </summary>
         internal TableProperties TableProperties
         {
             get
             {
                 Initialize();
                 return _tableProperties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _tableProperties, value);
             }
         }
 
@@ -99,28 +94,16 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                if (TableProperties is null)
-                {
-                    TableProperties = new TableProperties();
-                }
-                return TableProperties.TableName;
+                return TableProperties is null ? default : TableProperties.TableName;
             }
         }
 
-        /// <summary> Gets or sets the SignedIdentifiers. </summary>
+        /// <summary> Gets the SignedIdentifiers. </summary>
         public BicepList<StorageTableSignedIdentifier> SignedIdentifiers
         {
             get
             {
                 return TableProperties is null ? default : TableProperties.SignedIdentifiers;
-            }
-            set
-            {
-                if (TableProperties is null)
-                {
-                    TableProperties = new TableProperties();
-                }
-                TableProperties.SignedIdentifiers = value;
             }
         }
 

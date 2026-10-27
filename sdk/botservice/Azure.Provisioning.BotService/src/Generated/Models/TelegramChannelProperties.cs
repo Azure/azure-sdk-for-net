@@ -22,7 +22,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the AccessToken. </summary>
+        /// <summary> Gets the AccessToken. </summary>
         public BicepValue<string> AccessToken
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _accessToken;
             }
-            set
-            {
-                Initialize();
-                _accessToken.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsValidated. </summary>
+        /// <summary> Gets the IsValidated. </summary>
         public BicepValue<bool> IsValidated
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isValidated;
             }
-            set
-            {
-                Initialize();
-                _isValidated.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
             }
         }
 
@@ -73,7 +58,7 @@ namespace Azure.Provisioning.BotService
             base.DefineProvisionableProperties();
             _accessToken = DefineProperty<string>(nameof(AccessToken), new string[] { "accessToken" });
             _isValidated = DefineProperty<bool>(nameof(IsValidated), new string[] { "isValidated" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
             DefineAdditionalProperties();
         }
 

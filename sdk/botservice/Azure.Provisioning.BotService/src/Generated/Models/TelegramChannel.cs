@@ -18,18 +18,13 @@ namespace Azure.Provisioning.BotService
             ChannelName.Assign("TelegramChannel");
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public TelegramChannelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 

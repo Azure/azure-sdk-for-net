@@ -42,6 +42,24 @@ namespace Azure.Provisioning.MySql
     {
         AzureBlob = 0,
     }
+    public partial class LocationsCapabilitySets : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal LocationsCapabilitySets() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServerFeatureProperty> SupportedFeatures { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> SupportedGeoBackupRegions { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerVersionCapabilityV2> SupportedServerVersions { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.MySql.LocationsCapabilitySets FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_12_30;
+        }
+    }
     public partial class MySqlFlexibleServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MySqlFlexibleServer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -66,7 +84,7 @@ namespace Azure.Provisioning.MySql
         public Azure.Provisioning.BicepValue<int> ReplicaCapacity { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerReplicationRole> ReplicationRole { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RestorePointInOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServersPrivateEndpointConnection> ServerPrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServerMySqlFlexibleServersPrivateEndpointConnection> ServerPrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.MySql.MySqlFlexibleServerSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerState> State { get { throw null; } }
@@ -147,15 +165,15 @@ namespace Azure.Provisioning.MySql
     }
     public partial class MySqlFlexibleServerBackupV2 : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public MySqlFlexibleServerBackupV2(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> BackupNameV2 { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerBackupType> BackupType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CompletedOn { get { throw null; } set { } }
+        internal MySqlFlexibleServerBackupV2() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> BackupNameV2 { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerBackupType> BackupType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CompletedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.MySql.MySqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerBackupProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Source { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Source { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.MySql.MySqlFlexibleServerBackupV2 FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -366,6 +384,24 @@ namespace Azure.Provisioning.MySql
         public Azure.Provisioning.BicepValue<int> StartMinute { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class MySqlFlexibleServerMySqlFlexibleServersPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public MySqlFlexibleServerMySqlFlexibleServersPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.MySql.MySqlFlexibleServer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.MySql.MySqlPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.MySql.MySqlFlexibleServerMySqlFlexibleServersPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_12_30;
+        }
+    }
     public partial class MySqlFlexibleServerNetwork : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MySqlFlexibleServerNetwork() { }
@@ -385,24 +421,6 @@ namespace Azure.Provisioning.MySql
         Source = 1,
         Replica = 2,
     }
-    public partial class MySqlFlexibleServersCapability : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal MySqlFlexibleServersCapability() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServerFeatureProperty> SupportedFeatures { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> SupportedGeoBackupRegions { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerVersionCapabilityV2> SupportedServerVersions { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.MySql.MySqlFlexibleServersCapability FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_12_30;
-        }
-    }
     public partial class MySqlFlexibleServerSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MySqlFlexibleServerSku() { }
@@ -415,24 +433,6 @@ namespace Azure.Provisioning.MySql
         Burstable = 0,
         GeneralPurpose = 1,
         MemoryOptimized = 2,
-    }
-    public partial class MySqlFlexibleServersPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public MySqlFlexibleServersPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.MySql.MySqlFlexibleServer Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.MySql.MySqlPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.MySql.MySqlFlexibleServersPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_12_30;
-        }
     }
     public enum MySqlFlexibleServerState
     {

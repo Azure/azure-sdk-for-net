@@ -34,7 +34,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the MigrationState. </summary>
+        /// <summary> Gets the MigrationState. </summary>
         public BackupPolicyMigrationState MigrationState
         {
             get
@@ -42,18 +42,13 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _migrationState;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _migrationState, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for CosmosDBAccountBackupPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _backupPolicyType = DefineProperty<BackupPolicyType>(nameof(BackupPolicyType), new string[] { "type" }, isRequired: true);
+            _backupPolicyType = DefineProperty<BackupPolicyType>(nameof(BackupPolicyType), new string[] { "type" });
             _migrationState = DefineModelProperty<BackupPolicyMigrationState>(nameof(MigrationState), new string[] { "migrationState" });
             DefineAdditionalProperties();
         }

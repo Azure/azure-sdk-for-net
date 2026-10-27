@@ -6922,77 +6922,878 @@
           "arguments": {
             "resources": [
               {
-                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStore",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores",
+                "resourceModelId": "ProvisioningTypeSpec.KeyValue",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/keyValues",
                 "methods": [
                   {
                     "$id": "456",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
+                    "methodId": "ProvisioningTypeSpec.KeyValues.createOrUpdate",
                     "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                     "scope": {
                       "$id": "457",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "458",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.get",
+                    "methodId": "ProvisioningTypeSpec.KeyValues.get",
                     "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                     "scope": {
                       "$id": "459",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "460",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "methodId": "ProvisioningTypeSpec.KeyValues.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                     "scope": {
                       "$id": "461",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
                     "$id": "462",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "methodId": "ProvisioningTypeSpec.KeyValues.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues",
                     "scope": {
                       "$id": "463",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
+                  }
+                ],
+                "scope": {
+                  "$id": "464",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "KeyValue",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.Item",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/items",
+                "methods": [
+                  {
+                    "$id": "465",
+                    "methodId": "ProvisioningTypeSpec.Items.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
+                    "scope": {
+                      "$id": "466",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
                   },
                   {
-                    "$id": "464",
+                    "$id": "467",
+                    "methodId": "ProvisioningTypeSpec.Items.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
+                    "scope": {
+                      "$id": "468",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "469",
+                    "methodId": "ProvisioningTypeSpec.Items.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items",
+                    "scope": {
+                      "$id": "470",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "471",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "Item",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.Profile",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles",
+                "methods": [
+                  {
+                    "$id": "472",
+                    "methodId": "ProvisioningTypeSpec.Profiles.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                    "scope": {
+                      "$id": "473",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "474",
+                    "methodId": "ProvisioningTypeSpec.Profiles.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                    "scope": {
+                      "$id": "475",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "476",
+                    "methodId": "ProvisioningTypeSpec.Profiles.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                    "scope": {
+                      "$id": "477",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "478",
+                    "methodId": "ProvisioningTypeSpec.Profiles.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles",
+                    "scope": {
+                      "$id": "479",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "480",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "Profile",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.Profile",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles/revisions",
+                "methods": [
+                  {
+                    "$id": "481",
+                    "methodId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
+                    "scope": {
+                      "$id": "482",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "483",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                "resourceName": "ProfileRevision",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
+                "methods": [
+                  {
+                    "$id": "484",
+                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                    "scope": {
+                      "$id": "485",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "486",
+                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                    "scope": {
+                      "$id": "487",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "488",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "DiscriminatedResourceProfile",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
+                "methods": [
+                  {
+                    "$id": "489",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                    "scope": {
+                      "$id": "490",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "491",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                    "scope": {
+                      "$id": "492",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "493",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "ResourceProfile",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
+                "methods": [
+                  {
+                    "$id": "494",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfileRevisions.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                    "scope": {
+                      "$id": "495",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "496",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                "resourceName": "ResourceProfileRevision",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.SingletonSetting",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/settings",
+                "methods": [
+                  {
+                    "$id": "497",
+                    "methodId": "ProvisioningTypeSpec.SingletonSettings.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
+                    "scope": {
+                      "$id": "498",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "499",
+                    "methodId": "ProvisioningTypeSpec.SingletonSettings.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
+                    "scope": {
+                      "$id": "500",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "501",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "singletonResourceName": "default",
+                "resourceName": "SingletonSetting",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.LegacySingleton",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
+                "resourceType": "ProvisioningTypeSpec/legacySingletons",
+                "methods": [
+                  {
+                    "$id": "502",
+                    "methodId": "ProvisioningTypeSpec.LegacySingletons.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
+                    "scope": {
+                      "$id": "503",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "504",
+                    "methodId": "ProvisioningTypeSpec.LegacySingletons.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
+                    "scope": {
+                      "$id": "505",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "506",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "singletonResourceName": "default",
+                "resourceName": "LegacySingleton",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.OrphanedSingleton",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
+                "resourceType": "ProvisioningTypeSpec/unmodeledParents/orphanedSingletons",
+                "methods": [
+                  {
+                    "$id": "507",
+                    "methodId": "ProvisioningTypeSpec.OrphanedSingletons.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
+                    "scope": {
+                      "$id": "508",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "509",
+                    "methodId": "ProvisioningTypeSpec.OrphanedSingletons.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
+                    "scope": {
+                      "$id": "510",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "511",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "singletonResourceName": "default",
+                "resourceName": "OrphanedSingleton",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ExtensionAssignment",
+                "resourceIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
+                "resourceType": "ProvisioningTypeSpec/extensionAssignments",
+                "methods": [
+                  {
+                    "$id": "512",
+                    "methodId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
+                    "scope": {
+                      "$id": "513",
+                      "kind": "Extension",
+                      "scopeIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
+                    }
+                  },
+                  {
+                    "$id": "514",
+                    "methodId": "ProvisioningTypeSpec.ExtensionAssignments.get",
+                    "kind": "Read",
+                    "operationPath": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
+                    "scope": {
+                      "$id": "515",
+                      "kind": "Extension",
+                      "scopeIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "516",
+                  "kind": "Extension",
+                  "scopeIdPattern": "/{scope}"
+                },
+                "resourceName": "ExtensionAssignment",
+                "nameConstraints": {},
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
+                "methods": [
+                  {
+                    "$id": "517",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
+                    "scope": {
+                      "$id": "518",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "519",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources",
+                    "scope": {
+                      "$id": "520",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "521",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "ConfigurationStoreConfigurationStorePrivateLinkResource",
+                "nameConstraints": {},
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.VersionedResource",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                "resourceType": "ProvisioningTypeSpec/versionedResources",
+                "methods": [
+                  {
+                    "$id": "522",
+                    "methodId": "ProvisioningTypeSpec.VersionedResources.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                    "scope": {
+                      "$id": "523",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "524",
+                    "methodId": "ProvisioningTypeSpec.VersionedResources.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                    "scope": {
+                      "$id": "525",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "526",
+                    "methodId": "ProvisioningTypeSpec.VersionedResources.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                    "scope": {
+                      "$id": "527",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "528",
+                    "methodId": "ProvisioningTypeSpec.VersionedResources.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                    "scope": {
+                      "$id": "529",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "530",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "VersionedResource",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.PreviewOnlyResource",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                "resourceType": "ProvisioningTypeSpec/previewOnlyResources",
+                "methods": [
+                  {
+                    "$id": "531",
+                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                    "scope": {
+                      "$id": "532",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "533",
+                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                    "scope": {
+                      "$id": "534",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "535",
+                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                    "scope": {
+                      "$id": "536",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "537",
+                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                    "scope": {
+                      "$id": "538",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "539",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "PreviewOnlyResource",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.PreviewRetainedResource",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                "resourceType": "ProvisioningTypeSpec/previewRetainedResources",
+                "methods": [
+                  {
+                    "$id": "540",
+                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                    "scope": {
+                      "$id": "541",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "542",
+                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                    "scope": {
+                      "$id": "543",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "544",
+                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                    "scope": {
+                      "$id": "545",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "546",
+                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                    "scope": {
+                      "$id": "547",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "548",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "PreviewRetainedResource",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-03-01-preview"
+                ],
+                "rbacRoles": []
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStore",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores",
+                "methods": [
+                  {
+                    "$id": "549",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "scope": {
+                      "$id": "550",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "551",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "scope": {
+                      "$id": "552",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "553",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "scope": {
+                      "$id": "554",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "555",
+                    "methodId": "ProvisioningTypeSpec.ConfigurationStores.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                    "scope": {
+                      "$id": "556",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "557",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.list",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores",
                     "scope": {
-                      "$id": "465",
+                      "$id": "558",
                       "kind": "ResourceGroup",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "466",
+                    "$id": "559",
                     "methodId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/providers/ProvisioningTypeSpec/configurationStores",
                     "scope": {
-                      "$id": "467",
+                      "$id": "560",
                       "kind": "Subscription",
                       "scopeIdPattern": "/subscriptions/{subscriptionId}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -7000,7 +7801,7 @@
                   }
                 ],
                 "scope": {
-                  "$id": "468",
+                  "$id": "561",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -7027,807 +7828,6 @@
                     "value": "00000000-0000-0000-0000-000000000003"
                   }
                 ]
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.KeyValue",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/keyValues",
-                "methods": [
-                  {
-                    "$id": "469",
-                    "methodId": "ProvisioningTypeSpec.KeyValues.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                    "scope": {
-                      "$id": "470",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "471",
-                    "methodId": "ProvisioningTypeSpec.KeyValues.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                    "scope": {
-                      "$id": "472",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "473",
-                    "methodId": "ProvisioningTypeSpec.KeyValues.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                    "scope": {
-                      "$id": "474",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "475",
-                    "methodId": "ProvisioningTypeSpec.KeyValues.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues",
-                    "scope": {
-                      "$id": "476",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "477",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "KeyValue",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.Item",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/items",
-                "methods": [
-                  {
-                    "$id": "478",
-                    "methodId": "ProvisioningTypeSpec.Items.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
-                    "scope": {
-                      "$id": "479",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "480",
-                    "methodId": "ProvisioningTypeSpec.Items.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
-                    "scope": {
-                      "$id": "481",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "482",
-                    "methodId": "ProvisioningTypeSpec.Items.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items",
-                    "scope": {
-                      "$id": "483",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "484",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "Item",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.Profile",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles",
-                "methods": [
-                  {
-                    "$id": "485",
-                    "methodId": "ProvisioningTypeSpec.Profiles.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                    "scope": {
-                      "$id": "486",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "487",
-                    "methodId": "ProvisioningTypeSpec.Profiles.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                    "scope": {
-                      "$id": "488",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "489",
-                    "methodId": "ProvisioningTypeSpec.Profiles.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                    "scope": {
-                      "$id": "490",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "491",
-                    "methodId": "ProvisioningTypeSpec.Profiles.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles",
-                    "scope": {
-                      "$id": "492",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "493",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "Profile",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.Profile",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles/revisions",
-                "methods": [
-                  {
-                    "$id": "494",
-                    "methodId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
-                    "scope": {
-                      "$id": "495",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "496",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
-                "resourceName": "ProfileRevision",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
-                "methods": [
-                  {
-                    "$id": "497",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                    "scope": {
-                      "$id": "498",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "499",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                    "scope": {
-                      "$id": "500",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "501",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "ResourceProfile",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
-                "methods": [
-                  {
-                    "$id": "502",
-                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                    "scope": {
-                      "$id": "503",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "504",
-                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                    "scope": {
-                      "$id": "505",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "506",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "DiscriminatedResourceProfile",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
-                "methods": [
-                  {
-                    "$id": "507",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfileRevisions.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
-                    "scope": {
-                      "$id": "508",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "509",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                "resourceName": "ResourceProfileRevision",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ExtensionAssignment",
-                "resourceIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
-                "resourceType": "ProvisioningTypeSpec/extensionAssignments",
-                "methods": [
-                  {
-                    "$id": "510",
-                    "methodId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
-                    "scope": {
-                      "$id": "511",
-                      "kind": "Extension",
-                      "scopeIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
-                    }
-                  },
-                  {
-                    "$id": "512",
-                    "methodId": "ProvisioningTypeSpec.ExtensionAssignments.get",
-                    "kind": "Read",
-                    "operationPath": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}",
-                    "scope": {
-                      "$id": "513",
-                      "kind": "Extension",
-                      "scopeIdPattern": "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "514",
-                  "kind": "Extension",
-                  "scopeIdPattern": "/{scope}"
-                },
-                "resourceName": "ExtensionAssignment",
-                "nameConstraints": {},
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.SingletonSetting",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/settings",
-                "methods": [
-                  {
-                    "$id": "515",
-                    "methodId": "ProvisioningTypeSpec.SingletonSettings.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
-                    "scope": {
-                      "$id": "516",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "517",
-                    "methodId": "ProvisioningTypeSpec.SingletonSettings.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
-                    "scope": {
-                      "$id": "518",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "519",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "singletonResourceName": "default",
-                "resourceName": "SingletonSetting",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.LegacySingleton",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
-                "resourceType": "ProvisioningTypeSpec/legacySingletons",
-                "methods": [
-                  {
-                    "$id": "520",
-                    "methodId": "ProvisioningTypeSpec.LegacySingletons.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
-                    "scope": {
-                      "$id": "521",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "522",
-                    "methodId": "ProvisioningTypeSpec.LegacySingletons.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
-                    "scope": {
-                      "$id": "523",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/legacySingletons/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "524",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "singletonResourceName": "default",
-                "resourceName": "LegacySingleton",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.OrphanedSingleton",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
-                "resourceType": "ProvisioningTypeSpec/unmodeledParents/orphanedSingletons",
-                "methods": [
-                  {
-                    "$id": "525",
-                    "methodId": "ProvisioningTypeSpec.OrphanedSingletons.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
-                    "scope": {
-                      "$id": "526",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "527",
-                    "methodId": "ProvisioningTypeSpec.OrphanedSingletons.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
-                    "scope": {
-                      "$id": "528",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/unmodeledParents/{unmodeledParentName}/orphanedSingletons/default",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "529",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "singletonResourceName": "default",
-                "resourceName": "OrphanedSingleton",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
-                "methods": [
-                  {
-                    "$id": "530",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
-                    "scope": {
-                      "$id": "531",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "532",
-                    "methodId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources",
-                    "scope": {
-                      "$id": "533",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "534",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "ConfigurationStorePrivateLinkResource",
-                "nameConstraints": {},
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.VersionedResource",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                "resourceType": "ProvisioningTypeSpec/versionedResources",
-                "methods": [
-                  {
-                    "$id": "535",
-                    "methodId": "ProvisioningTypeSpec.VersionedResources.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                    "scope": {
-                      "$id": "536",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "537",
-                    "methodId": "ProvisioningTypeSpec.VersionedResources.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                    "scope": {
-                      "$id": "538",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "539",
-                    "methodId": "ProvisioningTypeSpec.VersionedResources.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                    "scope": {
-                      "$id": "540",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "541",
-                    "methodId": "ProvisioningTypeSpec.VersionedResources.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                    "scope": {
-                      "$id": "542",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/versionedResources/{versionedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "543",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "resourceName": "VersionedResource",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.PreviewOnlyResource",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                "resourceType": "ProvisioningTypeSpec/previewOnlyResources",
-                "methods": [
-                  {
-                    "$id": "544",
-                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                    "scope": {
-                      "$id": "545",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "546",
-                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                    "scope": {
-                      "$id": "547",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "548",
-                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                    "scope": {
-                      "$id": "549",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "550",
-                    "methodId": "ProvisioningTypeSpec.PreviewOnlyResources.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                    "scope": {
-                      "$id": "551",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewOnlyResources/{previewOnlyResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "552",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "resourceName": "PreviewOnlyResource",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.PreviewRetainedResource",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                "resourceType": "ProvisioningTypeSpec/previewRetainedResources",
-                "methods": [
-                  {
-                    "$id": "553",
-                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                    "scope": {
-                      "$id": "554",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "555",
-                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                    "scope": {
-                      "$id": "556",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "557",
-                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.update",
-                    "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                    "scope": {
-                      "$id": "558",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "559",
-                    "methodId": "ProvisioningTypeSpec.PreviewRetainedResources.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                    "scope": {
-                      "$id": "560",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/previewRetainedResources/{previewRetainedResourceName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  }
-                ],
-                "scope": {
-                  "$id": "561",
-                  "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                },
-                "resourceName": "PreviewRetainedResource",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "apiVersions": [
-                  "2024-03-01-preview"
-                ],
-                "rbacRoles": []
               }
             ],
             "nonResourceMethods": [
@@ -7848,50 +7848,6 @@
           "name": "Azure.ClientGenerator.Core.@provisioningProviderSchema",
           "arguments": {
             "resourceProjections": [
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStore",
-                "resourceName": "ConfigurationStore",
-                "resourceType": "ProvisioningTypeSpec/configurationStores",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "resourceIdPatterns": [
-                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
-                ],
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "methodIds": [
-                  "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
-                  "ProvisioningTypeSpec.ConfigurationStores.get",
-                  "ProvisioningTypeSpec.ConfigurationStores.update",
-                  "ProvisioningTypeSpec.ConfigurationStores.delete",
-                  "ProvisioningTypeSpec.ConfigurationStores.list",
-                  "ProvisioningTypeSpec.ConfigurationStores.listBySubscription"
-                ],
-                "rbacRoles": [
-                  {
-                    "name": "ConfigStoreContributor",
-                    "value": "00000000-0000-0000-0000-000000000001"
-                  },
-                  {
-                    "name": "ConfigStoreReader",
-                    "value": "00000000-0000-0000-0000-000000000002"
-                  },
-                  {
-                    "name": "ConfigStoreDataOperator",
-                    "value": "00000000-0000-0000-0000-000000000003"
-                  }
-                ],
-                "readableScopes": [
-                  "ResourceGroup"
-                ],
-                "writableScopes": [
-                  "ResourceGroup"
-                ],
-                "isExtensionResource": false
-              },
               {
                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",
                 "resourceName": "KeyValue",
@@ -8007,34 +7963,6 @@
                 "isExtensionResource": false
               },
               {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
-                "resourceName": "ResourceProfile",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                },
-                "resourceIdPatterns": [
-                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}"
-                ],
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "methodIds": [
-                  "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
-                  "ProvisioningTypeSpec.ResourceProfiles.get"
-                ],
-                "rbacRoles": [],
-                "readableScopes": [
-                  "ResourceGroup"
-                ],
-                "writableScopes": [
-                  "ResourceGroup"
-                ],
-                "isExtensionResource": false
-              },
-              {
                 "resourceModelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
                 "resourceName": "DiscriminatedResourceProfile",
                 "resourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
@@ -8052,6 +7980,34 @@
                 "methodIds": [
                   "ProvisioningTypeSpec.DiscriminatedResourceProfiles.createOrUpdate",
                   "ProvisioningTypeSpec.DiscriminatedResourceProfiles.get"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
+                "resourceName": "ResourceProfile",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "resourceIdPatterns": [
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}"
+                ],
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
+                  "ProvisioningTypeSpec.ResourceProfiles.get"
                 ],
                 "rbacRoles": [],
                 "readableScopes": [
@@ -8086,31 +8042,6 @@
                 ],
                 "writableScopes": [],
                 "isExtensionResource": false
-              },
-              {
-                "resourceModelId": "ProvisioningTypeSpec.ExtensionAssignment",
-                "resourceName": "ExtensionAssignment",
-                "resourceType": "ProvisioningTypeSpec/extensionAssignments",
-                "nameConstraints": {},
-                "resourceIdPatterns": [
-                  "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
-                ],
-                "apiVersions": [
-                  "2024-01-01",
-                  "2024-03-01-preview"
-                ],
-                "methodIds": [
-                  "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate",
-                  "ProvisioningTypeSpec.ExtensionAssignments.get"
-                ],
-                "rbacRoles": [],
-                "readableScopes": [
-                  "Extension"
-                ],
-                "writableScopes": [
-                  "Extension"
-                ],
-                "isExtensionResource": true
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.SingletonSetting",
@@ -8198,8 +8129,33 @@
                 "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.ExtensionAssignment",
+                "resourceName": "ExtensionAssignment",
+                "resourceType": "ProvisioningTypeSpec/extensionAssignments",
+                "nameConstraints": {},
+                "resourceIdPatterns": [
+                  "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
+                ],
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate",
+                  "ProvisioningTypeSpec.ExtensionAssignments.get"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "Extension"
+                ],
+                "writableScopes": [
+                  "Extension"
+                ],
+                "isExtensionResource": true
+              },
+              {
                 "resourceModelId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
-                "resourceName": "ConfigurationStorePrivateLinkResource",
+                "resourceName": "ConfigurationStoreConfigurationStorePrivateLinkResource",
                 "resourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "nameConstraints": {},
@@ -8305,13 +8261,53 @@
                   "ResourceGroup"
                 ],
                 "isExtensionResource": false
+              },
+              {
+                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStore",
+                "resourceName": "ConfigurationStore",
+                "resourceType": "ProvisioningTypeSpec/configurationStores",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "resourceIdPatterns": [
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
+                ],
+                "apiVersions": [
+                  "2024-01-01",
+                  "2024-03-01-preview"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
+                  "ProvisioningTypeSpec.ConfigurationStores.get",
+                  "ProvisioningTypeSpec.ConfigurationStores.update",
+                  "ProvisioningTypeSpec.ConfigurationStores.delete",
+                  "ProvisioningTypeSpec.ConfigurationStores.list",
+                  "ProvisioningTypeSpec.ConfigurationStores.listBySubscription"
+                ],
+                "rbacRoles": [
+                  {
+                    "name": "ConfigStoreContributor",
+                    "value": "00000000-0000-0000-0000-000000000001"
+                  },
+                  {
+                    "name": "ConfigStoreReader",
+                    "value": "00000000-0000-0000-0000-000000000002"
+                  },
+                  {
+                    "name": "ConfigStoreDataOperator",
+                    "value": "00000000-0000-0000-0000-000000000003"
+                  }
+                ],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               }
             ],
             "modelSettableUsage": [
-              {
-                "modelId": "ProvisioningTypeSpec.ConfigurationStore",
-                "isSettable": true
-              },
               {
                 "modelId": "ProvisioningTypeSpec.KeyValue",
                 "isSettable": true
@@ -8325,20 +8321,16 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfile",
+                "modelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
+                "modelId": "ProvisioningTypeSpec.ResourceProfile",
                 "isSettable": true
               },
               {
                 "modelId": "ProvisioningTypeSpec.ResourceProfileRevision",
                 "isSettable": false
-              },
-              {
-                "modelId": "ProvisioningTypeSpec.ExtensionAssignment",
-                "isSettable": true
               },
               {
                 "modelId": "ProvisioningTypeSpec.SingletonSetting",
@@ -8350,6 +8342,10 @@
               },
               {
                 "modelId": "ProvisioningTypeSpec.OrphanedSingleton",
+                "isSettable": true
+              },
+              {
+                "modelId": "ProvisioningTypeSpec.ExtensionAssignment",
                 "isSettable": true
               },
               {
@@ -8369,20 +8365,16 @@
                 "isSettable": true
               },
               {
-                "modelId": "Azure.ResourceManager.CommonTypes.TrackedResource",
-                "isSettable": true
-              },
-              {
-                "modelId": "Azure.ResourceManager.CommonTypes.SystemData",
-                "isSettable": false
-              },
-              {
-                "modelId": "ProvisioningTypeSpec.ConfigurationStoreProperties",
+                "modelId": "ProvisioningTypeSpec.ConfigurationStore",
                 "isSettable": true
               },
               {
                 "modelId": "Azure.ResourceManager.CommonTypes.ProxyResource",
                 "isSettable": true
+              },
+              {
+                "modelId": "Azure.ResourceManager.CommonTypes.SystemData",
+                "isSettable": false
               },
               {
                 "modelId": "ProvisioningTypeSpec.KeyValueProperties",
@@ -8397,10 +8389,6 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfileProperties",
-                "isSettable": true
-              },
-              {
                 "modelId": "ProvisioningTypeSpec.SpecializedResourceProfile",
                 "isSettable": true
               },
@@ -8409,16 +8397,12 @@
                 "isSettable": true
               },
               {
+                "modelId": "ProvisioningTypeSpec.ResourceProfileProperties",
+                "isSettable": true
+              },
+              {
                 "modelId": "ProvisioningTypeSpec.ResourceProfileRevisionProperties",
                 "isSettable": false
-              },
-              {
-                "modelId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
-                "isSettable": true
-              },
-              {
-                "modelId": "ProvisioningTypeSpec.ExtensionAssignmentProperties",
-                "isSettable": true
               },
               {
                 "modelId": "ProvisioningTypeSpec.SingletonSettingProperties",
@@ -8433,12 +8417,24 @@
                 "isSettable": true
               },
               {
+                "modelId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
+                "isSettable": true
+              },
+              {
+                "modelId": "ProvisioningTypeSpec.ExtensionAssignmentProperties",
+                "isSettable": true
+              },
+              {
                 "modelId": "Azure.ResourceManager.CommonTypes.Resource",
                 "isSettable": true
               },
               {
                 "modelId": "Azure.ResourceManager.CommonTypes.PrivateLinkResourceProperties",
                 "isSettable": false
+              },
+              {
+                "modelId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+                "isSettable": true
               },
               {
                 "modelId": "ProvisioningTypeSpec.VersionedResourceProperties",
@@ -8450,6 +8446,18 @@
               },
               {
                 "modelId": "ProvisioningTypeSpec.PreviewRetainedResourceProperties",
+                "isSettable": true
+              },
+              {
+                "modelId": "ProvisioningTypeSpec.ConfigurationStoreProperties",
+                "isSettable": true
+              },
+              {
+                "modelId": "ProvisioningTypeSpec.ItemAttributes",
+                "isSettable": true
+              },
+              {
+                "modelId": "ProvisioningTypeSpec.ProfileSku",
                 "isSettable": true
               },
               {
@@ -8465,11 +8473,7 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ItemAttributes",
-                "isSettable": true
-              },
-              {
-                "modelId": "ProvisioningTypeSpec.ProfileSku",
+                "modelId": "ProvisioningTypeSpec.BaseItemAttributes",
                 "isSettable": true
               },
               {
@@ -8486,10 +8490,6 @@
               },
               {
                 "modelId": "Azure.ResourceManager.Models.SubResource",
-                "isSettable": true
-              },
-              {
-                "modelId": "ProvisioningTypeSpec.BaseItemAttributes",
                 "isSettable": true
               }
             ]

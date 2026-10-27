@@ -292,6 +292,23 @@ namespace Azure.Provisioning.ServiceFabric
         public Azure.Provisioning.BicepValue<System.Uri> TableEndpoint { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class LocationsUnsupportedVmSizes : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal LocationsUnsupportedVmSizes() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ServiceFabric.LocationsUnsupportedVmSizes FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_11_01_PREVIEW;
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2026_03_01_PREVIEW;
+        }
+    }
     public partial class NamedPartitionSchemeDescription : Azure.Provisioning.ServiceFabric.PartitionSchemeDescription
     {
         public NamedPartitionSchemeDescription() { }
@@ -478,23 +495,6 @@ namespace Azure.Provisioning.ServiceFabric
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ServiceFabric.ServiceFabricService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2023_11_01_PREVIEW;
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2026_03_01_PREVIEW;
-        }
-    }
-    public partial class ServiceFabricVmSizeResource : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal ServiceFabricVmSizeResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ServiceFabric.ServiceFabricVmSizeResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]

@@ -30,7 +30,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -38,14 +38,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PhoneNumber. </summary>
+        /// <summary> Gets the PhoneNumber. </summary>
         public BicepValue<string> PhoneNumber
         {
             get
@@ -53,14 +48,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _phoneNumber;
             }
-            set
-            {
-                Initialize();
-                _phoneNumber.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AcsEndpoint. </summary>
+        /// <summary> Gets the AcsEndpoint. </summary>
         public BicepValue<string> AcsEndpoint
         {
             get
@@ -68,14 +58,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _acsEndpoint;
             }
-            set
-            {
-                Initialize();
-                _acsEndpoint.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AcsSecret. </summary>
+        /// <summary> Gets the AcsSecret. </summary>
         public BicepValue<string> AcsSecret
         {
             get
@@ -83,14 +68,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _acsSecret;
             }
-            set
-            {
-                Initialize();
-                _acsSecret.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AcsResourceId. </summary>
+        /// <summary> Gets the AcsResourceId. </summary>
         public BicepValue<ResourceIdentifier> AcsResourceId
         {
             get
@@ -98,14 +78,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _acsResourceId;
             }
-            set
-            {
-                Initialize();
-                _acsResourceId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        /// <summary> Gets the CognitiveServiceSubscriptionKey. </summary>
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -113,14 +88,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceSubscriptionKey;
             }
-            set
-            {
-                Initialize();
-                _cognitiveServiceSubscriptionKey.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        /// <summary> Gets the CognitiveServiceRegion. </summary>
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -128,14 +98,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceRegion;
             }
-            set
-            {
-                Initialize();
-                _cognitiveServiceRegion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
+        /// <summary> Gets the CognitiveServiceResourceId. </summary>
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -143,14 +108,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceResourceId;
             }
-            set
-            {
-                Initialize();
-                _cognitiveServiceResourceId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DefaultLocale. </summary>
+        /// <summary> Gets the DefaultLocale. </summary>
         public BicepValue<string> DefaultLocale
         {
             get
@@ -158,25 +118,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _defaultLocale;
             }
-            set
-            {
-                Initialize();
-                _defaultLocale.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OfferType. </summary>
+        /// <summary> Gets the OfferType. </summary>
         public BicepValue<string> OfferType
         {
             get
             {
                 Initialize();
                 return _offerType;
-            }
-            set
-            {
-                Initialize();
-                _offerType.Assign(value);
             }
         }
 
