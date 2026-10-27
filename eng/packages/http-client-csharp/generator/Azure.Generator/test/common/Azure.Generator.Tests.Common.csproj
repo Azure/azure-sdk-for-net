@@ -14,7 +14,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <ProjectReference Include="..\..\..\..\..\..\..\..\typespec\packages\http-client-csharp\generator\Microsoft.TypeSpec.Generator.Input\src\Microsoft.TypeSpec.Generator.Input.csproj" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
   </ItemGroup>
 
 </Project>
