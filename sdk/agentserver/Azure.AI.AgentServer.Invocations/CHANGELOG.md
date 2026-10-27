@@ -4,7 +4,12 @@
 
 ### Features Added
 
-### Breaking Changes
+- Added `VoiceInputDataPart`, ordered `VoiceUserMessageEvent.ContentParts`, and `VoiceResponseOutputDataDoneMessage` for application data in Bridge protocol `1.0`. The existing text-only `Content` projection and explicit silent completion remain available.
+- Added a standalone `/voice_conversation_engine` WebSocket route for typed Voice
+  handlers registered with `AddVoice<THandler>()`. It reuses the existing Bridge
+  Protocol 1.0 relay alongside `/invocations_ws`, without new registration options
+  or changes to generic Invocations handlers.
+- Aligned the experimental Voice caller-interruption contract with `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`, preserving playback snapshots and application-owned cancellation/history. Voice Live senders must use the same event contract. Generic raw WebSocket handlers are unchanged.
 
 ### Bugs Fixed
 

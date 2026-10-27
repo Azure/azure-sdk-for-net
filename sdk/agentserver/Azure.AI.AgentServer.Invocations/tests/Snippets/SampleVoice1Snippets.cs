@@ -112,9 +112,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     generation);
             }
 
-            protected override Task OnBargeInAsync(
+            protected override Task OnUserBargeInAsync(
                 VoiceSession session,
-                VoiceBargeInEvent bargeIn,
+                VoiceUserBargeInEvent bargeIn,
                 CancellationToken cancellationToken)
             {
                 CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);

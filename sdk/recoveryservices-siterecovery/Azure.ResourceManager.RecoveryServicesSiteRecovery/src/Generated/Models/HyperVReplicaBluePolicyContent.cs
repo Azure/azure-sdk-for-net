@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaBluePolicyContent : HyperVReplicaPolicyContent
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaBluePolicyContent"/>. </summary>
-        public HyperVReplicaBluePolicyContent()
+        public HyperVReplicaBluePolicyContent() : base("HyperVReplica2012R2")
         {
         }
 

@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _linkerName;
-        internal bool _linkerNameIsDefined;
+        private bool _linkerNameIsDefined;
         private bool? _isConnectionAvailable;
-        internal bool _isConnectionAvailableIsDefined;
+        private bool _isConnectionAvailableIsDefined;
         private DateTimeOffset? _reportStartsOn;
-        internal bool _reportStartsOnIsDefined;
+        private bool _reportStartsOnIsDefined;
         private DateTimeOffset? _reportEndsOn;
-        internal bool _reportEndsOnIsDefined;
+        private bool _reportEndsOnIsDefined;
         private LinkerAuthType? _authType;
-        internal bool _authTypeIsDefined;
+        private bool _authTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ValidateResult"/>. </summary>
         internal ValidateResult()

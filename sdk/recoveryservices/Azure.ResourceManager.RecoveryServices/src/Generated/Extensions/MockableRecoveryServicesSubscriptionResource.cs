@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> An object representing collection of RecoveryServicesDeletedVaults and their operations over a RecoveryServicesDeletedVaultResource. </returns>
         public virtual RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults(AzureLocation location)
         {
-            return GetCachedClient(client => new RecoveryServicesDeletedVaultCollection(client, Id, location));
+            return new RecoveryServicesDeletedVaultCollection(Client, Id, location);
         }
 
         /// <summary>

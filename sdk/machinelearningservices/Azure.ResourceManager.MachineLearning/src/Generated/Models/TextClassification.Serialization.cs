@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(TextClassification)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_featurizationSettingsIsDefined || Optional.IsDefined(FeaturizationSettings))
+            if (Optional.IsDefined(FeaturizationSettings, _featurizationSettingsIsDefined))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings"u8);
                 }
             }
-            if (_limitSettingsIsDefined || Optional.IsDefined(LimitSettings))
+            if (Optional.IsDefined(LimitSettings, _limitSettingsIsDefined))
             {
                 if (LimitSettings != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings"u8);
                 }
             }
-            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
+            if (Optional.IsDefined(ValidationData, _validationDataIsDefined))
             {
                 if (ValidationData != null)
                 {

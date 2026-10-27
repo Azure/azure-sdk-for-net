@@ -76,7 +76,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 
 ### Prerequisites
 
-To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
+To use Azure AI Agents capabilities, you must have an [Azure subscription](https://azure.microsoft.com/pricing/purchase-options/azure-account). This will allow you to create an Azure AI resource and get a connection URL.
 
 ### Install the package
 
@@ -86,7 +86,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.Extensions.OpenAI --prerelease
 ```
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+> You must have an [Azure subscription](https://azure.microsoft.com/pricing/purchase-options/azure-account) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
@@ -1481,9 +1481,9 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-### Browser automation (preview)<a id="browser-automation"></a>
+### Browser automation<a id="browser-automation"></a>
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
+Playwright is a Node.js library for browser automation. Microsoft provides [Playwright Workspaces](https://learn.microsoft.com/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces), which can execute Playwright-based tasks triggered by an agent using `BrowserAutomationTool`.
 
 #### Create Azure Playwright workspace
 
@@ -1494,26 +1494,27 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 #### Configure Microsoft Foundry
 
-See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure the connection. Microsoft Entra ID is the preferred authentication method. For instructions to create a project connection, see [Automate browsers with the Playwright Workspaces remote MCP server](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp). You can also use a workspace access token as described in the following steps.
-1. In the Microsoft foundry portal select **Build**.
-2. On the left panel select **Tools** sectrion and click **Connect a tool**.
-3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
-4. Name the connection.
-5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
-6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
-7. Click **Connect**.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
+
+1. Open your project in the Microsoft Foundry portal and select **Build** > **Tools**.
+2. Select **Create a toolbox** and enter a name and description.
+3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
+4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
+5. Select **Connect**, then **Publish** to save the toolbox.
+6. Set `BROWSER_AUTOMATION_NAME` to the connection name you entered. The sample looks up the connection and passes its ID to the tool.
+
+Prefer Microsoft Entra ID authentication when supported; never include workspace access tokens in source code, prompts, or logs.
 
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
-The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
-Please refer to the playwright [quickstart document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure playwright mcp connection.
-The preferred way to access MCP server is  by using EntraID; see this [document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp) on how to create a project connection.
+`BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
+Set `FOUNDRY_PROJECT_ENDPOINT` to your project endpoint, `FOUNDRY_MODEL_NAME` to your model deployment name, and `BROWSER_AUTOMATION_NAME` to the Browser Automation project connection name.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -1521,12 +1522,13 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
+To use Azure Playwright workspace we need to create an agent with `BrowserAutomationTool`.
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1541,10 +1543,13 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
+Create a streaming response. Require the agent to use a tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on `CreateResponseOptions`. The [browser automation sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample23_BrowserAutomationTool.md) includes the `ParseResponse` helper and synchronous equivalent.
+
+**Warning:** Streaming text and complete messages may contain sensitive browser live-view URLs. Use these only in a trusted local terminal and redact them from saved logs or shared output.
 
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+    new AgentReference(agentVersion.Name, agentVersion.Version));
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -1565,12 +1570,18 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
+After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
+
+```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+```
+
 #### Browser automation preview tool
 
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
-This tool was released to preview the functionality, please use the stable version of the tool.
+This tool was released to preview the functionality and is now deprecated, please use the stable version of the tool.
 
-`BrowserAutomationPreviewTool` is using Serverless Model connection as opposed to MCP connection, used by `BrowserAutomationTool`. Please follow the steps below to create it.
+`BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the Browser Automation connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 
 1. On the left panel select **Management center**.
 2. Choose **Connected resources**.

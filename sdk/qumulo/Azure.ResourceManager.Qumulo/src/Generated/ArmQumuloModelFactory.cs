@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="initialCapacity"></param>
         /// <returns> A new <see cref="Qumulo.QumuloFileSystemResourceData"/> instance for mocking. </returns>
-        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, string delegatedSubnetId, string performanceTier, Uri clusterLoginUri, IEnumerable<IPAddress> privateIPs, string adminPassword, string availabilityZone, string userDetailsEmail, ManagedServiceIdentity identity, int initialCapacity)
+        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, string delegatedSubnetId, string performanceTier, Uri clusterLoginUri, IEnumerable<IPAddress> privateIPs, string adminPassword, string availabilityZone, string userDetailsEmail, ManagedServiceIdentity identity, int initialCapacity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="initialCapacity"></param>
         /// <returns> A new <see cref="Qumulo.QumuloFileSystemResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MarketplaceDetails marketplaceDetails = default, QumuloArmProvisioningState? armProvisioningState = default, string storageSkuName = default, string delegatedSubnetId = default, string performanceTier = default, Uri clusterLoginUri = default, IEnumerable<IPAddress> privateIPs = default, string adminPassword = default, string availabilityZone = default, string userDetailsEmail = default, string name0 = default, ManagedServiceIdentity identity = default, int initialCapacity = 0)
+        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, string delegatedSubnetId, string performanceTier, Uri clusterLoginUri, IEnumerable<IPAddress> privateIPs, string adminPassword, string availabilityZone, string userDetailsEmail, string name0, ManagedServiceIdentity identity, int initialCapacity)
         {
             return new QumuloFileSystemResourceData(
                 id,

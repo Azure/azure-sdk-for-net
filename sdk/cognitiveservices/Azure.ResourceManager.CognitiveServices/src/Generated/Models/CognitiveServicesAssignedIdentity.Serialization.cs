@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
-            if (_subjectIsDefined || Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject, _subjectIsDefined))
             {
                 if (Subject != null)
                 {

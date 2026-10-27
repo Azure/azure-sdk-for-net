@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,6 +15,18 @@ namespace Azure.ResourceManager.Purview.Models
     // The new generator doesn't produce one, so we add it manually to satisfy ApiCompat.
     public static partial class ArmPurviewModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
+        /// <param name="catalog"> The catalog endpoint. </param>
+        /// <param name="guardian"> The guardian endpoint. </param>
+        /// <param name="scan"> The scan endpoint. </param>
+        /// <returns> A new <see cref="Models.PurviewAccountEndpoint"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog, string guardian, string scan)
+        {
+            // Guardian is no longer generated, but GA callers can still mock its value.
+            return new PurviewAccountEndpoint(catalog, guardian, scan, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group identifier. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>

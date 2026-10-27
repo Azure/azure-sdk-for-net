@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="sku"> IotHub SKU info. </param>
         /// <param name="identity"> The managed identities for the IotHub. </param>
         /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotHubProperties properties, ETag? eTag, IotHubSkuInfo sku, ManagedServiceIdentity identity)
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotHubProperties properties = default, ETag? eTag = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
-        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ResourceIdentifier userAssignedIdentity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, IotHubMessagePayloadFormat? messagePayloadFormat)
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = default, string id = default, string subscriptionId = default, string resourceGroup = default, Uri endpointUri = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string primaryKey = default, string secondaryKey = default, string databaseName = default, string containerName = default, string partitionKeyName = default, string partitionKeyTemplate = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingCosmosDBSqlApiProperties(
                 name,
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <param name="certificateAuthorityResourceId"> Full certificate authority resource ID for ADR linked standard SKU hubs. </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, ResourceIdentifier certificateAuthorityResourceId)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default, ResourceIdentifier certificateAuthorityResourceId = default)
         {
             return new IotHubCertificateProperties(
                 subject,
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <param name="certificateAuthorityResourceId"> Full certificate authority resource ID for ADR linked standard SKU hubs. </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate, ResourceIdentifier certificateAuthorityResourceId)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default, ResourceIdentifier certificateAuthorityResourceId = default)
         {
             return new IotHubCertificatePropertiesWithNonce(
                 subject,
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="identity"> The managed identities for the IotHub. </param>
         /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, IotHubProperties properties = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IotHubProperties properties, IotHubSkuInfo sku, ManagedServiceIdentity identity)
         {
             return new IotHubDescriptionData(
                 id,
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default, bool? disableLocalAuth = default, bool? disableDeviceSas = default, bool? disableModuleSas = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdns = default, IotHubPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<IotHubIPFilterRule> ipFilterRules = default, IotHubNetworkRuleSetProperties networkRuleSets = default, string minTlsVersion = default, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, string state = default, string hostName = default, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default, IotHubRoutingProperties routing = default, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default, bool? enableFileUploadNotifications = default, CloudToDeviceProperties cloudToDevice = default, string comments = default, IotHubCapability? features = default, IEnumerable<IotHubLocationDescription> locations = default, bool? enableDataResidency = default)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
             return new IotHubProperties(
                 (authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>()).ToList(),
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
         /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = default, string id = default, string subscriptionId = default, string resourceGroup = default, Uri endpointUri = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string primaryKey = default, string secondaryKey = default, string databaseName = default, string containerName = default, string partitionKeyName = default, string partitionKeyTemplate = default)
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ResourceIdentifier userAssignedIdentity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate)
         {
             return new RoutingCosmosDBSqlApiProperties(
                 name,
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
         {
             return new IotHubCertificateProperties(
                 subject,
@@ -1279,7 +1279,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
         {
             return new IotHubCertificatePropertiesWithNonce(
                 subject,

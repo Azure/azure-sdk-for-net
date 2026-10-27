@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Chat;
 using OpenAI.Containers;
 using OpenAI.Realtime;
@@ -255,7 +254,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, Uri endpoint = default, TelemetryTransportProtocol protocol = default)
         {
             exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
@@ -334,7 +333,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A managed runtime and agent loop used to execute a prompt agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/> and <see cref="Agents.MicrosoftCopilotHarness"/>.
         /// </summary>
         /// <param name="type"> The type of managed harness. </param>
         /// <returns> A new <see cref="Agents.AgentHarness"/> instance for mocking. </returns>
@@ -344,7 +343,15 @@ namespace Azure.AI.Projects.Agents
             return new UnknownAgentHarness(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
+        /// <summary> The Microsoft Copilot managed harness for prompt agents. </summary>
+        /// <returns> A new <see cref="Agents.MicrosoftCopilotHarness"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftCopilotHarness MicrosoftCopilotHarness()
+        {
+            return new MicrosoftCopilotHarness("microsoft_copilot_preview", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The legacy GitHub Copilot managed harness retained for compatibility. Use `MicrosoftCopilotHarness` for new prompt agents. </summary>
         /// <returns> A new <see cref="Agents.GitHubCopilotHarness"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static GitHubCopilotHarness GitHubCopilotHarness()
@@ -428,7 +435,7 @@ namespace Azure.AI.Projects.Agents
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
         /// when an avatar is configured.
         /// </param>
-        /// <param name="maxOutputTokens"> The maximum output-token count for one response. </param>
+        /// <param name="internalMaxOutputTokens"> The maximum output-token count for one response. </param>
         /// <param name="include"> Additional fields to include in service outputs. </param>
         /// <param name="interimResponse"> Interim-response settings for latency and tool execution. </param>
         /// <param name="avatar"> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </param>
@@ -437,7 +444,7 @@ namespace Azure.AI.Projects.Agents
         /// `system` (service-managed session controls), and `toolbox`. Server-side tools such as `web_search`,
         /// `azure_ai_search`, and `openapi` are provided through a toolbox rather than declared directly.
         /// </param>
-        /// <param name="toolChoice">
+        /// <param name="internalToolChoice">
         /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
         /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
         /// Defaults to `auto`.
@@ -455,7 +462,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
             include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -473,12 +480,12 @@ namespace Azure.AI.Projects.Agents
                 greeting,
                 audio,
                 outputModalities.ToList(),
-                maxOutputTokens,
+                internalMaxOutputTokens,
                 include.ToList(),
                 interimResponse,
                 avatar,
                 tools.ToList(),
-                toolChoice,
+                internalToolChoice,
                 parallelToolCalls,
                 structuredInputs,
                 subagentConfig,
@@ -530,12 +537,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
         /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
-        /// <param name="toolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
+        /// <param name="internalToolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, BinaryData toolChoice = default)
+        public static VoiceAgentLlmGeneratedGreetingConfig VoiceAgentLlmGeneratedGreetingConfig(string prompt = default, BinaryData internalToolChoice = default)
         {
-            return new VoiceAgentLlmGeneratedGreetingConfig("llm_generated", additionalBinaryDataProperties: null, prompt, toolChoice);
+            return new VoiceAgentLlmGeneratedGreetingConfig("llm_generated", additionalBinaryDataProperties: null, prompt, internalToolChoice);
         }
 
         /// <summary> The audio configuration for a voice agent. These values are session defaults and may be overridden when connecting. </summary>
@@ -633,7 +640,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -642,7 +649,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadTurnDetection VoiceAgentAzureSemanticVadTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -653,7 +660,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -667,7 +674,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -675,7 +682,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="interruptResponse"> Whether user speech may interrupt the agent's response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
+        public static VoiceAgentAzureSemanticVadEnTurnDetection VoiceAgentAzureSemanticVadEnTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default)
         {
             return new VoiceAgentAzureSemanticVadEnTurnDetection(
                 VoiceAgentTurnDetectionType.AzureSemanticVadEn,
@@ -684,7 +691,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -697,7 +704,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="threshold"> Activation threshold for voice activity detection, from 0 to 1. </param>
         /// <param name="prefixPaddingMs"> Audio to include before detected speech, in milliseconds. </param>
         /// <param name="silenceDurationMs"> Silence required to end speech detection, in milliseconds. </param>
-        /// <param name="idleTimeoutMs"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
+        /// <param name="idleTimeout"> Maximum idle time before the detector ends the turn, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="removeFillerWords"> Whether filler words are removed from transcription. </param>
@@ -706,7 +713,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="languages"> BCP-47 language codes used for speech detection. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeoutMs = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
+        public static VoiceAgentAzureSemanticVadMultilingualTurnDetection VoiceAgentAzureSemanticVadMultilingualTurnDetection(bool? autoTruncate = default, float? threshold = default, TimeSpan? prefixPaddingMs = default, TimeSpan? silenceDurationMs = default, TimeSpan? idleTimeout = default, VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default, TimeSpan? speechDurationMs = default, bool? removeFillerWords = default, bool? createResponse = default, bool? interruptResponse = default, IEnumerable<string> languages = default)
         {
             languages ??= new ChangeTrackingList<string>();
 
@@ -717,7 +724,7 @@ namespace Azure.AI.Projects.Agents
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                idleTimeoutMs,
+                idleTimeout,
                 endOfUtteranceDetection,
                 speechDurationMs,
                 removeFillerWords,
@@ -755,8 +762,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-        /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+        /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+        /// and phrase hints.
         /// </summary>
         /// <param name="language">
         /// The language of the input audio. Supplying the input language in
@@ -780,9 +787,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
+        /// <param name="profanityFilter">
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default, VoiceAgentProfanityFilterMode? profanityFilter = default)
         {
             languages ??= new ChangeTrackingList<string>();
             keywords ??= new ChangeTrackingList<string>();
@@ -798,6 +814,7 @@ namespace Azure.AI.Projects.Agents
                 model,
                 customSpeech,
                 phraseList.ToList(),
+                profanityFilter,
                 additionalBinaryDataProperties: null);
         }
 
@@ -953,10 +970,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="topLeft"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoCrop"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(IEnumerable<object> bottomRight = default, IEnumerable<object> topLeft = default)
+        public static VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(IEnumerable<uint> bottomRight = default, IEnumerable<uint> topLeft = default)
         {
-            bottomRight ??= new ChangeTrackingList<object>();
-            topLeft ??= new ChangeTrackingList<object>();
+            bottomRight ??= new ChangeTrackingList<uint>();
+            topLeft ??= new ChangeTrackingList<uint>();
 
             return new VoiceAgentAvatarVideoCrop(bottomRight.ToList(), topLeft.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1038,8 +1055,12 @@ namespace Azure.AI.Projects.Agents
             return new RealtimeFunctionToolParameters(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An MCP tool available to a voice agent. </summary>
+        /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
+        /// <param name="serverUrl">
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
+        /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
         ///   with a custom MCP server URL or a service connector. Your application
@@ -1049,15 +1070,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="allowedCallers"></param>
-        /// <param name="requireApproval"></param>
+        /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="serverUrl"> The URL for the MCP server. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentMcpTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApproval = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri serverUrl = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
+        public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, Uri serverUrl = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
             allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
@@ -1067,16 +1087,16 @@ namespace Azure.AI.Projects.Agents
                 "mcp",
                 additionalBinaryDataProperties: null,
                 serverLabel,
+                serverUrl,
                 authorization,
                 serverDescription,
                 headers,
                 allowedTools,
                 allowedCallers.ToList(),
-                requireApproval,
+                requireApprovalInternal,
                 deferLoading,
                 projectConnectionId,
                 toolConfigs,
-                serverUrl,
                 responseScheduling);
         }
 
@@ -1125,17 +1145,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
         /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
-        /// <param name="invokeTimeoutSeconds"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
+        /// <param name="invokeTimeout"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubagent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubagent VoiceAgentSubagent(string agentName = default, string agentVersion = default, string agentCapabilities = default, VoiceAgentSubagentResponsePolicy responsePolicy = default, TimeSpan? invokeTimeoutSeconds = default)
+        public static VoiceAgentSubagent VoiceAgentSubagent(string agentName = default, string agentVersion = default, string agentCapabilities = default, VoiceAgentSubagentResponsePolicy responsePolicy = default, TimeSpan? invokeTimeout = default)
         {
             return new VoiceAgentSubagent(
                 agentName,
                 agentVersion,
                 agentCapabilities,
                 responsePolicy,
-                invokeTimeoutSeconds,
+                invokeTimeout,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1579,17 +1599,28 @@ namespace Azure.AI.Projects.Agents
         /// (`GET .../responses/{response_id}/items`) for its output items. `created_at`/`completed_at` are Foundry
         /// durable ordering extensions.
         /// </summary>
+        /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         ///   `incomplete`, `in_progress`).
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
+        /// <param name="output"> The list of output items generated by the response. </param>
+        /// <param name="metadata"></param>
         /// <param name="usage">
         /// Usage statistics for the Response, this will correspond to billing. A
         ///   Realtime API session will maintain a conversation context and append new
         ///   Items to the Conversation, thus output from previous turns (text and
         ///   audio tokens) will become the input for later turns.
+        /// </param>
+        /// <param name="conversationId">
+        /// Which conversation the response is added to, determined by the `conversation`
+        ///   field in the `response.create` event. If `auto`, the response will be added to
+        ///   the default conversation and the value of `conversation_id` will be an id like
+        ///   `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///   the value of `conversation_id` will be `null`. If responses are being triggered
+        ///   automatically by VAD the response will be added to the default conversation
         /// </param>
         /// <param name="outputModalities">
         /// The set of modalities the model used to respond, currently the only possible values are
@@ -1600,38 +1631,34 @@ namespace Azure.AI.Projects.Agents
         /// Maximum number of output tokens for a single assistant response,
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
-        /// <param name="id"> The unique id of the response. </param>
-        /// <param name="output"> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </param>
-        /// <param name="conversationId"> The id of the conversation this response belongs to. </param>
         /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
-        /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResult VoiceResult(VoiceResponseBaseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id = default, IEnumerable<RealtimeItem> output = default, string conversationId = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
+        public static VoiceResult VoiceResult(string id = default, VoiceResponseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, IEnumerable<RealtimeItem> output = default, IDictionary<string, BinaryData> metadata = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, VoiceResponseAudio audio = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
         {
-            outputModalities ??= new ChangeTrackingList<RealtimeOutputModality>();
             output ??= new ChangeTrackingList<RealtimeItem>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new ChangeTrackingDictionary<string, BinaryData>();
+            outputModalities ??= new ChangeTrackingList<RealtimeOutputModality>();
 
             return new VoiceResult(
+                id,
                 @object,
                 status,
                 statusDetails,
+                output.ToList(),
+                metadata,
                 usage,
+                conversationId,
                 outputModalities.ToList(),
                 maxOutputTokens,
-                additionalBinaryDataProperties: null,
-                id,
-                output.ToList(),
-                conversationId,
                 audio,
-                metadata,
                 temperature,
                 createdOn,
-                completedOn);
+                completedOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Audio configuration for a response. Follows the OpenAI Realtime GA `audio` object shape. </summary>
@@ -1653,44 +1680,6 @@ namespace Azure.AI.Projects.Agents
         public static VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = default, VoiceType? voiceType = default, string voiceLocale = default, RealtimeAudioFormat format = default)
         {
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Properties shared by persisted voice responses. </summary>
-        /// <param name="object"> The object type, must be `realtime.response`. </param>
-        /// <param name="status">
-        /// The final status of the response (`completed`, `cancelled`, `failed`, or
-        ///   `incomplete`, `in_progress`).
-        /// </param>
-        /// <param name="statusDetails"> Additional details about the status. </param>
-        /// <param name="usage">
-        /// Usage statistics for the Response, this will correspond to billing. A
-        ///   Realtime API session will maintain a conversation context and append new
-        ///   Items to the Conversation, thus output from previous turns (text and
-        ///   audio tokens) will become the input for later turns.
-        /// </param>
-        /// <param name="outputModalities">
-        /// The set of modalities the model used to respond, currently the only possible values are
-        ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
-        ///   output to mode `text` will disable audio output from the model.
-        /// </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        ///   inclusive of tool calls, that was used in this response.
-        /// </param>
-        /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceResponseBase VoiceResponseBase(VoiceResponseBaseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
-        {
-            outputModalities ??= new ChangeTrackingList<RealtimeOutputModality>();
-
-            return new VoiceResponseBase(
-                @object,
-                status,
-                statusDetails,
-                usage,
-                outputModalities.ToList(),
-                maxOutputTokens,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2598,7 +2587,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             headers ??= new ChangeTrackingDictionary<string, string>();
@@ -2751,7 +2740,12 @@ namespace Azure.AI.Projects.Agents
                 sendCredentialsForAgentCard);
         }
 
-        /// <summary> A browser automation tool stored in a toolbox. </summary>
+        /// <summary>
+        /// A browser automation tool stored in a toolbox.
+        /// BrowserAutomationPreviewToolboxTool is deprecated.
+        /// Please use BrowserAutomationToolboxTool instead.
+        /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+        /// </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">

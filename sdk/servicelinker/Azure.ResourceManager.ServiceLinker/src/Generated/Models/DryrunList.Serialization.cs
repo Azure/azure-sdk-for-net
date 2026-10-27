@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_nextLinkIsDefined || Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink, _nextLinkIsDefined))
             {
                 if (NextLink != null)
                 {

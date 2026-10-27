@@ -9,7 +9,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+    /// <summary> The legacy GitHub Copilot toolset retained for compatibility. Use `MicrosoftCopilotToolsetPreview` for new integrations. </summary>
     [Experimental("AAIP001")]
     public partial class GitHubCopilotToolsetPreview : ResponseTool
     {

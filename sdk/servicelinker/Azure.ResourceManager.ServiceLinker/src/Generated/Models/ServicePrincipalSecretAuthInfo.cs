@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo
     {
         private string _userName;
-        internal bool _userNameIsDefined;
+        private bool _userNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>

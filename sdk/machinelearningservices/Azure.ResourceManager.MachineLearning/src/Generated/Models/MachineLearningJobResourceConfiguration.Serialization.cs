@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_dockerArgsIsDefined || Optional.IsDefined(DockerArgs))
+            if (Optional.IsDefined(DockerArgs, _dockerArgsIsDefined))
             {
                 if (DockerArgs != null)
                 {

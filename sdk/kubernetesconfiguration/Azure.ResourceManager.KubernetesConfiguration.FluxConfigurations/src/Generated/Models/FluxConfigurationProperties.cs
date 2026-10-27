@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _repositoryPublicKey;
-        internal bool _repositoryPublicKeyIsDefined;
+        private bool _repositoryPublicKeyIsDefined;
         private string _sourceSyncedCommitId;
-        internal bool _sourceSyncedCommitIdIsDefined;
+        private bool _sourceSyncedCommitIdIsDefined;
         private DateTimeOffset? _sourceUpdatedOn;
-        internal bool _sourceUpdatedOnIsDefined;
+        private bool _sourceUpdatedOnIsDefined;
         private DateTimeOffset? _statusUpdatedOn;
-        internal bool _statusUpdatedOnIsDefined;
+        private bool _statusUpdatedOnIsDefined;
         private bool? _isWaitForReconciliation;
-        internal bool _isWaitForReconciliationIsDefined;
+        private bool _isWaitForReconciliationIsDefined;
         private string _reconciliationWaitDuration;
-        internal bool _reconciliationWaitDurationIsDefined;
+        private bool _reconciliationWaitDurationIsDefined;
         private string _errorMessage;
-        internal bool _errorMessageIsDefined;
+        private bool _errorMessageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationProperties"/>. </summary>
         public FluxConfigurationProperties()

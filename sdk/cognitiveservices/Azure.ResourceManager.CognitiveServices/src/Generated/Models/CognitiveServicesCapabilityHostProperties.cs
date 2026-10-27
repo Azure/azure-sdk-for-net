@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesCapabilityHostProperties : CognitiveServicesResourceBase
     {
         private string _customerSubnet;
-        internal bool _customerSubnetIsDefined;
+        private bool _customerSubnetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapabilityHostProperties"/>. </summary>
         public CognitiveServicesCapabilityHostProperties()
