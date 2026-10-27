@@ -18,7 +18,7 @@ Use PowerShell 7+ to build a provisioning library and export its ARM resource hi
 
 `-Path` accepts a package directory with one project under `src`, a directory containing one project, a `.csproj`, or an existing `.dll`. Project inputs build with `dotnet` and copy their dependencies next to the output assembly. The default build target is `netstandard2.0` in `Debug`; use `-Framework` and `-Configuration` to override these.
 
-For DLL inputs, no build is performed. Keep the DLL's dependencies alongside it and use a compatible PowerShell/.NET runtime:
+For DLL inputs, no build is performed. Keep the DLL's dependencies alongside it and use a compatible PowerShell/.NET runtime. Only .NET framework assemblies may fall back to the host's default load context; a missing private dependency fails inspection even if PowerShell already loaded it:
 
 ```powershell
 .\eng\packages\http-client-csharp-provisioning\eng\scripts\Export-ResourceInventory.ps1 `
@@ -37,7 +37,7 @@ The output is a JSON array using a subset of the field names from the management
 
 In particular, `HasScope` does not identify the supported ARM deployment scope kinds. `Scopes` remains unknown (`null`), rather than inventing a scope set or propagating guesses from parents. The JSON shape is aligned with the management tool, but it is not sufficient for the strict `Compare-ResourceHierarchy.ps1` gate, which expects known singleton and deployment-scope metadata.
 
-Only inspect trusted libraries: assembly loading and resource constructors execute code. The script supports resource constructors taking a Bicep identifier and an optional API version, or just a Bicep identifier.
+Only inspect trusted libraries: assembly loading and resource constructors execute code. The script supports resource constructors taking a Bicep identifier and an optional API version, or just a Bicep identifier. The declared API-version default is used when present; otherwise the two-string constructor receives `null`.
 
 Generating the emitter's test projects also exports `resource-inventory.json` into each generated project directory:
 

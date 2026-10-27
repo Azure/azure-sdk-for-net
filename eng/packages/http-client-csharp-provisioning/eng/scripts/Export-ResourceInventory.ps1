@@ -85,14 +85,18 @@ else {
 # Resolve dependencies in an isolated context so repeat runs can inspect different library versions.
 if (-not ('ProvisioningResourceInventory.LoadContext' -as [type])) {
     Add-Type -TypeDefinition @'
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Text.Json;
 
 namespace ProvisioningResourceInventory
 {
     public sealed class LoadContext : AssemblyLoadContext
     {
+        private static readonly HashSet<string> FrameworkAssemblies = GetFrameworkAssemblies();
         private readonly AssemblyDependencyResolver _resolver;
         private readonly string _directory;
 
@@ -100,6 +104,39 @@ namespace ProvisioningResourceInventory
         {
             _resolver = new AssemblyDependencyResolver(assemblyPath);
             _directory = Path.GetDirectoryName(assemblyPath);
+        }
+
+        private static HashSet<string> GetFrameworkAssemblies()
+        {
+            var assemblies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            // PowerShell can use a shared framework or bundle a self-contained runtime pack.
+            string manifests = (string)AppContext.GetData("APP_CONTEXT_DEPS_FILES") ?? "";
+            foreach (string manifest in manifests.Split(';', StringSplitOptions.RemoveEmptyEntries))
+            {
+                using (var document = JsonDocument.Parse(File.ReadAllText(manifest)))
+                {
+                    foreach (var target in document.RootElement.GetProperty("targets").EnumerateObject())
+                    {
+                        foreach (var library in target.Value.EnumerateObject())
+                        {
+                            if (!library.Name.StartsWith("Microsoft.NETCore.App.Runtime.", StringComparison.Ordinal)
+                                && !library.Name.StartsWith("runtimepack.Microsoft.NETCore.App.Runtime.", StringComparison.Ordinal))
+                            {
+                                continue;
+                            }
+                            foreach (var asset in library.Value.GetProperty("runtime").EnumerateObject())
+                            {
+                                assemblies.Add(Path.GetFileNameWithoutExtension(asset.Name));
+                            }
+                        }
+                    }
+                }
+            }
+            if (assemblies.Count == 0)
+            {
+                throw new InvalidOperationException("Cannot identify .NET framework assemblies from the host dependency manifests.");
+            }
+            return assemblies;
         }
 
         public Assembly LoadLibrary(string path)
@@ -122,7 +159,17 @@ namespace ProvisioningResourceInventory
                     path = adjacent;
                 }
             }
-            return path == null ? null : LoadLibrary(path);
+            if (path != null)
+            {
+                return LoadLibrary(path);
+            }
+            if (FrameworkAssemblies.Contains(name.Name))
+            {
+                return null;
+            }
+            throw new FileNotFoundException(
+                $"Cannot resolve private dependency '{name.FullName}' for the inspected library in '{_directory}'.",
+                name.Name + ".dll");
         }
     }
 }
@@ -158,6 +205,9 @@ try {
             if ($null -eq $constructor) {
                 $constructor = $type.GetConstructor($flags, $null, [type[]] @([string]), $null)
                 $arguments = [object[]] @('resourceInventory')
+            }
+            elseif ($constructor.GetParameters()[1].HasDefaultValue) {
+                $arguments[1] = $constructor.GetParameters()[1].DefaultValue
             }
             if ($null -eq $constructor) {
                 throw "Resource '$($type.FullName)' has no supported (string, string) or (string) constructor."

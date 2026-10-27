@@ -250,4 +250,55 @@ public class Single : Azure.Provisioning.Primitives.ProvisionableResource
         ($single[0].ParentResources -is [array]) | Should -BeTrue
         $single[0].ParentResources.Count | Should -Be 0
     }
+
+    It 'honors a non-null optional API-version default' {
+        $pinnedDirectory = New-Item -ItemType Directory -Path (Join-Path $TestDrive 'pinned')
+        $pinnedProject = Join-Path $pinnedDirectory 'Inventory.Pinned.csproj'
+        Set-Content $pinnedProject @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>$framework</TargetFramework></PropertyGroup>
+  <ItemGroup><ProjectReference Include="..\core\Inventory.Core.csproj" /></ItemGroup>
+</Project>
+"@
+        Set-Content (Join-Path $pinnedDirectory 'Pinned.cs') @'
+public class Pinned : Azure.Provisioning.Primitives.ProvisionableResource
+{
+    public Pinned(string name, string version = "2025-01-01")
+        : base(name, "Test/pinned", version ?? throw new System.ArgumentNullException(nameof(version))) { }
+}
+'@
+        $output = Join-Path $pinnedDirectory 'report.json'
+        & $scriptPath -Path $pinnedProject -OutputPath $output -Framework $framework
+        $pinned = ConvertFrom-Json -InputObject (Get-Content $output -Raw) -NoEnumerate
+        $pinned[0].ResourceVersion | Should -Be '2025-01-01'
+    }
+
+    It 'rejects a missing private dependency even when it is loaded in the default context' {
+        $dependency = Join-Path (Split-Path $assemblyPath) 'Inventory.Core.dll'
+        $stream = [System.IO.File]::OpenRead($dependency)
+        try {
+            $preloaded = [System.Runtime.Loader.AssemblyLoadContext]::Default.LoadFromStream($stream)
+        }
+        finally {
+            $stream.Dispose()
+        }
+        [System.Runtime.Loader.AssemblyLoadContext]::GetLoadContext($preloaded) |
+            Should -Be ([System.Runtime.Loader.AssemblyLoadContext]::Default)
+
+        $isolated = New-Item -ItemType Directory -Path (Join-Path $TestDrive 'preloaded-dependency')
+        $isolatedAssembly = Join-Path $isolated 'Inventory.Sample.dll'
+        Copy-Item -LiteralPath $assemblyPath -Destination $isolatedAssembly
+        $output = Join-Path $isolated 'report.json'
+        { & $scriptPath -Path $isolatedAssembly -OutputPath $output } |
+            Should -Throw '*Inventory.Core*'
+        Test-Path -LiteralPath $output | Should -BeFalse
+
+        Set-Content $output 'preserve this report'
+        { & $scriptPath -Path $isolatedAssembly -OutputPath $output } |
+            Should -Throw '*Inventory.Core*'
+        (Get-Content $output -Raw).Trim() | Should -Be 'preserve this report'
+
+        & $scriptPath -Path $assemblyPath -OutputPath $output
+        Get-Content -LiteralPath $output -Raw | Should -Be $directoryReport
+    }
 }
