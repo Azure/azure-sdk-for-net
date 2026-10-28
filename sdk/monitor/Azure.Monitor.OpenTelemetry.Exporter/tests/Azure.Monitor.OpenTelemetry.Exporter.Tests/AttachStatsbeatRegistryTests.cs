@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -101,6 +102,143 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, registry.Count);
             Assert.True(reported["key"]);
             Assert.False(reported["Key"]);
+        }
+
+        [Fact]
+        public void PreparationDeduplicatesNonconsecutiveEqualStringsAcrossGroups()
+        {
+            var registry = new AttachStatsbeatRegistry();
+            var first = new string("first".ToCharArray());
+            var duplicate = new string("first".ToCharArray());
+            Assert.NotSame(first, duplicate);
+            var batch = MockStatsbeatScope.CreateRouteBatch(
+                (first, EastUs), ("second", EastUs), (duplicate, EastUs), ("", EastUs), ("First", EastUs),
+                (duplicate, WestEurope), ("second", WestEurope), (first, WestEurope));
+            batch.GetOrAdd(WestEurope, isAad: true).TelemetryItems.Add(
+                new TelemetryItem(DateTime.UtcNow, resource: null, first));
+
+            registry.Observe(batch, Start);
+
+            var observations = Assert.IsType<AttachStatsbeatRegistry.ObservationBuffer>(batch.AttachObservations);
+            Assert.Equal(new[] { "first", "second", "First" }, observations.Items.Select(pair => pair.Key));
+            var reported = registry.Collect(Start, Interval);
+            Assert.Equal(3, reported.Count);
+            Assert.True(reported["first"]);
+            Assert.True(reported["second"]);
+            Assert.False(reported["First"]);
+        }
+
+        [Theory]
+        [InlineData(true, true, true)]
+        [InlineData(true, false, false)]
+        [InlineData(false, true, true)]
+        public void DuplicateKeysUseTheLastEnabledRegion(bool nonEuEnabled, bool euEnabled, bool expectedIsEu)
+        {
+            var registry = new AttachStatsbeatRegistry();
+            registry.SetEnabledRegions(nonEuEnabled, euEnabled);
+            var batch = MockStatsbeatScope.CreateRouteBatch(("key", EastUs), ("key", WestEurope));
+
+            registry.Observe(batch, Start);
+
+            Assert.Equal(expectedIsEu, Assert.Single(registry.Collect(Start, Interval)).Value);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void DisabledGroupsDoNotChangeAdmissionOrderAtCapacity(bool nonEuEnabled)
+        {
+            var registry = new AttachStatsbeatRegistry();
+            var enabledEndpoint = nonEuEnabled ? EastUs : WestEurope;
+            var disabledEndpoint = nonEuEnabled ? WestEurope : EastUs;
+            registry.SetEnabledRegions(nonEuEnabled, !nonEuEnabled);
+            registry.Observe(MockStatsbeatScope.CreateRouteBatch(
+                Enumerable.Range(0, AttachStatsbeatRegistry.Capacity - 1)
+                    .Select(i => ($"key-{i}", enabledEndpoint)).ToArray()), Start);
+            var batch = MockStatsbeatScope.CreateRouteBatch(
+                ("later", disabledEndpoint), ("first", enabledEndpoint), ("later", enabledEndpoint));
+
+            registry.Observe(batch, Start);
+
+            var reported = registry.Collect(Start, Interval);
+            Assert.Equal(AttachStatsbeatRegistry.Capacity, registry.Count);
+            Assert.Contains("first", reported.Keys);
+            Assert.DoesNotContain("later", reported.Keys);
+        }
+
+        [Fact]
+        public void ReusedBatchesRefreshRegionsAndClearPreparedKeys()
+        {
+            var registry = new AttachStatsbeatRegistry();
+            var batch = MockStatsbeatScope.CreateRouteBatch(("old", EastUs));
+            registry.Observe(batch, Start);
+            var group = batch[0];
+            var observations = Assert.IsType<AttachStatsbeatRegistry.ObservationBuffer>(batch.AttachObservations);
+
+            foreach (var endpoint in new[] { WestEurope, new string(WestEurope.ToCharArray()), EastUs })
+            {
+                batch.Reset();
+                Assert.Empty(observations.Items);
+                Assert.Empty(group.TelemetryItems);
+                var reusedGroup = batch.GetOrAdd(endpoint);
+                Assert.Same(group, reusedGroup);
+                reusedGroup.TelemetryItems.Add(new TelemetryItem(DateTime.UtcNow, resource: null, "new"));
+
+                registry.Observe(batch, Start + 1);
+
+                Assert.Same(observations, batch.AttachObservations);
+                var observation = Assert.Single(observations.Items);
+                Assert.Equal("new", observation.Key);
+                Assert.Equal(endpoint == WestEurope, observation.Value);
+            }
+
+            Assert.Equal(2, registry.Count);
+            Assert.All(registry.Collect(Start + 1, Interval), pair => Assert.False(pair.Value));
+        }
+
+        [Fact]
+        public void ReusedBatchesRespectChangedRegionConfiguration()
+        {
+            var registry = new AttachStatsbeatRegistry();
+            var batch = MockStatsbeatScope.CreateRouteBatch(("key", EastUs), ("key", WestEurope));
+            registry.Observe(batch, Start);
+            Assert.True(Assert.Single(batch.AttachObservations!.Items).Value);
+
+            registry.SetEnabledRegions(true, false);
+            registry.Observe(batch, Start + 1);
+            Assert.False(Assert.Single(batch.AttachObservations.Items).Value);
+
+            registry.SetEnabledRegions(false, false);
+            registry.Observe(batch, Start + 2);
+            Assert.Equal(0, registry.Count);
+
+            registry.SetEnabledRegions(false, true);
+            registry.Observe(batch, Start + 3);
+            Assert.True(Assert.Single(registry.Collect(Start + 3, Interval)).Value);
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void DisabledOrClosedRegistriesSkipBatchPreparation(bool closed)
+        {
+            var registry = new AttachStatsbeatRegistry();
+            var batch = MockStatsbeatScope.CreateRouteBatch(("key", EastUs));
+            if (closed)
+            {
+                registry.Close();
+                registry.SetEnabledRegions(true, true);
+            }
+            else
+            {
+                registry.SetEnabledRegions(false, false);
+            }
+
+            registry.Observe(batch, Start);
+
+            Assert.Null(batch.AttachObservations);
+            Assert.Equal(0, registry.Count);
+            Assert.Empty(registry.Collect(Start, Interval));
         }
 
         [Theory]
@@ -305,7 +443,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .AddReader(collector.CreateReader(int.MaxValue))
                 .Build();
 
-        private static Internals.MultiEndpoint.EndpointRouteBatch Keys(int start, string endpoint = EastUs)
+        private static EndpointRouteBatch Keys(int start, string endpoint = EastUs)
             => MockStatsbeatScope.CreateRouteBatch(Enumerable.Range(start, AttachStatsbeatRegistry.Capacity)
                 .Select(i => ($"key-{i}", endpoint)).ToArray());
     }

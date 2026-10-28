@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
@@ -23,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private int _count;
 
         internal int Count => _count;
+
+        internal AttachStatsbeatRegistry.ObservationBuffer? AttachObservations { get; set; }
 
         /// <summary>Stitches one export's routing decisions to the sends they produced.</summary>
         internal long Sequence { get; private set; }
@@ -80,10 +83,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
 
             _count = 0;
+            AttachObservations?.Clear();
         }
 
         internal sealed class Group
         {
+            private string? _statsbeatEndpoint;
+            private bool _statsbeatIsEu;
+
+            internal bool StatsbeatIsEu
+            {
+                get
+                {
+                    if (!string.Equals(_statsbeatEndpoint, IngestionEndpoint, StringComparison.Ordinal))
+                    {
+                        _statsbeatIsEu = AzureMonitorStatsbeat.IsEuRegion(IngestionEndpoint);
+                        _statsbeatEndpoint = IngestionEndpoint;
+                    }
+                    return _statsbeatIsEu;
+                }
+            }
+
             internal string IngestionEndpoint { get; private set; } = string.Empty;
 
             /// <summary>Whether the destination authenticates ingestion with Microsoft Entra ID.</summary>

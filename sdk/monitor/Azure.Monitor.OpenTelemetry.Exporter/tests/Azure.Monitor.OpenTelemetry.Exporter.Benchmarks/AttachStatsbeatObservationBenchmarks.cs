@@ -15,15 +15,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
     public class AttachStatsbeatObservationBenchmarks
     {
         private const int BatchSize = 512;
-        private const int ConcurrentBatches = 128;
+        private const int ExporterCount = 3;
+        private const int ConcurrentBatches = 192;
         private MultiEndpointStatsbeat _stats = null!;
-        private EndpointRouteBatch _batch = null!;
+        private EndpointRouteBatch[] _batches = null!;
 
         [Params(1, 3)]
         public int EndpointCount { get; set; }
 
         [Params(1, BatchSize)]
         public int CustomerCount { get; set; }
+
+        [Params(false, true)]
+        public bool DistinctKeyInstances { get; set; }
 
         [GlobalSetup]
         public void Setup()
@@ -40,32 +44,63 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 keys[i] = "key-" + i;
             }
 
-            _batch = new EndpointRouteBatch();
-            for (int i = 0; i < BatchSize; i++)
+            // Each exporter owns its batch, just as it does on the export path.
+            _batches = new EndpointRouteBatch[ExporterCount];
+            for (int exporter = 0; exporter < ExporterCount; exporter++)
             {
-                _batch.GetOrAdd(endpoints[i % EndpointCount]).TelemetryItems.Add(
-                    new TelemetryItem(DateTime.UtcNow, resource: null, keys[i % CustomerCount]));
+                var batch = _batches[exporter] = new EndpointRouteBatch();
+                for (int i = 0; i < BatchSize; i++)
+                {
+                    var key = keys[i % CustomerCount];
+                    batch.GetOrAdd(endpoints[i % EndpointCount]).TelemetryItems.Add(
+                        new TelemetryItem(DateTime.UtcNow, resource: null,
+                            DistinctKeyInstances ? new string(key.ToCharArray()) : key));
+                }
             }
 
             // Observe can run before configuration completes; no transmitters or network are needed.
             _stats = new MultiEndpointStatsbeat(
                 null, endpoints[0], null, TimeSpan.FromHours(24), _ => new Measurement<int>(1));
-            _stats.Observe(_batch, 1);
+            foreach (var batch in _batches)
+            {
+                _stats.Observe(batch, 1);
+            }
+            _stats.Registry.Collect(1, long.MaxValue);
+            _stats.Registry.CompleteCollection();
         }
 
         [Benchmark]
-        public void Observe() => _stats.Observe(_batch, 1);
+        public void Observe() => _stats.Observe(_batches[0], 1);
 
         [Benchmark(OperationsPerInvoke = ConcurrentBatches)]
-        public void ObserveConcurrent()
+        public void ObserveConcurrent() => Parallel.For(0, ExporterCount, ObserveExporter);
+
+        [Benchmark(OperationsPerInvoke = ConcurrentBatches)]
+        public void ObserveDuringCollection()
         {
-            Parallel.For(0, 4, _ =>
+            Parallel.For(0, ExporterCount + 1, worker =>
             {
-                for (int i = 0; i < ConcurrentBatches / 4; i++)
+                if (worker < ExporterCount)
                 {
-                    _stats.Observe(_batch, 1);
+                    ObserveExporter(worker);
+                    return;
+                }
+
+                // Deliberately collect frequently to exercise contention, not the production cadence.
+                for (int i = 0; i < ConcurrentBatches / ExporterCount; i++)
+                {
+                    _stats.Registry.Collect(1, long.MaxValue);
+                    _stats.Registry.CompleteCollection();
                 }
             });
+        }
+
+        private void ObserveExporter(int exporter)
+        {
+            for (int i = 0; i < ConcurrentBatches / ExporterCount; i++)
+            {
+                _stats.Observe(_batches[exporter], 1);
+            }
         }
 
         [GlobalCleanup]

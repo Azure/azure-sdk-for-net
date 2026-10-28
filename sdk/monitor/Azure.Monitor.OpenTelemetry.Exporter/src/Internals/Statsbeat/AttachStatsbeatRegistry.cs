@@ -12,65 +12,69 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
     {
         internal const int Capacity = 2000;
 
+        private const int NonEuRegion = 1;
+        private const int EuRegion = 2;
         private readonly Dictionary<string, Entry> _entries = new(StringComparer.Ordinal);
         private readonly object _gate = new();
         private long _completedCollections;
         private int _count;
         private bool _closed;
-        private bool _nonEuEnabled = true;
-        private bool _euEnabled = true;
+        private int _enabledRegions = NonEuRegion | EuRegion;
 
         internal int Count => Volatile.Read(ref _count);
 
         internal void Observe(EndpointRouteBatch batch, long now)
         {
-            lock (_gate)
+            while (true)
             {
-                if (_closed)
+                var enabledRegions = Volatile.Read(ref _enabledRegions);
+                if (enabledRegions == 0)
                 {
                     return;
                 }
-                for (int i = 0; i < batch.Count; i++)
+
+                var observations = batch.AttachObservations ??= new ObservationBuffer();
+                observations.Prepare(batch, enabledRegions);
+                lock (_gate)
                 {
-                    var group = batch[i];
-                    var isEu = AzureMonitorStatsbeat.IsEuRegion(group.IngestionEndpoint);
-                    if (!(isEu ? _euEnabled : _nonEuEnabled))
+                    if (_closed)
+                    {
+                        return;
+                    }
+                    // Rebuild if configuration changed which region should win for a duplicate key.
+                    if (enabledRegions != _enabledRegions)
                     {
                         continue;
                     }
 
-                    ObserveGroup(group, now, isEu);
-                }
-                Volatile.Write(ref _count, _entries.Count);
-            }
-        }
-
-        private void ObserveGroup(EndpointRouteBatch.Group group, long now, bool isEu)
-        {
-            string? previousKey = null;
-            foreach (var item in group.TelemetryItems)
-            {
-                var key = item.InstrumentationKey;
-                if (string.IsNullOrEmpty(key) || ReferenceEquals(key, previousKey))
-                {
-                    continue;
-                }
-                previousKey = key;
-
-                if (_entries.TryGetValue(key, out var entry))
-                {
-                    if (now >= entry.LastSeen)
+                    foreach (var observation in observations.Items)
                     {
-                        entry.LastSeen = now;
-                        entry.IsEu = isEu;
+                        ObserveKey(observation.Key, now, observation.Value);
                     }
-                }
-                else if (_entries.Count < Capacity)
-                {
-                    _entries.Add(key, new Entry { LastSeen = now, IsEu = isEu });
+                    Volatile.Write(ref _count, _entries.Count);
+                    return;
                 }
             }
         }
+
+        private void ObserveKey(string key, long now, bool isEu)
+        {
+            if (_entries.TryGetValue(key, out var entry))
+            {
+                if (now >= entry.LastSeen)
+                {
+                    entry.LastSeen = now;
+                    entry.IsEu = isEu;
+                }
+            }
+            else if (_entries.Count < Capacity)
+            {
+                _entries.Add(key, new Entry { LastSeen = now, IsEu = isEu });
+            }
+        }
+
+        private static bool IsRegionEnabled(int enabledRegions, bool isEu)
+            => (enabledRegions & (isEu ? EuRegion : NonEuRegion)) != 0;
 
         internal IReadOnlyDictionary<string, bool> Collect(long now, long intervalTicks)
         {
@@ -82,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 foreach (var pair in _entries)
                 {
                     var entry = pair.Value;
-                    var enabled = entry.IsEu ? _euEnabled : _nonEuEnabled;
+                    var enabled = IsRegionEnabled(_enabledRegions, entry.IsEu);
                     var inactive = now - Math.Max(entry.LastSeen, entry.LastReported) >= intervalTicks;
 
                     // An idle SDK collection must finish before its slots can be reused.
@@ -127,8 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 {
                     return;
                 }
-                _nonEuEnabled = nonEuEnabled;
-                _euEnabled = euEnabled;
+                Volatile.Write(ref _enabledRegions, (nonEuEnabled ? NonEuRegion : 0) | (euEnabled ? EuRegion : 0));
                 if (!nonEuEnabled && !euEnabled)
                 {
                     _entries.Clear();
@@ -144,8 +147,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             lock (_gate)
             {
                 _closed = true;
+                Volatile.Write(ref _enabledRegions, 0);
                 _entries.Clear();
                 Volatile.Write(ref _count, 0);
+            }
+        }
+
+        internal sealed class ObservationBuffer
+        {
+            private readonly Dictionary<string, int> _indices = new(StringComparer.Ordinal);
+
+            internal List<KeyValuePair<string, bool>> Items { get; } = new();
+
+            internal void Prepare(EndpointRouteBatch batch, int enabledRegions)
+            {
+                Clear();
+                for (int i = 0; i < batch.Count; i++)
+                {
+                    var group = batch[i];
+                    var isEu = group.StatsbeatIsEu;
+                    if (!IsRegionEnabled(enabledRegions, isEu))
+                    {
+                        continue;
+                    }
+
+                    string? previousKey = null;
+                    foreach (var item in group.TelemetryItems)
+                    {
+                        var key = item.InstrumentationKey;
+                        if (string.IsNullOrEmpty(key) || string.Equals(key, previousKey, StringComparison.Ordinal))
+                        {
+                            continue;
+                        }
+                        previousKey = key;
+
+                        if (_indices.TryGetValue(key, out var index))
+                        {
+                            Items[index] = new(Items[index].Key, isEu);
+                        }
+                        else
+                        {
+                            // Keep first-admission order while the last enabled group supplies the region.
+                            _indices.Add(key, Items.Count);
+                            Items.Add(new(key, isEu));
+                        }
+                    }
+                }
+            }
+
+            internal void Clear()
+            {
+                _indices.Clear();
+                Items.Clear();
             }
         }
 

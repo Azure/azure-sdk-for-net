@@ -20,7 +20,7 @@
 
 ### Other Changes
 
-- Reduced locking in multi-endpoint Attach SDK statistics observation and export.
+- Reduced locking in multi-endpoint Attach SDK statistics observation and export. Endpoint regions are cached, keys are deduplicated before registry updates, and observation is skipped when both stats regions are disabled.
 
 ## 1.10.0 (2026-10-05)
 
