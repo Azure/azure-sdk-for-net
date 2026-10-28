@@ -1,7 +1,7 @@
 # Skill Eval coverage
 
 A deterministic, warning-only check for the skills affected by a pull request.
-It reads skill, Eval, and pipeline files as **data**. It does not install Vally,
+It discovers Evals inside each skill's folder and reads them as **data**. It does not install Vally,
 start Copilot/MCP, execute commands from Evals, or use model quota.
 Initial scope is the skill-coverage portion of
 [#16345](https://github.com/Azure/azure-sdk-tools/issues/16345), not MCP-tool or
@@ -21,12 +21,12 @@ mock-handler coverage enforcement.
    that skill. Renames select both paths. Removing the last Eval warns; removing
    the whole skill skips it. An existing Eval need not change in the same PR.
 3. The checker inventories the PR's immutable head tree and parses candidate
-   Eval YAML. Coverage needs at least one named stimulus with a nonempty prompt
-   or a nonempty `turns` array of nonempty strings, and a match in a configured pipeline's literal
-   `vallyRoot`/`evalGlobs`. Arbitrary fixture YAML, placeholders, invalid YAML,
-   symlinks, oversized files and collector-relative paths containing whitespace
+   Eval YAML in that skill's folder. Presence needs at least one named stimulus
+   with a nonempty prompt or a nonempty `turns` array of nonempty strings.
+   Arbitrary fixture YAML, placeholders, invalid YAML, symlinks and oversized files
    do not count. This is a minimum presence check,
    **not** full Vally schema validation, routing quality, or behavioral grading.
+   It does not read pipeline configuration or verify that a runner selects the Eval.
    When `turns` is provided, a standalone `prompt` does not repair invalid turns.
 4. The check summary and warning annotations explain uncovered skills. Coverage
    gaps exit successfully; unreadable data, failed requests and broken tooling
@@ -71,68 +71,48 @@ coverage.ts           # Shared inventory, minimal YAML checks, safe Markdown
 check.ts              # Local working-tree/Git-diff CLI and check summary
 github.ts             # Immutable GitHub reads and trusted comment updates
 test/                 # Unit tests, real Git fixtures and fake HTTP tests
-package-lock.json     # Exactly one frozen runtime dependency: yaml
+pnpm-lock.yaml        # Exactly one frozen runtime dependency: yaml
 ```
 
 The consumer owns its configuration in
 [.github/skill-eval-coverage.json](../../../../.github/skill-eval-coverage.json).
-That configuration names the skills root, workflow, approved links and pipelines
-to inspect. No deployments or resource addresses are embedded in shared code.
-It explicitly includes the separate TypeSpec-author benchmark pipeline, so that
-skill is not falsely called uncovered or silently exempted.
+That configuration names the skills root, source workflow and approved report
+links. No deployment addresses are embedded in shared code, and no pipeline paths
+or runner globs are needed.
 
-The checker does not invent a second list of Eval discovery globs: it reads the
-configured pipelines and reuses the shared pipeline glob-matching rules. Add a
-separate suite by registering its pipeline with
-literal `vallyRoot`/`evalGlobs` pairs. Unsupported/dynamic discovery is reported
-as unclear configuration, not silently accepted. There are no blanket exclusions
-for uncovered skills in this MVP. A config change, configured pipeline change or
-shared skills configuration change inventories all skills. Do not widen pipeline
-execution globs casually; that can run more model-backed Evals and is a separate
-reviewed change.
+For each skill, candidates are `eval.yaml` or `eval.yml` at the skill root, or
+`eval.yaml`, `eval.yml`, `*.eval.yaml` and `*.eval.yml` recursively under `evals/`
+or `evaluate/evals/`. Paths inside `fixtures/` are excluded. This includes nested
+TypeSpec-author benchmark Evals without knowing which pipeline executes them.
+Whitespace in a valid Eval path does not change presence; runner compatibility
+is a separate concern. A coverage-config or shared skills-config change inventories
+all skills. Pipeline-only edits do not create coverage comments.
 
 The read-only PR job reads configuration from the PR checkout. The writer uses
 default-branch configuration and recomputes independently, so PR code or a
 modified report cannot choose the destination or content of a privileged comment.
 
-## Workflow dependency locks
+## Verification and coverage levels
 
-The two coverage workflows use readable, full release versions. Their exact action
-commits and source-repository identities are recorded in the generated
-[Actions lockfile](../../../../.github/workflows/actions.lock). This is a scoped
-adoption of GitHub's
-[workflow dependency lockfiles](https://docs.github.com/en/actions/concepts/security/workflow-dependency-lockfiles),
-which are in public preview. Other repository workflows retain their existing pins.
-Action versions and commits are unchanged by this migration.
+The dedicated [script-test workflow](../../../../.github/workflows/skill-eval-coverage-tests.yml)
+tests the checker and reporting contracts separately from the workflow that checks
+actual PR skills. Actions use exact commit SHA pins with readable version comments.
+Checker dependency installs use pnpm 12.6.0 with a frozen lockfile, disabled lifecycle
+scripts and isolation from consuming repositories' workspaces.
 
-The read-only coverage job runs the official generator's frozen online verification
-for these two workflows. It fails on stale or invalid locks, without changing files,
-accepting moved pins, or requiring write permissions. The existing GitHub Actions
-Dependabot configuration maintains version updates and their matching lock entries.
-
-After changing an action reference, regenerate and verify from the repository root:
-
-```sh
-gh extension install github/gh-actions-lock --pin v0.3.0
-gh actions-lock .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml
-gh actions-lock --verify .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml
-```
-
-Commit the generated lockfile with the workflow changes; never edit it by hand.
-Review commit or repository-identity changes as dependency changes. This adoption
-does not change repository or organization policies. The effective Actions policy
-and hosted lockfile behavior must still be checked before merging the public-preview
-migration; no policy relaxation is part of this change.
+This PR implements **Eval presence only**. A separate advisory agentic workflow can
+compare declared skill capabilities with Eval metadata, prompts and graders and
+identify likely semantic gaps. That second level does not run Evals and is not
+implemented or made blocking here. Presence is not a semantic quality score or
+evidence that the Evals pass.
 
 ## Run locally
 
-Requires **Node 24.14.1+** and Git. From the repository root:
+Requires **Node 24.14.1+**, **pnpm 12.6.0** and Git. From the repository root:
 
 ```sh
-cd eng/common/scripts/skill-eval-coverage
-npm ci --ignore-scripts --no-audit --no-fund
-npm test
-cd ../../../..
+pnpm --dir eng/common/scripts/skill-eval-coverage --ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --ignore-scripts
+node --test eng/common/scripts/skill-eval-coverage/test/*.test.ts
 node eng/common/scripts/skill-eval-coverage/check.ts --all
 node eng/common/scripts/skill-eval-coverage/check.ts --base origin/main --head HEAD
 node eng/common/scripts/skill-eval-coverage/check.ts --all --json
@@ -153,8 +133,9 @@ replace lint or execute the model-backed Eval suites.
 
 The `pull_request` job has only `contents: read` and `pull-requests: read`. The
 separate `workflow_run` reporter has `contents: read`, `actions: read` and
-`pull-requests: write`. It checks out only the default branch, installs only its
-frozen parser with lifecycle scripts disabled, and never downloads PR artifacts,
+`pull-requests: write`. Its sparse checkout includes only the default branch's
+coverage package and report configuration. It installs its frozen parser with
+lifecycle scripts disabled, and never downloads PR artifacts,
 checks out PR code, evaluates YAML commands, or imports code from the PR.
 
 The reporter validates the source workflow ID/path/repository, open PR, fork,

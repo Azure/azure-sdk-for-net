@@ -8,7 +8,7 @@ import path from "node:path";
 //   *  -> any run of non-separator chars
 //   ?  -> exactly one non-separator char
 // All other regex metacharacters are escaped so they match literally.
-function segmentToRegExp(segment: string): RegExp {
+function segmentToRegExp(segment) {
   const escaped = segment
     .replace(/[.+^${}()|[\]\\]/g, "\\$&")
     .replace(/\*/g, "[^/]*")
@@ -16,26 +16,7 @@ function segmentToRegExp(segment: string): RegExp {
   return new RegExp(`^${escaped}$`);
 }
 
-/** Match an inventoried file path using the same segment rules as globFiles. */
-export function matchesGlob(file: string, pattern: string): boolean {
-  const names = file.split("/");
-  const segments = pattern.split("/").filter(Boolean);
-  function match(nameIndex: number, segmentIndex: number): boolean {
-    if (segmentIndex === segments.length || nameIndex === names.length) {
-      return segmentIndex === segments.length && nameIndex === names.length;
-    }
-    const segment = segments[segmentIndex];
-    if (segment === "**") {
-      // The filesystem walker never emits files for a terminal ** directory glob.
-      return segmentIndex + 1 < segments.length &&
-        (match(nameIndex, segmentIndex + 1) || match(nameIndex + 1, segmentIndex));
-    }
-    return segmentToRegExp(segment).test(names[nameIndex]) && match(nameIndex + 1, segmentIndex + 1);
-  }
-  return match(0, 0);
-}
-
-function walk(dir: string, segments: string[], out: string[]): void {
+function walk(dir, segments, out) {
   if (segments.length === 0) {
     return;
   }
@@ -84,9 +65,9 @@ function walk(dir: string, segments: string[], out: string[]): void {
  * @param {string} pattern Forward-slashed glob relative to `root` (e.g. "tools/*.eval.yaml").
  * @returns {string[]} Sorted absolute file paths.
  */
-export function globFiles(root: string, pattern: string): string[] {
+export function globFiles(root, pattern) {
   const segments = pattern.split("/").filter(Boolean);
-  const out: string[] = [];
+  const out = [];
   walk(path.resolve(root), segments, out);
   return out.sort();
 }

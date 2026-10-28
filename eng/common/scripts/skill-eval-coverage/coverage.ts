@@ -1,7 +1,6 @@
-// Checks skill Eval presence and pipeline discovery using repository files as data only.
+// Checks skill-local Eval presence using repository files as data only.
 import path from "node:path";
 import { parseDocument } from "yaml";
-import { matchesGlob } from "../eval/lib/glob.ts";
 
 export const CONFIG_PATH = ".github/skill-eval-coverage.json";
 export const COMMENT_MARKER = "<!-- azsdk-skill-eval-coverage -->";
@@ -9,7 +8,6 @@ export const MAX_FILE_BYTES = 256 * 1024;
 
 export interface CoverageConfig {
   skillsRoot: string;
-  pipelines: string[];
   workflow: string;
   dashboardUrl: string;
   authoringGuideUrl: string;
@@ -32,13 +30,11 @@ export interface SkillCoverage {
   skillFile: string;
   status: "present" | "missing" | "deleted";
   evals: string[];
-  undiscovered: string[];
   issues: string[];
 }
 
 export interface CoverageReport {
   skills: SkillCoverage[];
-  configurationIssues: string[];
   fullScan: boolean;
 }
 
@@ -63,11 +59,9 @@ function webUrl(value: unknown): string {
 
 export function parseConfig(text: string): CoverageConfig {
   const value = JSON.parse(text);
-  if (!value || !Array.isArray(value.pipelines) || value.pipelines.length === 0 ||
-      value.pipelines.length > 20) throw new Error("Coverage configuration needs pipeline paths.");
+  if (!record(value)) throw new Error("Expected coverage configuration.");
   return {
     skillsRoot: repositoryPath(value.skillsRoot),
-    pipelines: [...new Set<string>(value.pipelines.map(repositoryPath))],
     workflow: repositoryPath(value.workflow),
     dashboardUrl: webUrl(value.dashboardUrl),
     authoringGuideUrl: webUrl(value.authoringGuideUrl),
@@ -87,29 +81,6 @@ function record(value: unknown): value is Record<string, unknown> {
 
 function regular(file: RepositoryFile | undefined): boolean {
   return file?.mode === "100644" || file?.mode === "100755";
-}
-
-interface Discovery {
-  root: string;
-  patterns: string[];
-}
-
-function findDiscovery(value: unknown, result: Discovery[], depth = 0, seen = new WeakSet<object>()): void {
-  if (depth > 100) throw new Error("Pipeline nesting is too deep.");
-  if (typeof value === "object" && value !== null) {
-    if (seen.has(value)) return;
-    seen.add(value);
-  }
-  if (Array.isArray(value)) {
-    for (const item of value) findDiscovery(item, result, depth + 1, seen);
-  } else if (record(value)) {
-    if (typeof value.vallyRoot === "string" && Array.isArray(value.evalGlobs)) {
-      const patterns = value.evalGlobs.map((pattern) => repositoryPath(pattern));
-      if (!patterns.length) throw new Error("Empty Eval discovery patterns.");
-      result.push({ root: repositoryPath(value.vallyRoot), patterns });
-    }
-    for (const child of Object.values(value)) findDiscovery(child, result, depth + 1, seen);
-  }
 }
 
 function nonempty(value: unknown): value is string {
@@ -133,7 +104,7 @@ export async function checkCoverage(
   const root = config.skillsRoot + "/";
   const changes = new Set((changedPaths ?? []).map(repositoryPath));
   const fullScan = changedPaths === null || changes.has(CONFIG_PATH) ||
-    changes.has(root + ".vally.yaml") || config.pipelines.some((file) => changes.has(file));
+    changes.has(root + ".vally.yaml");
   const names = new Set<string>();
   if (fullScan) {
     for (const file of files.keys()) {
@@ -147,39 +118,17 @@ export async function checkCoverage(
     }
   }
 
-  const configurationIssues: string[] = [];
-  const discovery: Discovery[] = [];
-  for (const pipeline of config.pipelines) {
-    if (!regular(files.get(pipeline))) {
-      configurationIssues.push(`Configured pipeline is missing or is not a regular file: ${pipeline}`);
-      continue;
-    }
-    const text = await snapshot.read(pipeline);
-    if (text === undefined) throw new Error("A pipeline file could not be read.");
-    try {
-      const found: Discovery[] = [];
-      findDiscovery(yamlData(text), found);
-      if (!found.length) throw new Error("No literal vallyRoot/evalGlobs discovery settings.");
-      discovery.push(...found);
-    } catch {
-      configurationIssues.push(`Cannot read literal vallyRoot/evalGlobs settings from: ${pipeline}`);
-    }
-  }
-
-  const matchingDiscovery = (file: string) => discovery.filter(({ root: evalRoot, patterns }) =>
-    file.startsWith(evalRoot + "/") && patterns.some((pattern) =>
-      matchesGlob(file.slice(evalRoot.length + 1), pattern)));
   const skills: SkillCoverage[] = [];
   for (const name of [...names].sort()) {
     const directory = root + name + "/";
     const skillFile = directory + "SKILL.md";
     if (!files.has(skillFile)) {
       if (changes.has(skillFile)) {
-        skills.push({ name, skillFile, status: "deleted", evals: [], undiscovered: [], issues: [] });
+        skills.push({ name, skillFile, status: "deleted", evals: [], issues: [] });
       }
       continue; // Shared guides and fixture folders without SKILL.md are not skills.
     }
-    const item: SkillCoverage = { name, skillFile, status: "missing", evals: [], undiscovered: [], issues: [] };
+    const item: SkillCoverage = { name, skillFile, status: "missing", evals: [], issues: [] };
     if (!regular(files.get(skillFile))) {
       item.issues.push("SKILL.md must be a regular file, not a symbolic link.");
       skills.push(item);
@@ -187,16 +136,12 @@ export async function checkCoverage(
     }
     const candidates = [...files.keys()].filter((file) => file.startsWith(directory) &&
       /(?:^|\/)(?:eval|[^/]+\.eval)\.ya?ml$/.test(file.slice(directory.length)) &&
-      (file.startsWith(directory + "evals/") || file.startsWith(directory + "evaluate/evals/") || matchingDiscovery(file).length > 0));
+      (file === directory + "eval.yaml" || file === directory + "eval.yml" ||
+        file.startsWith(directory + "evals/") || file.startsWith(directory + "evaluate/evals/")) &&
+      !file.slice(directory.length).split("/").includes("fixtures"));
     for (const file of candidates.sort()) {
       if (!regular(files.get(file)) || (files.get(file)?.size ?? 0) > MAX_FILE_BYTES) {
         item.issues.push(`Eval must be a regular file of at most ${MAX_FILE_BYTES} bytes: ${file}`);
-        continue;
-      }
-      const matches = matchingDiscovery(file);
-      // The collector passes root-relative Eval paths as space-delimited CLI arguments.
-      if (matches.length && matches.every(({ root: evalRoot }) => /\s/.test(file.slice(evalRoot.length + 1)))) {
-        item.issues.push(`Eval path contains whitespace unsupported by pipeline discovery: ${file}`);
         continue;
       }
       const text = await snapshot.read(file);
@@ -207,19 +152,17 @@ export async function checkCoverage(
         item.issues.push(`Invalid Eval YAML or no named, nonempty stimulus: ${file}`);
         continue;
       }
-      if (matches.length) item.evals.push(file);
-      else item.undiscovered.push(file);
+      item.evals.push(file);
     }
     if (item.evals.length) item.status = "present";
-    else if (item.undiscovered.length) item.issues.push("Eval files exist but no configured pipeline discovers them.");
-    else item.issues.push("No associated, discoverable Eval with a named stimulus was found.");
+    else item.issues.push("No associated Eval with a named, nonempty stimulus was found in the skill folder.");
     skills.push(item);
   }
-  return { skills, configurationIssues, fullScan };
+  return { skills, fullScan };
 }
 
 export function hasCoverageWarnings(report: CoverageReport): boolean {
-  return report.configurationIssues.length > 0 || report.skills.some((skill) => skill.status === "missing");
+  return report.skills.some((skill) => skill.status === "missing");
 }
 
 function html(value: string): string {
@@ -260,7 +203,7 @@ export function renderReport(report: CoverageReport | null, links: ReportLinks):
   if (!report) {
     lines.push("The coverage check could not read all required data. Do not treat this as a coverage pass.");
   } else {
-    if (report.fullScan) lines.push("Full inventory: coverage configuration or shared discovery changed.", "");
+    if (report.fullScan) lines.push("Full inventory: coverage configuration or shared skills configuration changed.", "");
     lines.push("| Skill | Coverage | Associated Eval |", "| --- | --- | --- |");
     for (const skill of report.skills.slice(0, 50)) {
       const status = skill.status === "present" ? "Present" : skill.status === "deleted" ? "Skipped — skill deleted" : "Missing";
@@ -270,7 +213,6 @@ export function renderReport(report: CoverageReport | null, links: ReportLinks):
       lines.push(`| <code>${html(skill.name)}</code> | ${status} | ${evals} |`);
     }
     if (!report.skills.length) lines.push("| — | No skill changes | — |");
-    for (const issue of report.configurationIssues.slice(0, 10)) lines.push("", `- ${html(issue)}`);
     for (const skill of report.skills.filter((item) => item.status === "missing").slice(0, 30)) {
       lines.push("", `**<code>${html(skill.name)}</code>**: ${html(skill.issues.join(" "))}`);
     }
@@ -280,6 +222,7 @@ export function renderReport(report: CoverageReport | null, links: ReportLinks):
   return body + "\n\n" + [
     `${link("Eval-authoring guide", links.config.authoringGuideUrl)} · ${link("View Eval dashboard", links.config.dashboardUrl)}`,
     "Dashboard access requires corporate access/sign-in. It shows published historical results, not validation of this PR.",
+    "This checks associated Eval presence only. Semantic coverage of the skill's capabilities is not assessed.",
     ...(links.runUrl ? [link("Check run", links.runUrl)] : []),
     "Coverage warnings are **nonblocking**. This check does not run Evals or prove behavioral correctness. Existing lint failures remain blocking.",
   ].join("\n\n") + "\n";
