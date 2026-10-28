@@ -110,6 +110,8 @@ While `DefaultAzureCredential` is generally the quickest way to authenticate app
 * [Azure Virtual Machines](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token)
 * [Azure Virtual Machines Scale Sets](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-powershell-windows-vmss)
 
+On Azure Arc-enabled servers with user-assigned managed identity support, `ManagedIdentityCredential` supports selecting an attached identity by client ID, resource ID, or object ID. `DefaultAzureCredential` supports client ID and resource ID. Without a selector, the system-assigned identity is used. Authentication fails if the host cannot honor the selected identity; it does not silently fall back to the system-assigned identity. See [Managed identities on Azure Arc](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#managed-identities-on-azure-arc) for configuration details.
+
 As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
 
 ## Identity binding mode (WorkloadIdentityCredential)

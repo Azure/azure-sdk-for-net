@@ -1151,11 +1151,36 @@ namespace Azure.Core.Tests.Identity
             using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
             var mockTransport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(
                 ExpectedToken, identityParameter, managedIdentityId._userAssignedId));
-            var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId);
+            var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId, isForceRefreshEnabled: false);
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            AccessToken cachedToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.AreEqual(actualToken.Token, cachedToken.Token);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
+            CredentialTestHelpers.AssertArcManagedIdentityRequest(
+                mockTransport.Requests.Single(), identityParameter, managedIdentityId._userAssignedId);
+        }
+
+        [NonParallelizable]
+        [TestCaseSource(nameof(ArcUnconfirmedUserAssignedIdentityIds))]
+        public void VerifyArcRejectsUnconfirmedUserAssignedIdentity(
+            ManagedIdentityId managedIdentityId,
+            string identityParameter,
+            bool mismatchedIdentity)
+        {
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
+            var response = mismatchedIdentity
+                ? CredentialTestHelpers.CreateMockArcTokenResponse(ExpectedToken, identityParameter, $"{managedIdentityId._userAssignedId}-different")
+                : CredentialTestHelpers.CreateMockArcTokenResponse(ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.IsTrue(ExceptionChainContains(ex, Constants.MiSourceNoUserAssignedIdentityMessage));
             Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
             CredentialTestHelpers.AssertArcManagedIdentityRequest(
                 mockTransport.Requests.Single(), identityParameter, managedIdentityId._userAssignedId);
@@ -1163,16 +1188,18 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [TestCaseSource(nameof(ArcUserAssignedIdentityIds))]
-        public void VerifyArcRejectsUnconfirmedUserAssignedIdentity(ManagedIdentityId managedIdentityId, string identityParameter)
+        public void VerifyArcRejectsUnattachedUserAssignedIdentity(ManagedIdentityId managedIdentityId, string identityParameter)
         {
             using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
-            var mockTransport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(ExpectedToken));
+            var response = new MockResponse(400);
+            response.SetContent("""{"error":"identity_not_found","error_description":"The requested identity is not assigned to this resource."}""");
+            var mockTransport = new MockTransport(response);
             var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId);
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
                 await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
 
-            Assert.IsTrue(ExceptionChainContains(ex, Constants.MiSourceNoUserAssignedIdentityMessage));
+            Assert.IsTrue(ExceptionChainContains(ex, "identity_not_found"));
             Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
             CredentialTestHelpers.AssertArcManagedIdentityRequest(
                 mockTransport.Requests.Single(), identityParameter, managedIdentityId._userAssignedId);
@@ -1216,6 +1243,17 @@ namespace Azure.Core.Tests.Identity
             yield return new TestCaseData(ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(
                 $"/subscriptions/{Guid.NewGuid()}/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arc-uami")), "msi_res_id");
             yield return new TestCaseData(ManagedIdentityId.FromUserAssignedObjectId(Guid.NewGuid().ToString()), "object_id");
+        }
+
+        private static IEnumerable<TestCaseData> ArcUnconfirmedUserAssignedIdentityIds()
+        {
+            foreach (TestCaseData identity in ArcUserAssignedIdentityIds())
+            {
+                foreach (bool mismatchedIdentity in new[] { false, true })
+                {
+                    yield return new TestCaseData(identity.Arguments[0], identity.Arguments[1], mismatchedIdentity);
+                }
+            }
         }
 
         [NonParallelizable]
