@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceGroups.Models
 {
-    /// <summary> The attributes of the serviceGroup. </summary>
     internal partial class ServiceGroupAttributes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
