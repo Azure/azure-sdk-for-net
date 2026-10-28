@@ -221,6 +221,18 @@ Or declare it in `runtimeconfig.template.json` so that it is baked into the appl
 }
 ```
 
+The same setting can be declared in the project file with `<RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase" Value="true" />`.
+
+On .NET Framework, which does not use `runtimeconfig.json`, declare it in `app.config` or `web.config` instead:
+
+```xml
+<configuration>
+  <runtime>
+    <AppContextSwitchOverrides value="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase=true" />
+  </runtime>
+</configuration>
+```
+
 With the switch enabled, multimodal messages can produce large telemetry items. Telemetry is sent uncompressed, up to 512 items per request, and the offline storage cap (50 MiB) is not configurable. If you capture such content, consider limiting content capture in your GenAI instrumentation, or increasing `AzureMonitorExporterOptions.Retry.NetworkTimeout` for slow networks.
 
 ## Telemetry delivery on shutdown
