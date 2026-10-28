@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
@@ -960,10 +960,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = new WritableSubResource()
-                {
-                    Id = getLocalNetworkGatewayResponse.Value.Id
-                },
+                GatewayDefaultSiteId = getLocalNetworkGatewayResponse.Value.Id,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
@@ -982,9 +979,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             Console.WriteLine("Virtual Network Gateway is deployed successfully.");
             Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.NotNull(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Console.WriteLine("Default site :{0} set at Virtual network gateway.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Assert.AreEqual(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite.Id, getLocalNetworkGatewayResponse.Value.Id.ToString());
+            Assert.NotNull(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Console.WriteLine("Default site :{0} set at Virtual network gateway.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Assert.AreEqual(getLocalNetworkGatewayResponse.Value.Id, getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
 
             // C. CreaetVirtualNetworkGatewayConnection API
             string VirtualNetworkGatewayConnectionName = Recording.GenerateAssetName("azsmnet");
@@ -1018,13 +1015,13 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("abc", getVirtualNetworkGatewayConnectionResponse.Value.Data.SharedKey);
 
             // 2A. Remove Default local network site
-            getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite = null;
+            getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId = null;
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
-            Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
+            Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
+            Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSiteId);
 
             // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey length => 64
             await getVirtualNetworkGatewayConnectionResponse.Value.ResetSharedKey(WaitUntil.Completed, new ConnectionResetSharedKey(64)).WaitForCompletionAsync();
@@ -1110,7 +1107,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
@@ -1253,7 +1250,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     Tier = VirtualNetworkGatewaySkuTier.Basic,
                 },
-                GatewayDefaultSite = new WritableSubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
+                GatewayDefaultSiteId = getLocalNetworkGatewayResponse.Value.Id,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations =
@@ -1431,7 +1428,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
                 IsActive = true,
-                GatewayDefaultSite = null,
+                GatewayDefaultSiteId = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
                 IPConfigurations = { ipconfig1, ipconfig2 },

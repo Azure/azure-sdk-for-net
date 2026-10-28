@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string peConnectionName = "testPlePeConnection";
             NetworkPrivateEndpointConnectionData data = new NetworkPrivateEndpointConnectionData
             {
-                PrivateLinkServiceConnectionState = new NetworkPrivateLinkServiceConnectionState
+                ConnectionState = new NetworkPrivateLinkServiceConnectionState
                 {
                     Status = "Approved",
                     Description = "approved it for some reason.",

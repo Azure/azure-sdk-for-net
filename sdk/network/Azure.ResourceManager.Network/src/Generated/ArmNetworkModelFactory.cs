@@ -1050,22 +1050,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
         /// <param name="privateEndpointLocation"> The location of the private endpoint. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static NetworkPrivateEndpointConnectionData NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, NetworkProvisioningState? provisioningState, string linkIdentifier, string privateEndpointLocation, ETag? eTag)
+        public static NetworkPrivateEndpointConnectionData NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier, string privateEndpointLocation, ETag? eTag)
         {
             return new NetworkPrivateEndpointConnectionData(
                 id,
                 default,
                 name,
                 resourceType,
-                privateEndpoint is null && privateLinkServiceConnectionState is null && provisioningState is null && linkIdentifier is null && privateEndpointLocation is null ? default : new PrivateEndpointConnectionProperties(
+                privateEndpoint is null && connectionState is null && provisioningState is null && linkIdentifier is null && privateEndpointLocation is null ? default : new PrivateEndpointConnectionProperties(
                     privateEndpoint,
-                    privateLinkServiceConnectionState,
+                    connectionState,
                     provisioningState,
                     linkIdentifier,
                     privateEndpointLocation,
@@ -5211,16 +5211,6 @@ namespace Azure.ResourceManager.Network.Models
             return new PolicySignaturesOverridesForIdpsData(id, name, resourceType, default, signatures is null ? default : new SignaturesOverridesProperties(signatures ?? new ChangeTrackingDictionary<string, string>(), default));
         }
 
-        /// <summary> Describes an object containing an array with a single item. </summary>
-        /// <param name="value"> Describes a list consisting exactly one item describing the policy's signature override status. </param>
-        /// <returns> A new <see cref="Models.SignaturesOverridesList"/> instance for mocking. </returns>
-        public static SignaturesOverridesList SignaturesOverridesList(IEnumerable<PolicySignaturesOverridesForIdpsData> value = default)
-        {
-            value ??= new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>();
-
-            return new SignaturesOverridesList((value ?? new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>()).ToList(), default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -6401,10 +6391,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.NetworkChildResource"/> instance for mocking. </returns>
-        public static NetworkChildResource NetworkChildResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        /// <returns> A new <see cref="Models.NetworkChildResourceData"/> instance for mocking. </returns>
+        public static NetworkChildResourceData NetworkChildResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
         {
-            return new NetworkChildResource(id, name, @type, eTag, default);
+            return new NetworkChildResourceData(id, name, @type, eTag, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -8077,14 +8067,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="rules"> Collection of RouteFilterRules contained within a route filter. </param>
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.RouteFilterData"/> instance for mocking. </returns>
-        public static RouteFilterData RouteFilterData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default, IEnumerable<RouteFilterRuleData> rules = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, IEnumerable<ExpressRouteCircuitPeeringData> ipv6Peerings = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static RouteFilterData RouteFilterData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<RouteFilterRuleData> rules = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, IEnumerable<ExpressRouteCircuitPeeringData> ipv6Peerings = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -8095,7 +8084,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                @type,
                 rules is null && peerings is null && ipv6Peerings is null && provisioningState is null ? default : new RouteFilterPropertiesFormat((rules ?? new ChangeTrackingList<RouteFilterRuleData>()).ToList(), (peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>()).ToList(), (ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>()).ToList(), provisioningState, default),
                 eTag);
         }
@@ -8120,28 +8108,6 @@ namespace Azure.ResourceManager.Network.Models
                 access is null && routeFilterRuleType is null && communities is null && provisioningState is null ? default : new RouteFilterRulePropertiesFormat(access.GetValueOrDefault(), routeFilterRuleType.GetValueOrDefault(), (communities ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
                 location,
                 eTag);
-        }
-
-        /// <summary> Common resource representation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <returns> A new <see cref="Models.TrackedResourceWithSettableIdOptionalLocation"/> instance for mocking. </returns>
-        public static TrackedResourceWithSettableIdOptionalLocation TrackedResourceWithSettableIdOptionalLocation(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TrackedResourceWithSettableIdOptionalLocation(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                @type);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -8239,6 +8205,63 @@ namespace Azure.ResourceManager.Network.Models
             ipamPoolPrefixAllocations ??= new ChangeTrackingList<IpamPoolPrefixAllocation>();
 
             return new VirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>()).ToList(), default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="allowVirtualNetworkAccess"> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </param>
+        /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
+        /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
+        /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
+        /// <param name="localAddressSpace"> The local address space of the local virtual network that is peered. </param>
+        /// <param name="localVirtualNetworkAddressSpace"> The current local address space of the local virtual network that is peered. </param>
+        /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
+        /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
+        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
+        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network's encryption. </param>
+        /// <param name="peeringState"> The status of the virtual network peering. </param>
+        /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
+        /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
+        /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
+        /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
+        /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, bool? allowVirtualNetworkAccess = default, bool? allowForwardedTraffic = default, bool? allowGatewayTransit = default, bool? useRemoteGateways = default, VirtualNetworkAddressSpace localAddressSpace = default, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default, VirtualNetworkAddressSpace remoteAddressSpace = default, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default, VirtualNetworkBgpCommunities remoteBgpCommunities = default, VirtualNetworkEncryption remoteVirtualNetworkEncryption = default, VirtualNetworkPeeringState? peeringState = default, VirtualNetworkPeeringLevel? peeringSyncLevel = default, NetworkProvisioningState? provisioningState = default, bool? doNotVerifyRemoteGateways = default, Guid? resourceGuid = default, bool? areCompleteVnetsPeered = default, bool? enableOnlyIPv6Peering = default, IEnumerable<string> localSubnetNames = default, IEnumerable<string> remoteSubnetNames = default, ResourceIdentifier remoteVirtualNetworkId = default, ETag? eTag = default)
+        {
+            return new VirtualNetworkPeeringData(
+                id,
+                name,
+                resourceType,
+                default,
+                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
+                    allowVirtualNetworkAccess,
+                    allowForwardedTraffic,
+                    allowGatewayTransit,
+                    useRemoteGateways,
+                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
+                    localAddressSpace,
+                    localVirtualNetworkAddressSpace,
+                    remoteAddressSpace,
+                    remoteVirtualNetworkAddressSpace,
+                    remoteBgpCommunities,
+                    remoteVirtualNetworkEncryption,
+                    peeringState,
+                    peeringSyncLevel,
+                    provisioningState,
+                    doNotVerifyRemoteGateways,
+                    resourceGuid,
+                    areCompleteVnetsPeered,
+                    enableOnlyIPv6Peering,
+                    (localSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                eTag);
         }
 
         /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
@@ -8489,6 +8512,89 @@ namespace Azure.ResourceManager.Network.Models
         public static UnprepareNetworkPoliciesContent UnprepareNetworkPoliciesContent(string serviceName = default)
         {
             return new UnprepareNetworkPoliciesContent(serviceName, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
+        /// <param name="gatewayType"> The type of this virtual network gateway. </param>
+        /// <param name="vpnType"> The type of this virtual network gateway. </param>
+        /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
+        /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
+        /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="virtualNetworkGatewayMigrationStatus"> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </param>
+        /// <param name="isActive"> ActiveActive flag. </param>
+        /// <param name="enableHighBandwidthVpnGateway"> To enable Advanced Connectivity feature for VPN gateway. </param>
+        /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
+        /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
+        /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
+        /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
+        /// <param name="bgpSettings"> Virtual network gateway's BGP speaker settings. </param>
+        /// <param name="customRoutes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network gateway resource. </param>
+        /// <param name="enableDnsForwarding"> Whether dns forwarding is enabled or not. </param>
+        /// <param name="inboundDnsForwardingEndpoint"> The IP address allocated by the gateway to which dns requests can be sent. </param>
+        /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
+        /// <param name="natRules"> NatRules for virtual network gateway. </param>
+        /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
+        /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
+        /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
+        /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
+        /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
+        /// <param name="autoScaleBounds"> The bounds of the autoscale configuration. </param>
+        /// <param name="gatewayDefaultSiteId"> Resource ID. </param>
+        /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity of the virtual network gateway, if configured. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkGatewayData"/> instance for mocking. </returns>
+        public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? isActive, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, ResourceIdentifier gatewayDefaultSiteId, ExtendedLocation extendedLocation, ETag? eTag, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualNetworkGatewayData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                autoScaleBounds is null && ipConfigurations is null && gatewayType is null && vpnType is null && vpnGatewayGeneration is null && enableBgp is null && enablePrivateIPAddress is null && virtualNetworkGatewayMigrationStatus is null && isActive is null && enableHighBandwidthVpnGateway is null && disableIPSecReplayProtection is null && gatewayDefaultSiteId is null && sku is null && vpnClientConfiguration is null && virtualNetworkGatewayPolicyGroups is null && bgpSettings is null && customRoutes is null && resourceGuid is null && provisioningState is null && enableDnsForwarding is null && inboundDnsForwardingEndpoint is null && vNetExtendedLocationResourceId is null && natRules is null && enableBgpRouteTranslationForNat is null && allowVirtualWanTraffic is null && allowRemoteVnetTraffic is null && adminState is null && resiliencyModel is null ? default : new VirtualNetworkGatewayPropertiesFormat(
+                    autoScaleBounds is null ? default : new VirtualNetworkGatewayAutoScaleConfiguration(autoScaleBounds, default),
+                    (ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>()).ToList(),
+                    gatewayType,
+                    vpnType,
+                    vpnGatewayGeneration,
+                    enableBgp,
+                    enablePrivateIPAddress,
+                    virtualNetworkGatewayMigrationStatus,
+                    isActive,
+                    enableHighBandwidthVpnGateway,
+                    disableIPSecReplayProtection,
+                    gatewayDefaultSiteId is null ? default : new NetworkSubResource(gatewayDefaultSiteId, default),
+                    sku,
+                    vpnClientConfiguration,
+                    (virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>()).ToList(),
+                    bgpSettings,
+                    customRoutes,
+                    resourceGuid,
+                    provisioningState,
+                    enableDnsForwarding,
+                    inboundDnsForwardingEndpoint,
+                    vNetExtendedLocationResourceId,
+                    (natRules ?? new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>()).ToList(),
+                    enableBgpRouteTranslationForNat,
+                    allowVirtualWanTraffic,
+                    allowRemoteVnetTraffic,
+                    adminState,
+                    resiliencyModel,
+                    default),
+                extendedLocation,
+                eTag,
+                identity);
         }
 
         /// <summary> The VirtualNetworkGatewayAutoScaleBounds. </summary>
@@ -9554,7 +9660,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="disableVpnEncryption"> Vpn encryption to be disabled or not. </param>
         /// <param name="virtualHubs"> List of VirtualHubs in the VirtualWAN. </param>
         /// <param name="vpnSites"> List of VpnSites in the VirtualWAN. </param>
@@ -9565,7 +9670,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VirtualWanData"/> instance for mocking. </returns>
-        public static VirtualWanData VirtualWanData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default, bool? disableVpnEncryption = default, IEnumerable<WritableSubResource> virtualHubs = default, IEnumerable<WritableSubResource> vpnSites = default, bool? allowBranchToBranchTraffic = default, bool? allowVnetToVnetTraffic = default, OfficeTrafficCategory? office365LocalBreakoutCategory = default, NetworkProvisioningState? provisioningState = default, string virtualWanType = default, ETag? eTag = default)
+        public static VirtualWanData VirtualWanData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? disableVpnEncryption = default, IEnumerable<WritableSubResource> virtualHubs = default, IEnumerable<WritableSubResource> vpnSites = default, bool? allowBranchToBranchTraffic = default, bool? allowVnetToVnetTraffic = default, OfficeTrafficCategory? office365LocalBreakoutCategory = default, NetworkProvisioningState? provisioningState = default, string virtualWanType = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -9576,7 +9681,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                @type,
                 disableVpnEncryption is null && virtualHubs is null && vpnSites is null && allowBranchToBranchTraffic is null && allowVnetToVnetTraffic is null && office365LocalBreakoutCategory is null && provisioningState is null && virtualWanType is null ? default : new VirtualWanProperties(
                     disableVpnEncryption,
                     (virtualHubs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -9632,7 +9736,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="deviceProperties"> The device properties. </param>
         /// <param name="ipAddress"> The ip-address for the vpn-site. </param>
         /// <param name="siteKey"> The key for vpn-site that can be used for connections. </param>
@@ -9645,7 +9748,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="o365BreakOutCategories"> Office365 breakout categories. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VpnSiteData"/> instance for mocking. </returns>
-        public static VpnSiteData VpnSiteData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default, DeviceProperties deviceProperties = default, string ipAddress = default, string siteKey = default, VirtualNetworkAddressSpace addressSpace = default, BgpSettings bgpProperties = default, NetworkProvisioningState? provisioningState = default, bool? isSecuritySite = default, IEnumerable<VpnSiteLinkData> vpnSiteLinks = default, ResourceIdentifier virtualWanId = default, O365BreakOutCategoryPolicies o365BreakOutCategories = default, ETag? eTag = default)
+        public static VpnSiteData VpnSiteData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, DeviceProperties deviceProperties = default, string ipAddress = default, string siteKey = default, VirtualNetworkAddressSpace addressSpace = default, BgpSettings bgpProperties = default, NetworkProvisioningState? provisioningState = default, bool? isSecuritySite = default, IEnumerable<VpnSiteLinkData> vpnSiteLinks = default, ResourceIdentifier virtualWanId = default, O365BreakOutCategoryPolicies o365BreakOutCategories = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -9656,7 +9759,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                @type,
                 virtualWanId is null && deviceProperties is null && ipAddress is null && siteKey is null && addressSpace is null && bgpProperties is null && provisioningState is null && isSecuritySite is null && vpnSiteLinks is null && o365BreakOutCategories is null ? default : new VpnSiteProperties(
                     virtualWanId is null ? default : new NetworkSubResource(virtualWanId, default),
                     deviceProperties,
@@ -9843,7 +9945,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="p2SConnectionConfigurations"> List of all p2s connection configurations of the gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the P2S VPN gateway resource. </param>
         /// <param name="vpnGatewayScaleUnit"> The scale unit for this p2s vpn gateway. </param>
@@ -9854,7 +9955,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnServerConfigurationId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.P2SVpnGatewayData"/> instance for mocking. </returns>
-        public static P2SVpnGatewayData P2SVpnGatewayData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default, IEnumerable<P2SConnectionConfiguration> p2SConnectionConfigurations = default, NetworkProvisioningState? provisioningState = default, int? vpnGatewayScaleUnit = default, VpnClientConnectionHealth vpnClientConnectionHealth = default, IEnumerable<string> customDnsServers = default, bool? isRoutingPreferenceInternet = default, ResourceIdentifier virtualHubId = default, ResourceIdentifier vpnServerConfigurationId = default, ETag? eTag = default)
+        public static P2SVpnGatewayData P2SVpnGatewayData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<P2SConnectionConfiguration> p2SConnectionConfigurations = default, NetworkProvisioningState? provisioningState = default, int? vpnGatewayScaleUnit = default, VpnClientConnectionHealth vpnClientConnectionHealth = default, IEnumerable<string> customDnsServers = default, bool? isRoutingPreferenceInternet = default, ResourceIdentifier virtualHubId = default, ResourceIdentifier vpnServerConfigurationId = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -9865,7 +9966,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                @type,
                 virtualHubId is null && p2SConnectionConfigurations is null && provisioningState is null && vpnGatewayScaleUnit is null && vpnServerConfigurationId is null && vpnClientConnectionHealth is null && customDnsServers is null && isRoutingPreferenceInternet is null ? default : new P2SVpnGatewayProperties(
                     virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
                     (p2SConnectionConfigurations ?? new ChangeTrackingList<P2SConnectionConfiguration>()).ToList(),
@@ -10161,7 +10261,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="connections"> List of all vpn connections to the gateway. </param>
         /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN gateway resource. </param>
@@ -10173,7 +10272,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VpnGatewayData"/> instance for mocking. </returns>
-        public static VpnGatewayData VpnGatewayData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string @type = default, IEnumerable<VpnConnectionData> connections = default, BgpSettings bgpSettings = default, NetworkProvisioningState? provisioningState = default, int? vpnGatewayScaleUnit = default, IEnumerable<VpnGatewayIPConfiguration> ipConfigurations = default, bool? enableBgpRouteTranslationForNat = default, bool? isRoutingPreferenceInternet = default, IEnumerable<VpnGatewayNatRuleData> natRules = default, ResourceIdentifier virtualHubId = default, ETag? eTag = default)
+        public static VpnGatewayData VpnGatewayData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<VpnConnectionData> connections = default, BgpSettings bgpSettings = default, NetworkProvisioningState? provisioningState = default, int? vpnGatewayScaleUnit = default, IEnumerable<VpnGatewayIPConfiguration> ipConfigurations = default, bool? enableBgpRouteTranslationForNat = default, bool? isRoutingPreferenceInternet = default, IEnumerable<VpnGatewayNatRuleData> natRules = default, ResourceIdentifier virtualHubId = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -10184,7 +10283,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                @type,
                 virtualHubId is null && connections is null && bgpSettings is null && provisioningState is null && vpnGatewayScaleUnit is null && ipConfigurations is null && enableBgpRouteTranslationForNat is null && isRoutingPreferenceInternet is null && natRules is null ? default : new VpnGatewayProperties(
                     virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
                     (connections ?? new ChangeTrackingList<VpnConnectionData>()).ToList(),
@@ -10527,10 +10625,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.NetworkProxyResource"/> instance for mocking. </returns>
-        public static NetworkProxyResource NetworkProxyResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        /// <returns> A new <see cref="Models.NetworkProxyResourceData"/> instance for mocking. </returns>
+        public static NetworkProxyResourceData NetworkProxyResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
         {
-            return new NetworkProxyResource(id, name, @type, eTag, default);
+            return new NetworkProxyResourceData(id, name, @type, eTag, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -11231,9 +11329,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkResource"/> instance for mocking. </returns>
-        public static ApplicationGatewayPrivateLinkResource ApplicationGatewayPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ETag? eTag = default, string @type = default)
+        public static ApplicationGatewayPrivateLinkResource ApplicationGatewayPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ETag? eTag = default)
         {
             return new ApplicationGatewayPrivateLinkResource(
                 id,
@@ -11241,8 +11338,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApplicationGatewayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                eTag,
-                @type);
+                eTag);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -13230,7 +13326,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
         /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
-        /// <param name="remoteVirtualNetworkId"></param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
         /// <param name="localAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="localVirtualNetworkAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="remoteAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
@@ -13255,12 +13351,12 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 default,
-                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && localAddressPrefixes is null && localVirtualNetworkAddressPrefixes is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
+                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && localAddressPrefixes is null && localVirtualNetworkAddressPrefixes is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
                     allowGatewayTransit,
                     useRemoteGateways,
-                    default,
+                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
                     localAddressPrefixes is null ? default : new VirtualNetworkAddressSpace((localAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default, default),
                     localVirtualNetworkAddressPrefixes is null ? default : new VirtualNetworkAddressSpace((localVirtualNetworkAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default, default),
                     remoteAddressPrefixes is null ? default : new VirtualNetworkAddressSpace((remoteAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default, default),
@@ -13328,7 +13424,6 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 default,
                 virtualWanId is null && deviceProperties is null && ipAddress is null && siteKey is null && addressPrefixes is null && bgpProperties is null && provisioningState is null && isSecuritySite is null && vpnSiteLinks is null && o365BreakOutCategories is null ? default : new VpnSiteProperties(
                     virtualWanId is null ? default : new NetworkSubResource(virtualWanId, default),
@@ -13410,7 +13505,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
         /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
-        /// <param name="remoteVirtualNetworkId"></param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
         /// <param name="remoteAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="remoteVirtualNetworkAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
@@ -13429,12 +13524,12 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 default,
-                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null ? default : new VirtualNetworkPeeringPropertiesFormat(
+                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && remoteAddressPrefixes is null && remoteVirtualNetworkAddressPrefixes is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
                     allowGatewayTransit,
                     useRemoteGateways,
-                    default,
+                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
                     default,
                     default,
                     remoteAddressPrefixes is null ? default : new VirtualNetworkAddressSpace((remoteAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default, default),
@@ -15391,8 +15486,7 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApplicationGatewayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                etag,
-                default);
+                etag);
         }
 
         /// <summary> A web application firewall rule set. </summary>
@@ -17254,7 +17348,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                default,
                 rules is null && peerings is null && ipv6Peerings is null && provisioningState is null ? default : new RouteFilterPropertiesFormat((rules ?? new ChangeTrackingList<RouteFilterRuleData>()).ToList(), (peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>()).ToList(), (ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>()).ToList(), provisioningState, default),
                 etag);
         }
@@ -17418,7 +17511,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
         /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
-        /// <param name="remoteVirtualNetworkId"></param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
         /// <param name="localAddressSpace"> The local address space of the local virtual network that is peered. </param>
         /// <param name="localVirtualNetworkAddressSpace"> The current local address space of the local virtual network that is peered. </param>
         /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
@@ -17443,12 +17536,12 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 resourceType,
                 default,
-                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
+                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && areCompleteVnetsPeered is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
                     allowVirtualNetworkAccess,
                     allowForwardedTraffic,
                     allowGatewayTransit,
                     useRemoteGateways,
-                    default,
+                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
                     localAddressSpace,
                     localVirtualNetworkAddressSpace,
                     remoteAddressSpace,
@@ -17918,7 +18011,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                default,
                 disableVpnEncryption is null && virtualHubs is null && vpnSites is null && allowBranchToBranchTraffic is null && allowVnetToVnetTraffic is null && office365LocalBreakoutCategory is null && provisioningState is null && virtualWanType is null ? default : new VirtualWanProperties(
                     disableVpnEncryption,
                     (virtualHubs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -17959,7 +18051,6 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 default,
                 virtualWanId is null && deviceProperties is null && ipAddress is null && siteKey is null && addressSpace is null && bgpProperties is null && provisioningState is null && isSecuritySite is null && vpnSiteLinks is null && o365BreakOutCategories is null ? default : new VpnSiteProperties(
                     virtualWanId is null ? default : new NetworkSubResource(virtualWanId, default),
@@ -18084,7 +18175,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                default,
                 virtualHubId is null && p2sConnectionConfigurations is null && provisioningState is null && vpnGatewayScaleUnit is null && vpnServerConfigurationId is null && vpnClientConnectionHealth is null && customDnsServers is null && isRoutingPreferenceInternet is null ? default : new P2SVpnGatewayProperties(
                     virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
                     (p2sConnectionConfigurations ?? new ChangeTrackingList<P2SConnectionConfiguration>()).ToList(),
@@ -18198,7 +18288,6 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 default,
                 virtualWanId is null && vpnGatewayId is null && p2sVpnGatewayId is null && expressRouteGatewayId is null && azureFirewallId is null && securityPartnerProviderId is null && addressPrefix is null && routes is null && provisioningState is null && securityProviderName is null && virtualHubRouteTableV2S is null && sku is null && routingState is null && bgpConnections is null && ipConfigurations is null && routeMaps is null && virtualRouterAsn is null && virtualRouterIPs is null && allowBranchToBranchTraffic is null && preferredRoutingGateway is null && hubRoutingPreference is null && virtualRouterAutoScaleMinCapacity is null ? default : new VirtualHubProperties(
                     virtualWanId is null ? default : new NetworkSubResource(virtualWanId, default),
@@ -18334,7 +18423,6 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
                 default,
                 virtualHubId is null && connections is null && bgpSettings is null && provisioningState is null && vpnGatewayScaleUnit is null && ipConfigurations is null && enableBgpRouteTranslationForNat is null && isRoutingPreferenceInternet is null && natRules is null ? default : new VpnGatewayProperties(
                     virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),

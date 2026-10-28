@@ -35,8 +35,6 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyIdpsSignaturesFilterValues _firewallPolicyIdpsSignaturesFilterValuesRestClient;
         private readonly ClientDiagnostics _firewallPolicyIdpsSignaturesClientDiagnostics;
         private readonly FirewallPolicyIdpsSignatures _firewallPolicyIdpsSignaturesRestClient;
-        private readonly ClientDiagnostics _firewallPolicyIdpsSignaturesOverridesClientDiagnostics;
-        private readonly FirewallPolicyIdpsSignaturesOverrides _firewallPolicyIdpsSignaturesOverridesRestClient;
         private readonly FirewallPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies";
@@ -69,8 +67,6 @@ namespace Azure.ResourceManager.Network
             _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValues(_firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2026-01-01");
             _firewallPolicyIdpsSignaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignatures(_firewallPolicyIdpsSignaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2026-01-01");
-            _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -703,102 +699,6 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _firewallPolicyIdpsSignaturesRestClient.CreateGetFirewallPolicyIdpsSignatureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdpsQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IdpsSignatureListResult> response = Response.FromValue(IdpsSignatureListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns all signatures overrides objects for a specific policy as a list containing a single value.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FirewallPolicyIdpsSignaturesOverrides_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FirewallPolicyResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SignaturesOverridesList>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SignaturesOverridesList> response = Response.FromValue(SignaturesOverridesList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns all signatures overrides objects for a specific policy as a list containing a single value.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FirewallPolicyIdpsSignaturesOverrides_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FirewallPolicyResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SignaturesOverridesList> GetAll(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("FirewallPolicyResource.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SignaturesOverridesList> response = Response.FromValue(SignaturesOverridesList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

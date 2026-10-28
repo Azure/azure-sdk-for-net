@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 name: name,
                 resourceType: resourceType,
                 privateEndpoint: privateEndpoint,
-                privateLinkServiceConnectionState: connectionState,
+                connectionState: connectionState,
                 provisioningState: provisioningState,
                 linkIdentifier: linkIdentifier,
                 privateEndpointLocation: privateEndpointLocation,

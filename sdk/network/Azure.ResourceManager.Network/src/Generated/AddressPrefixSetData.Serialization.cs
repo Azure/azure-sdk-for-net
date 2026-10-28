@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Address prefix set child resource of an application security group. </summary>
-    public partial class AddressPrefixSetData : NetworkProxyResource, IJsonModel<AddressPrefixSetData>
+    public partial class AddressPrefixSetData : NetworkProxyResourceData, IJsonModel<AddressPrefixSetData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkProxyResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AddressPrefixSetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkProxyResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AddressPrefixSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

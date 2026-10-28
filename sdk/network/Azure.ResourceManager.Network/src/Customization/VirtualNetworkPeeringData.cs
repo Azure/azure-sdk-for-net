@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -62,19 +61,6 @@ namespace Azure.ResourceManager.Network
             {
                 RemoteVirtualNetworkAddressSpace ??= new VirtualNetworkAddressSpace();
                 return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
-        // Preserve the identifier API now that the internal reference uses WritableSubResource and is no longer ID-flattened.
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.remoteVirtualNetwork.id")]
-        public ResourceIdentifier RemoteVirtualNetworkId
-        {
-            get => RemoteVirtualNetwork?.Id;
-            set
-            {
-                RemoteVirtualNetwork ??= new WritableSubResource();
-                RemoteVirtualNetwork.Id = value;
             }
         }
     }

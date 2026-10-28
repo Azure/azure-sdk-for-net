@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network.Tests
             var peering = new VirtualNetworkPeeringData()
             {
                 AllowForwardedTraffic = true,
-                RemoteVirtualNetwork = new WritableSubResource { Id = putVnet2.Value.Id }
+                RemoteVirtualNetworkId = putVnet2.Value.Id
             };
 
             // Create Peering
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(getPeer.Data.AllowForwardedTraffic);
             Assert.True(getPeer.Data.AllowVirtualNetworkAccess);
             Assert.False(getPeer.Data.AllowGatewayTransit);
-            Assert.NotNull(getPeer.Data.RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, getPeer.Data.RemoteVirtualNetwork.Id);
+            Assert.NotNull(getPeer.Data.RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, getPeer.Data.RemoteVirtualNetworkId);
 
             // List Peering
             AsyncPageable<VirtualNetworkPeeringResource> listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(listPeer[0].Data.AllowForwardedTraffic);
             Assert.True(listPeer[0].Data.AllowVirtualNetworkAccess);
             Assert.False(listPeer[0].Data.AllowGatewayTransit);
-            Assert.NotNull(listPeer[0].Data.RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, listPeer[0].Data.RemoteVirtualNetwork.Id);
+            Assert.NotNull(listPeer[0].Data.RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, listPeer[0].Data.RemoteVirtualNetworkId);
 
             // Get peering from GET vnet
             VirtualNetworkResource peeringVnet = await virtualNetworkCollection.GetAsync(vnet1Name);
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(peeringVnet.Data.VirtualNetworkPeerings[0].AllowForwardedTraffic);
             Assert.True(peeringVnet.Data.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess);
             Assert.False(peeringVnet.Data.VirtualNetworkPeerings[0].AllowGatewayTransit);
-            Assert.NotNull(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id);
+            Assert.NotNull(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetworkId);
 
             // Delete Peering
             var deleteOperation = await getPeer.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);

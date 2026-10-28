@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -34,20 +33,6 @@ namespace Azure.ResourceManager.Network
             {
                 CustomRoutes ??= new VirtualNetworkAddressSpace();
                 return CustomRoutes.AddressPrefixes;
-            }
-        }
-
-        // Preserve the identifier API now that the internal reference uses WritableSubResource and is no longer ID-flattened.
-        /// <summary> Resource ID. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("properties.gatewayDefaultSite.id")]
-        public ResourceIdentifier GatewayDefaultSiteId
-        {
-            get => GatewayDefaultSite?.Id;
-            set
-            {
-                GatewayDefaultSite ??= new WritableSubResource();
-                GatewayDefaultSite.Id = value;
             }
         }
     }

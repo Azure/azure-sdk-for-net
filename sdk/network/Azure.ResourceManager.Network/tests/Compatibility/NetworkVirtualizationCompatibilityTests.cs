@@ -447,6 +447,7 @@ namespace Azure.ResourceManager.Network.Tests
         public void GatewayFactoryActiveArgumentsReachNativeStorage()
         {
             int factories = 0;
+            int legacyFactories = 0;
             foreach (MethodInfo method in typeof(ArmNetworkModelFactory).GetMethods(BindingFlags.Public | BindingFlags.Static))
             {
                 if (method.Name != nameof(ArmNetworkModelFactory.VirtualNetworkGatewayData))
@@ -454,6 +455,8 @@ namespace Azure.ResourceManager.Network.Tests
                 ParameterInfo[] parameters = method.GetParameters();
                 int activeIndex = Array.FindIndex(parameters, parameter => parameter.Name is "active" or "isActive");
                 Assert.That(activeIndex, Is.GreaterThanOrEqualTo(0));
+                if (parameters[activeIndex].Name == "active")
+                    legacyFactories++;
                 foreach (bool? value in new bool?[] { true, false, null })
                 {
                     var arguments = new object[parameters.Length];
@@ -466,7 +469,8 @@ namespace Azure.ResourceManager.Network.Tests
                 }
                 factories++;
             }
-            Assert.That(factories, Is.EqualTo(5));
+            Assert.That(legacyFactories, Is.EqualTo(5));
+            Assert.That(factories, Is.EqualTo(6));
         }
 
         [Test]

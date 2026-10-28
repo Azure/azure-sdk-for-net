@@ -137,19 +137,36 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public async Task PolicyUpdateProjectsTheCompletedNativeOperation([Values(false, true)] bool async)
+        public async Task PolicyUpdateUsesNativePatchOperation([Values(false, true)] bool async)
         {
-            var resource = new RecordingPolicyResource();
-            var data = new PolicySignaturesOverridesForIdpsData();
+            const string subscription = "00000000-0000-0000-0000-000000000001";
+            const string resourceId = "/subscriptions/" + subscription + "/resourceGroups/rg/providers/Microsoft.Network/firewallPolicies/policy/signatureOverrides/default";
+            var rawResponse = new MockResponse(200).SetContent(
+                $$$"""{"id":"{{{resourceId}}}","name":"default","type":"Microsoft.Network/firewallPolicies/signatureOverrides","properties":{}}""");
             using var cancellation = new CancellationTokenSource();
+            int requests = 0;
+            var client = new ArmClient(new MockCredential(), subscription, new ArmClientOptions
+            {
+                Transport = MockTransport.FromMessageCallback(message =>
+                {
+                    requests++;
+                    Assert.That(message.Request.Method, Is.EqualTo(RequestMethod.Patch));
+                    Assert.That(message.Request.Uri.ToUri().AbsolutePath, Is.EqualTo(resourceId));
+                    Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
+                    // Retry policies can link tokens, so verify cancellation propagation rather than identity.
+                    cancellation.Cancel();
+                    Assert.That(message.CancellationToken.IsCancellationRequested, Is.True);
+                    return rawResponse;
+                })
+            });
+            var resource = client.GetPolicySignaturesOverridesForIdpsResource(new ResourceIdentifier(resourceId));
+            var data = new PolicySignaturesOverridesForIdpsData();
             Response<PolicySignaturesOverridesForIdpsResource> response = async
                 ? await resource.UpdateAsync(data, cancellation.Token)
                 : resource.Update(data, cancellation.Token);
-            Assert.That(resource.WaitUntil, Is.EqualTo(WaitUntil.Completed));
-            Assert.That(resource.Data, Is.SameAs(data));
-            Assert.That(resource.CancellationToken, Is.EqualTo(cancellation.Token));
-            Assert.That(response.Value, Is.SameAs(resource));
-            Assert.That(response.GetRawResponse(), Is.SameAs(resource.Response));
+            Assert.That(requests, Is.EqualTo(1));
+            Assert.That(response.Value.Id, Is.EqualTo(resource.Id));
+            Assert.That(response.GetRawResponse(), Is.SameAs(rawResponse));
         }
 
         [Test]
@@ -250,12 +267,16 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void PrefixCompatibilitySetterKeepsTheNativeReadonlyValue()
+        public void PrefixNativeReadonlyReferenceRetainsTheServiceValue()
         {
             var prefix = ModelReaderWriter.Read<PublicIPPrefixData>(BinaryData.FromString(
                 $$$$"""{"properties":{"loadBalancerFrontendIpConfiguration":{"id":"{{{{ReferenceId}}}}"}}}"""));
-            prefix.LoadBalancerFrontendIPConfigurationId = new ResourceIdentifier(ReferenceId + "2");
+            Assert.That(typeof(PublicIPPrefixData).GetProperty("LoadBalancerFrontendIPConfigurationId").SetMethod, Is.Null);
             Assert.That(prefix.LoadBalancerFrontendIPConfigurationId.ToString(), Is.EqualTo(ReferenceId));
+            using var persisted = JsonDocument.Parse(ModelReaderWriter.Write(prefix));
+            Assert.That(persisted.RootElement.GetProperty("properties").GetProperty("loadBalancerFrontendIpConfiguration").GetProperty("id").GetString(), Is.EqualTo(ReferenceId));
+            using var wire = JsonDocument.Parse(ModelReaderWriter.Write(prefix, new ModelReaderWriterOptions("W")));
+            Assert.That(wire.RootElement.GetProperty("properties").TryGetProperty("loadBalancerFrontendIpConfiguration", out _), Is.False);
         }
 
         [TestCase("J")]
@@ -309,31 +330,15 @@ namespace Azure.ResourceManager.Network.Tests
             var pages = new List<Page<T>>();
             if (useAsync)
             {
-                await foreach (Page<T> page in async.AsPages()) pages.Add(page);
+                await foreach (Page<T> page in async.AsPages())
+                    pages.Add(page);
             }
-            else pages.AddRange(sync.AsPages());
+            else
+                pages.AddRange(sync.AsPages());
             Assert.That(pages, Has.Count.EqualTo(1));
             Assert.That(pages[0].Values, Has.Count.EqualTo(1));
             Assert.That(pages[0].ContinuationToken, Is.Null);
             Assert.That(pages[0].GetRawResponse(), Is.SameAs(response));
-        }
-
-        private sealed class RecordingPolicyResource : PolicySignaturesOverridesForIdpsResource
-        {
-            public MockResponse Response { get; } = new MockResponse(200);
-            public override PolicySignaturesOverridesForIdpsData Data => _data;
-            private PolicySignaturesOverridesForIdpsData _data;
-            public WaitUntil WaitUntil { get; private set; }
-            public CancellationToken CancellationToken { get; private set; }
-            public override ArmOperation<PolicySignaturesOverridesForIdpsResource> CreateOrUpdate(WaitUntil waitUntil, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
-            {
-                WaitUntil = waitUntil;
-                _data = data;
-                CancellationToken = cancellationToken;
-                return new CompletedOperation<PolicySignaturesOverridesForIdpsResource>(this, Response);
-            }
-            public override Task<ArmOperation<PolicySignaturesOverridesForIdpsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
-                => Task.FromResult(CreateOrUpdate(waitUntil, data, cancellationToken));
         }
 
         private sealed class RecordingGatewayResource : ServiceGatewayResource
@@ -353,19 +358,6 @@ namespace Azure.ResourceManager.Network.Tests
             public override Task<Response<ServiceGatewayActionResult>> UpdateServicesAsync(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default) => Task.FromResult(Record(content, cancellationToken));
             public override Response<ServiceGatewayActionResult> UpdateAddressLocations(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default) => Record(content, cancellationToken);
             public override Task<Response<ServiceGatewayActionResult>> UpdateAddressLocationsAsync(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default) => Task.FromResult(Record(content, cancellationToken));
-        }
-
-        private sealed class CompletedOperation<T> : ArmOperation<T>
-        {
-            private readonly Response _response;
-            public CompletedOperation(T value, Response response) { Value = value; _response = response; }
-            public override string Id => "completed-operation";
-            public override bool HasCompleted => true;
-            public override bool HasValue => true;
-            public override T Value { get; }
-            public override Response GetRawResponse() => _response;
-            public override Response UpdateStatus(CancellationToken cancellationToken = default) => _response;
-            public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => new ValueTask<Response>(_response);
         }
     }
 }

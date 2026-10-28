@@ -44,24 +44,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
-        /// <summary> The name of the VpnServerConfiguration that is unique within a resource group. </summary>
-        [WirePath("properties.name")]
-        public string NamePropertiesName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NamePropertiesName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VpnServerConfigurationProperties();
-                }
-                Properties.NamePropertiesName = value;
-            }
-        }
-
         /// <summary> VPN protocols for the VpnServerConfiguration. </summary>
         [WirePath("properties.vpnProtocols")]
         public IList<VpnGatewayTunnelingProtocol> VpnProtocols
@@ -263,16 +245,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new VpnServerConfigurationProperties();
                 }
                 return Properties.ConfigurationPolicyGroups;
-            }
-        }
-
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("properties.etag")]
-        public string PropertiesETag
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PropertiesETag;
             }
         }
     }

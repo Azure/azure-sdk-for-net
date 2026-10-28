@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
@@ -113,25 +111,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkPeeringPropertiesFormat();
                 }
                 Properties.UseRemoteGateways = value;
-            }
-        }
-
-        /// <summary> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </summary>
-        [CodeGenMember("RemoteVirtualNetwork")]
-        [WirePath("properties.remoteVirtualNetwork")]
-        public WritableSubResource RemoteVirtualNetwork
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RemoteVirtualNetwork;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPeeringPropertiesFormat();
-                }
-                Properties.RemoteVirtualNetwork = value;
             }
         }
 
@@ -370,6 +349,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkPeeringPropertiesFormat();
                 }
                 return Properties.RemoteSubnetNames;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.remoteVirtualNetwork.id")]
+        public ResourceIdentifier RemoteVirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPeeringPropertiesFormat();
+                }
+                Properties.RemoteVirtualNetworkId = value;
             }
         }
     }

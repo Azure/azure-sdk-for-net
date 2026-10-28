@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
-        public ConnectionMonitorQueryResult()
+        internal ConnectionMonitorQueryResult()
         {
             States = new ChangeTrackingList<ConnectionStateSnapshot>();
         }

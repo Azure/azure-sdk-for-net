@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Network
         public virtual Task<Response<LoadBalancerResource>> GetAsync(string expand, CancellationToken cancellationToken)
             => GetAsync(expand, null, cancellationToken);
 
-        // The same endpoint now generates as GetAllAsync returning data; 1.15.0 returned resource wrappers.
+        // The native listing returns data; 1.15.0 returned resource wrappers.
         /// <summary> Gets the network interfaces associated with this load balancer. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual AsyncPageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
-            => new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(GetAllAsync(cancellationToken), data => new NetworkInterfaceResource(Client, data));
+            => new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(GetNetworkInterfacesAsync(cancellationToken), data => new NetworkInterfaceResource(Client, data));
 
         // Preserve the 1.15.0 resource-valued pages and continuation tokens over native data-valued listing.
         /// <summary> Gets the network interfaces associated with this load balancer. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
-            => new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(GetAll(cancellationToken), data => new NetworkInterfaceResource(Client, data));
+            => new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(GetNetworkInterfaces(cancellationToken), data => new NetworkInterfaceResource(Client, data));
     }
 }

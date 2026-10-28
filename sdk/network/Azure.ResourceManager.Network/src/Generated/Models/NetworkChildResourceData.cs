@@ -13,24 +13,24 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Proxy resource representation. </summary>
-    public partial class NetworkProxyResource
+    public partial class NetworkChildResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProxyResource"/>. </summary>
-        public NetworkProxyResource()
+        /// <summary> Initializes a new instance of <see cref="NetworkChildResourceData"/>. </summary>
+        public NetworkChildResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProxyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkChildResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProxyResource(ResourceIdentifier id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkChildResourceData(ResourceIdentifier id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Resource name. </summary>
         [WirePath("name")]

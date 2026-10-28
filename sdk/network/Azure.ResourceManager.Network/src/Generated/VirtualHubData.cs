@@ -16,7 +16,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VirtualHub Resource. </summary>
-    public partial class VirtualHubData : TrackedResourceWithSettableIdOptionalLocation
+    public partial class VirtualHubData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         public VirtualHubData()
@@ -30,11 +30,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the virtual hub. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </param>
-        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties, @type)
+        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

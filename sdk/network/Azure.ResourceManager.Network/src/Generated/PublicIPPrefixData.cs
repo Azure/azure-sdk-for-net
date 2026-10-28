@@ -187,6 +187,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
+        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfigurationId;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.customIPPrefix.id")]
         public ResourceIdentifier CustomIPPrefixId
         {

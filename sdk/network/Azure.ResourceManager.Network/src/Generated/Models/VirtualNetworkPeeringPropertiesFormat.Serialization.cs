@@ -8,13 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Properties of the virtual network peering. </summary>
     internal partial class VirtualNetworkPeeringPropertiesFormat : IJsonModel<VirtualNetworkPeeringPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
+                writer.WriteObjectValue(RemoteVirtualNetwork, options);
             }
             if (Optional.IsDefined(LocalAddressSpace))
             {
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? allowForwardedTraffic = default;
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
-            WritableSubResource remoteVirtualNetwork = default;
+            NetworkSubResource remoteVirtualNetwork = default;
             VirtualNetworkAddressSpace localAddressSpace = default;
             VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default;
             VirtualNetworkAddressSpace remoteAddressSpace = default;
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    remoteVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+                    remoteVirtualNetwork = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("localAddressSpace"u8))

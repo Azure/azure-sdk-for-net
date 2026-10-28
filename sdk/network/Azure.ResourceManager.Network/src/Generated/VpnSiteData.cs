@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> VpnSite Resource. </summary>
-    public partial class VpnSiteData : TrackedResourceWithSettableIdOptionalLocation
+    public partial class VpnSiteData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         public VpnSiteData()
@@ -28,10 +28,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the VPN site. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type, VpnSiteProperties properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties, @type)
+        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VpnSiteProperties properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

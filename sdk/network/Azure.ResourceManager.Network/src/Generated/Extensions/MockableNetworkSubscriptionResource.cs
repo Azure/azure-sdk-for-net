@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
@@ -133,8 +131,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private ExpressRouteServiceProviders _expressRouteServiceProvidersRestClient;
         private ClientDiagnostics _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics;
         private NetworkSecurityPerimeterAssociableResourceTypes _networkSecurityPerimeterAssociableResourceTypesRestClient;
-        private ClientDiagnostics _networkSecurityPerimeterOperationStatusesClientDiagnostics;
-        private NetworkSecurityPerimeterOperationStatuses _networkSecurityPerimeterOperationStatusesRestClient;
         private ClientDiagnostics _networkSecurityPerimeterServiceTagsClientDiagnostics;
         private NetworkSecurityPerimeterServiceTags _networkSecurityPerimeterServiceTagsRestClient;
         private ClientDiagnostics _availablePrivateEndpointTypesClientDiagnostics;
@@ -397,10 +393,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
-
-        private ClientDiagnostics NetworkSecurityPerimeterOperationStatusesClientDiagnostics => _networkSecurityPerimeterOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterServiceTagsClientDiagnostics => _networkSecurityPerimeterServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -4465,106 +4457,6 @@ namespace Azure.ResourceManager.Network.Mocking
                 CancellationToken = cancellationToken
             };
             return new NetworkSecurityPerimeterAssociableResourceTypeCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes");
-        }
-
-        /// <summary>
-        /// Gets the operation status for the given operation id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterOperationStatusesOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The operation id of the async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = NetworkSecurityPerimeterOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = NetworkSecurityPerimeterOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation status for the given operation id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterOperationStatusesOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The operation id of the async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = NetworkSecurityPerimeterOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = NetworkSecurityPerimeterOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

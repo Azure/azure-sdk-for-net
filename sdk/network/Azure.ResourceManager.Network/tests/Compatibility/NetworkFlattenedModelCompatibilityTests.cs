@@ -311,8 +311,8 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "HttpListener")]
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "RedirectConfiguration")]
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "UrlPathMap")]
-        [TestCase(typeof(NetworkChildResource), "ETag")]
-        [TestCase(typeof(NetworkProxyResource), "ETag")]
+        [TestCase(typeof(NetworkChildResourceData), "ETag")]
+        [TestCase(typeof(NetworkProxyResourceData), "ETag")]
         public void Post115CustomPropertiesAreNotPublic(Type type, string name)
         {
             Assert.That(type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static), Is.Null);
@@ -328,8 +328,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(property.SetMethod?.IsPublic, Is.Not.True);
         }
 
-        [TestCase(typeof(NetworkChildResource))]
-        [TestCase(typeof(NetworkProxyResource))]
+        [TestCase(typeof(NetworkChildResourceData))]
+        [TestCase(typeof(NetworkProxyResourceData))]
         public void NonpublicETagStorageStillPersists(Type type)
         {
             object value = ModelReaderWriter.Read(BinaryData.FromString("""{"etag":"retained-etag"}"""), type, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);

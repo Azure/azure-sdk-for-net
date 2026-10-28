@@ -125,34 +125,40 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        public void GatewayReferenceAndIdentifierShareMutableSerializedState()
+        public void GatewayIdentifierRetainsMutableSerializedState()
         {
             var value = new VirtualNetworkGatewayData();
-            value.GatewayDefaultSite = new WritableSubResource { Id = new ResourceIdentifier(GatewayId) };
+            Assert.That(typeof(VirtualNetworkGatewayData).GetProperty("GatewayDefaultSite"), Is.Null);
+            value.GatewayDefaultSiteId = new ResourceIdentifier(GatewayId);
             Assert.That(value.GatewayDefaultSiteId.ToString(), Is.EqualTo(GatewayId));
-            value.GatewayDefaultSite.Id = new ResourceIdentifier(NetworkId);
+            AssertReferenceWire(value, "gatewayDefaultSite", GatewayId);
+            value.GatewayDefaultSiteId = new ResourceIdentifier(NetworkId);
             Assert.That(value.GatewayDefaultSiteId.ToString(), Is.EqualTo(NetworkId));
+            AssertReferenceWire(value, "gatewayDefaultSite", NetworkId);
             value.GatewayDefaultSiteId = new ResourceIdentifier(GatewayId);
             AssertReferenceWire(value, "gatewayDefaultSite", GatewayId);
             var restored = ModelReaderWriter.Read<VirtualNetworkGatewayData>(ModelReaderWriter.Write(value));
-            Assert.That(restored.GatewayDefaultSite.Id, Is.EqualTo(value.GatewayDefaultSiteId));
-            value.GatewayDefaultSite = null;
+            Assert.That(restored.GatewayDefaultSiteId, Is.EqualTo(value.GatewayDefaultSiteId));
+            value.GatewayDefaultSiteId = null;
             Assert.That(value.GatewayDefaultSiteId, Is.Null);
         }
 
         [Test]
-        public void PeeringReferenceAndIdentifierShareMutableSerializedState()
+        public void PeeringIdentifierRetainsMutableSerializedState()
         {
             var value = new VirtualNetworkPeeringData();
-            value.RemoteVirtualNetwork = new WritableSubResource { Id = new ResourceIdentifier(NetworkId) };
+            Assert.That(typeof(VirtualNetworkPeeringData).GetProperty("RemoteVirtualNetwork"), Is.Null);
+            value.RemoteVirtualNetworkId = new ResourceIdentifier(NetworkId);
             Assert.That(value.RemoteVirtualNetworkId.ToString(), Is.EqualTo(NetworkId));
-            value.RemoteVirtualNetwork.Id = new ResourceIdentifier(GatewayId);
+            AssertReferenceWire(value, "remoteVirtualNetwork", NetworkId);
+            value.RemoteVirtualNetworkId = new ResourceIdentifier(GatewayId);
             Assert.That(value.RemoteVirtualNetworkId.ToString(), Is.EqualTo(GatewayId));
+            AssertReferenceWire(value, "remoteVirtualNetwork", GatewayId);
             value.RemoteVirtualNetworkId = new ResourceIdentifier(NetworkId);
             AssertReferenceWire(value, "remoteVirtualNetwork", NetworkId);
             var restored = ModelReaderWriter.Read<VirtualNetworkPeeringData>(ModelReaderWriter.Write(value));
-            Assert.That(restored.RemoteVirtualNetwork.Id, Is.EqualTo(value.RemoteVirtualNetworkId));
-            value.RemoteVirtualNetwork = null;
+            Assert.That(restored.RemoteVirtualNetworkId, Is.EqualTo(value.RemoteVirtualNetworkId));
+            value.RemoteVirtualNetworkId = null;
             Assert.That(value.RemoteVirtualNetworkId, Is.Null);
         }
 
