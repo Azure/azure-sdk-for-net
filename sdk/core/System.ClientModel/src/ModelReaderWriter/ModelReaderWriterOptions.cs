@@ -114,6 +114,11 @@ public class ModelReaderWriterOptions
     /// Proxies are consulted in the order they were registered.
     /// Direct (non-conditional) proxies always match, the first registered one wins.
     /// </summary>
+    /// <remarks>
+    /// Registering a proxy does not automatically apply it throughout an object graph.
+    /// When writing nested models, serializers must resolve child proxies and forward the options they receive.
+    /// Calling a child's original writer directly bypasses proxy resolution.
+    /// </remarks>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
     {
@@ -128,6 +133,11 @@ public class ModelReaderWriterOptions
     /// When the proxy list is consulted by ModelReaderWriter, it checks <c>CanHandle</c> before delegating
     /// to the held model.
     /// </summary>
+    /// <remarks>
+    /// Registering a proxy does not automatically apply it throughout an object graph.
+    /// When writing nested models, serializers must resolve child proxies and forward the options they receive.
+    /// Calling a child's original writer directly bypasses proxy resolution.
+    /// </remarks>
     /// <param name="proxy">The conditional proxy.</param>
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)
         where T : IPersistableModel<T>
@@ -154,6 +164,10 @@ public class ModelReaderWriterOptions
     /// so that the proxy implementation can access the original model's data during serialization.
     /// Returns null when no proxy is active.
     /// </summary>
+    /// <remarks>
+    /// A nested <c>ResolveProxy</c> call can replace or clear this value and does not restore the parent's value.
+    /// Proxy writers should capture their original model in a local variable before resolving child proxies.
+    /// </remarks>
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
@@ -162,6 +176,18 @@ public class ModelReaderWriterOptions
     /// For plain <see cref="IPersistableModel{T}"/> proxies, returns immediately (first wins).
     /// If no proxy matches, returns the model itself.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// To apply proxies to nested models, resolve each child before invoking its writer and pass the same
+    /// options instance received by the serializer. Calling a child's original writer directly bypasses
+    /// proxy resolution; replacing the received options with default options loses the registrations.
+    /// </para>
+    /// <para>
+    /// This method updates <see cref="ProxiedModel"/> and does not restore the parent's value after a nested
+    /// write. Capture the original parent model before resolving children rather than retrieving it from
+    /// <see cref="ProxiedModel"/> afterward.
+    /// </para>
+    /// </remarks>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));
@@ -199,6 +225,18 @@ public class ModelReaderWriterOptions
     /// For plain <see cref="IJsonModel{T}"/> proxies, returns immediately (first wins).
     /// If no proxy matches, returns the model itself.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// To apply proxies to nested models, resolve each child before invoking its writer and pass the same
+    /// options instance received by the serializer. Calling a child's original writer directly bypasses
+    /// proxy resolution; replacing the received options with default options loses the registrations.
+    /// </para>
+    /// <para>
+    /// This method updates <see cref="ProxiedModel"/> and does not restore the parent's value after a nested
+    /// write. Capture the original parent model before resolving children rather than retrieving it from
+    /// <see cref="ProxiedModel"/> afterward.
+    /// </para>
+    /// </remarks>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));

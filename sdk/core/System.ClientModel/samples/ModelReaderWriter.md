@@ -164,3 +164,56 @@ options.AddProxy(new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
 ```
+
+### Writing nested models with proxies
+
+Proxy registration does not automatically intercept every model in an object graph.
+Each model or proxy serializer that writes child models must use a proxy-aware path
+and forward the working `ModelReaderWriterOptions` it receives. This applies even
+when the parent and child have the same model type.
+
+Calling a child's original `IJsonModel<T>.Write` method directly bypasses its proxy,
+even if the options are forwarded. Using `ModelReaderWriterOptions.Json` or omitting
+the options from a child `ModelReaderWriter.Write` call also loses the registered
+proxies.
+
+For streaming JSON, resolve the child's proxy before writing it:
+`options.ResolveProxy((IJsonModel<TChild>)child).Write(writer, options)`.
+Resolution updates `options.ProxiedModel` to the child, or clears it if no proxy
+matches. It does not restore the parent's value afterward, so capture the parent
+in a local variable before resolving children.
+
+For example, suppose `Node` implements `IJsonModel<Node>` and has `Name` and
+`Node? Child` properties. The following method belongs to a proxy for `Node`:
+
+```csharp
+void IJsonModel<Node>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+{
+    Node parent = (Node)options.ProxiedModel!;
+
+    writer.WriteStartObject();
+    writer.WritePropertyName("child");
+    if (parent.Child is null)
+    {
+        writer.WriteNullValue();
+    }
+    else
+    {
+        options.ResolveProxy((IJsonModel<Node>)parent.Child).Write(writer, options);
+    }
+
+    // Use the captured parent: ProxiedModel may now refer to the child or be null.
+    writer.WriteString("name", parent.Name);
+    writer.WriteEndObject();
+}
+```
+
+Both proxy-aware dispatch and forwarding the received options are required at
+each level where nested proxy behavior is expected. This is a requirement for
+authors of model and proxy serializers, not an extra step for callers that
+register proxies and use a client.
+
+When the appropriate `ModelReaderWriterContext` is available, recursively calling
+`ModelReaderWriter.Write(child, options, context)` is another proxy-aware path.
+That call saves and restores the parent's proxy execution state, but returns
+`BinaryData` rather than writing directly to the existing `Utf8JsonWriter`.
