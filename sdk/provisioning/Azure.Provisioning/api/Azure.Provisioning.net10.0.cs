@@ -982,6 +982,7 @@ namespace Azure.Provisioning.Primitives
     {
         public ResourceReference(Azure.Provisioning.BicepValue<string> reference) { }
         public T? Value { get { throw null; } set { } }
+        public void Clear() { }
     }
     public partial class StaticResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
@@ -2112,6 +2113,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ManagementLockOwner> Owners { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource? Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Resources.ManagementLock FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }

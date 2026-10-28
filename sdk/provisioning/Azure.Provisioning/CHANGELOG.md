@@ -7,6 +7,15 @@
 - Added JSON serialization and deserialization for `Infrastructure` and Bicep syntax nodes through `ModelReaderWriter`, including schema-compatible decorators, 64-bit integers, type annotations, and reverse indexing.
 - Added `OfResourceType<T>` to upgrade deserialized resources to generated resource types while preserving properties, metadata, conditions, and resource dependencies.
 - Added validation that rejects Bicep constructs without a JSON schema representation, including nested resource access, null suppression, and standalone decorators.
+- Added a typed `ManagementLock.Scope` property to apply a lock to an individual resource. Leaving it unset or assigning `null` preserves deployment-scope locking. ([#63624](https://github.com/Azure/azure-sdk-for-net/issues/63624))
+- Types deriving from `ManagementLock` that declare their own `Scope` member, such as the workaround described in the issue, now hide this property (warning CS0108). Remove that member and use `ManagementLock.Scope`.
+- Added `ResourceReference<T>.Clear()` for generated optional resource references to omit their Bicep property.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.6.0 (2026-08-20)
 
