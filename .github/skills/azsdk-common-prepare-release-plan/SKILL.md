@@ -85,6 +85,7 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
    - Spec PR URL
 2. **Query** — Run `azure-sdk-mcp:azsdk_get_release_plan` with the provided identifier. Always use a relative path for `typeSpecProjectPath`; use `specPullRequestUrl` when the user provides only a spec PR URL.
 3. **Display** — Show the release plan ID, status, linked PRs, and SDK details. Always relay schedule-risk warnings and recommended actions from the response.
+4. **Next-step questions** — Answer from the returned plan without starting generation, release-readiness checks, publishing, or plan updates. Pending spec approval comes before SDK generation. Existing unreleased SDK PRs need review and merge confirmation before release readiness; a PR link alone is not evidence that it merged. When every required language is Released or has an approved exclusion, report completion without recommending more work.
 
 **Tool**: `azure-sdk-mcp:azsdk_get_release_plan`
 
