@@ -111,9 +111,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void IsSwitchEnabled_ReadsRuntimeConfigStringValue(string value, bool expected)
         {
             // runtimeconfig.json configProperties are surfaced to AppContext as string data.
+            // .NET Framework has no AppContext.SetData, and AppDomain.SetData is what AppContext reads from.
             var switchName = $"{nameof(GenAiTruncationTests)}.{Guid.NewGuid():N}";
-            AppContext.SetData(switchName, value);
+            AppDomain.CurrentDomain.SetData(switchName, value);
 
+#if NETFRAMEWORK
+            // .NET Framework's AppContext.TryGetSwitch does not fall back to AppDomain data.
+            expected = false;
+#endif
             Assert.Equal(expected, GenAiTruncationConfig.IsSwitchEnabled(switchName));
         }
 
