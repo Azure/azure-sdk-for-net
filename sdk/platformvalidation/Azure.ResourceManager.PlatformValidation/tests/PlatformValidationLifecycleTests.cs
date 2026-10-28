@@ -449,10 +449,10 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
                 string[] segments = uri.AbsolutePath.Trim('/').Split('/');
                 int location = Array.FindIndex(segments, value => value.Equals("locations", StringComparison.OrdinalIgnoreCase));
                 if (location >= 0 && location + 1 < segments.Length && segments.Length >= 2
-                    && segments[^2].Equals("operationStatuses", StringComparison.OrdinalIgnoreCase))
+                    && segments[segments.Length - 2].Equals("operationStatuses", StringComparison.OrdinalIgnoreCase))
                 {
                     Location = new AzureLocation(segments[location + 1]);
-                    OperationId = segments[^1];
+                    OperationId = segments[segments.Length - 1];
                 }
             }
         }

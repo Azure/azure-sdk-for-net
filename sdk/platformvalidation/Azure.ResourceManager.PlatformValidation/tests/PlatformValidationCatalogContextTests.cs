@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
         private static MockResponse CreateCatalogResponse(MockRequest request)
         {
             string path = request.Uri.ToUri().AbsolutePath;
-            string id = path[path.IndexOf("/providers/", StringComparison.Ordinal)..];
+            string id = path.Substring(path.IndexOf("/providers/", StringComparison.Ordinal));
             bool isList = id.EndsWith("/validationTests", StringComparison.Ordinal)
                 || id.EndsWith("/validationTestCategories", StringComparison.Ordinal)
                 || id.EndsWith("/versions", StringComparison.Ordinal);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             var data = new
             {
                 id,
-                name = id[(id.LastIndexOf('/') + 1)..],
+                name = id.Substring(id.LastIndexOf('/') + 1),
                 type,
                 properties = new { audience = "Public" }
             };
