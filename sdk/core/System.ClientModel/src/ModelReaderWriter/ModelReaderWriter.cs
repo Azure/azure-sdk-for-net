@@ -157,6 +157,7 @@ public static class ModelReaderWriter
 
     private static BinaryData WritePersistable<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
     {
+        model = options.ResolveProxy(model);
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
             using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).ExtractReader())
@@ -166,7 +167,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return options.ResolveProxy(model).Write(options);
+            return model.Write(options);
         }
     }
 
@@ -366,7 +367,7 @@ public static class ModelReaderWriter
         => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static ModelReaderWriterOptions GetOptions(ModelReaderWriterOptions? options)
+    internal static ModelReaderWriterOptions GetOptions(ModelReaderWriterOptions? options)
     {
         if (options is null)
             return ModelReaderWriterOptions.Json;

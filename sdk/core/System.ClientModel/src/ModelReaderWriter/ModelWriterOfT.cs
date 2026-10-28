@@ -18,7 +18,7 @@ internal partial class ModelWriter<T>
     /// <summary>
     /// Initializes a new instance of <see cref="ModelWriter{T}"/>.
     /// </summary>
-    /// <param name="model">The model to write.</param>
+    /// <param name="model">The model to write, after resolving any applicable proxy.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     public ModelWriter(IJsonModel<T> model, ModelReaderWriterOptions options)
@@ -31,7 +31,7 @@ internal partial class ModelWriter<T>
     {
         using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
         using var jsonWriter = new Utf8JsonWriter(sequenceWriter, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
-        _options.ResolveProxy(_model).Write(jsonWriter, _options);
+        _model.Write(jsonWriter, _options);
         jsonWriter.Flush();
         return sequenceWriter.ExtractReader();
     }

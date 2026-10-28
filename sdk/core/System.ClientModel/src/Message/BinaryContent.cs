@@ -223,8 +223,9 @@ public abstract class BinaryContent : IDisposable
 
     private sealed class ModelBinaryContent<T> : BinaryContent where T : IPersistableModel<T>
     {
-        private readonly T _model;
+        private readonly IPersistableModel<T> _model;
         private readonly ModelReaderWriterOptions _options;
+        private readonly bool _writeAsJson;
 
         // Used when _model is an IJsonModel
         private UnsafeBufferSequence.Reader? _sequenceReader;
@@ -234,13 +235,14 @@ public abstract class BinaryContent : IDisposable
 
         public ModelBinaryContent(T model, ModelReaderWriterOptions options)
         {
-            _model = model;
-            _options = options;
+            _options = ModelReaderWriter.GetOptions(options);
+            _model = _options.ResolveProxy((IPersistableModel<T>)model);
+            _writeAsJson = ModelReaderWriter.ShouldWriteAsJson(_model, _options);
 
             // Set MediaType to JSON if the model will be serialized as JSON
             // This checks if JSON format is requested, either explicitly ("J") or
-            // via wire format ("W") where the model returns "J" as its preferred format
-            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+            // via wire format ("W") where the selected model returns "J" as its preferred format
+            if (_options.Format == "J" || (_options.Format == "W" && _model.GetFormatFromOptions(_options) == "J"))
             {
                 MediaType = "application/json";
             }
@@ -264,7 +266,7 @@ public abstract class BinaryContent : IDisposable
         {
             get
             {
-                if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
+                if (_writeAsJson)
                 {
                     throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                 }
@@ -276,7 +278,7 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            length = ModelReaderWriter.ShouldWriteAsJson(_model, _options) ? SequenceReader.Length : Data.ToMemory().Length;
+            length = _writeAsJson ? SequenceReader.Length : Data.ToMemory().Length;
 
             return true;
         }
@@ -290,7 +292,7 @@ public abstract class BinaryContent : IDisposable
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
+            if (_writeAsJson)
             {
                 SequenceReader.CopyTo(stream, cancellation);
                 return;
@@ -307,7 +309,7 @@ public abstract class BinaryContent : IDisposable
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
+            if (_writeAsJson)
             {
                 await SequenceReader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                 return;

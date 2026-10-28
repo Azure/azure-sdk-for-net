@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -391,6 +392,135 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreNotSame(wireOptions, calls[0]);
             Assert.AreNotSame(wireOptions, calls[1]);
             Assert.AreNotSame(calls[0], calls[1]);
+        }
+
+        [Test]
+        public void BinaryContent_ProxyWriteDoesNotMutateCallerOptions()
+        {
+            using var barrier = new Barrier(1);
+            var proxy = new ConcurrentWriteProxy(barrier);
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
+
+            Assert.AreEqual("{\"value\":\"original\"}",
+                WriteBinaryContent(new PlainTextModel { Value = "original" }, options));
+            Assert.IsNull(options.ProxiedModel);
+            Assert.AreNotSame(options, proxy.Observed.ToArray()[0]);
+        }
+
+        [Test]
+        public void BinaryContent_ConcurrentProxyWritesDoNotShareExecutionState()
+        {
+            using var barrier = new Barrier(2);
+            var proxy = new ConcurrentWriteProxy(barrier);
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)proxy);
+
+            Task<string> first = Task.Factory.StartNew(
+                () => WriteBinaryContent(new PlainTextModel { Value = "first" }, options),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task<string> second = Task.Factory.StartNew(
+                () => WriteBinaryContent(new PlainTextModel { Value = "second" }, options),
+                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task.WaitAll(first, second);
+
+            Assert.AreEqual("{\"value\":\"first\"}", first.Result);
+            Assert.AreEqual("{\"value\":\"second\"}", second.Result);
+            Assert.IsNull(options.ProxiedModel);
+            var calls = proxy.Observed.ToArray();
+            Assert.AreEqual(2, calls.Length);
+            Assert.AreNotSame(options, calls[0]);
+            Assert.AreNotSame(options, calls[1]);
+            Assert.AreNotSame(calls[0], calls[1]);
+        }
+
+        [TestCase("J", false)]
+        [TestCase("J", true)]
+        [TestCase("W", false)]
+        [TestCase("W", true)]
+        public void Write_PersistableOnlyProxyOverridesJsonModel(string format, bool conditional)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var proxy = new PersistableWriteProxy("J");
+            var conditionalProxy = new PersistableWriteConditionalProxy(proxy);
+            if (conditional)
+            {
+                options.AddProxy<PlainTextModel>(conditionalProxy);
+            }
+            else
+            {
+                options.AddProxy<PlainTextModel>(proxy);
+            }
+            var model = new PlainTextModel { Value = "hello" };
+            const string expected = "{\"value\":\"proxied: hello\"}";
+
+            Assert.AreEqual(expected, ModelReaderWriter.Write(model, options).ToString());
+            Assert.AreEqual(expected, WriteBinaryContent(model, options));
+            Assert.AreEqual(2, proxy.WriteCount);
+            Assert.AreEqual(conditional ? 2 : 0, conditionalProxy.CanHandleCount);
+            Assert.IsNull(options.ProxiedModel);
+        }
+
+        [Test]
+        public void Write_UsesSelectedProxyWireFormat()
+        {
+            var options = new ModelReaderWriterOptions("W");
+            var proxy = new PersistableWriteProxy("PT");
+            options.AddProxy<PlainTextModel>(proxy);
+            var model = new PlainTextModel { Value = "hello" };
+
+            Assert.AreEqual("proxied: hello", ModelReaderWriter.Write(model, options).ToString());
+            using BinaryContent content = BinaryContent.Create(model, options);
+            Assert.IsNull(content.MediaType);
+            using var stream = new MemoryStream();
+            content.WriteTo(stream);
+            Assert.AreEqual("proxied: hello", BinaryData.FromBytes(stream.ToArray()).ToString());
+            Assert.AreEqual(2, proxy.WriteCount);
+            Assert.IsNull(options.ProxiedModel);
+        }
+
+        private static string WriteBinaryContent(PlainTextModel model, ModelReaderWriterOptions options)
+        {
+            using BinaryContent content = BinaryContent.Create(model, options);
+            using var stream = new MemoryStream();
+            content.WriteTo(stream);
+            return BinaryData.FromBytes(stream.ToArray()).ToString();
+        }
+
+        private sealed class PersistableWriteProxy : IPersistableModel<PlainTextModel>
+        {
+            private readonly string _wireFormat;
+            internal int WriteCount { get; private set; }
+
+            internal PersistableWriteProxy(string wireFormat) => _wireFormat = wireFormat;
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => _wireFormat;
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+            {
+                WriteCount++;
+                string value = ((PlainTextModel)options.ProxiedModel!).Value;
+                string format = options.Format == "W" ? _wireFormat : options.Format;
+                return BinaryData.FromString(format == "J"
+                    ? $"{{\"value\":\"proxied: {value}\"}}"
+                    : $"proxied: {value}");
+            }
+        }
+
+        private sealed class PersistableWriteConditionalProxy : ConditionalModelProxy<PlainTextModel>
+        {
+            internal int CanHandleCount { get; private set; }
+
+            internal PersistableWriteConditionalProxy(PersistableWriteProxy model) : base(model) { }
+
+            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            {
+                CanHandleCount++;
+                return true;
+            }
         }
 
         private sealed class ConcurrentWriteProxy : IJsonModel<PlainTextModel>

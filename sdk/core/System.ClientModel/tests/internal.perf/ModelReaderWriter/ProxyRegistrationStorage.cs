@@ -15,6 +15,9 @@ internal static class ProxyRegistrationStorage
 
     public static void Run()
     {
+#if NETFRAMEWORK
+        throw new PlatformNotSupportedException("Proxy registration storage diagnostics are not supported on .NET Framework.");
+#else
         ProxyResolutionBenchmark.Scenario[] scenarios =
         [
             ProxyResolutionBenchmark.Scenario.Direct,
@@ -51,8 +54,10 @@ internal static class ProxyRegistrationStorage
             Method = "GC.GetTotalMemory(true) before/after a strongly rooted batch; GC.GetAllocatedBytesForCurrentThread around batch construction. Report samples, not exact individual object sizes.",
             Results = results
         }, new JsonSerializerOptions { WriteIndented = true }));
+#endif
     }
 
+#if !NETFRAMEWORK
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static (double Retained, double Allocated) Measure(ProxyResolutionBenchmark.Scenario scenario, int count)
     {
@@ -66,4 +71,5 @@ internal static class ProxyRegistrationStorage
         GC.KeepAlive(roots);
         return ((double)retained / BatchSize, (double)allocated / BatchSize);
     }
+#endif
 }
