@@ -13,22 +13,12 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects;
 
 /// <summary>
-/// Realtime session client, using bearer token authentication.
+/// A Realtime WebSocket session for a Foundry voice agent.
 /// </summary>
 /// <remarks>
-/// This type extends OpenAI's <see cref="RealtimeSessionClient"/> so that voice-agent sessions
-/// reuse its command and event model (for example
-/// <see cref="RealtimeSessionClient.SendInputAudioAsync(BinaryData, CancellationToken)"/>,
-/// <see cref="RealtimeSessionClient.AddItemAsync(RealtimeItem, string, CancellationToken)"/>, or
-/// <see cref="RealtimeSessionClient.ReceiveUpdatesAsync(CancellationToken)"/> for OpenAI's
-/// strongly-typed <see cref="RealtimeServerUpdate"/> sequence). Only the query string/header
-/// values are Foundry-specific here (see the <see cref="ConnectAsync"/> override below); the
-/// WebSocket handshake itself is performed by the base <see cref="RealtimeSessionClient.ConnectAsync"/>
-/// implementation, targeting the Foundry voice-agent endpoint
-/// (<c>/agents/{agentName}/endpoint/protocols/voice</c>) this instance was constructed with instead
-/// of OpenAI's generic <c>/realtime</c> endpoint. Use
-/// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> (via <see cref="AIProjectClient.ProjectsRealtimeClient"/>)
-/// to obtain an already-connected instance.
+/// Create a connected session with <see cref="AIProjectClient.ProjectsRealtimeClient"/> and
+/// <see cref="ProjectsRealtimeClient.StartSessionAsync"/>. Use the inherited
+/// <see cref="RealtimeSessionClient"/> methods to send messages or audio and receive updates.
 /// </remarks>
 [Experimental("AAIP002")]
 public class ProjectsRealtimeSessionClient : RealtimeSessionClient
@@ -40,7 +30,7 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     private readonly VoiceAgentRealtimeTelemetry _telemetry;
 
     /// <summary>
-    /// Internal empty constructor for mocking.
+    /// Initializes a new instance for mocking.
     /// </summary>
     protected ProjectsRealtimeSessionClient() : base(null, null, default, default, null) { }
 
@@ -95,17 +85,11 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         => ConnectAsync(queryString: queryString, headers: headers, cancellationToken: cancellationToken);
 
     /// <summary>
-    /// Connects to the Foundry voice-agent endpoint this instance was constructed with. Only the
-    /// Foundry-specific query string (api-version, merged with any caller-supplied query string --
-    /// see <paramref name="queryString"/> -- such as ProjectsRealtimeClient.StartSessionAsync's
-    /// "store" option) and headers (Foundry-Features, bearer Authorization) are computed here; the
-    /// WebSocket handshake itself (subprotocol negotiation, applying the headers, connecting,
-    /// assigning <see cref="RealtimeSessionClient.WebSocket"/>) is entirely delegated to
-    /// <see cref="RealtimeSessionClient.ConnectAsync"/>.
+    /// Connects to the Foundry voice agent using the project's authentication, API version, and preview headers.
     /// </summary>
-    /// <param name="queryString">An additional query string merged in after api-version.</param>
-    /// <param name="headers">Additional headers to merge with the ones this override computes.</param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="queryString">Additional query parameters, such as <c>store=true</c>.</param>
+    /// <param name="headers">Additional WebSocket headers.</param>
+    /// <param name="cancellationToken">Cancels authentication and connection.</param>
     protected override async Task ConnectAsync(string queryString = null, IDictionary<string, string> headers = null, CancellationToken cancellationToken = default)
     {
         Activity previousActivity = Activity.Current;

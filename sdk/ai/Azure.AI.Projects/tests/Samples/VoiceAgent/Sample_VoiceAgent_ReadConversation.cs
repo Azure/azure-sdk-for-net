@@ -54,9 +54,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
         try
         {
             #region Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
-            // Passing store: true (via options.QueryString) persists this session's conversation so
-            // it can be read back afterward through BetaVoiceAgentsConversations; the response.done
-            // event reports the resulting conversation ID.
+            // Save the conversation with store=true and get its ID from response.done.
             string conversationId;
             using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
                 await projectClient.ProjectsRealtimeClient.StartSessionAsync(
@@ -80,8 +78,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
             }
             #endregion
             #region Snippet:Sample_VoiceAgent_ReadConversation_Read
-            // Once the session above closes, the conversation it produced becomes readable through
-            // the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
+            // Read the saved messages and responses over REST.
             BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
             VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);

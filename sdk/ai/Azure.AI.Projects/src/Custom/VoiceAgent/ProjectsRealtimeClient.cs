@@ -15,12 +15,12 @@ namespace Azure.AI.Projects;
 #pragma warning disable AAIP002
 
 /// <summary>
-/// The extended real time client.
+/// Connects to Realtime sessions for Foundry voice agents.
 /// </summary>
 /// <remarks>
-/// Use this client for agent-scoped Voice Agent WebSocket sessions. OpenAI Realtime REST methods
-/// inherited from <see cref="RealtimeClient"/>, including client-secret creation, are not mapped
-/// to Voice Agent endpoints and do not establish support for Voice Agent ephemeral authentication.
+/// Connections use the project's Microsoft Entra ID credentials. Inherited client-secret creation
+/// methods are not mapped to Voice Agent endpoints. <see cref="RealtimeSessionClientOptions.ClientSecret"/>
+/// does not provide ephemeral authentication for these Voice Agent connections.
 /// </remarks>
 [Experimental("AAIP002")]
 public class ProjectsRealtimeClient : RealtimeClient
@@ -32,7 +32,7 @@ public class ProjectsRealtimeClient : RealtimeClient
     private readonly RealtimeClientOptions _options;
 
     /// <summary>
-    /// Internal empty constructor for mocking.
+    /// Initializes a new instance for mocking.
     /// </summary>
     protected ProjectsRealtimeClient() { }
 
@@ -78,26 +78,20 @@ public class ProjectsRealtimeClient : RealtimeClient
     internal string ExperimentalHeaders { get; }
 
     /// <summary>
-    /// Starts and connects a realtime session for the named voice agent. Overrides
-    /// <see cref="RealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)"/>
-    /// rather than introducing a differently-named method: this is the public, documented way to
-    /// start a voice-agent session -- get a <see cref="ProjectsRealtimeClient"/> from
-    /// <see cref="AIProjectClient.ProjectsRealtimeClient"/>, then call this (inherited/overridden)
-    /// method on it, the same way an OpenAI <see cref="RealtimeClient"/> consumer would.
+    /// Starts a Realtime session for the named Foundry voice agent.
     /// </summary>
-    /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
+    /// <param name="model">The voice agent name, not a model deployment name.</param>
     /// <param name="intent">The client intent.</param>
     /// <param name="options">
-    /// Additional connection options. Use <see cref="ProjectsRealtimeSessionClientOptions.Transport"/>
-    /// to select a Voice Agent transport, or <see cref="RealtimeSessionClientOptions.QueryString"/>
-    /// to pass Foundry's "store" option as <c>"store=true"</c> or <c>"store=false"</c>.
+    /// Connection options. Use <see cref="ProjectsRealtimeSessionClientOptions.Transport"/> to select
+    /// a transport and <see cref="RealtimeSessionClientOptions.QueryString"/> to set <c>store=true</c>
+    /// or <c>store=false</c>.
     /// </param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">Cancels authentication and connection.</param>
     /// <exception cref="ArgumentException">The selected transport has no value.</exception>
     /// <returns>
-    /// An already-connected <see cref="ProjectsRealtimeSessionClient"/> (returned as the base
-    /// <see cref="RealtimeSessionClient"/> type: <c>Task&lt;T&gt;</c> isn't covariant in <c>T</c>
-    /// even under C# 9+ override covariance, unlike a method's own direct return type).
+    /// A connected <see cref="ProjectsRealtimeSessionClient"/>, returned as <see cref="RealtimeSessionClient"/>.
+    /// Dispose the session when finished.
     /// </returns>
 #pragma warning disable AZC0015 // Returns a connected WebSocket session client, not a REST response; there is no response body to wrap.
 #pragma warning disable AZC0004 // Establishing a WebSocket connection is asynchronous-only; matches the base method's own shape.

@@ -49,7 +49,7 @@ public static class Sample_VoiceAgent_Live
             {
                 Console.WriteLine($"State: {session.State}; model: {session.SessionStarted.Session.Model}");
             }
-            // DisposeAsync confirms native finalization before releasing the connection.
+            // DisposeAsync attempts graceful closure before releasing the connection.
             Console.WriteLine($"Closed: {session.State}; final usage: {session.SessionClosed.Usage.Seconds} seconds");
         }
         finally
@@ -65,7 +65,7 @@ public static class Sample_VoiceAgent_Live
         ProjectsLiveSessionClientOptions options = new()
         {
             AgentVersion = version,
-            // Store is used by the other examples; this shows its raw-query alternative.
+            // Use either Store or the store query parameter, not both.
             QueryString = "store=false"
         };
         options.StructuredInputs["language"] = BinaryData.FromObjectAsJson("English");
@@ -522,7 +522,7 @@ public static class Sample_VoiceAgent_Live
                         throw new InvalidOperationException("Sample tool continuation limit exceeded.");
                     }
                     #region Snippet:Sample_VoiceAgent_Live_ToolResults
-                    // Finish the backend response before returning all pending results and continuing once.
+                    // Wait for response.completed, then submit all tool results and continue once.
                     foreach (ResponseItem result in pendingResults)
                     {
                         await session.SendEventAsync(new LiveClientEventLiveResponseItemCreateParam(result), cancellationToken);
@@ -787,7 +787,7 @@ public static class Sample_VoiceAgent_Live
     private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
     {
         using PacedPcmStream audio = new(speech);
-        // The SDK reads until EOF and leaves this stream open; the caller supplies real-time pacing.
+        // The caller controls pacing; the SDK reads to the end and leaves the stream open.
         await session.SendInputAudioAsync(audio, cancellationToken);
         return audio.BytesRead;
     }

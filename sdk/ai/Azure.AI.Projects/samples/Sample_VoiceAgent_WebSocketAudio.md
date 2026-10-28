@@ -1,18 +1,17 @@
 # Stream audio with a Foundry Voice Agent over WebSocket
 
-This runnable sample selects `VoiceAgentTransport.Websocket`, streams a recorded spoken
-question as PCM audio, and receives the spoken answer. It prints the transferred audio sizes
-and the returned transcript.
+Send a recorded question over WebSocket and receive an audio response. The sample prints the
+response transcript and the raw audio bytes sent and received.
 
-Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME`
-to a deployed realtime model. Suppress experimental diagnostics `AAIP001`, `AAIP002`, and `OPENAI002`
-when building the sample.
+## Prerequisites
 
-Set `VOICE_SAMPLE_AUDIO_PATH` to a mono PCM16LE/24 kHz WAV recording. The repository test uses
-the existing recorded weather question. The sample's WAV reader strips the container header;
-only raw audio is sent.
+- Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+- Set `VOICE_SAMPLE_AUDIO_PATH` to a mono, 16-bit PCM WAV recording at 24 kHz.
 
-1. Create an audio-modality voice agent with PCM16 audio at 24 kHz and one channel.
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_WebSocketAudio.cs)
+includes the WAV reader. It removes the WAV header before sending audio.
+
+1. Create a voice agent that uses mono PCM16 audio at 24 kHz.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Create
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -50,8 +49,8 @@ ProjectsAgentVersion agentVersion = createResult;
 Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
 ```
 
-2. Send five 100 ms PCM16 chunks over the selected WebSocket connection. Count input bytes only
-after each send succeeds, and count output bytes from the received audio delta payloads.
+2. Stream the recording in 20 ms chunks, commit the audio, and request a response. Collect
+the returned audio and transcript. Byte counts exclude WAV headers and base64 encoding.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Stream
 using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
@@ -120,5 +119,4 @@ ClientResult deleteResult = await projectClient.AgentAdministrationClient.Delete
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
-Selecting `VoiceAgentTransport.Webrtc` instead changes the signaling transport only. It does not
-send WebRTC media for you; a full WebRTC application needs a separate peer connection and SDP flow.
+For WebRTC requirements, see the [transport sample](Sample_VoiceAgent_WebSocketTransport.md).

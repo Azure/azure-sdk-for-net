@@ -1,13 +1,14 @@
 # Select the WebSocket transport for a Foundry Voice Agent
 
-This runnable sample selects `VoiceAgentTransport.Websocket` for a realtime text conversation
-and reads the conversation back after it is persisted.
-Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME`
-to a deployed realtime model. It creates a temporary voice agent version and deletes it afterward.
-Voice Agent and OpenAI realtime APIs are experimental; suppress `AAIP001`, `AAIP002`, and
-`OPENAI002` when building this sample.
+Use `ProjectsRealtimeSessionClientOptions.Transport` to select a connection transport.
+This example uses `VoiceAgentTransport.Websocket` to send a text message, save the conversation,
+and read it back over REST.
 
-1. Create a text-modality voice agent.
+Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_WebSocketTransport.cs)
+includes setup and cleanup.
+
+1. Create a temporary voice agent that returns text.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Create
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -28,9 +29,7 @@ ProjectsAgentVersion agentVersion = createResult;
 Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
 ```
 
-2. Connect with the typed WebSocket transport, request conversation persistence, send a text
-message, and verify the response. Select WebSocket through
-`ProjectsRealtimeSessionClientOptions.Transport`; the SDK handles the connection details.
+2. Connect over WebSocket and send a message. Set `store=true` to save the conversation.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Connect
 using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
@@ -72,7 +71,7 @@ using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
 }
 ```
 
-3. After closing the WebSocket session, retrieve the persisted conversation over REST.
+3. After closing the session, read the saved conversation over REST.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketTransport_Read
 ClientResult<VoiceConversation> conversation = await projectClient.AgentAdministrationClient
@@ -92,6 +91,6 @@ ClientResult deleteResult = await projectClient.AgentAdministrationClient.Delete
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
-`VoiceAgentTransport.Webrtc` selects **WebRTC signaling only**. A WebRTC application must also
-implement the peer connection, media transport, and SDP offer/answer exchange. The WebSocket text
-flow above is not a complete WebRTC application.
+`VoiceAgentTransport.Webrtc` selects **signaling only**. Your application must implement the
+WebRTC peer connection, audio transport, and SDP offer/answer exchange. Changing this option
+does not create a complete WebRTC application.

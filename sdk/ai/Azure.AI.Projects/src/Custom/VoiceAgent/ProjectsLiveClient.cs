@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects;
 
-/// <summary> Connects to native Live sessions for Foundry Voice Agents. </summary>
+/// <summary> Connects to GPT Live sessions for Foundry voice agents. </summary>
 [Experimental("AAIP001")]
 public class ProjectsLiveClient
 {
@@ -47,14 +47,14 @@ public class ProjectsLiveClient
     /// <summary> The Foundry project endpoint. </summary>
     public Uri Endpoint { get; }
 
-    /// <summary> The parent project's HTTP pipeline. Native Live messages use a dedicated WebSocket. </summary>
+    /// <summary> The parent project's HTTP pipeline. Live audio and events use a separate WebSocket. </summary>
     public ClientPipeline Pipeline { get; }
 
-    /// <summary> Connects a native Live WebSocket session and waits for the service's startup acknowledgment. </summary>
-    /// <param name="agentName"> The name of the Live voice agent. </param>
-    /// <param name="options"> Optional connection settings. Foundry starts the native session from the agent definition. </param>
+    /// <summary> Connects to a GPT Live session and waits for <c>session.started</c>. </summary>
+    /// <param name="agentName"> The voice agent name. </param>
+    /// <param name="options"> Connection options. Foundry loads session settings from the agent definition. </param>
     /// <param name="cancellationToken"> Cancels authentication, connection, and session startup. </param>
-    /// <returns> An initialized session, owned by the caller. </returns>
+    /// <returns> The connected session. Dispose it when finished. </returns>
 #pragma warning disable AZC0004 // WebSocket connection and native session startup are asynchronous.
 #pragma warning disable AZC0015 // The result is an owned, connected session, not an HTTP response.
     public virtual async Task<ProjectsLiveSessionClient> StartSessionAsync(string agentName,
@@ -205,7 +205,7 @@ public partial class AIProjectClient
     [Experimental("AAIP001")]
     private ProjectsLiveClient _cachedProjectsLiveClient;
 
-    /// <summary> Gets the client for native Live Voice Agent sessions. Realtime agents use <see cref="ProjectsRealtimeClient"/> instead. </summary>
+    /// <summary> Gets the client for GPT Live voice agents. Realtime agents use <see cref="ProjectsRealtimeClient"/> instead. </summary>
     [Experimental("AAIP001")]
     public virtual ProjectsLiveClient ProjectsLiveClient
     {

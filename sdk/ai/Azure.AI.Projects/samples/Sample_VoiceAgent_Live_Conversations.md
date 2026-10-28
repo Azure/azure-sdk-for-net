@@ -1,35 +1,29 @@
-# Stored Live conversations and audio: every REST overload
+# Read saved GPT Live conversations and recordings
 
-The [complete, compilable sample source](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live_Conversations.cs)
-demonstrates all **nine** `BetaVoiceAgentsLiveConversations` REST operation groups in
-all **four** public overload families: synchronous/asynchronous typed methods taking a
-`CancellationToken`, and synchronous/asynchronous protocol methods taking `RequestOptions`.
-That is **36 SDK methods**, not counting response-status accessors or parsing helpers.
+Use `BetaVoiceAgentsLiveConversations` to list saved conversations, read messages, and download
+audio. The examples include synchronous, asynchronous, typed, and protocol methods.
 
-For creating an agent, connecting over WebSocket, sending actual speech, and capturing
-`session.started.conversation_id`, see the [Live guide](Sample_VoiceAgent_Live.md) and its
-[WebSocket source](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live.cs), particularly
-`StoredConversationAsync`. The REST samples read an existing conversation; they do not
-create an empty substitute or change the project's endpoint.
+To create and save an audio conversation first, use `StoredConversationAsync` in the
+[Live guide](Sample_VoiceAgent_Live.md#stored-live-history). The examples below read an
+existing conversation.
 
-## Prerequisites and callable usage
+## Prerequisites
 
-- A Foundry project endpoint and an identity authorized to read the agent's Live conversations.
-- A native Live agent and an actual speech session stored with effective `Store = true`.
-  Save the **returned** `session.started.conversation_id` and the agent name. Neither a
-  fabricated ID nor a text-only delegation is a substitute for a stored speech segment.
-- Close the session and wait for persistence finalization to reach `completed`. A session
-  can remain `in_progress` after transport closure while finalization is pending. These
-  samples fail explicitly for non-completed or failed persistence.
-- **Foundry-managed storage** for both the segment and whole-call recording. Bring-your-own-storage (BYOS) metadata
-  contains `BlobUri` without a SAS token and requires the customer's own storage credentials.
-  These samples throw `NotSupportedException` for BYOS rather than following or logging the URI.
-- `Azure.AI.Projects`, `Azure.AI.Projects.Agents`, and `Azure.Identity`, and the sample class
-  from the linked source. The sample is not a class shipped inside the client library.
-  Acknowledge the experimental `AAIP001` APIs.
+- A Foundry project and a Microsoft Entra ID identity with permission to read Live conversations.
+- An audio conversation saved with `Store = true`. Keep the agent name and the returned
+  `SessionStarted.ConversationId`. Text-only conversations have no speech segment to download.
+- A closed session with storage status `completed`. Storage can still be `in_progress` after
+  the WebSocket closes; use the wait helper in the Live guide before reading.
+- **Foundry-managed storage.** These examples do not support bring-your-own-storage (BYOS),
+  which requires your own storage credentials to access `BlobUri`.
+- `Azure.AI.Projects`, `Azure.AI.Projects.Agents`, and `Azure.Identity`. Suppress experimental
+  diagnostic `AAIP001`.
 
-For example, set the environment variables to values captured from your real stored session,
-copy the complete sample class into your application, and call:
+## Run an example
+
+Copy the [complete sample class](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live_Conversations.cs)
+into your application; it is sample code, not part of the SDK. Set the environment variables
+to your saved session's values, then call:
 
 ```C#
 using System;
@@ -62,46 +56,29 @@ await Sample_VoiceAgent_Live_Conversations.ReadAsync(
     cancellationToken: timeout.Token);
 ```
 
-Replace `ReadAsync` with `Read`, `ReadProtocolAsync`, or `ReadProtocol` to run the other
-families against that same stored conversation. Await only the asynchronous methods.
-The synchronous methods do not block on an asynchronous implementation.
+Choose the method that matches your application:
 
-**Deletion is irreversible and defaults to `false` in every sample.** Only explicitly set
-`deleteConversation: true` if you intend to delete this stored conversation after both audio
-downloads have succeeded. Do not enable it while comparing all four families against one ID:
-once a sample deletes that conversation, later reads of the same ID cannot succeed.
+| Method | API style |
+| --- | --- |
+| `ReadAsync` | Async, using C# models |
+| `Read` | Sync, using C# models |
+| `ReadProtocolAsync` | Async, using raw HTTP responses and `RequestOptions` |
+| `ReadProtocol` | Sync, using raw HTTP responses and `RequestOptions` |
 
-## API-to-sample coverage
+**Deletion is irreversible and disabled by default.** Set `deleteConversation: true` only if you
+want to delete the conversation after both downloads succeed. Leave it disabled when trying
+multiple examples against the same conversation.
 
-All paths below are relative to the project's
-`/agents/{agentName}/endpoint/protocols/voice/live/conversations` route.
-The client supplies the API version, project authentication, and
-`Foundry-Features: VoiceAgents=V1Preview`; the samples do not construct a Realtime URL.
+## What each example does
 
-| REST operation | Typed sync: `Read` (`CancellationToken`) | Typed async: `ReadAsync` (`CancellationToken`) | Protocol sync: `ReadProtocol` (`RequestOptions`) | Protocol async: `ReadProtocolAsync` (`RequestOptions`) |
-| --- | --- | --- | --- | --- |
-| GET conversations | `GetLiveAgentConversations` | `GetLiveAgentConversationsAsync` | `GetLiveAgentConversations` | `GetLiveAgentConversationsAsync` |
-| GET `/{conversationId}` | `GetLiveAgentConversation` | `GetLiveAgentConversationAsync` | `GetLiveAgentConversation` | `GetLiveAgentConversationAsync` |
-| GET `/{conversationId}/items` | `GetLiveAgentConversationItems` | `GetLiveAgentConversationItemsAsync` | `GetLiveAgentConversationItems` | `GetLiveAgentConversationItemsAsync` |
-| GET `/{conversationId}/items/{itemId}` | `GetLiveAgentConversationItem` | `GetLiveAgentConversationItemAsync` | `GetLiveAgentConversationItem` | `GetLiveAgentConversationItemAsync` |
-| GET `/{conversationId}/items/{itemId}/audio` | `GetLiveAgentConversationAudioItem` | `GetLiveAgentConversationAudioItemAsync` | `GetLiveAgentConversationAudioItem` | `GetLiveAgentConversationAudioItemAsync` |
-| GET `/{conversationId}/items/{itemId}/audio/content` | `GetLiveAgentConversationAudioItemContent` | `GetLiveAgentConversationAudioItemContentAsync` | `GetLiveAgentConversationAudioItemContent` | `GetLiveAgentConversationAudioItemContentAsync` |
-| GET `/{conversationId}/audio` | `GetLiveAgentConversationAudio` | `GetLiveAgentConversationAudioAsync` | `GetLiveAgentConversationAudio` | `GetLiveAgentConversationAudioAsync` |
-| GET `/{conversationId}/audio/content` | `GetLiveAgentConversationAudioContent` | `GetLiveAgentConversationAudioContentAsync` | `GetLiveAgentConversationAudioContent` | `GetLiveAgentConversationAudioContentAsync` |
-| DELETE `/{conversationId}` (explicit opt-in, last) | `DeleteLiveAgentConversation` | `DeleteLiveAgentConversationAsync` | `DeleteLiveAgentConversation` | `DeleteLiveAgentConversationAsync` |
+1. List saved conversations and items, following all pages.
+2. Read the selected conversation and its first input/output speech item.
+3. Download that item's audio and the full conversation recording.
+4. Optionally delete the conversation after both downloads succeed.
 
-Each method enumerates conversations and items with `limit: 2` and ascending order, letting
-the SDK follow every continuation page. It verifies the requested conversation's identity and
-completed status, selects the **first actual input/output speech item from history**, retrieves
-that same item, reads segment metadata and bytes, then reads merged recording metadata and bytes.
-Only then can the optional DELETE run.
-
-The generated native Live DTOs are `VoiceAgentLiveConversation`,
-`VoiceAgentLiveConversationItem`, `VoiceAgentLiveInputConversationItem`,
-`VoiceAgentLiveOutputConversationItem`, `VoiceAudioItem`, and `VoiceRecording`.
-They are **not Realtime conversation items or native turn resources**. Delegation results and
-unknown items are not interpreted as speech. Unsupported item kinds rejected by generated
-deserialization also propagate as failures, rather than being treated as audio.
+The SDK handles authentication, API version, and Live history routes. Live history uses
+different models from Realtime history. Only speech items are selected for audio downloads;
+tool results and unknown item kinds are not treated as audio.
 
 ## Typed asynchronous methods
 
@@ -233,12 +210,9 @@ public static void Read(
 
 ## Protocol asynchronous methods
 
-The protocol examples pass all paging parameters explicitly and put the caller's token in
-`RequestOptions.CancellationToken`. `GetRawPagesAsync`/`GetRawPages` preserve SDK pagination.
-The shared `ReadPage<T>` helper parses `GetRawResponse().Content` with `JsonDocument` and
-deserializes entries with `ModelReaderWriter`; `ReadModel<T>` also reads the raw response
-content into the same generated DTOs. No alternate handwritten wire models are needed.
-Audio content is taken directly from `GetRawResponse().Content`.
+Protocol methods pass cancellation through `RequestOptions` and expose raw HTTP responses.
+The SDK still handles pagination. The helpers parse JSON into SDK models and save audio bytes
+from `GetRawResponse().Content`.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Conversations_ReadProtocolAsync
 public static async Task ReadProtocolAsync(
@@ -372,30 +346,20 @@ public static void ReadProtocol(
 }
 ```
 
-## Output, failures, and deployment availability
+## Downloaded files and troubleshooting
 
-The shared helpers in the [source](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live_Conversations.cs)
-create `outputDirectory` and write the returned WAV content to constant local filenames:
+The sample creates `outputDirectory` and saves:
 
-- `segment.wav`: the selected stored input/output speech segment.
-- `conversation.wav`: the merged whole-call recording (user left channel, agent right channel).
+- `segment.wav`: audio from the selected speech item.
+- `conversation.wav`: the full recording, with the user on the left channel and the agent on the right.
 
-These names are overwritten on a successful download; server-provided item IDs are never used
-as local paths. Store these recordings in a private directory. The sample reports HTTP status,
-conversation/item IDs, lifecycle status, basic audio metadata, and downloaded byte counts, but
-does not print transcripts, authorization tokens, audio bytes, or BYOS blob URIs.
-The asynchronous file writer uses `FileStream.WriteAsync`, including on .NET Framework.
+Existing files with these names are overwritten. Keep recordings in a private directory.
+The sample prints HTTP statuses, IDs, audio metadata, and byte counts, but not transcripts,
+credentials, audio contents, or BYOS URIs.
 
-Empty history with no speech item, malformed responses, mismatched resource IDs, BYOS metadata,
-and zero-byte downloads are explicit failures. A service error or cancellation propagates;
-there is no silent skip and no `finally` block that deletes the conversation after failure.
-An earlier successful download can remain on disk if a later step fails. Even when deletion
-is enabled, it is attempted only after both nonempty downloads have been saved.
+Missing speech items, invalid responses, mismatched IDs, BYOS storage, and empty downloads fail
+the call. Service errors and cancellation are propagated. If a later step fails, an earlier
+download can remain on disk; deletion is attempted only after both recordings are saved.
 
-**Deployment availability:** an HTTP 404 raises `ClientResultException`; it is not a successful
-sample run. Verify the returned conversation ID, effective storage setting, persistence
-finalization, and availability of the Live history routes in your deployment.
-These examples do not rewrite endpoints, switch to Realtime, or use a legacy fallback.
-The [mocked sample tests](../tests/VoiceAgentLiveConversationSampleTests.cs) validate all 36 SDK
-methods, pagination, download bytes, deletion ordering, and these failure paths without
-substituting mocked success for a real-service sample run.
+For HTTP 404, check the conversation ID, storage setting, `completed` status, and Live history
+availability in your deployment. Live conversations cannot be read through Realtime history routes.

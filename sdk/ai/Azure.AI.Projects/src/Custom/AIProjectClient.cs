@@ -276,10 +276,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Gets the client for working with Voice Agents' realtime endpoints. Call
-        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
-        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
-        /// named voice agent.
+        /// Gets the client for Realtime voice agents. Call <see cref="ProjectsRealtimeClient.StartSessionAsync"/>
+        /// with an agent name to connect.
         /// </summary>
         [Experimental("AAIP002")]
         public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();

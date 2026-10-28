@@ -1,13 +1,13 @@
-# Read a voice agent's persisted conversation history
+# Read a voice agent's saved conversation
 
-This sample holds a realtime session with `Store = true`, so the Foundry service persists the
-conversation the session produces, then reads that conversation back afterward through the
-REST-only `BetaVoiceAgentsConversations` surface -- no realtime connection needed for the read.
+Save a Realtime conversation with `store=true`, close the session, and read its messages and
+responses using `BetaVoiceAgentsConversations`. Reading saved history uses REST, not a WebSocket.
 
-Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_REALTIME_MODEL_NAME` to a
-realtime-capable model deployment name before running this sample.
+Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_ReadConversation.cs)
+includes client setup and cleanup.
 
-1. Create the client and a temporary text-modality voice agent.
+1. Create a temporary voice agent that returns text.
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_Create
 VoiceAgentDefinition definition = new()
@@ -22,12 +22,10 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     new ProjectsAgentVersionCreationOptions(definition));
 ```
 
-2. Hold a realtime session with `store: true` and note the conversation ID reported by `response.done`.
+2. Start a session with `store=true` and capture the conversation ID from `response.done`.
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
-// Passing store: true (via options.QueryString) persists this session's conversation so
-// it can be read back afterward through BetaVoiceAgentsConversations; the response.done
-// event reports the resulting conversation ID.
+// Save the conversation with store=true and get its ID from response.done.
 string conversationId;
 using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
     await projectClient.ProjectsRealtimeClient.StartSessionAsync(
@@ -51,11 +49,10 @@ using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
 }
 ```
 
-3. Once the session closes, read the persisted conversation, its items, and its responses back over REST.
+3. After closing the session, read the saved conversation, messages, and responses.
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_Read
-// Once the session above closes, the conversation it produced becomes readable through
-// the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
+// Read the saved messages and responses over REST.
 BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
 VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);

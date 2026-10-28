@@ -1,85 +1,48 @@
-# GPT Live REST and WebSocket API samples
+# Use GPT Live with a Foundry voice agent
 
-These examples use the native Live protocol through `AIProjectClient.ProjectsLiveClient`.
-The existing `ProjectsRealtimeClient` remains the client for Realtime agents; its commands,
-events, and transport selection must not be used with Live agents.
+Use `AIProjectClient.ProjectsLiveClient` to send text or audio to a GPT Live voice agent.
+Realtime agents use `ProjectsRealtimeClient` instead; the two clients use different commands
+and events.
 
-The complete, compilable [WebSocket sample source](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live.cs)
-contains the helper methods used below. The [conversation REST samples](Sample_VoiceAgent_Live_Conversations.md)
-cover all nine operations with synchronous/asynchronous and typed/protocol overloads.
-
-## API-to-sample coverage
-
-These are runnable samples, not a list of APIs covered only by tests. All public Live client
-operations and connection options have examples. Generated model constructors/properties,
-mocking constructors, and SIP-only transport events are not separate client operations.
-
-| WebSocket API | Executable example |
-| --- | --- |
-| `AIProjectClient.ProjectsLiveClient`, `ProjectsLiveClient.StartSessionAsync` | `ConnectAsync`, and every session example |
-| `ProjectsLiveClient.Endpoint`, `Pipeline` | `ConnectionOptionsAsync` |
-| `ProjectsLiveSessionClientOptions.Store` | `ConnectAsync` (`false`), `StoredConversationAsync` (`true`) |
-| `AgentVersion`, `StructuredInputs`, `Headers`, `QueryString` | `ConnectionOptionsAsync` |
-| `SessionStarted`, `SessionClosed`, `State` | `ConnectAsync`, `ConnectionOptionsAsync`, `StoredConversationAsync` |
-| `SendEventAsync` | `SessionControlsAsync`, `TextConversationAsync`, `FunctionAsync` |
-| `SendCommandAsync` | Raw JSON command in `SessionControlsAsync` |
-| `SendInputAudioAsync(BinaryData)` | `ConversationAsync` |
-| `SendInputAudioAsync(Stream)` | `StreamAudioAsync`, with a caller-paced PCM stream |
-| `ReceiveEventsAsync` | Audio, controls, text, function, and cancellation receive loops |
-| `CloseAsync` | `ConnectAsync`; `SessionControlsAsync` also demonstrates a typed `session.close` command |
-| `Dispose` | `CancelReceiveAsync` (immediate release) and `using` scopes |
-| `DisposeAsync` / `IAsyncDisposable` | `ConnectionOptionsAsync` (`await using`, graceful finalization) |
-
-| Native client command | Example |
-| --- | --- |
-| `session.start` | **Foundry sends this on behalf of the caller.** `ConnectAsync` waits for `session.started`; do not send a duplicate startup command. |
-| `session.update` | `SessionControlsAsync`, updating only mutable Responses delegation settings |
-| `session.input_audio.append` | Chunked and streamed audio examples |
-| `session.input_audio.mute`, `session.input_audio.unmute` | `SessionControlsAsync` |
-| `session.thinking.append`, `session.commentary.append`, `session.instructions.append` | `SessionControlsAsync`, with correlated acknowledgments |
-| `response.item.create`, `response.create` | Multi-turn text and function/tool-result examples |
-| `session.close` | `CloseAsync` or the explicit typed command in `SessionControlsAsync` |
-
-The audio receiver handles output audio, input/output captions, client-delegation requests,
-cumulative usage, notices, and closure. It does not play reflected input as assistant output or
-print backend text as spoken captions. Unknown and non-audio events are identified by their wire
-type rather than assuming every generated event will occur in each conversation.
-
-Live lifecycle events expose `VoiceAgentLiveSessionResource`. Its `Delegation` JSON reports
-`client`, `responses`, or `foundry_managed_agent`; a Foundry-managed owner includes the pinned
-`agent_name` and resolved `agent_version`. Delegation-created events expose
-`VoiceAgentLiveDelegationItem.Target` to identify who handles the work. The audio receiver
-replies only to `VoiceAgentLiveDelegationTarget.Client`; Responses and Foundry-managed work
-remain owned by the service, and an unknown future target is not executed locally.
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Live.cs) includes the helpers
+used below. To read saved conversations and download recordings, see the
+[Live history samples](Sample_VoiceAgent_Live_Conversations.md).
 
 ## Prerequisites
 
-- A Foundry project endpoint and a deployed native GPT Live model, such as `gpt-live-1`.
-- An identity authorized to create agents and connect to their voice endpoints.
+- A Foundry project endpoint and a GPT Live model deployment, such as `gpt-live-1`.
+- A Microsoft Entra ID identity with permission to create agents and connect to their voice endpoints.
+  For local development, sign in with `az login`.
 - `Azure.AI.Projects` and `Azure.Identity`.
-- Experimental opt-ins `AAIP001`, `AAIP002`, and `OPENAI001` where the sample uses native
-  Live models or OpenAI Responses items.
-- For function calls, a separate Responses-compatible model deployment in the same resource.
-- For speech, an actual mono PCM16LE/24 kHz WAV file. For repository validation, the existing
-  speech recording at `sdk/openai/Azure.AI.OpenAI/tests/Assets/whats_the_weather_pcm16_24khz_mono.wav`
-  is suitable; the sample strips and validates its WAV header rather than sending it as audio.
+- Experimental opt-ins `AAIP001`, `AAIP002`, and `OPENAI001` where used by the sample.
+- For text and function calls, a separate Responses-compatible model deployment in the same resource.
+- For audio, a mono, 16-bit PCM WAV file at 24 kHz. You can use the repository's
+  [recorded weather question](../../../openai/Azure.AI.OpenAI/tests/Assets/whats_the_weather_pcm16_24khz_mono.wav).
 
-The methods create uniquely named temporary agents and delete them in `finally`.
-Supply a bounded `CancellationToken`, for example from a two-minute `CancellationTokenSource`.
+Pass a cancellation token with a timeout. The examples create temporary agents and delete them
+in `finally`.
 
-## Connect and finalize
+## Choose an example
 
-The client targets `/agents/{agentName}/endpoint/protocols/voice/live/sessions`, uses the
-project's bearer-token provider and `VoiceAgents=V1Preview`, and does not request a WebSocket
-subprotocol. Foundry starts the session from the stored agent definition; the client waits for
-`session.started` before returning. It does **not** send a duplicate `session.start`.
+| Task | Sample method |
+| --- | --- |
+| [Connect and close a session](#connect-and-close-a-session) | `ConnectAsync` |
+| [Send text messages](#send-text-messages) | `TextConversationAsync` |
+| [Send and receive audio](#send-and-receive-audio) | `ConversationAsync` |
+| [Call a function](#call-a-function) | `FunctionAsync` |
+| [Set connection options](#set-connection-options) | `ConnectionOptionsAsync` |
+| [Update instructions, mute audio, and send commands](#update-and-control-a-session) | `SessionControlsAsync` |
+| [Stream audio from a file](#stream-audio-from-a-file) | `StreamAudioAsync` |
+| [Cancel a receive](#cancel-a-receive) | `CancelReceiveAsync` |
+| [Save a conversation and download recordings](#stored-live-history) | `StoredConversationAsync` |
 
-Use an `https://` project endpoint, which connects through `wss://`. Live startup rejects
-unencrypted endpoints before requesting an authentication token.
+## Connect and close a session
 
-Use `ProjectsLiveSessionClientOptions.Store`, `AgentVersion`, and `StructuredInputs` for
-Foundry handshake options. `QueryString` and `Headers` allow additional supported parameters;
-managed authentication and API-version values cannot be overridden.
+Use an `https://` project endpoint. The client uses the project's Microsoft Entra ID credentials
+and an encrypted WebSocket connection; unencrypted endpoints are rejected.
+
+`StartSessionAsync` returns after receiving `session.started`. Foundry starts the session from
+the agent definition, so **do not send `session.start` yourself**.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Connect
 public static async Task ConnectAsync(string projectEndpoint, string liveDeployment, CancellationToken cancellationToken)
@@ -104,19 +67,15 @@ public static async Task ConnectAsync(string projectEndpoint, string liveDeploym
 }
 ```
 
-`CloseAsync` sends native `session.close`, waits for `session.closed`, preserves its final
-usage/reason in `SessionClosed`, then completes the WebSocket closing handshake.
-A closed transport without `session.closed` does not confirm native finalization.
-`Dispose` immediately releases the socket; `DisposeAsync` attempts graceful closure first.
+`CloseAsync` waits for `session.closed` and the WebSocket closing handshake. Final usage and the
+close reason are available in `SessionClosed`; a closed socket alone does not confirm that Live
+finished. `Dispose` releases the connection immediately; `DisposeAsync` tries graceful closure first.
 
-## Scripted multi-turn text
+## Send text messages
 
-Like the scripted text examples in the Java SDK, this example sends each user message to the
-Responses backend and waits for that backend response to complete before sending the next prompt.
-The same Live session retains the backend conversation across turns.
-
-This mode prints **backend text**, not frontend spoken captions, and needs no microphone or
-speaker. It does not stream silent PCM while waiting for console input.
+Send each message to the Responses model and wait for its response before sending the next.
+The same Live session keeps the conversation across turns. This example returns text from the
+Responses model, not spoken captions, and needs no microphone or speaker.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Text
 public static async Task TextConversationAsync(
@@ -155,28 +114,21 @@ await Sample_VoiceAgent_Live.TextConversationAsync(
     timeout.Token);
 ```
 
-## Text guidance and actual audio
+## Send and receive audio
 
-Live is continuous speech, not a Realtime-style request/response text chat:
+Live sends and receives audio continuously. This example sends a WAV recording, receives
+generated speech, and saves the response as a WAV file.
 
-- Text context is supplied through `session.thinking.append`, `session.commentary.append`,
-  or `session.instructions.append`. A null delegation ID is still present in the JSON.
-- An append acknowledgment means the guidance entered the timeline, not that speech finished.
-- Keep correctly paced input audio flowing while expecting context acknowledgments.
-- Send raw, headerless audio. At 24 kHz, each 20 ms PCM16 chunk contains 960 bytes.
-- Receive audio from `LiveOutputAudioDelta`; its `Delta` is a base64 string.
-  Spoken text arrives separately as `LiveServerEventLiveOutputTranscriptDelta`.
-- Frontend transcript deltas are labeled `You:` and `Assistant:`. Backend notes are not
-  printed as if they were spoken captions.
-- There is no `input_audio_buffer.commit`, frontend `response.create`, or audio-done event.
+- Send raw audio without the WAV header. At 24 kHz, a 20 ms PCM16 chunk contains 960 bytes.
+- Read base64 audio from `LiveOutputAudioDelta.Delta` and spoken captions from
+  `LiveServerEventLiveOutputTranscriptDelta`. The sample labels captions as `You:` and `Assistant:`.
+- Send text guidance with `session.thinking.append`, `session.commentary.append`, or
+  `session.instructions.append`. Keep audio flowing while waiting for acknowledgments.
+  An acknowledgment means the guidance was accepted, not spoken.
+- Live has no `input_audio_buffer.commit`, frontend `response.create`, or audio-done event.
 
-This sample sends real recorded speech, continues with silence to advance the timeline,
-captures generated PCM audio, and writes a valid WAV file. It also sends typed text guidance.
-Like the Realtime audio example, it prints received event types and the actual input, output,
-and total audio bytes with KB, sample rate, channels, and PCM duration. Input totals include
-the silence that was actually sent. Unlike Realtime, Live sends and receives concurrently and
-uses native session closure instead of committing an input buffer or starting a frontend response.
-The WAV reader, writer, and pacing helpers are in the linked sample source.
+The sample prints event types, raw input/output/total audio bytes, duration, sample rate, and
+channels. Input totals include the silence sent after the recording.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Audio
 public static async Task ConversationAsync(
@@ -211,8 +163,8 @@ public static async Task ConversationAsync(
 }
 ```
 
-The receiver, paced sender, and native-finalization task are coordinated so a failure cancels
-and observes the other tasks instead of leaving audio sends running after disposal:
+Send, receive, and close concurrently. If a task fails, cancel and await the remaining tasks
+before disposing the session:
 
 ```C# Snippet:Sample_VoiceAgent_Live_AudioTasks
 internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient session, byte[] speech, Stream output,
@@ -239,30 +191,23 @@ internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient s
 }
 ```
 
-The recorded-audio example sends all input speech before adding eight seconds of silence as a
-demonstration window. Backpressure can extend the elapsed time but does not truncate the input
-or consume the silence tail. This is **not** a service speech-completion signal and can truncate
-unusually long answers. Silent PCM advances the Live timeline and **voice usage remains billable**, including
-while waiting. Always supply a bounded cancellation token.
+The sample sends the whole recording, then eight seconds of silence before closing. This wait
+is a sample policy, **not a speech-completion signal**, and may cut off long answers.
+Silence advances the Live timeline and **is billable**. Always use a cancellation token with a timeout.
 
-Only one event enumeration can receive from a session at a time. Sends may run concurrently
-and are serialized internally. `CloseAsync` can also be awaited inside the event-consumer loop.
-Continue iterating afterward if final audio or usage events are needed. Canceling a WebSocket
-I/O operation may abort its transport; create a new session rather than reconnecting the
-disposed session object.
+Use one receive loop per session. Concurrent sends are serialized. You can call `CloseAsync`
+inside the receive loop; keep iterating afterward to collect final audio or usage events.
+Canceling WebSocket I/O may abort the connection; create a new session rather than reusing it.
 
-## Function calling through Responses delegation
+## Call a function
 
-Configure `delegation.type` as `responses`. The native `response.item.create` and
-`response.create` commands operate on that delegated backend, not on frontend speech.
+Set `delegation.type` to `responses` to handle function calls through a Responses model.
+The `response.item.create` and `response.create` commands control that model, not spoken output.
 
-Consume granular backend events inside `LiveServerEventLiveResponseEvent.Event`.
-For a completed function call, validate its name/arguments, return a matching `call_id`
-using the existing OpenAI `ResponseItem`, then explicitly continue with `response.create`.
-Collect all completed function items from one backend response first. Do not send the next
-`response.create` from inside `response.output_item.done`; wait for `response.completed`,
-return the entire pending result batch, and continue exactly once.
-Lifecycle snapshots intentionally omit full output; do not recover tools from those snapshots.
+1. Read completed function calls from `LiveServerEventLiveResponseEvent.Event` and validate their
+   names and arguments. Completion snapshots do not contain the full output.
+2. Wait for `response.completed`, then submit all tool results using the matching `call_id` values.
+3. Send `response.create` once to continue. Do not start it from `response.output_item.done`.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Function
 public static async Task FunctionAsync(
@@ -288,10 +233,10 @@ public static async Task FunctionAsync(
 }
 ```
 
-The shared loop performs that ordering here:
+The shared loop submits the results and continues once:
 
 ```C# Snippet:Sample_VoiceAgent_Live_ToolResults
-// Finish the backend response before returning all pending results and continuing once.
+// Wait for response.completed, then submit all tool results and continue once.
 foreach (ResponseItem result in pendingResults)
 {
     await session.SendEventAsync(new LiveClientEventLiveResponseItemCreateParam(result), cancellationToken);
@@ -301,21 +246,17 @@ answerReceived = false;
 await session.SendEventAsync(new LiveClientEventLiveResponseCreateParam(), cancellationToken);
 ```
 
-The allowlisted function returns a deliberate test value, not external service data.
-Duplicate call IDs, unsupported tools/arguments, missing final text, premature disconnects,
-and more than eight continuation rounds fail explicitly. Native errors retain their type
-and explanatory message even when the service omits an error code.
-Wrapped Responses backend errors also fail immediately with their supplied code and message,
-rather than waiting for the caller's timeout.
-Backend completion does not establish that the Live model spoke the result or that a user
-heard it; observe output transcript/audio events separately.
+`get_test_value` returns a demonstration value. The loop rejects duplicate calls, unexpected
+tools or arguments, and missing answers; it limits continuation to eight rounds. Service errors
+are reported immediately. A completed Responses answer does not mean Live finished speaking;
+observe output audio and transcript events separately.
 
-## Connection options and asynchronous disposal
+## Set connection options
 
-This example pins the created agent version, defines a structured instruction input, supplies
-its runtime value, and adds a non-secret correlation header. `QueryString = "store=false"` shows
-the raw-query alternative to `Store = false`; do not set the same option in both places.
-The final `await using` calls `DisposeAsync`, which performs native graceful shutdown.
+Select an agent version, provide structured instruction values, and add a correlation header.
+Set storage through `Store` or `QueryString`, not both. The SDK manages authentication, API
+version, and preview headers; those values cannot be overridden.
+`await using` calls `DisposeAsync` to try graceful shutdown.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Options
 public static async Task ConnectionOptionsAsync(
@@ -342,7 +283,7 @@ public static async Task ConnectionOptionsAsync(
         {
             Console.WriteLine($"State: {session.State}; model: {session.SessionStarted.Session.Model}");
         }
-        // DisposeAsync confirms native finalization before releasing the connection.
+        // DisposeAsync attempts graceful closure before releasing the connection.
         Console.WriteLine($"Closed: {session.State}; final usage: {session.SessionClosed.Usage.Seconds} seconds");
     }
     finally
@@ -358,7 +299,7 @@ internal static ProjectsLiveSessionClientOptions CreateConnectionOptions(string 
     ProjectsLiveSessionClientOptions options = new()
     {
         AgentVersion = version,
-        // Store is used by the other examples; this shows its raw-query alternative.
+        // Use either Store or the store query parameter, not both.
         QueryString = "store=false"
     };
     options.StructuredInputs["language"] = BinaryData.FromObjectAsJson("English");
@@ -367,17 +308,15 @@ internal static ProjectsLiveSessionClientOptions CreateConnectionOptions(string 
 }
 ```
 
-## Session controls, updates, and raw commands
+## Update and control a session
 
-Use the existing Responses-compatible backend deployment for this example. An active session
-can update Responses delegation settings, not its frontend model, audio format, or delegation
-owner. Thinking/commentary/instructions append text to the Live timeline; their acknowledgments
-are **not** proof that the model spoke the text.
+Use a Responses model for this example. Update its instructions, mute or unmute input audio,
+and append text guidance. An active session cannot change its Live model, audio format, or
+delegation owner.
 
-The example correlates every acknowledgment to its client event ID. Paced silence keeps the
-timeline moving while acknowledgments arrive; this consumes billable Live audio time. The
-producer is stopped without canceling an in-flight WebSocket send. A missing acknowledgment,
-native service error, or premature closure is surfaced rather than reported as success.
+The sample matches acknowledgments by client event ID and sends paced silence while waiting.
+That silence is billable. Acknowledgments confirm that commands were accepted, not spoken.
+`SendCommandAsync` also lets you send a raw JSON command.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Controls
 public static async Task SessionControlsAsync(
@@ -491,14 +430,12 @@ internal static async Task RunSessionControlsAsync(
 }
 ```
 
-## Caller-paced stream audio
+## Stream audio from a file
 
-`SendInputAudioAsync(Stream)` reads raw bytes until EOF, leaves the stream owned by the caller,
-and does not pace a file automatically. This runnable WAV example uses a sample-only
-`PacedPcmStream` to provide 20 ms reads, followed by the same eight-second silence tail as the
-chunked example. It sends no WAV header over the socket and writes returned PCM as a WAV.
-Its input count comes from the bytes read by the completed stream send, not the WAV file size
-or a duration estimate.
+`SendInputAudioAsync(Stream)` reads raw audio until the stream ends and leaves it open.
+You must pace the input; the SDK does not delay file reads. This example uses `PacedPcmStream`
+for 20 ms chunks followed by eight seconds of silence, then saves the response as a WAV file.
+Byte counts measure raw audio read from the stream, not WAV headers.
 
 ```C# Snippet:Sample_VoiceAgent_Live_StreamAudio
 public static async Task StreamAudioAsync(string projectEndpoint, string liveDeployment,
@@ -533,18 +470,16 @@ public static async Task StreamAudioAsync(string projectEndpoint, string liveDep
 private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
 {
     using PacedPcmStream audio = new(speech);
-    // The SDK reads until EOF and leaves this stream open; the caller supplies real-time pacing.
+    // The caller controls pacing; the SDK reads to the end and leaves the stream open.
     await session.SendInputAudioAsync(audio, cancellationToken);
     return audio.BytesRead;
 }
 ```
 
-## Cancel receiving and immediately dispose
+## Cancel a receive
 
-This example deliberately cancels a pending receive. Cancellation may abort the WebSocket;
-it is not a graceful-close acknowledgment, and the old session must not be reused.
-Caller cancellation still propagates. Use `CloseAsync` or `DisposeAsync` instead when native
-finalization is required.
+Canceling a receive may abort the WebSocket. Dispose that session and create a new one to
+continue. Use `CloseAsync` or `DisposeAsync` when you need graceful shutdown.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Cancellation
 public static async Task CancelReceiveAsync(string projectEndpoint, string liveDeployment, CancellationToken cancellationToken)
@@ -580,27 +515,22 @@ public static async Task CancelReceiveAsync(string projectEndpoint, string liveD
 }
 ```
 
-## Interactive audio scope
+## Audio devices
 
-These portable .NET examples use an actual WAV recording and a generated WAV file.
-They do not capture a microphone, play speakers, or coordinate a console prompt with live
-spoken output. The Java PR also demonstrates those device/UI scenarios.
-
-Live has no native speech-finished event. The Java interactive examples use speech-inactivity
-and PCM-level heuristics for greeting/utterance boundaries; these are application policies,
-not protocol events. A .NET device sample would need an explicitly chosen audio I/O integration
-and should not present those heuristics as guaranteed speech completion.
+These examples read and write WAV files; they do not capture a microphone or play audio.
+For live audio devices, choose an audio I/O library and your own speech-boundary policy.
+Live does not provide a speech-finished event.
 
 ## Stored Live history
 
-The end-to-end sample below creates a temporary Live agent with `Store = true` in both its
-definition and connection options, sends actual speech, receives audio, confirms native and
-transport finalization, waits up to 30 seconds for persistence to reach `completed`, and only
-then calls the [REST samples](Sample_VoiceAgent_Live_Conversations.md). The wait observes caller
-cancellation and fails immediately if persistence reports `failed`.
-It uses `SessionStarted.ConversationId`, **not** the native `SessionStarted.Session.Id`.
-The REST sample downloads item audio and the merged recording before deleting this sample's
-conversation. The temporary agent is deleted in `finally`, including on a REST failure.
+`StoredConversationAsync` creates a temporary agent, saves an audio conversation with `Store = true`,
+and downloads recordings using the [REST samples](Sample_VoiceAgent_Live_Conversations.md).
+After closing, it waits up to 30 seconds for storage status `completed`. A failed status or
+cancellation stops the read.
+
+Use `SessionStarted.ConversationId`, **not** `SessionStarted.Session.Id`, to read history.
+This example deletes its conversation after downloading both recordings and always deletes
+the temporary agent.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Stored
 public static async Task StoredConversationAsync(string projectEndpoint, string liveDeployment, string speechWavePath,
@@ -666,8 +596,7 @@ public static async Task StoredConversationAsync(string projectEndpoint, string 
 }
 ```
 
-The persistence check is bounded and caller-cancellable; it does not treat transport
-closure as completed storage finalization:
+This helper waits for storage to finish after the WebSocket closes:
 
 ```C# Snippet:Sample_VoiceAgent_Live_Persistence
 internal static async Task WaitForPersistenceAsync(
@@ -699,7 +628,7 @@ internal static async Task WaitForPersistenceAsync(
 }
 ```
 
-Choose one overload family per run; each run creates its own conversation:
+Select sync/async and typed/protocol REST methods with these flags. Each run creates a new conversation:
 
 ```C#
 using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(3));
@@ -710,20 +639,20 @@ await Sample_VoiceAgent_Live.StoredConversationAsync(
 // protocol: true     selects raw ClientResult/RequestOptions overloads.
 ```
 
-Live history uses dedicated `/voice/live/conversations` routes and a different item schema
-from Realtime. **Do not silently fall back to `/voice/conversations`.** An HTTP 404 from the
-Live route is a failed REST sample, not a passing WebSocket-only result. Verify the returned
-conversation ID, effective storage setting, persistence finalization, and availability of the
-Live history routes in your deployment. The samples propagate REST failures rather than
-rewriting the route or reporting a successful WebSocket connection as a successful history read.
+Live history uses `/voice/live/conversations`, not Realtime history routes. For HTTP 404, check the
+conversation ID, storage setting, `completed` status, and Live history availability in your deployment.
+Switching to Realtime history will not read a Live conversation.
 
-## Errors and limits
+## Handle events and errors
 
-After startup, native service errors are returned as `LiveServerEventLiveErrorEvent`.
-Inspect the nested error code and optional client-event correlation rather than treating
-every error event as a closed session. Authentication, failed upgrades, malformed frames,
-unconfirmed graceful closure, and cancellation surface as exceptions.
+Session metadata identifies delegation as `client`, `responses`, or `foundry_managed_agent`.
+For a managed agent, it includes the agent name and resolved version. Handle local delegation
+requests only when `VoiceAgentLiveDelegationItem.Target` is `VoiceAgentLiveDelegationTarget.Client`;
+the service handles the other known targets. Do not execute unknown targets locally.
 
-The client bounds each JSON WebSocket message to 16 MiB and never buffers an entire
-conversation. Raw JSON commands are available through `SendCommandAsync` for forward
-compatibility; typed events should be preferred for modeled protocol messages.
+Handle `LiveServerEventLiveErrorEvent` in the receive loop; an error event does not always close
+the session. Authentication, connection, invalid-message, shutdown, and cancellation failures
+are raised as exceptions.
+
+JSON messages are limited to 16 MiB. Prefer typed events; use `SendCommandAsync` for commands
+not yet modeled by the SDK.

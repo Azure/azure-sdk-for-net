@@ -18,7 +18,7 @@ namespace Azure.AI.Projects;
 
 #pragma warning disable AZC0015 // WebSocket commands, event streams, and disposal do not have HTTP responses.
 
-/// <summary> An owned WebSocket session using the native Live protocol, independent of Realtime. </summary>
+/// <summary> A WebSocket session for a Foundry GPT Live voice agent. </summary>
 [Experimental("AAIP001")]
 public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
 {
@@ -45,10 +45,10 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         _socket = socket;
     }
 
-    /// <summary> The native startup acknowledgment, including the negotiated session and optional Foundry conversation ID. </summary>
+    /// <summary> The <c>session.started</c> event, including session settings and the optional stored conversation ID. </summary>
     public LiveServerEventLiveSessionStarted SessionStarted { get; private set; }
 
-    /// <summary> The native terminal event, including final usage and closure reason. Null means finalization has not been confirmed. </summary>
+    /// <summary> The <c>session.closed</c> event, including final usage and close reason. Null until the service confirms closure. </summary>
     public LiveServerEventLiveSessionClosed SessionClosed { get; private set; }
 
     /// <summary> The state of the underlying WebSocket. </summary>
@@ -82,8 +82,8 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         _startupEvent = SessionStarted;
     }
 
-    /// <summary> Sends a generated native Live client event. Concurrent sends are serialized. </summary>
-    /// <param name="clientEvent"> The native event to send. </param>
+    /// <summary> Sends a typed Live event. Concurrent sends are serialized. </summary>
+    /// <param name="clientEvent"> The event to send. </param>
     /// <param name="cancellationToken"> Cancels the send. </param>
 #pragma warning disable AZC0004 // Native WebSocket operations are asynchronous.
     public virtual Task SendEventAsync(LiveClientEvent clientEvent, CancellationToken cancellationToken = default)
@@ -92,7 +92,7 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         return SendCommandAsync(ModelReaderWriter.Write(clientEvent, new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default), cancellationToken);
     }
 
-    /// <summary> Sends a raw audio chunk using the format negotiated at startup, without a WAV or other container header. </summary>
+    /// <summary> Sends raw audio in the session's format, without a WAV or other container header. </summary>
     /// <param name="audio"> Raw audio bytes. PCM chunks must contain complete 16-bit samples. </param>
     /// <param name="cancellationToken"> Cancels the send. </param>
     public virtual Task SendInputAudioAsync(BinaryData audio, CancellationToken cancellationToken = default)
@@ -106,8 +106,8 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         return SendEventAsync(new LiveClientEventLiveInputAudioAppendEvent(Convert.ToBase64String(audio.ToArray())), cancellationToken);
     }
 
-    /// <summary> Streams raw audio without closing or committing a Realtime-style input buffer. The caller controls pacing. </summary>
-    /// <param name="audio"> A readable stream in the startup-selected audio format. The stream remains owned by the caller. </param>
+    /// <summary> Streams raw audio in the session's format. The caller controls pacing. </summary>
+    /// <param name="audio"> A readable raw-audio stream, without a WAV header. The client leaves it open. </param>
     /// <param name="cancellationToken"> Cancels reading and sending. </param>
     public virtual async Task SendInputAudioAsync(Stream audio, CancellationToken cancellationToken = default)
     {
@@ -149,8 +149,8 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         }
     }
 
-    /// <summary> Sends a JSON Live command, including protocol extensions not yet modeled by the SDK. </summary>
-    /// <param name="command"> A UTF-8 JSON object with a native Live <c>type</c>. </param>
+    /// <summary> Sends a raw JSON Live command, including commands not yet modeled by the SDK. </summary>
+    /// <param name="command"> A UTF-8 JSON object with a Live <c>type</c>. </param>
     /// <param name="cancellationToken"> Cancels the send. </param>
     public virtual async Task SendCommandAsync(BinaryData command, CancellationToken cancellationToken = default)
     {
@@ -201,9 +201,9 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         }
     }
 
-    /// <summary> Receives native Live events, including the initial startup acknowledgment. Only one enumeration may receive at a time. </summary>
+    /// <summary> Receives Live events, starting with <c>session.started</c>. Use only one receive loop per session. </summary>
     /// <param name="cancellationToken"> Cancels receiving. Disposing the session also cancels pending receives. </param>
-    /// <returns> Generated native Live events. Service error events are returned for the caller to handle. </returns>
+    /// <returns> Live events, including service error events for the caller to handle. </returns>
     public virtual async IAsyncEnumerable<LiveServerEvent> ReceiveEventsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         ThrowIfDisposed();
@@ -261,8 +261,9 @@ public class ProjectsLiveSessionClient : IDisposable, IAsyncDisposable
         }
     }
 
-    /// <summary> Requests native session closure and completes the WebSocket closing handshake. May be called from the event-consumer loop; events read during shutdown remain available to that receiver. </summary>
-    /// <param name="cancellationToken"> Cancels shutdown. The default shutdown budget is ten seconds. </param>
+    /// <summary> Closes the Live session and its WebSocket connection. </summary>
+    /// <remarks> Waits for <c>session.closed</c>. You can call this from the receive loop; shutdown events remain available to that loop. </remarks>
+    /// <param name="cancellationToken"> Cancels shutdown, which is limited to ten seconds. </param>
     public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
     {
         ThrowIfDisposed();
