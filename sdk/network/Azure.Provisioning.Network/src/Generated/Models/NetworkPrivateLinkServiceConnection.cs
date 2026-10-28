@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private PrivateLinkServiceConnectionProperties _properties;
         private BicepValue<string> _name;
+        private BicepValue<ResourceType> _resourceType;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new NetworkPrivateLinkServiceConnection. </summary>
@@ -50,6 +51,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
             }
         }
 
@@ -127,6 +138,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public NetworkPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
         /// <summary> Gets or sets the PrivateEndpointId. </summary>
         public BicepValue<ResourceIdentifier> ApprovalReferencePrivateEndpointId
         {
@@ -150,6 +178,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<PrivateLinkServiceConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

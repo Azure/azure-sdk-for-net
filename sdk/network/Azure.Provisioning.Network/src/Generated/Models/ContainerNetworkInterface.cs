@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class ContainerNetworkInterface : NetworkSubResource
     {
         private ContainerNetworkInterfacePropertiesFormat _properties;
+        private BicepValue<ResourceType> _resourceType;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new ContainerNetworkInterface. </summary>
@@ -28,6 +30,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
             }
         }
 
@@ -73,6 +85,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ContainerNetworkInterfacePropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

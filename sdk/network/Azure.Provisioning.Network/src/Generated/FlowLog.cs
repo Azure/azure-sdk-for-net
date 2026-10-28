@@ -277,6 +277,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the TrafficAnalyticsConfiguration. </summary>
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficAnalyticsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogPropertiesFormat();
+                }
+                Properties.TrafficAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FlowLog. </summary>
         protected override void DefineProvisionableProperties()
         {

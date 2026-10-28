@@ -179,6 +179,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ConnectionRoutingConfiguration. </summary>
+        public RoutingConfiguration ConnectionRoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionRoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.ConnectionRoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkVirtualApplianceConnection. </summary>
         protected override void DefineProvisionableProperties()
         {

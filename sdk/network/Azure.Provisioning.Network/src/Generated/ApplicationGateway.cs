@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private ApplicationGatewayPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
+        private BicepList<string> _availabilityZones;
         private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new ApplicationGateway. </summary>
@@ -109,6 +110,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _eTag;
+            }
+        }
+
+        /// <summary> Gets or sets the AvailabilityZones. </summary>
+        public BicepList<string> AvailabilityZones
+        {
+            get
+            {
+                Initialize();
+                return _availabilityZones;
+            }
+            set
+            {
+                Initialize();
+                _availabilityZones.Assign(value);
             }
         }
 
@@ -797,6 +813,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ApplicationGatewayPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "zones" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }

@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayBackendHttpSettingsPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ApplicationGatewayBackendHttpSettings. </summary>
         public ApplicationGatewayBackendHttpSettings()
@@ -61,6 +62,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _eTag;
+            }
+        }
+
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
             }
         }
 
@@ -373,6 +384,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayBackendHttpSettingsPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

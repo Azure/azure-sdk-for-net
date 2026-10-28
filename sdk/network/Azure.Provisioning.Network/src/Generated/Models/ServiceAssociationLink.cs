@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private ServiceAssociationLinkPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ServiceAssociationLink. </summary>
         public ServiceAssociationLink()
@@ -41,6 +43,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -56,6 +68,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ServiceAssociationLinkPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

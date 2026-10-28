@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -17,6 +18,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayAuthenticationCertificatePropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()
@@ -63,6 +65,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
+            }
+        }
+
         /// <summary> Gets or sets the Data. </summary>
         public BicepValue<BinaryData> Data
         {
@@ -100,6 +112,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayAuthenticationCertificatePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayIPConfigurationPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ApplicationGatewayIPConfiguration. </summary>
         public ApplicationGatewayIPConfiguration()
@@ -63,6 +64,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -100,6 +111,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayIPConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

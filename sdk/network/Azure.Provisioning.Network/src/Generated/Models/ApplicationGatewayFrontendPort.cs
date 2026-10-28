@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayFrontendPortPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()
@@ -62,6 +64,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
+            }
+        }
+
         /// <summary> Gets or sets the Port. </summary>
         public BicepValue<int> Port
         {
@@ -99,6 +111,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayFrontendPortPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

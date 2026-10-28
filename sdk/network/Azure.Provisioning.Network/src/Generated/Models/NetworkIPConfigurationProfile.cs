@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure;
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private IPConfigurationProfilePropertiesFormat _properties;
         private BicepValue<string> _name;
+        private BicepValue<ResourceType> _resourceType;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new NetworkIPConfigurationProfile. </summary>
@@ -49,6 +51,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
+        {
+            get
+            {
+                Initialize();
+                return _resourceType;
             }
         }
 
@@ -98,6 +110,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<IPConfigurationProfilePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
