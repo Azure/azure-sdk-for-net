@@ -3,9 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using FoundryLikeA;
 using NUnit.Framework;
-using OpenAILike.Responses;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 {
@@ -16,17 +14,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         public void Write_BaseTypeRegistrationDoesNotApplyToDerivedInstance()
         {
             var options = new ModelReaderWriterOptions("J");
-            var baseProxy = new SentinelModel<ResponseTool>("base");
-            options.AddProxy<ResponseTool>(baseProxy);
-            var tool = new AzureSearchTool("docs");
+            var baseProxy = new SentinelModel<TestTool>("base");
+            options.AddProxy<TestTool>(baseProxy);
+            var tool = new DerivedTestTool("derived", "docs");
             string original = ModelReaderWriter.Write(tool, new ModelReaderWriterOptions("J")).ToString();
 
-            Assert.That(ModelReaderWriter.Write<ResponseTool>(tool, options).ToString(), Is.EqualTo(original));
+            Assert.That(ModelReaderWriter.Write<TestTool>(tool, options).ToString(), Is.EqualTo(original));
             Assert.That(baseProxy.ProxiedModelAtWrite, Is.Null);
 
-            options.AddProxy<AzureSearchTool>(new SentinelModel<AzureSearchTool>("exact"));
+            options.AddProxy<DerivedTestTool>(new SentinelModel<DerivedTestTool>("exact"));
 
-            Assert.That(ModelReaderWriter.Write<ResponseTool>(tool, options).ToString(), Is.EqualTo("{\"sentinel\":\"exact\"}"));
+            Assert.That(ModelReaderWriter.Write<TestTool>(tool, options).ToString(), Is.EqualTo("{\"sentinel\":\"exact\"}"));
         }
 
         // Writes a distinct sentinel document so a test can tell the proxy, not the original model, wrote.

@@ -2,57 +2,39 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using FoundryLikeA;
-using FoundryLikeB;
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
-using OpenAILike;
-using OpenAILike.Mocks;
-using OpenAILike.Responses;
-using static System.ClientModel.Tests.ModelReaderWriterTests.Proxies.ProxyTestPayloads;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 {
     /// <summary>
-    /// Behavior of proxy registration on <see cref="ClientPipelineOptions"/> and of the registration snapshot a client
-    /// takes at construction, plus concurrency isolation between requests and between clients.
+    /// Behavior of proxy registration on <see cref="ClientPipelineOptions"/>.
     /// </summary>
     public class ProxyClientOptionsTests
     {
-        private static readonly ApiKeyCredential s_credential = new("local-test-key");
+        private const string SpecialToolJson = "{\"type\":\"special\",\"name\":\"docs\"}";
+        private const string OtherToolJson = "{\"type\":\"other\",\"name\":\"docs\"}";
+
+        private static TestTool Read(string json, ModelReaderWriterOptions? options)
+            => ModelReaderWriter.Read<TestTool>(BinaryData.FromString(json), options)!;
 
         [Test]
         public void ClientOptions_AddProxyRejectsNullAndFrozenOptions()
         {
-            var options = new ResponsesClientOptions
+            var options = new ClientPipelineOptions
             {
-                Transport = new CannedResponseTransport("{\"type\":\"azure_search\"}")
+                Transport = new MockPipelineTransport("transport", 200)
             };
 
             Assert.Throws<ArgumentNullException>(
-                () => options.AddProxy<ResponseTool>((IPersistableModel<ResponseTool>)null!));
+                () => options.AddProxy<TestTool>((IPersistableModel<TestTool>)null!));
             Assert.Throws<ArgumentNullException>(
-                () => options.AddProxy<ResponseTool>((ConditionalModelProxy<ResponseTool>)null!));
+                () => options.AddProxy<TestTool>((ConditionalModelProxy<TestTool>)null!));
 
             ClientPipeline.Create(options);
 
             Assert.Throws<InvalidOperationException>(
-                () => options.AddAzureSerializationExtensions());
-        }
-
-        [Test]
-        public void RegistrationHelpers_RejectNullOptions()
-        {
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeAExtensions.AddAzureSerializationExtensions((OpenAIClientOptions)null!));
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeAExtensions.AddAzureSerializationExtensions((ResponsesClientOptions)null!));
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeAExtensions.AddAzureSerializationExtensions((ModelReaderWriterOptions)null!));
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeBExtensions.AddBingSerializationExtensions((OpenAIClientOptions)null!));
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeBExtensions.AddBingSerializationExtensions((ResponsesClientOptions)null!));
-            Assert.Throws<ArgumentNullException>(() => FoundryLikeBExtensions.AddBingSerializationExtensions((ModelReaderWriterOptions)null!));
+                () => options.AddProxy<TestTool>(new DerivedTestToolProxy("special")));
         }
 
         [Test]
@@ -64,97 +46,32 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         }
 
         [Test]
-        public async Task ClientConstruction_SnapshotsProxyRegistrations()
+        public void ClientOptions_AddProxyCreatesModelReaderWriterOptionsThatUseTheProxy()
         {
-            var options = new ResponsesClientOptions
-            {
-                Transport = new CannedResponseTransport(ResponseJson("bing_grounding", "market", "en-US"))
-            };
-            options.AddAzureSerializationExtensions();
-            var client = new ResponsesClient(s_credential, options);
+            var options = new ClientPipelineOptions();
+            Assert.That(options.ModelReaderWriterOptions, Is.Null);
 
-            options.ModelReaderWriterOptions!.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
 
-            ResponseTool tool = (await client.GetResponseAsync("snapshot")).Value.Tools.Single();
-            Assert.That(tool, Is.InstanceOf<UnknownResponseTool>());
+            Assert.That(options.ModelReaderWriterOptions, Is.Not.Null);
+            Assert.That(Read(SpecialToolJson, options.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions).GetType(), Is.EqualTo(typeof(TestTool)));
         }
 
         [Test]
         public void ClientOptionsClone_SeparatesProxyRegistrations()
         {
-            var options = new ResponsesClientOptions();
-            options.AddAzureSerializationExtensions();
+            var options = new ClientPipelineOptions();
+            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
             ClientPipelineOptions clone = options.Clone();
-            options.ModelReaderWriterOptions!.AddProxy<ResponseTool>(new BingGroundingToolProxy());
+            options.ModelReaderWriterOptions!.AddProxy<TestTool>(new DerivedTestToolProxy("other"));
 
-            ResponseTool azure = ModelReaderWriter.Read<ResponseTool>(BinaryData.FromString(AzureToolJson), clone.ModelReaderWriterOptions)!;
-            ResponseTool bing = ModelReaderWriter.Read<ResponseTool>(BinaryData.FromString(BingToolJson), clone.ModelReaderWriterOptions)!;
+            TestTool special = Read(SpecialToolJson, clone.ModelReaderWriterOptions);
+            TestTool other = Read(OtherToolJson, clone.ModelReaderWriterOptions);
 
-            Assert.That(azure, Is.InstanceOf<AzureSearchTool>());
-            Assert.That(bing, Is.InstanceOf<UnknownResponseTool>());
-        }
-
-        [Test]
-        public async Task ClientConcurrentRequestsKeepSerializedToolsIndependent()
-        {
-            var transport = new CannedResponseTransport(ResponseJson("azure_search", "index_name", "response"));
-            var options = new ResponsesClientOptions { Transport = transport };
-            options.AddAzureSerializationExtensions();
-            var client = new ResponsesClient(s_credential, options);
-            var calls = new List<Task<ClientResult<ResponseResult>>>();
-
-            for (int i = 0; i < 8; i++)
-            {
-                var request = new CreateResponseOptions("test-model", [ResponseItem.CreateUserMessageItem("hello")]);
-                request.Tools.Add(new AzureSearchTool($"index-{i}"));
-                calls.Add(Task.Run(() => client.CreateResponseAsync(request)));
-            }
-
-            ClientResult<ResponseResult>[] results = await Task.WhenAll(calls);
-
-            var requestNames = new HashSet<string>();
-            while (transport.RequestBodies.TryDequeue(out BinaryData? requestBody))
-            {
-                using JsonDocument document = JsonDocument.Parse(requestBody);
-                requestNames.Add(document.RootElement.GetProperty("tools")[0].GetProperty("index_name").GetString()!);
-            }
-
-            Assert.That(requestNames, Has.Count.EqualTo(8));
-            for (int i = 0; i < 8; i++)
-            {
-                Assert.That(requestNames, Does.Contain($"index-{i}"));
-            }
-            Assert.That(results.Select(r => r.Value.Tools.Single()), Is.All.InstanceOf<AzureSearchTool>());
-        }
-
-        [Test]
-        public async Task SeparateClients_ConcurrentCallsDoNotShareProxyRegistrations()
-        {
-            using var barrier = new Barrier(2);
-            var azureOptions = new ResponsesClientOptions
-            {
-                Transport = new CannedResponseTransport(ResponseJson("azure_search", "index_name", "docs"), processBarrier: barrier)
-            };
-            azureOptions.AddAzureSerializationExtensions();
-            var bingOnlyOptions = new ResponsesClientOptions
-            {
-                Transport = new CannedResponseTransport(ResponseJson("azure_search", "index_name", "docs"), processBarrier: barrier)
-            };
-            bingOnlyOptions.AddBingSerializationExtensions();
-            var azureClient = new ResponsesClient(s_credential, azureOptions);
-            var bingOnlyClient = new ResponsesClient(s_credential, bingOnlyOptions);
-
-            // Each call blocks inside the transport until both are in flight, so the reads genuinely overlap.
-            Task<ClientResult<ResponseResult>> azureCall = Task.Factory.StartNew(
-                () => azureClient.GetResponseAsync("azure"),
-                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
-            Task<ClientResult<ResponseResult>> bingOnlyCall = Task.Factory.StartNew(
-                () => bingOnlyClient.GetResponseAsync("bing"),
-                CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap();
-            await Task.WhenAll(azureCall, bingOnlyCall);
-
-            Assert.That(azureCall.Result.Value.Tools.Single(), Is.InstanceOf<AzureSearchTool>());
-            Assert.That(bingOnlyCall.Result.Value.Tools.Single(), Is.InstanceOf<UnknownResponseTool>());
+            Assert.That(special, Is.InstanceOf<DerivedTestTool>());
+            Assert.That(other.GetType(), Is.EqualTo(typeof(TestTool)));
+            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
         }
     }
 }

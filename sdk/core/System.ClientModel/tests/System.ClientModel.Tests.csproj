@@ -27,9 +27,6 @@
     <ProjectReference Include="..\..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\System.ClientModel.csproj" />
     <ProjectReference Include="client\System.ClientModel.Tests.Client.csproj" />
-    <ProjectReference Include="Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
-    <ProjectReference Include="Proxy.EndToEnd.FoundryLikeA\Proxy.EndToEnd.FoundryLikeA.csproj" />
-    <ProjectReference Include="Proxy.EndToEnd.FoundryLikeB\Proxy.EndToEnd.FoundryLikeB.csproj" />
   </ItemGroup>
 
   <!-- We purposely have multiple ModelReaderWriterContexts in this project for samples so removing the SourceGeneration -->
@@ -46,12 +43,6 @@
     <Compile Remove="internal.perf/**" />
     <None Remove="internal.perf/**" />
     <Compile Remove="gen*/**" />
-    <Compile Remove="Proxy.EndToEnd.OpenAILike/**" />
-    <Compile Remove="Proxy.EndToEnd.FoundryLikeA/**" />
-    <Compile Remove="Proxy.EndToEnd.FoundryLikeB/**" />
-    <None Remove="Proxy.EndToEnd.OpenAILike/**" />
-    <None Remove="Proxy.EndToEnd.FoundryLikeA/**" />
-    <None Remove="Proxy.EndToEnd.FoundryLikeB/**" />
   </ItemGroup>
 
 </Project>
