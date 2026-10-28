@@ -21,7 +21,7 @@ public abstract partial class Specification
             using Azure.Provisioning.Expressions;
             using Azure.Provisioning.Primitives;
 
-            namespace {{LibraryNamespace}}.Internal;
+            namespace {{LibraryNamespace}};
 
             internal sealed class ProvisioningResourceReference<T>(BicepValue<string> reference)
                 where T : ProvisionableResource

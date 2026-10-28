@@ -54,7 +54,7 @@ public class Resource(Specification spec, Type armType)
 
                 // Add the usings
                 HashSet<string> namespaces = CollectNamespaces();
-                if (ParentResource is not null || HasScope) { namespaces.Add($"{Spec!.LibraryNamespace}.Internal"); }
+                if (ParentResource is not null || HasScope) { namespaces.Add(Spec!.LibraryNamespace); }
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }

@@ -8,7 +8,7 @@
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.Internal;
+namespace Azure.Provisioning;
 
 internal sealed class ProvisioningResourceReference<T>(BicepValue<string> reference)
     where T : ProvisionableResource

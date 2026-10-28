@@ -6,7 +6,7 @@
 #nullable enable
 
 using Azure.Core;
-using Azure.Provisioning.Internal;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
