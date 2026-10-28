@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.18.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.18.0-beta.2 (2026-10-28)
+
+The changes below are described relative to version 1.15.0. Previously published releases after 1.15.0, including 1.16.1 and 1.17.0, are planned for retraction.
+
+### Features Added
+
+- Upgraded API version from 2025-05-01 to 2026-01-01.
+- Added resource APIs for address prefix sets, connection analyzers, connection policies, ExpressRoute LAGs, firewall policy Kubernetes selector groups, identity integration authentication policies, interconnect groups, and network manager configuration commits.
+- Added models for Application Gateway advanced routing conditions, maps, and rules.
+- Added strongly typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
+
+### Breaking Changes
+
+- This release contains breaking changes compared with versions 1.16.1 and 1.17.0.
+
+### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
+- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense. The legacy property forwards to the replacement property for serialization.
 
 ## 1.18.0-beta.1 (2026-09-20)
 

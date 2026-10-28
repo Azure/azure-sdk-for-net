@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _insightCreatedOn;
-        internal bool _insightCreatedOnIsDefined;
+        private protected bool _insightCreatedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionInsightProperties"/>. </summary>
         /// <param name="type"> The type of insight. </param>

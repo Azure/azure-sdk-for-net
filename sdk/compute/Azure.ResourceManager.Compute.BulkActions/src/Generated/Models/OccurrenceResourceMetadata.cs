@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Scheduling and status details for a resource included in a scheduled action occurrence. </summary>
+    /// <summary> Scheduling and status details for a resource included in a recurring bulk action occurrence. </summary>
     public partial class OccurrenceResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

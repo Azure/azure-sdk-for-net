@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningOutputPathAssetReference : MachineLearningAssetReferenceBase
     {
         private string _path;
-        internal bool _pathIsDefined;
+        private bool _pathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOutputPathAssetReference"/>. </summary>
         public MachineLearningOutputPathAssetReference() : base(ReferenceType.OutputPath)

@@ -7,11 +7,12 @@ using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.Network
 {
-    // The previous GA version mistakenly exposed SubscriptionNetworkManagerConnectionData. Registering the
-    // compatibility type here preserves ModelReaderWriter support and prevents the generator from duplicating
-    // this registration in generated code.
-#pragma warning disable CS0618 // Type is retained solely for backward compatibility.
-    [ModelReaderWriterBuildable(typeof(SubscriptionNetworkManagerConnectionData))]
+    // The released model-valued appliance operation projects native resource data through this compatibility model.
+#pragma warning disable CS0618 // The model is retained for the released model-valued operation.
+    [ModelReaderWriterBuildable(typeof(Models.InboundSecurityRule))]
+    [ModelReaderWriterBuildable(typeof(Models.ConnectionMonitorQueryResult))]
+    [ModelReaderWriterBuildable(typeof(Models.ConnectionStateSnapshot))]
+    [ModelReaderWriterBuildable(typeof(Models.ApplicationGatewayAvailableSslOptionsInfo))]
 #pragma warning restore CS0618
     public partial class AzureResourceManagerNetworkContext
     {

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Properties of a scheduled action occurrence. </summary>
+    /// <summary> Properties of a recurring bulk action occurrence. </summary>
     public partial class OccurrenceProperties : IJsonModel<OccurrenceProperties>
     {
         /// <param name="data"> The data to parse. </param>

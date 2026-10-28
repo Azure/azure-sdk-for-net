@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ContentSafety _contentSafety;
-        internal bool _contentSafetyIsDefined;
+        private bool _contentSafetyIsDefined;
         private ServerlessInferenceEndpoint _inferenceEndpoint;
-        internal bool _inferenceEndpointIsDefined;
+        private bool _inferenceEndpointIsDefined;
         private string _marketplaceSubscriptionId;
-        internal bool _marketplaceSubscriptionIdIsDefined;
+        private bool _marketplaceSubscriptionIdIsDefined;
         private ModelSettings _modelSettings;
-        internal bool _modelSettingsIsDefined;
+        private bool _modelSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServerlessEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>

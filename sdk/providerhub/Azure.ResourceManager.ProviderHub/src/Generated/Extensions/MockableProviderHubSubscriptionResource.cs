@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
 
         private ClientDiagnostics ProviderMonitorSettingsClientDiagnostics => _providerMonitorSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProviderHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProviderMonitorSettings ProviderMonitorSettingsRestClient => _providerMonitorSettingsRestClient ??= new ProviderMonitorSettings(ProviderMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private ProviderMonitorSettings ProviderMonitorSettingsRestClient => _providerMonitorSettingsRestClient ??= new ProviderMonitorSettings(ProviderMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProviderHub/providerMonitorSettings", out string apiVersion) ? apiVersion : "2025-10-01");
 
         /// <summary> Gets a collection of ProviderRegistrations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of ProviderRegistrations and their operations over a ProviderRegistrationResource. </returns>

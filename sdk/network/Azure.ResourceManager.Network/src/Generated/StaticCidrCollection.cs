@@ -279,12 +279,12 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticCidrResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticCidrResource> GetAllAsync(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StaticCidrResource> GetAllAsync(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticCidrResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticCidrResource> GetAll(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<StaticCidrResource> GetAll(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Network
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,

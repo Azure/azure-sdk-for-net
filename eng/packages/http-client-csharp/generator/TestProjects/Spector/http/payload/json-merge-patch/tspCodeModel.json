@@ -677,7 +677,6 @@
             "$id": "53",
             "name": "createResource",
             "isExactName": false,
-            "resourceName": "JsonMergePatch",
             "doc": "Test content-type: application/merge-patch+json with required body",
             "accessibility": "public",
             "parameters": [
@@ -869,7 +868,6 @@
             "$id": "61",
             "name": "updateResource",
             "isExactName": false,
-            "resourceName": "JsonMergePatch",
             "doc": "Test content-type: application/merge-patch+json with required body",
             "accessibility": "public",
             "parameters": [
@@ -1059,7 +1057,6 @@
             "$id": "69",
             "name": "updateOptionalResource",
             "isExactName": false,
-            "resourceName": "JsonMergePatch",
             "doc": "Test content-type: application/merge-patch+json with optional body",
             "accessibility": "public",
             "parameters": [

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Uri _nextLink;
-        internal bool _nextLinkIsDefined;
+        private bool _nextLinkIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
         internal ResourceList()

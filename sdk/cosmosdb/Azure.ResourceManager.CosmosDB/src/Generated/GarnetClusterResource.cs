@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GarnetClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string garnetClusterApiVersion);
             _garnetClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, garnetClusterApiVersion ?? "2026-04-01-preview");
+            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/garnetClusters", out string garnetClustersApiVersionOverride) ? garnetClustersApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (_subnetIsDefined || Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet, _subnetIsDefined))
             {
                 if (Subnet != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
-            if (_sshSettingsIsDefined || Optional.IsDefined(SshSettings))
+            if (Optional.IsDefined(SshSettings, _sshSettingsIsDefined))
             {
                 if (SshSettings != null)
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (_computeInstanceAuthorizationTypeIsDefined || Optional.IsDefined(ComputeInstanceAuthorizationType))
+            if (Optional.IsDefined(ComputeInstanceAuthorizationType, _computeInstanceAuthorizationTypeIsDefined))
             {
                 if (ComputeInstanceAuthorizationType != null)
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeInstanceAuthorizationType"u8);
                 }
             }
-            if (_enableSSOIsDefined || Optional.IsDefined(EnableSSO))
+            if (Optional.IsDefined(EnableSSO, _enableSSOIsDefined))
             {
                 if (EnableSSO != null)
                 {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableSSO"u8);
                 }
             }
-            if (_personalComputeInstanceSettingsIsDefined || Optional.IsDefined(PersonalComputeInstanceSettings))
+            if (Optional.IsDefined(PersonalComputeInstanceSettings, _personalComputeInstanceSettingsIsDefined))
             {
                 if (PersonalComputeInstanceSettings != null)
                 {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("personalComputeInstanceSettings"u8);
                 }
             }
-            if (_setupScriptsSettingsIsDefined || Optional.IsDefined(SetupScriptsSettings))
+            if (Optional.IsDefined(SetupScriptsSettings, _setupScriptsSettingsIsDefined))
             {
                 if (SetupScriptsSettings != null)
                 {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("setupScripts"u8);
                 }
             }
-            if (options.Format != "W" && (_lastOperationIsDefined || Optional.IsDefined(LastOperation)))
+            if (options.Format != "W" && Optional.IsDefined(LastOperation, _lastOperationIsDefined))
             {
                 if (LastOperation != null)
                 {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("lastOperation"u8);
                 }
             }
-            if (_schedulesIsDefined || Optional.IsDefined(Schedules))
+            if (Optional.IsDefined(Schedules, _schedulesIsDefined))
             {
                 if (Schedules != null)
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
                 writer.WriteStringValue(IdleTimeBeforeShutdown);
             }
-            if (_enableNodePublicIPIsDefined || Optional.IsDefined(EnableNodePublicIP))
+            if (Optional.IsDefined(EnableNodePublicIP, _enableNodePublicIPIsDefined))
             {
                 if (EnableNodePublicIP != null)
                 {

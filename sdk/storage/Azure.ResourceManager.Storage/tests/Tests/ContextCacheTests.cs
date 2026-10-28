@@ -22,6 +22,14 @@ namespace Azure.ResourceManager.Storage.Tests
         {
         }
 
+        private async Task<GenericResource> CreateUserAssignedIdentityAsync()
+        {
+            string userAssignedIdentityName = Recording.GenerateAssetName("testMsi-");
+            ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
+            GenericResourceData input = new GenericResourceData(_resourceGroup.Data.Location);
+            return (await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userIdentityId, input)).Value;
+        }
+
         [TearDown]
         public async Task ClearContextCaches()
         {
@@ -37,18 +45,33 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task CreateGetListUpdateDeleteContextCacheAndContainer()
         {
-            _resourceGroup = await CreateResourceGroupAsync();
+            AzureLocation location = AzureLocation.EastUS;
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            _resourceGroup = (await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(location))).Value;
             string contextCacheName = Recording.GenerateAssetName("ctxcache");
+            ContextCacheNameAvailabilityResult availableName = (await DefaultSubscription.CheckContextCacheNameAvailabilityAsync(
+                new ContextCacheNameAvailabilityContent(contextCacheName))).Value;
+            Assert.IsTrue(availableName.IsNameAvailable);
+            Assert.IsNull(availableName.Reason);
+
+            GenericResource userAssignedIdentity = await CreateUserAssignedIdentityAsync();
+            ManagedServiceIdentity identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
+            identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             ContextCacheCollection contextCaches = _resourceGroup.GetContextCaches();
             var contextCacheData = new ContextCacheData(
-                AzureLocation.EastUS,
+                location,
                 new ContextCacheProperties(ContextCacheAccountKind.Regional)
                 {
                     Description = "Test Azure Context Cache account"
-                });
+                })
+            {
+                Identity = identity
+            };
             contextCacheData.Tags.Add("environment", "test");
 
             ContextCacheResource contextCache = (await contextCaches.CreateOrUpdateAsync(
@@ -61,6 +84,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual("Test Azure Context Cache account", contextCache.Data.Properties.Description);
             Assert.AreEqual(ContextCacheProvisioningState.Succeeded, contextCache.Data.Properties.ProvisioningState);
             Assert.AreEqual("test", contextCache.Data.Tags["environment"]);
+            Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, contextCache.Data.Identity.ManagedServiceIdentityType);
+            Assert.IsTrue(contextCache.Data.Identity.UserAssignedIdentities.ContainsKey(userAssignedIdentity.Id));
+
+            ContextCacheNameAvailabilityResult unavailableName = (await DefaultSubscription.CheckContextCacheNameAvailabilityAsync(
+                new ContextCacheNameAvailabilityContent(contextCacheName))).Value;
+            Assert.IsFalse(unavailableName.IsNameAvailable);
+            Assert.AreEqual(ContextCacheNameUnavailableReason.AlreadyExists, unavailableName.Reason);
+            Assert.IsNotEmpty(unavailableName.Message);
 
             Assert.IsTrue((await contextCaches.ExistsAsync(contextCacheName)).Value);
             Assert.IsTrue((await contextCaches.GetIfExistsAsync(contextCacheName)).HasValue);
@@ -76,24 +107,34 @@ namespace Azure.ResourceManager.Storage.Tests
 
             var patch = new ContextCachePatch
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned),
                 Properties = new ContextCachePropertiesPatch
                 {
                     Description = "Updated Azure Context Cache account"
                 }
             };
+            patch.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             patch.Tags.Add("environment", "production");
             contextCache = (await contextCache.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual("Updated Azure Context Cache account", contextCache.Data.Properties.Description);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, contextCache.Data.Identity.ManagedServiceIdentityType);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, contextCache.Data.Identity.ManagedServiceIdentityType);
             Assert.IsNotNull(contextCache.Data.Identity.PrincipalId);
             Assert.IsNotNull(contextCache.Data.Identity.TenantId);
+            Assert.IsTrue(contextCache.Data.Identity.UserAssignedIdentities.ContainsKey(userAssignedIdentity.Id));
             Assert.AreEqual("production", contextCache.Data.Tags["environment"]);
 
+            contextCache = (await contextCache.UpdateAsync(WaitUntil.Completed, new ContextCachePatch
+            {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            })).Value;
             contextCache = (await contextCache.AddTagAsync("team", "context-cache")).Value;
             Assert.AreEqual("context-cache", contextCache.Data.Tags["team"]);
-            contextCache = (await contextCache.SetTagsAsync(new Dictionary<string, string> { ["environment"] = "production" })).Value;
+            contextCache = (await contextCache.SetTagsAsync(new Dictionary<string, string>
+            {
+                { "environment", "production" }
+            })).Value;
             Assert.AreEqual(1, contextCache.Data.Tags.Count);
+            Assert.AreEqual("production", contextCache.Data.Tags["environment"]);
             contextCache = (await contextCache.RemoveTagAsync("environment")).Value;
             Assert.IsEmpty(contextCache.Data.Tags);
 

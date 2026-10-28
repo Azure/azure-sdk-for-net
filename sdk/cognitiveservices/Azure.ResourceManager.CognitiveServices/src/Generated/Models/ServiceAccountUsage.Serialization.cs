@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -74,6 +75,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value);
+            }
             if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
@@ -109,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (_scopeTypeIsDefined || Optional.IsDefined(ScopeType))
+            if (Optional.IsDefined(ScopeType, _scopeTypeIsDefined))
             {
                 if (ScopeType != null)
                 {
@@ -121,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("scopeType"u8);
                 }
             }
-            if (_scopeIdIsDefined || Optional.IsDefined(ScopeId))
+            if (Optional.IsDefined(ScopeId, _scopeIdIsDefined))
             {
                 if (ScopeId != null)
                 {
@@ -175,6 +186,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            ResourceType? @type = default;
             ServiceAccountUsageUnitType? unit = default;
             ServiceAccountUsageMetricName name = default;
             string quotaPeriod = default;
@@ -189,6 +202,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("unit"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -272,6 +303,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             return new ServiceAccountUsage(
+                id,
+                @type,
                 unit,
                 name,
                 quotaPeriod,

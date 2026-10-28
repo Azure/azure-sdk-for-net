@@ -22,5 +22,5 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticCapacityPoolResource : ArmResource { protected NetAppElasticCapacityPoolResource() { } internal NetAppElasticCapacityPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id) { _elasticCapacityPoolsClientDiagnostics = null; _elasticCapacityPoolsRestClient = null; _ = _elasticCapacityPoolsClientDiagnostics; _ = _elasticCapacityPoolsRestClient; } }
+    public partial class NetAppElasticCapacityPoolResource : ArmResource { protected NetAppElasticCapacityPoolResource() { } internal NetAppElasticCapacityPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id) { } }
 }

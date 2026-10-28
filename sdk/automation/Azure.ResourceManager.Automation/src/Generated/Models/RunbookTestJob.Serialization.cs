@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (_startOnIsDefined || Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn, _startOnIsDefined))
             {
                 if (StartOn != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime"u8);
                 }
             }
-            if (_endOnIsDefined || Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn, _endOnIsDefined))
             {
                 if (EndOn != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (_lastStatusModifiedOnIsDefined || Optional.IsDefined(LastStatusModifiedOn))
+            if (Optional.IsDefined(LastStatusModifiedOn, _lastStatusModifiedOnIsDefined))
             {
                 if (LastStatusModifiedOn != null)
                 {

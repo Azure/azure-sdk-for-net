@@ -5,13 +5,16 @@ namespace Azure.Security.Attestation
         protected AttestationAdministrationClient() { }
         public AttestationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
-        public System.Uri Endpoint { get { throw null; } }
+        public virtual bool CanGetTcbBaselines { get { throw null; } }
+        public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult> AddPolicyManagementCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, Azure.Security.Attestation.AttestationTokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, Azure.Security.Attestation.AttestationTokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<string> GetPolicy(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<string>> GetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<System.Collections.Generic.IReadOnlyList<System.Security.Cryptography.X509Certificates.X509Certificate2>> GetPolicyManagementCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<System.Collections.Generic.IReadOnlyList<System.Security.Cryptography.X509Certificates.X509Certificate2>>> GetPolicyManagementCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.Attestation.TcbBaselineResult> GetTcbBaselines(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.TcbBaselineResult>> GetTcbBaselinesAsync(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult> RemovePolicyManagementCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2 certificateToRemove, Azure.Security.Attestation.AttestationTokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(System.Security.Cryptography.X509Certificates.X509Certificate2 certificateToRemove, Azure.Security.Attestation.AttestationTokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyModificationResult> ResetPolicy(Azure.Security.Attestation.AttestationType attestationType, Azure.Security.Attestation.AttestationTokenSigningKey signingKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -24,13 +27,22 @@ namespace Azure.Security.Attestation
         protected AttestationClient() { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
-        public System.Uri Endpoint { get { throw null; } }
+        public virtual bool CanAttestTdxVm { get { throw null; } }
+        public virtual System.Uri Endpoint { get { throw null; } }
+        public virtual Azure.Response<Azure.Security.Attestation.SealedAttestationResult> AttestAzureGuest(System.BinaryData attestationInfo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.SealedAttestationResult>> AttestAzureGuestAsync(System.BinaryData attestationInfo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestOpenEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSevSnpVm(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSevSnpVmAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestTdxVm(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestTdxVmAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.Attestation.TpmAttestationResponse> AttestTpm(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.TpmAttestationResponse>> AttestTpmAsync(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.Attestation.AttestationOpenIdMetadata> GetOpenIdMetadata(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.AttestationOpenIdMetadata>> GetOpenIdMetadataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -52,11 +64,35 @@ namespace Azure.Security.Attestation
     }
     public static partial class AttestationModelFactory
     {
+        public static Azure.Security.Attestation.AttestationOpenIdMetadata AttestationOpenIdMetadata(string issuer = null, System.Uri jsonWebKeySetUri = null, System.Collections.Generic.IEnumerable<string> responseTypesSupported = null, System.Collections.Generic.IEnumerable<string> tokenSigningAlgorithmsSupported = null, System.Collections.Generic.IEnumerable<string> supportedClaims = null) { throw null; }
         public static Azure.Security.Attestation.AttestationResponse<T> AttestationResponse<T>(Azure.Response response, Azure.Security.Attestation.AttestationToken token, T body = null) where T : class { throw null; }
-        public static Azure.Security.Attestation.AttestationResult AttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null) { throw null; }
+        public static Azure.Security.Attestation.AttestationResult AttestationResult(string jti, string issuer, System.DateTimeOffset issuedAt, System.DateTimeOffset expiration, System.DateTimeOffset notBefore, object cnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, Azure.Security.Attestation.AttestationSigner policySigner, System.BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, System.BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, System.BinaryData deprecatedEnclaveHeldData, System.BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner, System.BinaryData deprecatedPolicyHash, string deprecatedRpData) { throw null; }
+        public static Azure.Security.Attestation.AttestationResult AttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalClaims = null) { throw null; }
         public static Azure.Security.Attestation.PolicyCertificatesModificationResult PolicyCertificatesModificationResult(Azure.Security.Attestation.PolicyCertificateResolution certificateResolution, string certificateThumbprint) { throw null; }
         public static Azure.Security.Attestation.PolicyModificationResult PolicyModificationResult(Azure.Security.Attestation.PolicyModification policyModification, string policyHash, Azure.Security.Attestation.AttestationSigner signer) { throw null; }
+        public static Azure.Security.Attestation.SealedAttestationResult SealedAttestationResult(string token = null) { throw null; }
+        public static Azure.Security.Attestation.TcbBaseline TcbBaseline(string tcbIdentifier = null, int? tcbEvaluationDataNumber = default(int?), System.DateTimeOffset? tcbReleasedOn = default(System.DateTimeOffset?), string minimumPswLinuxVersion = null, string minimumPswWindowsVersion = null, bool? isSelectedTcb = default(bool?)) { throw null; }
+        public static Azure.Security.Attestation.TcbBaselineResult TcbBaselineResult(System.Collections.Generic.IEnumerable<Azure.Security.Attestation.TcbBaseline> tcbBaselines = null) { throw null; }
         public static Azure.Security.Attestation.TpmAttestationResponse TpmAttestationResponse(System.BinaryData data = null) { throw null; }
+    }
+    public partial class AttestationOpenIdMetadata : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationOpenIdMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationOpenIdMetadata>
+    {
+        internal AttestationOpenIdMetadata() { }
+        public string Issuer { get { throw null; } }
+        public System.Uri JsonWebKeySetUri { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ResponseTypesSupported { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> SupportedClaims { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> TokenSigningAlgorithmsSupported { get { throw null; } }
+        protected virtual Azure.Security.Attestation.AttestationOpenIdMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.Attestation.AttestationOpenIdMetadata (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.Attestation.AttestationOpenIdMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.Attestation.AttestationOpenIdMetadata System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationOpenIdMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationOpenIdMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.AttestationOpenIdMetadata System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationOpenIdMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationOpenIdMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationOpenIdMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AttestationRequest
     {
@@ -64,6 +100,7 @@ namespace Azure.Security.Attestation
         public string DraftPolicyForAttestation { get { throw null; } set { } }
         public System.BinaryData Evidence { get { throw null; } set { } }
         public Azure.Security.Attestation.AttestationData InittimeData { get { throw null; } set { } }
+        public string Nonce { get { throw null; } set { } }
         public Azure.Security.Attestation.AttestationData RuntimeData { get { throw null; } set { } }
     }
     public partial class AttestationResponse<T> : Azure.Response<T> where T : class
@@ -76,6 +113,7 @@ namespace Azure.Security.Attestation
     public partial class AttestationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>
     {
         internal AttestationResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalClaims { get { throw null; } }
         public object Confirmation { get { throw null; } }
         [System.ObsoleteAttribute("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead")]
         public System.BinaryData DeprecatedEnclaveHeldData { get { throw null; } }
@@ -299,6 +337,21 @@ namespace Azure.Security.Attestation
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SealedAttestationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.SealedAttestationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.SealedAttestationResult>
+    {
+        internal SealedAttestationResult() { }
+        public string Token { get { throw null; } }
+        protected virtual Azure.Security.Attestation.SealedAttestationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.Attestation.SealedAttestationResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.Attestation.SealedAttestationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.Attestation.SealedAttestationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.SealedAttestationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.SealedAttestationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.SealedAttestationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.SealedAttestationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.SealedAttestationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.SealedAttestationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StoredAttestationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.StoredAttestationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>
     {
         public StoredAttestationPolicy() { }
@@ -312,6 +365,40 @@ namespace Azure.Security.Attestation
         Azure.Security.Attestation.StoredAttestationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TcbBaseline : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaseline>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaseline>
+    {
+        internal TcbBaseline() { }
+        public bool? IsSelectedTcb { get { throw null; } }
+        public string MinimumPswLinuxVersion { get { throw null; } }
+        public string MinimumPswWindowsVersion { get { throw null; } }
+        public int? TcbEvaluationDataNumber { get { throw null; } }
+        public string TcbIdentifier { get { throw null; } }
+        public System.DateTimeOffset? TcbReleasedOn { get { throw null; } }
+        protected virtual Azure.Security.Attestation.TcbBaseline JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Security.Attestation.TcbBaseline PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.Attestation.TcbBaseline System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaseline>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaseline>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.TcbBaseline System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaseline>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaseline>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaseline>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TcbBaselineResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaselineResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaselineResult>
+    {
+        internal TcbBaselineResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.TcbBaseline> TcbBaselines { get { throw null; } }
+        protected virtual Azure.Security.Attestation.TcbBaselineResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.Attestation.TcbBaselineResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.Attestation.TcbBaselineResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.Attestation.TcbBaselineResult System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaselineResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TcbBaselineResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.Attestation.TcbBaselineResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaselineResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaselineResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TcbBaselineResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TpmAttestationRequest : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>
     {

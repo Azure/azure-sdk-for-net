@@ -517,13 +517,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("app-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
-        /// <summary>
-        /// The credential is scoped to the exporter's own audience, and the bearer token policy sits
-        /// in the shared pipeline, so it would be attached to requests addressed to hosts named by
-        /// telemetry. The combination is refused rather than disclosing the token.
-        /// </summary>
         [Fact]
-        public void MultiEndpointRefusesToStartWithEntraCredentials()
+        public void MultiEndpointWithEntraCredentialsSeparatesTheRoutedClients()
         {
             var options = new AzureMonitorExporterOptions
             {
@@ -532,10 +527,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 DisableOfflineStorage = true,
             };
 
-            var exception = Assert.Throws<NotSupportedException>(
-                () => new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true));
+            using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
 
-            Assert.Contains("Entra", exception.Message, StringComparison.Ordinal);
+            Assert.NotNull(transmitter._routedAadRestClient);
+            Assert.NotSame(transmitter._applicationInsightsRestClient, transmitter._routedRestClient);
+            Assert.NotSame(transmitter._applicationInsightsRestClient, transmitter._routedAadRestClient);
+            Assert.NotSame(transmitter._routedRestClient, transmitter._routedAadRestClient);
+        }
+
+        [Fact]
+        public void MultiEndpointWithoutCredentialsHasNoAadClient()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint={EastUs}",
+                DisableOfflineStorage = true,
+            };
+
+            using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
+
+            Assert.Null(transmitter._routedAadRestClient);
+            Assert.Same(transmitter._applicationInsightsRestClient, transmitter._routedRestClient);
         }
 
         /// <summary>

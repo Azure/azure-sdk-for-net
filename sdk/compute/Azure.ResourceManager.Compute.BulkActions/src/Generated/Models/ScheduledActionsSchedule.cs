@@ -11,14 +11,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The recurring schedule for a scheduled action. </summary>
+    /// <summary> The recurring schedule for a recurring bulk action. </summary>
     public partial class ScheduledActionsSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/>. </summary>
-        /// <param name="scheduledTime"> The local time of day when the scheduled action runs. </param>
+        /// <param name="scheduledTime"> The local time of day when the recurring bulk action runs. </param>
         /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
         public ScheduledActionsSchedule(TimeSpan scheduledTime, string timeZone)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/>. </summary>
-        /// <param name="scheduledTime"> The local time of day when the scheduled action runs. </param>
+        /// <param name="scheduledTime"> The local time of day when the recurring bulk action runs. </param>
         /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
         /// <param name="requestedWeekDays"> The days of the week when the action runs. An empty array means every day of the week. </param>
         /// <param name="requestedMonths"> The months when the action runs. An empty array means every month. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The local time of day when the scheduled action runs. </summary>
+        /// <summary> The local time of day when the recurring bulk action runs. </summary>
         public TimeSpan ScheduledTime { get; set; }
 
         /// <summary> The time zone used to interpret the scheduled time. </summary>
