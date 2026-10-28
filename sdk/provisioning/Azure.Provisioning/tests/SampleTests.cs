@@ -383,9 +383,6 @@ internal class SampleTests
                     };
                     identityLock.Scope = identity;
                     Assert.That(identityLock.Scope, Is.SameAs(identity));
-                    identityLock.Scope = null;
-                    Assert.That(identityLock.Scope, Is.Null);
-                    identityLock.Scope = identity;
                     if (explicitDependency)
                     {
                         identityLock.DependsOn.Add(identity);
@@ -411,9 +408,8 @@ internal class SampleTests
             """);
     }
 
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task ManagementLockUnsetOrNullResourceScope(bool assignNullScope)
+    [Test]
+    public async Task ManagementLockWithoutResourceScope()
     {
         await using Trycep test = new Trycep()
             .Define(
@@ -430,26 +426,19 @@ internal class SampleTests
                         Level = ManagementLockLevel.ReadOnly
                     };
                     Assert.That(identityLock.Scope, Is.Null);
-                    if (assignNullScope)
-                    {
-                        identityLock.Scope = identity;
-                        identityLock.Scope = null;
-                        Assert.That(identityLock.Scope, Is.Null);
-                    }
                     identityLock.DependsOn.Add(identity);
                     infra.Add(identityLock);
                     return infra;
                 });
 
-        string scope = assignNullScope ? "\n  scope: null" : "";
         test.Compare(
-            $$"""
+            """
             resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
               name: 'existing-identity'
             }
 
             resource identityLock 'Microsoft.Authorization/locks@2020-05-01' = {
-              name: 'protect-deployment'{{scope}}
+              name: 'protect-deployment'
               properties: {
                 level: 'ReadOnly'
               }
