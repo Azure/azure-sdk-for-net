@@ -26,5 +26,3 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 ```
 
 See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/README.md) for other ways to authenticate the client.
-
-All samples use the default service API version, `2026-08-01-preview`.

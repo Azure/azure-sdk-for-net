@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Chat.Tests
 {
-    public class WebPubSubChatServiceClientLiveTests : RecordedTestBase<WebPubSubChatTestEnvironment>
+    public partial class WebPubSubChatServiceClientLiveTests : RecordedTestBase<WebPubSubChatTestEnvironment>
     {
         private WebPubSubChatServiceClient _client;
         private WebPubSubChatServiceClient _accessKeyClient;
@@ -25,7 +25,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         public void SetUp()
         {
             WebPubSubChatServiceClientOptions options = InstrumentClientOptions(
-                new WebPubSubChatServiceClientOptions(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview));
+                new WebPubSubChatServiceClientOptions());
             _client = InstrumentClient(new WebPubSubChatServiceClient(
                 new Uri(TestEnvironment.Endpoint),
                 "test_hub",

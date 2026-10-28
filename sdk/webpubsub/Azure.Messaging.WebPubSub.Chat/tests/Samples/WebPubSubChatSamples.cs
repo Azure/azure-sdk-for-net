@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Identity;
 
 namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
@@ -210,19 +211,10 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #endregion
         }
 
-        public void HandleRequestFailure()
+        public void EnableLogging()
         {
-            var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
-
-            #region Snippet:WebPubSubChatHandleRequestFailure
-            try
-            {
-                client.GetRoom("does-not-exist");
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine($"Request failed with status {ex.Status}: {ex.Message}");
-            }
+            #region Snippet:WebPubSubChatEnableLogging
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             #endregion
         }
 

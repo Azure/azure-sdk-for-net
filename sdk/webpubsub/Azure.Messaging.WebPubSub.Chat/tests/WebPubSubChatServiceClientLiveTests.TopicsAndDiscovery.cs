@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -10,21 +9,8 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Chat.Tests
 {
-    public class WebPubSubChatServiceClientNewOperationsLiveTests : RecordedTestBase<WebPubSubChatTestEnvironment>
+    public partial class WebPubSubChatServiceClientLiveTests
     {
-        private WebPubSubChatServiceClient _client;
-
-        public WebPubSubChatServiceClientNewOperationsLiveTests(bool isAsync) : base(isAsync)
-        {
-            ReplacementHost = "sanitized.webpubsub.azure.com";
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _client = CreateClient(WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview);
-        }
-
         [RecordedTest]
         public async Task DiscoverRoomsUsersAndMemberships()
         {
@@ -127,13 +113,6 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             {
                 await _client.DeleteRoomAsync(roomId);
             }
-        }
-
-        private WebPubSubChatServiceClient CreateClient(WebPubSubChatServiceClientOptions.ServiceVersion version)
-        {
-            var options = InstrumentClientOptions(new WebPubSubChatServiceClientOptions(version));
-            return InstrumentClient(new WebPubSubChatServiceClient(
-                new Uri(TestEnvironment.Endpoint), "test_hub", TestEnvironment.Credential, options));
         }
     }
 }

@@ -55,17 +55,9 @@ client.UpdateMessage(
     updatedMessage);
 ```
 
-`Content` replaces the entire existing content. Create it with
-`WebPubSubChatMessageContent.FromText(text)` or
-`WebPubSubChatMessageContent.FromBinary(binaryData)`, choosing one content type.
-The `Text` and `Binary` properties are read-only. Switching to binary does not
-require clearing the previous text separately.
 Leaving a property unset preserves its value, whereas explicitly assigning null
 clears it (`CreatedBy` becomes an empty string, and `Content` becomes empty text).
-For example, `new UpdateMessageOptions { Content = null }` clears only the body.
-The method returns the updated `WebPubSubChatMessage`. Pass `MatchConditions`
-with its ETag to protect against concurrent changes. The `RequestContent`
-overload remains available for raw JSON patches.
+Pass `MatchConditions` with the message's ETag to protect against concurrent changes.
 
 ## Delete a message
 

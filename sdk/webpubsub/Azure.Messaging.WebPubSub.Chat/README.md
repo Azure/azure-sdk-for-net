@@ -246,35 +246,16 @@ to define custom permissions and inspect built-in roles.
 
 ## Troubleshooting
 
-Service failures throw `RequestFailedException`. Inspect `Status` and
-`ErrorCode` without logging credentials or access URIs:
+### Setting up console logging
 
-```C# Snippet:WebPubSubChatHandleRequestFailure
-try
-{
-    client.GetRoom("does-not-exist");
-}
-catch (RequestFailedException ex)
-{
-    Console.WriteLine($"Request failed with status {ex.Status}: {ex.Message}");
-}
+Enable console logging to inspect requests to the service. Add
+`using Azure.Core.Diagnostics;` and keep the listener alive while using the client:
+
+```C# Snippet:WebPubSubChatEnableLogging
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
-- **400:** Check resource identifiers, topic titles, and the request body.
-  Topic IDs use 1-64 letters, digits, underscores, or hyphens; topic titles
-  contain 1-256 characters.
-- **401 or 403:** Verify credentials, hub, and resource endpoint. For Entra ID,
-  verify the identity's role assignment. Connection strings require local
-  authentication to be enabled.
-- **404:** Check resource existence and that the service supports the selected
-  API version.
-- **412:** A conditional write failed. Retrieve the latest resource, reconcile
-  changes, and retry with the latest ETag rather than blindly overwriting it.
-- **429 or transient 5xx:** Clients retry eligible transient failures according
-  to `WebPubSubChatServiceClientOptions.Retry`. Check service capacity and
-  [performance guidance](https://learn.microsoft.com/azure/azure-web-pubsub/concept-performance).
-
-For diagnostics, see [Azure SDK logging](https://learn.microsoft.com/dotnet/azure/sdk/logging).
+For more information, see [Azure SDK logging](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 Avoid enabling content logging for sensitive chat messages in production.
 
 ## Next steps

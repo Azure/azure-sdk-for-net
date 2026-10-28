@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Chat.Tests
 {
-    public class WebPubSubChatServiceClientVersionTests : ClientTestBase
+    public class WebPubSubChatServiceClientOperationsTests : ClientTestBase
     {
         private const string Endpoint = "https://contoso.webpubsub.azure.com";
         private const string ApiVersion = "2026-08-01-preview";
@@ -24,7 +24,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         private const string UserJson = """{"kind":"Human","id":"alice","nickname":"Alice","roleName":"user.normal","etag":"user-etag"}""";
         private const string TopicJson = """{"id":"topic1","title":"Planning","createdAt":"2026-08-01T12:00:00Z","createdBy":"alice","state":"Normal","conversationId":"c.room1.topic1","etag":"topic-etag"}""";
 
-        public WebPubSubChatServiceClientVersionTests(bool isAsync) : base(isAsync)
+        public WebPubSubChatServiceClientOperationsTests(bool isAsync) : base(isAsync)
         {
         }
 
