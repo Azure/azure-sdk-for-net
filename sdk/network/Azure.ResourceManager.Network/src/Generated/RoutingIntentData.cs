@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,16 +25,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the RoutingIntent resource. </param>
-        internal RoutingIntentData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, RoutingIntentProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RoutingIntentData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, RoutingIntentProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> Properties of the RoutingIntent resource. </summary>
         [WirePath("properties")]
         internal RoutingIntentProperties Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> List of routing policies. </summary>
         [WirePath("properties.routingPolicies")]

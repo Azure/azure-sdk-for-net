@@ -108,7 +108,8 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         {
             throw new InvalidOperationException(
                 "ResilientBackground/SteerableConversations requires the Core resilient-task runtime. " +
-                "Enable ResilientBackground or call SetResilientTasksEnabled() before host startup.");
+                "Ensure AddResponsesServer() is registered before host startup and restore " +
+                "the Core resilient-task runtime if its registration was replaced.");
         }
 
         if (options.ResilientBackground)

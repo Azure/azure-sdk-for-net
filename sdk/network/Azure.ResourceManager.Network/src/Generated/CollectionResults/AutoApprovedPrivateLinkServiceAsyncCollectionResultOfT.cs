@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private readonly PrivateLinkServices _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AutoApprovedPrivateLinkServiceAsyncCollectionResultOfT(PrivateLinkServices client, Guid subscriptionId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AutoApprovedPrivateLinkServiceAsyncCollectionResultOfT(PrivateLinkServices client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAutoApprovedPrivateLinkServicesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAutoApprovedPrivateLinkServicesRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAutoApprovedPrivateLinkServicesPrivateLinkServicesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAutoApprovedPrivateLinkServicesPrivateLinkServicesRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

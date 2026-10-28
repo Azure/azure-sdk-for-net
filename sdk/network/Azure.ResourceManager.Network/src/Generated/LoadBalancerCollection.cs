@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsync0CollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerData0CollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadBalancerCollection.GetAll"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>

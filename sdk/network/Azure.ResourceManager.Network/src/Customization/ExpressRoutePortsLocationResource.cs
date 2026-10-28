@@ -3,28 +3,112 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the ExpressRoutePortsLocationResource type. </summary>
     public partial class ExpressRoutePortsLocationResource
     {
-        /// <summary> Invokes the AddTag compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.AddTag`.", false)]
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> AddTag(global::System.String p0, global::System.String p1, global::System.Threading.CancellationToken p2) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the RemoveTag compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.RemoveTag`.", false)]
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> RemoveTag(global::System.String p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the SetTags compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.SetTags`.", false)]
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> SetTags(global::System.Collections.Generic.IDictionary<global::System.String, global::System.String> p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the AddTagAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.AddTagAsync`.", false)]
-        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> AddTagAsync(global::System.String p0, global::System.String p1, global::System.Threading.CancellationToken p2) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the RemoveTagAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.RemoveTagAsync`.", false)]
-        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> RemoveTagAsync(global::System.String p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the SetTagsAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. There is no replacement operation for `ExpressRoutePortsLocationResource.SetTagsAsync`.", false)]
-        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> SetTagsAsync(global::System.Collections.Generic.IDictionary<global::System.String, global::System.String> p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+        // The released custom methods use ARM's tag resource, not a location update endpoint.
+        /// <summary> Adds a tag to the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortsLocationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+            var tagResource = GetTagResource();
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues[key] = value;
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
+        }
+
+        /// <summary> Removes a tag by key from the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortsLocationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            var tagResource = GetTagResource();
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues.Remove(key);
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
+        }
+
+        /// <summary> Replaces the tags on the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortsLocationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+            var tagResource = GetTagResource();
+            tagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+            var originalTags = tagResource.Get(cancellationToken);
+            originalTags.Value.Data.TagValues.Clear();
+            foreach (KeyValuePair<string, string> tag in tags)
+            {
+                originalTags.Value.Data.TagValues.Add(tag);
+            }
+            tagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+            return Get(cancellationToken);
+        }
+
+        /// <summary> Adds a tag to the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortsLocationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+            var tagResource = GetTagResource();
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues[key] = value;
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Removes a tag by key from the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortsLocationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            var tagResource = GetTagResource();
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues.Remove(key);
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Replaces the tags on the current resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortsLocationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+            var tagResource = GetTagResource();
+            await tagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var originalTags = await tagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+            originalTags.Value.Data.TagValues.Clear();
+            foreach (KeyValuePair<string, string> tag in tags)
+            {
+                originalTags.Value.Data.TagValues.Add(tag);
+            }
+            await tagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }

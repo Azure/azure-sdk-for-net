@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             FrontendPortRangeStart = frontendPortRangeStart;
             FrontendPortRangeEnd = frontendPortRangeEnd;
             BackendPort = backendPort;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPoolProperties"/>. </summary>
@@ -41,8 +42,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerInboundNatPoolProperties(NetworkSubResource frontendIPConfiguration, LoadBalancingTransportProtocol protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal LoadBalancerInboundNatPoolProperties(NetworkSubResource frontendIPConfiguration, LoadBalancingTransportProtocol protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             Protocol = protocol;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             EnableFloatingIP = enableFloatingIP;
             EnableTcpReset = enableTcpReset;
             ProvisioningState = provisioningState;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> A reference to frontend IP addresses. </summary>
@@ -91,6 +92,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the inbound NAT pool resource. </summary>
         [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         /// <summary> Resource ID. </summary>
         [WirePath("frontendIPConfiguration.id")]

@@ -75,20 +75,28 @@ public sealed class ResilientTaskOptInProtocolTests
             configureServices: services => services.SetResilientTasksEnabled());
     }
 
-    [Test]
-    public void SteerableConversations_WithoutTaskOptIn_FailsStartup()
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SteerableConversations_AutomaticallyEnablesTaskRuntime(bool stream)
     {
-        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
-            () => new TestWebApplicationFactory(
-                configureOptions: options => options.SteerableConversations = true))!;
+        await AssertTaskRuntimeUsedAsync(
+            configureOptions: options => options.SteerableConversations = true,
+            configureServices: null,
+            stream: stream);
+    }
 
-        Assert.That(exception.Message, Does.Contain(nameof(ResponsesServerOptions.SteerableConversations)));
-        Assert.That(exception.Message, Does.Contain(nameof(ResilientTaskEnablementExtensions.SetResilientTasksEnabled)));
+    [Test]
+    public async Task SteerableConversations_CannotBeSilentlyDisabledByLaterConfiguration()
+    {
+        await AssertTaskRuntimeUsedAsync(
+            configureOptions: options => options.SteerableConversations = true,
+            configureServices: services => services.SetResilientTasksEnabled(false));
     }
 
     private static async Task AssertTaskRuntimeUsedAsync(
         Action<ResponsesServerOptions>? configureOptions,
-        Action<IServiceCollection>? configureServices)
+        Action<IServiceCollection>? configureServices,
+        bool stream = false)
     {
         string root = Path.Combine(
             Path.GetTempPath(),
@@ -110,7 +118,7 @@ public sealed class ResilientTaskOptInProtocolTests
 
             using HttpResponseMessage response = await client.PostAsync(
                 "/responses",
-                Json(new { model = "test", store = true, background = true }));
+                Json(new { model = "test", store = true, background = true, stream }));
             string body = await response.Content.ReadAsStringAsync();
 
             Assert.Multiple(() =>

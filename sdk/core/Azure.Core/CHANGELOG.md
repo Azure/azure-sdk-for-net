@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
+
 ### Other Changes
 
 ## 1.64.0 (2026-10-26)

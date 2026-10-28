@@ -146,6 +146,24 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(span.GetTag(Keys.ServerAddress), Is.EqualTo("my-service.azure.com"));
         }
 
+        [TestCase("wss://example.azure.com/realtime", null)]
+        [TestCase("wss://example.azure.com:443/realtime", null)]
+        [TestCase("wss://example.azure.com:8443/realtime", 8443)]
+        [TestCase("ws://localhost/realtime", 80)]
+        [TestCase("ws://localhost:8080/realtime", 8080)]
+        public void ConnectActivity_OmitsPort443AndReportsOtherPorts(string endpoint, int? expectedPort)
+        {
+            using var capturer = new ActivityCapturer();
+            var tracer = CreateTracer(endpoint);
+
+            tracer.StartConnectActivity();
+            tracer.EndConnectActivity();
+
+            var span = capturer.Find("connect");
+            Assert.That(span, Is.Not.Null);
+            Assert.That(span!.GetTag(Keys.ServerPort), Is.EqualTo(expectedPort?.ToString()));
+        }
+
         [Test]
         public void ConnectActivity_WithModelEndpoint_HasModelAttribute()
         {

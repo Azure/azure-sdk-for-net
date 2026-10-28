@@ -62,5 +62,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </summary>
         [WirePath("validStatusCodeRanges")]
         public IList<string> ValidStatusCodeRanges { get; }
+
+        /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
+        [WirePath("preferHTTPS")]
+        public bool? PreferHttps { get; set; }
     }
 }

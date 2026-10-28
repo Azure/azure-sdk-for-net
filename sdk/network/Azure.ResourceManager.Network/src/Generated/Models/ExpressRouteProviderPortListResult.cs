@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRouteProviderPort API service call. </summary>
-    public partial class ExpressRouteProviderPortListResult
+    internal partial class ExpressRouteProviderPortListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
         //
         [Test]
         [RecordedTest]
+        [Ignore("Temporarily disabled pending Network private-endpoint approval compatibility review. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task StartC2CJobWithPrivateSourceTest()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupNamePrefix, WestCentralUsLocation);
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                 NetworkPrivateEndpointConnectionData approvalData = new NetworkPrivateEndpointConnectionData
                 {
                     Name = pendingPeConnection.Data.Name,
-                    PrivateLinkServiceConnectionState = new NetworkPrivateLinkServiceConnectionState
+                    ConnectionState = new NetworkPrivateLinkServiceConnectionState
                     {
                         Status = "Approved",
                         Description = "",

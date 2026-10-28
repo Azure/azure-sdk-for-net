@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Network.Tests
             string ipName = GetNameById(idItem, "publicIPAddresses");
 
             var vmssVmId = VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            var vmssListResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetAllPublicIPAddressDataAsync(virtualMachineScaleSetName, vmIndex, System.Threading.CancellationToken.None).ToEnumerableAsync();
+            var vmssListResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetAllPublicIPAddressDataAsync(networkInterfaceName: nicName, ipConfigurationName: ipConfigName, cancellationToken: System.Threading.CancellationToken.None).ToEnumerableAsync();
 
             Has.One.EqualTo(vmssListResult);
 
-            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressDataAsync(virtualMachineScaleSetName, vmIndex, nicName, ipName, System.Threading.CancellationToken.None);
+            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressDataAsync(networkInterfaceName: nicName, ipConfigurationName: ipConfigName, publicIPAddressName: ipName, cancellationToken: System.Threading.CancellationToken.None);
 
             Assert.NotNull(vmssGetResult);
             Assert.AreEqual("Succeeded", vmssGetResult.Value.ProvisioningState.ToString());

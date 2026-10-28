@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, System.Threading.CancellationToken.None);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, cancellationToken: System.Threading.CancellationToken.None);
             Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();
             ;
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, System.Threading.CancellationToken.None);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, cancellationToken: System.Threading.CancellationToken.None);
             Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, System.Threading.CancellationToken.None);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, cancellationToken: System.Threading.CancellationToken.None);
             Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
 
             cm.MonitoringIntervalInSeconds = 60;
-            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, System.Threading.CancellationToken.None);
+            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm, cancellationToken: System.Threading.CancellationToken.None);
             Response<ConnectionMonitorResource> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(60, updateConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.Network.Tests
                 AutoStart = false
             };
 
-            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName1, cm, System.Threading.CancellationToken.None);
+            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName1, cm, cancellationToken: System.Threading.CancellationToken.None);
             await connectionMonitor1Operation.WaitForCompletionAsync();
             ;
-            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName2, cm, System.Threading.CancellationToken.None);
+            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName2, cm, cancellationToken: System.Threading.CancellationToken.None);
             var connectionMonitor2 = (await connectionMonitor2Operation.WaitForCompletionAsync()).Value;
 
             AsyncPageable<ConnectionMonitorResource> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-15-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-15-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-08-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/renewCredentials", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/transitiontocmk", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/getKeyVaultStatus", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/changeKeyVault", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/refreshLdapBindPassword", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-15-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-08-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
