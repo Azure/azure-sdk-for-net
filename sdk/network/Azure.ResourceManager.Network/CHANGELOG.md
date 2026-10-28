@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.18.0-beta.2 (2026-10-28)
 
 The changes below are described relative to version 1.15.0. Previously published releases after 1.15.0, including 1.16.1 and 1.17.0, are planned for retraction.
 
