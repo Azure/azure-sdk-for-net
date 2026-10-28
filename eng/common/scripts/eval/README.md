@@ -13,6 +13,47 @@ templates.
   its own pnpm package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
   restores do not install it; publication adds no Node Azure SDK dependencies.
 
+## Extending a shard job
+
+The shared `eng/common/pipelines/templates/jobs/eval-shard.yml` owns checkout,
+Node/Vally installation, MCP staging, git fixture initialization and Copilot login.
+Its defaults preserve the standard Prepare/Eval/Summary pipeline behavior.
+Repo-local adapters can customize it without copying that infrastructure:
+
+| Parameter | Contract |
+| --- | --- |
+| `matrixStageName` | Stage containing `generate_eval_matrix`; defaults to `Prepare`. The eval stage must depend on it. |
+| `artifactNamespace` | Optional track namespace, e.g. `forced`. Common adds the separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>`. Empty preserves existing names. Configure the matching summary with the same namespace. |
+| `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
+| `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
+| `azureSubscription` | Existing invoke service-connection setting, also forwarded by the stage/job when using the common invoke template. |
+| `vallyArguments` | Optional string array of supplementary Vally option/value pairs. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
+
+Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
+For example, `['--tag', 'mode=forced', '--runs', '3']` selects a local benchmark
+configuration without replacing the common runner. Trial/worker counts must be
+positive integer strings; use `${{ format('{0}', parameters.Runs) }}` for numeric
+pipeline parameters. Both authentication branches forward the array as JSON in
+`VALLY_ARGUMENTS_JSON`; the runner passes literal arguments to the pinned CLI using
+Node directly, without a shell or whitespace splitting of supplementary values.
+Unsupported flags (including aliases and `--flag=value`) are rejected. Eval
+selection, output paths, JUnit, plugins and verdict settings remain framework-owned.
+Legacy custom invoke templates retain their existing parameter contract when the
+array is empty. A custom template opting into a non-empty array must declare its
+own `vallyArguments` parameter; otherwise template compilation rejects it.
+
+Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
+Do not replace authentication, result collection or retry/completeness checks.
+Supplementary reports must not rewrite JUnit thresholds or raw results.
+
+For multiple tracks in one build, use a distinct artifact namespace and configure
+the common summary's `matrixStageName`, `evalStageName` and `artifactNamespace`
+to match the shard job. Each Summary stage must depend on both its Prepare and
+Eval stages. Timeline attempts are checked against that exact Eval stage, and
+only that namespace's latest verified attempts are selected. Namespaced tracks
+support artifact-only summaries: dashboard bundles/publication are rejected
+because the archive identity currently represents one build-wide Summary.
+
 ## Complete build results and direct Blob publishing
 
 Shards now retain the newest invocation's raw JSONL, JUnit and a completion marker

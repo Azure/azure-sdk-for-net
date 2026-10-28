@@ -8,6 +8,69 @@ import path from "node:path";
 import { after, before, describe, it } from "node:test";
 
 import { getVallyShardVerdict } from "../lib/verdict.ts";
+import { parseArgs, runShard, validateVallyArguments } from "../invoke-eval-shard.ts";
+import { spawnSync } from "node:child_process";
+
+describe("supplementary Vally arguments", () => {
+  it("accepts only supported option/value pairs without splitting values", () => {
+    const args = ["--tag", "label=two words; $(not-a-command) & \"quoted\"", "--runs", "3", "--workers", "1", "--timeout", "5m"];
+    assert.deepEqual(validateVallyArguments(args), args);
+    const options = parseArgs(["--eval-args", "-e example.eval.yaml", "--shard-name", "example", "--output-dir", "out"],
+      { VALLY_ARGUMENTS_JSON: JSON.stringify(args) });
+    assert.deepEqual(options.vallyArguments, args);
+  });
+
+  it("rejects output, verdict, discovery and plugin overrides, including aliases and equals syntax", () => {
+    for (const option of ["--output-dir", "--output-dir=elsewhere", "--junit", "--no-junit", "--threshold",
+      "--require-pass", "--skip-grade", "--skip-validate", "-e", "--eval-spec", "--suite", "--work-dir",
+      "--reporter-plugin", "--executor-plugin", "--grader-plugin", "--runs=3", "--", "-r"]) {
+      assert.throws(() => validateVallyArguments([option, "value"]), /Unsupported/);
+    }
+    for (const args of [null, {}, " --runs 3", [3], ["--runs"], ["--runs", "0"], ["--runs", "-1"],
+      ["--workers", "1.5"], ["--tag", "--threshold"], ["--tag", "value\0"]]) {
+      assert.throws(() => validateVallyArguments(args));
+    }
+    assert.throws(() => parseArgs([], { VALLY_ARGUMENTS_JSON: "not JSON" }));
+    assert.deepEqual(validateVallyArguments([]), []);
+  });
+
+  it("passes literal arguments through a real Node process, retaining framework-owned settings", (t) => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-arguments-"));
+    t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+    const capture = path.join(root, "capture.json");
+    const fakeCli = path.join(root, "fake-cli.mjs");
+    const outputDir = path.join(root, "results with spaces");
+    fs.writeFileSync(fakeCli, `
+      import fs from "node:fs";
+      import path from "node:path";
+      const args = process.argv.slice(2);
+      fs.writeFileSync(${JSON.stringify(capture)}, JSON.stringify(args));
+      const output = args[args.indexOf("--output-dir") + 1];
+      fs.mkdirSync(output, { recursive: true });
+      fs.writeFileSync(path.join(output, "results.jsonl"), JSON.stringify({
+        type: "run-summary", evals: [{ name: "test", passed: true, stimuliRun: 1 }]
+      }));
+    `);
+    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--runs", "3"];
+    const exit = runShard({ evalArgs: "-e test.eval.yaml", shardName: "test", outputDir, vallyArguments: args }, {
+      spawn(command, commandArgs, options) {
+        assert.equal(command, process.execPath);
+        assert.equal(options.shell, false);
+        assert.match(commandArgs[0], /vally-cli[\\/]dist[\\/]index\.js$/);
+        return spawnSync(command, [fakeCli, ...commandArgs.slice(1)], options);
+      },
+    });
+    assert.equal(exit, 0);
+    const actual = JSON.parse(fs.readFileSync(capture, "utf8"));
+    assert.deepEqual(actual, ["eval", "-e", "test.eval.yaml", ...args,
+      "--junit", "--threshold", "0.8", "--output-dir", outputDir]);
+  });
+
+  it("surfaces process launch failures instead of reading stale results", () => {
+    assert.throws(() => runShard({ evalArgs: "-e x", shardName: "x", outputDir: "unused" },
+      { spawn: () => ({ error: new Error("failed to launch") }) }), /failed to launch/);
+  });
+});
 
 describe("getVallyShardVerdict", () => {
   let root;

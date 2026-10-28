@@ -6,10 +6,24 @@ parameters:
   - name: vallyRoot
     # Required (no default) so each repo passes its own eval root explicitly.
     type: string
+  - name: matrixStageName
+    # Stage containing the generate_eval_matrix job.
+    type: string
+    default: Prepare
+  - name: artifactNamespace
+    # Optional track namespace (e.g. 'forced'); common adds the separator.
+    type: string
+    default: ''
   - name: evalInvokeTemplate
     # Swap point: runs `vally eval` for the shard (the common template is auth-conditional).
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: vallyArguments
+    type: object
+    default: []
+  - name: azureSubscription
+    type: string
+    default: opensource-api-connection
   - name: UseAzSdkAuthentication
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
@@ -44,7 +58,7 @@ jobs:
     workspace:
       clean: all
     strategy:
-      matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      matrix: $[ stageDependencies.${{ parameters.matrixStageName }}.generate_eval_matrix.outputs['detect.matrix'] ]
       maxParallel: 10
     templateContext:
       outputs:
@@ -53,12 +67,18 @@ jobs:
         # The Summary job keeps only the highest attempt per shard so retries supersede cleanly.
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) raw results, JUnit and completeness'
-          artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
+          ${{ if eq(parameters.artifactNamespace, '') }}:
+            artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
+          ${{ else }}:
+            artifactName: 'eval-result-${{ parameters.artifactNamespace }}-$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/eval-result
           condition: always()
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) transcripts (on failure)'
-          artifactName: 'eval-debug-$(shardName)-$(System.JobAttempt)'
+          ${{ if eq(parameters.artifactNamespace, '') }}:
+            artifactName: 'eval-debug-$(shardName)-$(System.JobAttempt)'
+          ${{ else }}:
+            artifactName: 'eval-debug-${{ parameters.artifactNamespace }}-$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/debug
           condition: failed()
     steps:
@@ -113,12 +133,16 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/login-to-copilot.yml
 
-      # Runs the eval via the invoke template (auth-conditional in the common default).
       - template: ${{ parameters.evalInvokeTemplate }}
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
           threshold: ${{ parameters.threshold }}
+          # Existing custom templates keep their contract unless opting into the argument list.
+          ${{ if eq(parameters.evalInvokeTemplate, '/eng/common/pipelines/templates/steps/eval-invoke.yml') }}:
+            azureSubscription: ${{ parameters.azureSubscription }}
+          ${{ if ne(length(parameters.vallyArguments), 0) }}:
+            vallyArguments: ${{ parameters.vallyArguments }}
 
       # Optional repo-specific teardown after the eval.
       - ${{ if parameters.postEvalTemplate }}:

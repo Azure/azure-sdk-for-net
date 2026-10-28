@@ -2,6 +2,15 @@
 # gates on it when failOnFailedTests is true.
 
 parameters:
+  - name: matrixStageName
+    type: string
+    default: Prepare
+  - name: evalStageName
+    type: string
+    default: Eval
+  - name: artifactNamespace
+    type: string
+    default: ''
   - name: failOnFailedTests
     type: boolean
     default: false
@@ -22,15 +31,25 @@ jobs:
     workspace:
       clean: all
     variables:
-      EvalExpectedMatrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      EvalExpectedMatrix: $[ stageDependencies.${{ parameters.matrixStageName }}.generate_eval_matrix.outputs['detect.matrix'] ]
     templateContext:
       outputs:
         - output: pipelineArtifact
           displayName: 'Retain selected build summary and saved bundle'
-          artifactName: 'eval-summary-$(System.JobAttempt)'
+          ${{ if eq(parameters.artifactNamespace, '') }}:
+            artifactName: 'eval-summary-$(System.JobAttempt)'
+          ${{ else }}:
+            artifactName: 'eval-summary-${{ parameters.artifactNamespace }}-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/eval-summary
           condition: always()
     steps:
+      # Dashboard archives identify a single build-wide summary, not separate tracks.
+      - ${{ if and(ne(parameters.artifactNamespace, ''), or(parameters.createDashboardBundle, parameters.publishDashboardResults)) }}:
+        - script: |
+            echo "##vso[task.logissue type=error]Namespaced eval tracks support artifact-only summaries, not dashboard bundles or publication."
+            exit 1
+          displayName: 'Reject ambiguous multi-track dashboard identity'
+
       - checkout: self
         clean: true
         fetchDepth: 1
@@ -60,6 +79,7 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
+          EVAL_STAGE_NAME: ${{ parameters.evalStageName }}
 
       - script: |
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts" \
@@ -71,6 +91,7 @@ jobs:
         condition: always()
         env:
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
+          EVAL_ARTIFACT_NAMESPACE: ${{ parameters.artifactNamespace }}
 
       - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults) }}:
         - template: ../steps/eval-publish-results.yml

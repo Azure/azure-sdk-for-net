@@ -31,13 +31,14 @@ export function expectedShardsFromMatrix(value) {
 }
 
 // The artifact list cannot reveal a newer retry that lost its agent before publishing.
-export function latestShardAttempts(timeline, matrix) {
+export function latestShardAttempts(timeline, matrix, evalStageName = "Eval") {
     expectedShardsFromMatrix(matrix);
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(evalStageName)) throw new Error("Invalid eval stage identity.");
     if (!Array.isArray(timeline?.records)) throw new Error("The current build timeline is required.");
     const attempts = {};
     for (const [key, entry] of Object.entries(matrix)) {
         if (!validShard(key)) throw new Error("Invalid matrix leg identity.");
-        const jobs = timeline.records.filter(record => record?.type === "Job" && record.identifier === `Eval.RunShard.${key}`);
+        const jobs = timeline.records.filter(record => record?.type === "Job" && record.identifier === `${evalStageName}.RunShard.${key}`);
         for (const record of jobs) {
             if (!Number.isSafeInteger(record.attempt) || record.attempt < 1) throw new Error("Invalid timeline attempt.");
             const current = { attempt: record.attempt, complete: record.state === "completed" &&
@@ -66,7 +67,7 @@ export async function readShardAttempts(env, { fetchImpl = fetch, wait = delay }
             response = await fetchImpl(url, { headers: { authorization: `Bearer ${env.SYSTEM_ACCESSTOKEN}` },
                 redirect: "error", signal: AbortSignal.timeout(30_000) });
             if (!response.ok) throw new Error("Timeline could not be read.");
-            return latestShardAttempts(await response.json(), matrix);
+            return latestShardAttempts(await response.json(), matrix, env.EVAL_STAGE_NAME ?? "Eval");
         } catch (error) {
             if ((response && ![408, 429, 500, 502, 503, 504].includes(response.status)) || attempt === 2) throw error;
         } finally { await response?.body?.cancel().catch(() => {}); }
@@ -177,18 +178,23 @@ export function stageShardResults({ resultsRoot, outputDirectory, shardName, att
     return metadata;
 }
 
-export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts }) {
+export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts, artifactNamespace = "" }) {
     if (!Array.isArray(expectedShards) || expectedShards.some((name) => !validShard(name)) ||
         new Set(expectedShards).size !== expectedShards.length) {
         throw new Error("Expected shards must be unique, valid shard names from Prepare.");
     }
+    if (typeof artifactNamespace !== "string" || (artifactNamespace !== "" && !validShard(artifactNamespace))) {
+        throw new Error("Invalid artifact namespace.");
+    }
+    const artifactPrefix = `eval-result-${artifactNamespace ? `${artifactNamespace}-` : ""}`;
     emptyDirectory(selectedRoot);
     const expected = new Set(expectedShards);
     const timeline = jobAttempts?.schemaVersion === 1 && jobAttempts.valid === true ? jobAttempts.attempts : null;
     const selected = new Map();
     const seen = new Set();
     for (const entry of fs.readdirSync(resultsRoot, { withFileTypes: true })) {
-        const match = /^eval-result-(.+)-(\d+)$/.exec(entry.name);
+        if (!entry.name.startsWith(artifactPrefix)) continue;
+        const match = /^(.+)-(\d+)$/.exec(entry.name.slice(artifactPrefix.length));
         if (!match || !expected.has(match[1])) continue;
         if (!entry.isDirectory()) throw new Error("Shard artifact paths must be directories, not files or symbolic links.");
         const attempt = Number(match[2]);
@@ -232,7 +238,7 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
         // The Tests tab and Markdown use the SAME selected attempts as the bundle.
         // Old-layout JUnit remains diagnostic; old artifacts are never upload-ready.
         const files = junit.length ? junit : globFiles(directory, "**/*.junit.xml");
-        const output = path.join(selectedRoot, selectedAttempt.directory, "junit");
+        const output = path.join(selectedRoot, `eval-result-${shard}-${selectedAttempt.attempt}`, "junit");
         fs.mkdirSync(output, { recursive: true });
         for (const [index, file] of files.entries()) {
             try {
