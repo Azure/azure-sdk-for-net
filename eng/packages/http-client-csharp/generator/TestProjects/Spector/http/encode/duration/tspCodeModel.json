@@ -1333,7 +1333,6 @@
                 "$id": "125",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1440,7 +1439,6 @@
                 "$id": "133",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1547,7 +1545,6 @@
                 "$id": "141",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1654,7 +1651,6 @@
                 "$id": "149",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1761,7 +1757,6 @@
                 "$id": "157",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1868,7 +1863,6 @@
                 "$id": "165",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1975,7 +1969,6 @@
                 "$id": "173",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2082,7 +2075,6 @@
                 "$id": "181",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2189,7 +2181,6 @@
                 "$id": "189",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2296,7 +2287,6 @@
                 "$id": "197",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2403,7 +2393,6 @@
                 "$id": "205",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2510,7 +2499,6 @@
                 "$id": "213",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2617,7 +2605,6 @@
                 "$id": "221",
                 "name": "int32SecondsArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2735,7 +2722,6 @@
                 "$id": "230",
                 "name": "int32MillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2903,7 +2889,6 @@
                 "$id": "243",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3093,7 +3078,6 @@
                 "$id": "251",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3283,7 +3267,6 @@
                 "$id": "259",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3473,7 +3456,6 @@
                 "$id": "267",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3663,7 +3645,6 @@
                 "$id": "275",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -3853,7 +3834,6 @@
                 "$id": "283",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4043,7 +4023,6 @@
                 "$id": "291",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4233,7 +4212,6 @@
                 "$id": "299",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4423,7 +4401,6 @@
                 "$id": "307",
                 "name": "floatSecondsArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4613,7 +4590,6 @@
                 "$id": "315",
                 "name": "floatMillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4803,7 +4779,6 @@
                 "$id": "323",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4993,7 +4968,6 @@
                 "$id": "331",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5183,7 +5157,6 @@
                 "$id": "339",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5373,7 +5346,6 @@
                 "$id": "347",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5613,7 +5585,6 @@
                 "$id": "359",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5720,7 +5691,6 @@
                 "$id": "367",
                 "name": "iso8601",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5827,7 +5797,6 @@
                 "$id": "375",
                 "name": "iso8601Array",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5946,7 +5915,6 @@
                 "$id": "384",
                 "name": "int32Seconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6053,7 +6021,6 @@
                 "$id": "392",
                 "name": "int32SecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6160,7 +6127,6 @@
                 "$id": "400",
                 "name": "floatSeconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6267,7 +6233,6 @@
                 "$id": "408",
                 "name": "floatSecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6374,7 +6339,6 @@
                 "$id": "416",
                 "name": "float64Seconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6481,7 +6445,6 @@
                 "$id": "424",
                 "name": "int32Milliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6588,7 +6551,6 @@
                 "$id": "432",
                 "name": "int32MillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6695,7 +6657,6 @@
                 "$id": "440",
                 "name": "floatMilliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6802,7 +6763,6 @@
                 "$id": "448",
                 "name": "floatMillisecondsLargerUnit",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6909,7 +6869,6 @@
                 "$id": "456",
                 "name": "float64Milliseconds",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7016,7 +6975,6 @@
                 "$id": "464",
                 "name": "int32MillisecondsArray",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7186,7 +7144,6 @@
                 "$id": "477",
                 "name": "intSeconds",
                 "isExactName": false,
-                "resourceName": "Lossy",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7293,7 +7250,6 @@
                 "$id": "485",
                 "name": "intMilliseconds",
                 "isExactName": false,
-                "resourceName": "Lossy",
                 "accessibility": "public",
                 "parameters": [
                   {

@@ -27,7 +27,9 @@ public class ResponseToolDeserializationTests
         yield return Case(ResponseToolKind.AzureFunction, typeof(AzureFunctionTool));
         yield return Case(ResponseToolKind.BingCustomSearchPreview, typeof(BingCustomSearchPreviewTool));
         yield return Case(ResponseToolKind.BingGrounding, typeof(BingGroundingTool));
+#pragma warning disable CS0618 // Preserve deserialization coverage for the legacy browser automation tool.
         yield return Case(ResponseToolKind.BrowserAutomationPreview, typeof(BrowserAutomationPreviewTool));
+#pragma warning restore CS0618
         yield return Case(ResponseToolKind.CaptureStructuredOutputs, typeof(CaptureStructuredOutputsTool));
         yield return Case(ResponseToolKind.FabricIQPreview, typeof(FabricIQPreviewTool));
         yield return Case(ResponseToolKind.MemorySearchPreview, typeof(MemorySearchPreviewTool));
@@ -35,6 +37,8 @@ public class ResponseToolDeserializationTests
         yield return Case(ResponseToolKind.OpenAPI, typeof(OpenApiTool));
         yield return Case(ResponseToolKind.SharePointGroundingPreview, typeof(SharePointPreviewTool));
         yield return Case(ResponseToolKind.WorkIQPreview, typeof(WorkIQPreviewTool));
+        yield return Case(ResponseToolKind.GitHubCopilotToolsetPreviewValue, typeof(GitHubCopilotToolsetPreview));
+        yield return Case(ResponseToolKind.MicrosoftCopilotToolsetPreview, typeof(MicrosoftCopilotToolsetPreview));
 
         static TestCaseData Case(ResponseToolKind discriminator, Type expectedType)
             => new TestCaseData(discriminator, expectedType).SetName($"{{m}}({discriminator} => {expectedType.Name})");

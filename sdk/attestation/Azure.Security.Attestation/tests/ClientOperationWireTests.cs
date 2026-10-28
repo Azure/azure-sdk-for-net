@@ -164,9 +164,17 @@ namespace Azure.Security.Attestation.Tests
             var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}"), AttestationClientOptions.ServiceVersion.V2020_10_01));
             var request = new AttestationRequest { Evidence = BinaryData.FromBytes(s_evidence) };
 
+            Assert.IsFalse(client.CanAttestTdxVm);
             Assert.Throws<NotSupportedException>(() => client.AttestTdxVm(request));
             Assert.ThrowsAsync<NotSupportedException>(() => client.AttestTdxVmAsync(request));
             Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void CanAttestTdxVmOnServiceVersion20250601()
+        {
+            Assert.IsTrue(new AttestationClient(new Uri(Endpoint), new MockCredential()).CanAttestTdxVm);
+            Assert.IsTrue(new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(AttestationClientOptions.ServiceVersion.V2025_06_01)).CanAttestTdxVm);
         }
 
         [Test]
@@ -211,7 +219,7 @@ namespace Azure.Security.Attestation.Tests
         [Test]
         public async System.Threading.Tasks.Task DraftPolicyAttestationReturnsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm")] string type, [Values] bool async)
         {
-            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             AttestationResponse<AttestationResult> response = await Attest(client, type, request, async);
@@ -223,7 +231,7 @@ namespace Azure.Security.Attestation.Tests
         [Test]
         public void AttestationWithoutDraftPolicyRejectsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm", "TdxVm")] string type, [Values] bool async)
         {
-            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}") };
 
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, type, request, async));
@@ -233,11 +241,11 @@ namespace Azure.Security.Attestation.Tests
         public void DraftPolicyAttestationStillChecksExpiration([Values] bool async)
         {
             long expired = DateTimeOffset.UtcNow.AddHours(-1).ToUnixTimeSeconds();
-            AttestationClient client = ValidatingClient($"{{\"exp\":{expired}}}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"exp\":{expired}}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             Exception ex = Assert.CatchAsync(() => Attest(client, "SevSnpVm", request, async));
-            Assert.AreEqual("Attestation token expired.", ex.Message);
+            StringAssert.StartsWith("Attestation token expired", ex.Message);
         }
 
         // 61 s is outside a 10 s slack even though its seconds component (1) is inside it.
@@ -262,6 +270,16 @@ namespace Azure.Security.Attestation.Tests
         }
 
         [Test]
+        public void DraftPolicyAttestationStillChecksIssuer([Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"iss\":\"https://fabrikam.attest.azure.net\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Exception ex = Assert.CatchAsync(() => Attest(client, "SgxEnclave", request, async));
+            StringAssert.StartsWith("Unknown Issuer for attestation token.", ex.Message);
+        }
+
+        [Test]
         public void DraftPolicyAttestationStillRaisesTokenValidated([Values] bool async)
         {
             var tokenOptions = new AttestationTokenValidationOptions();
@@ -270,7 +288,7 @@ namespace Azure.Security.Attestation.Tests
                 args.IsValid = false;
                 return System.Threading.Tasks.Task.CompletedTask;
             };
-            AttestationClient client = ValidatingClient("{}", tokenOptions);
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\"}}", tokenOptions);
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
@@ -280,7 +298,7 @@ namespace Azure.Security.Attestation.Tests
         public async System.Threading.Tasks.Task AsyncOperationsFetchSigningCertificatesAsynchronously()
         {
             var transport = new AsyncOnlyTransport(request => new MockResponse(200).SetContent(
-                request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse("{\"nonce\":\"d1\"}")));
+                request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}")));
             var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions { Transport = transport });
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
@@ -346,7 +364,7 @@ namespace Azure.Security.Attestation.Tests
             TcbBaseline baseline = result.TcbBaselines.Single();
             Assert.AreEqual("16", baseline.TcbIdentifier);
             Assert.AreEqual(16, baseline.TcbEvaluationDataNumber);
-            Assert.AreEqual(new DateTimeOffset(2023, 8, 9, 0, 0, 0, TimeSpan.Zero), baseline.TcbReleaseOn);
+            Assert.AreEqual(new DateTimeOffset(2023, 8, 9, 0, 0, 0, TimeSpan.Zero), baseline.TcbReleasedOn);
             Assert.AreEqual("2.17", baseline.MinimumPswLinuxVersion);
             Assert.AreEqual("2.16", baseline.MinimumPswWindowsVersion);
             Assert.IsTrue(baseline.IsSelectedTcb);
@@ -358,9 +376,36 @@ namespace Azure.Security.Attestation.Tests
             var captured = new List<CapturedRequest>();
             var client = new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), Options(captured, "{}", AttestationClientOptions.ServiceVersion.V2020_10_01));
 
+            Assert.IsFalse(client.CanGetTcbBaselines);
             Assert.Throws<NotSupportedException>(() => client.GetTcbBaselines(AttestationType.SgxEnclave));
             Assert.ThrowsAsync<NotSupportedException>(() => client.GetTcbBaselinesAsync(AttestationType.SgxEnclave));
             Assert.IsEmpty(captured);
+        }
+
+        [Test]
+        public void CanGetTcbBaselinesOnServiceVersion20250601()
+        {
+            Assert.IsTrue(new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential()).CanGetTcbBaselines);
+            Assert.IsTrue(new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(AttestationClientOptions.ServiceVersion.V2025_06_01)).CanGetTcbBaselines);
+        }
+
+        // Client properties are virtual so that the clients can be mocked.
+        [Test]
+        public void ClientPropertiesCanBeMocked()
+        {
+            var endpoint = new Uri(Endpoint);
+
+            var client = new Moq.Mock<AttestationClient>();
+            client.SetupGet(c => c.Endpoint).Returns(endpoint);
+            client.SetupGet(c => c.CanAttestTdxVm).Returns(true);
+            Assert.AreEqual(endpoint, client.Object.Endpoint);
+            Assert.IsTrue(client.Object.CanAttestTdxVm);
+
+            var administrationClient = new Moq.Mock<AttestationAdministrationClient>();
+            administrationClient.SetupGet(c => c.Endpoint).Returns(endpoint);
+            administrationClient.SetupGet(c => c.CanGetTcbBaselines).Returns(true);
+            Assert.AreEqual(endpoint, administrationClient.Object.Endpoint);
+            Assert.IsTrue(administrationClient.Object.CanGetTcbBaselines);
         }
 
         [Test]

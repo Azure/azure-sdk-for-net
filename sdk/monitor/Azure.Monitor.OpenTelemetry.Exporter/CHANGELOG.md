@@ -13,6 +13,7 @@
 
 - Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
   ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
+- Fixed `LogFilteringProcessor` behavior in .net 11 when `RandomTraceId` is set. ([64084](https://github.com/Azure/azure-sdk-for-net/pull/64084))
 
 ### Other Changes
 

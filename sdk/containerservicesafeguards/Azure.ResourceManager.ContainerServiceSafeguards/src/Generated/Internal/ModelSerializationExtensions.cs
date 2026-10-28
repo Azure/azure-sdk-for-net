@@ -247,6 +247,18 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 case int i:
                     writer.WriteNumberValue(i);
                     break;
+                case short shortValue:
+                    writer.WriteNumberValue(shortValue);
+                    break;
+                case ushort ushortValue:
+                    writer.WriteNumberValue(ushortValue);
+                    break;
+                case uint uintValue:
+                    writer.WriteNumberValue(uintValue);
+                    break;
+                case ulong ulongValue:
+                    writer.WriteNumberValue(ulongValue);
+                    break;
                 case decimal d:
                     writer.WriteNumberValue(d);
                     break;

@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests;
-
+#pragma warning disable AAIP001
 public class VoiceAgentUnitTests
 {
     [Test]

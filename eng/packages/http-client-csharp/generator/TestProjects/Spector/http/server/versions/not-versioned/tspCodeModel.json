@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "withoutApiVersion",
             "isExactName": false,
-            "resourceName": "NotVersioned",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -65,7 +64,6 @@
             "$id": "5",
             "name": "withQueryApiVersion",
             "isExactName": false,
-            "resourceName": "NotVersioned",
             "accessibility": "public",
             "parameters": [
               {
@@ -156,7 +154,6 @@
             "$id": "11",
             "name": "withPathApiVersion",
             "isExactName": false,
-            "resourceName": "NotVersioned",
             "accessibility": "public",
             "parameters": [
               {

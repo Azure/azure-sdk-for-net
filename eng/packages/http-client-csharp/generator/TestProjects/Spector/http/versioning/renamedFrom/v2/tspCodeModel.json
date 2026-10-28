@@ -327,7 +327,6 @@
             "$id": "27",
             "name": "newOp",
             "isExactName": false,
-            "resourceName": "RenamedFrom",
             "accessibility": "public",
             "parameters": [
               {
@@ -636,7 +635,6 @@
                 "$id": "44",
                 "name": "newOpInNewInterface",
                 "isExactName": false,
-                "resourceName": "NewInterface",
                 "accessibility": "public",
                 "parameters": [
                   {

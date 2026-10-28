@@ -1,7 +1,7 @@
 # Invokes `vally eval` for one shard. UseAzSdkAuthentication=false (default) runs the hermetic
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
-# copilot-sdk authenticates the model session via GITHUB_TOKEN (from the linked eval variable group).
+# The shard's login-to-copilot template supplies the executor and prompt-judge token.
 
 parameters:
   - name: vallyRoot
@@ -32,9 +32,8 @@ steps:
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --threshold ${{ parameters.threshold }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
 
   - ${{ else }}:
     - script: |
@@ -45,6 +44,5 @@ steps:
           --threshold ${{ parameters.threshold }}
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
-      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-        env:
-          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      env:
+        COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)

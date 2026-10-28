@@ -2982,7 +2982,6 @@
                 "$id": "197",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ManagedIdentityTrackedResource",
                 "doc": "Get a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3383,7 +3382,6 @@
                 "$id": "217",
                 "name": "createWithSystemAssigned",
                 "isExactName": false,
-                "resourceName": "ManagedIdentityTrackedResource",
                 "doc": "Create a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3868,7 +3866,6 @@
                 "$id": "239",
                 "name": "updateWithUserAssignedAndSystemAssigned",
                 "isExactName": false,
-                "resourceName": "ManagedIdentityTrackedResource",
                 "doc": "Update a ManagedIdentityTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -4395,7 +4392,6 @@
                 "$id": "265",
                 "name": "getForPredefinedError",
                 "isExactName": false,
-                "resourceName": "ConfidentialResource",
                 "doc": "Get a ConfidentialResource",
                 "accessibility": "public",
                 "parameters": [
@@ -4834,7 +4830,6 @@
                 "$id": "288",
                 "name": "createForUserDefinedError",
                 "isExactName": false,
-                "resourceName": "ConfidentialResource",
                 "doc": "Create a ConfidentialResource",
                 "accessibility": "public",
                 "parameters": [
@@ -5379,7 +5374,6 @@
                 "$id": "314",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ArmResourceIdentifierResource",
                 "doc": "Get a ArmResourceIdentifierResource",
                 "accessibility": "public",
                 "parameters": [
@@ -5818,7 +5812,6 @@
                 "$id": "337",
                 "name": "createOrReplace",
                 "isExactName": false,
-                "resourceName": "ArmResourceIdentifierResource",
                 "doc": "Create a ArmResourceIdentifierResource",
                 "accessibility": "public",
                 "parameters": [

@@ -10,8 +10,83 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceCodecTests
 {
+    [Test]
+    public void DecodePreservesOrderedDataPartsAndLegacyTextProjection()
+    {
+        var frame = Frame("user.message", """
+            "item_id":"in_data","content":[{"type":"input_text","text":"hello"},{"type":"input_data","data":{"nested":[1,true,null]}}]
+            """);
+        var message = (VoiceUserMessageEvent)VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(frame))!;
+        Assert.That(message.Content, Has.Count.EqualTo(1));
+        Assert.That(message.Content[0].Text, Is.EqualTo("hello"));
+        Assert.That(message.ContentParts, Has.Count.EqualTo(2));
+        var data = (VoiceInputDataPart)message.ContentParts[1];
+        using var payload = JsonDocument.Parse(data.Data);
+        Assert.That(payload.RootElement.GetProperty("nested").GetArrayLength(), Is.EqualTo(3));
+    }
+
+    [TestCase("null")]
+    [TestCase("[]")]
+    [TestCase("1")]
+    public void DecodeRejectsNonObjectData(string data)
+    {
+        var frame = Frame("user.message", $$"""
+            "item_id":"in_data","content":[{"type":"input_data","data":{{data}}}]
+            """);
+        Assert.Throws<VoiceProtocolException>(() => VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(frame)));
+    }
+
+    [Test]
+    public void EncodeDataItemPreservesPayload()
+    {
+        var message = new VoiceResponseOutputDataDoneMessage("r_data", "it_data", BinaryData.FromString("""{"type":"hubagent.metadata","data":{}}"""));
+        using var payload = JsonDocument.Parse(VoiceProtocolCodec.Encode(message));
+        Assert.That(payload.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_data.done"));
+        Assert.That(payload.RootElement.GetProperty("data").GetProperty("type").GetString(), Is.EqualTo("hubagent.metadata"));
+    }
+
     private static readonly DateTimeOffset Timestamp =
         DateTimeOffset.Parse("2026-08-13T00:00:00.000Z", System.Globalization.CultureInfo.InvariantCulture);
+
+    [Test]
+    public void UserBargeInUsesRenamedEvent()
+    {
+        var message = VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(Frame(
+            "user.barge_in", "\"response_id\":\"r_1\",\"item_id\":\"it_1\",\"heard_text\":\"heard\"")));
+
+        Assert.That(message, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(message, Is.TypeOf<VoiceUserBargeInEvent>());
+            var interruption = (VoiceUserBargeInEvent)message!;
+            Assert.That(interruption.MessageType, Is.EqualTo("user.barge_in"));
+            Assert.That(interruption.ResponseId, Is.EqualTo("r_1"));
+            Assert.That(interruption.ItemId, Is.EqualTo("it_1"));
+            Assert.That(interruption.HeardText, Is.EqualTo("heard"));
+        });
+    }
+
+    [Test]
+    public void LegacyBargeInIsNotSupported()
+    {
+        Assert.That(
+            VoiceProtocolCodec.Decode(Encoding.UTF8.GetBytes(Frame(
+                "barge_in", "\"response_id\":\"r_1\",\"heard_text\":\"heard\""))),
+            Is.Null);
+    }
+
+    [Test]
+    public void OldBargeInPublicNamesAreNotRetained()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(typeof(VoiceHandler).Assembly.GetType(
+                "Azure.AI.AgentServer.Invocations.Voice.VoiceBargeInEvent"), Is.Null);
+            Assert.That(typeof(VoiceHandler).GetMethod(
+                "OnBargeInAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic),
+                Is.Null);
+        });
+    }
 
     private static IEnumerable<TestCaseData> InboundMessages()
     {
@@ -23,7 +98,7 @@ public class VoiceCodecTests
             """, typeof(VoiceUserMessageEvent));
         yield return Inbound("user.no_input", """{"item_id":"in_2","count":1}""", typeof(VoiceUserNoInputEvent));
         yield return Inbound("user.speech_started", "{}", typeof(VoiceUserSpeechStartedEvent));
-        yield return Inbound("barge_in", """{"response_id":"r_1","item_id":"it_1","heard_text":"heard"}""", typeof(VoiceBargeInEvent));
+        yield return Inbound("user.barge_in", """{"response_id":"r_1","item_id":"it_1","heard_text":"heard"}""", typeof(VoiceUserBargeInEvent));
         yield return Inbound("response.accepted", """{"response_id":"r_2"}""", typeof(VoiceResponseAcceptedEvent));
         yield return Inbound("response.dropped", """{"response_id":"r_3","reason":"queue_full"}""", typeof(VoiceResponseDroppedEvent));
         yield return Inbound("response.cancelled", """{"response_id":"r_4","heard_text":"heard"}""", typeof(VoiceResponseCancelledEvent));
