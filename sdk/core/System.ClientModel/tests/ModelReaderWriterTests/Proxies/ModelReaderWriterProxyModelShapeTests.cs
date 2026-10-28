@@ -12,31 +12,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 {
     public class ModelReaderWriterProxyModelShapeTests
     {
-        [Test]
-        public void Read_StructModel_ConditionalProxy_Handles()
-        {
-            // Regression: a conditional proxy over a value-type (struct) model used to throw
-            // InvalidCastException because variance does not apply to value types. After removing
-            // IConditionalProxy / the where T : class constraint, it must route through the proxy.
-            var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<StructModel>(new StructConditionalProxy(handle: true));
-
-            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":1}"), options);
-
-            Assert.IsTrue(result.HasValue);
-            Assert.AreEqual(999, result!.Value.Number); // proxy sentinel proves it handled the read
-        }
-
-        [Test]
-        public void Read_StructModel_ConditionalProxy_Declines_FallsToModel()
+        // The 999 case is a regression: a conditional proxy over a value-type (struct) model used to throw
+        // InvalidCastException because variance does not apply to value types. After removing
+        // IConditionalProxy / the where T : class constraint, it must route through the proxy.
+        // A handling proxy produces the 999 sentinel; a declining proxy falls through to the struct model itself.
+        [TestCase(true, 1, 999, TestName = "Read_StructModel_ConditionalProxy_Handles")]
+        [TestCase(false, 42, 42, TestName = "Read_StructModel_ConditionalProxy_Declines_FallsToModel")]
+        public void Read_StructModel_ConditionalProxy(bool handle, int input, int expected)
         {
             var options = new ModelReaderWriterOptions("J");
-            options.AddProxy<StructModel>(new StructConditionalProxy(handle: false));
+            options.AddProxy<StructModel>(new StructConditionalProxy(handle));
 
-            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":42}"), options);
+            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString($"{{\"number\":{input}}}"), options);
 
             Assert.IsTrue(result.HasValue);
-            Assert.AreEqual(42, result!.Value.Number); // declined; the struct model read itself
+            Assert.AreEqual(expected, result!.Value.Number);
         }
 
         [Test]

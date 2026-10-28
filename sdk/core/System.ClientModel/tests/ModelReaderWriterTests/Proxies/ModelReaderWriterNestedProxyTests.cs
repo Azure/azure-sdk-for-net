@@ -21,23 +21,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.AreEqual("{\"value\":\"outer\"}", result.ToString());
         }
 
-        [Test]
-        public void NestedWrite_SameModelType_ModelReaderWriterResolvesChildProxy()
-            => AssertNestedProxyWrite(NestedChildWrite.ModelReaderWriter, expectChildProxy: true);
-
-        [Test]
-        public void NestedWrite_SameModelType_ResolveProxyResolvesChildProxy()
-            => AssertNestedProxyWrite(NestedChildWrite.ResolveProxy, expectChildProxy: true);
-
-        [Test]
-        public void NestedWrite_SameModelType_DirectChildWriteBypassesChildProxy()
-            => AssertNestedProxyWrite(NestedChildWrite.Direct, expectChildProxy: false);
-
-        [Test]
-        public void NestedWrite_SameModelType_DefaultOptionsBypassChildProxy()
-            => AssertNestedProxyWrite(NestedChildWrite.DefaultOptions, expectChildProxy: false);
-
-        private static void AssertNestedProxyWrite(NestedChildWrite childWrite, bool expectChildProxy)
+        [TestCase(NestedChildWrite.ModelReaderWriter, true, TestName = "NestedWrite_SameModelType_ModelReaderWriterResolvesChildProxy")]
+        [TestCase(NestedChildWrite.ResolveProxy, true, TestName = "NestedWrite_SameModelType_ResolveProxyResolvesChildProxy")]
+        [TestCase(NestedChildWrite.Direct, false, TestName = "NestedWrite_SameModelType_DirectChildWriteBypassesChildProxy")]
+        [TestCase(NestedChildWrite.DefaultOptions, false, TestName = "NestedWrite_SameModelType_DefaultOptionsBypassChildProxy")]
+        public void NestedWrite_SameModelType(NestedChildWrite childWrite, bool expectChildProxy)
         {
             var options = new ModelReaderWriterOptions("J");
             var context = new NestedWriteContext();
@@ -93,7 +81,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.AreSame(proxy.BeforeNestedRead, proxy.AfterNestedRead);
         }
 
-        private enum NestedChildWrite
+        public enum NestedChildWrite
         {
             ModelReaderWriter,
             ResolveProxy,

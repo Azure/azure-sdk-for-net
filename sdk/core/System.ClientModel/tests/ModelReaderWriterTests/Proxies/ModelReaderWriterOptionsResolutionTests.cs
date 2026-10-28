@@ -9,8 +9,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 {
     public class ModelReaderWriterOptionsResolutionTests
     {
-        [Test]
-        public void ResolveProxy_ReturnsFirstRegistered()
+        [TestCase(false, TestName = "ResolveProxy_ReturnsFirstRegistered")]
+        [TestCase(true, TestName = "ResolveProxy_IJsonModel_ReturnsFirstRegistered")]
+        public void ResolveProxy_ReturnsFirstRegistered(bool json)
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new JsonModelProxy();
@@ -20,23 +21,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
             var model = new JsonModel();
-            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
-            Assert.AreSame(proxy1, resolved);
-            Assert.AreSame(model, options.ProxiedModel);
-        }
-
-        [Test]
-        public void ResolveProxy_IJsonModel_ReturnsFirstRegistered()
-        {
-            var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new JsonModelProxy();
-            var proxy2 = new JsonModelProxy();
-
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
-
-            var model = new JsonModel();
-            var resolved = options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model);
+            object resolved = json
+                ? options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model)
+                : options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
             Assert.AreSame(proxy1, resolved);
             Assert.AreSame(model, options.ProxiedModel);
         }
@@ -82,8 +69,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
 
         #region ResolveProxy write path with CanHandle declining
 
-        [Test]
-        public void ResolveProxy_Write_FirstDeclinesSecondHandles()
+        [TestCase(false, TestName = "ResolveProxy_Write_FirstDeclinesSecondHandles")]
+        [TestCase(true, TestName = "ResolveProxy_IJsonModel_FirstDeclinesSecondHandles")]
+        public void ResolveProxy_Write_FirstDeclinesSecondHandles(bool json)
         {
             var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new SelectiveWriteProxy(canWrite: false);
@@ -93,7 +81,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             options.AddProxy<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
-            var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
+            object resolved = json
+                ? options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)model)
+                : options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
 
             Assert.AreSame(proxy2.Model, resolved,
                 "ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2's model.");
@@ -116,23 +106,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
                 "ResolveProxy should return the model itself when all proxies decline.");
         }
 
-        [Test]
-        public void ResolveProxy_IJsonModel_FirstDeclinesSecondHandles()
-        {
-            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
-            var proxy1 = new SelectiveWriteProxy(canWrite: false);
-            var proxy2 = new SelectiveWriteProxy(canWrite: true);
-
-            options.AddProxy<SimpleModel>(proxy1);
-            options.AddProxy<SimpleModel>(proxy2);
-
-            var model = new SimpleModel();
-            var resolved = options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)model);
-
-            Assert.AreSame((IJsonModel<SimpleModel>)proxy2.Model, resolved,
-                "IJsonModel ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2's model.");
-        }
-
         #endregion
 
         #region WS3 Medium-severity regression tests
@@ -153,18 +126,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.Throws<ArgumentNullException>(() => options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)null!));
         }
 
-        [Test]
-        public void AddProxy_OnDefaultJsonOptions_ThrowsInvalidOperationException()
+        [TestCase(false, TestName = "AddProxy_OnDefaultJsonOptions_ThrowsInvalidOperationException")]
+        [TestCase(true, TestName = "AddProxy_OnDefaultXmlOptions_ThrowsInvalidOperationException")]
+        public void AddProxy_OnDefaultOptions_ThrowsInvalidOperationException(bool xml)
         {
             var proxy = new ChainProxy(handleRead: true);
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriterOptions.Json.AddProxy<SimpleModel>(proxy));
-        }
-
-        [Test]
-        public void AddProxy_OnDefaultXmlOptions_ThrowsInvalidOperationException()
-        {
-            var proxy = new ChainProxy(handleRead: true);
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriterOptions.Xml.AddProxy<SimpleModel>(proxy));
+            ModelReaderWriterOptions defaultOptions = xml ? ModelReaderWriterOptions.Xml : ModelReaderWriterOptions.Json;
+            Assert.Throws<InvalidOperationException>(() => defaultOptions.AddProxy<SimpleModel>(proxy));
         }
 
         [Test]

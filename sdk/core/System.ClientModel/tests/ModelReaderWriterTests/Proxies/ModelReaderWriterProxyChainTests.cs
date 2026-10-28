@@ -27,19 +27,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.IsTrue(proxy.CreateWasCalled);
         }
 
-        [Test]
-        public void ReadWithChain_ProxyDeclinesWithCanHandle_FallsToModel()
+        [TestCase(1, TestName = "ReadWithChain_ProxyDeclinesWithCanHandle_FallsToModel")]
+        [TestCase(2, TestName = "ReadWithChain_AllProxiesDecline_ModelHandlesIt")]
+        public void ReadWithChain_DecliningProxies_FallToModel(int proxyCount)
         {
             var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
-            var proxy = new ChainProxy(handleRead: false); // CanHandle returns false = decline
-            options.AddProxy<SimpleModel>(proxy);
+            var proxies = new ChainProxy[proxyCount];
+            for (int i = 0; i < proxyCount; i++)
+            {
+                proxies[i] = new ChainProxy(handleRead: false); // CanHandle returns false = decline
+                options.AddProxy<SimpleModel>(proxies[i]);
+            }
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
             var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
+
             Assert.IsNotNull(result);
-            Assert.IsFalse(proxy.CreateWasCalled);
-            // Model handled it since proxy declined
+            Assert.That(proxies, Has.None.Matches<ChainProxy>(p => p.CreateWasCalled));
+            // ProxiedModel cleared since model handled it
             Assert.IsNull(options.ProxiedModel);
         }
 
@@ -62,27 +68,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             Assert.IsFalse(proxy1.CreateWasCalled);
             // proxy2 was tried next, handled it
             Assert.IsTrue(proxy2.CreateWasCalled);
-        }
-
-        [Test]
-        public void ReadWithChain_AllProxiesDecline_ModelHandlesIt()
-        {
-            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
-
-            options.AddProxy<SimpleModel>(proxy1);
-            options.AddProxy<SimpleModel>(proxy2);
-
-            var model = new SimpleModel();
-            var data = BinaryData.FromString("{}");
-            var result = options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
-
-            Assert.IsNotNull(result);
-            Assert.IsFalse(proxy1.CreateWasCalled);
-            Assert.IsFalse(proxy2.CreateWasCalled);
-            // ProxiedModel cleared since model handled it
-            Assert.IsNull(options.ProxiedModel);
         }
 
         [Test]
