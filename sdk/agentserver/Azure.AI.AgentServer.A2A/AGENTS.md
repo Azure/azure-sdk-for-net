@@ -29,9 +29,8 @@ changes against the restored assembly or its matching upstream source.
   over existing implementation behavior.
 
 Canonical routes are `POST /a2a` and
-`GET /a2a/.well-known/agent-card.json`. Compatibility routes under
-`/invocations/a2a` must execute the same native transport without rewriting the
-card. Do not silently enable another binding or advertise unsupported features.
+`GET /a2a/.well-known/agent-card.json`. Do not add alternate protocol routes,
+silently enable another binding, or advertise unsupported features.
 Preserve native JSON-RPC results and errors, including errors returned with HTTP
 200. Do not buffer a complete SSE response.
 
@@ -82,7 +81,7 @@ semantic spans. Use structured `ILogger` diagnostics for failures.
 
 - Public argument contracts need unit tests. Endpoint, response-header, error,
   and streaming changes require tests through the real ASP.NET Core pipeline.
-- Test canonical and compatibility routes, explicit handler/store preservation,
+- Test the canonical route surface, explicit handler/store preservation,
   caller isolation, task serialization, streaming completion, and trace lifetime.
 - Every sample handler requires a compiled snippet and a corresponding HTTP
   test in `tests/SampleEndToEndTests.cs`. Edit snippet source, then regenerate

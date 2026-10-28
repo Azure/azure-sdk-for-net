@@ -13,8 +13,7 @@
 - Added `AddFoundryA2A()` and `MapFoundryA2A()` for integrating native A2A services
   with an existing ASP.NET Core application.
 - Added JSON-RPC and SSE handling at `/a2a` and public Agent Card discovery at
-  `/a2a/.well-known/agent-card.json`, with compatibility routes under
-  `/invocations/a2a`.
+  `/a2a/.well-known/agent-card.json`.
 - Added `FoundryTaskStore` for persisting native task snapshots through Core's
   state store. Explicitly registered task stores and existing request handlers
   retain their storage configuration.

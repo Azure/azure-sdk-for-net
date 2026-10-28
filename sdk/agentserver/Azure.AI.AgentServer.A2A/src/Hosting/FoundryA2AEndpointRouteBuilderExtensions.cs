@@ -21,8 +21,8 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
     /// <param name="app">The application.</param>
     /// <returns>The application for chaining.</returns>
     /// <remarks>
-    /// Maps the JSON-RPC endpoint and public Agent Card at <c>/a2a</c>, compatibility routes
-    /// under <c>/invocations/a2a</c>, and readiness at <c>/readiness</c>.
+    /// Maps the JSON-RPC endpoint at <c>/a2a</c>, the public Agent Card at
+    /// <c>/a2a/.well-known/agent-card.json</c>, and readiness at <c>/readiness</c>.
     /// The application owns its listening port, telemetry exporters, and shutdown settings.
     /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="app"/> is <see langword="null"/>.</exception>
@@ -66,11 +66,8 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
         routes.AddEndpointFilter((context, next) =>
             ValueTask.FromResult<object?>(new A2ATransportResult(() => next(context))));
 
-        foreach (var path in new[] { "/a2a", "/invocations/a2a" })
-        {
-            routes.MapPost(path, () => new A2ARpcResult(handler, card));
-            routes.MapWellKnownAgentCard(card, path);
-        }
+        routes.MapPost("/a2a", () => new A2ARpcResult(handler, card));
+        routes.MapWellKnownAgentCard(card, "/a2a");
 
         return endpoints;
     }

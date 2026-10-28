@@ -101,8 +101,7 @@ Use `MessageResponder` for message-only replies, or `TaskUpdater` for task
 lifecycle and artifact updates.
 
 `AgentCard` describes the agent's identity, skills, media types, and supported
-interfaces. The same card is served through the public card endpoint. The
-library does not rewrite it to advertise compatibility routes.
+interfaces. The same card is served through the public card endpoint.
 
 If you already have an `IA2ARequestHandler`, pass it with the card to
 `AddA2A(card, requestHandler)` or `AddFoundryA2A(card, requestHandler)`.
@@ -138,12 +137,9 @@ ensure shared dependencies are thread-safe.
 | --- | --- | --- |
 | POST | `/a2a` | Native v1.0 JSON-RPC, including SSE |
 | GET | `/a2a/.well-known/agent-card.json` | Native public Agent Card |
-| POST | `/invocations/a2a` | Compatibility alias |
-| GET | `/invocations/a2a/.well-known/agent-card.json` | Compatibility alias |
 | GET | `/readiness` | Core readiness probe |
 
-Aliases run the same transport and do not rewrite the card or add advertised
-interfaces. The library does not expose HTTP+JSON/REST, gRPC, push notifications,
+The library does not expose HTTP+JSON/REST, gRPC, push notifications,
 or extended agent cards. Cards advertising push notifications or extended cards
 are rejected at startup rather than silently rewritten.
 

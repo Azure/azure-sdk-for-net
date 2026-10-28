@@ -56,15 +56,14 @@ public class HostingTests
     internal const string MessageParams =
         """{"message":{"messageId":"message-1","role":"ROLE_USER","contextId":"conversation-1","parts":[{"text":"hello"}]}}""";
 
-    [TestCase("/a2a")]
-    [TestCase("/invocations/a2a")]
-    public async Task NativeMessageAndPlatformHeaders(string path)
+    [Test]
+    public async Task NativeMessageAndPlatformHeaders()
     {
         await using var app = await CreateAppAsync();
         using var client = app.GetTestClient();
         client.DefaultRequestHeaders.Add("x-agent-foundry-call-id", "call-1");
         client.DefaultRequestHeaders.Add("x-agent-user-id", "user-1");
-        using var response = await client.PostAsync(path, Rpc("SendMessage", MessageParams));
+        using var response = await client.PostAsync("/a2a", Rpc("SendMessage", MessageParams));
         var body = await response.Content.ReadAsStringAsync();
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), body);
         using var json = JsonDocument.Parse(body);
@@ -77,13 +76,29 @@ public class HostingTests
     }
 
     [Test]
+    public async Task OnlyCanonicalProtocolRoutesAreMapped()
+    {
+        await using var app = await CreateAppAsync();
+        var routes = ((IEndpointRouteBuilder)app).DataSources
+            .SelectMany(source => source.Endpoints)
+            .OfType<RouteEndpoint>()
+            .Select(endpoint => endpoint.RoutePattern.RawText)
+            .ToArray();
+
+        Assert.That(routes, Is.EquivalentTo(new[]
+        {
+            "/a2a",
+            "/a2a/.well-known/agent-card.json",
+            "/readiness",
+        }));
+    }
+
+    [Test]
     public async Task CardsAndReadiness()
     {
         await using var app = await CreateAppAsync();
         using var client = app.GetTestClient();
         var canonical = await client.GetStringAsync("/a2a/.well-known/agent-card.json");
-        var alias = await client.GetStringAsync("/invocations/a2a/.well-known/agent-card.json");
-        Assert.That(alias, Is.EqualTo(canonical));
         Assert.That(canonical, Does.Contain("native-echo"));
         using var ready = await client.GetAsync("/readiness");
         Assert.That(ready.StatusCode, Is.EqualTo(HttpStatusCode.OK));
