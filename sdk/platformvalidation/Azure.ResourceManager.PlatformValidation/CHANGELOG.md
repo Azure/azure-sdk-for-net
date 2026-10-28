@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Retain subscription context when refreshing catalog tests, versions, and categories or navigating to versions from provider-global catalog response IDs.
+
 ### Other Changes
 
 ## 1.0.0-beta.1 (2026-10-15)
