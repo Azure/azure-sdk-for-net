@@ -12,12 +12,22 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.AI.AgentServer.A2A;
 
-/// <summary>Maps the Foundry A2A container endpoints using the native A2A transport.</summary>
+/// <summary>
+/// Endpoint mapping extensions for the Foundry A2A container contract.
+/// </summary>
 public static class FoundryA2AEndpointRouteBuilderExtensions
 {
     /// <summary>Adds Core middleware, readiness, and the A2A endpoints to an existing application.</summary>
     /// <param name="app">The application.</param>
     /// <returns>The application for chaining.</returns>
+    /// <remarks>
+    /// Maps the JSON-RPC endpoint and public Agent Card at <c>/a2a</c>, compatibility routes
+    /// under <c>/invocations/a2a</c>, and readiness at <c>/readiness</c>.
+    /// The application owns its listening port, telemetry exporters, and shutdown settings.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="app"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException">The native card or request handler is not registered.</exception>
+    /// <exception cref="ArgumentException">The card advertises an unsupported capability.</exception>
     public static WebApplication MapFoundryA2A(this WebApplication app)
     {
         ArgumentNullException.ThrowIfNull(app);
@@ -30,6 +40,14 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
     /// <summary>Maps JSON-RPC and public card routes; the caller owns Core middleware and readiness.</summary>
     /// <param name="endpoints">The route builder.</param>
     /// <returns>The route builder for chaining.</returns>
+    /// <remarks>
+    /// Requires a native <see cref="AgentCard"/> and <see cref="IA2ARequestHandler"/> in dependency
+    /// injection. This overload maps only protocol routes. Install Core middleware and readiness
+    /// separately, or use <see cref="MapFoundryA2A(WebApplication)"/>.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="endpoints"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException">The native card or request handler is not registered.</exception>
+    /// <exception cref="ArgumentException">The card advertises an unsupported capability.</exception>
     public static IEndpointRouteBuilder MapFoundryA2A(this IEndpointRouteBuilder endpoints)
     {
         ArgumentNullException.ThrowIfNull(endpoints);

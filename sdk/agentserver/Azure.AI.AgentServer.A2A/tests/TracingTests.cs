@@ -78,7 +78,8 @@ public class TracingTests
     [Test]
     public async Task ObserverForwardsBytesUnchanged()
     {
-        var context = new DefaultHttpContext { RequestServices = new ServiceCollection().AddLogging().BuildServiceProvider() };
+        using var services = new ServiceCollection().AddLogging().BuildServiceProvider();
+        var context = new DefaultHttpContext { RequestServices = services };
         context.Response.ContentType = "text/event-stream";
         using var observer = new A2AResponseObserver(context, "SendStreamingMessage", null, null, false);
         using var output = new MemoryStream();

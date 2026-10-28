@@ -1,47 +1,54 @@
 # Azure AI Agent Server A2A library for .NET
 
-`Azure.AI.AgentServer.A2A` hosts native [A2A .NET](https://github.com/a2aproject/a2a-dotnet)
-v1.0 applications in Azure AI Foundry hosted-agent containers. The native library owns
-messages, tasks, agent cards, JSON-RPC validation, errors, and SSE serialization. This
-library adds Foundry's routes, shared hosting lifecycle, request context, task persistence,
-and semantic tracing through `Azure.AI.AgentServer.Core`.
+Azure.AI.AgentServer.A2A is a .NET library for hosting native [A2A][a2a] agents
+as Microsoft Foundry hosted agents. Implement a native `IAgentHandler`, supply
+an `AgentCard`, and the library handles the Foundry hosting integration:
+JSON-RPC and streaming endpoints, readiness, request context, task storage
+selection, and distributed tracing.
 
-This is an unreleased preview. Its native `A2A.AspNetCore` dependency is
-`1.0.0-preview3`; dependency and public API approval are required before release.
-The hosting library is optional: applications can implement the Foundry container
-contract directly instead.
+Your agent continues to use native A2A messages, tasks, artifacts, and handlers.
+The library builds on `Azure.AI.AgentServer.Core` without translating A2A
+requests into another protocol.
+
+[Source code][source] | [Package (NuGet)][nuget] | [Product documentation][product_doc]
 
 ## Getting started
 
-### Build the package
+### Install the package
 
-From the repository root, build the library using the repository's .NET SDK:
+Install the library for .NET with [NuGet](https://www.nuget.org/):
 
-```powershell
-dotnet build sdk\agentserver\Azure.AI.AgentServer.A2A\src\Azure.AI.AgentServer.A2A.csproj
-dotnet pack sdk\agentserver\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj -c Release
-dotnet pack sdk\agentserver\Azure.AI.AgentServer.A2A\src\Azure.AI.AgentServer.A2A.csproj -c Release
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.A2A --prerelease
 ```
-
-Until a preview is published, consume the project through a project reference or
-install the resulting NuGet package from your local package feed.
-Use Core and A2A packages from the same build to include the native Agent Card
-identity-preservation fix.
 
 ### Prerequisites
 
-- .NET 8 or .NET 10 for the consuming ASP.NET Core application.
-- The repository-pinned .NET SDK when building from source.
-- A native `AgentCard` and either an `IAgentHandler` or an existing `IA2ARequestHandler`.
-- Foundry project and managed-identity configuration when using hosted task persistence.
+- [.NET 8](https://dotnet.microsoft.com/download) or later.
+- An ASP.NET Core application.
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/) and a
+  Foundry project when deploying to Foundry. Local execution does not require
+  an Azure subscription.
 
-### Run an agent
+The native `A2A.AspNetCore` library and `Azure.AI.AgentServer.Core` are installed
+automatically as dependencies.
 
-Use the native A2A types in your application, together with the
-`Azure.AI.AgentServer.A2A` namespace. The entry point is named `A2AAgentServer`
-to avoid colliding with the native `A2A.A2AServer`.
+### Configure the server
 
-Define your native card:
+Use the `A2A` namespace for native protocol types and
+`Azure.AI.AgentServer.A2A` for the Foundry hosting extensions.
+The fastest way to start a server is:
+
+```C# Snippet:A2A_Run
+A2AAgentServer.Run<EchoAgent>(CreateCard());
+```
+
+This starts the Core host on port 8088 by default, with readiness, graceful
+shutdown, OpenTelemetry, and the A2A endpoints. Set `PORT` to change the
+listening port.
+
+Define the native Agent Card describing your agent. Its interface URL should
+match the address clients use to reach your local server:
 
 ```C# Snippet:A2A_AgentCard
 public static AgentCard CreateCard() => new()
@@ -81,33 +88,49 @@ public class EchoAgent : IAgentHandler
 }
 ```
 
-Run it with the shared Core host:
-
-```C# Snippet:A2A_Run
-A2AAgentServer.Run<EchoAgent>(CreateCard());
-```
+For more control over service registration, use the [Core host builder](#customizing-the-host),
+or add A2A to an [existing ASP.NET Core application](#use-an-existing-aspnet-core-application).
 
 ## Key concepts
 
-### Hosting tiers
+### Native A2A handlers and agent cards
 
-- `A2AAgentServer.Run<THandler>(card)` builds and runs a Core host, using
-  `${PORT:-8088}`, readiness, graceful shutdown, and Core telemetry.
-- `AgentHost.CreateBuilder().AddA2A<THandler>(card)` composes A2A with other
-  protocols and supports application DI and tracing customization.
-- `services.AddFoundryA2A<THandler>(card)` and `app.MapFoundryA2A()` add Foundry
-  hosting to an existing ASP.NET Core application.
-- `services.AddFoundryA2A(card, requestHandler)` preserves an existing native
-  request handler and its storage. The native handler remains responsible for
-  the lifetime of its own dependencies.
-- `services.AddFoundryA2A()` adds hosting to already-registered native services,
-  without changing the native card, handler, or task store.
+`IAgentHandler` is the native A2A execution contract. Implement `ExecuteAsync`
+to process a message and write responses to the supplied `AgentEventQueue`.
+Use `MessageResponder` for message-only replies, or `TaskUpdater` for task
+lifecycle and artifact updates.
 
-The `IEndpointRouteBuilder.MapFoundryA2A()` overload maps only protocol routes.
-When using it directly, register Core services, install `UseAgentServerCore()`,
-and map readiness yourself. The `WebApplication` overload does this automatically.
-Existing ASP.NET Core applications retain ownership of port configuration,
-telemetry exporters, and shutdown settings.
+`AgentCard` describes the agent's identity, skills, media types, and supported
+interfaces. The same card is served through the public card endpoint. The
+library does not rewrite it to advertise compatibility routes.
+
+If you already have an `IA2ARequestHandler`, pass it with the card to
+`AddA2A(card, requestHandler)` or `AddFoundryA2A(card, requestHandler)`.
+The existing handler and its storage are preserved. Manage the lifetime of
+externally constructed handlers and their dependencies in your application.
+
+### Customizing the host
+
+Choose the integration level that matches your application:
+
+| Entry point | Use when |
+| --- | --- |
+| `A2AAgentServer.Run<THandler>(card)` | You want the library to build and run the host. |
+| `AgentHost.CreateBuilder().AddA2A<THandler>(card)` | You need application services, custom tracing, or multiple protocols on one Core host. |
+| `services.AddFoundryA2A<THandler>(card)` and `app.MapFoundryA2A()` | You already own an ASP.NET Core application. |
+| `services.AddFoundryA2A()` | Native A2A services, including the card and request handler, are already registered. |
+
+`AddA2A<THandler>` and `AddFoundryA2A<THandler>` accept a configuration callback
+for the native `A2AServerOptions`.
+The `A2AAgentServer` name distinguishes the Foundry entry point from the native
+`A2A.A2AServer`.
+
+### Handler lifetime
+
+Native handlers registered through `AddA2A<THandler>` or
+`AddFoundryA2A<THandler>` are singletons and may handle concurrent requests.
+Keep per-request data in local variables or the native request context, and
+ensure shared dependencies are thread-safe.
 
 ### Endpoints
 
@@ -124,12 +147,17 @@ interfaces. The library does not expose HTTP+JSON/REST, gRPC, push notifications
 or extended agent cards. Cards advertising push notifications or extended cards
 are rejected at startup rather than silently rewritten.
 
-### Request identity and storage
+### Platform request context
 
 Core captures `x-agent-foundry-call-id` and `x-agent-user-id` in
 `FoundryAgentRequestContext.Current`. Use Core's `FoundryCallIdHandler` for
-outbound Foundry calls. Only the call ID is forwarded; the user ID is not echoed.
-The native A2A `contextId` is not reinterpreted as a Foundry session ID.
+outbound Foundry calls so the current request's call ID is forwarded.
+The user ID is available for application-owned state partitioning; it is not
+forwarded as an outbound identity header.
+
+Native A2A `contextId` and platform session IDs remain separate identifiers.
+
+### Task storage
 
 | Registration | Default task storage |
 | --- | --- |
@@ -138,26 +166,33 @@ The native A2A `contextId` is not reinterpreted as a Foundry session ID.
 | Explicit `ITaskStore` registration | Supplied store, unchanged |
 | Existing native request handler or services | Existing storage, unchanged |
 
-Register a custom `ITaskStore` before or after `AddFoundryA2A<THandler>()` to
+Register a custom native `ITaskStore` before or after `AddFoundryA2A<THandler>()` to
 override the default. `FoundryTaskStore` can also wrap an existing Core
 `FoundryStateStore`, or lazily resolve a named store using optional credentials,
-endpoint, and retention settings. The default hosted store name is
-`a2a/tasks/{agent-id-or-name}` and excludes deployment version so task snapshots
-survive upgrades.
+endpoint, and retention settings.
 
 Hosted persistence requires brokered request context or caller identity, and
-verifies server-side user isolation on every operation. Keys additionally scope
-tasks by platform user, native HTTP identity, and tenant. The call ID is not a
-stable storage key. Snapshots use native A2A JSON serialization; listing delegates
-filtering, history/artifact projection, and pagination to the native in-memory
-store after reading the caller's persisted records.
+an existing backing store must enable server-side user isolation.
+Task records are scoped by the platform user, native HTTP identity, and tenant.
+The per-request call ID does not change the storage partition.
 
 Explicit local persistence uses Core's file-backed state store. Local partitions
 are a development convenience, not an authentication boundary. Persisting a task
 does not restart an interrupted executor, restore subscriptions, or enable
-resilient background execution.
+resilient background execution. The default local in-memory store loses tasks
+when the process stops.
 
-### Distributed tracing and errors
+### Streaming and errors
+
+The native transport handles JSON-RPC request validation, response serialization,
+and SSE delivery. `SendStreamingMessage` uses the same JSON-RPC endpoint as
+`SendMessage` and streams native task, message, status, or artifact events.
+
+Protocol-level errors use native JSON-RPC error objects, including when returned
+with HTTP 200. Clients must inspect the JSON-RPC result rather than relying
+only on the HTTP status code. Transport failures may use HTTP 4xx or 5xx.
+
+### Distributed tracing
 
 `Azure.AI.AgentServer.A2A` emits a `SERVER` span named after the JSON-RPC method.
 In Foundry, `SendMessage` and `SendStreamingMessage` also emit an enclosing
@@ -167,15 +202,13 @@ subscription do not emit a hosted invocation span.
 
 Spans cover dispatch and complete response transmission, including SSE. They
 record method, version, message/task IDs, tenant, and request `contextId`, without
-recording prompts, application metadata, or artifacts. The first returned task ID
-is also observed for single-task operations. Response observation forwards bytes
-unchanged and is bounded to 1 MiB per JSON payload or SSE event.
+recording prompts, application metadata, or artifacts. Single-task operations
+also record the first observed returned task ID when none was supplied in the
+request.
 
 HTTP failures and unary JSON-RPC errors mark spans failed, including protocol
 errors returned with HTTP 200. HTTP-200 SSE application-error events do not mark
-the span failed; transmission exceptions do. HTTP transport failures receive
-Foundry's `x-platform-error-source` classification. Native JSON-RPC application
-errors retain their native envelope and HTTP status.
+the span failed; transmission exceptions do.
 
 Core-hosted applications register the A2A source automatically. Existing ASP.NET
 Core applications must configure their own OpenTelemetry exporters. Native A2A
@@ -184,7 +217,16 @@ produce additional implementation-level spans.
 
 ## Examples
 
+| Sample | Description |
+| --- | --- |
+| [Getting started](samples/Sample1_GettingStarted.md) | Native Agent Card, message handler, and JSON-RPC request. |
+| [Tasks and artifacts](samples/Sample2_TasksAndArtifacts.md) | Task lifecycle, artifact output, streaming, and retrieval. |
+| [Host configuration](samples/Sample3_HostConfiguration.md) | Core builder and existing ASP.NET Core integration. |
+
 ### Compose with the Core host
+
+Use the builder to register application services, configure tracing, or compose
+A2A with another Agent Server protocol:
 
 ```C# Snippet:A2A_Builder
 var builder = AgentHost.CreateBuilder();
@@ -194,6 +236,8 @@ builder.Build().Run();
 
 ### Use an existing ASP.NET Core application
 
+Register Foundry services and map the A2A endpoints on your own application:
+
 ```C# Snippet:A2A_Standalone
 var builder = WebApplication.CreateBuilder();
 builder.Services.AddFoundryA2A<EchoAgent>(CreateCard());
@@ -202,10 +246,20 @@ app.MapFoundryA2A();
 app.Run();
 ```
 
-### Emit persistent native tasks
+`WebApplication.MapFoundryA2A()` installs Core middleware and maps readiness as
+well as the protocol endpoints. Your application still owns port configuration,
+telemetry exporters, and shutdown settings.
+
+If you use the `IEndpointRouteBuilder.MapFoundryA2A()` overload instead, it maps
+only protocol routes. Register Core services, install `UseAgentServerCore()`,
+and map readiness yourself.
+
+### Emit native tasks and artifacts
 
 A message-only reply does not create a task snapshot. Use the native `TaskUpdater`
-when you want task lifecycle and artifact events:
+when you want task lifecycle and artifact events. Snapshots are saved through
+the configured `ITaskStore`; using this handler does not itself enable durable
+storage:
 
 ```C# Snippet:A2A_TaskAgent
 public class TaskAgent : IAgentHandler
@@ -225,26 +279,59 @@ public class TaskAgent : IAgentHandler
 }
 ```
 
-The compiled examples have matching offline HTTP tests in
-[SampleEndToEndTests.cs](tests/SampleEndToEndTests.cs).
-
 ## Troubleshooting
 
-- An isolation error means the hosted state store is not user-isolated or the
-  request lacks caller context. Do not disable isolation to work around it.
-- Missing task snapshots can result from a changed store name, caller scope,
-  task retention, or a handler that only sends messages.
-- Use the v1.0 method names, such as `SendMessage`, rather than v0.3 names.
-- Startup rejects cards advertising unsupported extended-card or push features.
-- Native preview APIs may change; update the native dependency and HTTP tests together.
+### Common errors
+
+- **Endpoint not found:** Register services with `AddFoundryA2A` and map them
+  with `MapFoundryA2A`, or use the Core builder's `AddA2A` integration.
+- **Task not found:** Check the task ID, caller scope, retention settings, and
+  configured store. A message-only response does not create a task, and the
+  default local store does not survive process restarts.
+- **Storage isolation error:** Supply the hosted caller context and use a
+  backing state store with user isolation enabled. Do not disable isolation
+  to work around the error.
+- **Method not found:** Use A2A v1.0 method names, such as `SendMessage` and
+  `SendStreamingMessage`, rather than v0.3 names.
+- **Unsupported card capability at startup:** Do not advertise push notifications
+  or extended agent cards; those surfaces are not exposed by this host.
+
+### Logging
+
+Enable ASP.NET Core logging to diagnose request routing and application failures.
+Core-hosted applications configure OpenTelemetry automatically; configure an
+exporter to collect the `Azure.AI.AgentServer.A2A` activity source in an existing
+ASP.NET Core host.
 
 ## Next steps
 
-See the [native A2A examples](https://github.com/a2aproject/a2a-dotnet/tree/main/samples)
-and the [Agent Server libraries](../README.md) for multi-protocol hosting.
+- [Samples](samples/) - Native A2A handlers, tasks, and hosting.
+- [Native A2A examples][a2a_samples] - Native handlers, tasks, and clients.
+- [Agent Server Core][core] - Shared hosting, request context, and telemetry.
+- [Agent Server libraries][agentserver] - Protocol selection and multi-protocol hosting.
 
 ## Contributing
 
-See the repository [contributing guide](../../../CONTRIBUTING.md). API design
-follows the [.NET API design guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming).
-Run the package tests and compile documentation snippets before submitting changes.
+This project welcomes contributions and suggestions. Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution.
+For details, visit <https://cla.microsoft.com>.
+
+When you submit a pull request, a CLA-bot will automatically determine whether
+you need to provide a CLA and decorate the PR appropriately (e.g., label,
+comment). Simply follow the instructions provided by the bot. You will only
+need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
+or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any
+additional questions or comments.
+
+<!-- LINKS -->
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.A2A/src
+[nuget]: https://www.nuget.org/packages/Azure.AI.AgentServer.A2A
+[product_doc]: https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents
+[a2a]: https://github.com/a2aproject/a2a-dotnet
+[a2a_samples]: https://github.com/a2aproject/a2a-dotnet/tree/main/samples
+[core]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core
+[agentserver]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver

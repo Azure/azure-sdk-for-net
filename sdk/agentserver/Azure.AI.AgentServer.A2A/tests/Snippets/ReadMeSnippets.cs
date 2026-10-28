@@ -80,6 +80,15 @@ public class ReadMeSnippets
         #endregion
     }
 
+    [Test]
+    [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
+    public void StartTaskServer()
+    {
+        #region Snippet:A2A_TaskServer
+        A2AAgentServer.Run<TaskAgent>(CreateCard());
+        #endregion
+    }
+
     #region Snippet:A2A_TaskAgent
     public class TaskAgent : IAgentHandler
     {

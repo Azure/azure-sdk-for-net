@@ -11,12 +11,19 @@ using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.A2A;
 
-/// <summary>Registers native A2A applications with the Foundry hosting infrastructure.</summary>
+/// <summary>
+/// Service registration extensions for hosting native A2A applications in Foundry.
+/// </summary>
 public static class FoundryA2AHostingExtensions
 {
     /// <summary>Adds Foundry hosting to an application with native A2A services already registered.</summary>
     /// <param name="services">The service collection containing the native card and request handler.</param>
     /// <returns>The service collection for chaining.</returns>
+    /// <remarks>
+    /// Register the native <see cref="AgentCard"/> and <see cref="IA2ARequestHandler"/> before
+    /// mapping endpoints. This overload does not replace existing native services or storage.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
     public static IServiceCollection AddFoundryA2A(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -30,6 +37,14 @@ public static class FoundryA2AHostingExtensions
     /// <param name="agentCard">The native public agent card.</param>
     /// <param name="configure">Optional native server configuration.</param>
     /// <returns>The service collection for chaining.</returns>
+    /// <remarks>
+    /// Registers the native handler as a singleton and constructs its request handler through
+    /// the native A2A service registration. An explicitly registered <see cref="ITaskStore"/>
+    /// is preserved. The default store is Foundry-backed when hosted and in-memory locally.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="services"/> or <paramref name="agentCard"/> is <see langword="null"/>.
+    /// </exception>
     public static IServiceCollection AddFoundryA2A<
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
@@ -56,6 +71,14 @@ public static class FoundryA2AHostingExtensions
     /// <param name="agentCard">The native public agent card.</param>
     /// <param name="requestHandler">The existing native request handler.</param>
     /// <returns>The service collection for chaining.</returns>
+    /// <remarks>
+    /// Registers the supplied handler instance without replacing its native configuration or
+    /// storage. The application owns the instance and any externally constructed dependencies.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="services"/>, <paramref name="agentCard"/>, or <paramref name="requestHandler"/>
+    /// is <see langword="null"/>.
+    /// </exception>
     public static IServiceCollection AddFoundryA2A(
         this IServiceCollection services,
         AgentCard agentCard,

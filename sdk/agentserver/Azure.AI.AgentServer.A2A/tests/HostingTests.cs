@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -11,6 +11,7 @@ using global::A2A.AspNetCore;
 using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -27,6 +28,11 @@ public class HostingTests
         Description = "Native echo agent",
         Version = "1.0",
         Capabilities = new() { Streaming = true },
+        SupportedInterfaces =
+        [
+            new() { Url = "http://localhost/a2a", ProtocolBinding = "JSONRPC", ProtocolVersion = "1.0" },
+        ],
+        Skills = [new() { Id = "echo", Name = "Echo", Description = "Echoes input", Tags = ["echo"] }],
         DefaultInputModes = ["text/plain"],
         DefaultOutputModes = ["text/plain"],
     };
@@ -88,12 +94,12 @@ public class HostingTests
     [Test]
     public async Task NativeSseAndSemanticSpan()
     {
-        var stopped = new List<System.Diagnostics.Activity>();
+        var stopped = new ConcurrentQueue<System.Diagnostics.Activity>();
         using var listener = new ActivityListener
         {
             ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.A2A",
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
-            ActivityStopped = activity => { lock (stopped) { stopped.Add(activity); } },
+            ActivityStopped = stopped.Enqueue,
         };
         ActivitySource.AddActivityListener(listener);
         await using var app = await CreateAppAsync();
@@ -103,25 +109,22 @@ public class HostingTests
         Assert.That(response.Content.Headers.ContentType!.MediaType, Is.EqualTo("text/event-stream"), body);
         Assert.That(body, Does.Contain("data:"));
         Assert.That(body, Does.Contain("hello"));
-        lock (stopped)
-        {
-            var span = stopped.Single(a => a.OperationName == "SendStreamingMessage");
-            Assert.That(span.Kind, Is.EqualTo(ActivityKind.Server));
-            Assert.That(span.GetTagItem("gen_ai.agent.name"), Is.EqualTo("native-echo"));
-            Assert.That(span.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("conversation-1"));
-        }
+        var span = stopped.Single(a => a.OperationName == "SendStreamingMessage");
+        Assert.That(span.Kind, Is.EqualTo(ActivityKind.Server));
+        Assert.That(span.GetTagItem("gen_ai.agent.name"), Is.EqualTo("native-echo"));
+        Assert.That(span.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("conversation-1"));
     }
 
     [TestCase("UnknownMethod")]
     [TestCase("GetTask")]
     public async Task JsonRpcErrorsStayHttp200AndMarkSpan(string method)
     {
-        var stopped = new List<System.Diagnostics.Activity>();
+        var stopped = new ConcurrentQueue<System.Diagnostics.Activity>();
         using var listener = new ActivityListener
         {
             ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.A2A",
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
-            ActivityStopped = activity => stopped.Add(activity),
+            ActivityStopped = stopped.Enqueue,
         };
         ActivitySource.AddActivityListener(listener);
         await using var app = await CreateAppAsync();
@@ -148,6 +151,62 @@ public class HostingTests
         var builder = AgentHost.CreateBuilder();
         builder.AddA2A<EchoHandler>(CreateCard());
         Assert.Throws<InvalidOperationException>(() => builder.AddA2A<EchoHandler>(CreateCard()));
+    }
+
+    [Test]
+    public void NullServiceCollectionIsRejected()
+    {
+        IServiceCollection services = null!;
+        Assert.Throws<ArgumentNullException>(() => services.AddFoundryA2A());
+        Assert.Throws<ArgumentNullException>(() => services.AddFoundryA2A<EchoHandler>(CreateCard()));
+        Assert.Throws<ArgumentNullException>(() => services.AddFoundryA2A(CreateCard(), null!));
+    }
+
+    [Test]
+    public void NullCardAndRequestHandlerAreRejected()
+    {
+        var services = new ServiceCollection();
+        Assert.Throws<ArgumentNullException>(() => services.AddFoundryA2A<EchoHandler>(null!));
+        Assert.Throws<ArgumentNullException>(() => services.AddFoundryA2A(CreateCard(), null!));
+
+        var builder = AgentHost.CreateBuilder();
+        Assert.Throws<ArgumentNullException>(() => builder.AddA2A<EchoHandler>(null!));
+        Assert.Throws<ArgumentNullException>(() => builder.AddA2A(CreateCard(), null!));
+        Assert.Throws<ArgumentNullException>(() => A2AAgentServer.Run<EchoHandler>(null!));
+        Assert.Throws<ArgumentNullException>(() => A2AAgentServer.Run(CreateCard(), null!));
+    }
+
+    [Test]
+    public void NullHostAndEndpointBuildersAreRejected()
+    {
+        AgentHostBuilder builder = null!;
+        WebApplication app = null!;
+        IEndpointRouteBuilder endpoints = null!;
+        Assert.Throws<ArgumentNullException>(() => builder.AddA2A<EchoHandler>(CreateCard()));
+        Assert.Throws<ArgumentNullException>(() => builder.AddA2A(CreateCard(), null!));
+        Assert.Throws<ArgumentNullException>(() => app.MapFoundryA2A());
+        Assert.Throws<ArgumentNullException>(() => endpoints.MapFoundryA2A());
+    }
+
+    [Test]
+    public async Task NativeOptionsCallbackIsAppliedOnce()
+    {
+        int configured = 0;
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddFoundryA2A<EchoHandler>(CreateCard(), options =>
+        {
+            configured++;
+            options.AutoAppendHistory = false;
+        });
+        await using var app = builder.Build();
+        app.MapFoundryA2A();
+        await app.StartAsync();
+        using var client = app.GetTestClient();
+        using var response = await client.PostAsync("/a2a", Rpc("SendMessage", MessageParams));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(configured, Is.EqualTo(1));
+        Assert.That(app.Services.GetRequiredService<A2AServerOptions>().AutoAppendHistory, Is.False);
     }
 
     [Test]

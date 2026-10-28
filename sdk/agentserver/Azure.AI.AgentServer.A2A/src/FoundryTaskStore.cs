@@ -14,7 +14,11 @@ using Azure.Identity;
 namespace Azure.AI.AgentServer.A2A;
 
 /// <summary>Persists native A2A task snapshots in a caller-isolated Foundry state store.</summary>
-/// <remarks>Task persistence does not restart executors or make in-flight work resilient.</remarks>
+/// <remarks>
+/// Stores complete native task snapshots and uses native filtering and projection for task lists.
+/// Hosted operations require caller context and a backing store with user isolation enabled.
+/// Task persistence does not restart executors or make in-flight work resilient.
+/// </remarks>
 public class FoundryTaskStore : ITaskStore, IDisposable
 {
     private readonly SemaphoreSlim _initialization = new(1, 1);
@@ -25,16 +29,28 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     private FoundryStateStore? _store;
     private bool _disposed;
 
-    /// <summary>Initializes an instance for mocking.</summary>
+    /// <summary>Initializes a new instance of the <see cref="FoundryTaskStore"/> class for mocking.</summary>
     protected FoundryTaskStore()
     {
     }
 
-    /// <summary>Creates a lazily initialized store using Core's storage client.</summary>
+    /// <summary>Initializes a named task store that resolves its backing state store on first use.</summary>
     /// <param name="name">A stable store name scoped to the owning agent.</param>
-    /// <param name="credential">An optional credential; defaults to managed identity when hosted.</param>
-    /// <param name="endpoint">An optional Foundry project or storage endpoint.</param>
-    /// <param name="itemTtlSeconds">Retention for items in a newly created store.</param>
+    /// <param name="credential">The storage credential. Defaults to system-assigned managed identity when hosted.</param>
+    /// <param name="endpoint">
+    /// An optional Foundry project or storage endpoint. Defaults to the platform project endpoint when hosted.
+    /// </param>
+    /// <param name="itemTtlSeconds">
+    /// Retention in seconds for items in a newly created store. Use <c>-1</c> for no expiration;
+    /// otherwise the value must be positive. The default is 30 days.
+    /// </param>
+    /// <remarks>
+    /// Non-hosted execution uses Core's local file-backed state store. The local backend does not
+    /// authenticate callers; request identity scopes are a development partitioning convenience.
+    /// </remarks>
+    /// <exception cref="ArgumentException"><paramref name="name"/> is empty or whitespace.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="itemTtlSeconds"/> is zero or less than <c>-1</c>.</exception>
     public FoundryTaskStore(
         string name,
         TokenCredential? credential = null,
@@ -53,15 +69,20 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         _itemTtlSeconds = itemTtlSeconds;
     }
 
-    /// <summary>Wraps an existing state store without taking ownership of it.</summary>
+    /// <summary>Initializes a task store using an existing backing state store.</summary>
     /// <param name="store">The backing state store. Hosted stores must enable user isolation.</param>
+    /// <remarks>Disposing this adapter does not dispose or delete the supplied state store.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="store"/> is <see langword="null"/>.</exception>
     public FoundryTaskStore(FoundryStateStore store)
     {
         ArgumentNullException.ThrowIfNull(store);
         _store = store;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Gets a task snapshot in the current caller's scope.</summary>
+    /// <param name="taskId">The native task identifier.</param>
+    /// <param name="cancellationToken">A token to cancel the storage operation.</param>
+    /// <returns>The native task snapshot, or <see langword="null"/> when the task does not exist in this scope.</returns>
     public virtual async Task<AgentTask?> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
     {
         var owner = Owner();
@@ -71,7 +92,13 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         return item is null ? null : Deserialize(item, owner);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Creates or replaces a complete task snapshot in the current caller's scope.</summary>
+    /// <param name="taskId">The native task identifier, which must match <paramref name="task"/>.</param>
+    /// <param name="task">The complete native task snapshot to store.</param>
+    /// <param name="cancellationToken">A token to cancel the storage operation.</param>
+    /// <returns>A task that completes when the snapshot has been stored.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="task"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException">The supplied identifier does not match the snapshot identifier.</exception>
     public virtual async Task SaveTaskAsync(string taskId, AgentTask task, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(task);
@@ -90,7 +117,10 @@ public class FoundryTaskStore : ITaskStore, IDisposable
             cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Deletes a task snapshot in the current caller's scope.</summary>
+    /// <param name="taskId">The native task identifier.</param>
+    /// <param name="cancellationToken">A token to cancel the storage operation.</param>
+    /// <returns>A task that completes when deletion has finished. Missing snapshots are ignored.</returns>
     public virtual async Task DeleteTaskAsync(string taskId, CancellationToken cancellationToken = default)
     {
         var key = Key(taskId, Owner());
@@ -105,7 +135,15 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         }
     }
 
-    /// <inheritdoc/>
+    /// <summary>Lists task snapshots in the current caller's scope using native A2A filters and pagination.</summary>
+    /// <param name="request">The native task-list filters, projection, and pagination options.</param>
+    /// <param name="cancellationToken">A token to cancel the storage operation.</param>
+    /// <returns>A native response containing the selected task snapshots and pagination information.</returns>
+    /// <remarks>
+    /// Reads the caller's persisted records before applying native filtering and pagination.
+    /// The requested page size does not limit the number of storage reads.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="request"/> is <see langword="null"/>.</exception>
     public virtual async Task<ListTasksResponse> ListTasksAsync(
         ListTasksRequest request, CancellationToken cancellationToken = default)
     {

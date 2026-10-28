@@ -7,7 +7,9 @@ using Azure.AI.AgentServer.Core;
 
 namespace Azure.AI.AgentServer.A2A;
 
-/// <summary>Composes native A2A applications onto an <see cref="AgentHostBuilder"/>.</summary>
+/// <summary>
+/// Extension methods for registering native A2A applications on an <see cref="AgentHostBuilder"/>.
+/// </summary>
 public static class A2ABuilderExtensions
 {
     /// <summary>Registers a native A2A agent handler on the shared host.</summary>
@@ -16,6 +18,15 @@ public static class A2ABuilderExtensions
     /// <param name="agentCard">The native public agent card.</param>
     /// <param name="configure">Optional native server configuration.</param>
     /// <returns>The host builder for chaining.</returns>
+    /// <remarks>
+    /// Registers <typeparamref name="THandler"/> as a singleton. An explicitly registered native
+    /// task store is preserved; otherwise the host selects Foundry storage when hosted and
+    /// in-memory storage locally.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="builder"/> or <paramref name="agentCard"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="InvalidOperationException">A2A is already registered on this builder.</exception>
     public static AgentHostBuilder AddA2A<
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this AgentHostBuilder builder,
@@ -35,6 +46,15 @@ public static class A2ABuilderExtensions
     /// <param name="agentCard">The native public agent card.</param>
     /// <param name="requestHandler">The existing native request handler.</param>
     /// <returns>The host builder for chaining.</returns>
+    /// <remarks>
+    /// Preserves the handler's storage and native configuration. The application owns the
+    /// supplied handler and is responsible for disposing it when necessary.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="builder"/>, <paramref name="agentCard"/>, or <paramref name="requestHandler"/>
+    /// is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="InvalidOperationException">A2A is already registered on this builder.</exception>
     public static AgentHostBuilder AddA2A(
         this AgentHostBuilder builder,
         AgentCard agentCard,

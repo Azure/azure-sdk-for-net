@@ -3,9 +3,9 @@
 
 using System.Text.Json;
 using global::A2A;
-using Azure.AI.AgentServer.Core.Storage;
-using Azure.AI.AgentServer.A2A.Tests.Snippets;
 using Azure.AI.AgentServer.A2A.Internal;
+using Azure.AI.AgentServer.A2A.Tests.Snippets;
+using Azure.AI.AgentServer.Core.Storage;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -44,10 +44,10 @@ public class FoundryTaskStoreTests
         var backing = await FoundryStateStore.GetOrCreateAsync(name);
         try
         {
-            var store = new FoundryTaskStore(backing);
+            using var store = new FoundryTaskStore(backing);
             await store.SaveTaskAsync("t1", CreateTask("t1"));
             await store.SaveTaskAsync("t2", CreateTask("t2"));
-            var reconstructed = new FoundryTaskStore(backing);
+            using var reconstructed = new FoundryTaskStore(backing);
             var loaded = await reconstructed.GetTaskAsync("t1");
             Assert.That(loaded, Is.Not.Null);
             Assert.That(loaded!.Metadata!["custom"].GetProperty("nested").GetInt32(), Is.EqualTo(42));
@@ -73,7 +73,7 @@ public class FoundryTaskStoreTests
         var backing = await FoundryStateStore.GetOrCreateAsync($"a2a-test-{Guid.NewGuid():N}");
         try
         {
-            var store = new FoundryTaskStore(backing);
+            using var store = new FoundryTaskStore(backing);
             Assert.ThrowsAsync<ArgumentException>(async () => await store.SaveTaskAsync("other", CreateTask("t1")));
         }
         finally
@@ -214,13 +214,44 @@ public class FoundryTaskStoreTests
     [Test]
     public async Task DisposedStoreAndInvalidConfigurationFailExplicitly()
     {
-        Assert.Throws<ArgumentException>(() => new FoundryTaskStore(""));
-        Assert.Throws<ArgumentOutOfRangeException>(() => new FoundryTaskStore("test", itemTtlSeconds: 0));
         var backing = await FoundryStateStore.GetOrCreateAsync($"a2a-test-{Guid.NewGuid():N}");
-        var store = new FoundryTaskStore(backing);
+        using var store = new FoundryTaskStore(backing);
         store.Dispose();
         Assert.ThrowsAsync<ObjectDisposedException>(async () => await store.GetTaskAsync("t1"));
         await backing.DeleteAsync();
+    }
+
+    [TestCase("")]
+    [TestCase(" ")]
+    public void InvalidStoreNameIsRejected(string name) =>
+        Assert.Throws<ArgumentException>(() => new FoundryTaskStore(name));
+
+    [Test]
+    public void NullStoreArgumentsAreRejected()
+    {
+        Assert.Throws<ArgumentNullException>(() => new FoundryTaskStore((string)null!));
+        Assert.Throws<ArgumentNullException>(() => new FoundryTaskStore((FoundryStateStore)null!));
+    }
+
+    [TestCase(0)]
+    [TestCase(-2)]
+    public void InvalidRetentionIsRejected(int retention) =>
+        Assert.Throws<ArgumentOutOfRangeException>(() => new FoundryTaskStore("test", itemTtlSeconds: retention));
+
+    [TestCase(-1)]
+    [TestCase(1)]
+    public void ValidRetentionDoesNotInitializeStorage(int retention)
+    {
+        using var store = new FoundryTaskStore("test", itemTtlSeconds: retention);
+        Assert.That(store, Is.InstanceOf<ITaskStore>());
+    }
+
+    [Test]
+    public void NullTaskAndListRequestsAreRejected()
+    {
+        using var store = new FoundryTaskStore(new CorruptStore());
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await store.SaveTaskAsync("t1", null!));
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await store.ListTasksAsync(null!));
     }
 
     private sealed class CorruptStore : FoundryStateStore

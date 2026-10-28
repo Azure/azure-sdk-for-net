@@ -61,5 +61,14 @@ public class SampleEndToEndTests
         Assert.That(task.GetProperty("status").GetProperty("state").GetString(), Is.EqualTo("TASK_STATE_COMPLETED"));
         Assert.That(task.GetProperty("artifacts")[0].GetProperty("parts")[0].GetProperty("text").GetString(),
             Is.EqualTo("Echo: hello"));
+
+        string taskId = task.GetProperty("id").GetString()!;
+        using var lookup = await client.PostAsync("/a2a", HostingTests.Rpc("GetTask", $$"""{"id":"{{taskId}}"}"""));
+        using var stored = JsonDocument.Parse(await lookup.Content.ReadAsStringAsync());
+        var storedTask = stored.RootElement.GetProperty("result");
+        Assert.That(storedTask.GetProperty("id").GetString(), Is.EqualTo(taskId));
+        Assert.That(storedTask.GetProperty("status").GetProperty("state").GetString(), Is.EqualTo("TASK_STATE_COMPLETED"));
+        Assert.That(storedTask.GetProperty("artifacts")[0].GetProperty("parts")[0].GetProperty("text").GetString(),
+            Is.EqualTo("Echo: hello"));
     }
 }
