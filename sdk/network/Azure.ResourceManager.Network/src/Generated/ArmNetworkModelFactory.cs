@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateEndpointLocation"> The location of the private endpoint. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static NetworkPrivateEndpointConnectionData NetworkPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, PrivateEndpointData privateEndpoint = default, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, NetworkProvisioningState? provisioningState = default, string linkIdentifier = default, string privateEndpointLocation = default, ETag? eTag = default)
+        public static NetworkPrivateEndpointConnectionData NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, NetworkProvisioningState? provisioningState, string linkIdentifier, string privateEndpointLocation, ETag? eTag)
         {
             return new NetworkPrivateEndpointConnectionData(
                 id,
