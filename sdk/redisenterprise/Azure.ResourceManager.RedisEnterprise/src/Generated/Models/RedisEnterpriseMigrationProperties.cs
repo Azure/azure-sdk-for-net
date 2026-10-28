@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _statusDetails;
+        private protected bool _statusDetailsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProperties"/>. </summary>
         /// <param name="sourceType"> Describes the source of the migration operation. </param>
@@ -35,17 +37,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
-        /// <param name="rollbackEligibleUntil"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
+        /// <param name="rollbackEligibilityExpiresOn"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? rollbackEligibleUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? rollbackEligibilityExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceType = sourceType;
             TargetResourceId = targetResourceId;
             ProvisioningState = provisioningState;
-            StatusDetails = statusDetails;
+            _statusDetails = statusDetails;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
-            RollbackEligibleUntil = rollbackEligibleUntil;
+            RollbackEligibilityExpiresOn = rollbackEligibilityExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,7 +65,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Additional details about the migration operation's status in free text format. </summary>
         [WirePath("statusDetails")]
-        public string StatusDetails { get; }
+        public string StatusDetails
+        {
+            get
+            {
+                return _statusDetails;
+            }
+        }
 
         /// <summary> The timestamp when the migration operation was created. </summary>
         [WirePath("creationTime")]
@@ -72,9 +80,5 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> The timestamp when the migration operation was last updated. </summary>
         [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
-
-        /// <summary> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </summary>
-        [WirePath("rollbackEligibleUntil")]
-        public DateTimeOffset? RollbackEligibleUntil { get; }
     }
 }

@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public static partial class ArmRedisEnterpriseModelFactory
     {
         public static Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData AccessPolicyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), string accessPolicyName = null, System.Guid? userObjectId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? rollbackEligibleUntil = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceResourceId = null, bool isSwitchDns = false, bool isSkipDataMigration = false, bool? isForceMigrate = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? rollbackEligibilityExpiresOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceResourceId = null, bool isSwitchDns = false, bool isSkipDataMigration = false, bool? isForceMigrate = default(bool?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent ExportRedisEnterpriseDatabaseContent(System.Uri sasUri = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent FlushRedisEnterpriseDatabaseContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ids = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.ForceLinkContent ForceLinkContent(Azure.ResourceManager.RedisEnterprise.Models.ForceLinkParametersGeoReplication geoReplication = null) { throw null; }
@@ -406,8 +406,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase RedisEnterpriseLinkedDatabase(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseLinkState? state = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseLinkState?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindow RedisEnterpriseMaintenanceWindow(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindowType type = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindowType), System.TimeSpan duration = default(System.TimeSpan), int startHourUtc = 0, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceDayOfWeek? scheduleDayOfWeek = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceDayOfWeek?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData RedisEnterpriseMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? rollbackEligibleUntil = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent RedisEnterpriseMigrationUndoContent(Azure.ResourceManager.RedisEnterprise.Models.MigrationRollbackReason? rollbackReason = default(Azure.ResourceManager.RedisEnterprise.Models.MigrationRollbackReason?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? rollbackEligibilityExpiresOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent RedisEnterpriseMigrationUndoContent(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationRollbackReason? rollbackReason = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationRollbackReason?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationValidationDisparity RedisEnterpriseMigrationValidationDisparity(string category = null, string message = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationValidationError RedisEnterpriseMigrationValidationError(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationValidationDisparity> disparities = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(Azure.Core.ResourceIdentifier sourceResourceId = null, bool? isSkipDataMigration = default(bool?)) { throw null; }
@@ -543,17 +543,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum MigrationRollbackReason
-    {
-        Performance = 0,
-        Compatibility = 1,
-        ClientConnection = 2,
-        Cost = 3,
-        Testing = 4,
-        Stability = 5,
-        DataLoss = 6,
-        Other = 7,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersistenceSettingAofFrequency : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.PersistenceSettingAofFrequency>
@@ -944,7 +933,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? RollbackEligibleUntil { get { throw null; } }
+        public System.DateTimeOffset? RollbackEligibilityExpiresOn { get { throw null; } }
         public string StatusDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -983,10 +972,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum RedisEnterpriseMigrationRollbackReason
+    {
+        Performance = 0,
+        Compatibility = 1,
+        ClientConnection = 2,
+        Cost = 3,
+        Testing = 4,
+        Stability = 5,
+        DataLoss = 6,
+        Other = 7,
+    }
     public partial class RedisEnterpriseMigrationUndoContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent>
     {
         public RedisEnterpriseMigrationUndoContent() { }
-        public Azure.ResourceManager.RedisEnterprise.Models.MigrationRollbackReason? RollbackReason { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationRollbackReason? RollbackReason { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationUndoContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

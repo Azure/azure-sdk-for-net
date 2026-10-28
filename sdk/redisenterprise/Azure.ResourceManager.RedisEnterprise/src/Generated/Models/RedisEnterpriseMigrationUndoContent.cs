@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationUndoContent"/>. </summary>
         /// <param name="rollbackReason"> The reason for undoing (rolling back) the migration. Choose the value that best describes why the rollback is needed. This information helps us improve the migration experience and does not change how the rollback is performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationUndoContent(MigrationRollbackReason? rollbackReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationUndoContent(RedisEnterpriseMigrationRollbackReason? rollbackReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RollbackReason = rollbackReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The reason for undoing (rolling back) the migration. Choose the value that best describes why the rollback is needed. This information helps us improve the migration experience and does not change how the rollback is performed. </summary>
         [WirePath("rollbackReason")]
-        public MigrationRollbackReason? RollbackReason { get; set; }
+        public RedisEnterpriseMigrationRollbackReason? RollbackReason { get; set; }
     }
 }

@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusDetails))
+            if (options.Format != "W" && Optional.IsDefined(StatusDetails, _statusDetailsIsDefined))
             {
-                writer.WritePropertyName("statusDetails"u8);
-                writer.WriteStringValue(StatusDetails);
+                if (StatusDetails != null)
+                {
+                    writer.WritePropertyName("statusDetails"u8);
+                    writer.WriteStringValue(StatusDetails);
+                }
+                else
+                {
+                    writer.WriteNull("statusDetails"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -109,10 +116,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RollbackEligibleUntil))
+            if (options.Format != "W" && Optional.IsDefined(RollbackEligibilityExpiresOn))
             {
                 writer.WritePropertyName("rollbackEligibleUntil"u8);
-                writer.WriteStringValue(RollbackEligibleUntil.Value, "O");
+                writer.WriteStringValue(RollbackEligibilityExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

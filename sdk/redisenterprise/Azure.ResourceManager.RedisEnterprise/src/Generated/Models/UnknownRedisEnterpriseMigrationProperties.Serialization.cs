@@ -116,10 +116,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             SourceType sourceType = default;
             ResourceIdentifier targetResourceId = default;
             RedisEnterpriseMigrationProvisioningState? provisioningState = default;
+            bool statusDetailsIsDefined = false;
             string statusDetails = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
-            DateTimeOffset? rollbackEligibleUntil = default;
+            DateTimeOffset? rollbackEligibilityExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,6 +149,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("statusDetails"u8))
                 {
+                    statusDetailsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         statusDetails = null;
@@ -180,7 +182,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    rollbackEligibleUntil = prop.Value.GetDateTimeOffset("O");
+                    rollbackEligibilityExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,8 +197,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
-                rollbackEligibleUntil,
-                additionalBinaryDataProperties);
+                rollbackEligibilityExpiresOn,
+                additionalBinaryDataProperties)
+            {
+                _statusDetailsIsDefined = statusDetailsIsDefined
+            };
         }
     }
 }

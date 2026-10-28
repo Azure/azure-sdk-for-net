@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                     WaitUntil.Completed,
                     new RedisEnterpriseMigrationUndoContent
                     {
-                        RollbackReason = MigrationRollbackReason.Testing
+                        RollbackReason = RedisEnterpriseMigrationRollbackReason.Testing
                     });
 
                 migration = (await migration.GetAsync()).Value;
@@ -186,8 +186,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 {
                     ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
                     ClusteringPolicy = RedisEnterpriseClusteringPolicy.NoCluster,
-                    EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
-                    // NotifyKeyspaceEvents = string.Empty
+                    EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction
                 };
                 await target.GetRedisEnterpriseDatabases().CreateOrUpdateAsync(
                     WaitUntil.Completed,
@@ -200,7 +199,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                     IsSkipDataMigration = skipDataMigration
                 };
                 RedisEnterpriseMigrationValidationResponseResult validation = (await migration.ValidateAsync(validationContent)).Value;
-                TestContext.Progress.WriteLine($"OSS migration validation result: {validation.IsValid}.");
+                Assert.IsTrue(validation.IsValid);
+                Assert.AreEqual(1, validation.Errors.Count);
+                Assert.IsEmpty(validation.Errors[0].Disparities);
+                Assert.AreEqual(1, validation.Warnings.Count);
+                Assert.IsEmpty(validation.Warnings[0].Disparities);
 
                 RedisEnterpriseMigrationData migrationData = new()
                 {
@@ -244,12 +247,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
             if (expectRollbackEligibility)
             {
-                Assert.IsNotNull(properties.RollbackEligibleUntil);
-                Assert.Greater(properties.RollbackEligibleUntil.Value, properties.LastModifiedOn.Value);
+                Assert.IsNotNull(properties.RollbackEligibilityExpiresOn);
+                Assert.Greater(properties.RollbackEligibilityExpiresOn.Value, properties.LastModifiedOn.Value);
             }
             else
             {
-                Assert.IsNull(properties.RollbackEligibleUntil);
+                Assert.IsNull(properties.RollbackEligibilityExpiresOn);
             }
         }
 
@@ -261,7 +264,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(targetId, properties.TargetResourceId);
             Assert.AreEqual(RedisEnterpriseMigrationProvisioningState.Unlinked, properties.ProvisioningState);
             AssertMigrationTimestamps(properties);
-            Assert.IsNull(properties.RollbackEligibleUntil);
+            Assert.IsNull(properties.RollbackEligibilityExpiresOn);
         }
 
         private static AzureCacheForRedisMigrationProperties GetAzureCacheForRedisProperties(RedisEnterpriseMigrationResource migration)

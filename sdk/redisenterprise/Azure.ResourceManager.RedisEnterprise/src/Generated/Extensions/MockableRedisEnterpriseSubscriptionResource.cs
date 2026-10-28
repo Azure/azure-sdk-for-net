@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
 
         private ClientDiagnostics RedisEnterpriseClusterClientDiagnostics => _redisEnterpriseClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
+        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cache/redisEnterprise", out string apiVersion) ? apiVersion : "2026-09-01");
 
         private ClientDiagnostics OperationsStatusClientDiagnostics => _operationsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

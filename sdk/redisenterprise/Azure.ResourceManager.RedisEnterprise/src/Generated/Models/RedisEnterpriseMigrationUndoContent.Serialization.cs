@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            MigrationRollbackReason? rollbackReason = default;
+            RedisEnterpriseMigrationRollbackReason? rollbackReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    rollbackReason = prop.Value.GetString().ToMigrationRollbackReason();
+                    rollbackReason = prop.Value.GetString().ToRedisEnterpriseMigrationRollbackReason();
                     continue;
                 }
                 if (options.Format != "W")
