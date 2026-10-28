@@ -1,14 +1,16 @@
 # Release History
 
-## 1.19.0-beta.1 (Unreleased)
+## 1.19.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Added `FlexPreferredVmSize` to `VirtualMachineData` and `VirtualMachinePatch` to support FlexProfile preferred VM sizes.
+- Added `PrivateIPAddressPrefixLength` to `VirtualMachineNetworkInterfaceIPConfiguration`, `VirtualMachineScaleSetIPConfiguration` and `VirtualMachineScaleSetUpdateIPConfiguration`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `ComputeResourceSkuZoneDetails.Name` deserialization to read the `Name` property returned by the service. JSON written by previous versions using `name` is still accepted.
+- Fixed `CapacityReservationGroupResource` delete operations to poll the long-running operation until completion.
 
 ## 1.18.0 (2026-10-12)
 

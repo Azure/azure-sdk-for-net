@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.Compute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FlexProfile"/>. </summary>
-        /// <param name="preferredVMSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preferredVMSize"/> is null. </exception>
-        public FlexProfile(string preferredVMSize)
+        /// <param name="preferredVmSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="preferredVmSize"/> is null. </exception>
+        public FlexProfile(string preferredVmSize)
         {
-            Argument.AssertNotNull(preferredVMSize, nameof(preferredVMSize));
+            Argument.AssertNotNull(preferredVmSize, nameof(preferredVmSize));
 
-            PreferredVMSize = preferredVMSize;
+            PreferredVmSize = preferredVmSize;
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexProfile"/>. </summary>
-        /// <param name="preferredVMSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
+        /// <param name="preferredVmSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlexProfile(string preferredVMSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlexProfile(string preferredVmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PreferredVMSize = preferredVMSize;
+            PreferredVmSize = preferredVmSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </summary>
-        public string PreferredVMSize { get; set; }
+        public string PreferredVmSize { get; set; }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(FlexProfile)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("preferredVMSize"u8);
-            writer.WriteStringValue(PreferredVMSize);
+            writer.WriteStringValue(PreferredVmSize);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string preferredVMSize = default;
+            string preferredVmSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("preferredVMSize"u8))
                 {
-                    preferredVMSize = prop.Value.GetString();
+                    preferredVmSize = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FlexProfile(preferredVMSize, additionalBinaryDataProperties);
+            return new FlexProfile(preferredVmSize, additionalBinaryDataProperties);
         }
     }
 }
