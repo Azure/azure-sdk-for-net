@@ -39,8 +39,22 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
+    /// Initializes options with a context for proxy resolution outside a <see cref="ModelReaderWriter"/> operation.
+    /// </summary>
+    /// <param name="format">The format to read and write models.</param>
+    /// <param name="context">The context to pass to conditional proxies.</param>
+    /// <remarks>
+    /// Calls to <see cref="ModelReaderWriter"/> use the context of that operation instead.
+    /// </remarks>
+    public ModelReaderWriterOptions(string format, ModelReaderWriterContext context) : this(format)
+    {
+        Argument.AssertNotNull(context, nameof(context));
+        _context = context;
+    }
+
+    /// <summary>
     /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/> in the specified format
-    /// that copies the proxy registrations from <paramref name="options"/>.
+    /// that copies the proxy registrations and configured context from <paramref name="options"/>.
     /// </summary>
     /// <param name="format">The format to read and write models. Pass in 'W' to use the service-defined wire format.</param>
     /// <param name="options">The options containing the proxies to reuse.</param>
@@ -58,6 +72,20 @@ public class ModelReaderWriterOptions
             }
         }
         _userOptions = options._userOptions ?? options;
+        _context = options._context;
+    }
+
+    /// <summary>
+    /// Initializes options that copy proxy registrations and use the specified context.
+    /// </summary>
+    /// <param name="format">The format to read and write models.</param>
+    /// <param name="options">The options containing the proxies to reuse.</param>
+    /// <param name="context">The context to pass to conditional proxies outside a <see cref="ModelReaderWriter"/> operation.</param>
+    public ModelReaderWriterOptions(string format, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+        : this(format, options)
+    {
+        Argument.AssertNotNull(context, nameof(context));
+        _context = context;
     }
 
     internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
@@ -65,6 +93,7 @@ public class ModelReaderWriterOptions
     {
         _proxies = options._proxies;
         _userOptions = options._userOptions ?? options;
+        _context = options._context;
         IsCoreOwned = true;
     }
 
@@ -73,6 +102,10 @@ public class ModelReaderWriterOptions
     // The caller-provided options passed to conditional proxies' CanHandle. For a core-owned working
     // copy this is the original user options (preserving any derived type/config); otherwise this.
     private ModelReaderWriterOptions ProxyContextOptions => _userOptions ?? this;
+
+    private ModelReaderWriterContext ProxyContext => _context ?? throw new InvalidOperationException(
+        "Conditional proxies require a ModelReaderWriterContext. Use a context-taking ModelReaderWriter overload " +
+        "or construct ModelReaderWriterOptions with a context.");
 
     internal bool IsCoreOwned { get; }
 
@@ -181,6 +214,7 @@ public class ModelReaderWriterOptions
     /// To apply proxies to nested models, resolve each child before invoking its writer and pass the same
     /// options instance received by the serializer. Calling a child's original writer directly bypasses
     /// proxy resolution; replacing the received options with default options loses the registrations.
+    /// Conditional proxies require a context supplied by the active operation or configured on these options.
     /// </para>
     /// <para>
     /// This method updates <see cref="ProxiedModel"/> and does not restore the parent's value after a nested
@@ -188,6 +222,7 @@ public class ModelReaderWriterOptions
     /// <see cref="ProxiedModel"/> afterward.
     /// </para>
     /// </remarks>
+    /// <exception cref="InvalidOperationException">A conditional proxy is consulted without a context.</exception>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));
@@ -201,7 +236,7 @@ public class ModelReaderWriterOptions
         {
             if (entry.IsConditional)
             {
-                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
+                if (entry.CanHandleModel(model, ProxyContextOptions, ProxyContext) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
                 {
                     ProxiedModel = model;
                     return proxyModel;
@@ -230,6 +265,7 @@ public class ModelReaderWriterOptions
     /// To apply proxies to nested models, resolve each child before invoking its writer and pass the same
     /// options instance received by the serializer. Calling a child's original writer directly bypasses
     /// proxy resolution; replacing the received options with default options loses the registrations.
+    /// Conditional proxies require a context supplied by the active operation or configured on these options.
     /// </para>
     /// <para>
     /// This method updates <see cref="ProxiedModel"/> and does not restore the parent's value after a nested
@@ -237,6 +273,7 @@ public class ModelReaderWriterOptions
     /// <see cref="ProxiedModel"/> afterward.
     /// </para>
     /// </remarks>
+    /// <exception cref="InvalidOperationException">A conditional proxy is consulted without a context.</exception>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));
@@ -250,7 +287,7 @@ public class ModelReaderWriterOptions
         {
             if (entry.IsConditional)
             {
-                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
+                if (entry.CanHandleModel(model, ProxyContextOptions, ProxyContext) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
                 {
                     ProxiedModel = model;
                     return jsonModel;
@@ -287,7 +324,7 @@ public class ModelReaderWriterOptions
         {
             if (entry.IsConditional)
             {
-                if (entry.CanHandleData(data, ProxyContextOptions, _context!) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
+                if (entry.CanHandleData(data, ProxyContextOptions, ProxyContext) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
                 {
                     proxy = proxyModel;
                     return true;
@@ -329,7 +366,7 @@ public class ModelReaderWriterOptions
             if (entry.IsConditional)
             {
                 Utf8JsonReader snapshot = reader;
-                if (entry.CanHandleReader(ref snapshot, ProxyContextOptions, _context!) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
+                if (entry.CanHandleReader(ref snapshot, ProxyContextOptions, ProxyContext) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
                 {
                     proxy = jsonModel;
                     return true;
@@ -397,7 +434,7 @@ public class ModelReaderWriterOptions
         {
             if (entry.IsConditional)
             {
-                if (entry.CanHandleData(memory, ProxyContextOptions, _context!))
+                if (entry.CanHandleData(memory, ProxyContextOptions, ProxyContext))
                 {
                     ProxiedModel = model;
                     return entry.CreateFromData(data, this);
@@ -436,7 +473,7 @@ public class ModelReaderWriterOptions
                 Utf8JsonReader checkReader = snapshot;
                 // Skip conditional proxies whose held model can't handle the reader path so we
                 // fall through to the next proxy (or the model) instead of throwing mid-read.
-                if (entry.CanHandleReader(ref checkReader, ProxyContextOptions, _context!) && entry.HasJsonModel)
+                if (entry.CanHandleReader(ref checkReader, ProxyContextOptions, ProxyContext) && entry.HasJsonModel)
                 {
                     ProxiedModel = model;
                     object? result = entry.CreateFromReader(ref reader, this);
@@ -474,7 +511,7 @@ public class ModelReaderWriterOptions
             {
                 // Skip conditional proxies whose held model can't satisfy the JSON write
                 // path so we fall through instead of throwing mid-serialization.
-                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.AsJsonModelOfObject() is IJsonModel<object> jsonModel)
+                if (entry.CanHandleModel(model, ProxyContextOptions, ProxyContext) && entry.AsJsonModelOfObject() is IJsonModel<object> jsonModel)
                 {
                     ProxiedModel = model;
                     return jsonModel;

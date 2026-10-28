@@ -53,6 +53,7 @@ public abstract class BinaryContent : IDisposable
     /// that indicates what format the <paramref name="model"/> will be written in.
     /// </param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
+    /// <exception cref="InvalidOperationException">A conditional proxy is consulted without a context configured on <paramref name="options"/>.</exception>
     public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
     {
         Argument.AssertNotNull(model, nameof(model));

@@ -440,7 +440,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [TestCase("W", true)]
         public void Write_PersistableOnlyProxyOverridesJsonModel(string format, bool conditional)
         {
-            var options = new ModelReaderWriterOptions(format);
+            var options = new ModelReaderWriterOptions(format, ModelReaderWriterReflectionContext.Default);
             var proxy = new PersistableWriteProxy("J");
             var conditionalProxy = new PersistableWriteConditionalProxy(proxy);
             if (conditional)
@@ -835,7 +835,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_SingleProxy_ReturnsProxyResult()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy = new ChainProxy(handleRead: true);
             options.AddProxy<SimpleModel>(proxy);
 
@@ -849,7 +849,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_ProxyDeclinesWithCanHandle_FallsToModel()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy = new ChainProxy(handleRead: false); // CanHandle returns false = decline
             options.AddProxy<SimpleModel>(proxy);
 
@@ -865,7 +865,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_SecondProxyHandlesAfterFirstDeclines()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);  // will decline (tried first, FIFO)
             var proxy2 = new ChainProxy(handleRead: true);   // will handle
 
@@ -886,7 +886,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_AllProxiesDecline_ModelHandlesIt()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);
             var proxy2 = new ChainProxy(handleRead: false);
 
@@ -918,7 +918,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_DiscriminatorPattern()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             // Discriminator proxy only handles data containing "special" — registered first (FIFO)
             var discriminatorProxy = new DiscriminatorProxy("special");
             // Default proxy handles everything — registered second (fallback)
@@ -951,7 +951,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ResolveProxy_Write_UsesCanHandle()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);
             var proxy2 = new ChainProxy(handleRead: false);
 
@@ -1054,7 +1054,131 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void FormatAndOptionsConstructor_RejectsNullOptions()
         {
-            Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("W", null!));
+            Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("W", (ModelReaderWriterOptions)null!));
+        }
+
+        [Test]
+        public void ContextConstructors_RejectNullContext()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("J", (ModelReaderWriterContext)null!));
+            Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("J", ModelReaderWriterOptions.Json, null!));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConditionalProxy_StandaloneResolutionRequiresContext(bool json)
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ContextAwareProxy();
+            options.AddProxy<SimpleModel>(proxy);
+            var model = new SimpleModel();
+
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+            {
+                if (json)
+                {
+                    options.ResolveProxy((IJsonModel<SimpleModel>)model);
+                }
+                else
+                {
+                    options.ResolveProxy((IPersistableModel<SimpleModel>)model);
+                }
+            });
+
+            StringAssert.Contains("ModelReaderWriterContext", exception!.Message);
+            Assert.IsNull(proxy.LastContext);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConditionalProxy_StandaloneResolutionUsesConfiguredContext(bool json)
+        {
+            var context = ModelReaderWriterReflectionContext.Default;
+            var options = new ModelReaderWriterOptions("J", context);
+            var proxy = new ContextAwareProxy();
+            options.AddProxy<SimpleModel>(proxy);
+            var model = new SimpleModel();
+
+            object resolved = json
+                ? options.ResolveProxy((IJsonModel<SimpleModel>)model)
+                : options.ResolveProxy((IPersistableModel<SimpleModel>)model);
+
+            Assert.AreSame(proxy.Model, resolved);
+            Assert.AreSame(context, proxy.LastContext);
+        }
+
+        [Test]
+        public void ConditionalProxy_BinaryContentRequiresContext()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ContextAwareProxy();
+            options.AddProxy<SimpleModel>(proxy);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => BinaryContent.Create(new SimpleModel(), options));
+
+            StringAssert.Contains("ModelReaderWriterContext", exception!.Message);
+            Assert.IsNull(proxy.LastContext);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConditionalProxy_ConverterWithoutExplicitContextProvidesUsableContext(bool read)
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var proxy = new ContextAwareProxy();
+            options.AddProxy<SimpleModel>(proxy);
+            var serializerOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter(options) }
+            };
+
+            if (read)
+            {
+                Assert.IsNotNull(JsonSerializer.Deserialize<SimpleModel>("{}", serializerOptions));
+            }
+            else
+            {
+                Assert.AreEqual("{}", JsonSerializer.Serialize(new SimpleModel(), serializerOptions));
+            }
+
+            Assert.AreSame(ModelReaderWriterReflectionContext.Default, proxy.LastContext);
+        }
+
+        [Test]
+        public void ConditionalProxy_OperationContextOverridesConfiguredContext()
+        {
+            var configured = new NestedWriteContext();
+            var options = new ModelReaderWriterOptions("J", configured);
+            var proxy = new ContextAwareProxy();
+            options.AddProxy<SimpleModel>(proxy);
+
+            ModelReaderWriter.Write(new SimpleModel(), options, ModelReaderWriterReflectionContext.Default);
+
+            Assert.AreSame(ModelReaderWriterReflectionContext.Default, proxy.LastContext);
+            Assert.AreSame(configured, options.ProxyResolutionContext);
+        }
+
+        private sealed class ContextAwareProxy : ConditionalModelProxy<SimpleModel>
+        {
+            internal ModelReaderWriterContext? LastContext { get; private set; }
+
+            internal ContextAwareProxy() : base(new TrackingModel()) { }
+
+            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => Observe(context);
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => Observe(context);
+
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => Observe(context);
+
+            private bool Observe(ModelReaderWriterContext context)
+            {
+                Assert.IsNotNull(context.GetTypeBuilder(typeof(SimpleModel)));
+                LastContext = context;
+                return true;
+            }
         }
 
         [Test]
@@ -1525,7 +1649,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ProxiedModel_IsNull_WhenAllProxiesDecline_AndModelHandlesRead()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);
             var proxy2 = new ChainProxy(handleRead: false);
             options.AddProxy<SimpleModel>(proxy1);
@@ -1543,7 +1667,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ProxiedModel_IsCorrectForEachProxy_InChain()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: true);
             var proxy2 = new ChainProxy(handleRead: false);
 
@@ -1564,7 +1688,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ProxiedModel_IsCorrectForEachProxy_InChain_ReaderPath()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: true);
             var proxy2 = new ChainProxy(handleRead: false);
 
@@ -1723,7 +1847,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ResolveProxy_Write_FirstDeclinesSecondHandles()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new SelectiveWriteProxy(canWrite: false);
             var proxy2 = new SelectiveWriteProxy(canWrite: true);
 
@@ -1740,7 +1864,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ResolveProxy_Write_AllDecline_ReturnsSelf()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new SelectiveWriteProxy(canWrite: false);
             var proxy2 = new SelectiveWriteProxy(canWrite: false);
 
@@ -1757,7 +1881,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ResolveProxy_IJsonModel_FirstDeclinesSecondHandles()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new SelectiveWriteProxy(canWrite: false);
             var proxy2 = new SelectiveWriteProxy(canWrite: true);
 
@@ -1778,7 +1902,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_NonGeneric_SecondProxyHandles()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);
             var proxy2 = new ChainProxy(handleRead: true);
 
@@ -1800,7 +1924,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ReadWithChain_NonGeneric_AllDecline_ModelHandles()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             var proxy1 = new ChainProxy(handleRead: false);
             var proxy2 = new ChainProxy(handleRead: false);
 
@@ -1879,7 +2003,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void ResolveProxy_NonGeneric_SkipsConditionalProxyWithoutJsonModel()
         {
-            var options = new ModelReaderWriterOptions("J");
+            var options = new ModelReaderWriterOptions("J", ModelReaderWriterReflectionContext.Default);
             // First proxy handles (CanHandle=true) but its model is persistable-only (not IJsonModel),
             // so the JSON write path must skip it instead of throwing.
             var persistableOnly = new PersistableOnlyConditionalProxy();

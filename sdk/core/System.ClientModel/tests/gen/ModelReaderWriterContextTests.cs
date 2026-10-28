@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -121,6 +122,55 @@ namespace System.ClientModel.SourceGeneration.Tests
             Assert.AreSame(options, proxy.LastOptions);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConditionalProxy_ConfiguredGeneratedContextSupportsStandaloneWrites(bool requestBody)
+        {
+            var options = new ModelReaderWriterOptions("J", BasicContext.Default);
+            var proxy = new TrackingJsonModelProxy();
+            options.AddProxy<JsonModel>(proxy);
+            var model = new JsonModel();
+
+            using var stream = new MemoryStream();
+            if (requestBody)
+            {
+                using BinaryContent content = BinaryContent.Create(model, options);
+                content.WriteTo(stream);
+                Assert.IsNull(options.ProxiedModel);
+            }
+            else
+            {
+                using var writer = new Utf8JsonWriter(stream);
+                options.ResolveProxy((IJsonModel<JsonModel>)model).Write(writer, options);
+                writer.Flush();
+            }
+
+            Assert.AreEqual("{}", BinaryData.FromBytes(stream.ToArray()).ToString());
+            Assert.AreSame(BasicContext.Default, proxy.LastContext);
+            Assert.AreSame(options, proxy.LastOptions);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConditionalProxy_OptionsCopyPreservesGeneratedContext(bool explicitContext)
+        {
+            var original = new ModelReaderWriterOptions("J", BasicContext.Default);
+            var proxy = new TrackingJsonModelProxy();
+            original.AddProxy<JsonModel>(proxy);
+            var copy = explicitContext
+                ? new ModelReaderWriterOptions("J", original, BasicContext.Default)
+                : new ModelReaderWriterOptions("J", original);
+
+            using BinaryContent content = BinaryContent.Create(new JsonModel(), copy);
+            using var stream = new MemoryStream();
+            content.WriteTo(stream);
+
+            Assert.AreSame(BasicContext.Default, proxy.LastContext);
+            Assert.AreSame(original, proxy.LastOptions);
+            Assert.IsNull(copy.ProxiedModel);
+            Assert.IsNull(original.ProxiedModel);
+        }
+
         private sealed class ExtendedBaseModelProxy : ConditionalModelProxy<BaseModel>
         {
             public ModelReaderWriterContext? LastContext { get; private set; }
@@ -183,6 +233,7 @@ namespace System.ClientModel.SourceGeneration.Tests
 
             public override bool CanHandle(JsonModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
             {
+                Assert.IsNotNull(context.GetTypeBuilder(typeof(JsonModel)));
                 CanHandleCalled = true;
                 LastOptions = options;
                 LastContext = context;
@@ -191,6 +242,7 @@ namespace System.ClientModel.SourceGeneration.Tests
 
             public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
             {
+                Assert.IsNotNull(context.GetTypeBuilder(typeof(JsonModel)));
                 CanHandleCalled = true;
                 LastOptions = options;
                 LastContext = context;

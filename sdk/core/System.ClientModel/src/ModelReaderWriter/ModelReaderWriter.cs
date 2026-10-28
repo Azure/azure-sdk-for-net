@@ -81,6 +81,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
+        Argument.AssertNotNull(context, nameof(context));
         return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 
@@ -106,6 +107,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
+        Argument.AssertNotNull(context, nameof(context));
         return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 

@@ -135,6 +135,37 @@ public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
 }
 ```
 
+#### Context for conditional proxies
+
+`CanHandle` always receives a non-null `ModelReaderWriterContext`. Calls through
+`ModelReaderWriter` supply the context of that operation. Pass the library's
+generated context to its context-taking overloads for AOT-compatible serialization.
+The context-free `JsonModelConverter` constructors already use reflection and
+provide a reflection context; the context-taking constructor preserves the supplied
+context instead.
+
+For standalone `ResolveProxy` calls or `BinaryContent.Create` with conditional
+proxies, configure a context on the options:
+
+```csharp
+var options = new ModelReaderWriterOptions("J", MyLibraryContext.Default);
+options.AddProxy<BaseModel>(new DerivedModelProxy());
+```
+
+Client-library authors can copy registrations while supplying their library's
+generated context for request-body serialization:
+
+```csharp
+var options = new ModelReaderWriterOptions("J", configuredOptions, MyLibraryContext.Default);
+using BinaryContent content = BinaryContent.Create(model, options);
+```
+
+Options copies preserve the configured context. A `ModelReaderWriter` operation
+uses its own operation context instead. Outside such an operation, attempting to
+resolve a conditional proxy without a configured context throws
+`InvalidOperationException` before calling `CanHandle`; these paths do not silently
+introduce reflection. Unconditional proxies do not require a context.
+
 #### Multiple proxies and the chain of responsibility
 
 Multiple proxies can be registered for the same model type to form a chain of responsibility. Proxies are used in the order they are added, regardless of whether they are conditional or unconditional. This means the **first registered** proxy has the highest priority. If conditional proxies are added after an unconditional proxy, they will not be consulted.

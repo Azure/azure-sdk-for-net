@@ -38,7 +38,7 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
             // Store the caller-provided MRW options (with any proxies) so serialization uses them
             // automatically — the join point a generated client would receive from the generator.
             _mrwOptions = pipelineOptions.ModelReaderWriterOptions is { } configuredOptions
-                ? new ModelReaderWriterOptions("J", configuredOptions)
+                ? new ModelReaderWriterOptions("J", configuredOptions, ResponseToolsContext.Default)
                 : ModelReaderWriterOptions.Json;
             _pipeline = ClientPipeline.Create(pipelineOptions);
         }
@@ -79,7 +79,7 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
             PipelineResponse response = message.Response
                 ?? throw new InvalidOperationException("The pipeline did not produce a response.");
 
-            return ModelReaderWriter.Read<ResponseTool>(response.Content, _mrwOptions)!;
+            return ModelReaderWriter.Read<ResponseTool>(response.Content, _mrwOptions, ResponseToolsContext.Default)!;
         }
 
         public ResponseTool SubmitTool(ResponseTool tool)
@@ -94,7 +94,7 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
             PipelineResponse response = message.Response
                 ?? throw new InvalidOperationException("The pipeline did not produce a response.");
 
-            return ModelReaderWriter.Read<ResponseTool>(response.Content, _mrwOptions)!;
+            return ModelReaderWriter.Read<ResponseTool>(response.Content, _mrwOptions, ResponseToolsContext.Default)!;
         }
     }
 }

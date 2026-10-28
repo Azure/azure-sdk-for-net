@@ -11,6 +11,11 @@ namespace System.ClientModel.Primitives;
 /// <see cref="ModelReaderWriterContext"/>, so the decision can depend on them in addition to the
 /// payload.
 /// </summary>
+/// <remarks>
+/// The context passed to <c>CanHandle</c> is never null. Standalone proxy resolution and
+/// request-body serialization require options configured with a context. A
+/// <see cref="ModelReaderWriter"/> operation supplies its own context.
+/// </remarks>
 /// <typeparam name="T">The model type this proxy handles.</typeparam>
 public abstract class ConditionalModelProxy<T>
     where T : IPersistableModel<T>
