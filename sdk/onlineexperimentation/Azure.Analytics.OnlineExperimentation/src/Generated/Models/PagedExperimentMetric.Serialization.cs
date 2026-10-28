@@ -170,7 +170,7 @@ namespace Azure.Analytics.OnlineExperimentation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedExperimentMetric(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedExperimentMetric(value ?? new ChangeTrackingList<ExperimentMetric>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

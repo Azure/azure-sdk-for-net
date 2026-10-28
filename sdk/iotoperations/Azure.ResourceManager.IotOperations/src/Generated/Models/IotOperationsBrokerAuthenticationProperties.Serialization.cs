@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotOperationsBrokerAuthenticationProperties(authenticationMethods, provisioningState, healthState, additionalBinaryDataProperties);
+            return new IotOperationsBrokerAuthenticationProperties(authenticationMethods ?? new ChangeTrackingList<BrokerAuthenticatorMethods>(), provisioningState, healthState, additionalBinaryDataProperties);
         }
     }
 }

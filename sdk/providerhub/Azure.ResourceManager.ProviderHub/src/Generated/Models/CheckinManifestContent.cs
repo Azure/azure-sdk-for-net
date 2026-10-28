@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The environment supplied to the checkin manifest operation. </summary>
-        public string Environment { get; }
+        public string Environment { get; set; }
 
         /// <summary> The baseline ARM manifest location supplied to the checkin manifest operation. </summary>
-        public AzureLocation BaselineArmManifestLocation { get; }
+        public AzureLocation BaselineArmManifestLocation { get; set; }
     }
 }

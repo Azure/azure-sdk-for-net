@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="email"> Email id of the principal. </param>
         /// <param name="principalType"> Type of the principal. </param>
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
-        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, Guid? principalId, string principalDisplayName, string email, RoleManagementPrincipalType? principalType)
+        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default)
         {
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
         }
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = default, string ruleType = default, RoleManagementPolicyRuleTarget target = default)
         {
-            return new UnknownRoleManagementPolicyRule(id, default, target, default);
+            return new UnknownRoleManagementPolicyRule(id, ruleType is null ? default : new RoleManagementPolicyRuleType(ruleType), target, default);
         }
 
         /// <summary> The role management policy rule target. </summary>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyApprovalRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyApprovalRule RoleManagementPolicyApprovalRule(string id = default, RoleManagementPolicyRuleTarget target = default, RoleManagementApprovalSettings settings = default)
         {
-            return new RoleManagementPolicyApprovalRule(id, default, target, default, settings);
+            return new RoleManagementPolicyApprovalRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule, target, default, settings);
         }
 
         /// <summary> The approval settings. </summary>
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             return new RoleManagementPolicyAuthenticationContextRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule,
                 target,
                 default,
                 isEnabled,
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             enablementRules ??= new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
 
-            return new RoleManagementPolicyEnablementRule(id, default, target, default, (enablementRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>()).ToList());
+            return new RoleManagementPolicyEnablementRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule, target, default, (enablementRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>()).ToList());
         }
 
         /// <summary> The role management policy expiration rule. </summary>
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
             return new RoleManagementPolicyExpirationRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule,
                 target,
                 default,
                 isExpirationRequired,
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
             return new RoleManagementPolicyNotificationRule(
                 id,
-                default,
+                RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule,
                 target,
                 default,
                 notificationDeliveryType,
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyPimOnlyModeRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = default, RoleManagementPolicyRuleTarget target = default, PimOnlyModeSettings pimOnlyModeSettings = default)
         {
-            return new RoleManagementPolicyPimOnlyModeRule(id, default, target, default, pimOnlyModeSettings);
+            return new RoleManagementPolicyPimOnlyModeRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyPimOnlyModeRule, target, default, pimOnlyModeSettings);
         }
 
         /// <summary> The PIM Only Mode settings. </summary>
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn)
+        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
         {
             return new PolicyAssignmentProperties(
                 id,
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IEnumerable<DenyAssignmentPermission> deniedPermissions, string scope, bool? isAppliedToChildScopes, IEnumerable<RoleManagementPrincipal> deniedPrincipals, IEnumerable<RoleManagementPrincipal> excludedPrincipals, bool? isSystemProtected, DenyAssignmentEffect? denyAssignmentEffect, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> deniedPermissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> deniedPrincipals = default, IEnumerable<RoleManagementPrincipal> excludedPrincipals = default, bool? isSystemProtected = default, DenyAssignmentEffect? denyAssignmentEffect = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
         {
             return new DenyAssignmentData(
                 id,
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationRoleDefinitionData"/> instance for mocking. </returns>
-        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IEnumerable<RoleDefinitionPermission> permissions, IEnumerable<string> assignableScopes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, string description = default, AuthorizationRoleType? roleType = default, IEnumerable<RoleDefinitionPermission> permissions = default, IEnumerable<string> assignableScopes = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
         {
             return new AuthorizationRoleDefinitionData(
                 id,
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static AzureRolesAssignedOutsidePimAlertIncidentProperties AzureRolesAssignedOutsidePimAlertIncidentProperties(string assigneeDisplayName = default, string assigneeUserPrincipalName = default, string assigneeId = default, string roleDisplayName = default, string roleTemplateId = default, string roleDefinitionId = default, DateTimeOffset? assignmentActivatedOn = default, string requestorId = default, string requestorDisplayName = default, string requestorUserPrincipalName = default)
         {
             return new AzureRolesAssignedOutsidePimAlertIncidentProperties(
-                default,
+                "AzureRolesAssignedOutsidePimAlertIncident",
                 default,
                 assigneeDisplayName,
                 assigneeUserPrincipalName,
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.DuplicateRoleCreatedAlertIncidentProperties"/> instance for mocking. </returns>
         public static DuplicateRoleCreatedAlertIncidentProperties DuplicateRoleCreatedAlertIncidentProperties(string roleName = default, string duplicateRoles = default, string reason = default)
         {
-            return new DuplicateRoleCreatedAlertIncidentProperties(default, default, roleName, duplicateRoles, reason);
+            return new DuplicateRoleCreatedAlertIncidentProperties("DuplicateRoleCreatedAlertIncident", default, roleName, duplicateRoles, reason);
         }
 
         /// <summary> Too many owners assigned to resource alert incident properties. </summary>
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.TooManyOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
         public static TooManyOwnersAssignedToResourceAlertIncidentProperties TooManyOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = default, string assigneeType = default)
         {
-            return new TooManyOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
+            return new TooManyOwnersAssignedToResourceAlertIncidentProperties("TooManyOwnersAssignedToResourceAlertIncident", default, assigneeName, assigneeType);
         }
 
         /// <summary> Too many permanent owners assigned to resource alert incident properties. </summary>
@@ -1451,7 +1451,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
         public static TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = default, string assigneeType = default)
         {
-            return new TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
+            return new TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties("TooManyPermanentOwnersAssignedToResourceAlertIncident", default, assigneeName, assigneeType);
         }
 
         /// <summary> Alert configuration. </summary>
@@ -1505,7 +1505,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "AzureRolesAssignedOutsidePimAlertConfiguration",
                 alertDefinition,
                 default);
         }
@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "DuplicateRoleCreatedAlertConfiguration",
                 alertDefinition,
                 default);
         }
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "TooManyOwnersAssignedToResourceAlertConfiguration",
                 alertDefinition,
                 default,
                 thresholdNumberOfOwners,
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 alertDefinitionId,
                 scope,
                 isEnabled,
-                default,
+                "TooManyPermanentOwnersAssignedToResourceAlertConfiguration",
                 alertDefinition,
                 default,
                 thresholdNumberOfPermanentOwners,
@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary>
         /// Target of the decision.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserIdentity"/> and <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="Models.AccessReviewDecisionUserIdentity"/>.
         /// </summary>
         /// <param name="type"> The type of decision target : User/ServicePrincipal. </param>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionIdentity AccessReviewDecisionIdentity(string @type = default, string id = default, string displayName = default)
         {
-            return new UnknownAccessReviewDecisionIdentity(default, id, displayName, default);
+            return new UnknownAccessReviewDecisionIdentity(@type is null ? default : new DecisionTargetType(@type), id, displayName, default);
         }
 
         /// <summary> User Decision Target. </summary>
@@ -1683,7 +1683,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionUserIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionUserIdentity AccessReviewDecisionUserIdentity(string id = default, string displayName = default, string userPrincipalName = default)
         {
-            return new AccessReviewDecisionUserIdentity(default, id, displayName, default, userPrincipalName);
+            return new AccessReviewDecisionUserIdentity(DecisionTargetType.User, id, displayName, default, userPrincipalName);
         }
 
         /// <summary> Service Principal Decision Target. </summary>
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> instance for mocking. </returns>
         public static AccessReviewDecisionServicePrincipalIdentity AccessReviewDecisionServicePrincipalIdentity(string id = default, string displayName = default, string appId = default)
         {
-            return new AccessReviewDecisionServicePrincipalIdentity(default, id, displayName, default, appId);
+            return new AccessReviewDecisionServicePrincipalIdentity(DecisionTargetType.ServicePrincipal, id, displayName, default, appId);
         }
 
         /// <summary> Target of the decision. </summary>
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionInsightProperties"/> instance for mocking. </returns>
         public static AccessReviewDecisionInsightProperties AccessReviewDecisionInsightProperties(string @type = default, DateTimeOffset? insightCreatedOn = default)
         {
-            return new UnknownAccessReviewDecisionInsightProperties(default, insightCreatedOn, default);
+            return new UnknownAccessReviewDecisionInsightProperties(@type is null ? default : new AccessReviewDecisionInsightType(@type), insightCreatedOn, default);
         }
 
         /// <summary> User Decision Target. </summary>
@@ -1735,7 +1735,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.AccessReviewDecisionUserSignInInsightProperties"/> instance for mocking. </returns>
         public static AccessReviewDecisionUserSignInInsightProperties AccessReviewDecisionUserSignInInsightProperties(DateTimeOffset? insightCreatedOn = default, DateTimeOffset? lastSignInOn = default)
         {
-            return new AccessReviewDecisionUserSignInInsightProperties(default, insightCreatedOn, default, lastSignInOn);
+            return new AccessReviewDecisionUserSignInInsightProperties(AccessReviewDecisionInsightType.UserSignInInsight, insightCreatedOn, default, lastSignInOn);
         }
 
         /// <param name="id"> The access review reviewer id. </param>
@@ -1853,29 +1853,29 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"></param>
+        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"></param>
-        /// <param name="excludePrincipals"></param>
+        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> permissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> principals = default, IEnumerable<RoleManagementPrincipal> excludePrincipals = default, bool? isSystemProtected = default)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IEnumerable<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IEnumerable<RoleManagementPrincipal> principals, IEnumerable<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected)
         {
             return new DenyAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                denyAssignmentName is null && description is null && scope is null && isAppliedToChildScopes is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
+                denyAssignmentName is null && description is null && permissions is null && scope is null && isAppliedToChildScopes is null && principals is null && excludePrincipals is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
                     denyAssignmentName,
                     description,
-                    default,
+                    (permissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
                     scope,
                     isAppliedToChildScopes,
-                    default,
-                    default,
+                    (principals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    (excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
                     isSystemProtected,
                     default,
                     default,
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationRoleDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, string description = default, AuthorizationRoleType? roleType = default, IEnumerable<RoleDefinitionPermission> permissions = default, IEnumerable<string> assignableScopes = default)
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IEnumerable<RoleDefinitionPermission> permissions, IEnumerable<string> assignableScopes)
         {
             return new AuthorizationRoleDefinitionData(
                 id,
@@ -1934,7 +1934,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeType"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
+        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId, string principalDisplayName, string email, RoleManagementPrincipalType? principalType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType)
         {
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
         }
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeType"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
+        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType)
         {
             return new PolicyAssignmentProperties(
                 id,

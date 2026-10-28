@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceApiVersion ?? "2026-08-31");
+            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Devices/provisioningServices", out string provisioningServiceDescriptionsApiVersionOverride) ? provisioningServiceDescriptionsApiVersionOverride : "2026-08-31");
             ValidateResourceId(id);
         }
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetKeysCollectionResultOfT(
+            return new DeviceProvisioningServicesSharedAccessKeyCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusAsyncCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionAsyncCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new ProvisioningServiceDescriptionsGetValidSkusCollectionResultOfT(
+            return new DeviceProvisioningServicesSkuDefinitionCollectionResultOfT(
                 _provisioningServiceDescriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -773,10 +773,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -816,10 +815,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

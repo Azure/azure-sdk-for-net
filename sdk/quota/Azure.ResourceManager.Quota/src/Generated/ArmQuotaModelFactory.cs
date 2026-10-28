@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaLimitJsonObject"/> instance for mocking. </returns>
         public static QuotaLimitJsonObject QuotaLimitJsonObject(string limitObjectType = default)
         {
-            return new UnknownLimitJsonObject(default, default);
+            return new UnknownLimitJsonObject(limitObjectType is null ? default : new LimitType(limitObjectType), default);
         }
 
         /// <summary> The resource quota limit value. </summary>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaLimitObject"/> instance for mocking. </returns>
         public static QuotaLimitObject QuotaLimitObject(int value = default, QuotaLimitType? limitType = default)
         {
-            return new QuotaLimitObject(default, default, value, limitType);
+            return new QuotaLimitObject(LimitType.LimitValue, default, value, limitType);
         }
 
         /// <summary> Request property. </summary>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName, long? limit, string comment, string unit, string value, string localizedValue, long? availableLimit, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue)
         {
             return new GroupQuotaLimitProperties(
                 resourceName,
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, string value, string localizedValue, long? availableLimit, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue)
         {
             return new GroupQuotaDetails(
                 resourceName,
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="value"> Quota request details. </param>
         /// <returns> A new <see cref="Quota.QuotaRequestDetailData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<QuotaSubRequestDetail> value = default)
+        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IEnumerable<QuotaSubRequestDetail> value)
         {
             return new QuotaRequestDetailData(
                 id,

@@ -150,7 +150,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyPressAction(@type, additionalBinaryDataProperties, keys);
+            return new KeyPressAction(@type, additionalBinaryDataProperties, keys ?? new ChangeTrackingList<string>());
         }
     }
 }

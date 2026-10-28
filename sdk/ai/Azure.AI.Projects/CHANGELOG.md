@@ -1,15 +1,58 @@
 # Release History
 
-## 3.0.0-beta.3 (Unreleased)
+## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
+- Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
+
 ### Breaking Changes
-- `MaxSamples` member was removed from `DataGenerationJobOptions`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+
+- Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Features Added
+- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+
+### Breaking Changes
+- Removed the `UpdateMemories(string, BinaryContent, RequestOptions)` and `UpdateMemoriesAsync(string, BinaryContent, RequestOptions)` protocol overloads from `AIProjectMemoryStores`. Use the corresponding long-running operation overloads that accept `waitUntilCompleted` instead, passing `false` to return after starting the operation.
+
+### Sample Updates
+- Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
+
+## 3.0.0-beta.4 (2026-10-12)
+
+### Features Added
+- `EvaluatorGenerationJobs` and `DataGenerationJob` do not require warning suppression anymore.
+- Agent optimization does not require `AAIP001` warning suppression anymore.
+
+### Breaking Changes
+- `EvaluatorGenerationJobs.Create` and `EvaluatorGenerationJobs.CreateAsync` are now returning the LRO poller.
+- To create a data generation job, `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
+- `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
+- `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
+- The `EvaluatorName` property of `EvaluatorGenerationInputs` now can only be set through constructor.
+
+## 3.0.0-beta.3 (2026-09-16)
+
+### Features Added
+- Added `ProjectsRealtimeClient` and `ProjectsRealtimeSessionClient` to work with voice agents. `AIProjectClient.ProjectsRealtimeClient` gets a `ProjectsRealtimeClient`; calling `StartSessionAsync(model, intent, options, cancellationToken)` on it -- the same method used with OpenAI's own `RealtimeClient` -- connects a `ProjectsRealtimeSessionClient` to the named voice agent's realtime endpoint (`/agents/{agentName}/endpoint/protocols/voice`). Pass `store=true`/`store=false` via `options.QueryString` to control whether the session's conversation is persisted. `ProjectsRealtimeClient` is also available when `AIProjectClient` is constructed from an `AIProjectClientSettings` whose credential resolves a token provider.
+
+### Breaking Changes
+- `MaxSamples` member was removed from `DataGenerationJobOptions`.
+- `AIProjectClient.GetProjectsRealtimeSessionClient(string, string)` and its replacement `GetProjectsRealtimeSessionClientAsync(string, string, bool?, CancellationToken)` were both removed in favor of `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)`, reusing OpenAI's own `RealtimeClient.StartSessionAsync` method rather than introducing a separate one.
+- `ProjectsRealtimeSessionClient`'s public constructor was removed. An instance constructed through it could never become connected (its `ConnectAsync` override is only reachable through `ProjectsRealtimeClient.StartSessionAsync`), so it offered no working standalone use; call `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync` to obtain an already-connected instance instead.
+
+### Sample Updates
+- Added `Sample_VoiceAgent`, showing how to create a voice agent and exchange a realtime text turn with it, and `Sample_VoiceAgent_ReadConversation`, showing how to persist a realtime session's conversation with `store: true` and read it back afterward through `BetaVoiceAgentsConversations`.
 
 ## 3.0.0-beta.2 (2026-09-03)
 

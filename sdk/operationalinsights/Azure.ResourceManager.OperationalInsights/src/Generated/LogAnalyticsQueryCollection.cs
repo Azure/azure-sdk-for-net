@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(LogAnalyticsQueryResource.ResourceType, out string logAnalyticsQueryApiVersion);
             _queriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryResource.ResourceType.Namespace, Diagnostics);
-            _queriesRestClient = new Queries(_queriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryApiVersion ?? "2025-07-01");
+            _queriesRestClient = new Queries(_queriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logAnalyticsQueryApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new QueriesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new LogAnalyticsQueryDataAsyncCollectionResultOfT(
                 _queriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new QueriesGetAllCollectionResultOfT(
+            return new PageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new LogAnalyticsQueryDataCollectionResultOfT(
                 _queriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

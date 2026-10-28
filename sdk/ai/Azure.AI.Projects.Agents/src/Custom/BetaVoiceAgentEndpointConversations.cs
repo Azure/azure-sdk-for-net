@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents;
@@ -30,7 +29,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentConversationResponses", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-public partial class BetaVoiceAgentEndpointConversations
+public partial class BetaVoiceAgentsConversations
 {
     /// <summary>
     /// Returns the conversations persisted for the specified voice agent endpoint.
@@ -363,12 +362,12 @@ public partial class BetaVoiceAgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<VoiceResponse> GetAgentConversationResponses(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<VoiceResult> GetAgentConversationResponses(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-        return new InternalOpenAICollectionResultOfT<VoiceResponse>(
+        return new InternalOpenAICollectionResultOfT<VoiceResult>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationResponsesRequest(
@@ -379,7 +378,7 @@ public partial class BetaVoiceAgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<VoiceResponse>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<VoiceResult>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId]),
             cancellationToken.ToRequestOptions());
     }
@@ -413,12 +412,12 @@ public partial class BetaVoiceAgentEndpointConversations
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<VoiceResponse> GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<VoiceResult> GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-        return new InternalOpenAIAsyncCollectionResultOfT<VoiceResponse>(
+        return new InternalOpenAIAsyncCollectionResultOfT<VoiceResult>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAgentConversationResponsesRequest(
@@ -429,7 +428,7 @@ public partial class BetaVoiceAgentEndpointConversations
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<VoiceResponse>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<VoiceResult>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, conversationId]),
             cancellationToken.ToRequestOptions());
     }

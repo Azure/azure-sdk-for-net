@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -52,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesComputeApiVersion);
             _computesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesComputeApiVersion ?? "2026-07-15-preview");
+            _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesComputeApiVersion ?? "2026-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -302,7 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -353,7 +351,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +402,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -455,7 +453,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -506,7 +504,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -557,7 +555,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -606,7 +604,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -665,7 +663,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -703,258 +701,6 @@ namespace Azure.ResourceManager.CognitiveServices
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServicesComputeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CognitiveServicesComputeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServicesComputeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CognitiveServicesComputeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServicesComputeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CognitiveServicesComputeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _computesClientDiagnostics.CreateScope("CognitiveServicesComputeResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _computesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CognitiveServicesComputeData> response = Response.FromValue(CognitiveServicesComputeData.FromResponse(result), result);
-                    return Response.FromValue(new CognitiveServicesComputeResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
             }
             catch (Exception e)
             {

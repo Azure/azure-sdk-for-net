@@ -79,15 +79,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitoringTarget)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentId, _deploymentIdIsDefined))
             {
-                writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
+                if (DeploymentId != null)
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentId"u8);
+                }
             }
-            if (Optional.IsDefined(ModelId))
+            if (Optional.IsDefined(ModelId, _modelIdIsDefined))
             {
-                writer.WritePropertyName("modelId"u8);
-                writer.WriteStringValue(ModelId);
+                if (ModelId != null)
+                {
+                    writer.WritePropertyName("modelId"u8);
+                    writer.WriteStringValue(ModelId);
+                }
+                else
+                {
+                    writer.WriteNull("modelId"u8);
+                }
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
@@ -133,7 +147,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool deploymentIdIsDefined = false;
             string deploymentId = default;
+            bool modelIdIsDefined = false;
             string modelId = default;
             ModelTaskType taskType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,6 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("deploymentId"u8))
                 {
+                    deploymentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentId = null;
@@ -151,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("modelId"u8))
                 {
+                    modelIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelId = null;
@@ -166,10 +184,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitoringTarget(deploymentId, modelId, taskType, additionalBinaryDataProperties);
+            return new MonitoringTarget(deploymentId, modelId, taskType, additionalBinaryDataProperties)
+            {
+                _deploymentIdIsDefined = deploymentIdIsDefined,
+                _modelIdIsDefined = modelIdIsDefined
+            };
         }
     }
 }

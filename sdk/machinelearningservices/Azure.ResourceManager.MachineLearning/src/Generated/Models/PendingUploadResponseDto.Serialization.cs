@@ -82,15 +82,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BlobReferenceForConsumption))
+            if (Optional.IsDefined(BlobReferenceForConsumption, _blobReferenceForConsumptionIsDefined))
             {
-                writer.WritePropertyName("blobReferenceForConsumption"u8);
-                writer.WriteObjectValue(BlobReferenceForConsumption, options);
+                if (BlobReferenceForConsumption != null)
+                {
+                    writer.WritePropertyName("blobReferenceForConsumption"u8);
+                    writer.WriteObjectValue(BlobReferenceForConsumption, options);
+                }
+                else
+                {
+                    writer.WriteNull("blobReferenceForConsumption"u8);
+                }
             }
-            if (Optional.IsDefined(PendingUploadId))
+            if (Optional.IsDefined(PendingUploadId, _pendingUploadIdIsDefined))
             {
-                writer.WritePropertyName("pendingUploadId"u8);
-                writer.WriteStringValue(PendingUploadId);
+                if (PendingUploadId != null)
+                {
+                    writer.WritePropertyName("pendingUploadId"u8);
+                    writer.WriteStringValue(PendingUploadId);
+                }
+                else
+                {
+                    writer.WriteNull("pendingUploadId"u8);
+                }
             }
             if (Optional.IsDefined(PendingUploadType))
             {
@@ -139,7 +153,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool blobReferenceForConsumptionIsDefined = false;
             BlobReferenceForConsumptionDto blobReferenceForConsumption = default;
+            bool pendingUploadIdIsDefined = false;
             string pendingUploadId = default;
             PendingUploadType? pendingUploadType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("blobReferenceForConsumption"u8))
                 {
+                    blobReferenceForConsumptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         blobReferenceForConsumption = null;
@@ -157,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("pendingUploadId"u8))
                 {
+                    pendingUploadIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         pendingUploadId = null;
@@ -176,10 +194,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType, additionalBinaryDataProperties);
+            return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType, additionalBinaryDataProperties)
+            {
+                _blobReferenceForConsumptionIsDefined = blobReferenceForConsumptionIsDefined,
+                _pendingUploadIdIsDefined = pendingUploadIdIsDefined
+            };
         }
     }
 }

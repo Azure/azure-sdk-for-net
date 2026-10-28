@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Usage))
+            if (options.Format != "W" && Optional.IsDefined(Usage, _usageIsDefined))
             {
-                writer.WritePropertyName("usage"u8);
-                writer.WriteNumberValue(Usage.Value);
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteNumberValue(Usage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("usage"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,6 +140,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             int? current = default;
             int? @default = default;
+            bool usageIsDefined = false;
             int? usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("usage"u8))
                 {
+                    usageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         usage = null;
@@ -167,10 +176,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaItemProperties(current, @default, usage, additionalBinaryDataProperties);
+            return new QuotaItemProperties(current, @default, usage, additionalBinaryDataProperties)
+            {
+                _usageIsDefined = usageIsDefined
+            };
         }
     }
 }

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConnectivityConfigurationProperties(
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
                 connectivityCapabilities,
-                appliesToGroups,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
                 provisioningState,
                 deleteExistingPeering,
                 resourceGuid,

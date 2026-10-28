@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
+            if (Optional.IsDefined(GatedModelAccess))
+            {
+                writer.WritePropertyName("gatedModelAccess"u8);
+                writer.WriteObjectValue(GatedModelAccess, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string deploymentTemplate = default;
             string acceleratorType = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
+            GatedModelAccessProperties gatedModelAccess = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             string computeId = default;
             string priority = default;
@@ -226,6 +232,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     versionUpgradeOption = new DeploymentModelVersionUpgradeOption(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("gatedModelAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatedModelAccess = GatedModelAccessProperties.DeserializeGatedModelAccessProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("capabilities"u8))
@@ -306,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesManagedComputeDeploymentProperties(
@@ -314,6 +329,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 deploymentTemplate,
                 acceleratorType,
                 versionUpgradeOption,
+                gatedModelAccess,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 computeId,
                 priority,

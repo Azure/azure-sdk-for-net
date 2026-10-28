@@ -167,7 +167,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedRedTeam(value, nextLink, additionalBinaryDataProperties);
+            return new PagedRedTeam(value ?? new ChangeTrackingList<RedTeam>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

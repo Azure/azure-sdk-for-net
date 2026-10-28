@@ -164,7 +164,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VideoCrop(topLeftInternal, bottomRightInternal, additionalBinaryDataProperties);
+            return new VideoCrop(topLeftInternal ?? new ChangeTrackingList<int>(), bottomRightInternal ?? new ChangeTrackingList<int>(), additionalBinaryDataProperties);
         }
     }
 }

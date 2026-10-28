@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerDevOpsAuditingSettingResource.ResourceType, out string sqlServerDevOpsAuditingSettingApiVersion);
             _serverDevOpsAuditSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDevOpsAuditingSettingResource.ResourceType.Namespace, Diagnostics);
-            _serverDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettings(_serverDevOpsAuditSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDevOpsAuditingSettingApiVersion ?? "2025-02-01-preview");
+            _serverDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettings(_serverDevOpsAuditSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDevOpsAuditingSettingApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingDataAsyncCollectionResultOfT(
                 _serverDevOpsAuditSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingDataCollectionResultOfT(
                 _serverDevOpsAuditSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

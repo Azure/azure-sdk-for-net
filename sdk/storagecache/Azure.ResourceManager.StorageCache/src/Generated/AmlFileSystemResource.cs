@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AmlFileSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string amlFileSystemApiVersion);
             _amlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemApiVersion ?? "2026-08-01");
+            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageCache/amlFilesystems", out string amlFilesystemsApiVersionOverride) ? amlFilesystemsApiVersionOverride : "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -689,10 +689,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -732,10 +731,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

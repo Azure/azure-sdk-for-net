@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BackendServiceFabricClusterProperties(
                 clientCertificateId,
                 clientCertificatethumbprint,
                 maxPartitionResolutionRetries,
-                managementEndpoints,
+                managementEndpoints ?? new ChangeTrackingList<string>(),
                 serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
                 serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
                 additionalBinaryDataProperties);

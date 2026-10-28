@@ -10,15 +10,18 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetMemoryStoresClient")]
 [CodeGenSuppress("GetProjectAgentSkillsClient")]
 [CodeGenSuppress("GetAgentOptimizationJobsClient")]
-[CodeGenSuppress("GetBetaVoiceAgentEndpointConversationsClient")]
-[CodeGenSuppress("GetBetaVoiceAgentTelephonyClient")]
+[CodeGenSuppress("GetBetaVoiceAgentsConversationsClient")]
+[CodeGenSuppress("GetBetaVoiceAgentsTelephonyClient")]
+[CodeGenSuppress("GetInternalBetaClient")]
+[CodeGenSuppress("GetAgentOptimizationJobCandidatesClient")]
 [CodeGenSuppress("_cachedAgentClient")]
 [CodeGenSuppress("_cachedConversations")]
 [CodeGenSuppress("_cachedMemoryStores")]
 [CodeGenSuppress("_cachedProjectAgentSkills")]
 [CodeGenSuppress("_cachedAgentOptimizationJobs")]
-[CodeGenSuppress("_cachedBetaVoiceAgentEndpointConversations")]
-[CodeGenSuppress("_cachedBetaVoiceAgentTelephony")]
+[CodeGenSuppress("_cachedBetaVoiceAgentsConversations")]
+[CodeGenSuppress("_cachedBetaVoiceAgentsTelephony")]
+[CodeGenSuppress("_cachedAgentOptimizationJobCandidates")]
 internal partial class InternalProjectsClient
 {
 }

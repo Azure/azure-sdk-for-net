@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdvancedSecurityObject(advSecurityObjectModelType, entry, additionalBinaryDataProperties);
+            return new AdvancedSecurityObject(advSecurityObjectModelType, entry ?? new ChangeTrackingList<NameDescriptionObject>(), additionalBinaryDataProperties);
         }
     }
 }

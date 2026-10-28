@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DurableTaskPrivateEndpointConnectionResource.ResourceType, out string durableTaskPrivateEndpointConnectionApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskPrivateEndpointConnectionApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new DurableTaskPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new SchedulersGetPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<DurableTaskPrivateEndpointConnectionData, DurableTaskPrivateEndpointConnectionResource>(new DurableTaskPrivateEndpointConnectionDataCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +462,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +523,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -38,7 +38,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -72,7 +72,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -109,7 +109,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -146,7 +146,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -183,7 +183,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -220,7 +220,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -254,7 +254,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -288,7 +288,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -358,7 +358,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -396,7 +396,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -433,7 +433,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -470,7 +470,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -766,38 +766,5 @@ public partial class AgentAdministrationClient
 
         using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, force, options);
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-    }
-    /// <summary>
-    /// Generates and creates an agent from kind-specific high-level inputs.
-    /// The generated definition remains fully editable through the standard agent versioning operations.
-    /// </summary>
-    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
-    {
-        return GenerateAgent(
-            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary>
-    /// Generates and creates an agent from kind-specific high-level inputs.
-    /// The generated definition remains fully editable through the standard agent versioning operations.
-    /// </summary>
-    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
-    {
-        return await GenerateAgentAsync(
-            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(SignalName);
             writer.WritePropertyName("history"u8);
             writer.WriteStartArray();
-            foreach (SignalHistoryDataPoint item in History)
+            foreach (HealthModelSignalHistoryDataPoint item in History)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             string entityName = default;
             string signalName = default;
-            IList<SignalHistoryDataPoint> history = default;
+            IList<HealthModelSignalHistoryDataPoint> history = default;
             string nextMarker = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (prop.NameEquals("history"u8))
                 {
-                    List<SignalHistoryDataPoint> array = new List<SignalHistoryDataPoint>();
+                    List<HealthModelSignalHistoryDataPoint> array = new List<HealthModelSignalHistoryDataPoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SignalHistoryDataPoint.DeserializeSignalHistoryDataPoint(item, options));
+                        array.Add(HealthModelSignalHistoryDataPoint.DeserializeHealthModelSignalHistoryDataPoint(item, options));
                     }
                     history = array;
                     continue;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySignalHistoryResult(entityName, signalName, history, nextMarker, additionalBinaryDataProperties);
+            return new EntitySignalHistoryResult(entityName, signalName, history ?? new ChangeTrackingList<HealthModelSignalHistoryDataPoint>(), nextMarker, additionalBinaryDataProperties);
         }
     }
 }

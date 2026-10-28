@@ -129,10 +129,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsPostPayloadJson))
+            if (Optional.IsDefined(IsPostPayloadJson, _isPostPayloadJsonIsDefined))
             {
-                writer.WritePropertyName("isPostPayloadJson"u8);
-                writer.WriteBooleanValue(IsPostPayloadJson.Value);
+                if (IsPostPayloadJson != null)
+                {
+                    writer.WritePropertyName("isPostPayloadJson"u8);
+                    writer.WriteBooleanValue(IsPostPayloadJson.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isPostPayloadJson"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -150,10 +157,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SessionTimeoutInMinutes))
+            if (Optional.IsDefined(SessionTimeoutInMinutes, _sessionTimeoutInMinutesIsDefined))
             {
-                writer.WritePropertyName("sessionTimeoutInMinutes"u8);
-                writer.WriteNumberValue(SessionTimeoutInMinutes.Value);
+                if (SessionTimeoutInMinutes != null)
+                {
+                    writer.WritePropertyName("sessionTimeoutInMinutes"u8);
+                    writer.WriteNumberValue(SessionTimeoutInMinutes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("sessionTimeoutInMinutes"u8);
+                }
             }
             if (Optional.IsDefined(SessionIdName))
             {
@@ -197,8 +211,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IDictionary<string, string> userName = default;
             IDictionary<string, string> password = default;
             IDictionary<string, BinaryData> queryParameters = default;
+            bool isPostPayloadJsonIsDefined = false;
             bool? isPostPayloadJson = default;
             IDictionary<string, string> headers = default;
+            bool sessionTimeoutInMinutesIsDefined = false;
             int? sessionTimeoutInMinutes = default;
             string sessionIdName = default;
             string sessionLoginRequestUri = default;
@@ -258,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     queryParameters = dictionary;
@@ -266,6 +282,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("isPostPayloadJson"u8))
                 {
+                    isPostPayloadJsonIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isPostPayloadJson = null;
@@ -297,6 +314,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("sessionTimeoutInMinutes"u8))
                 {
+                    sessionTimeoutInMinutesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         sessionTimeoutInMinutes = null;
@@ -317,20 +335,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SessionAuthModel(
                 @type,
                 additionalBinaryDataProperties,
-                userName,
-                password,
+                userName ?? new ChangeTrackingDictionary<string, string>(),
+                password ?? new ChangeTrackingDictionary<string, string>(),
                 queryParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 isPostPayloadJson,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 sessionTimeoutInMinutes,
                 sessionIdName,
-                sessionLoginRequestUri);
+                sessionLoginRequestUri)
+            {
+                _isPostPayloadJsonIsDefined = isPostPayloadJsonIsDefined,
+                _sessionTimeoutInMinutesIsDefined = sessionTimeoutInMinutesIsDefined
+            };
         }
     }
 }

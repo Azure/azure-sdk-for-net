@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The NFVI object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
     /// </summary>
     public abstract partial class NfviDetails
     {

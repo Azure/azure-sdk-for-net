@@ -336,9 +336,7 @@ namespace Azure.Identity
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
-#pragma warning disable AZID0002 // IsAzureProxyEnabled is experimental
             options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
-#pragma warning restore AZID0002
 
             if (!string.IsNullOrEmpty(Options.WorkloadTokenFilePath))
             {
@@ -366,6 +364,7 @@ namespace Azure.Identity
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
+                EnableMtlsProofOfPossession = options.EnableMtlsProofOfPossession,
             };
 
             // ManagedIdentityIdKind/ManagedIdentityId (new config properties) take priority
@@ -563,10 +562,19 @@ namespace Azure.Identity
             }
 
             string tokenScope = TranslateCloudToTokenScope(Options.AzureCloud);
-            var managedIdentityCredential = new ManagedIdentityCredential(managedIdentityId);
-            var tokenContext = new TokenRequestContext(new[] { tokenScope });
+            var managedIdentityOptions = Options.Clone<DefaultAzureCredentialOptions>();
+            managedIdentityOptions.IsChainedCredential = false;
+            var managedIdentityCredential = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions
+            {
+                ManagedIdentityId = managedIdentityId,
+                Pipeline = CredentialPipeline.GetInstance(managedIdentityOptions, IsManagedIdentityCredential: true),
+                Options = managedIdentityOptions,
+                IsForceRefreshEnabled = managedIdentityOptions.IsForceRefreshEnabled,
+                EnableMtlsProofOfPossession = managedIdentityOptions.EnableMtlsProofOfPossession,
+            }));
 
             var assertionOptions = Options.Clone<ClientAssertionCredentialOptions>();
+            assertionOptions.EnableMtlsProofOfPossession = managedIdentityOptions.EnableMtlsProofOfPossession;
 
             if (Options.AdditionallyAllowedTenants?.Count > 0)
             {
@@ -579,7 +587,8 @@ namespace Azure.Identity
             return new ClientAssertionCredential(
                 Options.TenantId,
                 Options.ClientId,
-                async _ => (await managedIdentityCredential.GetTokenAsync(tokenContext).ConfigureAwait(false)).Token,
+                managedIdentityCredential,
+                tokenScope,
                 assertionOptions);
         }
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
@@ -512,6 +513,147 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
+        public void CertificateTrustStore_ReplacedLedgerBehindSameDnsNameRecoversWithoutRestart()
+        {
+            var ledgerAResponse = new MockResponse(200);
+            ledgerAResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 certA = ConfidentialLedgerCertificateClient.ParseCertificate(ledgerAResponse);
+            var ledgerBResponse = new MockResponse(200);
+            ledgerBResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 certB = ConfidentialLedgerCertificateClient.ParseCertificate(ledgerBResponse);
+
+            int refreshCount = 0;
+            var store = new ConfidentialLedgerCertificateTrustStore(
+                verifyConnection: true,
+                // After the replacement, the identity service returns Ledger B's certificate for the same name.
+                certificateRefresher: _ =>
+                {
+                    refreshCount++;
+                    return certB;
+                });
+            // The client was constructed against Ledger A, so Cert A is pinned.
+            store.Trust("ledger-a", certA, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            // Ledger B now serves the same DNS name and presents Cert B, which is not rooted in Cert A. Server
+            // authentication fails against the pin, so the store re-queries the identity service and accepts the
+            // connection with the refreshed pin. No process restart is required.
+            Assert.IsTrue(store.Validate("ledger-a", certB));
+            Assert.AreEqual(1, refreshCount);
+
+            // Cert B is now pinned, so subsequent handshakes validate without refreshing.
+            Assert.IsTrue(store.Validate("ledger-a", certB));
+            Assert.AreEqual(1, refreshCount);
+
+            // Cert A is no longer trusted after the pin moves to Ledger B.
+            Assert.IsFalse(store.Validate("ledger-a", certA));
+        }
+
+        [Test]
+        public void CertificateTrustStore_ConcurrentHandshakesCoalesceIntoSingleRefresh()
+        {
+            const int ConcurrentHandshakes = 8;
+            TimeSpan timeout = TimeSpan.FromSeconds(30);
+            var ledgerAResponse = new MockResponse(200);
+            ledgerAResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 certA = ConfidentialLedgerCertificateClient.ParseCertificate(ledgerAResponse);
+            var ledgerBResponse = new MockResponse(200);
+            ledgerBResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 certB = ConfidentialLedgerCertificateClient.ParseCertificate(ledgerBResponse);
+
+            int refreshCount = 0;
+            using var refreshStarted = new ManualResetEventSlim(false);
+            using var releaseRefresh = new ManualResetEventSlim(false);
+            var store = new ConfidentialLedgerCertificateTrustStore(
+                verifyConnection: true,
+                certificateRefresher: _ =>
+                {
+                    Interlocked.Increment(ref refreshCount);
+                    refreshStarted.Set();
+                    // Hold the identity-service lookup open so the other handshakes queue behind the per-ledger lock.
+                    releaseRefresh.Wait(timeout);
+                    return certB;
+                });
+            store.Trust("ledger-a", certA, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            var handshakes = new Task<bool>[ConcurrentHandshakes];
+            handshakes[0] = StartHandshake(() => store.Validate("ledger-a", certB));
+            Assert.IsTrue(refreshStarted.Wait(timeout), "The first handshake never reached the identity service refresh.");
+
+            using var waitersStarted = new CountdownEvent(ConcurrentHandshakes - 1);
+            for (int i = 1; i < ConcurrentHandshakes; i++)
+            {
+                handshakes[i] = StartHandshake(() =>
+                {
+                    waitersStarted.Signal();
+                    return store.Validate("ledger-a", certB);
+                });
+            }
+            Assert.IsTrue(waitersStarted.Wait(timeout), "Not every concurrent handshake started.");
+
+            // Give the queued handshakes time to reach the per-ledger lock. If the lock regressed, they would enter
+            // the refresher during this window and increment the count.
+            Thread.Sleep(TimeSpan.FromMilliseconds(250));
+            Assert.AreEqual(1, Volatile.Read(ref refreshCount), "Concurrent handshakes must wait for the in-flight refresh instead of starting their own.");
+
+            releaseRefresh.Set();
+            Assert.IsTrue(Task.WaitAll(handshakes, timeout), "Concurrent handshakes did not complete.");
+            foreach (Task<bool> handshake in handshakes)
+            {
+                Assert.IsTrue(handshake.Result, "Every handshake must validate against the refreshed certificate.");
+            }
+            Assert.AreEqual(1, Volatile.Read(ref refreshCount), "Concurrent handshakes must coalesce into a single identity service lookup.");
+        }
+
+        private static Task<bool> StartHandshake(Func<bool> validate) =>
+            Task.Factory.StartNew(validate, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+
+        [Test]
+        public void CertificateTrustStore_ThrottlesRefreshForPersistentMismatch()
+        {
+            var identityResponse = new MockResponse(200);
+            identityResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 legitimate = ConfidentialLedgerCertificateClient.ParseCertificate(identityResponse);
+            var mismatchResponse = new MockResponse(200);
+            mismatchResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 mismatch = ConfidentialLedgerCertificateClient.ParseCertificate(mismatchResponse);
+
+            int refreshCount = 0;
+            var store = new ConfidentialLedgerCertificateTrustStore(
+                verifyConnection: true,
+                // The identity service keeps returning the legitimate certificate, so the mismatched one
+                // presented during the handshake never validates.
+                certificateRefresher: _ =>
+                {
+                    refreshCount++;
+                    return legitimate;
+                })
+            {
+                RefreshCooldown = TimeSpan.FromMinutes(5),
+            };
+            store.Trust("ledger-a", legitimate, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            Assert.IsFalse(store.Validate("ledger-a", mismatch));
+            Assert.IsFalse(store.Validate("ledger-a", mismatch));
+            Assert.AreEqual(1, refreshCount, "A persistently mismatched certificate must not refresh on every handshake.");
+        }
+
+        [Test]
+        public void CertificateTrustStore_DoesNotRefreshWithoutResolver()
+        {
+            var identityResponse = new MockResponse(200);
+            identityResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 original = ConfidentialLedgerCertificateClient.ParseCertificate(identityResponse);
+            var changedResponse = new MockResponse(200);
+            changedResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 changed = ConfidentialLedgerCertificateClient.ParseCertificate(changedResponse);
+
+            var store = new ConfidentialLedgerCertificateTrustStore(verifyConnection: true);
+            store.Trust("ledger-a", original, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            Assert.IsFalse(store.Validate("ledger-a", changed), "Without a refresher the store must reject a changed service identity certificate.");
+        }
+
+        [Test]
         public async Task Failover_NonUserCancellationSucceeds()
         {
             var transport = new MockTransport(req =>
@@ -729,6 +871,99 @@ namespace Azure.Security.ConfidentialLedger.Tests
             });
 
             Assert.AreEqual(0, failoverMetadataCalls, "Unsupported GET operations must remain on the primary ledger.");
+        }
+
+        [Test]
+        public async Task Failover_IneligibleTransportFailurePreservesExceptionAndRetryBehavior(
+            [Values("create", "post", "range", "archive", "receipt", "status", "governance")] string operation,
+            [Values(false, true)] bool succeedsOnRetry,
+            [Values(false, true)] bool timeout)
+        {
+            Exception original = timeout
+                ? new RequestFailedException(0, "primary transport timed out", new TimeoutException())
+                : new IOException("primary connection failed");
+            int attempts = 0;
+            int metadataCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    metadataCalls++;
+                    return new MockResponse(404);
+                }
+
+                Assert.AreEqual("testledger.confidential-ledger.azure.com", req.Uri.Host,
+                    "Ineligible requests must stay on the primary ledger.");
+                if (operation == "archive" && req.Uri.Path.EndsWith("/current"))
+                {
+                    return new MockResponse(404);
+                }
+
+                attempts++;
+                if (!succeedsOnRetry || attempts == 1)
+                {
+                    throw original;
+                }
+
+                var response = new MockResponse(200);
+                response.AddHeader("x-ms-ccf-transaction-id", "2.7");
+                response.SetContent(
+                    @"{ ""state"": ""Ready"", ""entries"": [
+                        { ""contents"": ""latest"", ""collectionId"": ""c1"", ""transactionId"": ""2.7"" }
+                    ] }");
+                return response;
+            });
+            var client = CreateClient(transport, enableArchivedFallback: true, maxRetries: succeedsOnRetry ? 1 : 0);
+
+            if (succeedsOnRetry)
+            {
+                await InvokeIneligibleOperationAsync(client, operation);
+                Assert.AreEqual(2, attempts, "The normal retry policy must see the original transport failure.");
+            }
+            else
+            {
+                Exception thrown = Assert.CatchAsync(async () => await InvokeIneligibleOperationAsync(client, operation));
+                Assert.AreSame(original, thrown, "Do not replace the transport exception with a missing-response error.");
+                Assert.AreEqual(1, attempts, "No retry is allowed when MaxRetries is zero.");
+            }
+
+            Assert.AreEqual(0, metadataCalls, "Ineligible transport failures must not initiate failover discovery.");
+        }
+
+        private static async Task InvokeIneligibleOperationAsync(ConfidentialLedgerClient client, string operation)
+        {
+            switch (operation)
+            {
+                case "create":
+                    await client.CreateLedgerEntryAsync(RequestContent.Create(new { contents = "x" }), "c1", new RequestContext());
+                    break;
+                case "post":
+                    await client.PostLedgerEntryAsync(WaitUntil.Started, RequestContent.Create(new { contents = "x" }), "c1", new RequestContext());
+                    break;
+                case "range":
+                    await foreach (BinaryData _ in client.GetLedgerEntriesAsync("c1", null, null, null, new RequestContext()))
+                    {
+                    }
+                    break;
+                case "archive":
+                    Response response = await client.GetCurrentLedgerEntryAsync("c1", new RequestContext());
+                    using (JsonDocument document = JsonDocument.Parse(response.Content))
+                    {
+                        Assert.AreEqual("latest", document.RootElement.GetProperty("contents").GetString());
+                    }
+                    break;
+                case "receipt":
+                    await client.GetReceiptAsync("2.7", new RequestContext());
+                    break;
+                case "status":
+                    await client.GetTransactionStatusAsync("2.7", new RequestContext());
+                    break;
+                case "governance":
+                    await client.GetConstitutionAsync(new RequestContext());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(operation));
+            }
         }
 
         [Test]

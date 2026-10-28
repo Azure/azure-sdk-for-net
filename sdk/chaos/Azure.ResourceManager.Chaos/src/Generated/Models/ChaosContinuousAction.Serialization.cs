@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChaosContinuousAction(
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 @type,
                 additionalBinaryDataProperties,
                 duration,
-                parameters,
+                parameters ?? new ChangeTrackingList<ChaosKeyValuePair>(),
                 selectorId);
         }
     }

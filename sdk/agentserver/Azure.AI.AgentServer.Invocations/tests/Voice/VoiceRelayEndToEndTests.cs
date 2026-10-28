@@ -20,6 +20,54 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceRelayEndToEndTests
 {
+    [TestCase(false, "invocations_ws")]
+    [TestCase(true, "invocations_ws")]
+    [TestCase(false, "voice_conversation_engine")]
+    [TestCase(true, "voice_conversation_engine")]
+    public async Task DataAndSilentCompletionAreRelayed(bool silent, string path)
+    {
+        await using var app = BuildApp(new DataHandler(silent));
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app, path);
+        await SendTextAsync(webSocket, """
+            {"type":"session.start","id":"m_start","ts":"2026-09-20T00:00:00Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1000,"idle_ms":1000,"max_duration_ms":5000}}
+            """);
+        using var ready = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+        Assert.That(ready.RootElement.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+        await SendTextAsync(webSocket, """
+            {"type":"user.message","id":"m_data","ts":"2026-09-20T00:00:01Z","item_id":"in_data","content":[{"type":"input_data","data":{"nested":[true,null]}}]}
+            """);
+        using var first = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+        Assert.That(first.RootElement.GetProperty("type").GetString(), Is.EqualTo(silent ? "response.none" : "response.created"));
+        if (!silent)
+        {
+            using var data = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+            Assert.That(data.RootElement.GetProperty("data").GetProperty("nested").GetArrayLength(), Is.EqualTo(2));
+            using var done = await ReceiveJsonAsync(webSocket).WaitAsync(TestTimeout);
+            Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+        }
+        await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+    }
+
+    private sealed class DataHandler(bool silent) : VoiceHandler
+    {
+        protected override Task OnSessionStartAsync(VoiceSession session, VoiceSessionStartEvent start, CancellationToken cancellationToken) =>
+            session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken);
+
+        protected override async Task OnUserMessageAsync(VoiceSession session, VoiceUserMessageEvent message, CancellationToken cancellationToken)
+        {
+            if (silent)
+            {
+                await session.SendAsync(new VoiceResponseNoneMessage(new[] { message.ItemId }, reason: "acknowledged"), cancellationToken);
+                return;
+            }
+            var part = (VoiceInputDataPart)message.ContentParts[0];
+            await session.SendAsync(new VoiceResponseCreatedMessage("r_data", new[] { message.ItemId }), cancellationToken);
+            await session.SendAsync(new VoiceResponseOutputDataDoneMessage("r_data", "it_data", part.Data), cancellationToken);
+            await session.SendAsync(new VoiceResponseDoneMessage("r_data"), cancellationToken);
+        }
+    }
+
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
 
     [Test]
@@ -53,20 +101,22 @@ public class VoiceRelayEndToEndTests
         Assert.That(handler.TerminationCount, Is.EqualTo(1));
     }
 
-    [Test]
-    public async Task SelectedInboundEventsAreDispatchedInWireOrderOnOneSession()
+    [TestCase("invocations_ws")]
+    [TestCase("voice_conversation_engine")]
+    public async Task SelectedInboundEventsAreDispatchedInWireOrderOnOneSession(string path)
     {
         var handler = new OrderedDispatchHandler();
         await using var app = BuildApp(handler);
         await app.StartAsync();
-        using var webSocket = await ConnectAsync(app);
+        using var webSocket = await ConnectAsync(app, path);
         var frames = new[]
         {
             """{"type":"session.start","id":"m_1","ts":"2026-08-13T00:00:00.000Z","protocol_version":"1.0","reconnect":false,"response_timeouts":{"first_output_ms":1,"idle_ms":2,"max_duration_ms":3}}""",
             """{"type":"user.message","id":"m_2","ts":"2026-08-13T00:00:01.000Z","item_id":"in_1","content":[{"type":"input_text","text":"hello"}]}""",
             """{"type":"user.no_input","id":"m_3","ts":"2026-08-13T00:00:02.000Z","item_id":"in_2","count":1}""",
             """{"type":"user.speech_started","id":"m_4","ts":"2026-08-13T00:00:03.000Z"}""",
-            """{"type":"barge_in","id":"m_5","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","heard_text":"heard"}""",
+            """{"type":"barge_in","id":"m_legacy","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","heard_text":"ignored"}""",
+            """{"type":"user.barge_in","id":"m_5","ts":"2026-08-13T00:00:04.000Z","response_id":"r_1","item_id":"it_1","heard_text":"heard"}""",
             """{"type":"response.accepted","id":"m_6","ts":"2026-08-13T00:00:05.000Z","response_id":"r_2"}""",
             """{"type":"response.dropped","id":"m_7","ts":"2026-08-13T00:00:06.000Z","response_id":"r_3","reason":"queue_full"}""",
             """{"type":"response.cancelled","id":"m_8","ts":"2026-08-13T00:00:07.000Z","response_id":"r_4","heard_text":"heard"}""",
@@ -88,7 +138,7 @@ public class VoiceRelayEndToEndTests
                 "user.message",
                 "user.no_input",
                 "user.speech_started",
-                "barge_in",
+                "user.barge_in",
                 "response.accepted",
                 "response.dropped",
                 "response.cancelled",
@@ -96,6 +146,10 @@ public class VoiceRelayEndToEndTests
                 "session.end",
             }));
             Assert.That(handler.Sessions.Distinct(ReferenceEqualityComparer.Instance).Count(), Is.EqualTo(1));
+            Assert.That(handler.Interruption, Is.Not.Null);
+            Assert.That(handler.Interruption!.ResponseId, Is.EqualTo("r_1"));
+            Assert.That(handler.Interruption.ItemId, Is.EqualTo("it_1"));
+            Assert.That(handler.Interruption.HeardText, Is.EqualTo("heard"));
         });
 
         await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
@@ -483,11 +537,11 @@ public class VoiceRelayEndToEndTests
         return app;
     }
 
-    private static async Task<WebSocket> ConnectAsync(WebApplication app)
+    private static async Task<WebSocket> ConnectAsync(WebApplication app, string path = "invocations_ws")
     {
         var client = app.GetTestServer().CreateWebSocketClient();
         return await client.ConnectAsync(
-            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            new Uri(app.GetTestServer().BaseAddress, path),
             CancellationToken.None);
     }
 
@@ -552,6 +606,8 @@ public class VoiceRelayEndToEndTests
 
         public List<VoiceSession> Sessions { get; } = new();
 
+        public VoiceUserBargeInEvent? Interruption { get; private set; }
+
         public TaskCompletionSource AllEventsReceived { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -578,10 +634,14 @@ public class VoiceRelayEndToEndTests
             VoiceUserSpeechStartedEvent speechStarted,
             CancellationToken cancellationToken) => Record(session, speechStarted);
 
-        protected override Task OnBargeInAsync(
+        protected override Task OnUserBargeInAsync(
             VoiceSession session,
-            VoiceBargeInEvent bargeIn,
-            CancellationToken cancellationToken) => Record(session, bargeIn);
+            VoiceUserBargeInEvent bargeIn,
+            CancellationToken cancellationToken)
+        {
+            Interruption = bargeIn;
+            return Record(session, bargeIn);
+        }
 
         protected override Task OnResponseAcceptedAsync(
             VoiceSession session,

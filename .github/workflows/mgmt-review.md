@@ -38,7 +38,7 @@ permissions:
   checks: read
 engine:
   id: copilot
-  version: "1.0.83"
+  version: "1.0.80"
   concurrency:
     group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.inputs.pr_number }}"
     queue: max
@@ -49,6 +49,7 @@ network:
     - dotnet
     - github
 safe-outputs:
+  runs-on: ubuntu-latest
   report-failure-as-issue: false
   add-comment:
     max: 1
@@ -300,7 +301,7 @@ Before submitting the review, compare the current result against previous review
 Same status as the previous management SDK review: <one-sentence pass/fail summary>. No new management SDK review findings on this head commit.
 ```
 
-Use the compact body only for unchanged non-blocking no-finding results. If there are any findings, CI moved from pending to failed/passed, the blocking/non-blocking event changed, the scope changed, or new changed files need explanation, use the full review body and recreate applicable inline comments on the current diff.
+Use the compact body only for unchanged non-blocking no-finding results. If there are any findings, CI moved from pending to failed/passed, the blocking/non-blocking event changed, the scope changed, or new changed files need explanation, use the full review body and recreate applicable inline comments on the current diff. Do not use the compact no-finding body while outstanding TypeSpec changes remain, even when the related inline findings were duplicate-suppressed.
 
 Then submit exactly one review using `submit_pull_request_review`:
 
@@ -309,7 +310,27 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
 
-The review body should contain:
+Before `### Management SDK Review Summary`, include the following guidance at the very top of every review body whose outstanding findings require TypeSpec changes in the spec repository. A TypeSpec-backed package alone is not enough to include the guidance. Omit the entire guidance section for clean reviews or reviews needing only C# customization, documentation, or CI-only fixes that do not require TypeSpec changes.
+
+Repeat the full guidance on each applicable review, even if an earlier review already included it. This includes applicable findings already posted by another reviewer and omitted here to avoid duplicate inline comments; a `COMMENT` verdict alone does not mean those findings are resolved.
+
+```markdown
+## ⚠️ Action required: resolve TypeSpec review findings
+
+> [!IMPORTANT]
+> **TypeSpec changes required.** Fix these findings in `azure-rest-api-specs`, then validate the regenerated SDK.
+> **Do not merge the spec PR while review findings remain.**
+
+Do not manually edit generated C# files.
+
+1. Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.
+2. Before the spec PR merges, update `tsp-location.yaml` to its latest commit, regenerate the SDK, and rerun this review.
+3. Address any new findings in the same spec PR, update the SDK from its latest commit, and repeat regeneration and review until no findings remain.
+4. Only after the review reports no more findings, merge the spec PR.
+5. After the spec PR merges, update `tsp-location.yaml` to the latest specs `main` commit containing the changes, then regenerate the SDK.
+```
+
+After that optional guidance section, the review body should contain:
 
 ```markdown
 ### Management SDK Review Summary
@@ -323,16 +344,4 @@ The review body should contain:
 <short, actionable summary>
 ```
 
-If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
-
-When the review has findings, append this process guidance to the review body:
-
-```markdown
-#### Resolving TypeSpec-related review comments
-
-1. Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.
-2. Before the spec PR merges, update `tsp-location.yaml` to the latest commit from the spec PR, regenerate the SDK, and rerun this review.
-3. If the review reports new findings, address them in the same spec PR, update the SDK from its latest commit, and repeat steps 2 and 3. Do not merge the spec PR while any review findings remain.
-4. Only after the review reports no more findings, merge the spec PR.
-5. After the spec PR merges, update `tsp-location.yaml` to the latest `main` commit in `azure-rest-api-specs` that contains the merged changes, then regenerate the SDK.
-```
+If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found. Do not include the TypeSpec guidance in that case.

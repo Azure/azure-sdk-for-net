@@ -1,11 +1,58 @@
 # Release History
 
-## 1.0.0-beta.30 (Unreleased)
+## 1.0.0-beta.31 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.30 (2026-10-15)
+
+### Features Added
+
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration, with
+  `POST /_before_snapshot` and `POST /_after_restore` as aliases. Applications can register
+  an `IAgentSnapshotLifecycle` singleton to release and rebuild process state; Core applies
+  session environment overrides first and provides serialized, idempotent retry handling.
+  Consumers acknowledge this experimental contract with the `AAAS002` diagnostic.
+- Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
+  validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
+- Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
+  probes without activating or reclaiming the task.
+- Added the hidden `TaskDefinition<TInput, TOutput>.TryStartExistingAsync()` compatibility
+  primitive, which starts a multi-turn task only if its record still exists and never enters the
+  create path.
+- Added host-scoped resilient-task opt-in through `SetResilientTasksEnabled()` and
+  `ResilientTaskOptions.Enabled`. Task registration alone no longer initializes task storage or
+  recovery; enabled hosts run startup recovery and the periodic recovery loop.
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
+- Added `ResilientTaskSettings : ClientSettings` and configuration-bound
+  `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
+  now accepts its credential and project endpoint from one settings object.
+### Breaking Changes
+
+- Resilient tasks now default to disabled. Applications that start Core tasks directly must call
+  `SetResilientTasksEnabled()` before host startup. Starting a registered task while disabled
+  throws `ResilientTaskException` with `ResilientTaskErrorCode.NotEnabled`.
+- `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
+  retaining closed streams indefinitely.
 - State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
   This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
   `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
@@ -13,6 +60,34 @@
   `DeleteItemAsync` `ifMatch` parameters.
 
 ### Bugs Fixed
+
+- Recovered handlers and queued turns drained by their recovered chain can invoke other registered
+  task definitions while the cold-start scan is still running. External callers remain gated until
+  startup recovery completes.
+- Graceful shutdown now closes task-start admission and signals the shutdown cause before waiting
+  for the periodic recovery scan to stop, preventing recovered handlers from starting nested work
+  after shutdown begins.
+- Multi-turn suspension now coordinates the empty-queue decision and execution
+  retirement with steering admission. Inputs waiting at that boundary are drained
+  or resumed with their own identity instead of being accepted and then erased.
+- Queued input acceptance now advances the last-input precondition atomically with
+  persistence. Active input identity is stored separately for recovery and stream
+  cleanup, and rejected appends cannot be promoted or restored by a stale queue snapshot.
+- Task deletion now coordinates stream closure with confirmed storage deletion and
+  producer unwind. Failed or cancelled deletes preserve recoverable streams without
+  undoing cancellation, including inputs being promoted or removed from the queue.
+- Concurrent first starts within one task engine now coordinate task creation before
+  routing subsequent multi-turn inputs to steering, preserving each input's own handle.
+  Recovery no longer mistakes an unpublished initial start for an abandoned task, and
+  duplicate creation by another engine reports a task-level conflict.
+- Task-bound streams now record their owning task and reject cross-task reuse of an
+  explicit input id. File-backed replay persists the ownership beside the stream log so
+  isolation is enforced after process restart.
+- Closed replay streams are swept after their retention window, closed live streams are
+  removed immediately, and ownership entries are released with the stream.
+- Task-stream closure is synchronized with lazy materialization so a terminal transition
+  cannot miss a concurrently created stream. Deleting a task abandoned for recovery closes
+  its existing persisted turn stream without creating a stream that was never used.
 
 ### Other Changes
 

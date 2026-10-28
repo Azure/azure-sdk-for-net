@@ -6,7 +6,12 @@
 
 ### Breaking Changes
 
+- Reduce default HTTP client metric volume on .NET 8+ while retaining request latency, count, and failure dimensions through `http.client.request.duration`. Other `System.Net.Http` metrics are now opt-in through OpenTelemetry `AddView`; dashboards and alerts using them must [explicitly enable collection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore#http-client-metrics). HTTP dependency tracing and server metrics are unchanged. No new public API is introduced.
+- Synced the vendored `OpenTelemetry.Resources.Azure` resource detectors to `1.20.1-beta.1`; resource attributes now follow semantic conventions v1.44.0 (`cloud.platform` values `azure_app_service`/`azure_container_apps`/`azure_vm` are now `azure.app_service`/`azure.container_apps`/`azure.vm`, and the App Service slot is reported as `deployment.environment.name` instead of `deployment.environment`).
+
 ### Bugs Fixed
+
+- `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` now take precedence over resource attributes detected by the Azure App Service, Container Apps, and VM resource detectors. Applications that set these variables will see Cloud Role Name and/or Cloud Role Instance change in Application Insights to the configured values.
 
 ### Other Changes
 

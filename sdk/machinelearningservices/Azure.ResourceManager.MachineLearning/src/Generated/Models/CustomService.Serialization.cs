@@ -95,10 +95,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Docker))
+            if (Optional.IsDefined(Docker, _dockerIsDefined))
             {
-                writer.WritePropertyName("docker"u8);
-                writer.WriteObjectValue(Docker, options);
+                if (Docker != null)
+                {
+                    writer.WritePropertyName("docker"u8);
+                    writer.WriteObjectValue(Docker, options);
+                }
+                else
+                {
+                    writer.WriteNull("docker"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -167,6 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string name = default;
             ImageSetting image = default;
             IDictionary<string, EnvironmentVariable> environmentVariables = default;
+            bool dockerIsDefined = false;
             DockerSetting docker = default;
             IList<ContainerEndpoint> endpoints = default;
             IList<VolumeDefinition> volumes = default;
@@ -204,6 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("docker"u8))
                 {
+                    dockerIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         docker = null;
@@ -249,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     kernel = JupyterKernelConfig.DeserializeJupyterKernelConfig(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new CustomService(
                 name,
@@ -259,7 +268,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
                 volumes ?? new ChangeTrackingList<VolumeDefinition>(),
                 kernel,
-                additionalProperties);
+                additionalProperties)
+            {
+                _dockerIsDefined = dockerIsDefined
+            };
         }
     }
 }

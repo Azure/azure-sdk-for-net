@@ -19,6 +19,7 @@ namespace Azure.Core.Tests.Identity.Mock
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
         public bool? LastIsTokenBindingAvailable { get; private set; }
+        public ManagedIdentityCapabilitiesOptions LastCapabilitiesOptions { get; private set; }
         public bool? FirstEnableMtlsPopForClientCreation { get; private set; }
         public bool? LastEnableMtlsPopForClientCreation { get; private set; }
         public bool OverrideAttestationSupport { get; set; }
@@ -95,8 +96,10 @@ namespace Azure.Core.Tests.Identity.Mock
         protected override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromClientAsync(
             IManagedIdentityApplication client,
             TokenRequestContext context,
+            ManagedIdentityCapabilitiesOptions options,
             CancellationToken cancellationToken)
         {
+            LastCapabilitiesOptions = options;
             if (GetManagedIdentityCapabilitiesAsyncFactory != null)
             {
                 return GetManagedIdentityCapabilitiesFromFactoryAsync(context, cancellationToken);

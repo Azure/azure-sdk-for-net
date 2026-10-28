@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new ApplicationGatewayForContainersSecurityPolicyDataAsyncCollectionResultOfT(
                 _securityPoliciesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new ApplicationGatewayForContainersSecurityPolicyDataCollectionResultOfT(
                 _securityPoliciesInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

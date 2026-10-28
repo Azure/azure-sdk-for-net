@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="acceleratorCount"> Number of GPUs consumed by this deployment. </param>
         /// <param name="instanceCount"> Number of instances for this deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeDeploymentInfo(string deploymentId, string projectId, string modelId, long? acceleratorCount, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentInfo(ResourceIdentifier deploymentId, ResourceIdentifier projectId, string modelId, long? acceleratorCount, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentId = deploymentId;
             ProjectId = projectId;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Full ARM resource ID of the deployment. </summary>
         [WirePath("deploymentId")]
-        public string DeploymentId { get; }
+        public ResourceIdentifier DeploymentId { get; }
 
         /// <summary> Full ARM resource ID of the account/project. </summary>
         [WirePath("projectId")]
-        public string ProjectId { get; }
+        public ResourceIdentifier ProjectId { get; }
 
         /// <summary> Model name (e.g., 'azureml://registries//models//versions/gpt-4o'). </summary>
         [WirePath("modelId")]

@@ -6,16 +6,22 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType;
+using Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     public partial class AlternateTypeClient
     {
         public AlternateTypeClient() : this(new Uri("http://localhost:3000"), new AlternateTypeClientOptions()) => throw null;
 
-        public AlternateTypeClient(Uri endpoint, AlternateTypeClientOptions options) => throw null;
+        internal AlternateTypeClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AlternateTypeClientOptions options) => throw null;
+
+        public AlternateTypeClient(Uri endpoint, AlternateTypeClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public AlternateTypeClient(AlternateTypeClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

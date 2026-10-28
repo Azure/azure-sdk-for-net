@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceNetworkingPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceNetworkingPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ServiceNetworkingPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

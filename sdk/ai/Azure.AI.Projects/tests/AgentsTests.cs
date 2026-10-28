@@ -501,7 +501,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -535,7 +537,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -805,7 +809,7 @@ public class AgentsTests : AgentsTestBase
         BinaryData json = BinaryData.FromObjectAsJson(
             new
             {
-                scope="Samle_scope",
+                scope = "Samle_scope",
                 items = new[] {
                     new {
                         type="message",
@@ -823,7 +827,7 @@ public class AgentsTests : AgentsTestBase
                 },
                 options = new
                 {
-                    max_memories=10
+                    max_memories = 10
                 }
             }
         );
@@ -850,8 +854,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -955,8 +958,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -1032,7 +1034,7 @@ public class AgentsTests : AgentsTestBase
             }
             else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
             {
-                Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+                Assert.Fail($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
             }
             else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
             {

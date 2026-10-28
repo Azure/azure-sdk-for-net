@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceAgentPool. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceAgentPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2026-01-01")
+        public ContainerServiceAgentPool(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -461,16 +461,20 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the NodeImageVersion. </summary>
+        /// <summary> Gets or sets the NodeImageVersion. </summary>
         public BicepValue<string> NodeImageVersion
         {
             get
+            {
+                return Properties is null ? default : Properties.NodeImageVersion;
+            }
+            set
             {
                 if (Properties is null)
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                return Properties.NodeImageVersion;
+                Properties.NodeImageVersion = value;
             }
         }
 
@@ -963,12 +967,12 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Manual. </summary>
-        public BicepList<ManualScaleProfile> VirtualMachinesScaleManual
+        /// <summary> Gets or sets the IsArtifactStreamingEnabled. </summary>
+        public BicepValue<bool> IsArtifactStreamingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualMachinesScaleManual;
+                return Properties is null ? default : Properties.IsArtifactStreamingEnabled;
             }
             set
             {
@@ -976,7 +980,24 @@ namespace Azure.Provisioning.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.VirtualMachinesScaleManual = value;
+                Properties.IsArtifactStreamingEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Scale. </summary>
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachinesScale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.VirtualMachinesScale = value;
             }
         }
 
@@ -1026,6 +1047,18 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-05-01". </summary>
+            public static readonly string V2026_05_01 = "2026-05-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
+            /// <summary> API version "2026-02-01". </summary>
+            public static readonly string V2026_02_01 = "2026-02-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-10-01". </summary>

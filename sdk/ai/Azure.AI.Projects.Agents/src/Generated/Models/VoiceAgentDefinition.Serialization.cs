@@ -115,13 +115,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (Optional.IsDefined(InternalMaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
+                writer.WriteRawValue(InternalMaxOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
+                using (JsonDocument document = JsonDocument.Parse(InternalMaxOutputTokens))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -157,13 +157,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
+            if (Optional.IsDefined(InternalToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(ToolChoice);
+                writer.WriteRawValue(InternalToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = JsonDocument.Parse(InternalToolChoice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -232,12 +232,12 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
             IList<VoiceOutputModality> outputModalities = default;
-            BinaryData maxOutputTokens = default;
+            BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
             VoiceAgentInterimResponseConfig interimResponse = default;
             VoiceAgentAvatarConfig avatar = default;
             IList<VoiceAgentTool> tools = default;
-            BinaryData toolChoice = default;
+            BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             VoiceAgentSubagentConfig subagentConfig = default;
@@ -324,7 +324,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    maxOutputTokens = prop.Value.GetUtf8Bytes();
+                    internalMaxOutputTokens = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("include"u8))
@@ -379,7 +379,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    toolChoice = prop.Value.GetUtf8Bytes();
+                    internalToolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))
@@ -439,12 +439,12 @@ namespace Azure.AI.Projects.Agents
                 greeting,
                 audio,
                 outputModalities ?? new ChangeTrackingList<VoiceOutputModality>(),
-                maxOutputTokens,
+                internalMaxOutputTokens,
                 include ?? new ChangeTrackingList<VoiceAgentSessionIncludeOption>(),
                 interimResponse,
                 avatar,
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
-                toolChoice,
+                internalToolChoice,
                 parallelToolCalls,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 subagentConfig,

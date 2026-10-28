@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Avatar placement and motion settings. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentAvatarScene
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

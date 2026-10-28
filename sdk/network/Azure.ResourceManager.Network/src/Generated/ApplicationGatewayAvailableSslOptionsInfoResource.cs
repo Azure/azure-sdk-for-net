@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string applicationGatewayAvailableSslOptionsInfoApiVersion);
             _applicationGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _applicationGatewaysRestClient = new ApplicationGateways(_applicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayAvailableSslOptionsInfoApiVersion ?? "2025-09-01");
+            _applicationGatewaysRestClient = new ApplicationGateways(
+                _applicationGatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                applicationGatewayAvailableSslOptionsInfoApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -199,7 +205,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +258,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -305,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewaysGetAvailableSslPredefinedPoliciesAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
+            return new ApplicationGatewaySslPredefinedPolicyAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
         }
 
         /// <summary>
@@ -337,7 +343,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -353,7 +359,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ApplicationGatewaysGetAvailableSslPredefinedPoliciesCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
+            return new ApplicationGatewaySslPredefinedPolicyCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "ApplicationGatewayAvailableSslOptionsInfoResource.GetAvailableSslPredefinedPolicies");
         }
     }
 }

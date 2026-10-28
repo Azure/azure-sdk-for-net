@@ -7,11 +7,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> An MCP tool available to a voice agent. </summary>
+    /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
     public partial class VoiceAgentMcpTool : VoiceAgentTool, IJsonModel<VoiceAgentMcpTool>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/> for deserialization. </summary>
@@ -80,6 +80,11 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
+            if (Optional.IsDefined(ServerUrl))
+            {
+                writer.WritePropertyName("server_url"u8);
+                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -92,49 +97,63 @@ namespace Azure.AI.Projects.Agents
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers"u8);
-                writer.WriteStartObject();
-                foreach (var item in Headers)
+                if (Headers != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("headers"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Headers)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(AllowedTools))
-            {
-                writer.WritePropertyName("allowed_tools"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(AllowedTools);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("headers"u8);
                 }
-#endif
+            }
+            if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
+            {
+                if (AllowedTools != null)
+                {
+                    writer.WritePropertyName("allowed_tools"u8);
+                    writer.WriteObjectValue(AllowedTools, options);
+                }
+                else
+                {
+                    writer.WriteNull("allowed_tools"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                if (AllowedCallers != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowed_callers"u8);
+                    writer.WriteStartArray();
+                    foreach (CallableToolAllowedCaller item in AllowedCallers)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowed_callers"u8);
+                }
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -165,11 +184,6 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(ServerUrl))
-            {
-                writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(ResponseScheduling))
             {
@@ -206,16 +220,17 @@ namespace Azure.AI.Projects.Agents
             string @type = "mcp";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
+            Uri serverUrl = default;
             string authorization = default;
             string serverDescription = default;
-            IDictionary<string, string> headers = default;
-            BinaryData allowedTools = default;
-            IList<CallableToolAllowedCaller> allowedCallers = default;
-            BinaryData requireApproval = default;
+            IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
+            bool allowedToolsIsDefined = false;
+            McpToolFilter allowedTools = default;
+            IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
+            BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            Uri serverUrl = default;
             VoiceAgentToolResponseScheduling? responseScheduling = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,6 +242,15 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("server_label"u8))
                 {
                     serverLabel = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -243,6 +267,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        headers = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -262,18 +287,15 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("allowed_tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        allowedTools = null;
-                        continue;
-                    }
-                    allowedTools = prop.Value.GetUtf8Bytes();
+                    allowedToolsIsDefined = true;
+                    DeserializeAllowedToolsValue(prop, ref allowedTools, options);
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedCallers = null;
                         continue;
                     }
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
@@ -288,10 +310,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = prop.Value.GetUtf8Bytes();
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -323,19 +345,10 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("server_url"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("response_scheduling"u8))
@@ -356,17 +369,20 @@ namespace Azure.AI.Projects.Agents
                 @type,
                 additionalBinaryDataProperties,
                 serverLabel,
+                serverUrl,
                 authorization,
                 serverDescription,
-                headers ?? new ChangeTrackingDictionary<string, string>(),
+                headers,
                 allowedTools,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
-                requireApproval,
+                allowedCallers,
+                requireApprovalInternal,
                 deferLoading,
                 projectConnectionId,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                serverUrl,
-                responseScheduling);
+                responseScheduling)
+            {
+                _allowedToolsIsDefined = allowedToolsIsDefined
+            };
         }
     }
 }

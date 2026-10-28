@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(CustomRolloutResource.ResourceType, out string customRolloutApiVersion);
             _customRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", CustomRolloutResource.ResourceType.Namespace, Diagnostics);
-            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion ?? "2024-09-01");
+            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
+            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutDataAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
+            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutDataCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

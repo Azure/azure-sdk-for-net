@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,43 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHciModelFactory
     {
+        /// <summary> Represents a os image resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.OSImageData"/> instance for mocking. </returns>
+        public static OSImageData OSImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OSImageProperties properties = default)
+        {
+            return new OSImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Represents properties of a os image resource. </summary>
+        /// <param name="validatedSolutionRecipeVersion"> Represents validated solution recipe version of a os image. </param>
+        /// <param name="composedImageVersion"> Represents composed image version of a os image. </param>
+        /// <param name="composedImageIsoUri"> Represents composed image iso download url of a os image. </param>
+        /// <param name="composedImageIsoHash"> Represents composed image iso hash of a os image. </param>
+        /// <param name="architecture"> Represents the CPU architecture of an OS image, for example amd64 or arm64. </param>
+        /// <param name="solutionType"> The solution type (OS family) of the OS image, for example AzureLinux or HCI. </param>
+        /// <returns> A new <see cref="Models.OSImageProperties"/> instance for mocking. </returns>
+        public static OSImageProperties OSImageProperties(string validatedSolutionRecipeVersion = default, string composedImageVersion = default, string composedImageIsoUri = default, string composedImageIsoHash = default, HciCpuArchitecture? architecture = default, HciOSImageSolutionType? solutionType = default)
+        {
+            return new OSImageProperties(
+                validatedSolutionRecipeVersion,
+                composedImageVersion,
+                composedImageIsoUri,
+                composedImageIsoHash,
+                architecture,
+                solutionType,
+                default);
+        }
 
         /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
@@ -147,6 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
         /// <param name="secretsLocations"> List of secret locations. </param>
         /// <param name="clusterPattern"> Supported Storage Type for HCI Cluster. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
@@ -154,7 +193,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, HciIdentityProvider? identityProvider = default, HciStorageType? storageType = default, NextBillingModel nextBillingModel = default, ManagedServiceIdentity identity = default, string kind = default)
+        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, HciIdentityProvider? identityProvider = default, HciStorageType? storageType = default, NextBillingModel nextBillingModel = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -165,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && nextBillingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && localAvailabilityZones is null && identityProvider is null && storageType is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && nextBillingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && sdnProperties is null && localAvailabilityZones is null && identityProvider is null && storageType is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     connectivityStatus,
@@ -192,6 +231,7 @@ namespace Azure.ResourceManager.Hci.Models
                     resourceProviderObjectId,
                     (secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>()).ToList(),
                     clusterPattern,
+                    sdnProperties,
                     (localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>()).ToList(),
                     identityProvider,
                     storageType,
@@ -415,6 +455,17 @@ namespace Azure.ResourceManager.Hci.Models
         public static SecretsLocationDetails SecretsLocationDetails(HciSecretsType secretsType = default, string secretsLocation = default)
         {
             return new SecretsLocationDetails(secretsType, secretsLocation, default);
+        }
+
+        /// <summary> Represents the Software Defined Networking (SDN) configuration state of the Azure Stack HCI cluster. </summary>
+        /// <param name="sdnStatus"> Indicates the current Software Defined Networking (SDN) status of the resource, which may be an individual device or a cluster. </param>
+        /// <param name="sdnDomainName"> The fully qualified domain name (FQDN) associated with the SDN deployment. This value is propagated from the Device Management Extension to the cluster resource. It is typically in the format `&lt;sdnPrefix&gt;-nc.&lt;domain&gt;` when SDN is enabled. May be null or absent in unsupported or disabled states. </param>
+        /// <param name="sdnApiAddress"> Represents the API address for the SDN deployment. </param>
+        /// <param name="sdnIntegrationIntent"> Indicates whether Software Defined Networking (SDN) integration should be enabled or disabled for this deployment. </param>
+        /// <returns> A new <see cref="Models.ClusterSdnProperties"/> instance for mocking. </returns>
+        public static ClusterSdnProperties ClusterSdnProperties(SdnStatus? sdnStatus = default, string sdnDomainName = default, string sdnApiAddress = default, SdnIntegrationIntent? sdnIntegrationIntent = default)
+        {
+            return new ClusterSdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, sdnIntegrationIntent, default);
         }
 
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
@@ -978,11 +1029,17 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
         /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="percentComplete"> The progress percentage of the step. </param>
+        /// <param name="additionalData"> Additional metadata associated with the step. </param>
+        /// <param name="recommendedSteps"> Recommended steps to resolve failures in this step. </param>
         /// <returns> A new <see cref="Models.HciClusterDeploymentStep"/> instance for mocking. </returns>
-        public static HciClusterDeploymentStep HciClusterDeploymentStep(string name = default, string description = default, string fullStepIndex = default, string startOn = default, string endOn = default, string status = default, IEnumerable<HciClusterDeploymentStep> steps = default, IEnumerable<string> exception = default)
+        public static HciClusterDeploymentStep HciClusterDeploymentStep(string name = default, string description = default, string fullStepIndex = default, string startOn = default, string endOn = default, string status = default, IEnumerable<HciClusterDeploymentStep> steps = default, IEnumerable<string> exception = default, ResponseError error = default, int? percentComplete = default, IEnumerable<HciClusterDeploymentStepMetadata> additionalData = default, IEnumerable<string> recommendedSteps = default)
         {
             steps ??= new ChangeTrackingList<HciClusterDeploymentStep>();
             exception ??= new ChangeTrackingList<string>();
+            additionalData ??= new ChangeTrackingList<HciClusterDeploymentStepMetadata>();
+            recommendedSteps ??= new ChangeTrackingList<string>();
 
             return new HciClusterDeploymentStep(
                 name,
@@ -993,7 +1050,20 @@ namespace Azure.ResourceManager.Hci.Models
                 status,
                 (steps ?? new ChangeTrackingList<HciClusterDeploymentStep>()).ToList(),
                 (exception ?? new ChangeTrackingList<string>()).ToList(),
+                error,
+                percentComplete,
+                (additionalData ?? new ChangeTrackingList<HciClusterDeploymentStepMetadata>()).ToList(),
+                (recommendedSteps ?? new ChangeTrackingList<string>()).ToList(),
                 default);
+        }
+
+        /// <summary> Metadata associated with a deployment step. </summary>
+        /// <param name="key"> The key of the metadata entry. </param>
+        /// <param name="value"> The value of the metadata entry. </param>
+        /// <returns> A new <see cref="Models.HciClusterDeploymentStepMetadata"/> instance for mocking. </returns>
+        public static HciClusterDeploymentStepMetadata HciClusterDeploymentStepMetadata(string key = default, string value = default)
+        {
+            return new HciClusterDeploymentStepMetadata(key, value, default);
         }
 
         /// <summary>
@@ -1013,7 +1083,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new EdgeDeviceKind(kind),
                 default);
         }
 
@@ -1031,7 +1101,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                EdgeDeviceKind.HCI,
                 default,
                 properties);
         }
@@ -1057,7 +1127,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                jobType is null ? default : new HciEdgeDeviceJobType(jobType),
                 default);
         }
 
@@ -1082,7 +1152,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                HciEdgeDeviceJobType.CollectLog,
                 default,
                 collectionStartOn,
                 collectionEndOn,
@@ -1144,7 +1214,7 @@ namespace Azure.ResourceManager.Hci.Models
                 startOn,
                 endOn,
                 status,
-                default,
+                HciEdgeDeviceJobType.RemoteSupport,
                 default,
                 accessLevel,
                 expireOn,
@@ -1225,7 +1295,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DeviceKind(kind),
                 default);
         }
 
@@ -1243,7 +1313,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DeviceKind.HCI,
                 default,
                 properties);
         }
@@ -1285,13 +1355,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicDetails"> List of NIC Details of device. </param>
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the device. </param>
         /// <returns> A new <see cref="Models.HciNetworkProfile"/> instance for mocking. </returns>
-        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = default, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = default, HciEdgeDeviceHostNetwork hostNetwork = default)
+        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = default, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = default, HciEdgeDeviceHostNetwork hostNetwork = default, SdnProperties sdnProperties = default)
         {
             nicDetails ??= new ChangeTrackingList<HciNicDetail>();
             switchDetails ??= new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
 
-            return new HciNetworkProfile((nicDetails ?? new ChangeTrackingList<HciNicDetail>()).ToList(), (switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>()).ToList(), hostNetwork, default);
+            return new HciNetworkProfile((nicDetails ?? new ChangeTrackingList<HciNicDetail>()).ToList(), (switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>()).ToList(), hostNetwork, sdnProperties, default);
         }
 
         /// <summary> The NIC Detail of a device. </summary>
@@ -1456,6 +1527,16 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
         {
             return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, default);
+        }
+
+        /// <summary> Represents the Software Defined Networking (SDN) configuration state. </summary>
+        /// <param name="sdnStatus"> Indicates the current Software Defined Networking (SDN) status of the resource, which may be an individual device or a cluster. </param>
+        /// <param name="sdnDomainName"> The fully qualified domain name (FQDN) associated with the SDN deployment. This value is propagated from the Device Management Extension to the cluster resource. It is typically in the format `&lt;sdnPrefix&gt;-nc.&lt;domain&gt;` when SDN is enabled. May be null or absent in unsupported or disabled states. </param>
+        /// <param name="sdnApiAddress"> Represents the API address for the SDN deployment. </param>
+        /// <returns> A new <see cref="Models.SdnProperties"/> instance for mocking. </returns>
+        public static SdnProperties SdnProperties(SdnStatus? sdnStatus = default, string sdnDomainName = default, string sdnApiAddress = default)
+        {
+            return new SdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, default);
         }
 
         /// <summary> OS configurations for HCI device. </summary>
@@ -2103,6 +2184,2003 @@ namespace Azure.ResourceManager.Hci.Models
                 default);
         }
 
+        /// <summary> EdgeMachine details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineData"/> instance for mocking. </returns>
+        public static EdgeMachineData EdgeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeMachineProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
+        /// <summary> Properties for edge machine. </summary>
+        /// <param name="edgeMachineKind"> Edge Machine type. </param>
+        /// <param name="provisioningState"> The provisioning state of a resource. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="arcMachineResourceGroupId"> Optional property to create arc machine in custom resource group. </param>
+        /// <param name="arcMachineResourceId"> Arc machine instance resource id. </param>
+        /// <param name="lifecycleDetails"> Lifecycle details of the resource. </param>
+        /// <param name="arcGatewayResourceId"> Link to Arc Gateway ARM resource Id. </param>
+        /// <param name="siteDetails"> Service fetches common configuration from site. </param>
+        /// <param name="ownershipVoucherDetails"> Ownership voucher details for provisioned machine. </param>
+        /// <param name="provisioningDetails"> Details for device provisioning. </param>
+        /// <param name="devicePoolResourceId"> A machine can only be assigned to single device pool. </param>
+        /// <param name="machineState"> OS configuration status details. </param>
+        /// <param name="connectivityStatus"> machine connectivity status. </param>
+        /// <param name="claimedBy"> Tracks the ID of the consuming resource, setting the machine as in-use. </param>
+        /// <param name="reportedProperties"> Reported properties for edge machine. </param>
+        /// <param name="operationDetails"> operation status details for edge machine. </param>
+        /// <param name="lastSyncedOn"> Last time data updated to service. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineProperties"/> instance for mocking. </returns>
+        public static EdgeMachineProperties EdgeMachineProperties(EdgeMachineKind? edgeMachineKind = default, HciProvisioningState? provisioningState = default, string cloudId = default, ResourceIdentifier arcMachineResourceGroupId = default, ResourceIdentifier arcMachineResourceId = default, EdgeMachineLifecycleDetails lifecycleDetails = default, ResourceIdentifier arcGatewayResourceId = default, HciSiteDetails siteDetails = default, OwnershipVoucherDetails ownershipVoucherDetails = default, HciProvisioningDetails provisioningDetails = default, string devicePoolResourceId = default, EdgeMachineState? machineState = default, EdgeMachineConnectivityStatus? connectivityStatus = default, string claimedBy = default, EdgeMachineReportedProperties reportedProperties = default, IEnumerable<HciOperationDetail> operationDetails = default, DateTimeOffset? lastSyncedOn = default)
+        {
+            operationDetails ??= new ChangeTrackingList<HciOperationDetail>();
+
+            return new EdgeMachineProperties(
+                edgeMachineKind,
+                provisioningState,
+                cloudId,
+                arcMachineResourceGroupId,
+                arcMachineResourceId,
+                lifecycleDetails,
+                arcGatewayResourceId,
+                siteDetails,
+                ownershipVoucherDetails,
+                provisioningDetails,
+                devicePoolResourceId,
+                machineState,
+                connectivityStatus,
+                claimedBy,
+                reportedProperties,
+                (operationDetails ?? new ChangeTrackingList<HciOperationDetail>()).ToList(),
+                lastSyncedOn,
+                default);
+        }
+
+        /// <summary> Overall Lifecycle details for a resource. </summary>
+        /// <param name="lifecycleStatus"> Overall lifecycle status of the edge machine. </param>
+        /// <param name="lifecycleStages"> List of lifecycle stages for the edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineLifecycleDetails"/> instance for mocking. </returns>
+        public static EdgeMachineLifecycleDetails EdgeMachineLifecycleDetails(EdgeMachineLifecycleStatusInfo lifecycleStatus = default, IEnumerable<EdgeMachineLifecycleStage> lifecycleStages = default)
+        {
+            lifecycleStages ??= new ChangeTrackingList<EdgeMachineLifecycleStage>();
+
+            return new EdgeMachineLifecycleDetails(lifecycleStatus, (lifecycleStages ?? new ChangeTrackingList<EdgeMachineLifecycleStage>()).ToList(), default);
+        }
+
+        /// <summary> Summary lifecycle status for a resource. </summary>
+        /// <param name="status"> Overall lifecycle status of the edge machine. </param>
+        /// <param name="stage"> Depicts what is the current ongoing stage. </param>
+        /// <param name="lastUpdatedOn"> Last time the lifecycle status was updated. </param>
+        /// <param name="message"> Message to provide more details on lifecycle status, especially in case of failures. </param>
+        /// <param name="recommendedSteps"> Recommended steps to resolve failures. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineLifecycleStatusInfo"/> instance for mocking. </returns>
+        public static EdgeMachineLifecycleStatusInfo EdgeMachineLifecycleStatusInfo(EdgeMachineLifecycleStatus status = default, string stage = default, DateTimeOffset lastUpdatedOn = default, string message = default, IEnumerable<string> recommendedSteps = default)
+        {
+            recommendedSteps ??= new ChangeTrackingList<string>();
+
+            return new EdgeMachineLifecycleStatusInfo(
+                status,
+                stage,
+                lastUpdatedOn,
+                message,
+                (recommendedSteps ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Lifecycle stage details for a resource. </summary>
+        /// <param name="name"> Name of the stage. </param>
+        /// <param name="description"> Description of the stage. </param>
+        /// <param name="status"> Status of the stage. </param>
+        /// <param name="startsOn"> Start time of the stage. </param>
+        /// <param name="endsOn"> End time of the stage. </param>
+        /// <param name="lastUpdatedOn"> Last time the stage was updated. </param>
+        /// <param name="error"> Error details. </param>
+        /// <param name="subStages"> Sub-stages for this stage. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineLifecycleStage"/> instance for mocking. </returns>
+        public static EdgeMachineLifecycleStage EdgeMachineLifecycleStage(string name = default, string description = default, EdgeMachineLifecycleOperationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DateTimeOffset? lastUpdatedOn = default, ResponseError error = default, IEnumerable<EdgeMachineLifecycleStage> subStages = default)
+        {
+            subStages ??= new ChangeTrackingList<EdgeMachineLifecycleStage>();
+
+            return new EdgeMachineLifecycleStage(
+                name,
+                description,
+                status,
+                startsOn,
+                endsOn,
+                lastUpdatedOn,
+                error,
+                (subStages ?? new ChangeTrackingList<EdgeMachineLifecycleStage>()).ToList(),
+                default);
+        }
+
+        /// <summary> Site Details consists of common configurations. </summary>
+        /// <param name="siteResourceId"> Site resource Id to be set during Edge Machine resource creation. </param>
+        /// <param name="deviceConfiguration"> Edge Device configuration received from site common configuration. </param>
+        /// <returns> A new <see cref="Models.HciSiteDetails"/> instance for mocking. </returns>
+        public static HciSiteDetails HciSiteDetails(ResourceIdentifier siteResourceId = default, HciTargetDeviceConfiguration deviceConfiguration = default)
+        {
+            return new HciSiteDetails(siteResourceId, deviceConfiguration, default);
+        }
+
+        /// <param name="networkAdapters"> List of network adapters. </param>
+        /// <param name="hostName"> Hostname of the device. </param>
+        /// <param name="webProxy"> Web proxy configuration. </param>
+        /// <param name="time"> Time configuration. </param>
+        /// <param name="storagePartitionSize"> Partition size. </param>
+        /// <returns> A new <see cref="Models.HciTargetDeviceConfiguration"/> instance for mocking. </returns>
+        public static HciTargetDeviceConfiguration HciTargetDeviceConfiguration(IEnumerable<HciNetworkAdapter> networkAdapters = default, string hostName = default, HciWebProxyConfiguration webProxy = default, HciTimeConfiguration time = default, string storagePartitionSize = default)
+        {
+            return new HciTargetDeviceConfiguration(
+                networkAdapters is null ? default : new NetworkConfiguration((networkAdapters ?? new ChangeTrackingList<HciNetworkAdapter>()).ToList(), default),
+                hostName,
+                webProxy,
+                time,
+                storagePartitionSize is null ? default : new StorageConfiguration(storagePartitionSize, default),
+                default);
+        }
+
+        /// <summary> Network adapter configuration. </summary>
+        /// <param name="ipAssignmentType"> Type of IP assignment. </param>
+        /// <param name="ipAddress"> IP address. </param>
+        /// <param name="adapterName"> Adapter Name. </param>
+        /// <param name="macAddress"> MAC address. </param>
+        /// <param name="ipAddressRange"> IP address range. </param>
+        /// <param name="gateway"> Gateway id. </param>
+        /// <param name="subnetMask"> Subnet mask. </param>
+        /// <param name="dnsAddressArray"> Array of DNS addresses. </param>
+        /// <param name="vlanId"> VLAN ID for the network setup. </param>
+        /// <returns> A new <see cref="Models.HciNetworkAdapter"/> instance for mocking. </returns>
+        public static HciNetworkAdapter HciNetworkAdapter(IPAssignmentType ipAssignmentType = default, string ipAddress = default, string adapterName = default, string macAddress = default, HciIPAddressRange ipAddressRange = default, string gateway = default, string subnetMask = default, IEnumerable<string> dnsAddressArray = default, string vlanId = default)
+        {
+            dnsAddressArray ??= new ChangeTrackingList<string>();
+
+            return new HciNetworkAdapter(
+                ipAssignmentType,
+                ipAddress,
+                adapterName,
+                macAddress,
+                ipAddressRange,
+                gateway,
+                subnetMask,
+                (dnsAddressArray ?? new ChangeTrackingList<string>()).ToList(),
+                vlanId,
+                default);
+        }
+
+        /// <summary> IP address range configuration. </summary>
+        /// <param name="startIP"> Start IP address. </param>
+        /// <param name="endIP"> End IP address. </param>
+        /// <returns> A new <see cref="Models.HciIPAddressRange"/> instance for mocking. </returns>
+        public static HciIPAddressRange HciIPAddressRange(string startIP = default, string endIP = default)
+        {
+            return new HciIPAddressRange(startIP, endIP, default);
+        }
+
+        /// <summary> Web proxy configuration. </summary>
+        /// <param name="connectionUri"> Connection URI of the web proxy. </param>
+        /// <param name="port"> Port of the web proxy. </param>
+        /// <param name="bypassList"> Bypass list for the web proxy. </param>
+        /// <returns> A new <see cref="Models.HciWebProxyConfiguration"/> instance for mocking. </returns>
+        public static HciWebProxyConfiguration HciWebProxyConfiguration(Uri connectionUri = default, string port = default, IEnumerable<Uri> bypassList = default)
+        {
+            bypassList ??= new ChangeTrackingList<Uri>();
+
+            return new HciWebProxyConfiguration(connectionUri, port, (bypassList ?? new ChangeTrackingList<Uri>()).ToList(), default);
+        }
+
+        /// <summary> Time configuration. </summary>
+        /// <param name="primaryTimeServer"> Primary NTP server. </param>
+        /// <param name="secondaryTimeServer"> Secondary NTP server. </param>
+        /// <param name="timeZone"> Time zone. </param>
+        /// <returns> A new <see cref="Models.HciTimeConfiguration"/> instance for mocking. </returns>
+        public static HciTimeConfiguration HciTimeConfiguration(string primaryTimeServer = default, string secondaryTimeServer = default, string timeZone = default)
+        {
+            return new HciTimeConfiguration(primaryTimeServer, secondaryTimeServer, timeZone, default);
+        }
+
+        /// <summary> Details for ownership voucher. </summary>
+        /// <param name="ownershipVoucher"> Ownership voucher in base64 encoded format. </param>
+        /// <param name="ownerKeyType"> Owner key type. </param>
+        /// <param name="validationDetails"> Ownership Voucher Validation Details. </param>
+        /// <returns> A new <see cref="Models.OwnershipVoucherDetails"/> instance for mocking. </returns>
+        public static OwnershipVoucherDetails OwnershipVoucherDetails(string ownershipVoucher = default, HciOwnershipVoucherOwnerKeyType ownerKeyType = default, OwnershipVoucherValidationDetails validationDetails = default)
+        {
+            return new OwnershipVoucherDetails(ownershipVoucher, ownerKeyType, validationDetails, default);
+        }
+
+        /// <summary> Ownership Voucher Validation Details. </summary>
+        /// <param name="validationStatus"> The ownership voucher validation status. </param>
+        /// <param name="serialNumber"> Serial number of the device. </param>
+        /// <param name="id"> FDO guid of the Ownership Voucher. </param>
+        /// <param name="manufacturer"> Name of the manufacturer. </param>
+        /// <param name="modelName"> Name of the model. </param>
+        /// <param name="version"> Version of the Ownership Voucher format. </param>
+        /// <param name="azureMachineId"> Azure Machine Id of the Ownership voucher. </param>
+        /// <param name="architecture"> CPU architecture of the device, for example amd64 or arm64. </param>
+        /// <param name="error"> Error details if the validation failed. </param>
+        /// <returns> A new <see cref="Models.OwnershipVoucherValidationDetails"/> instance for mocking. </returns>
+        public static OwnershipVoucherValidationDetails OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus = default, string serialNumber = default, string id = default, string manufacturer = default, string modelName = default, string version = default, string azureMachineId = default, HciCpuArchitecture? architecture = default, ResponseError error = default)
+        {
+            return new OwnershipVoucherValidationDetails(
+                validationStatus,
+                serialNumber,
+                id,
+                manufacturer,
+                modelName,
+                version,
+                azureMachineId,
+                architecture,
+                error,
+                default);
+        }
+
+        /// <summary> Details for device provisioning. </summary>
+        /// <param name="osProfile"> Operating system profile. </param>
+        /// <param name="userDetails"> User configuration. </param>
+        /// <returns> A new <see cref="Models.HciProvisioningDetails"/> instance for mocking. </returns>
+        public static HciProvisioningDetails HciProvisioningDetails(OSProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default)
+        {
+            userDetails ??= new ChangeTrackingList<HciUserDetails>();
+
+            return new HciProvisioningDetails(osProfile, (userDetails ?? new ChangeTrackingList<HciUserDetails>()).ToList(), default);
+        }
+
+        /// <summary> Operating system profile. </summary>
+        /// <param name="osName"> Name of the operating system. </param>
+        /// <param name="osType"> Type of the operating system. </param>
+        /// <param name="osVersion"> Version of the operating system. </param>
+        /// <param name="osImageLocation"> Location of the operating system image. </param>
+        /// <param name="vsrVersion"> Validated Solution Recipe version to be used for the job. </param>
+        /// <param name="imageHash"> Hash of the OS package downloaded. </param>
+        /// <param name="gpgPubKey"> GPG Public Key used for package verification. </param>
+        /// <param name="operationType"> Operation sub type of OS Provisioning. </param>
+        /// <returns> A new <see cref="Models.OSProvisionProfile"/> instance for mocking. </returns>
+        public static OSProvisionProfile OSProvisionProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default, OSOperationType? operationType = default)
+        {
+            return new OSProvisionProfile(
+                osName,
+                osType,
+                osVersion,
+                osImageLocation,
+                vsrVersion,
+                imageHash,
+                gpgPubKey,
+                operationType,
+                default);
+        }
+
+        /// <summary> User configuration. </summary>
+        /// <param name="userName"> Name of the user. </param>
+        /// <param name="secretType"> Type of the secret used for authentication. </param>
+        /// <param name="secretLocation"> Location of the secret used for authentication. </param>
+        /// <param name="sshPubKey"> SSH Public Key for the user. </param>
+        /// <returns> A new <see cref="Models.HciUserDetails"/> instance for mocking. </returns>
+        public static HciUserDetails HciUserDetails(string userName = default, HciSecretType secretType = default, string secretLocation = default, IEnumerable<string> sshPubKey = default)
+        {
+            sshPubKey ??= new ChangeTrackingList<string>();
+
+            return new HciUserDetails(userName, secretType, secretLocation, (sshPubKey ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="lastUpdatedOn"> Last time data reported. </param>
+        /// <param name="networkProfile"> Network details for edge machine. </param>
+        /// <param name="osProfile"> OS Properties for edge machine. </param>
+        /// <param name="hardwareProfile"> Hardware related information for edge machine. </param>
+        /// <param name="storagePoolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
+        /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
+        /// <param name="workloadInventory"> Read-only Hyper-V VM inventory reported by the device management extension for VMs visible on this node. </param>
+        /// <param name="workloadInventoryLastUpdatedOn"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
+        /// <param name="storageInitiators"> Storage fabric initiator ports (iSCSI or Fibre Channel) discovered on the edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineReportedProperties EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn = default, EdgeMachineNetworkProfile networkProfile = default, HciDeploymentOSProfile osProfile = default, HciDeploymentHardwareProfile hardwareProfile = default, long? storagePoolableDisksCount = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, IEnumerable<EdgeMachineWorkloadInventoryItem> workloadInventory = default, DateTimeOffset? workloadInventoryLastUpdatedOn = default, IEnumerable<StorageInitiator> storageInitiators = default)
+        {
+            workloadInventory ??= new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>();
+            storageInitiators ??= new ChangeTrackingList<StorageInitiator>();
+
+            return new EdgeMachineReportedProperties(
+                lastUpdatedOn,
+                networkProfile,
+                osProfile,
+                hardwareProfile,
+                storagePoolableDisksCount is null ? default : new StorageProfile(storagePoolableDisksCount, default),
+                sbeDeploymentPackageInfo,
+                extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), default),
+                (workloadInventory ?? new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>()).ToList(),
+                workloadInventoryLastUpdatedOn,
+                (storageInitiators ?? new ChangeTrackingList<StorageInitiator>()).ToList(),
+                default);
+        }
+
+        /// <summary> NetworkProfile of edge machine. </summary>
+        /// <param name="nicDetails"> List of Network Interface Card (NIC) Details of edge machine. </param>
+        /// <param name="switchDetails"> List of switch Details of edge machine. </param>
+        /// <param name="hostNetwork"> HostNetwork configuration reported for the edge machine. </param>
+        /// <param name="sdnProperties"> Software Defined Networking (SDN) properties reported for the edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNetworkProfile"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkProfile EdgeMachineNetworkProfile(IEnumerable<EdgeMachineNicDetail> nicDetails = default, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = default, EdgeMachineHostNetwork hostNetwork = default, SdnProperties sdnProperties = default)
+        {
+            nicDetails ??= new ChangeTrackingList<EdgeMachineNicDetail>();
+            switchDetails ??= new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
+
+            return new EdgeMachineNetworkProfile((nicDetails ?? new ChangeTrackingList<EdgeMachineNicDetail>()).ToList(), (switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>()).ToList(), hostNetwork, sdnProperties, default);
+        }
+
+        /// <summary> Network Interface Card (NIC) Details of edge machine. </summary>
+        /// <param name="adapterName"> Adapter Name of NIC. </param>
+        /// <param name="interfaceDescription"> Interface Description of NIC. </param>
+        /// <param name="componentId"> Component Id of NIC. </param>
+        /// <param name="driverVersion"> Driver Version of NIC. </param>
+        /// <param name="ip4Address"> Subnet Mask of NIC. </param>
+        /// <param name="subnetMask"> Subnet Mask of NIC. </param>
+        /// <param name="defaultGateway"> Default Gateway of NIC. </param>
+        /// <param name="dnsServers"> DNS Servers for NIC. </param>
+        /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
+        /// <param name="macAddress"> MAC address information of NIC. </param>
+        /// <param name="slot"> The slot attached to the NIC. </param>
+        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
+        /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
+        /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
+        /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNicDetail"/> instance for mocking. </returns>
+        public static EdgeMachineNicDetail EdgeMachineNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new EdgeMachineNicDetail(
+                adapterName,
+                interfaceDescription,
+                componentId,
+                driverVersion,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
+                defaultIsolationId,
+                macAddress,
+                slot,
+                switchName,
+                nicType,
+                vlanId,
+                nicStatus,
+                rdmaCapability,
+                default);
+        }
+
+        /// <summary> HostNetwork configuration reported for the edge machine. </summary>
+        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
+        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="isStorageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
+        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineHostNetwork"/> instance for mocking. </returns>
+        public static EdgeMachineHostNetwork EdgeMachineHostNetwork(IEnumerable<EdgeMachineHostNetworkIntent> intents = default, IEnumerable<EdgeMachineStorageNetwork> storageNetworks = default, bool? isStorageConnectivitySwitchless = default, bool? enableStorageAutoIP = default)
+        {
+            intents ??= new ChangeTrackingList<EdgeMachineHostNetworkIntent>();
+            storageNetworks ??= new ChangeTrackingList<EdgeMachineStorageNetwork>();
+
+            return new EdgeMachineHostNetwork((intents ?? new ChangeTrackingList<EdgeMachineHostNetworkIntent>()).ToList(), (storageNetworks ?? new ChangeTrackingList<EdgeMachineStorageNetwork>()).ToList(), isStorageConnectivitySwitchless, enableStorageAutoIP, default);
+        }
+
+        /// <summary> The network intent reported for the edge machine. </summary>
+        /// <param name="scope"> Scope for host network intent. </param>
+        /// <param name="intentType"> IntentType for host network intent. </param>
+        /// <param name="isComputeIntentSet"> IsComputeIntentSet for host network intent. </param>
+        /// <param name="isStorageIntentSet"> IsStorageIntentSet for host network intent. </param>
+        /// <param name="isOnlyStorage"> IntentType for host network intent. </param>
+        /// <param name="isManagementIntentSet"> IsManagementIntentSet for host network intent. </param>
+        /// <param name="isStretchIntentSet"> IsStretchIntentSet for host network intent. </param>
+        /// <param name="isOnlyStretch"> IsOnlyStretch for host network intent. </param>
+        /// <param name="isNetworkIntentType"> IsNetworkIntentType for host network intent. </param>
+        /// <param name="intentName"> Name of the network intent you wish to create. </param>
+        /// <param name="intentAdapters"> Array of adapters used for the network intent. </param>
+        /// <param name="shouldOverrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
+        /// <param name="shouldOverrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
+        /// <param name="shouldOverrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineHostNetworkIntent"/> instance for mocking. </returns>
+        public static EdgeMachineHostNetworkIntent EdgeMachineHostNetworkIntent(long? scope = default, long? intentType = default, bool? isComputeIntentSet = default, bool? isStorageIntentSet = default, bool? isOnlyStorage = default, bool? isManagementIntentSet = default, bool? isStretchIntentSet = default, bool? isOnlyStretch = default, bool? isNetworkIntentType = default, string intentName = default, IEnumerable<string> intentAdapters = default, bool? shouldOverrideVirtualSwitchConfiguration = default, EdgeMachineVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = default, bool? shouldOverrideQosPolicy = default, DeploymentSettingQosPolicyOverrides qosPolicyOverrides = default, bool? shouldOverrideAdapterProperty = default, EdgeMachineAdapterPropertyOverrides adapterPropertyOverrides = default)
+        {
+            intentAdapters ??= new ChangeTrackingList<string>();
+
+            return new EdgeMachineHostNetworkIntent(
+                scope,
+                intentType,
+                isComputeIntentSet,
+                isStorageIntentSet,
+                isOnlyStorage,
+                isManagementIntentSet,
+                isStretchIntentSet,
+                isOnlyStretch,
+                isNetworkIntentType,
+                intentName,
+                (intentAdapters ?? new ChangeTrackingList<string>()).ToList(),
+                shouldOverrideVirtualSwitchConfiguration,
+                virtualSwitchConfigurationOverrides,
+                shouldOverrideQosPolicy,
+                qosPolicyOverrides,
+                shouldOverrideAdapterProperty,
+                adapterPropertyOverrides,
+                default);
+        }
+
+        /// <summary> The VirtualSwitchConfigurationOverrides reported for the edge machine. </summary>
+        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
+        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineVirtualSwitchConfigurationOverrides"/> instance for mocking. </returns>
+        public static EdgeMachineVirtualSwitchConfigurationOverrides EdgeMachineVirtualSwitchConfigurationOverrides(string enableIov = default, string loadBalancingAlgorithm = default)
+        {
+            return new EdgeMachineVirtualSwitchConfigurationOverrides(enableIov, loadBalancingAlgorithm, default);
+        }
+
+        /// <summary> The AdapterPropertyOverrides reported for the edge machine. </summary>
+        /// <param name="jumboPacket"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirect"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirectTechnology"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineAdapterPropertyOverrides"/> instance for mocking. </returns>
+        public static EdgeMachineAdapterPropertyOverrides EdgeMachineAdapterPropertyOverrides(string jumboPacket = default, string networkDirect = default, string networkDirectTechnology = default)
+        {
+            return new EdgeMachineAdapterPropertyOverrides(jumboPacket, networkDirect, networkDirectTechnology, default);
+        }
+
+        /// <summary> The StorageNetworks reported for the edge machine. </summary>
+        /// <param name="name"> Name of the storage network. </param>
+        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
+        /// <param name="storageVlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
+        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineStorageNetwork"/> instance for mocking. </returns>
+        public static EdgeMachineStorageNetwork EdgeMachineStorageNetwork(string name = default, string networkAdapterName = default, string storageVlanId = default, IEnumerable<EdgeMachineStorageAdapterIPInfo> storageAdapterIPInfo = default)
+        {
+            storageAdapterIPInfo ??= new ChangeTrackingList<EdgeMachineStorageAdapterIPInfo>();
+
+            return new EdgeMachineStorageNetwork(name, networkAdapterName, storageVlanId, (storageAdapterIPInfo ?? new ChangeTrackingList<EdgeMachineStorageAdapterIPInfo>()).ToList(), default);
+        }
+
+        /// <summary> The StorageAdapter physical nodes reported for the edge machine. </summary>
+        /// <param name="physicalNode"> storage adapter physical node name. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineStorageAdapterIPInfo"/> instance for mocking. </returns>
+        public static EdgeMachineStorageAdapterIPInfo EdgeMachineStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
+        {
+            return new EdgeMachineStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, default);
+        }
+
+        /// <summary> OS configurations for HCI device. </summary>
+        /// <param name="bootType"> The boot type of the device. e.g. UEFI, Legacy etc. </param>
+        /// <param name="assemblyVersion"> Version of assembly present on device. </param>
+        /// <param name="osType"> OS type (“windows", “linux”). </param>
+        /// <param name="osSku"> OS SKU (e.g., “ Microsoft Azure Linux ROE“, “Azure Stack HCI", "Microsoft Azure Linux 3.0"). </param>
+        /// <param name="osVersion"> OS Version. </param>
+        /// <param name="buildNumber"> OS Build Number. </param>
+        /// <param name="baseImageVersion"> OS Base Image Version. </param>
+        /// <param name="imageVersion"> OS Image Version. </param>
+        /// <returns> A new <see cref="Models.HciDeploymentOSProfile"/> instance for mocking. </returns>
+        public static HciDeploymentOSProfile HciDeploymentOSProfile(string bootType = default, string assemblyVersion = default, string osType = default, string osSku = default, string osVersion = default, string buildNumber = default, string baseImageVersion = default, string imageVersion = default)
+        {
+            return new HciDeploymentOSProfile(
+                bootType,
+                assemblyVersion,
+                osType,
+                osSku,
+                osVersion,
+                buildNumber,
+                baseImageVersion,
+                imageVersion,
+                default);
+        }
+
+        /// <summary> Hardware profile for the machine. </summary>
+        /// <param name="cpuCores"> Number of cpu cores in the machine. </param>
+        /// <param name="cpuSockets"> Number of cpu sockets in the machine. </param>
+        /// <param name="memoryCapacityInGb"> Memory capacity of the machine. </param>
+        /// <param name="model"> Model info of the machine. </param>
+        /// <param name="manufacturer"> manufacturer info of the machine. </param>
+        /// <param name="serialNumber"> Serial number of the machine. </param>
+        /// <param name="processorType"> Process type of the machine. </param>
+        /// <param name="architecture"> CPU architecture of the machine, for example amd64 or arm64. </param>
+        /// <returns> A new <see cref="Models.HciDeploymentHardwareProfile"/> instance for mocking. </returns>
+        public static HciDeploymentHardwareProfile HciDeploymentHardwareProfile(long? cpuCores = default, long? cpuSockets = default, long? memoryCapacityInGb = default, string model = default, string manufacturer = default, string serialNumber = default, string processorType = default, HciCpuArchitecture? architecture = default)
+        {
+            return new HciDeploymentHardwareProfile(
+                cpuCores,
+                cpuSockets,
+                memoryCapacityInGb,
+                model,
+                manufacturer,
+                serialNumber,
+                processorType,
+                architecture,
+                default);
+        }
+
+        /// <summary> Represents a single workload (Hyper-V VM) inventory entry reported by the device management extension running on the edge machine. </summary>
+        /// <param name="workloadId"> Stable device-reported workload identifier, such as the Hyper-V VM ID when available. </param>
+        /// <param name="name"> Hyper-V VM name. </param>
+        /// <param name="resourceId"> Optional ARM resource ID when the service can map the local VM to an ARM resource. </param>
+        /// <param name="workloadType"> Workload type. For v1 this should be VirtualMachine. </param>
+        /// <param name="state"> Hyper-V VM state reported by the node. </param>
+        /// <param name="virtualProcessorCount"> Configured virtual processor count from Hyper-V. </param>
+        /// <param name="memoryInBytes"> Maximum memory the VM can consume, in bytes. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineWorkloadInventoryItem"/> instance for mocking. </returns>
+        public static EdgeMachineWorkloadInventoryItem EdgeMachineWorkloadInventoryItem(string workloadId = default, string name = default, ResourceIdentifier resourceId = default, string workloadType = default, string state = default, string virtualProcessorCount = default, string memoryInBytes = default)
+        {
+            return new EdgeMachineWorkloadInventoryItem(
+                workloadId,
+                name,
+                resourceId,
+                workloadType,
+                state,
+                virtualProcessorCount,
+                memoryInBytes,
+                default);
+        }
+
+        /// <summary> A storage fabric initiator port (iSCSI or Fibre Channel) discovered on the edge machine. </summary>
+        /// <param name="initiatorType"> Transport type of the initiator port. </param>
+        /// <param name="initiatorIdentifier"> Node identifier of the initiator. IQN for iSCSI or node WWN (WWNN) for Fibre Channel. Corresponds to the NodeAddress reported by Get-InitiatorPort. </param>
+        /// <param name="portWorldWideName"> Fibre Channel port World Wide Name (WWPN). Populated for FibreChannel initiators only; corresponds to the PortAddress reported by Get-InitiatorPort. </param>
+        /// <param name="ethernetAdapterName"> Name of the Ethernet adapter the iSCSI initiator is bound to. Populated for iSCSI initiators only; matches EdgeMachineNicDetail.adapterName. </param>
+        /// <param name="ethernetAdapterMacAddress"> MAC address of the Ethernet adapter the iSCSI initiator is bound to. Populated for iSCSI initiators only; matches EdgeMachineNicDetail.macAddress. </param>
+        /// <param name="operationalStatus"> Operational status of the initiator port as reported by the host. Corresponds to OperationalStatus from Get-InitiatorPort. </param>
+        /// <returns> A new <see cref="Models.StorageInitiator"/> instance for mocking. </returns>
+        public static StorageInitiator StorageInitiator(StorageInitiatorType initiatorType = default, string initiatorIdentifier = default, string portWorldWideName = default, string ethernetAdapterName = default, string ethernetAdapterMacAddress = default, string operationalStatus = default)
+        {
+            return new StorageInitiator(
+                initiatorType,
+                initiatorIdentifier,
+                portWorldWideName,
+                ethernetAdapterName,
+                ethernetAdapterMacAddress,
+                operationalStatus,
+                default);
+        }
+
+        /// <summary> operation detail. </summary>
+        /// <param name="name"> operation name. </param>
+        /// <param name="id"> operation id. </param>
+        /// <param name="type"> operation type. </param>
+        /// <param name="resourceId"> operation resource id. </param>
+        /// <param name="description"> operation description. </param>
+        /// <param name="status"> operation status. </param>
+        /// <param name="error"> error details. </param>
+        /// <returns> A new <see cref="Models.HciOperationDetail"/> instance for mocking. </returns>
+        public static HciOperationDetail HciOperationDetail(string name = default, string id = default, string @type = default, ResourceIdentifier resourceId = default, string description = default, string status = default, ResponseError error = default)
+        {
+            return new HciOperationDetail(
+                name,
+                id,
+                @type,
+                resourceId,
+                description,
+                status,
+                error,
+                default);
+        }
+
+        /// <summary> Model for patching edge machine. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.EdgeMachinePatch"/> instance for mocking. </returns>
+        public static EdgeMachinePatch EdgeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EdgeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+        }
+
+        /// <summary> The validate request for Edge Machine. </summary>
+        /// <param name="edgeMachineIds"> Machine Ids against which, current machine has to be validated. </param>
+        /// <param name="additionalInfo"> Additional info required for validation. </param>
+        /// <returns> A new <see cref="Models.HciEdgeMachineValidateContent"/> instance for mocking. </returns>
+        public static HciEdgeMachineValidateContent HciEdgeMachineValidateContent(IEnumerable<ResourceIdentifier> edgeMachineIds = default, string additionalInfo = default)
+        {
+            edgeMachineIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new HciEdgeMachineValidateContent((edgeMachineIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), additionalInfo, default);
+        }
+
+        /// <summary> The validate response for Edge Machine. </summary>
+        /// <param name="status"> Edge machine validation status. </param>
+        /// <returns> A new <see cref="Models.HciEdgeMachineValidateResult"/> instance for mocking. </returns>
+        public static HciEdgeMachineValidateResult HciEdgeMachineValidateResult(string status = default)
+        {
+            return new HciEdgeMachineValidateResult(status, default);
+        }
+
+        /// <summary> Cluster Jobs resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineJobData"/> instance for mocking. </returns>
+        public static EdgeMachineJobData EdgeMachineJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineJobProperties properties = default)
+        {
+            return new EdgeMachineJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// EdgeMachine Job properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DownloadOSJobProperties"/>, <see cref="Models.EdgeMachineCollectLogJobProperties"/>, <see cref="Models.EdgeMachineRemoteSupportJobProperties"/>, and <see cref="Models.ProvisionOSJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineJobProperties EdgeMachineJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default)
+        {
+            return new UnknownEdgeMachineJobProperties(
+                jobType is null ? default : new EdgeMachineJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                default);
+        }
+
+        /// <summary> Properties for adding a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="accessLevel"> Remote support access level. </param>
+        /// <param name="expiresOn"> Remote support expiration timestamp. </param>
+        /// <param name="type"> Remote support type. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportJobProperties EdgeMachineRemoteSupportJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, RemoteSupportAccessLevel accessLevel = default, DateTimeOffset expiresOn = default, RemoteSupportType @type = default, EdgeMachineRemoteSupportJobReportedProperties reportedProperties = default)
+        {
+            return new EdgeMachineRemoteSupportJobProperties(
+                EdgeMachineJobType.RemoteSupport,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                default,
+                accessLevel,
+                expiresOn,
+                @type,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a remote support job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="nodeSettings"> Optional settings for configuring the node for remote support. </param>
+        /// <param name="sessionDetails"> Details of the remote support session. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportJobReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportJobReportedProperties EdgeMachineRemoteSupportJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, EdgeMachineRemoteSupportNodeSettings nodeSettings = default, IEnumerable<RemoteSupportSession> sessionDetails = default)
+        {
+            sessionDetails ??= new ChangeTrackingList<RemoteSupportSession>();
+
+            return new EdgeMachineRemoteSupportJobReportedProperties(
+                percentComplete,
+                validationStatus,
+                deploymentStatus,
+                nodeSettings,
+                (sessionDetails ?? new ChangeTrackingList<RemoteSupportSession>()).ToList(),
+                default);
+        }
+
+        /// <summary> Represents the settings of a remote support node. </summary>
+        /// <param name="state"> The state of the remote support node. </param>
+        /// <param name="createdOn"> The timestamp when the node settings were created, in UTC. </param>
+        /// <param name="updatedOn"> The timestamp when the node settings were last updated, in UTC. </param>
+        /// <param name="connectionStatus"> The current connection status of the remote support session. </param>
+        /// <param name="connectionErrorMessage"> The error message, if any, from the last connection attempt. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineRemoteSupportNodeSettings"/> instance for mocking. </returns>
+        public static EdgeMachineRemoteSupportNodeSettings EdgeMachineRemoteSupportNodeSettings(string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default)
+        {
+            return new EdgeMachineRemoteSupportNodeSettings(
+                state,
+                createdOn,
+                updatedOn,
+                connectionStatus,
+                connectionErrorMessage,
+                default);
+        }
+
+        /// <summary> Represents the properties of an Azure Linux restricted operating environment Provision Os job. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="provisioningRequest"> Os Provisioning request. </param>
+        /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
+        /// <returns> A new <see cref="Models.ProvisionOSJobProperties"/> instance for mocking. </returns>
+        public static ProvisionOSJobProperties ProvisionOSJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, EdgeMachineOSProvisionContent provisioningRequest = default, ProvisionOSReportedProperties reportedProperties = default)
+        {
+            return new ProvisionOSJobProperties(
+                EdgeMachineJobType.ProvisionOS,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                default,
+                provisioningRequest,
+                reportedProperties);
+        }
+
+        /// <summary> Represents a provisioning request. </summary>
+        /// <param name="target"> Target operating system to support polymorphic resource. </param>
+        /// <param name="osProfile"> Operating system profile. </param>
+        /// <param name="userDetails"> User configuration. </param>
+        /// <param name="onboardingConfiguration"> Onboarding configuration. </param>
+        /// <param name="deviceConfiguration"> Device configuration. </param>
+        /// <param name="customConfiguration"> Base64 encoded custom configuration for CAPI to use. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineOSProvisionContent"/> instance for mocking. </returns>
+        public static EdgeMachineOSProvisionContent EdgeMachineOSProvisionContent(ProvisioningOSType target = default, OSProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default, EdgeMachineOnboardingConfiguration onboardingConfiguration = default, HciTargetDeviceConfiguration deviceConfiguration = default, string customConfiguration = default)
+        {
+            userDetails ??= new ChangeTrackingList<HciUserDetails>();
+
+            return new EdgeMachineOSProvisionContent(
+                target,
+                osProfile,
+                (userDetails ?? new ChangeTrackingList<HciUserDetails>()).ToList(),
+                onboardingConfiguration,
+                deviceConfiguration,
+                customConfiguration,
+                default);
+        }
+
+        /// <summary> Onboarding configuration. </summary>
+        /// <param name="type"> Type of the onboarding resource to support polymorphic resource. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="tenantId"> Tenant ID of the resource. </param>
+        /// <param name="arcVirtualMachineId"> Azure Arc virtual machine ID. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineOnboardingConfiguration"/> instance for mocking. </returns>
+        public static EdgeMachineOnboardingConfiguration EdgeMachineOnboardingConfiguration(EdgeMachineOnboardingResourceType? @type = default, ResourceIdentifier resourceId = default, string location = default, string tenantId = default, string arcVirtualMachineId = default)
+        {
+            return new EdgeMachineOnboardingConfiguration(
+                @type,
+                resourceId,
+                location,
+                tenantId,
+                arcVirtualMachineId,
+                default);
+        }
+
+        /// <summary> Reported Properties for Provision Os job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <returns> A new <see cref="Models.ProvisionOSReportedProperties"/> instance for mocking. </returns>
+        public static ProvisionOSReportedProperties ProvisionOSReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
+        {
+            return new ProvisionOSReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
+        }
+
+        /// <summary> Represents the properties of Download Os job. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="downloadRequest"> Download OS request. </param>
+        /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
+        /// <returns> A new <see cref="Models.DownloadOSJobProperties"/> instance for mocking. </returns>
+        public static DownloadOSJobProperties DownloadOSJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, HciOSDownloadContent downloadRequest = default, ProvisionOSReportedProperties reportedProperties = default)
+        {
+            return new DownloadOSJobProperties(
+                EdgeMachineJobType.DownloadOS,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                default,
+                downloadRequest,
+                reportedProperties);
+        }
+
+        /// <summary> Download Request properties. </summary>
+        /// <param name="target"> Target operating system to support polymorphic resource. </param>
+        /// <param name="osProfile"> Operating system profile. </param>
+        /// <returns> A new <see cref="Models.HciOSDownloadContent"/> instance for mocking. </returns>
+        public static HciOSDownloadContent HciOSDownloadContent(ProvisioningOSType target = default, DownloadOSProfile osProfile = default)
+        {
+            return new HciOSDownloadContent(target, osProfile, default);
+        }
+
+        /// <summary> Operating system profile. </summary>
+        /// <param name="osName"> Name of the operating system. </param>
+        /// <param name="osType"> Type of the operating system. </param>
+        /// <param name="osVersion"> Version of the operating system. </param>
+        /// <param name="osImageLocation"> Location of the operating system image. </param>
+        /// <param name="vsrVersion"> Validated Solution Recipe version to be used for the job. </param>
+        /// <param name="imageHash"> Hash of the OS package downloaded. </param>
+        /// <param name="gpgPubKey"> GPG Public Key used for package verification. </param>
+        /// <returns> A new <see cref="Models.DownloadOSProfile"/> instance for mocking. </returns>
+        public static DownloadOSProfile DownloadOSProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default)
+        {
+            return new DownloadOSProfile(
+                osName,
+                osType,
+                osVersion,
+                osImageLocation,
+                vsrVersion,
+                imageHash,
+                gpgPubKey,
+                default);
+        }
+
+        /// <summary> Properties for pausing a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> error details. </param>
+        /// <param name="collectionStartsOn"> From date for log collection. </param>
+        /// <param name="collectionEndsOn"> To date for log collection. </param>
+        /// <param name="lastLogGeneratedOn"> To date for log collection. </param>
+        /// <param name="reportedProperties"> log collection job reported properties. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineCollectLogJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineCollectLogJobProperties EdgeMachineCollectLogJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DateTimeOffset collectionStartsOn = default, DateTimeOffset collectionEndsOn = default, DateTimeOffset? lastLogGeneratedOn = default, EdgeMachineCollectLogJobReportedProperties reportedProperties = default)
+        {
+            return new EdgeMachineCollectLogJobProperties(
+                EdgeMachineJobType.CollectLog,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                default,
+                collectionStartsOn,
+                collectionEndsOn,
+                lastLogGeneratedOn,
+                reportedProperties);
+        }
+
+        /// <summary> Represents the reported properties of a log collection job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <param name="logCollectionSessionDetails"> Details of the log collection session. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineCollectLogJobReportedProperties"/> instance for mocking. </returns>
+        public static EdgeMachineCollectLogJobReportedProperties EdgeMachineCollectLogJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default, IEnumerable<LogCollectionJobSession> logCollectionSessionDetails = default)
+        {
+            logCollectionSessionDetails ??= new ChangeTrackingList<LogCollectionJobSession>();
+
+            return new EdgeMachineCollectLogJobReportedProperties(percentComplete, validationStatus, deploymentStatus, (logCollectionSessionDetails ?? new ChangeTrackingList<LogCollectionJobSession>()).ToList(), default);
+        }
+
+        /// <summary> Validate Ownership Voucher Request. </summary>
+        /// <param name="ownershipVoucherDetails"> Ownership Voucher Details. </param>
+        /// <returns> A new <see cref="Models.ValidateOwnershipVouchersContent"/> instance for mocking. </returns>
+        public static ValidateOwnershipVouchersContent ValidateOwnershipVouchersContent(IEnumerable<OwnershipVoucherDetails> ownershipVoucherDetails = default)
+        {
+            ownershipVoucherDetails ??= new ChangeTrackingList<OwnershipVoucherDetails>();
+
+            return new ValidateOwnershipVouchersContent((ownershipVoucherDetails ?? new ChangeTrackingList<OwnershipVoucherDetails>()).ToList(), default);
+        }
+
+        /// <summary> Validate Ownership Voucher Response. </summary>
+        /// <param name="ownershipVoucherValidationDetails"> Ownership Voucher Validation Details. </param>
+        /// <returns> A new <see cref="Models.ValidateOwnershipVouchersResult"/> instance for mocking. </returns>
+        public static ValidateOwnershipVouchersResult ValidateOwnershipVouchersResult(IEnumerable<OwnershipVoucherValidationDetails> ownershipVoucherValidationDetails = default)
+        {
+            ownershipVoucherValidationDetails ??= new ChangeTrackingList<OwnershipVoucherValidationDetails>();
+
+            return new ValidateOwnershipVouchersResult((ownershipVoucherValidationDetails ?? new ChangeTrackingList<OwnershipVoucherValidationDetails>()).ToList(), default);
+        }
+
+        /// <summary> Cluster Jobs resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.ClusterJobData"/> instance for mocking. </returns>
+        public static ClusterJobData ClusterJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterJobProperties properties = default)
+        {
+            return new ClusterJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Cluster Job properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HciAddServerJobProperties"/>, <see cref="Models.HciConfigureSdnIntegrationJobProperties"/>, and <see cref="Models.HciRepairServerJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <returns> A new <see cref="Models.ClusterJobProperties"/> instance for mocking. </returns>
+        public static ClusterJobProperties ClusterJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, HciClusterJobReportedProperties reportedProperties = default)
+        {
+            return new UnknownClusterJobProperties(
+                jobType is null ? default : new HciJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                reportedProperties,
+                default);
+        }
+
+        /// <summary> Reported Properties for job triggered from cloud. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of job. </param>
+        /// <param name="deploymentStatus"> Deployment status of job. </param>
+        /// <returns> A new <see cref="Models.HciClusterJobReportedProperties"/> instance for mocking. </returns>
+        public static HciClusterJobReportedProperties HciClusterJobReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
+        {
+            return new HciClusterJobReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
+        }
+
+        /// <summary> Properties for configuring SDN integration intent for the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <param name="sdnIntegrationIntent"> Defines the customer's intent for configuring SDN integration. </param>
+        /// <param name="sdnPrefix"> A string identifier used to construct the Network Controller (NC) REST resource name. This prefix helps group and distinguish SDN-managed network components and must follow specific formatting rules. </param>
+        /// <returns> A new <see cref="Models.HciConfigureSdnIntegrationJobProperties"/> instance for mocking. </returns>
+        public static HciConfigureSdnIntegrationJobProperties HciConfigureSdnIntegrationJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, HciClusterJobReportedProperties reportedProperties = default, SdnIntegrationIntent sdnIntegrationIntent = default, string sdnPrefix = default)
+        {
+            return new HciConfigureSdnIntegrationJobProperties(
+                HciJobType.ConfigureSdnIntegration,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                reportedProperties,
+                default,
+                sdnIntegrationIntent,
+                sdnPrefix);
+        }
+
+        /// <summary> Properties for adding a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <param name="addServerJobServerDetails"> Details of servers to be added to the cluster. </param>
+        /// <param name="secrets"> List of protected parameters to pass to trigger the job for the cluster. </param>
+        /// <returns> A new <see cref="Models.HciAddServerJobProperties"/> instance for mocking. </returns>
+        public static HciAddServerJobProperties HciAddServerJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, HciClusterJobReportedProperties reportedProperties = default, IEnumerable<AddServerJobServerDetails> addServerJobServerDetails = default, IEnumerable<EceDeploymentSecrets> secrets = default)
+        {
+            addServerJobServerDetails ??= new ChangeTrackingList<AddServerJobServerDetails>();
+            secrets ??= new ChangeTrackingList<EceDeploymentSecrets>();
+
+            return new HciAddServerJobProperties(
+                HciJobType.AddServer,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                reportedProperties,
+                default,
+                (addServerJobServerDetails ?? new ChangeTrackingList<AddServerJobServerDetails>()).ToList(),
+                (secrets ?? new ChangeTrackingList<EceDeploymentSecrets>()).ToList());
+        }
+
+        /// <summary> Details of servers to be added to the cluster. </summary>
+        /// <param name="serverName"> Name of server to be added to cluster. </param>
+        /// <param name="hostIPv4Address"> Ip address of server to be added to cluster. </param>
+        /// <param name="localAvailabilityZoneName"> Local availability zone name of server to be added to rack aware cluster. </param>
+        /// <param name="serverResourceId"> Azure resource id of machine part of cluster for which job will be triggered. </param>
+        /// <returns> A new <see cref="Models.AddServerJobServerDetails"/> instance for mocking. </returns>
+        public static AddServerJobServerDetails AddServerJobServerDetails(string serverName = default, string hostIPv4Address = default, string localAvailabilityZoneName = default, ResourceIdentifier serverResourceId = default)
+        {
+            return new AddServerJobServerDetails(serverName, hostIPv4Address, localAvailabilityZoneName, serverResourceId, default);
+        }
+
+        /// <summary> Properties for repairing a server in the cluster. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Cluster job. </param>
+        /// <param name="reportedProperties"> Reported properties for job. </param>
+        /// <param name="repairServerJobServerDetails"> Details of servers to be repaired in the cluster. </param>
+        /// <param name="secrets"> List of protected parameters to pass to trigger job for cluster. </param>
+        /// <returns> A new <see cref="Models.HciRepairServerJobProperties"/> instance for mocking. </returns>
+        public static HciRepairServerJobProperties HciRepairServerJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, HciClusterJobReportedProperties reportedProperties = default, IEnumerable<RepairServerJobServerDetails> repairServerJobServerDetails = default, IEnumerable<EceDeploymentSecrets> secrets = default)
+        {
+            repairServerJobServerDetails ??= new ChangeTrackingList<RepairServerJobServerDetails>();
+            secrets ??= new ChangeTrackingList<EceDeploymentSecrets>();
+
+            return new HciRepairServerJobProperties(
+                HciJobType.RepairServer,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                reportedProperties,
+                default,
+                (repairServerJobServerDetails ?? new ChangeTrackingList<RepairServerJobServerDetails>()).ToList(),
+                (secrets ?? new ChangeTrackingList<EceDeploymentSecrets>()).ToList());
+        }
+
+        /// <summary> Details of servers to be repaired in the cluster. </summary>
+        /// <param name="serverName"> Name of server to be repaired in cluster. </param>
+        /// <param name="serverResourceId"> Azure resource id of Arc machine part of cluster for which job will be triggered. </param>
+        /// <returns> A new <see cref="Models.RepairServerJobServerDetails"/> instance for mocking. </returns>
+        public static RepairServerJobServerDetails RepairServerJobServerDetails(string serverName = default, ResourceIdentifier serverResourceId = default)
+        {
+            return new RepairServerJobServerDetails(serverName, serverResourceId, default);
+        }
+
+        /// <summary> Edge Machine Network Adapter Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineNetworkAdapterData"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkAdapterData EdgeMachineNetworkAdapterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineNetworkAdapterProperties properties = default)
+        {
+            return new EdgeMachineNetworkAdapterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the Network Adapter resource. </summary>
+        /// <param name="networkConfiguration"> The authoritative desired configuration for this specific interface. </param>
+        /// <param name="reportedProperties"> The actual applied configuration reported by the device. </param>
+        /// <param name="provisioningState"> Provisioning state of the network adapter resource. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNetworkAdapterProperties"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkAdapterProperties EdgeMachineNetworkAdapterProperties(NetworkAdapterConfiguration networkConfiguration = default, NetworkAdapterReportedProperties reportedProperties = default, HciProvisioningState? provisioningState = default)
+        {
+            return new EdgeMachineNetworkAdapterProperties(networkConfiguration, reportedProperties, provisioningState, default);
+        }
+
+        /// <summary> Network adapter configuration. </summary>
+        /// <param name="adapterName"> Adapter name. </param>
+        /// <param name="ip4Address"> IP address. </param>
+        /// <param name="subnetMask"> Subnet mask. </param>
+        /// <param name="defaultGateway"> Default gateway. </param>
+        /// <param name="dnsServers"> List of DNS servers. </param>
+        /// <param name="ipInterfaceType"> IP configuration type (Dhcp or Static). </param>
+        /// <param name="vlanId"> VLAN identifier for network segmentation. </param>
+        /// <param name="interfaceState"> Administrative state of the interface (up or down). </param>
+        /// <param name="wifiConfiguration"> WiFi configuration desired properties. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterConfiguration"/> instance for mocking. </returns>
+        public static NetworkAdapterConfiguration NetworkAdapterConfiguration(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, EdgeMachineNetworkInterfaceState? interfaceState = default, WifiConfigurationDesiredProperties wifiConfiguration = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new NetworkAdapterConfiguration(
+                adapterName,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
+                ipInterfaceType,
+                vlanId,
+                interfaceState,
+                wifiConfiguration,
+                default);
+        }
+
+        /// <summary> WiFi configuration desired properties. </summary>
+        /// <param name="ssid"> WiFi SSID. </param>
+        /// <param name="authenticationType"> WiFi authentication type. </param>
+        /// <param name="eapMethod"> EAP method used for authentication. </param>
+        /// <param name="username"> Username for enterprise WiFi authentication. </param>
+        /// <param name="wifiSecret"> WiFi secret reference. </param>
+        /// <returns> A new <see cref="Models.WifiConfigurationDesiredProperties"/> instance for mocking. </returns>
+        public static WifiConfigurationDesiredProperties WifiConfigurationDesiredProperties(string ssid = default, EdgeMachineWifiAuthenticationType? authenticationType = default, EapMethod? eapMethod = default, string username = default, WifiSecret wifiSecret = default)
+        {
+            return new WifiConfigurationDesiredProperties(
+                ssid,
+                authenticationType,
+                eapMethod,
+                username,
+                wifiSecret,
+                default);
+        }
+
+        /// <summary> WiFi secret reference for storing credentials. </summary>
+        /// <param name="secretName"> Name of the secret. </param>
+        /// <param name="secretLocation"> Location of the secret. </param>
+        /// <param name="secretType"> Type of the WiFi secret. </param>
+        /// <returns> A new <see cref="Models.WifiSecret"/> instance for mocking. </returns>
+        public static WifiSecret WifiSecret(string secretName = default, string secretLocation = default, WifiSecretType? secretType = default)
+        {
+            return new WifiSecret(secretName, secretLocation, secretType, default);
+        }
+
+        /// <summary> Reported properties of a network adapter. </summary>
+        /// <param name="adapterName"> Adapter name. </param>
+        /// <param name="ip4Address"> IP address. </param>
+        /// <param name="subnetMask"> Subnet mask. </param>
+        /// <param name="defaultGateway"> Default gateway. </param>
+        /// <param name="dnsServers"> List of DNS servers. </param>
+        /// <param name="interfaceDescription"> Interface description of NIC. </param>
+        /// <param name="componentId"> Component ID of NIC. </param>
+        /// <param name="driverVersion"> Driver version of NIC. </param>
+        /// <param name="defaultIsolationId"> Default isolation of management NIC. </param>
+        /// <param name="macAddress"> MAC address. </param>
+        /// <param name="slot"> The slot attached to the NIC. </param>
+        /// <param name="switchName"> The switch attached to the NIC, if any. </param>
+        /// <param name="interfaceType"> Type of network interface. </param>
+        /// <param name="interfaceSpeed"> Interface speed in Mbps. </param>
+        /// <param name="interfaceState"> Current state of the interface. </param>
+        /// <param name="nicType"> The type of NIC (physical, virtual, management). </param>
+        /// <param name="nicStatus"> The status of NIC (up, disconnected). </param>
+        /// <param name="ipInterfaceType"> IP configuration type. </param>
+        /// <param name="vlanId"> VLAN identifier (0-4096). </param>
+        /// <param name="isManagementInterface"> Indicates if this is a management interface. </param>
+        /// <param name="rdmaCapability"> RDMA capability of the network adapter. </param>
+        /// <param name="networkAdapterStatus"> The observed state of network adapter. </param>
+        /// <param name="wifiConfiguration"> WiFi configuration reported properties. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterReportedProperties"/> instance for mocking. </returns>
+        public static NetworkAdapterReportedProperties NetworkAdapterReportedProperties(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, NetworkInterfaceType? interfaceType = default, int? interfaceSpeed = default, EdgeMachineNetworkInterfaceState? interfaceState = default, string nicType = default, string nicStatus = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, bool? isManagementInterface = default, RdmaCapability? rdmaCapability = default, NetworkAdapterStatus networkAdapterStatus = default, WifiConfigurationReportedProperties wifiConfiguration = default)
+        {
+            dnsServers ??= new ChangeTrackingList<string>();
+
+            return new NetworkAdapterReportedProperties(
+                adapterName,
+                ip4Address,
+                subnetMask,
+                defaultGateway,
+                (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
+                interfaceDescription,
+                componentId,
+                driverVersion,
+                defaultIsolationId,
+                macAddress,
+                slot,
+                switchName,
+                interfaceType,
+                interfaceSpeed,
+                interfaceState,
+                nicType,
+                nicStatus,
+                ipInterfaceType,
+                vlanId,
+                isManagementInterface,
+                rdmaCapability,
+                networkAdapterStatus,
+                wifiConfiguration,
+                default);
+        }
+
+        /// <summary> The observed state of network adapters. </summary>
+        /// <param name="errorCode"> Network adapter provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> Network adapter provisioning status. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterStatus"/> instance for mocking. </returns>
+        public static NetworkAdapterStatus NetworkAdapterStatus(string errorCode = default, string errorMessage = default, NetworkAdapterProvisioningStatus provisioningStatus = default)
+        {
+            return new NetworkAdapterStatus(errorCode, errorMessage, provisioningStatus, default);
+        }
+
+        /// <summary> Network adapter provisioning status. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the network adapter. </param>
+        /// <param name="status"> The status of the operation performed on the network adapter. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterProvisioningStatus"/> instance for mocking. </returns>
+        public static NetworkAdapterProvisioningStatus NetworkAdapterProvisioningStatus(string operationId = default, NetworkAdapterOperationStatus? status = default)
+        {
+            return new NetworkAdapterProvisioningStatus(operationId, status, default);
+        }
+
+        /// <summary> WiFi configuration reported properties. </summary>
+        /// <param name="ssid"> WiFi SSID. </param>
+        /// <param name="authenticationType"> WiFi authentication type. </param>
+        /// <param name="eapMethod"> EAP method used for authentication. </param>
+        /// <param name="signalStrength"> WiFi signal strength. </param>
+        /// <param name="lastSuccessfulConnectionTimestamp"> Last successful WiFi connection timestamp. </param>
+        /// <param name="connectionState"> Current WiFi connection state. </param>
+        /// <param name="username"> Username for enterprise WiFi authentication. </param>
+        /// <returns> A new <see cref="Models.WifiConfigurationReportedProperties"/> instance for mocking. </returns>
+        public static WifiConfigurationReportedProperties WifiConfigurationReportedProperties(string ssid = default, EdgeMachineWifiAuthenticationType? authenticationType = default, EapMethod? eapMethod = default, int? signalStrength = default, string lastSuccessfulConnectionTimestamp = default, EdgeMachineWifiConnectionState? connectionState = default, string username = default)
+        {
+            return new WifiConfigurationReportedProperties(
+                ssid,
+                authenticationType,
+                eapMethod,
+                signalStrength,
+                lastSuccessfulConnectionTimestamp,
+                connectionState,
+                username,
+                default);
+        }
+
+        /// <summary> Job for an Edge Machine Network Adapter. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineNetworkAdapterJobData"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkAdapterJobData EdgeMachineNetworkAdapterJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineNetworkAdapterJobProperties properties = default)
+        {
+            return new EdgeMachineNetworkAdapterJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Properties of the Network Adapter Job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ApplyConfigurationNetworkAdapterJobProperties"/>, <see cref="Models.ForcePushNetworkAdapterJobProperties"/>, and <see cref="Models.SyncConfigurationNetworkAdapterJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Type of operation. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Provisioning state of the job. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineNetworkAdapterJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineNetworkAdapterJobProperties EdgeMachineNetworkAdapterJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
+        {
+            return new UnknownEdgeMachineNetworkAdapterJobProperties(
+                jobType is null ? default : new NetworkAdapterJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default);
+        }
+
+        /// <summary> Reported properties for Network Adapter Job. </summary>
+        /// <param name="percentComplete"> The percentage of the job that is complete. </param>
+        /// <param name="validationStatus"> Validation status of Network Adapter Job. </param>
+        /// <param name="deploymentStatus"> Deployment status of Network Adapter Job. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterJobReportedProperties"/> instance for mocking. </returns>
+        public static NetworkAdapterJobReportedProperties NetworkAdapterJobReportedProperties(int? percentComplete = default, NetworkAdapterActionStatus validationStatus = default, NetworkAdapterActionStatus deploymentStatus = default)
+        {
+            return new NetworkAdapterJobReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
+        }
+
+        /// <summary> The action plan deployment status for Network Adapter Job. </summary>
+        /// <param name="status"> Status of ECE action Network Adapter Job. </param>
+        /// <param name="steps"> List of steps of Network Adapter Job. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterActionStatus"/> instance for mocking. </returns>
+        public static NetworkAdapterActionStatus NetworkAdapterActionStatus(string status = default, IEnumerable<NetworkAdapterDeploymentStep> steps = default)
+        {
+            steps ??= new ChangeTrackingList<NetworkAdapterDeploymentStep>();
+
+            return new NetworkAdapterActionStatus(status, (steps ?? new ChangeTrackingList<NetworkAdapterDeploymentStep>()).ToList(), default);
+        }
+
+        /// <summary> The Step of Network Adapter Job. </summary>
+        /// <param name="name"> Name of step. </param>
+        /// <param name="description"> Description of step. </param>
+        /// <param name="fullStepIndex"> FullStepIndex of step. </param>
+        /// <param name="startTimeUtc"> Start time of step. </param>
+        /// <param name="endTimeUtc"> End time of step. </param>
+        /// <param name="status"> Status of step (Error, Success, InProgress). </param>
+        /// <param name="steps"> List of nested steps. </param>
+        /// <param name="exception"> List of exceptions. </param>
+        /// <returns> A new <see cref="Models.NetworkAdapterDeploymentStep"/> instance for mocking. </returns>
+        public static NetworkAdapterDeploymentStep NetworkAdapterDeploymentStep(string name = default, string description = default, string fullStepIndex = default, string startTimeUtc = default, string endTimeUtc = default, string status = default, IEnumerable<NetworkAdapterDeploymentStep> steps = default, IEnumerable<string> exception = default)
+        {
+            steps ??= new ChangeTrackingList<NetworkAdapterDeploymentStep>();
+            exception ??= new ChangeTrackingList<string>();
+
+            return new NetworkAdapterDeploymentStep(
+                name,
+                description,
+                fullStepIndex,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                (steps ?? new ChangeTrackingList<NetworkAdapterDeploymentStep>()).ToList(),
+                (exception ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Properties for applying network adapter configuration. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Provisioning state of the job. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
+        /// <param name="targetConfiguration"> The desired network configuration to apply. </param>
+        /// <returns> A new <see cref="Models.ApplyConfigurationNetworkAdapterJobProperties"/> instance for mocking. </returns>
+        public static ApplyConfigurationNetworkAdapterJobProperties ApplyConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, NetworkAdapterConfiguration targetConfiguration = default)
+        {
+            return new ApplyConfigurationNetworkAdapterJobProperties(
+                NetworkAdapterJobType.ApplyConfiguration,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default,
+                targetConfiguration);
+        }
+
+        /// <summary> Properties for force push of network adapter configuration. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Provisioning state of the job. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
+        /// <returns> A new <see cref="Models.ForcePushNetworkAdapterJobProperties"/> instance for mocking. </returns>
+        public static ForcePushNetworkAdapterJobProperties ForcePushNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
+        {
+            return new ForcePushNetworkAdapterJobProperties(
+                NetworkAdapterJobType.ForcePush,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default);
+        }
+
+        /// <summary> Properties for resolving network adapter configuration drift. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Provisioning state of the job. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of Edge device job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
+        /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
+        /// <returns> A new <see cref="Models.SyncConfigurationNetworkAdapterJobProperties"/> instance for mocking. </returns>
+        public static SyncConfigurationNetworkAdapterJobProperties SyncConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, HciConfigurationDriftResolutionStrategy resolutionStrategy = default)
+        {
+            return new SyncConfigurationNetworkAdapterJobProperties(
+                NetworkAdapterJobType.SyncConfiguration,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default,
+                resolutionStrategy);
+        }
+
+        /// <summary> Disk resource representing a physical disk on an Edge Machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineDiskData"/> instance for mocking. </returns>
+        public static EdgeMachineDiskData EdgeMachineDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineDiskProperties properties = default)
+        {
+            return new EdgeMachineDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="diskVolumes"> List of desired volumes on this disk. </param>
+        /// <param name="reportedProperties"> The actual state of the disk as reported by the device. </param>
+        /// <param name="provisioningState"> Provisioning state of the disk resource. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDiskProperties"/> instance for mocking. </returns>
+        public static EdgeMachineDiskProperties EdgeMachineDiskProperties(IEnumerable<DiskVolumeConfiguration> diskVolumes = default, DiskReportedProperties reportedProperties = default, HciProvisioningState? provisioningState = default)
+        {
+            return new EdgeMachineDiskProperties(diskVolumes is null ? default : new DiskConfiguration((diskVolumes ?? new ChangeTrackingList<DiskVolumeConfiguration>()).ToList(), default), reportedProperties, provisioningState, default);
+        }
+
+        /// <summary> Configuration for a volume on a disk. </summary>
+        /// <param name="sizeInBytes"> Size of the volume in bytes. </param>
+        /// <param name="path"> Mount path for the volume (e.g., /data or D:\data). </param>
+        /// <param name="fileSystem"> File system type to format the volume with. </param>
+        /// <returns> A new <see cref="Models.DiskVolumeConfiguration"/> instance for mocking. </returns>
+        public static DiskVolumeConfiguration DiskVolumeConfiguration(string sizeInBytes = default, string path = default, DiskFileSystemType? fileSystem = default)
+        {
+            return new DiskVolumeConfiguration(sizeInBytes, path, fileSystem, default);
+        }
+
+        /// <summary> The actual state of the disk as reported by the device. </summary>
+        /// <param name="diskName"> The actual disk name as reported by the OS. </param>
+        /// <param name="model"> Model number of the hardware. </param>
+        /// <param name="manufacturer"> The manufacturer of the disk. </param>
+        /// <param name="isSupported"> Indicates whether the disk manufacturer is supported for the validated solution recipe ring. Defaults to true. Set to false when the SAN vendor is not in the allowed vendor list for the current ring. </param>
+        /// <param name="serialNumber"> Serial number. </param>
+        /// <param name="firmwareVersion"> Firmware version. </param>
+        /// <param name="sizeInBytes"> Size in bytes. </param>
+        /// <param name="storageType"> Storage type of the disk. </param>
+        /// <param name="diskType"> Type of the disk. </param>
+        /// <param name="busLocation"> Bus location of the disk. </param>
+        /// <param name="unallocatedSizeInBytes"> Unallocated space on the disk in bytes. </param>
+        /// <param name="state"> Current state of the disk. </param>
+        /// <param name="volumes"> List of volumes on this disk. </param>
+        /// <returns> A new <see cref="Models.DiskReportedProperties"/> instance for mocking. </returns>
+        public static DiskReportedProperties DiskReportedProperties(string diskName = default, string model = default, string manufacturer = default, bool? isSupported = default, string serialNumber = default, string firmwareVersion = default, string sizeInBytes = default, DiskStorageType? storageType = default, DiskType? diskType = default, string busLocation = default, string unallocatedSizeInBytes = default, DiskState? state = default, IEnumerable<DiskVolumeReportedProperties> volumes = default)
+        {
+            volumes ??= new ChangeTrackingList<DiskVolumeReportedProperties>();
+
+            return new DiskReportedProperties(
+                diskName,
+                model,
+                manufacturer,
+                isSupported,
+                serialNumber,
+                firmwareVersion,
+                sizeInBytes,
+                storageType,
+                diskType,
+                busLocation,
+                unallocatedSizeInBytes,
+                state,
+                (volumes ?? new ChangeTrackingList<DiskVolumeReportedProperties>()).ToList(),
+                default);
+        }
+
+        /// <summary> Reported properties of a volume on the disk. </summary>
+        /// <param name="sizeInBytes"> Size of the volume in bytes. </param>
+        /// <param name="path"> Mount path for the volume. </param>
+        /// <param name="fileSystem"> File system type. </param>
+        /// <param name="partitionId"> Unique identifier for the partition. </param>
+        /// <param name="partitionNumber"> Partition number. </param>
+        /// <param name="offsetInBytes"> Byte offset of the partition start. </param>
+        /// <param name="name"> Name of the volume. </param>
+        /// <param name="isBoot"> Indicates if this volume is a boot volume. </param>
+        /// <param name="sizeRemainingInBytes"> Available space on the volume in bytes. </param>
+        /// <param name="resourceName"> Resource name of the volume. </param>
+        /// <returns> A new <see cref="Models.DiskVolumeReportedProperties"/> instance for mocking. </returns>
+        public static DiskVolumeReportedProperties DiskVolumeReportedProperties(string sizeInBytes = default, string path = default, string fileSystem = default, string partitionId = default, int? partitionNumber = default, long? offsetInBytes = default, string name = default, bool? isBoot = default, string sizeRemainingInBytes = default, string resourceName = default)
+        {
+            return new DiskVolumeReportedProperties(
+                sizeInBytes,
+                path,
+                fileSystem,
+                partitionId,
+                partitionNumber,
+                offsetInBytes,
+                name,
+                isBoot,
+                sizeRemainingInBytes,
+                resourceName,
+                default);
+        }
+
+        /// <summary> Volume resource representing a storage volume on an Edge Machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineVolumeData"/> instance for mocking. </returns>
+        public static EdgeMachineVolumeData EdgeMachineVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineVolumeProperties properties = default)
+        {
+            return new EdgeMachineVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="volumeReserved"> Reserved for future volume configuration options. </param>
+        /// <param name="reportedProperties"> The actual state of the volume as reported by the device. </param>
+        /// <param name="provisioningState"> Provisioning state of the volume resource. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineVolumeProperties"/> instance for mocking. </returns>
+        public static EdgeMachineVolumeProperties EdgeMachineVolumeProperties(string volumeReserved = default, VolumeReportedProperties reportedProperties = default, HciProvisioningState? provisioningState = default)
+        {
+            return new EdgeMachineVolumeProperties(volumeReserved is null ? default : new VolumeConfiguration(volumeReserved, default), reportedProperties, provisioningState, default);
+        }
+
+        /// <summary> The actual state of the volume as reported by the device. </summary>
+        /// <param name="partitionId"> Unique identifier for the partition. </param>
+        /// <param name="offsetInBytes"> Byte offset of the partition start. </param>
+        /// <param name="name"> Label of the volume. </param>
+        /// <param name="path"> Access path for the volume. </param>
+        /// <param name="parentDiskId"> ARM resource ID of the parent disk. </param>
+        /// <param name="isBoot"> Indicates if this volume is a boot volume. </param>
+        /// <param name="sizeInBytes"> Total size of the volume in bytes. </param>
+        /// <param name="sizeRemainingInBytes"> Available space on the volume in bytes. </param>
+        /// <param name="fileSystem"> File system on the volume. </param>
+        /// <returns> A new <see cref="Models.VolumeReportedProperties"/> instance for mocking. </returns>
+        public static VolumeReportedProperties VolumeReportedProperties(string partitionId = default, long? offsetInBytes = default, string name = default, string path = default, string parentDiskId = default, bool? isBoot = default, string sizeInBytes = default, string sizeRemainingInBytes = default, string fileSystem = default)
+        {
+            return new VolumeReportedProperties(
+                partitionId,
+                offsetInBytes,
+                name,
+                path,
+                parentDiskId,
+                isBoot,
+                sizeInBytes,
+                sizeRemainingInBytes,
+                fileSystem,
+                default);
+        }
+
+        /// <summary> Disk Job resource for managing operations on disks. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineDiskJobData"/> instance for mocking. </returns>
+        public static EdgeMachineDiskJobData EdgeMachineDiskJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineDiskJobProperties properties = default)
+        {
+            return new EdgeMachineDiskJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Disk Job properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateVolumeJobProperties"/> and <see cref="Models.SyncConfigurationDiskJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of disk job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Properties reported by the job execution. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDiskJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineDiskJobProperties EdgeMachineDiskJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
+        {
+            return new UnknownEdgeMachineDiskJobProperties(
+                jobType is null ? default : new DiskJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default);
+        }
+
+        /// <summary> Reported properties of a disk job. </summary>
+        /// <param name="percentComplete"> Percentage of job completion. </param>
+        /// <param name="validationStatus"> Validation status of Disk Job. </param>
+        /// <param name="deploymentStatus"> Deployment status of Disk Job. </param>
+        /// <returns> A new <see cref="Models.DiskJobReportedProperties"/> instance for mocking. </returns>
+        public static DiskJobReportedProperties DiskJobReportedProperties(int? percentComplete = default, DiskActionStatus validationStatus = default, DiskActionStatus deploymentStatus = default)
+        {
+            return new DiskJobReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
+        }
+
+        /// <summary> The action plan deployment status for Disk Job. </summary>
+        /// <param name="status"> Status of ECE action Disk Job. </param>
+        /// <param name="steps"> List of steps of Disk Job. </param>
+        /// <returns> A new <see cref="Models.DiskActionStatus"/> instance for mocking. </returns>
+        public static DiskActionStatus DiskActionStatus(string status = default, IEnumerable<DiskDeploymentStep> steps = default)
+        {
+            steps ??= new ChangeTrackingList<DiskDeploymentStep>();
+
+            return new DiskActionStatus(status, (steps ?? new ChangeTrackingList<DiskDeploymentStep>()).ToList(), default);
+        }
+
+        /// <summary> The Step of Disk Job. </summary>
+        /// <param name="name"> Name of step. </param>
+        /// <param name="description"> Description of step. </param>
+        /// <param name="fullStepIndex"> FullStepIndex of step. </param>
+        /// <param name="startTimeUtc"> Start time of step. </param>
+        /// <param name="endTimeUtc"> End time of step. </param>
+        /// <param name="status"> Status of step (Error, Success, InProgress). </param>
+        /// <param name="steps"> List of nested steps. </param>
+        /// <param name="exception"> List of exceptions. </param>
+        /// <returns> A new <see cref="Models.DiskDeploymentStep"/> instance for mocking. </returns>
+        public static DiskDeploymentStep DiskDeploymentStep(string name = default, string description = default, string fullStepIndex = default, string startTimeUtc = default, string endTimeUtc = default, string status = default, IEnumerable<DiskDeploymentStep> steps = default, IEnumerable<string> exception = default)
+        {
+            steps ??= new ChangeTrackingList<DiskDeploymentStep>();
+            exception ??= new ChangeTrackingList<string>();
+
+            return new DiskDeploymentStep(
+                name,
+                description,
+                fullStepIndex,
+                startTimeUtc,
+                endTimeUtc,
+                status,
+                (steps ?? new ChangeTrackingList<DiskDeploymentStep>()).ToList(),
+                (exception ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Properties for creating a volume on a disk. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of disk job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Properties reported by the job execution. </param>
+        /// <param name="sizeInBytes"> Size of the volume to create in bytes. </param>
+        /// <param name="path"> Absolute path where the volume should be mounted. </param>
+        /// <param name="fileSystem"> File system type to format the volume with. </param>
+        /// <param name="createdVolumeId"> ARM resource ID of the created volume. </param>
+        /// <returns> A new <see cref="Models.CreateVolumeJobProperties"/> instance for mocking. </returns>
+        public static CreateVolumeJobProperties CreateVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string sizeInBytes = default, string path = default, DiskFileSystemType? fileSystem = default, string createdVolumeId = default)
+        {
+            return new CreateVolumeJobProperties(
+                DiskJobType.CreateVolume,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default,
+                sizeInBytes,
+                path,
+                fileSystem,
+                createdVolumeId);
+        }
+
+        /// <summary> Properties for resolving configuration drift. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of disk job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Properties reported by the job execution. </param>
+        /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
+        /// <returns> A new <see cref="Models.SyncConfigurationDiskJobProperties"/> instance for mocking. </returns>
+        public static SyncConfigurationDiskJobProperties SyncConfigurationDiskJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, HciConfigurationDriftResolutionStrategy resolutionStrategy = default)
+        {
+            return new SyncConfigurationDiskJobProperties(
+                DiskJobType.SyncConfiguration,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default,
+                resolutionStrategy);
+        }
+
+        /// <summary> Disk Privileged Job resource for managing privileged operations on disk volumes. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineDiskPrivilegedJobData"/> instance for mocking. </returns>
+        public static EdgeMachineDiskPrivilegedJobData EdgeMachineDiskPrivilegedJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineDiskPrivilegedJobProperties properties = default)
+        {
+            return new EdgeMachineDiskPrivilegedJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Disk Privileged Job properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeleteVolumeJobProperties"/>.
+        /// </summary>
+        /// <param name="jobType"> Privileged Job Type to support polymorphic resource. </param>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of disk job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Properties reported by the job execution. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDiskPrivilegedJobProperties"/> instance for mocking. </returns>
+        public static EdgeMachineDiskPrivilegedJobProperties EdgeMachineDiskPrivilegedJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
+        {
+            return new UnknownEdgeMachineDiskPrivilegedJobProperties(
+                jobType is null ? default : new PrivilegedJobType(jobType),
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default);
+        }
+
+        /// <summary> Properties for deleting a volume from a disk. </summary>
+        /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
+        /// <param name="provisioningState"> Job provisioning state. </param>
+        /// <param name="jobId"> Unique, immutable job id. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="status"> Status of disk job. </param>
+        /// <param name="error"> Error details if job failed. </param>
+        /// <param name="reportedProperties"> Properties reported by the job execution. </param>
+        /// <param name="volumePath"> The mount path of the volume to delete. </param>
+        /// <param name="isDeletionConfirmed"> Confirmation flag that must be set to true to proceed with deletion. </param>
+        /// <returns> A new <see cref="Models.DeleteVolumeJobProperties"/> instance for mocking. </returns>
+        public static DeleteVolumeJobProperties DeleteVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string volumePath = default, bool? isDeletionConfirmed = default)
+        {
+            return new DeleteVolumeJobProperties(
+                PrivilegedJobType.DeleteVolume,
+                deploymentMode,
+                provisioningState,
+                jobId,
+                startsOn,
+                endsOn,
+                status,
+                error,
+                reportedProperties,
+                default,
+                volumePath,
+                isDeletionConfirmed);
+        }
+
+        /// <summary> Edge Machine Security Settings proxy resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineSecuritySettingsData"/> instance for mocking. </returns>
+        public static EdgeMachineSecuritySettingsData EdgeMachineSecuritySettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineSecurityProperties properties = default)
+        {
+            return new EdgeMachineSecuritySettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of an Edge Machine Security Settings resource. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="securityComplianceStatus"> Compliance status values synchronized from Guest Configuration. </param>
+        /// <param name="registrationOn"> First synchronization timestamp in UTC. </param>
+        /// <param name="lastSyncOn"> Most recent synchronization timestamp in UTC. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineSecurityProperties"/> instance for mocking. </returns>
+        public static EdgeMachineSecurityProperties EdgeMachineSecurityProperties(HciProvisioningState? provisioningState = default, EdgeMachineSecurityComplianceStatus securityComplianceStatus = default, DateTimeOffset? registrationOn = default, DateTimeOffset? lastSyncOn = default)
+        {
+            return new EdgeMachineSecurityProperties(provisioningState, securityComplianceStatus, registrationOn, lastSyncOn, default);
+        }
+
+        /// <summary> Compliance status payload for edge machine security settings. </summary>
+        /// <param name="fipsStatus"> FIPS compliance status. </param>
+        /// <param name="secureBootStatus"> Secure Boot compliance status. </param>
+        /// <param name="encryptionAtRestStatus"> Encryption at rest compliance status. </param>
+        /// <param name="seLinuxPolicyStatus"> SELinux policy compliance status. </param>
+        /// <param name="securityBaselineStatus"> Security baseline compliance status. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineSecurityComplianceStatus"/> instance for mocking. </returns>
+        public static EdgeMachineSecurityComplianceStatus EdgeMachineSecurityComplianceStatus(HciClusterComplianceStatus? fipsStatus = default, HciClusterComplianceStatus? secureBootStatus = default, HciClusterComplianceStatus? encryptionAtRestStatus = default, HciClusterComplianceStatus? seLinuxPolicyStatus = default, HciClusterComplianceStatus? securityBaselineStatus = default)
+        {
+            return new EdgeMachineSecurityComplianceStatus(
+                fipsStatus,
+                secureBootStatus,
+                encryptionAtRestStatus,
+                seLinuxPolicyStatus,
+                securityBaselineStatus,
+                default);
+        }
+
+        /// <summary> Deployment setting resource for an Edge Machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Hci.EdgeMachineDeploymentSettingData"/> instance for mocking. </returns>
+        public static EdgeMachineDeploymentSettingData EdgeMachineDeploymentSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeMachineDeploymentSettingProperties properties = default)
+        {
+            return new EdgeMachineDeploymentSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The properties of an Edge Machine Deployment Setting. </summary>
+        /// <param name="provisioningState"> The provisioning state of the deployment setting resource. </param>
+        /// <param name="deploymentConfiguration"> The deployment configuration for the edge machine. </param>
+        /// <param name="reportedProperties"> Deployment status reported from the edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDeploymentSettingProperties"/> instance for mocking. </returns>
+        public static EdgeMachineDeploymentSettingProperties EdgeMachineDeploymentSettingProperties(HciProvisioningState? provisioningState = default, EdgeMachineDeploymentConfiguration deploymentConfiguration = default, EceReportedProperties reportedProperties = default)
+        {
+            return new EdgeMachineDeploymentSettingProperties(provisioningState, deploymentConfiguration, reportedProperties, default);
+        }
+
+        /// <summary> Edge Machine Deployment Configuration. </summary>
+        /// <param name="version"> Deployment template version. </param>
+        /// <param name="scaleUnits"> The list of deployment data. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDeploymentConfiguration"/> instance for mocking. </returns>
+        public static EdgeMachineDeploymentConfiguration EdgeMachineDeploymentConfiguration(string version = default, IEnumerable<EdgeMachineScaleUnits> scaleUnits = default)
+        {
+            scaleUnits ??= new ChangeTrackingList<EdgeMachineScaleUnits>();
+
+            return new EdgeMachineDeploymentConfiguration(version, (scaleUnits ?? new ChangeTrackingList<EdgeMachineScaleUnits>()).ToList(), default);
+        }
+
+        /// <summary> A scale unit containing deployment data. </summary>
+        /// <param name="deploymentData"> Deployment data to configure the edge machine. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineScaleUnits"/> instance for mocking. </returns>
+        public static EdgeMachineScaleUnits EdgeMachineScaleUnits(EdgeMachineDeployment deploymentData = default)
+        {
+            return new EdgeMachineScaleUnits(deploymentData, default);
+        }
+
+        /// <summary> The deployment data of an edge machine. </summary>
+        /// <param name="storageType"> Storage type for the edge machine node. </param>
+        /// <param name="iScsiConfig"> iSCSI configuration for the edge machine. </param>
+        /// <param name="secrets"> Protected parameters stored in Key Vault and applied during edge machine node preparation. </param>
+        /// <returns> A new <see cref="Models.EdgeMachineDeployment"/> instance for mocking. </returns>
+        public static EdgeMachineDeployment EdgeMachineDeployment(NodeStorageType storageType = default, IscsiConfig iScsiConfig = default, IEnumerable<EceDeploymentSecrets> secrets = default)
+        {
+            secrets ??= new ChangeTrackingList<EceDeploymentSecrets>();
+
+            return new EdgeMachineDeployment(storageType, iScsiConfig, (secrets ?? new ChangeTrackingList<EceDeploymentSecrets>()).ToList(), default);
+        }
+
+        /// <param name="iScsiNetworkConfig"> iSCSI network configuration. </param>
+        /// <param name="chapType"> The CHAP authentication mode to use. </param>
+        /// <param name="initiatorIqn"> iSCSI Qualified Name of the initiator. </param>
+        /// <returns> A new <see cref="Models.IscsiConfig"/> instance for mocking. </returns>
+        public static IscsiConfig IscsiConfig(IscsiNetworkConfig iScsiNetworkConfig = default, IscsiChapType? chapType = default, string initiatorIqn = default)
+        {
+            return new IscsiConfig(iScsiNetworkConfig, chapType is null ? default : new IscsiChapSettings(chapType, default), initiatorIqn, default);
+        }
+
+        /// <summary> iSCSI network configuration. </summary>
+        /// <param name="adapterProperties"> Common adapter properties applied to all iSCSI network adapters. </param>
+        /// <param name="adapterIPConfig"> Per-adapter IP configuration for the iSCSI network adapters. </param>
+        /// <returns> A new <see cref="Models.IscsiNetworkConfig"/> instance for mocking. </returns>
+        public static IscsiNetworkConfig IscsiNetworkConfig(IscsiAdapterProperties adapterProperties = default, IEnumerable<IscsiAdapterIPConfig> adapterIPConfig = default)
+        {
+            adapterIPConfig ??= new ChangeTrackingList<IscsiAdapterIPConfig>();
+
+            return new IscsiNetworkConfig(adapterProperties, (adapterIPConfig ?? new ChangeTrackingList<IscsiAdapterIPConfig>()).ToList(), default);
+        }
+
+        /// <summary> Common properties applied to iSCSI network adapters. </summary>
+        /// <param name="priorityValue8021ActionIscsi"> 802.1p priority value for iSCSI traffic. </param>
+        /// <param name="bandwidthPercentageIscsi"> iSCSI bandwidth percentage. </param>
+        /// <param name="jumboPacket"> Jumbo frame size in bytes. </param>
+        /// <returns> A new <see cref="Models.IscsiAdapterProperties"/> instance for mocking. </returns>
+        public static IscsiAdapterProperties IscsiAdapterProperties(int? priorityValue8021ActionIscsi = default, int? bandwidthPercentageIscsi = default, int? jumboPacket = default)
+        {
+            return new IscsiAdapterProperties(priorityValue8021ActionIscsi, bandwidthPercentageIscsi, jumboPacket, default);
+        }
+
+        /// <summary> IP configuration for a single iSCSI network adapter. </summary>
+        /// <param name="networkAdapterName"> Name of the iSCSI network adapter. </param>
+        /// <param name="vlanId"> VLAN ID associated with the iSCSI network adapter. </param>
+        /// <param name="addressPrefix"> Address prefix in CIDR notation. </param>
+        /// <param name="targetPortalAddresses"> Target portal addresses reachable through this adapter. </param>
+        /// <returns> A new <see cref="Models.IscsiAdapterIPConfig"/> instance for mocking. </returns>
+        public static IscsiAdapterIPConfig IscsiAdapterIPConfig(string networkAdapterName = default, int? vlanId = default, string addressPrefix = default, IEnumerable<IscsiTargetPortalAddress> targetPortalAddresses = default)
+        {
+            targetPortalAddresses ??= new ChangeTrackingList<IscsiTargetPortalAddress>();
+
+            return new IscsiAdapterIPConfig(networkAdapterName, vlanId, addressPrefix, (targetPortalAddresses ?? new ChangeTrackingList<IscsiTargetPortalAddress>()).ToList(), default);
+        }
+
+        /// <summary> iSCSI target portal address. </summary>
+        /// <param name="ipAddress"> IP address of the iSCSI target portal. </param>
+        /// <param name="nextHop"> Next hop IP address used to reach the target portal. </param>
+        /// <returns> A new <see cref="Models.IscsiTargetPortalAddress"/> instance for mocking. </returns>
+        public static IscsiTargetPortalAddress IscsiTargetPortalAddress(string ipAddress = default, string nextHop = default)
+        {
+            return new IscsiTargetPortalAddress(ipAddress, nextHop, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2165,6 +4243,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
         /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
         /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="isManagementCluster"> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </param>
         /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
         /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
         /// <param name="desiredProperties"> Desired properties of the cluster. </param>
@@ -2172,18 +4251,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
-        /// <param name="registrationTimestamp"></param>
-        /// <param name="lastSyncTimestamp"></param>
-        /// <param name="lastBillingTimestamp"></param>
+        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"></param>
-        /// <param name="tenantId"></param>
-        /// <param name="typeIdentityType"></param>
-        /// <param name="userAssignedIdentities"></param>
+        /// <param name="secretsLocations"> List of secret locations. </param>
+        /// <param name="clusterPattern"> Supported Storage Type for HCI Cluster. </param>
+        /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
+        /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
+        /// <param name="nextBillingModel"> The next billing model to be applied to the cluster. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, Guid? principalId = default, Guid? tenantId = default, HciManagedServiceIdentityType? typeIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IEnumerable<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, IEnumerable<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, NextBillingModel nextBillingModel, ManagedServiceIdentity identity, string kind)
         {
             return new HciClusterData(
                 id,
@@ -2192,7 +4275,128 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && nextBillingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && localAvailabilityZones is null && identityProvider is null && storageType is null ? default : new ClusterProperties(
+                    provisioningState,
+                    status,
+                    connectivityStatus,
+                    cloudId,
+                    cloudManagementEndpoint,
+                    aadClientId,
+                    aadTenantId,
+                    aadApplicationObjectId,
+                    aadServicePrincipalObjectId,
+                    softwareAssuranceProperties,
+                    isManagementCluster,
+                    logCollectionProperties,
+                    remoteSupportProperties,
+                    desiredProperties,
+                    reportedProperties,
+                    isolatedVmAttestationConfiguration,
+                    trialDaysRemaining,
+                    billingModel,
+                    nextBillingModel is null ? default : new ClusterBillingProperties(nextBillingModel, default),
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
+                    serviceEndpoint,
+                    resourceProviderObjectId,
+                    (secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>()).ToList(),
+                    clusterPattern,
+                    default,
+                    (localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>()).ToList(),
+                    identityProvider,
+                    storageType,
+                    default),
+                identity,
+                kind,
+                default);
+        }
+
+        /// <summary> The Step of AzureStackHCI Cluster. </summary>
+        /// <param name="name"> Name of step. </param>
+        /// <param name="description"> Description of step. </param>
+        /// <param name="fullStepIndex"> FullStepIndex of step. </param>
+        /// <param name="startOn"> Start time of step. </param>
+        /// <param name="endOn"> End time of step. </param>
+        /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
+        /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
+        /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
+        /// <returns> A new <see cref="Models.HciClusterDeploymentStep"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterDeploymentStep HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IEnumerable<HciClusterDeploymentStep> steps, IEnumerable<string> exception)
+        {
+            return new HciClusterDeploymentStep(
+                name,
+                description,
+                fullStepIndex,
+                startOn,
+                endOn,
+                status,
+                (steps ?? new ChangeTrackingList<HciClusterDeploymentStep>()).ToList(),
+                (exception ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                default,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> The network profile of a device. </summary>
+        /// <param name="nicDetails"> List of NIC Details of device. </param>
+        /// <param name="switchDetails"> List of switch details for edge device. </param>
+        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.HciNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork)
+        {
+            return new HciNetworkProfile((nicDetails ?? new ChangeTrackingList<HciNicDetail>()).ToList(), (switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>()).ToList(), hostNetwork, default, default);
+        }
+
+        /// <summary> Cluster details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state. Indicates the current lifecycle status of the resource, including creation, update, deletion, connectivity, and error states. </param>
+        /// <param name="status"> Status of the cluster agent. Indicates the current connectivity, validation, and deployment state of the agent within the cluster. </param>
+        /// <param name="connectivityStatus"> Overall connectivity status for the cluster resource. Indicates whether the cluster is connected to Azure, partially connected, or has not recently communicated. </param>
+        /// <param name="cloudId"> Unique, immutable resource id. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="aadApplicationObjectId"> Object id of cluster AAD identity. </param>
+        /// <param name="aadServicePrincipalObjectId"> Id of cluster identity service principal. </param>
+        /// <param name="softwareAssuranceProperties"> Software Assurance properties of the cluster. </param>
+        /// <param name="logCollectionProperties"> Log Collection properties of the cluster. </param>
+        /// <param name="remoteSupportProperties"> RemoteSupport properties of the cluster. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
+        /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
+        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
+        /// <param name="billingModel"> Type of billing applied to the resource. </param>
+        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
+        /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
+        /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
+        /// <param name="principalId"></param>
+        /// <param name="tenantId"></param>
+        /// <param name="typeIdentityType"></param>
+        /// <param name="userAssignedIdentities"></param>
+        /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HciClusterData HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        {
+            return new HciClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     connectivityStatus,
@@ -2212,11 +4416,12 @@ namespace Azure.ResourceManager.Hci.Models
                     trialDaysRemaining,
                     billingModel,
                     billingModel is null && trialDaysRemaining is null ? default : new ClusterBillingProperties(billingModel is null && trialDaysRemaining is null ? default : new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
-                    default,
-                    default,
-                    default,
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
                     serviceEndpoint,
                     resourceProviderObjectId,
+                    default,
                     default,
                     default,
                     default,
@@ -2240,7 +4445,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
         /// <returns> A new <see cref="Models.LogCollectionSession"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = default, DateTimeOffset? logEndOn = default, DateTimeOffset? timeCollected = default, long? logSize = default, LogCollectionStatus? logCollectionStatus = default, LogCollectionJobType? logCollectionJobType = default, string correlationId = default, DateTimeOffset? endTimeCollected = default, LogCollectionError logCollectionError = default)
+        public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, LogCollectionJobType? logCollectionJobType, string correlationId, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError)
         {
             return new LogCollectionSession(
                 logStartOn,
@@ -2263,7 +4468,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportSessionDetails"></param>
         /// <returns> A new <see cref="Models.RemoteSupportProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default, RemoteSupportType? remoteSupportType = default, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = default, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default)
+        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails)
         {
             return new RemoteSupportProperties(
                 accessLevel,
@@ -2283,7 +4488,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="accessLevel"> Remote Support Access Level. </param>
         /// <returns> A new <see cref="Models.PerNodeRemoteSupportSession"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default)
+        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel)
         {
             return new PerNodeRemoteSupportSession(
                 sessionStartOn,
@@ -2309,7 +4514,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <returns> A new <see cref="Models.HciClusterReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName = default, Guid? clusterId = default, string clusterVersion = default, IEnumerable<HciClusterNode> nodes = default, DateTimeOffset? lastUpdatedOn = default, ImdsAttestationState? imdsAttestation = default, HciClusterDiagnosticLevel? diagnosticLevel = default, IEnumerable<string> supportedCapabilities = default, ClusterNodeType? clusterType = default, string manufacturer = default, OemActivation? oemActivation = default)
+        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IEnumerable<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IEnumerable<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation)
         {
             return new HciClusterReportedProperties(
                 clusterName,
@@ -2340,7 +4545,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="userAssignedIdentities"></param>
         /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, HciClusterDesiredProperties desiredProperties = default, Guid? principalId = default, Guid? tenantId = default, HciManagedServiceIdentityType? managedServiceIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, HciClusterDesiredProperties desiredProperties, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             return new HciClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, default), default);
         }
@@ -2367,7 +4572,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string namePropertiesProgressName = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastCompletedOn = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IEnumerable<HciUpdateStep> steps)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -2418,7 +4623,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="state"> Overall update state of the stamp. Indicates the current status of update deployment across the stamp, including preparation, application, and any issues encountered. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateSummaryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, string oemFamily = default, string currentOemVersion = default, string hardwareModel = default, IEnumerable<HciPackageVersionInfo> packageVersions = default, string currentVersion = default, string currentSbeVersion = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? lastCheckedOn = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, HciClusterUpdateState? state = default)
+        public static HciClusterUpdateSummaryData HciClusterUpdateSummaryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, string oemFamily, string currentOemVersion, string hardwareModel, IEnumerable<HciPackageVersionInfo> packageVersions, string currentVersion, string currentSbeVersion, DateTimeOffset? lastUpdatedOn, DateTimeOffset? lastCheckedOn, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, HciClusterUpdateState? state)
         {
             return new HciClusterUpdateSummaryData(
                 id,
@@ -2474,7 +4679,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciClusterUpdateData HciClusterUpdateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, HciProvisioningState? provisioningState = default, DateTimeOffset? installedOn = default, string description = default, string minSbeVersionRequired = default, HciUpdateState? state = default, IEnumerable<HciClusterUpdatePrerequisite> prerequisites = default, IEnumerable<HciPackageVersionInfo> componentVersions = default, HciNodeRebootRequirement? rebootRequired = default, HciHealthState? healthState = default, IEnumerable<HciPrecheckResult> healthCheckResult = default, DateTimeOffset? healthCheckOn = default, string packagePath = default, float? packageSizeInMb = default, string displayName = default, string version = default, string publisher = default, string releaseLink = default, HciAvailabilityType? availabilityType = default, string packageType = default, string additionalProperties = default, float? progressPercentage = default, string notifyMessage = default)
+        public static HciClusterUpdateData HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IEnumerable<HciClusterUpdatePrerequisite> prerequisites, IEnumerable<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IEnumerable<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage)
         {
             return new HciClusterUpdateData(
                 id,
@@ -2516,7 +4721,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default)
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo)
         {
             return new HciReportedProperties(
                 deviceState,
@@ -2548,7 +4753,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default)
+        public static HciNicDetail HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IEnumerable<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus)
         {
             return new HciNicDetail(
                 adapterName,
@@ -2575,7 +4780,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceReportedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default)
+        public static HciEdgeDeviceReportedProperties HciEdgeDeviceReportedProperties(HciEdgeDeviceState? deviceState, IEnumerable<HciEdgeDeviceArcExtension> extensions)
         {
             return new HciEdgeDeviceReportedProperties(deviceState, extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), default), default, default);
         }
@@ -2649,9 +4854,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="reportedProperties"> Properties reported by cluster agent. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
-        /// <param name="registrationTimestamp"></param>
-        /// <param name="lastSyncTimestamp"></param>
-        /// <param name="lastBillingTimestamp"></param>
+        /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
+        /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
+        /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
         /// <param name="principalId"></param>
@@ -2669,7 +4874,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && desiredProperties is null && reportedProperties is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && desiredProperties is null && reportedProperties is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     default,
@@ -2689,11 +4894,12 @@ namespace Azure.ResourceManager.Hci.Models
                     trialDaysRemaining,
                     billingModel,
                     billingModel is null && trialDaysRemaining is null ? default : new ClusterBillingProperties(billingModel is null && trialDaysRemaining is null ? default : new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
-                    default,
-                    default,
-                    default,
+                    registrationTimestamp,
+                    lastSyncTimestamp,
+                    lastBillingTimestamp,
                     serviceEndpoint,
                     resourceProviderObjectId,
+                    default,
                     default,
                     default,
                     default,

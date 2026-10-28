@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AcsIncomingCallCustomContext(sipHeaders, voipHeaders, additionalBinaryDataProperties);
+            return new AcsIncomingCallCustomContext(sipHeaders ?? new ChangeTrackingDictionary<string, string>(), voipHeaders ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(VolumeOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Nocopy))
+            if (Optional.IsDefined(Nocopy, _nocopyIsDefined))
             {
-                writer.WritePropertyName("nocopy"u8);
-                writer.WriteBooleanValue(Nocopy.Value);
+                if (Nocopy != null)
+                {
+                    writer.WritePropertyName("nocopy"u8);
+                    writer.WriteBooleanValue(Nocopy.Value);
+                }
+                else
+                {
+                    writer.WriteNull("nocopy"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool nocopyIsDefined = false;
             bool? nocopy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nocopy"u8))
                 {
+                    nocopyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nocopy = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VolumeOptions(nocopy, additionalBinaryDataProperties);
+            return new VolumeOptions(nocopy, additionalBinaryDataProperties)
+            {
+                _nocopyIsDefined = nocopyIsDefined
+            };
         }
     }
 }

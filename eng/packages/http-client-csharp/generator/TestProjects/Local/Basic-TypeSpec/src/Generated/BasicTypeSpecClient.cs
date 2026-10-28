@@ -92,7 +92,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClient from a <see cref="BasicTypeSpecClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BasicTypeSpecClient. </param>
         [Experimental("SCME0002")]
-        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(settings?.BasicTypeSpecUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.BasicTypeSpecUrl, settings?.Options)
         {
         }
 
@@ -1261,19 +1261,19 @@ namespace BasicTypeSpec
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
+        public virtual Response<ReturnsAnonymousModelResult> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
             Response result = ReturnsAnonymousModel(cancellationToken.ToRequestContext());
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReturnsAnonymousModelResult>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
         {
             Response result = await ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary>
@@ -2776,8 +2776,7 @@ namespace BasicTypeSpec
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<BinaryData>> ReceiveJsonLinesAsync(RequestContext context)
+        public virtual async Task<AsyncStreamingResult<BinaryData>> ReceiveJsonLinesAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReceiveJsonLines");
             scope.Start();
@@ -2786,7 +2785,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveJsonLinesRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(message));
+                return AsyncStreamingResult.CreateJsonLines(new AzurePipelineResponse(message), context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -2794,20 +2793,17 @@ namespace BasicTypeSpec
                 throw;
             }
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> ReceiveJsonLines. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<StreamingItem>> ReceiveJsonLinesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<AsyncStreamingResult<StreamingItem>> ReceiveJsonLinesAsync(CancellationToken cancellationToken = default)
         {
             using HttpMessage message = CreateReceiveJsonLinesRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
             await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(message), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
+            return AsyncStreamingResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(message), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary>
         /// [Protocol Method] ReceiveSse
@@ -2820,8 +2816,7 @@ namespace BasicTypeSpec
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> ReceiveSseAsync(RequestContext context)
+        public virtual async Task<AsyncStreamingResult<SseItem<BinaryData>>> ReceiveSseAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReceiveSse");
             scope.Start();
@@ -2830,7 +2825,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveSseRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]", context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -2838,20 +2833,17 @@ namespace BasicTypeSpec
                 throw;
             }
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> ReceiveSse. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<SseItem<StreamingItem>>> ReceiveSseAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<AsyncStreamingResult<SseItem<StreamingItem>>> ReceiveSseAsync(CancellationToken cancellationToken = default)
         {
             using HttpMessage message = CreateReceiveSseRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
             await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(message), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
+            return AsyncStreamingResult.CreateSse<StreamingItem>(new AzurePipelineResponse(message), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary>
         /// [Protocol Method] GetOptionalResponse
@@ -2929,6 +2921,196 @@ namespace BasicTypeSpec
                 return new NoValueResponse<ThingModel>(result);
             }
             return Response.FromValue((ThingModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] RoundTripResourceIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response RoundTripResourceIdentifiers(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.RoundTripResourceIdentifiers");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+                Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+                Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRoundTripResourceIdentifiersRequest(resourceId, queryId, headerId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] RoundTripResourceIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RoundTripResourceIdentifiersAsync(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.RoundTripResourceIdentifiers");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+                Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+                Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRoundTripResourceIdentifiersRequest(resourceId, queryId, headerId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> RoundTripResourceIdentifiers. </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ResourceIdentifierModel> RoundTripResourceIdentifiers(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, ResourceIdentifierModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent("J");
+            Response result = RoundTripResourceIdentifiers(resourceId, queryId, headerId, content, cancellationToken.ToRequestContext());
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary> RoundTripResourceIdentifiers. </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ResourceIdentifierModel>> RoundTripResourceIdentifiersAsync(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, ResourceIdentifierModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent("J");
+            Response result = await RoundTripResourceIdentifiersAsync(resourceId, queryId, headerId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetResourceIdentifiersXml
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetResourceIdentifiersXml(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetResourceIdentifiersXml");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetResourceIdentifiersXmlRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetResourceIdentifiersXml
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetResourceIdentifiersXmlAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetResourceIdentifiersXml");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetResourceIdentifiersXmlRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> GetResourceIdentifiersXml. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ResourceIdentifierModel> GetResourceIdentifiersXml(CancellationToken cancellationToken = default)
+        {
+            Response result = GetResourceIdentifiersXml(cancellationToken.ToRequestContext());
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary> GetResourceIdentifiersXml. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ResourceIdentifierModel>> GetResourceIdentifiersXmlAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetResourceIdentifiersXmlAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ResourceIdentifierModel)result, result);
         }
 
         /// <summary> Initializes a new instance of PlantOperations. </summary>

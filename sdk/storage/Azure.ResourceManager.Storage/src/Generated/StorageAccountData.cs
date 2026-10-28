@@ -212,6 +212,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> Configures Turbo Tier for the storage account. </summary>
+        [WirePath("properties.turboTier")]
+        public TurboTier TurboTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TurboTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.TurboTier = value;
+            }
+        }
+
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         [WirePath("properties.azureFilesIdentityBasedAuthentication")]
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication
@@ -587,6 +605,24 @@ namespace Azure.ResourceManager.Storage
                     Properties = new StorageAccountProperties();
                 }
                 Properties.DataCollaborationPolicyProperties = value;
+            }
+        }
+
+        /// <summary> Allow or disallow cross AAD tenant user delegation SAS (shared access signature). The default interpretation is false for this property. </summary>
+        [WirePath("properties.allowCrossTenantDelegationSas")]
+        public bool? AllowCrossTenantDelegationSas
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowCrossTenantDelegationSas;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowCrossTenantDelegationSas = value;
             }
         }
 

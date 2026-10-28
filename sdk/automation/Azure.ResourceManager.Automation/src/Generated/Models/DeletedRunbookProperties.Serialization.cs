@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runtime"u8);
                 writer.WriteStringValue(Runtime);
             }
-            if (Optional.IsDefined(RuntimeEnvironment))
+            if (Optional.IsDefined(RuntimeEnvironment, _runtimeEnvironmentIsDefined))
             {
-                writer.WritePropertyName("runtimeEnvironment"u8);
-                writer.WriteStringValue(RuntimeEnvironment);
+                if (RuntimeEnvironment != null)
+                {
+                    writer.WritePropertyName("runtimeEnvironment"u8);
+                    writer.WriteStringValue(RuntimeEnvironment);
+                }
+                else
+                {
+                    writer.WriteNull("runtimeEnvironment"u8);
+                }
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -149,6 +156,7 @@ namespace Azure.ResourceManager.Automation.Models
             string runbookId = default;
             string runbookType = default;
             string runtime = default;
+            bool runtimeEnvironmentIsDefined = false;
             string runtimeEnvironment = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? deletedOn = default;
@@ -172,6 +180,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("runtimeEnvironment"u8))
                 {
+                    runtimeEnvironmentIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runtimeEnvironment = null;
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeletedRunbookProperties(
@@ -210,7 +219,10 @@ namespace Azure.ResourceManager.Automation.Models
                 runtimeEnvironment,
                 createdOn,
                 deletedOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _runtimeEnvironmentIsDefined = runtimeEnvironmentIsDefined
+            };
         }
     }
 }

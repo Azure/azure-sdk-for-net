@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class DefaultAzureCredentialOptionsTests
@@ -399,6 +398,25 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(original.ApiKey, clone.ApiKey);
             Assert.AreEqual("azureclicredential", clone.CredentialSource);
             Assert.AreEqual(apiKey, clone.ApiKey);
+        }
+
+        [Test]
+        public void ConstructorAndClone_PreserveEnableMtlsProofOfPossession()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:EnableMtlsProofOfPossession"] = "true",
+                })
+                .Build();
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+
+            var clone = options.Clone<DefaultAzureCredentialOptions>();
+
+            Assert.IsTrue(options.EnableMtlsProofOfPossession);
+            Assert.IsTrue(clone.EnableMtlsProofOfPossession);
         }
 
         [TestCase(nameof(VisualStudioCredential))]

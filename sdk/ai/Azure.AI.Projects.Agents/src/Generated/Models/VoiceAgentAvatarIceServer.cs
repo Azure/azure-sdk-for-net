@@ -4,15 +4,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An ICE server used for avatar WebRTC negotiation. </summary>
+    [Experimental("AAIP001")]
     internal partial class VoiceAgentAvatarIceServer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _username;
+        private bool _usernameIsDefined;
+        private string _credential;
+        private bool _credentialIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarIceServer"/>. </summary>
         /// <param name="urls"></param>
@@ -32,8 +38,8 @@ namespace Azure.AI.Projects.Agents
         internal VoiceAgentAvatarIceServer(IList<Uri> urls, string username, string credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Urls = urls;
-            Username = username;
-            Credential = credential;
+            _username = username;
+            _credential = credential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,9 +47,31 @@ namespace Azure.AI.Projects.Agents
         public IList<Uri> Urls { get; }
 
         /// <summary> Gets or sets the Username. </summary>
-        public string Username { get; set; }
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                _username = value;
+                _usernameIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the Credential. </summary>
-        public string Credential { get; set; }
+        public string Credential
+        {
+            get
+            {
+                return _credential;
+            }
+            set
+            {
+                _credential = value;
+                _credentialIsDefined = true;
+            }
+        }
     }
 }

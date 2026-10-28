@@ -176,7 +176,6 @@
             "$id": "14",
             "name": "list",
             "isExactName": false,
-            "resourceName": "Pageable",
             "doc": "List users",
             "accessibility": "public",
             "parameters": [
@@ -320,6 +319,7 @@
               "value"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],

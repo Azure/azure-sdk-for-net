@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The retry policy for the user request. </summary>
+    /// <summary> The retry settings for a bulk action. </summary>
     public partial class BulkOperationRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkOperationRetryPolicy"/>. </summary>
-        /// <param name="retryCount"> Retry count for user request. </param>
-        /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
-        /// <param name="onFailureAction"> Action to take on failure. </param>
+        /// <param name="retryCount"> The maximum number of retry attempts. </param>
+        /// <param name="retryWindowInMinutes"> The period, in minutes, during which Bulk Actions can retry the operation. </param>
+        /// <param name="onFailureAction"> The operation that Bulk Actions attempts when the requested operation fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BulkOperationRetryPolicy(int? retryCount, int? retryWindowInMinutes, ComputeBulkOperationKind? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Retry count for user request. </summary>
+        /// <summary> The maximum number of retry attempts. </summary>
         public int? RetryCount { get; set; }
 
-        /// <summary> Retry window in minutes for user request. </summary>
+        /// <summary> The period, in minutes, during which Bulk Actions can retry the operation. </summary>
         public int? RetryWindowInMinutes { get; set; }
 
-        /// <summary> Action to take on failure. </summary>
+        /// <summary> The operation that Bulk Actions attempts when the requested operation fails. </summary>
         public ComputeBulkOperationKind? OnFailureAction { get; set; }
     }
 }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GatewayListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GatewayListResult(value ?? new ChangeTrackingList<ProgrammableConnectivityGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

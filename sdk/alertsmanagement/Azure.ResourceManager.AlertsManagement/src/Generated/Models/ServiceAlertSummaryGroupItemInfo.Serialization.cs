@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServiceAlertSummaryGroupItemInfo(name, count, groupedBy, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), additionalBinaryDataProperties);

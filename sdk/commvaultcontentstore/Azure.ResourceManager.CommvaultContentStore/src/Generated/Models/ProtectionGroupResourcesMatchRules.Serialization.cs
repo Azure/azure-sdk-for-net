@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProtectionGroupResourcesMatchRules(rules, matchType, additionalBinaryDataProperties);
+            return new ProtectionGroupResourcesMatchRules(rules ?? new ChangeTrackingList<ProtectionGroupRule>(), matchType, additionalBinaryDataProperties);
         }
     }
 }

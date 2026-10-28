@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The rectangular crop applied to avatar video. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentAvatarVideoCrop
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bottomRight"></param>
         /// <param name="topLeft"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="bottomRight"/> or <paramref name="topLeft"/> is null. </exception>
-        public VoiceAgentAvatarVideoCrop(IEnumerable<object> bottomRight, IEnumerable<object> topLeft)
+        public VoiceAgentAvatarVideoCrop(IEnumerable<uint> bottomRight, IEnumerable<uint> topLeft)
         {
             Argument.AssertNotNull(bottomRight, nameof(bottomRight));
             Argument.AssertNotNull(topLeft, nameof(topLeft));
@@ -31,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bottomRight"></param>
         /// <param name="topLeft"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAvatarVideoCrop(IList<object> bottomRight, IList<object> topLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAvatarVideoCrop(IList<uint> bottomRight, IList<uint> topLeft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BottomRight = bottomRight;
             TopLeft = topLeft;
@@ -39,9 +41,9 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets the BottomRight. </summary>
-        public IList<object> BottomRight { get; }
+        public IList<uint> BottomRight { get; }
 
         /// <summary> Gets the TopLeft. </summary>
-        public IList<object> TopLeft { get; }
+        public IList<uint> TopLeft { get; }
     }
 }

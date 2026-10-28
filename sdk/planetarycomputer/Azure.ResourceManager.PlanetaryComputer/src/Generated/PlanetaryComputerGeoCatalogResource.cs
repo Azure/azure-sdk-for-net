@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PlanetaryComputer.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PlanetaryComputerGeoCatalogResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Orbital/geoCatalogs", out string geoCatalogsApiVersionOverride) ? geoCatalogsApiVersionOverride : "2026-04-15");
             ValidateResourceId(id);
         }
 
@@ -515,10 +515,9 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -558,10 +557,9 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

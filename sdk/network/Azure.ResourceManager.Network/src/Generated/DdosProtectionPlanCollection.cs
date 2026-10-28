@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DdosProtectionPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DdosProtectionPlanResource.ResourceType, out string ddosProtectionPlanApiVersion);
             _ddosProtectionPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlanResource.ResourceType.Namespace, Diagnostics);
-            _ddosProtectionPlansRestClient = new DdosProtectionPlans(_ddosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ddosProtectionPlanApiVersion ?? "2025-09-01");
+            _ddosProtectionPlansRestClient = new DdosProtectionPlans(_ddosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetByResourceGroupAsyncCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
+            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanDataAsyncCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetByResourceGroupCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
+            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlanDataCollectionResultOfT(_ddosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DdosProtectionPlanCollection.GetAll"), data => new DdosProtectionPlanResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

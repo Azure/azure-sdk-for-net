@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyData, PolicyResource>(new PolicyDataAsyncCollectionResultOfT(
                 _policiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyData, PolicyResource>(new PoliciesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PolicyData, PolicyResource>(new PolicyDataCollectionResultOfT(
                 _policiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

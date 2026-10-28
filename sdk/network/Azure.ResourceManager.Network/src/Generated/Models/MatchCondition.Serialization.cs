@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MatchCondition(
-                matchVariables,
+                matchVariables ?? new ChangeTrackingList<MatchVariable>(),
                 @operator,
                 negationConditon,
-                matchValues,
+                matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<WebApplicationFirewallTransform>(),
                 additionalBinaryDataProperties);
         }

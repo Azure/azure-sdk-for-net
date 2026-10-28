@@ -84,10 +84,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("assignedTo"u8);
                 writer.WriteStringValue(AssignedTo);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Optional.IsDefined(ObjectId, _objectIdIsDefined))
             {
-                writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId.Value);
+                if (ObjectId != null)
+                {
+                    writer.WritePropertyName("objectId"u8);
+                    writer.WriteStringValue(ObjectId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("objectId"u8);
+                }
             }
             if (Optional.IsDefined(UserPrincipalName))
             {
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string email = default;
             string assignedTo = default;
+            bool objectIdIsDefined = false;
             Guid? objectId = default;
             string userPrincipalName = default;
             SecurityInsightsIncidentOwnerType? ownerType = default;
@@ -161,6 +169,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
+                    objectIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         objectId = null;
@@ -185,7 +194,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SecurityInsightsHuntOwner(
@@ -194,7 +203,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 objectId,
                 userPrincipalName,
                 ownerType,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _objectIdIsDefined = objectIdIsDefined
+            };
         }
     }
 }

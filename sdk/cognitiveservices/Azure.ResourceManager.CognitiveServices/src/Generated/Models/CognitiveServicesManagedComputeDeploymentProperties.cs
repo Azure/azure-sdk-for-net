@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="acceleratorType"> Accelerator type (e.g., H100_80GB). Optional on creation; immutable after creation. </param>
         /// <param name="versionUpgradeOption"> Template auto-upgrade policy. Defaults to OnceNewDefaultVersionAvailable. </param>
+        /// <param name="gatedModelAccess"> Configuration used to authorize access to a gated model during deployment creation. </param>
         /// <param name="capabilities">
         /// Deployment capabilities represented as key-value pairs.
         /// Example: { assetsV2: "true" }.
@@ -55,12 +57,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningDetails"> Read-only. Status message and timestamp from the last provisioning operation. </param>
         /// <param name="routes"> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, IReadOnlyDictionary<string, string> capabilities, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails, CognitiveServicesManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, GatedModelAccessProperties gatedModelAccess, IReadOnlyDictionary<string, string> capabilities, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails, CognitiveServicesManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             DeploymentTemplate = deploymentTemplate;
             AcceleratorType = acceleratorType;
             VersionUpgradeOption = versionUpgradeOption;
+            GatedModelAccess = gatedModelAccess;
             Capabilities = capabilities;
             ComputeId = computeId;
             Priority = priority;
@@ -94,6 +97,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Template auto-upgrade policy. Defaults to OnceNewDefaultVersionAvailable. </summary>
         [WirePath("versionUpgradeOption")]
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
+
+        /// <summary> Configuration used to authorize access to a gated model during deployment creation. </summary>
+        [WirePath("gatedModelAccess")]
+        internal GatedModelAccessProperties GatedModelAccess { get; set; }
 
         /// <summary>
         /// Deployment capabilities represented as key-value pairs.
@@ -129,5 +136,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </summary>
         [WirePath("routes")]
         public CognitiveServicesManagedComputeDeploymentRoutes Routes { get; }
+
+        /// <summary> The fully qualified Azure resource ID of the project connection used to authorize access to a gated model during deployment creation. </summary>
+        [WirePath("gatedModelAccess.connectionId")]
+        public ResourceIdentifier GatedModelAccessConnectionId
+        {
+            get
+            {
+                return GatedModelAccess is null ? default : GatedModelAccess.ConnectionId;
+            }
+            set
+            {
+                GatedModelAccess = new GatedModelAccessProperties(value);
+            }
+        }
     }
 }

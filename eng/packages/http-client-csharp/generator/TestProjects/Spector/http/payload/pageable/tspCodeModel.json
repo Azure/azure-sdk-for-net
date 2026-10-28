@@ -1739,7 +1739,6 @@
                 "$id": "116",
                 "name": "link",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1832,6 +1831,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "next"
                   ],
@@ -1851,7 +1851,6 @@
                 "$id": "120",
                 "name": "linkString",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1944,6 +1943,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "next"
                   ],
@@ -1963,7 +1963,6 @@
                 "$id": "124",
                 "name": "nestedLink",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2058,6 +2057,7 @@
                   "pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nestedNext",
                     "next"
@@ -2128,7 +2128,6 @@
                     "$id": "132",
                     "name": "post",
                     "isExactName": false,
-                    "resourceName": "AlternateInitialVerb",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2314,6 +2313,7 @@
                       "pets"
                     ],
                     "nextLink": {
+                      "verb": "GET",
                       "responseSegments": [
                         "next"
                       ],
@@ -2383,7 +2383,6 @@
                     "$id": "144",
                     "name": "requestQueryResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2642,7 +2641,6 @@
                     "$id": "160",
                     "name": "requestHeaderResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2901,7 +2899,6 @@
                     "$id": "176",
                     "name": "requestQueryResponseHeader",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3172,7 +3169,6 @@
                     "$id": "193",
                     "name": "requestHeaderResponseHeader",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3443,7 +3439,6 @@
                     "$id": "210",
                     "name": "requestQueryNestedResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3705,7 +3700,6 @@
                     "$id": "226",
                     "name": "requestHeaderNestedResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -4020,7 +4014,6 @@
                 "$id": "246",
                 "name": "listWithoutContinuation",
                 "isExactName": false,
-                "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4126,7 +4119,6 @@
                 "$id": "250",
                 "name": "listWithPageSize",
                 "isExactName": false,
-                "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4332,7 +4324,6 @@
                 "$id": "262",
                 "name": "listWithContinuation",
                 "isExactName": false,
-                "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4503,7 +4494,6 @@
                 "$id": "270",
                 "name": "listWithNextLink",
                 "isExactName": false,
-                "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4604,6 +4594,7 @@
                   "Pets"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "NextLink"
                   ],

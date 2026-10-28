@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudConnectorSolutionTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublicCloudConnectorSolutionTypeResource.ResourceType, out string publicCloudConnectorSolutionTypeApiVersion);
             _solutionTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionTypeResource.ResourceType.Namespace, Diagnostics);
-            _solutionTypesRestClient = new SolutionTypes(_solutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionTypeApiVersion ?? "2024-12-01");
+            _solutionTypesRestClient = new SolutionTypes(_solutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridConnectivity/solutionTypes", out string solutionTypesApiVersionOverride) ? solutionTypesApiVersionOverride : "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetByResourceGroupAsyncCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorSolutionTypeCollection.GetAll"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new PublicCloudConnectorSolutionTypeDataAsyncCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorSolutionTypeCollection.GetAll"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetByResourceGroupCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorSolutionTypeCollection.GetAll"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
+            return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new PublicCloudConnectorSolutionTypeDataCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicCloudConnectorSolutionTypeCollection.GetAll"), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +396,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

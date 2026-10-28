@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials, options);
             }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             string host = default;
             string shareName = default;
             AzureKeyVaultSmbCredentials credentials = default;
+            SmbMountSourceType? sourceType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointType"u8))
@@ -173,9 +179,18 @@ namespace Azure.ResourceManager.StorageMover.Models
                     credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("sourceType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceType = new SmbMountSourceType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SmbMountEndpointProperties(
@@ -186,7 +201,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 additionalBinaryDataProperties,
                 host,
                 shareName,
-                credentials);
+                credentials,
+                sourceType);
         }
     }
 }

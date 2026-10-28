@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 writer.WritePropertyName("signals"u8);
                 writer.WriteStartArray();
-                foreach (ExternalSignal item in Signals)
+                foreach (HealthModelExternalSignal item in Signals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            IReadOnlyList<ExternalSignal> signals = default;
+            IReadOnlyList<HealthModelExternalSignal> signals = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,20 +136,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    List<ExternalSignal> array = new List<ExternalSignal>();
+                    List<HealthModelExternalSignal> array = new List<HealthModelExternalSignal>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExternalSignal.DeserializeExternalSignal(item, options));
+                        array.Add(HealthModelExternalSignal.DeserializeHealthModelExternalSignal(item, options));
                     }
                     signals = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExternalSignalGroup(signals ?? new ChangeTrackingList<ExternalSignal>(), additionalBinaryDataProperties);
+            return new ExternalSignalGroup(signals ?? new ChangeTrackingList<HealthModelExternalSignal>(), additionalBinaryDataProperties);
         }
     }
 }

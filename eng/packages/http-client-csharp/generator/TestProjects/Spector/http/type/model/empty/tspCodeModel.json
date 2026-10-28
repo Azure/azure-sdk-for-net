@@ -148,7 +148,6 @@
             "$id": "14",
             "name": "putEmpty",
             "isExactName": false,
-            "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
               {
@@ -284,7 +283,6 @@
             "$id": "20",
             "name": "getEmpty",
             "isExactName": false,
-            "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
               {
@@ -381,7 +379,6 @@
             "$id": "24",
             "name": "postRoundTripEmpty",
             "isExactName": false,
-            "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
               {

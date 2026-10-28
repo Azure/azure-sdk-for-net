@@ -28,7 +28,6 @@
     <!-- Existing -->
     <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
     <PackageReference Include="Azure.ResourceManager.ApiManagement" />
-    <PackageReference Include="Azure.ResourceManager.AppService" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
     <PackageReference Include="Azure.ResourceManager.DataFactory" />

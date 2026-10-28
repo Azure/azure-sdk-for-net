@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchProperties"/>. </summary>
-        /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this workbench. </param>
-        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. </param>
+        /// <param name="targetClusterId"> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </param>
+        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. Immutable after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetClusterId"/> or <paramref name="imageLink"/> is null. </exception>
         public CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink)
         {
@@ -33,49 +33,63 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchProperties"/>. </summary>
-        /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this workbench. </param>
-        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. </param>
+        /// <param name="targetClusterId"> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </param>
+        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. Immutable after creation. </param>
+        /// <param name="instanceType"> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. If omitted on creation, defaults to Singularity.D4_v3. Foundry Compute ignores this override and uses the pool configuration. Changing the instance type requires the workbench to be stopped. </param>
+        /// <param name="gpuCount"> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. A full-node Azure VM size permits partition selection; omission uses the full node. For an exact Singularity instance type, a supplied count must match that type; the Singularity.D4_v3 fallback accepts 4. </param>
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </param>
-        /// <param name="datasetId"> The dataset ID to mount for the workbench. </param>
-        /// <param name="sshSettings"> SSH configuration for remote access to the workbench. </param>
+        /// <param name="datasetId"> The dataset ID to mount for the workbench. Set only during creation. </param>
+        /// <param name="sshSettings"> SSH configuration for remote access to the workbench. Set only during creation. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the workbench. </param>
         /// <param name="webEndpoint"> The web endpoint URL for accessing the workbench. </param>
-        /// <param name="provisioningState"> Provisioning state of the workbench resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the workbench resource, independent of runtime lifecycle status. </param>
+        /// <param name="status"> Runtime lifecycle status of the workbench. Independent of resource provisioning; start, stop, restart, and runtime health changes do not change provisioningState. </param>
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string instanceType, int? gpuCount, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, WorkbenchProvisioningState? provisioningState, WorkbenchStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
+            InstanceType = instanceType;
+            GpuCount = gpuCount;
             IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
             DatasetId = datasetId;
             SshSettings = sshSettings;
             ConnectivityEndpoints = connectivityEndpoints;
             WebEndpoint = webEndpoint;
             ProvisioningState = provisioningState;
+            Status = status;
             Errors = errors;
             CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> ARM resource ID of the parent cluster that hosts this workbench. </summary>
+        /// <summary> Resource ID of the Foundry Compute or virtual cluster that hosts this workbench. Changing the cluster requires the workbench to be stopped. </summary>
         [WirePath("targetClusterId")]
         public string TargetClusterId { get; set; }
 
-        /// <summary> Container image URI (e.g., MCR or ACR image path) for the workbench. </summary>
+        /// <summary> Container image URI (e.g., MCR or ACR image path) for the workbench. Immutable after creation. </summary>
         [WirePath("imageLink")]
         public string ImageLink { get; set; }
+
+        /// <summary> For virtual clusters, an exact Singularity instance type or a full-node Azure VM size. If omitted on creation, defaults to Singularity.D4_v3. Foundry Compute ignores this override and uses the pool configuration. Changing the instance type requires the workbench to be stopped. </summary>
+        [WirePath("instanceType")]
+        public string InstanceType { get; set; }
+
+        /// <summary> GPU count for GPU pools or vCPU count for CPU pools. Must be 1, 2, 4, 8, or a positive multiple of 8. A full-node Azure VM size permits partition selection; omission uses the full node. For an exact Singularity instance type, a supplied count must match that type; the Singularity.D4_v3 fallback accepts 4. </summary>
+        [WirePath("gpuCount")]
+        public int? GpuCount { get; set; }
 
         /// <summary> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </summary>
         [WirePath("idleTimeBeforeShutdown")]
         public string IdleTimeBeforeShutdown { get; set; }
 
-        /// <summary> The dataset ID to mount for the workbench. </summary>
+        /// <summary> The dataset ID to mount for the workbench. Set only during creation. </summary>
         [WirePath("datasetId")]
         public string DatasetId { get; set; }
 
-        /// <summary> SSH configuration for remote access to the workbench. </summary>
+        /// <summary> SSH configuration for remote access to the workbench. Set only during creation. </summary>
         [WirePath("sshSettings")]
         public CognitiveServicesComputeSshSettings SshSettings { get; set; }
 
@@ -87,9 +101,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("webEndpoint")]
         public string WebEndpoint { get; }
 
-        /// <summary> Provisioning state of the workbench resource. </summary>
+        /// <summary> Provisioning state of the workbench resource, independent of runtime lifecycle status. </summary>
         [WirePath("provisioningState")]
-        public CognitiveServicesComputeProvisioningState? ProvisioningState { get; }
+        public WorkbenchProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Runtime lifecycle status of the workbench. Independent of resource provisioning; start, stop, restart, and runtime health changes do not change provisioningState. </summary>
+        [WirePath("status")]
+        public WorkbenchStatus? Status { get; }
 
         /// <summary> Error details for the workbench resource. </summary>
         [WirePath("errors")]

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ContainerRegistryResource.ResourceType, out string containerRegistryApiVersion);
             _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryResource.ResourceType.Namespace, Diagnostics);
-            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryApiVersion ?? "2026-03-01-preview");
+            _registriesRestClient = new Registries(
+                _registriesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                containerRegistryApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
+            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +401,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +458,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +519,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -74,6 +75,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ServiceAccountUsage)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value);
+            }
             if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
@@ -109,15 +120,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ScopeType))
+            if (Optional.IsDefined(ScopeType, _scopeTypeIsDefined))
             {
-                writer.WritePropertyName("scopeType"u8);
-                writer.WriteStringValue(ScopeType.Value.ToString());
+                if (ScopeType != null)
+                {
+                    writer.WritePropertyName("scopeType"u8);
+                    writer.WriteStringValue(ScopeType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("scopeType"u8);
+                }
             }
-            if (Optional.IsDefined(ScopeId))
+            if (Optional.IsDefined(ScopeId, _scopeIdIsDefined))
             {
-                writer.WritePropertyName("scopeId"u8);
-                writer.WriteStringValue(ScopeId);
+                if (ScopeId != null)
+                {
+                    writer.WritePropertyName("scopeId"u8);
+                    writer.WriteStringValue(ScopeId);
+                }
+                else
+                {
+                    writer.WriteNull("scopeId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,6 +186,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            ResourceType? @type = default;
             ServiceAccountUsageUnitType? unit = default;
             ServiceAccountUsageMetricName name = default;
             string quotaPeriod = default;
@@ -168,11 +195,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             double? currentValue = default;
             string nextResetTime = default;
             ServiceAccountQuotaUsageStatus? status = default;
+            bool scopeTypeIsDefined = false;
             CognitiveServicesQuotaScopeType? scopeType = default;
+            bool scopeIdIsDefined = false;
             string scopeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("unit"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -230,6 +277,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("scopeType"u8))
                 {
+                    scopeTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scopeType = null;
@@ -240,6 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("scopeId"u8))
                 {
+                    scopeIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scopeId = null;
@@ -250,10 +299,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServiceAccountUsage(
+                id,
+                @type,
                 unit,
                 name,
                 quotaPeriod,
@@ -263,7 +314,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 scopeType,
                 scopeId,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _scopeTypeIsDefined = scopeTypeIsDefined,
+                _scopeIdIsDefined = scopeIdIsDefined
+            };
         }
     }
 }

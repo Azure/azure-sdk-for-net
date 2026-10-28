@@ -7,14 +7,14 @@ jobs:
   validate_agent_output:
     needs: agent
     if: ${{ always() && needs.agent.result != 'skipped' }}
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       actions: read
     outputs:
       output_types: ${{ steps.validate.outputs.output_types }}
     steps:
       - name: Download terminal agent output
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           pattern: "{agent,agent-output-fallback}"
           merge-multiple: true

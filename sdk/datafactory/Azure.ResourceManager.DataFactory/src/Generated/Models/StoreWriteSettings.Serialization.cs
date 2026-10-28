@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Connector write settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SftpWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, and <see cref="LakeHouseWriteSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="LakeHouseWriteSettings"/>, and <see cref="SftpWriteSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStoreWriteSettings))]
     public abstract partial class StoreWriteSettings : IJsonModel<StoreWriteSettings>
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SftpWriteSettings":
-                        return SftpWriteSettings.DeserializeSftpWriteSettings(element, options);
-                    case "AzureBlobStorageWriteSettings":
-                        return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element, options);
                     case "AzureBlobFSWriteSettings":
                         return AzureBlobFSWriteSettings.DeserializeAzureBlobFSWriteSettings(element, options);
+                    case "AzureBlobStorageWriteSettings":
+                        return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element, options);
                     case "AzureDataLakeStoreWriteSettings":
                         return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element, options);
-                    case "FileServerWriteSettings":
-                        return FileServerWriteSettings.DeserializeFileServerWriteSettings(element, options);
                     case "AzureFileStorageWriteSettings":
                         return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element, options);
+                    case "FileServerWriteSettings":
+                        return FileServerWriteSettings.DeserializeFileServerWriteSettings(element, options);
                     case "LakeHouseWriteSettings":
                         return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element, options);
+                    case "SftpWriteSettings":
+                        return SftpWriteSettings.DeserializeSftpWriteSettings(element, options);
                 }
             }
             return UnknownStoreWriteSettings.DeserializeUnknownStoreWriteSettings(element, options);

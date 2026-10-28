@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, additionalBinaryDataProperties);
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskInput(selectedDatabases ?? new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>(), targetConnectionInfo, sourceConnectionInfo, additionalBinaryDataProperties);
         }
     }
 }

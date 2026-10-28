@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExtensionTypesList(value, nextLink, additionalBinaryDataProperties);
+            return new ExtensionTypesList(value ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesWorkbenchData"/>. </summary>
@@ -41,16 +40,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the workbench resource. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="location"> The location of the workbench resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesWorkbenchProperties properties, ETag? eTag, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesWorkbenchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesWorkbenchProperties properties, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
-            Location = location;
-            Tags = tags;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -62,14 +57,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The location of the workbench resource. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]

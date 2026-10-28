@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    headers = BinaryData.FromString(prop.Value.GetRawText());
+                    headers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("statusCode"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebAppResponse(headers, statusCode, bodyLink, additionalBinaryDataProperties);

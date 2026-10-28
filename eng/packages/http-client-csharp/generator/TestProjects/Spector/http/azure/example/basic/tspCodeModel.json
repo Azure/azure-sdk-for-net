@@ -518,7 +518,6 @@
             "$id": "36",
             "name": "basicAction",
             "isExactName": false,
-            "resourceName": "AzureExampleClient",
             "accessibility": "public",
             "parameters": [
               {

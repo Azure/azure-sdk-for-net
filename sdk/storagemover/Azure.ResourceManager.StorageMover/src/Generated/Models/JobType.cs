@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         private readonly string _value;
         private const string OnPremToCloudValue = "OnPremToCloud";
         private const string CloudToCloudValue = "CloudToCloud";
+        private const string OnPremToCloudAgentLessValue = "OnPremToCloudAgentLess";
 
         /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +34,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Gets the CloudToCloud. </summary>
         public static JobType CloudToCloud { get; } = new JobType(CloudToCloudValue);
+
+        /// <summary> Gets the OnPremToCloudAgentLess. </summary>
+        public static JobType OnPremToCloudAgentLess { get; } = new JobType(OnPremToCloudAgentLessValue);
 
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

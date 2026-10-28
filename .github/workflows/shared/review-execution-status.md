@@ -2,7 +2,7 @@
 jobs:
   capture_review_head:
     needs: activation
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: read
       checks: write
@@ -43,7 +43,7 @@ jobs:
             core.setOutput('check_id', String(check.id));
   validate_review_result:
     needs: [capture_review_head, agent, safe_outputs, validate_agent_output]
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       actions: read
       checks: read
@@ -54,7 +54,7 @@ jobs:
       review_event: ${{ steps.validate.outputs.review_event }}
     steps:
       - name: Download review output
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           pattern: "{agent,agent-output-fallback}"
           merge-multiple: true
@@ -149,7 +149,7 @@ jobs:
   publish_pr_check:
     needs: [activation, capture_review_head, agent, detection, safe_outputs, validate_agent_output, validate_review_result, dismiss_stale_change_requests]
     if: ${{ always() && needs.capture_review_head.result == 'success' }}
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       checks: write
     steps:
