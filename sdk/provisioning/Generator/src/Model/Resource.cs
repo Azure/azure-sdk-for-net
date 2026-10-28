@@ -23,6 +23,7 @@ public class Resource(Specification spec, Type armType)
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
+    public bool HasScope { get; set; } = false;
     public SimpleModel? GetKeysType { get; set; }
     public bool GetKeysIsList { get; set; }
 
@@ -125,6 +126,21 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"private ResourceReference<{ParentResource.Name}>? _parent;");
                     }
 
+                    if (HasScope)
+                    {
+                        if (fence.RequiresSeparator) { writer.WriteLine(); }
+                        writer.WriteLine("/// <summary>");
+                        writer.WriteLine("/// Gets or sets the Scope.");
+                        writer.WriteLine("/// </summary>");
+                        writer.WriteLine("public ProvisionableResource? Scope");
+                        using (writer.Scope("{", "}"))
+                        {
+                            writer.WriteLine("get { Initialize(); return _scope!.Value; }");
+                            writer.WriteLine("set { Initialize(); _scope!.Value = value; }");
+                        }
+                        writer.WriteLine("private ResourceReference<ProvisionableResource>? _scope;");
+                    }
+
                     // Write the default value partial methods
                     foreach (Property property in Properties.Where(p => p.GenerateDefaultValue))
                     {
@@ -213,6 +229,10 @@ public class Resource(Specification spec, Type armType)
                         if (ParentResource is not null)
                         {
                             writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
+                        }
+                        if (HasScope)
+                        {
+                            writer.WriteLine("_scope = DefineResource<ProvisionableResource>(nameof(Scope), [\"scope\"]);");
                         }
                     }
 
@@ -397,4 +417,3 @@ public class Resource(Specification spec, Type armType)
             });
     }
 }
-

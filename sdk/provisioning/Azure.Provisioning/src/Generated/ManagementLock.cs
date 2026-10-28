@@ -82,6 +82,16 @@ public partial class ManagementLock : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
+    /// Gets or sets the Scope.
+    /// </summary>
+    public ProvisionableResource? Scope
+    {
+        get { Initialize(); return _scope!.Value; }
+        set { Initialize(); _scope!.Value = value; }
+    }
+    private ResourceReference<ProvisionableResource>? _scope;
+
+    /// <summary>
     /// Creates a new ManagementLock.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -108,10 +118,8 @@ public partial class ManagementLock : ProvisionableResource
         _owners = DefineListProperty<ManagementLockOwner>("Owners", ["properties", "owners"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        DefineAdditionalProperties();
+        _scope = DefineResource<ProvisionableResource>(nameof(Scope), ["scope"]);
     }
-
-    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported ManagementLock resource versions.

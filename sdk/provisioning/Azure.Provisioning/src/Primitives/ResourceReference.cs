@@ -29,14 +29,4 @@ public class ResourceReference<T>(BicepValue<string> reference) where T : Provis
                 BicepSyntax.Var(_value.BicepIdentifier);
         }
     }
-
-    /// <summary>
-    /// Clears the referenced resource so that the property is omitted from
-    /// the compiled Bicep rather than emitted as <c>null</c>.
-    /// </summary>
-    internal void Clear()
-    {
-        _value = null;
-        _reference.ClearValue();
-    }
 }
