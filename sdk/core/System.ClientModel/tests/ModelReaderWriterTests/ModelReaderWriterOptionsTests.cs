@@ -42,6 +42,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             ModelReaderWriter.Write(model, options);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Write_WithNullContextWithoutProxies_PreservesLegacyBehavior(bool nonGeneric)
+        {
+            var model = new PlainTextModel { Value = "legacy" };
+
+            BinaryData data = nonGeneric
+                ? ModelReaderWriter.Write((object)model, ModelReaderWriterOptions.Json, null!)
+                : ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, null!);
+
+            Assert.AreEqual("{\"value\":\"legacy\"}", data.ToString());
+        }
+
         [TestCase("J")]
         [TestCase("W")]
         public void Write_ClonesClientWireOptions(string format)
