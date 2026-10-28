@@ -47,7 +47,7 @@ jobs:
       contents: read
       actions: read
       checks: read
-      issues: write
+      issues: read # add-comment reads the PR through the Issues API
       pull-requests: write
     with:
       analysis_context: ${{ needs.prepare.outputs.analysis_context }}

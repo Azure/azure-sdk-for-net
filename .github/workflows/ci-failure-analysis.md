@@ -63,8 +63,13 @@ safe-outputs:
   add-comment:
     max: 1
     target: "${{ fromJSON(inputs.analysis_context).prNumber }}"
+    issues: false
   noop:
     report-as-issue: false
+  missing-tool:
+    create-issue: false
+  report-incomplete:
+    create-issue: false
   steps:
     - name: Checkout trusted CI publication guard
       uses: actions/checkout@v7.0.1
