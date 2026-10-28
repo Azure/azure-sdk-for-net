@@ -121,7 +121,9 @@ public class VoiceConnectionTracingRedTests
     public async Task DirectCallbackSpan_ExportsThroughDedicatedCallbackParent()
     {
         var exporter = new CapturingActivityExporter();
-        await using var server = await StartVoiceServerAsync<DirectCallbackSpanVoiceHandler>(exporter);
+        await using var server = await StartVoiceServerAsync<DirectCallbackSpanVoiceHandler>(
+            exporter,
+            configureTracing: tracing => tracing.AddProcessor(new FoundryEnrichmentProcessor()));
         var traceId = ActivityTraceId.CreateRandom();
         var parentSpanId = ActivitySpanId.CreateRandom();
 
@@ -2894,10 +2896,11 @@ public class VoiceConnectionTracingRedTests
         TaskCompletionSource<Activity?>? requestActivityAfterEndpoint = null,
         string? requestPath = null,
         string? pathBase = null,
-        HttpProtocols? serverProtocols = null)
+        HttpProtocols? serverProtocols = null,
+        Action<TracerProviderBuilder>? configureTracing = null)
         where THandler : VoiceHandler
     {
-        var builder = CreateBuilder(exporter, serverProtocols);
+        var builder = CreateBuilder(exporter, serverProtocols, configureTracing);
         if (loggerProvider is not null)
         {
             builder.Logging.AddProvider(loggerProvider);
@@ -2995,7 +2998,8 @@ public class VoiceConnectionTracingRedTests
 
     private static WebApplicationBuilder CreateBuilder(
         CapturingActivityExporter exporter,
-        HttpProtocols? serverProtocols)
+        HttpProtocols? serverProtocols,
+        Action<TracerProviderBuilder>? configureTracing = null)
     {
         var builder = WebApplication.CreateBuilder();
         if (serverProtocols is { } protocols)
@@ -3012,11 +3016,15 @@ public class VoiceConnectionTracingRedTests
         }
         builder.Logging.ClearProviders();
         builder.Services.AddOpenTelemetry()
-            .WithTracing(tracing => tracing
-                .AddAspNetCoreInstrumentation()
-                .AddSource(InvocationsSourceName)
-                .AddSource(TargetTurnCustomerSourceName)
-                .AddProcessor(new SimpleActivityExportProcessor(exporter)));
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddSource(InvocationsSourceName)
+                    .AddSource(TargetTurnCustomerSourceName);
+                configureTracing?.Invoke(tracing);
+                tracing.AddProcessor(new SimpleActivityExportProcessor(exporter));
+            });
         return builder;
     }
 
