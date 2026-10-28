@@ -6,6 +6,12 @@
 
 ### Breaking Changes
 
+- Batch functions now automatically renew message or session locks using
+  `MaxAutoLockRenewalDuration`, including time spent waiting to fill a batch.
+  The existing five-minute default now applies to batches. Set the duration
+  to zero to restore batch processing without automatic renewal; this also
+  disables renewal for single-message functions in the same host.
+
 ### Bugs Fixed
 
 - Fixed Functions drain mode to release accepted Service Bus sessions after

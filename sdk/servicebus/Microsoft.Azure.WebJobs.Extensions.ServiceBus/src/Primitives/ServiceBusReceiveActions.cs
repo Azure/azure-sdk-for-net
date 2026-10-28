@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
@@ -18,6 +19,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
         private readonly ProcessMessageEventArgs _eventArgs;
         private readonly ServiceBusReceiver _receiver;
+        private readonly BatchLockRenewalManager _lockRenewal;
+        private readonly object _executionLock = new();
         private bool _callbackCompleted;
 
         // only populated for batch functions
@@ -45,15 +48,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         internal ServiceBusReceiveActions(ServiceBusReceiver receiver)
+            : this(receiver, null)
+        {
+        }
+
+        internal ServiceBusReceiveActions(ServiceBusReceiver receiver, BatchLockRenewalManager lockRenewal)
         {
             _receiver = receiver;
+            _lockRenewal = lockRenewal;
         }
 
         /// <summary>
         /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity.
         /// This method doesn't guarantee to return exact `maxMessages` messages, even if there are `maxMessages` messages available in the queue or topic.
         /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusOptions.AutoCompleteMessages"/>.
-        /// When this method is used in a single-dispatch functions, messages received are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
+        /// Received messages are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
@@ -89,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Receives a list of deferred <see cref="ServiceBusReceivedMessage"/> identified by <paramref name="sequenceNumbers"/>.
         /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusOptions.AutoCompleteMessages"/>.
-        /// When this method is used in a single-dispatch functions, messages received are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
+        /// Received messages are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -170,14 +179,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal void EndExecutionScope()
         {
-            _callbackCompleted = true;
+            lock (_executionLock)
+            {
+                Volatile.Write(ref _callbackCompleted, true);
+            }
         }
 
         private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
-            foreach (ServiceBusReceivedMessage message in messages)
+            lock (_executionLock)
             {
-                Messages[message] = default;
+                ValidateCallbackInScope();
+                foreach (ServiceBusReceivedMessage message in messages)
+                {
+                    Messages[message] = default;
+                    _lockRenewal?.Start(message, _receiver);
+                }
             }
 
             return messages;

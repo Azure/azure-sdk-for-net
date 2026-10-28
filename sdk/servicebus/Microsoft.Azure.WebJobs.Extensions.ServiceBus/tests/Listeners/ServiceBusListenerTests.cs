@@ -321,6 +321,99 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreSame(scaleMonitor, scaleMonitor2);
         }
 
+        [TestCase("success", false)]
+        [TestCase("failure", false)]
+        [TestCase("throw", false)]
+        [TestCase("cancel", false)]
+        [TestCase("success", true)]
+        public async Task BatchRenewalCoversWaitingAndDrainAndStopsAfterInvocation(string outcome, bool waitForBatch)
+        {
+            var receiver = new Mock<ServiceBusReceiver>();
+            receiver.SetupGet(r => r.FullyQualifiedNamespace).Returns("test.servicebus.windows.net");
+            receiver.SetupGet(r => r.EntityPath).Returns(_entityPath);
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(lockedUntil: DateTimeOffset.UtcNow);
+            var renewed = new TaskCompletionSource<CancellationToken>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var invoked = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            receiver.Setup(r => r.RenewMessageLockAsync(message, It.IsAny<CancellationToken>()))
+                .Returns(async (ServiceBusReceivedMessage _, CancellationToken token) =>
+                {
+                    renewed.TrySetResult(token);
+                    await Task.Delay(Timeout.Infinite, token);
+                });
+            int receives = 0;
+            receiver.Setup(r => r.ReceiveMessagesAsync(It.IsAny<int>(), null, It.IsAny<CancellationToken>()))
+                .Returns(async (int _, TimeSpan? wait, CancellationToken token) =>
+                {
+                    if (Interlocked.Increment(ref receives) == 1)
+                    {
+                        return new[] { message };
+                    }
+
+                    await Task.Delay(Timeout.Infinite, token);
+                    return Array.Empty<ServiceBusReceivedMessage>();
+                });
+            var executor = new Mock<ITriggeredFunctionExecutor>();
+            executor.Setup(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Returns(async (TriggeredFunctionData _, CancellationToken token) =>
+                {
+                    invoked.TrySetResult(true);
+                    await release.Task.WaitAsync(token);
+                    if (outcome == "throw")
+                    {
+                        throw new InvalidOperationException("Handler failure");
+                    }
+
+                    return new FunctionResult(outcome == "success");
+                });
+            _mockMessagingProvider.Setup(p => p.CreateBatchMessageReceiver(
+                It.IsAny<ServiceBusClient>(), _entityPath, It.IsAny<ServiceBusReceiverOptions>())).Returns(receiver.Object);
+            var options = new ServiceBusOptions
+            {
+                MaxMessageBatchSize = 2,
+                MinMessageBatchSize = waitForBatch ? 2 : 1,
+                MaxBatchWaitTime = TimeSpan.FromSeconds(10)
+            };
+            var drainManager = new Mock<IDrainModeManager>();
+            drainManager.SetupGet(d => d.IsDrainModeEnabled).Returns(outcome != "cancel");
+            using var listener = new ServiceBusListener(
+                _functionId, ServiceBusEntityType.Queue, _entityPath, false, true, options.MaxMessageBatchSize,
+                executor.Object, options, _connection, _mockMessagingProvider.Object, _loggerFactory, false,
+                _mockClientFactory.Object, _concurrencyManager, drainManager.Object);
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            Task stopping = null;
+            await listener.StartAsync(CancellationToken.None);
+            try
+            {
+                var renewalToken = await renewed.Task.WaitAsync(timeout.Token);
+                if (waitForBatch)
+                {
+                    Assert.IsFalse(invoked.Task.IsCompleted, "Renewal must start before the partial batch is dispatched.");
+                }
+                else
+                {
+                    await invoked.Task.WaitAsync(timeout.Token);
+                }
+
+                stopping = listener.StopAsync(CancellationToken.None);
+                await invoked.Task.WaitAsync(timeout.Token);
+                Assert.AreEqual(outcome == "cancel", renewalToken.IsCancellationRequested,
+                    "Only non-drain shutdown should cancel renewal before the invocation finishes.");
+                release.TrySetResult(true);
+                await stopping.WaitAsync(timeout.Token);
+                Assert.IsTrue(renewalToken.IsCancellationRequested);
+                receiver.Verify(r => r.CompleteMessageAsync(message, It.IsAny<CancellationToken>()),
+                    outcome == "success" ? Times.Once() : Times.Never());
+                receiver.Verify(r => r.AbandonMessageAsync(message, It.IsAny<IDictionary<string, object>>(), It.IsAny<CancellationToken>()),
+                    outcome == "failure" ? Times.Once() : Times.Never());
+            }
+            finally
+            {
+                release.TrySetResult(true);
+                await (stopping ?? listener.StopAsync(CancellationToken.None));
+            }
+        }
+
         [Test]
         public void StopAsync_LogListenerDetails()
         {
