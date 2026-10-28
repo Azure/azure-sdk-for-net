@@ -8,7 +8,6 @@
 
 ### Breaking Changes
 
-- Removed the stale `VirtualHub.Routes` and `VirtualNetworkGateway.Active` aliases. The generated properties are `VirtualHub.RouteRoutes` and `VirtualNetworkGateway.IsActive`, respectively.
 
 ### Bugs Fixed
 
@@ -17,6 +16,7 @@
 - Migrated code generation to TypeSpec.
 - Regenerated from Azure REST API specifications commit `e9f47c7976fdbeed1a378652b56b0766dae858a2`.
 - Removed stale customization aliases so restored TypeSpec property names and resource types are generated directly.
+- Preserved `VirtualHub.Routes` through a `CodeGenMember` customization and retained `VirtualNetworkGateway.Active` as a hidden, obsolete alias for `IsActive`.
 
 ## 1.1.0 (2026-04-16)
 

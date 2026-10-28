@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
@@ -11,6 +12,44 @@ namespace Azure.Provisioning.Network.Tests;
 
 public class GeneratedPropertyTests
 {
+    [Test]
+    public void VirtualHubRoutesUsesRegisteredRouteTable()
+    {
+        VirtualHub hub = new("hub");
+        hub.Routes = new BicepList<VirtualHubRoute>
+        {
+            new VirtualHubRoute { AddressPrefixes = { "10.0.0.0/24" }, NextHopIPAddress = "10.0.0.1" }
+        };
+        hub.Routes.Add(new VirtualHubRoute { NextHopIPAddress = "10.0.0.2" });
+
+        string bicep = ((IBicepValue)hub).Compile().ToString();
+        Assert.That(bicep, Does.Contain("routeTable: {"));
+        Assert.That(bicep, Does.Contain("routes: ["));
+        Assert.That(bicep, Does.Contain("'10.0.0.0/24'"));
+        Assert.That(bicep, Does.Contain("nextHopIpAddress: '10.0.0.1'"));
+        Assert.That(bicep, Does.Contain("nextHopIpAddress: '10.0.0.2'"));
+        Assert.That(typeof(VirtualHub).GetProperty("RouteRoutes"), Is.Null);
+        Assert.That(typeof(VirtualHub).GetProperty("Routes")!.GetCustomAttribute<ObsoleteAttribute>(), Is.Null);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void VirtualNetworkGatewayActiveForwardsToIsActive(bool value)
+    {
+        VirtualNetworkGateway gateway = new("gateway");
+        PropertyInfo legacy = typeof(VirtualNetworkGateway).GetProperty("Active")!;
+        legacy.SetValue(gateway, new BicepValue<bool>(value));
+
+        Assert.That(legacy.GetValue(gateway), Is.SameAs(gateway.IsActive));
+        Assert.That(((IBicepValue)gateway).Compile().ToString(), Does.Contain($"activeActive: {value.ToString().ToLowerInvariant()}"));
+        Assert.That(legacy.GetCustomAttribute<EditorBrowsableAttribute>()!.State, Is.EqualTo(EditorBrowsableState.Never));
+        Assert.That(legacy.GetCustomAttribute<ObsoleteAttribute>()!.Message, Does.Contain("IsActive"));
+
+        gateway.IsActive = !value;
+        Assert.That(legacy.GetValue(gateway), Is.SameAs(gateway.IsActive));
+        Assert.That(((IBicepValue)gateway).Compile().ToString(), Does.Contain($"activeActive: {(!value).ToString().ToLowerInvariant()}"));
+    }
+
     [TestCase(typeof(ApplicationGatewayAuthenticationCertificate))]
     [TestCase(typeof(ApplicationGatewayBackendAddressPool))]
     [TestCase(typeof(ApplicationGatewayBackendHttpSettings))]

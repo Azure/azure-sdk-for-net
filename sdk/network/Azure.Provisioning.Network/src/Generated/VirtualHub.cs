@@ -473,23 +473,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Routes. </summary>
-        public BicepList<VirtualHubRoute> RouteRoutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RouteRoutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualHubProperties();
-                }
-                Properties.RouteRoutes = value;
-            }
-        }
-
         /// <summary> Gets or sets the MinCapacity. </summary>
         public BicepValue<int> VirtualRouterAutoScaleMinCapacity
         {

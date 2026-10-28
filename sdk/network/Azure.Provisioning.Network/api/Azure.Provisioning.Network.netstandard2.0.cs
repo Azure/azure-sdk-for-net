@@ -8748,7 +8748,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.PreferredRoutingGateway> PreferredRoutingGateway { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RouteMaps { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VirtualHubRoute> RouteRoutes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VirtualHubRoute> Routes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.RoutingState> RoutingState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SecurityPartnerProviderId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecurityProviderName { get { throw null; } set { } }
@@ -9092,6 +9092,8 @@ namespace Azure.Provisioning.Network
     public partial class VirtualNetworkGateway : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualNetworkGateway(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use IsActive instead.")]
+        public Azure.Provisioning.BicepValue<bool> Active { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ExpressRouteGatewayAdminState> AdminState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowRemoteVnetTraffic { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowVirtualWanTraffic { get { throw null; } set { } }
