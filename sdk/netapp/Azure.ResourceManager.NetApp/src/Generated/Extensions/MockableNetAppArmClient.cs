@@ -134,6 +134,60 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return new NetAppCacheResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ExternalClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalClusterResource"/> object. </returns>
+        public virtual ExternalClusterResource GetExternalClusterResource(ResourceIdentifier id)
+        {
+            ExternalClusterResource.ValidateResourceId(id);
+            return new ExternalClusterResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterPeerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterPeerResource"/> object. </returns>
+        public virtual ClusterPeerResource GetClusterPeerResource(ResourceIdentifier id)
+        {
+            ClusterPeerResource.ValidateResourceId(id);
+            return new ClusterPeerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExternalSvmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalSvmResource"/> object. </returns>
+        public virtual ExternalSvmResource GetExternalSvmResource(ResourceIdentifier id)
+        {
+            ExternalSvmResource.ValidateResourceId(id);
+            return new ExternalSvmResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SvmPeerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SvmPeerResource"/> object. </returns>
+        public virtual SvmPeerResource GetSvmPeerResource(ResourceIdentifier id)
+        {
+            SvmPeerResource.ValidateResourceId(id);
+            return new SvmPeerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExternalCacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalCacheResource"/> object. </returns>
+        public virtual ExternalCacheResource GetExternalCacheResource(ResourceIdentifier id)
+        {
+            ExternalCacheResource.ValidateResourceId(id);
+            return new ExternalCacheResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExternalCacheConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalCacheConnectionResource"/> object. </returns>
+        public virtual ExternalCacheConnectionResource GetExternalCacheConnectionResource(ResourceIdentifier id)
+        {
+            ExternalCacheConnectionResource.ValidateResourceId(id);
+            return new ExternalCacheConnectionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetAppSubscriptionQuotaItemResource"/> object. </returns>
