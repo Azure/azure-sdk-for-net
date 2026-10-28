@@ -6,9 +6,32 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { getVallyShardVerdict } from "./lib/verdict.ts";
 
-// The pinned Vally CLI is installed next to this script (package.json + node_modules live here),
-// so the npm --prefix is just this file's own directory.
+// Invoke the pinned CLI with Node directly so arguments never pass through a shell.
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const VALLY_CLI = path.join(SCRIPT_DIR, "node_modules", "@microsoft", "vally-cli", "dist", "index.js");
+
+export function validateVallyArguments(value) {
+  if (!Array.isArray(value) || value.some((arg) => typeof arg !== "string" || arg.includes("\0"))) {
+    throw new Error("Vally arguments must be an array of strings without null characters.");
+  }
+  // Deliberately exclude eval selection, plugins, output, JUnit and verdict overrides.
+  const allowed = new Set(["--tag", "--runs", "--workers", "--timeout"]);
+  for (let index = 0; index < value.length; index += 2) {
+    const option = value[index];
+    if (!allowed.has(option)) {
+      throw new Error(`Unsupported supplementary Vally option: ${option}`);
+    }
+    const argument = value[index + 1];
+    if (!argument || argument.startsWith("-")) {
+      throw new Error(`Missing value for ${option}`);
+    }
+    if (["--runs", "--workers"].includes(option) &&
+      (!/^[1-9]\d*$/.test(argument) || !Number.isSafeInteger(Number(argument)))) {
+      throw new Error(`${option} must be a positive integer.`);
+    }
+  }
+  return [...value];
+}
 
 /**
  * Executes the shard and returns the process exit code (0 pass, 1 fail). Side effects
@@ -19,11 +42,14 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
+ * @param {string[]} [options.vallyArguments] Supplementary, allowlisted Vally arguments.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */
-export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
+export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8, vallyArguments = [] },
+  { spawn = spawnSync } = {}) {
   const evalArgList = evalArgs.split(/\s+/).filter(Boolean);
   const thresholdArg = String(threshold);
+  const supplementaryArgs = validateVallyArguments(vallyArguments);
 
   console.log(
     `Running: vally eval ${evalArgs} --junit --threshold ${thresholdArg} --output-dir "${outputDir}"`
@@ -33,25 +59,22 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
   // Uses spawnSync (not the vendored execFile helper) on purpose: the shard needs vally's output
   // streamed live to the log (stdio: "inherit") and must keep going on a non-zero exit, whereas
   // the exec helper captures output and rejects on failure.
-  const proc = spawnSync(
-    "npm",
+  const proc = spawn(
+    process.execPath,
     [
-      "exec",
-      "--no",
-      "--prefix",
-      SCRIPT_DIR,
-      "--",
-      "vally",
+      VALLY_CLI,
       "eval",
       ...evalArgList,
+      ...supplementaryArgs,
       "--junit",
       "--threshold",
       thresholdArg,
       "--output-dir",
       outputDir,
     ],
-    { stdio: "inherit", shell: process.platform === "win32" }
+    { stdio: "inherit", shell: false }
   );
+  if (proc.error) throw proc.error;
   const vallyExit = proc.status ?? 1;
 
   const verdict = getVallyShardVerdict({ resultsDir: outputDir, threshold });
@@ -91,8 +114,11 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
 
 // ----- CLI -----
 
-function parseArgs(argv) {
-  const options = { threshold: 0.8 };
+export function parseArgs(argv, env = process.env) {
+  const options = {
+    threshold: 0.8,
+    vallyArguments: validateVallyArguments(JSON.parse(env.VALLY_ARGUMENTS_JSON ?? "[]")),
+  };
   for (let i = 0; i < argv.length; i++) {
     const next = () => argv[++i];
     switch (argv[i]) {
