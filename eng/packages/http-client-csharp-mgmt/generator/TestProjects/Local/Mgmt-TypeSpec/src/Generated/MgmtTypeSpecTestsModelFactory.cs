@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="action"> The action to be performed. </param>
         /// <param name="result"></param>
         /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
-        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        private static FooPreviewAction FooPreviewAction(string action = default, string result = default)
         {
             return new FooPreviewAction(action, result, default);
         }
@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.PrivateLink"/> instance for mocking. </returns>
-        public static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        private static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             return new PrivateLink(
                 id,
@@ -54,7 +54,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        private static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
@@ -69,7 +69,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Tests.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        private static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
             return new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(
                 id,
@@ -86,7 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        private static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
@@ -98,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        private static AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
@@ -112,7 +112,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="storageSyncServiceLocation"> The storage sync service location. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Tests.StorageSyncServiceData"/> instance for mocking. </returns>
-        public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string storageSyncServiceLocation = default, ManagedServiceIdentity identity = default)
+        private static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string storageSyncServiceLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -151,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        private static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -197,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
+        private static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -222,7 +222,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The FooActionRequest. </summary>
         /// <param name="id"></param>
         /// <returns> A new <see cref="Models.FooActionRequest"/> instance for mocking. </returns>
-        public static FooActionRequest FooActionRequest(string id = default)
+        private static FooActionRequest FooActionRequest(string id = default)
         {
             return new FooActionRequest(id, default);
         }
@@ -231,7 +231,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="msg"></param>
         /// <param name="error"></param>
         /// <returns> A new <see cref="Models.FooActionResult"/> instance for mocking. </returns>
-        public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
+        private static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
         {
             return new FooActionResult(msg, error, default);
         }
@@ -240,7 +240,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="dependencyName"></param>
         /// <param name="version"></param>
         /// <returns> A new <see cref="Models.FooDependency"/> instance for mocking. </returns>
-        public static FooDependency FooDependency(string dependencyName = default, string version = default)
+        private static FooDependency FooDependency(string dependencyName = default, string version = default)
         {
             return new FooDependency(dependencyName, version, default);
         }
@@ -252,7 +252,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.FooSettingsData"/> instance for mocking. </returns>
-        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default)
+        private static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default)
         {
             return new FooSettingsData(
                 id,
@@ -269,7 +269,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="accessControlEnabled"></param>
         /// <param name="metaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, bool? accessControlEnabled = default, IEnumerable<string> metaDatas = default)
+        private static FooSettingsProperties FooSettingsProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, bool? accessControlEnabled = default, IEnumerable<string> metaDatas = default)
         {
             return new FooSettingsProperties(
                 marketplace,
@@ -286,7 +286,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, OfferDetails offerDetails = default)
+        private static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, OfferDetails offerDetails = default)
         {
             return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
         }
@@ -299,7 +299,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <returns> A new <see cref="Models.OfferDetails"/> instance for mocking. </returns>
-        public static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        private static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
         {
             return new OfferDetails(
                 publisherId,
@@ -318,7 +318,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="upn"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <returns> A new <see cref="Models.UserDetails"/> instance for mocking. </returns>
-        public static UserDetails UserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        private static UserDetails UserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
         {
             return new UserDetails(
                 firstName,
@@ -332,7 +332,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The type used for update operations of the FooSettings. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FooConfigurationPatch"/> instance for mocking. </returns>
-        public static FooConfigurationPatch FooConfigurationPatch(FooSettingsUpdateProperties properties = default)
+        private static FooConfigurationPatch FooConfigurationPatch(FooSettingsUpdateProperties properties = default)
         {
             return new FooConfigurationPatch(properties, default);
         }
@@ -342,7 +342,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="user"> Details of the user. </param>
         /// <param name="accessControlEnabled"></param>
         /// <returns> A new <see cref="Models.FooSettingsUpdateProperties"/> instance for mocking. </returns>
-        public static FooSettingsUpdateProperties FooSettingsUpdateProperties(MarketplaceDetails marketplace = default, UserDetails user = default, bool? accessControlEnabled = default)
+        private static FooSettingsUpdateProperties FooSettingsUpdateProperties(MarketplaceDetails marketplace = default, UserDetails user = default, bool? accessControlEnabled = default)
         {
             return new FooSettingsUpdateProperties(marketplace, user, accessControlEnabled, default);
         }
@@ -356,7 +356,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.BarData"/> instance for mocking. </returns>
-        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BarProperties properties = default)
+        private static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BarProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -378,7 +378,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
         /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
-        public static BarProperties BarProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
+        private static BarProperties BarProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
         {
             return new BarProperties(
                 serviceUri,
@@ -392,7 +392,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> LimitJson abstract class. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
-        public static LimitJsonObject LimitJsonObject(string limitObjectType = default)
+        private static LimitJsonObject LimitJsonObject(string limitObjectType = default)
         {
             return new UnknownLimitJsonObject(limitObjectType is null ? default : new LimitType(limitObjectType), default);
         }
@@ -406,7 +406,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.Employee"/> instance for mocking. </returns>
-        public static Employee Employee(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmployeeProperties properties = default)
+        private static Employee Employee(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmployeeProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -425,7 +425,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="age"> Age of employee. </param>
         /// <param name="city"> City of employee. </param>
         /// <returns> A new <see cref="Models.EmployeeProperties"/> instance for mocking. </returns>
-        public static EmployeeProperties EmployeeProperties(int? age = default, string city = default)
+        private static EmployeeProperties EmployeeProperties(int? age = default, string city = default)
         {
             return new EmployeeProperties(age, city, default);
         }
@@ -439,7 +439,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.BazData"/> instance for mocking. </returns>
-        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BazProperties properties = default)
+        private static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BazProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -458,7 +458,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <returns> A new <see cref="Models.BazProperties"/> instance for mocking. </returns>
-        public static BazProperties BazProperties(string something = default, bool? boolValue = default)
+        private static BazProperties BazProperties(string something = default, bool? boolValue = default)
         {
             return new BazProperties(something, boolValue, default);
         }
@@ -485,7 +485,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// </param>
         /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="Tests.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default, ExtendedLocation extendedLocation = default)
+        private static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -523,7 +523,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         ///       on the public property under the unified wrapper-optionality rule.
         /// </param>
         /// <returns> A new <see cref="Models.ZooProperties"/> instance for mocking. </returns>
-        public static ZooProperties ZooProperties(string something = default, int requiredInt = default, ZooFixedMode requiredFixedEnum = default, ZooProvisioningState requiredExtensibleEnum = default, string requiredString = default)
+        private static ZooProperties ZooProperties(string something = default, int requiredInt = default, ZooFixedMode requiredFixedEnum = default, ZooProvisioningState requiredExtensibleEnum = default, string requiredString = default)
         {
             return new ZooProperties(
                 something,
@@ -538,7 +538,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
-        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, ZooUpdateProperties properties = default)
+        private static ZooPatch ZooPatch(IDictionary<string, string> tags = default, ZooUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -561,7 +561,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         ///       on the public property under the unified wrapper-optionality rule.
         /// </param>
         /// <returns> A new <see cref="Models.ZooUpdateProperties"/> instance for mocking. </returns>
-        public static ZooUpdateProperties ZooUpdateProperties(string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default)
+        private static ZooUpdateProperties ZooUpdateProperties(string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default)
         {
             return new ZooUpdateProperties(
                 something,
@@ -576,7 +576,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The ZooAddress items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.ZooAddressListListResult"/> instance for mocking. </returns>
-        public static ZooAddressListListResult ZooAddressListListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
+        private static ZooAddressListListResult ZooAddressListListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<SubResource>();
 
@@ -587,7 +587,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
         /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
-        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
+        private static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
         {
             return new ZooRecommendation(recommendedValue, reason, default);
         }
@@ -604,7 +604,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.IssueTestResourceData"/> instance for mocking. </returns>
-        public static IssueTestResourceData IssueTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IssueTestBaseProperties properties = default)
+        private static IssueTestResourceData IssueTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IssueTestBaseProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -624,7 +624,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="innerFlag"> Inner flag that gets flattened. </param>
         /// <param name="status"> Read-only property. </param>
         /// <returns> A new <see cref="Models.IssueTestBaseProperties"/> instance for mocking. </returns>
-        public static IssueTestBaseProperties IssueTestBaseProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default)
+        private static IssueTestBaseProperties IssueTestBaseProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default)
         {
             return new IssueTestBaseProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, default), status, default);
         }
@@ -636,7 +636,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="innerFlag"> Inner flag that gets flattened. </param>
         /// <param name="updateOnlyValue"> Property specific to updates. </param>
         /// <returns> A new <see cref="Models.IssueTestResourcePatch"/> instance for mocking. </returns>
-        public static IssueTestResourcePatch IssueTestResourcePatch(IDictionary<string, string> tags = default, string displayName = default, string status = default, string innerValue = default, bool? innerFlag = default, string updateOnlyValue = default)
+        private static IssueTestResourcePatch IssueTestResourcePatch(IDictionary<string, string> tags = default, string displayName = default, string status = default, string innerValue = default, bool? innerFlag = default, string updateOnlyValue = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -649,7 +649,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="endpointProp"> Gets or sets the Prop. </param>
         /// <returns> A new <see cref="Tests.EndpointResourceData"/> instance for mocking. </returns>
-        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
+        private static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
         {
             return new EndpointResourceData(
                 id,
@@ -666,7 +666,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="selfHelpId"> Gets the SelfHelpId. </param>
         /// <returns> A new <see cref="Tests.SelfHelpResourceData"/> instance for mocking. </returns>
-        public static SelfHelpResourceData SelfHelpResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
+        private static SelfHelpResourceData SelfHelpResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
         {
             return new SelfHelpResourceData(
                 id,
@@ -681,7 +681,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        private static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
         {
             return new CheckNameAvailabilityRequest(name, @type, default);
         }
@@ -691,7 +691,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="reason"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool nameAvailable = default, string reason = default, string message = default)
+        private static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool nameAvailable = default, string reason = default, string message = default)
         {
             return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
@@ -703,7 +703,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.PlaywrightQuotaData"/> instance for mocking. </returns>
-        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
+        private static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
         {
             return new PlaywrightQuotaData(
                 id,
@@ -718,7 +718,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="freeTrial"> The subscription-level location-based Playwright quota resource free-trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <returns> A new <see cref="Models.PlaywrightQuotaProperties"/> instance for mocking. </returns>
-        public static PlaywrightQuotaProperties PlaywrightQuotaProperties(string freeTrial = default, string provisioningState = default)
+        private static PlaywrightQuotaProperties PlaywrightQuotaProperties(string freeTrial = default, string provisioningState = default)
         {
             return new PlaywrightQuotaProperties(freeTrial, provisioningState, default);
         }
@@ -731,7 +731,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <returns> A new <see cref="Tests.JobResourceData"/> instance for mocking. </returns>
-        public static JobResourceData JobResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jobName = default)
+        private static JobResourceData JobResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jobName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -749,7 +749,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
         /// <returns> A new <see cref="Models.JobResourceCustomUpdate"/> instance for mocking. </returns>
-        public static JobResourceCustomUpdate JobResourceCustomUpdate(string jobName = default, IDictionary<string, string> tags = default)
+        private static JobResourceCustomUpdate JobResourceCustomUpdate(string jobName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -762,7 +762,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
         /// <returns> A new <see cref="Tests.HciVmInstanceData"/> instance for mocking. </returns>
-        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
+        private static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
         {
             return new HciVmInstanceData(
                 id,
@@ -780,7 +780,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.GroupQuotaSubscriptionRequestStatusData"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
+        private static GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
         {
             return new GroupQuotaSubscriptionRequestStatusData(
                 id,
@@ -798,7 +798,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        private static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaLimitProperties(
                 resourceName,
@@ -817,7 +817,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        private static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaDetails(
                 resourceName,
@@ -833,7 +833,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="subscriptionId"> An Azure subscriptionId. </param>
         /// <param name="quotaAllocated"> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </param>
         /// <returns> A new <see cref="Models.AllocatedToSubscription"/> instance for mocking. </returns>
-        public static AllocatedToSubscription AllocatedToSubscription(string subscriptionId = default, long? quotaAllocated = default)
+        private static AllocatedToSubscription AllocatedToSubscription(string subscriptionId = default, long? quotaAllocated = default)
         {
             return new AllocatedToSubscription(subscriptionId, quotaAllocated, default);
         }
@@ -845,7 +845,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
-        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
+        private static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
         {
             return new SubscriptionQuotaAllocationsListData(
                 id,
@@ -860,7 +860,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> Subscription quota list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsListProperties"/> instance for mocking. </returns>
-        public static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(IEnumerable<string> value = default, string nextLink = default)
+        private static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(IEnumerable<string> value = default, string nextLink = default)
         {
             value ??= new ChangeTrackingList<string>();
 
@@ -871,7 +871,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>
         /// <returns> A new <see cref="Models.QueryNetworkSiblingSetRequest"/> instance for mocking. </returns>
-        public static QueryNetworkSiblingSetRequest QueryNetworkSiblingSetRequest(string location = default, string subscriptionId = default)
+        private static QueryNetworkSiblingSetRequest QueryNetworkSiblingSetRequest(string location = default, string subscriptionId = default)
         {
             return new QueryNetworkSiblingSetRequest(location, subscriptionId, default);
         }
@@ -885,7 +885,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="type"> Type of the resource. </param>
         /// <param name="properties"> Properties of the network sibling set. </param>
         /// <returns> A new <see cref="Models.NetworkSiblingSet"/> instance for mocking. </returns>
-        public static NetworkSiblingSet NetworkSiblingSet(string id = default, string name = default, string @type = default, NetworkSiblingSetProperties properties = default)
+        private static NetworkSiblingSet NetworkSiblingSet(string id = default, string name = default, string @type = default, NetworkSiblingSetProperties properties = default)
         {
             return new NetworkSiblingSet(id, name, @type, properties, default);
         }
@@ -894,7 +894,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="siblings"> List of network siblings. </param>
         /// <param name="status"> Status of the query. </param>
         /// <returns> A new <see cref="Models.NetworkSiblingSetProperties"/> instance for mocking. </returns>
-        public static NetworkSiblingSetProperties NetworkSiblingSetProperties(IEnumerable<NetworkSibling> siblings = default, string status = default)
+        private static NetworkSiblingSetProperties NetworkSiblingSetProperties(IEnumerable<NetworkSibling> siblings = default, string status = default)
         {
             siblings ??= new ChangeTrackingList<NetworkSibling>();
 
@@ -906,7 +906,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="networkInterfaceId"> Network interface ID. </param>
         /// <returns> A new <see cref="Models.NetworkSibling"/> instance for mocking. </returns>
-        public static NetworkSibling NetworkSibling(string subscriptionId = default, string resourceGroupName = default, string networkInterfaceId = default)
+        private static NetworkSibling NetworkSibling(string subscriptionId = default, string resourceGroupName = default, string networkInterfaceId = default)
         {
             return new NetworkSibling(subscriptionId, resourceGroupName, networkInterfaceId, default);
         }
@@ -920,7 +920,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.JooData"/> instance for mocking. </returns>
-        public static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, JooProperties properties = default)
+        private static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, JooProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -938,7 +938,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"></param>
         /// <param name="predictionInputHistoricalData"> Gets the HistoricalData. </param>
         /// <returns> A new <see cref="Models.JooProperties"/> instance for mocking. </returns>
-        public static JooProperties JooProperties(string name = default, IEnumerable<long> predictionInputHistoricalData = default)
+        private static JooProperties JooProperties(string name = default, IEnumerable<long> predictionInputHistoricalData = default)
         {
             return new JooProperties(name, predictionInputHistoricalData is null ? default : new Prediction(new PredictionInput((predictionInputHistoricalData ?? new ChangeTrackingList<long>()).ToList(), default), default), default);
         }
@@ -951,7 +951,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sapVirtualInstanceName"> Gets or sets the Name. </param>
         /// <returns> A new <see cref="Tests.SAPVirtualInstanceData"/> instance for mocking. </returns>
-        public static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
+        private static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -969,7 +969,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
         /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
         /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsRequest"/> instance for mocking. </returns>
-        public static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
+        private static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
         {
             return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, default);
         }
@@ -977,7 +977,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The SAPAvailabilityZoneDetailsResult. </summary>
         /// <param name="recommendedAvailabilityZonePair"> The recommended availability zone pair. </param>
         /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsResult"/> instance for mocking. </returns>
-        public static SAPAvailabilityZoneDetailsResult SAPAvailabilityZoneDetailsResult(string recommendedAvailabilityZonePair = default)
+        private static SAPAvailabilityZoneDetailsResult SAPAvailabilityZoneDetailsResult(string recommendedAvailabilityZonePair = default)
         {
             return new SAPAvailabilityZoneDetailsResult(recommendedAvailabilityZonePair, default);
         }
@@ -990,7 +990,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="Tests.BestPracticeData"/> instance for mocking. </returns>
-        public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocationOptionalModel extendedLocation = default)
+        private static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocationOptionalModel extendedLocation = default)
         {
             return new BestPracticeData(
                 id,
@@ -1006,7 +1006,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="description"> The description of the best practice. </param>
         /// <returns> A new <see cref="Models.BestPracticeProperties"/> instance for mocking. </returns>
-        public static BestPracticeProperties BestPracticeProperties(ResourceProvisioningState? provisioningState = default, string description = default)
+        private static BestPracticeProperties BestPracticeProperties(ResourceProvisioningState? provisioningState = default, string description = default)
         {
             return new BestPracticeProperties(provisioningState, description, default);
         }
@@ -1015,14 +1015,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> The type of the extended location. </param>
         /// <returns> A new <see cref="Models.ExtendedLocationOptionalModel"/> instance for mocking. </returns>
-        public static ExtendedLocationOptionalModel ExtendedLocationOptionalModel(string name = default, ExtendedLocationType? @type = default)
+        private static ExtendedLocationOptionalModel ExtendedLocationOptionalModel(string name = default, ExtendedLocationType? @type = default)
         {
             return new ExtendedLocationOptionalModel(name, @type, default);
         }
 
         /// <param name="bestPracticeUpdateDescription"> The description of the best practice. </param>
         /// <returns> A new <see cref="Models.BestPracticeUpdate"/> instance for mocking. </returns>
-        public static BestPracticeUpdate BestPracticeUpdate(string bestPracticeUpdateDescription = default)
+        private static BestPracticeUpdate BestPracticeUpdate(string bestPracticeUpdateDescription = default)
         {
             return new BestPracticeUpdate(bestPracticeUpdateDescription is null ? default : new BestPracticeUpdateProperties(bestPracticeUpdateDescription, default), default);
         }
@@ -1036,7 +1036,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.ResourceTypeTestResourceData"/> instance for mocking. </returns>
-        public static ResourceTypeTestResourceData ResourceTypeTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceTypeTestProperties properties = default)
+        private static ResourceTypeTestResourceData ResourceTypeTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceTypeTestProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1055,7 +1055,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="optionalResourceType"> Nullable resource type - this tests the fix for nullable value type serialization. </param>
         /// <param name="status"> Status of the resource. </param>
         /// <returns> A new <see cref="Models.ResourceTypeTestProperties"/> instance for mocking. </returns>
-        public static ResourceTypeTestProperties ResourceTypeTestProperties(ResourceType? optionalResourceType = default, string status = default)
+        private static ResourceTypeTestProperties ResourceTypeTestProperties(ResourceType? optionalResourceType = default, string status = default)
         {
             return new ResourceTypeTestProperties(optionalResourceType, status, default);
         }
@@ -1069,7 +1069,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.SampleData"/> instance for mocking. </returns>
-        public static SampleData SampleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SampleDataProperties properties = default)
+        private static SampleData SampleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SampleDataProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1088,7 +1088,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="sampleValue"> the sample value. </param>
         /// <param name="anotherValue"> another value. </param>
         /// <returns> A new <see cref="Models.SampleDataProperties"/> instance for mocking. </returns>
-        public static SampleDataProperties SampleDataProperties(string sampleValue = default, int? anotherValue = default)
+        private static SampleDataProperties SampleDataProperties(string sampleValue = default, int? anotherValue = default)
         {
             return new SampleDataProperties(sampleValue, anotherValue, default);
         }
@@ -1100,7 +1100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
-        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
+        private static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
         {
             return new ScheduledActionResources(
                 id,
@@ -1115,7 +1115,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="actionId"> The scheduled action identifier. </param>
         /// <param name="status"> The scheduled action status. </param>
         /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(string actionId = default, string status = default)
+        private static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(string actionId = default, string status = default)
         {
             return new ScheduledActionsExtensionProperties(actionId, status, default);
         }
@@ -1129,7 +1129,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.WorkloadNetworksData"/> instance for mocking. </returns>
-        public static WorkloadNetworksData WorkloadNetworksData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworksProperties properties = default)
+        private static WorkloadNetworksData WorkloadNetworksData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworksProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1148,7 +1148,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="displayName"> Display name of the workload network. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworksProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworksProperties WorkloadNetworksProperties(string displayName = default, string provisioningState = default)
+        private static WorkloadNetworksProperties WorkloadNetworksProperties(string displayName = default, string provisioningState = default)
         {
             return new WorkloadNetworksProperties(displayName, provisioningState, default);
         }
@@ -1162,7 +1162,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkVmGroupProperties properties = default)
+        private static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkVmGroupProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1182,7 +1182,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="members"> Virtual machine members of this group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkVmGroupProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupProperties WorkloadNetworkVmGroupProperties(string displayName = default, IEnumerable<string> members = default, string provisioningState = default)
+        private static WorkloadNetworkVmGroupProperties WorkloadNetworkVmGroupProperties(string displayName = default, IEnumerable<string> members = default, string provisioningState = default)
         {
             members ??= new ChangeTrackingList<string>();
 
@@ -1198,7 +1198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkSegmentProperties properties = default)
+        private static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkSegmentProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1219,7 +1219,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="subnet"> Subnet for the segment. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkSegmentProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentProperties WorkloadNetworkSegmentProperties(string displayName = default, string connectedGateway = default, string subnet = default, string provisioningState = default)
+        private static WorkloadNetworkSegmentProperties WorkloadNetworkSegmentProperties(string displayName = default, string connectedGateway = default, string subnet = default, string provisioningState = default)
         {
             return new WorkloadNetworkSegmentProperties(displayName, connectedGateway, subnet, provisioningState, default);
         }
@@ -1232,7 +1232,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="properties"> The properties of the target resource. </param>
         /// <param name="location"> Azure resource location. </param>
         /// <returns> A new <see cref="Tests.TargetData"/> instance for mocking. </returns>
-        public static TargetData TargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, BinaryData> properties = default, AzureLocation? location = default)
+        private static TargetData TargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, BinaryData> properties = default, AzureLocation? location = default)
         {
             properties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -1264,7 +1264,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="maintenanceWindows"> Gets the MaintenanceWindows. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. </param>
         /// <returns> A new <see cref="Tests.ClusterData"/> instance for mocking. </returns>
-        public static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HighAvailability? highAvailability = default, TlsVersion? minimumTlsVersion = default, string hostName = default, ProvisioningState? provisioningState = default, RedundancyMode? redundancyMode = default, ResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisPrivateEndpointConnection> privateEndpointConnections = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, PublicNetworkAccess? publicNetworkAccess = default)
+        private static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HighAvailability? highAvailability = default, TlsVersion? minimumTlsVersion = default, string hostName = default, ProvisioningState? provisioningState = default, RedundancyMode? redundancyMode = default, ResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisPrivateEndpointConnection> privateEndpointConnections = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, PublicNetworkAccess? publicNetworkAccess = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1295,7 +1295,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="keyEncryptionKeyIdentity"></param>
         /// <param name="keyEncryptionKeyUri"></param>
         /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        private static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
         {
             return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
         }
@@ -1304,7 +1304,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="userAssignedIdentityResourceId"></param>
         /// <param name="identityType"></param>
         /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(string userAssignedIdentityResourceId = default, CmkIdentityType? identityType = default)
+        private static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(string userAssignedIdentityResourceId = default, CmkIdentityType? identityType = default)
         {
             return new KeyEncryptionKeyIdentity(userAssignedIdentityResourceId, identityType, default);
         }
@@ -1314,7 +1314,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="startHour"></param>
         /// <param name="duration"></param>
         /// <returns> A new <see cref="Models.MaintenanceWindow"/> instance for mocking. </returns>
-        public static MaintenanceWindow MaintenanceWindow(DayOfWeek? dayOfWeek = default, int? startHour = default, int? duration = default)
+        private static MaintenanceWindow MaintenanceWindow(DayOfWeek? dayOfWeek = default, int? startHour = default, int? duration = default)
         {
             return new MaintenanceWindow(dayOfWeek, startHour, duration, default);
         }
@@ -1326,7 +1326,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.RedisPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RedisPrivateEndpointConnection RedisPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisPrivateEndpointConnectionProperties properties = default)
+        private static RedisPrivateEndpointConnection RedisPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisPrivateEndpointConnectionProperties properties = default)
         {
             return new RedisPrivateEndpointConnection(
                 id,
@@ -1341,7 +1341,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="privateLinkServiceConnectionState"></param>
         /// <param name="provisioningState"></param>
         /// <returns> A new <see cref="Models.RedisPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static RedisPrivateEndpointConnectionProperties RedisPrivateEndpointConnectionProperties(string privateEndpointId = default, RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ProvisioningState? provisioningState = default)
+        private static RedisPrivateEndpointConnectionProperties RedisPrivateEndpointConnectionProperties(string privateEndpointId = default, RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ProvisioningState? provisioningState = default)
         {
             return new RedisPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new RedisPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
@@ -1351,7 +1351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="description"></param>
         /// <param name="actionsRequired"></param>
         /// <returns> A new <see cref="Models.RedisPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState(RedisPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        private static RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState(RedisPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new RedisPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
@@ -1368,7 +1368,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// Similar to accessKeysAuthentication in the original RedisEnterprise issue.
         /// </param>
         /// <returns> A new <see cref="Tests.DuplicatePropertyTestData"/> instance for mocking. </returns>
-        public static DuplicatePropertyTestData DuplicatePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string baseOnlyProperty = default, string overridableProperty = default)
+        private static DuplicatePropertyTestData DuplicatePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string baseOnlyProperty = default, string overridableProperty = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1390,7 +1390,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.ServiceGroupSiteData"/> instance for mocking. </returns>
-        public static ServiceGroupSiteData ServiceGroupSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupSiteProperties properties = default)
+        private static ServiceGroupSiteData ServiceGroupSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupSiteProperties properties = default)
         {
             return new ServiceGroupSiteData(
                 id,
@@ -1406,7 +1406,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
         /// <returns> A new <see cref="Models.ServiceGroupSiteProperties"/> instance for mocking. </returns>
-        public static ServiceGroupSiteProperties ServiceGroupSiteProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
+        private static ServiceGroupSiteProperties ServiceGroupSiteProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
         {
             return new ServiceGroupSiteProperties(displayName, description, provisioningState, default);
         }
@@ -1419,7 +1419,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"></param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Tests.TrafficProfileData"/> instance for mocking. </returns>
-        public static TrafficProfileData TrafficProfileData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default, TrafficProfileProperties properties = default)
+        private static TrafficProfileData TrafficProfileData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default, TrafficProfileProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1437,7 +1437,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="profileStatus"></param>
         /// <param name="trafficRoutingMethod"></param>
         /// <returns> A new <see cref="Models.TrafficProfileProperties"/> instance for mocking. </returns>
-        public static TrafficProfileProperties TrafficProfileProperties(TrafficProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default)
+        private static TrafficProfileProperties TrafficProfileProperties(TrafficProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default)
         {
             return new TrafficProfileProperties(profileStatus, trafficRoutingMethod, default);
         }
@@ -1449,7 +1449,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"></param>
         /// <param name="location"></param>
         /// <returns> A new <see cref="Models.TrafficTrackedResource"/> instance for mocking. </returns>
-        public static TrafficTrackedResource TrafficTrackedResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default)
+        private static TrafficTrackedResource TrafficTrackedResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1467,7 +1467,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.TrafficResource"/> instance for mocking. </returns>
-        public static TrafficResource TrafficResource(ResourceIdentifier id = default, string name = default, string @type = default)
+        private static TrafficResource TrafficResource(ResourceIdentifier id = default, string name = default, string @type = default)
         {
             return new TrafficResource(id, name, @type, default);
         }
@@ -1478,7 +1478,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="type"></param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Tests.TrafficEndpointData"/> instance for mocking. </returns>
-        public static TrafficEndpointData TrafficEndpointData(ResourceIdentifier id = default, string name = default, string @type = default, TrafficEndpointProperties properties = default)
+        private static TrafficEndpointData TrafficEndpointData(ResourceIdentifier id = default, string name = default, string @type = default, TrafficEndpointProperties properties = default)
         {
             return new TrafficEndpointData(id, name, @type, default, properties);
         }
@@ -1491,7 +1491,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="priority"></param>
         /// <param name="endpointLocation"></param>
         /// <returns> A new <see cref="Models.TrafficEndpointProperties"/> instance for mocking. </returns>
-        public static TrafficEndpointProperties TrafficEndpointProperties(string targetResourceId = default, string target = default, TrafficEndpointStatus? endpointStatus = default, int? weight = default, int? priority = default, string endpointLocation = default)
+        private static TrafficEndpointProperties TrafficEndpointProperties(string targetResourceId = default, string target = default, TrafficEndpointStatus? endpointStatus = default, int? weight = default, int? priority = default, string endpointLocation = default)
         {
             return new TrafficEndpointProperties(
                 targetResourceId,
@@ -1508,7 +1508,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.TrafficProxyResource"/> instance for mocking. </returns>
-        public static TrafficProxyResource TrafficProxyResource(ResourceIdentifier id = default, string name = default, string @type = default)
+        private static TrafficProxyResource TrafficProxyResource(ResourceIdentifier id = default, string name = default, string @type = default)
         {
             return new TrafficProxyResource(id, name, @type, default);
         }
@@ -1520,7 +1520,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.VmConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static VmConfigurationAssignmentData VmConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmConfigurationAssignmentProperties properties = default)
+        private static VmConfigurationAssignmentData VmConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VmConfigurationAssignmentProperties properties = default)
         {
             return new VmConfigurationAssignmentData(
                 id,
@@ -1535,7 +1535,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="complianceStatus"> The compliance status. </param>
         /// <returns> A new <see cref="Models.VmConfigurationAssignmentProperties"/> instance for mocking. </returns>
-        public static VmConfigurationAssignmentProperties VmConfigurationAssignmentProperties(string configurationName = default, VmConfigurationAssignmentPropertiesComplianceStatus? complianceStatus = default)
+        private static VmConfigurationAssignmentProperties VmConfigurationAssignmentProperties(string configurationName = default, VmConfigurationAssignmentPropertiesComplianceStatus? complianceStatus = default)
         {
             return new VmConfigurationAssignmentProperties(configurationName, complianceStatus, default);
         }
@@ -1547,7 +1547,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.HcrpConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static HcrpConfigurationAssignmentData HcrpConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcrpConfigurationAssignmentProperties properties = default)
+        private static HcrpConfigurationAssignmentData HcrpConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcrpConfigurationAssignmentProperties properties = default)
         {
             return new HcrpConfigurationAssignmentData(
                 id,
@@ -1562,7 +1562,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="machineComplianceStatus"> Machine compliance status. </param>
         /// <returns> A new <see cref="Models.HcrpConfigurationAssignmentProperties"/> instance for mocking. </returns>
-        public static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
+        private static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
         {
             return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, default);
         }
@@ -1578,7 +1578,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyAssignmentProperties properties = default)
+        private static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyAssignmentProperties properties = default)
         {
             return new PolicyAssignmentData(
                 id,
@@ -1593,7 +1593,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="displayName"> Display name of the policy assignment. </param>
         /// <param name="description"> Description of the policy assignment. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(string displayName = default, string description = default)
+        private static PolicyAssignmentProperties PolicyAssignmentProperties(string displayName = default, string description = default)
         {
             return new PolicyAssignmentProperties(displayName, description, default);
         }
@@ -1606,7 +1606,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="deleteFinalResultTestMarker"> Gets or sets the Marker. </param>
         /// <returns> A new <see cref="Tests.DeleteFinalResultTestData"/> instance for mocking. </returns>
-        public static DeleteFinalResultTestData DeleteFinalResultTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string deleteFinalResultTestMarker = default)
+        private static DeleteFinalResultTestData DeleteFinalResultTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string deleteFinalResultTestMarker = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1629,7 +1629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="customBaseTypeResourceDescription"> Gets or sets the Description. </param>
         /// <returns> A new <see cref="Models.CustomBaseTypeResourceData"/> instance for mocking. </returns>
-        public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
+        private static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1650,7 +1650,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="testCertificateThumbprint"> Gets the Thumbprint. </param>
         /// <returns> A new <see cref="Tests.TestCertificateData"/> instance for mocking. </returns>
-        public static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string testCertificateThumbprint = default)
+        private static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string testCertificateThumbprint = default)
         {
             return new TestCertificateData(
                 id,
@@ -1664,7 +1664,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Parameters for creating or updating a certificate. </summary>
         /// <param name="properties"> The properties associated with the certificate. </param>
         /// <returns> A new <see cref="Models.TestCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static TestCertificateCreateOrUpdateContent TestCertificateCreateOrUpdateContent(TestCertificateCreateOrUpdateProperties properties = default)
+        private static TestCertificateCreateOrUpdateContent TestCertificateCreateOrUpdateContent(TestCertificateCreateOrUpdateProperties properties = default)
         {
             return new TestCertificateCreateOrUpdateContent(properties, default);
         }
@@ -1673,7 +1673,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="thumbprintAlgorithm"> The thumbprint algorithm. </param>
         /// <param name="thumbprintString"> The thumbprint string. </param>
         /// <returns> A new <see cref="Models.TestCertificateCreateOrUpdateProperties"/> instance for mocking. </returns>
-        public static TestCertificateCreateOrUpdateProperties TestCertificateCreateOrUpdateProperties(string thumbprintAlgorithm = default, string thumbprintString = default)
+        private static TestCertificateCreateOrUpdateProperties TestCertificateCreateOrUpdateProperties(string thumbprintAlgorithm = default, string thumbprintString = default)
         {
             return new TestCertificateCreateOrUpdateProperties(thumbprintAlgorithm, thumbprintString, default);
         }
@@ -1687,7 +1687,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.SharedConfigData"/> instance for mocking. </returns>
-        public static SharedConfigData SharedConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SharedConfigProperties properties = default)
+        private static SharedConfigData SharedConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SharedConfigProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1707,7 +1707,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="description"> Description. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.SharedConfigProperties"/> instance for mocking. </returns>
-        public static SharedConfigProperties SharedConfigProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
+        private static SharedConfigProperties SharedConfigProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
         {
             return new SharedConfigProperties(displayName, description, provisioningState, default);
         }
@@ -1716,7 +1716,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The ContainerItemLike items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.ContainerItemLikeListResult"/> instance for mocking. </returns>
-        public static ContainerItemLikeListResult ContainerItemLikeListResult(IEnumerable<ContainerItemLike> value = default, Uri nextLink = default)
+        private static ContainerItemLikeListResult ContainerItemLikeListResult(IEnumerable<ContainerItemLike> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<ContainerItemLike>();
 
@@ -1730,7 +1730,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="containerItemLikeSomething"> A simple string property. </param>
         /// <returns> A new <see cref="Models.ContainerItemLike"/> instance for mocking. </returns>
-        public static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string containerItemLikeSomething = default)
+        private static ContainerItemLike ContainerItemLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, string containerItemLikeSomething = default)
         {
             return new ContainerItemLike(
                 id,
@@ -1749,7 +1749,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="Models.EntityResourceLike"/> instance for mocking. </returns>
-        public static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default)
+        private static EntityResourceLike EntityResourceLike(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default)
         {
             return new EntityResourceLike(
                 id,
@@ -1764,7 +1764,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The DerivedPatch items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.SharedParamReproListResult"/> instance for mocking. </returns>
-        public static SharedParamReproListResult SharedParamReproListResult(IEnumerable<DerivedPatch> value = default, Uri nextLink = default)
+        private static SharedParamReproListResult SharedParamReproListResult(IEnumerable<DerivedPatch> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<DerivedPatch>();
 
@@ -1779,7 +1779,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="derivedProp"> Update properties. </param>
         /// <returns> A new <see cref="Models.DerivedPatch"/> instance for mocking. </returns>
-        public static DerivedPatch DerivedPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string derivedProp = default)
+        private static DerivedPatch DerivedPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string derivedProp = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1800,7 +1800,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CustomPatchBase"/> instance for mocking. </returns>
-        public static CustomPatchBase CustomPatchBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        private static CustomPatchBase CustomPatchBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1817,7 +1817,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The SiblingPatch items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.SiblingPatchListResult"/> instance for mocking. </returns>
-        public static SiblingPatchListResult SiblingPatchListResult(IEnumerable<SiblingPatch> value = default, Uri nextLink = default)
+        private static SiblingPatchListResult SiblingPatchListResult(IEnumerable<SiblingPatch> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<SiblingPatch>();
 
@@ -1831,7 +1831,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="siblingProp"> Sibling properties. </param>
         /// <returns> A new <see cref="Models.SiblingPatch"/> instance for mocking. </returns>
-        public static SiblingPatch SiblingPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string siblingProp = default)
+        private static SiblingPatch SiblingPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string siblingProp = default)
         {
             return new SiblingPatch(
                 id,
@@ -1853,7 +1853,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <returns> A new <see cref="Tests.PolyDeviceData"/> instance for mocking. </returns>
-        public static PolyDeviceData PolyDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
+        private static PolyDeviceData PolyDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
         {
             return new UnknownPolyDevice(
                 id,
@@ -1870,7 +1870,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="typeAPolyDeviceDescription"> Gets or sets the Description. </param>
         /// <returns> A new <see cref="Models.TypeAPolyDevice"/> instance for mocking. </returns>
-        public static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string typeAPolyDeviceDescription = default)
+        private static TypeAPolyDevice TypeAPolyDevice(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string typeAPolyDeviceDescription = default)
         {
             return new TypeAPolyDevice(
                 id,
@@ -1886,7 +1886,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="value"> The GrandparentFlattenLeaf items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenLeafListResult"/> instance for mocking. </returns>
-        public static GrandparentFlattenLeafListResult GrandparentFlattenLeafListResult(IEnumerable<GrandparentFlattenLeaf> value = default, Uri nextLink = default)
+        private static GrandparentFlattenLeafListResult GrandparentFlattenLeafListResult(IEnumerable<GrandparentFlattenLeaf> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<GrandparentFlattenLeaf>();
 
@@ -1900,7 +1900,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
         /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenLeaf"/> instance for mocking. </returns>
-        public static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        private static GrandparentFlattenLeaf GrandparentFlattenLeaf(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
         {
             return new GrandparentFlattenLeaf(
                 id,
@@ -1919,7 +1919,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
         /// <param name="grandparentFlattenLeafDisclaimer"> Gets the Disclaimer. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenProxyGrandparentFlattenLeafProperties"/> instance for mocking. </returns>
-        public static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        private static GrandparentFlattenProxyGrandparentFlattenLeafProperties GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default, string grandparentFlattenLeafDisclaimer = default)
         {
             return new GrandparentFlattenProxyGrandparentFlattenLeafProperties(
                 id,
@@ -1937,7 +1937,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identifierUniqueId"> Gets the UniqueId. </param>
         /// <returns> A new <see cref="Models.GrandparentFlattenBase"/> instance for mocking. </returns>
-        public static GrandparentFlattenBase GrandparentFlattenBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default)
+        private static GrandparentFlattenBase GrandparentFlattenBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string identifierUniqueId = default)
         {
             return new GrandparentFlattenBase(
                 id,
@@ -1957,7 +1957,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.CycleTestStoreData"/> instance for mocking. </returns>
-        public static CycleTestStoreData CycleTestStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CycleTestStoreProperties properties = default)
+        private static CycleTestStoreData CycleTestStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CycleTestStoreProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1976,7 +1976,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="endpoint"> The endpoint for the store. </param>
         /// <param name="connections"> Related connections. </param>
         /// <returns> A new <see cref="Models.CycleTestStoreProperties"/> instance for mocking. </returns>
-        public static CycleTestStoreProperties CycleTestStoreProperties(string endpoint = default, IEnumerable<CycleTestConnectionReference> connections = default)
+        private static CycleTestStoreProperties CycleTestStoreProperties(string endpoint = default, IEnumerable<CycleTestConnectionReference> connections = default)
         {
             connections ??= new ChangeTrackingList<CycleTestConnectionReference>();
 
@@ -1990,7 +1990,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="provisioningState"> The provisioning status. </param>
         /// <param name="description"> Description of the connection. </param>
         /// <returns> A new <see cref="Models.CycleTestConnectionReference"/> instance for mocking. </returns>
-        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string description = default)
+        private static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string description = default)
         {
             return new CycleTestConnectionReference(
                 id,
@@ -2009,7 +2009,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eventGridTopicEndpoint"> Topic endpoint. </param>
         /// <returns> A new <see cref="Tests.EventGridTopicData"/> instance for mocking. </returns>
-        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridTopicEndpoint = default)
+        private static EventGridTopicData EventGridTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridTopicEndpoint = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2032,7 +2032,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eventGridDomainEndpoint"> Domain endpoint. </param>
         /// <returns> A new <see cref="Tests.EventGridDomainData"/> instance for mocking. </returns>
-        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridDomainEndpoint = default)
+        private static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string eventGridDomainEndpoint = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2054,7 +2054,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.EventGridPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventGridPrivateEndpointConnectionProperties properties = default)
+        private static EventGridPrivateEndpointConnectionData EventGridPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventGridPrivateEndpointConnectionProperties properties = default)
         {
             return new EventGridPrivateEndpointConnectionData(
                 id,
@@ -2069,7 +2069,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="status"> Connection status. </param>
         /// <param name="description"> Description. </param>
         /// <returns> A new <see cref="Models.EventGridPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static EventGridPrivateEndpointConnectionProperties EventGridPrivateEndpointConnectionProperties(string status = default, string description = default)
+        private static EventGridPrivateEndpointConnectionProperties EventGridPrivateEndpointConnectionProperties(string status = default, string description = default)
         {
             return new EventGridPrivateEndpointConnectionProperties(status, description, default);
         }
@@ -2081,7 +2081,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="solutionsApplicationDefinitionDisplayName"> The managed application definition display name. </param>
         /// <returns> A new <see cref="Tests.SolutionsApplicationDefinitionData"/> instance for mocking. </returns>
-        public static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
+        private static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2102,7 +2102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <returns> A new <see cref="Models.SolutionsGenericResource"/> instance for mocking. </returns>
-        public static SolutionsGenericResource SolutionsGenericResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default)
+        private static SolutionsGenericResource SolutionsGenericResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2121,7 +2121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SolutionsResource"/> instance for mocking. </returns>
-        public static SolutionsResource SolutionsResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default)
+        private static SolutionsResource SolutionsResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2131,11 +2131,787 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Information about a query-suffixed application definition request. </summary>
         /// <param name="tags"> Application definition tags. </param>
         /// <returns> A new <see cref="Models.SolutionsApplicationDefinitionPatch"/> instance for mocking. </returns>
-        public static SolutionsApplicationDefinitionPatch SolutionsApplicationDefinitionPatch(IDictionary<string, string> tags = default)
+        private static SolutionsApplicationDefinitionPatch SolutionsApplicationDefinitionPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="stringArray"> Gets the StringArray. </param>
+        /// <param name="discriminatorProperty"> Gets or sets the DiscriminatorProperty. </param>
+        /// <param name="isEnabled"> enabled. </param>
+        /// <param name="propertyLeft"> enabled. </param>
+        /// <param name="anotherPropertyLeft"> enabled. </param>
+        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <param name="optionalFlattenPropertyRandomCollectionProp"> Required collection used by the optional flattened model scenario. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        private static BarSettingsResourceData BarSettingsResourceData(IEnumerable<string> stringArray = default, LimitJsonObject discriminatorProperty = default, bool? isEnabled = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default)
+        {
+            return new BarSettingsResourceData(
+                id,
+                name,
+                resourceType.GetValueOrDefault(),
+                systemData,
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, default),
+                (stringArray ?? new ChangeTrackingList<string>()).ToList(),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft, default),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft, default),
+                innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
+                    innerProp1,
+                    innerProp2,
+                    default,
+                    middleProp1.GetValueOrDefault(),
+                    middleProp2 ?? new ChangeTrackingDictionary<string, string>(),
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
+                    prop2.GetValueOrDefault()),
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), default),
+                discriminatorProperty,
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="barQuotaLeft"> enabled. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        private static BarQuotaResourceData BarQuotaResourceData(string barQuotaLeft = default, ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default)
+        {
+            return new BarQuotaResourceData(
+                id,
+                name,
+                resourceType.GetValueOrDefault(),
+                systemData,
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, default),
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
+        /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
+        /// <param name="innerSelectionType"> Gets or sets the SelectionType. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        private static MultiFlattenTestData MultiFlattenTestData(FlattenChannel? channel = default, bool? disabled = default, string innerSelectionType = default, ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default)
+        {
+            return new MultiFlattenTestData(
+                id,
+                name,
+                resourceType.GetValueOrDefault(),
+                systemData,
+                channel is null && innerSelectionType is null && disabled is null ? default : new MultiFlattenProperties(channel, innerSelectionType is null ? default : new SafeFlattenInner(innerSelectionType, default), disabled, default),
+                default);
+        }
+
+        /// <summary> Creates a model for mocking. Missing properties use defaults; service-required fields are not validated. Nested models and collection elements may be supplied as property bags. Unchanged reference values, including nested models and dictionaries, may be shared. Collection containers are copied only where required by model constructors. This is not a deep clone. </summary>
+        /// <param name="properties"> An anonymous object or a dictionary keyed by case-sensitive C# property names. </param>
+        /// <param name="current"> An optional template. A new instance is returned; the template is never modified. </param>
+        /// <returns> A new model instance. </returns>
+        public static T Create<T>(object properties, T current = default)
+            where T : class
+        {
+            return (T)MgmtTypeSpecTestsModelFactory.CreateModel(typeof(T), Models.ModelFactoryPropertyBag.Read(properties), current);
+        }
+
+        /// <summary> Creates a model for mocking. Missing properties use defaults; service-required fields are not validated. Nested models and collection elements may be supplied as property bags. Unchanged reference values, including nested models and dictionaries, may be shared. Collection containers are copied only where required by model constructors. This is not a deep clone. </summary>
+        /// <param name="properties"> An anonymous object or a dictionary keyed by case-sensitive C# property names. </param>
+        /// <param name="current"> An optional template. A new instance is returned; the template is never modified. </param>
+        /// <returns> A new model instance. </returns>
+        public static T Create<T>(IReadOnlyDictionary<string, object> properties, T current = default)
+            where T : class
+        {
+            return (T)MgmtTypeSpecTestsModelFactory.CreateModel(typeof(T), Models.ModelFactoryPropertyBag.Read(properties), current);
+        }
+
+        /// <summary> Creates a model using generated typed dispatch. </summary>
+        /// <param name="modelType"> The model type. </param>
+        /// <param name="properties"> The property bag. </param>
+        /// <param name="current"> The template instance. </param>
+        internal static object CreateModel(Type modelType, IReadOnlyDictionary<string, object> properties, object current)
+        {
+            if (modelType == typeof(FooPreviewAction))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooPreviewAction), new string[] { "Action", "Result" });
+                return MgmtTypeSpecTestsModelFactory.FooPreviewAction(Models.ModelFactoryPropertyBag.Get<string>(properties, "Action", current == null ? default : ((FooPreviewAction)current).Action, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Result", current == null ? default : ((FooPreviewAction)current).Result, CreateModel));
+            }
+            if (modelType == typeof(PrivateLink))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PrivateLink), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties", "Identity" });
+                return MgmtTypeSpecTestsModelFactory.PrivateLink(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((PrivateLink)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((PrivateLink)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((PrivateLink)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((PrivateLink)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>(properties, "Properties", current == null ? default : ((PrivateLink)current).Properties, CreateModel), Models.ModelFactoryPropertyBag.Get<ManagedServiceIdentity>(properties, "Identity", current == null ? default : ((PrivateLink)current).Identity, CreateModel));
+            }
+            if (modelType == typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties), new string[] { "GroupId", "RequiredMembers", "RequiredZoneNames" });
+                return MgmtTypeSpecTestsModelFactory.AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "GroupId", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)current).GroupId, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "RequiredMembers", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)current).RequiredMembers, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "RequiredZoneNames", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)current).RequiredZoneNames, CreateModel));
+            }
+            if (modelType == typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<PrivateEndpointConnectionProperties>(properties, "Properties", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(PrivateEndpointConnectionProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PrivateEndpointConnectionProperties), new string[] { "GroupIds", "PrivateEndpoint", "PrivateLinkServiceConnectionState", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.PrivateEndpointConnectionProperties(Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "GroupIds", current == null ? default : ((PrivateEndpointConnectionProperties)current).GroupIds, CreateModel), Models.ModelFactoryPropertyBag.Get<SubResource>(properties, "PrivateEndpoint", current == null ? default : ((PrivateEndpointConnectionProperties)current).PrivateEndpoint, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>(properties, "PrivateLinkServiceConnectionState", current == null ? default : ((PrivateEndpointConnectionProperties)current).PrivateLinkServiceConnectionState, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((PrivateEndpointConnectionProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState), new string[] { "Status", "Description", "ActionsRequired" });
+                return MgmtTypeSpecTestsModelFactory.AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(Models.ModelFactoryPropertyBag.Get<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus?>(properties, "Status", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)current).Status, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)current).Description, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ActionsRequired", current == null ? default : ((AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)current).ActionsRequired, CreateModel));
+            }
+            if (modelType == typeof(StorageSyncServiceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(StorageSyncServiceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "StorageSyncServiceLocation", "Identity" });
+                return MgmtTypeSpecTestsModelFactory.StorageSyncServiceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((StorageSyncServiceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((StorageSyncServiceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((StorageSyncServiceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((StorageSyncServiceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((StorageSyncServiceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((StorageSyncServiceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "StorageSyncServiceLocation", current == null ? default : ((StorageSyncServiceData)current).Properties == null ? default : ((StorageSyncServiceData)current).Properties.StorageSyncServiceLocation, CreateModel), Models.ModelFactoryPropertyBag.Get<ManagedServiceIdentity>(properties, "Identity", current == null ? default : ((StorageSyncServiceData)current).Identity, CreateModel));
+            }
+            if (modelType == typeof(FooData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "ServiceUri", "Something", "BoolValue", "FloatValue", "DoubleValue", "Prop1", "Prop2", "ETag", "WritableSubResourceProp", "NestedPropertyProperties", "FlattenedProperty", "VmGalleryApplications", "ComputeFleetVmCapacityReservationGroupId", "ExtendedLocation", "Identity", "Plan" });
+                return MgmtTypeSpecTestsModelFactory.FooData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((FooData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((FooData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((FooData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((FooData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((FooData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((FooData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "ServiceUri", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.ServiceUri, CreateModel), Models.ModelFactoryPropertyBag.Get<ManagedServiceIdentity>(properties, "Something", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.Something, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "BoolValue", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.BoolValue, CreateModel), Models.ModelFactoryPropertyBag.Get<float?>(properties, "FloatValue", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.FloatValue, CreateModel), Models.ModelFactoryPropertyBag.Get<double?>(properties, "DoubleValue", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.DoubleValue, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "Prop1", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.Prop1, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<int>>(properties, "Prop2", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.Prop2, CreateModel), Models.ModelFactoryPropertyBag.Get<ETag?>(properties, "ETag", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.ETag, CreateModel), Models.ModelFactoryPropertyBag.Get<WritableSubResource>(properties, "WritableSubResourceProp", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.WritableSubResourceProp, CreateModel), Models.ModelFactoryPropertyBag.Get<FooProperties>(properties, "NestedPropertyProperties", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.NestedProperty == null ? default : ((FooData)current).Properties.NestedProperty.Properties, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "FlattenedProperty", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.OptionalProperty == null ? default : ((FooData)current).Properties.OptionalProperty.FlattenedProperty, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "VmGalleryApplications", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.VmProfile == null ? default : ((FooData)current).Properties.VmProfile.ApplicationProfile == null ? default : ((FooData)current).Properties.VmProfile.ApplicationProfile.GalleryApplications, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "ComputeFleetVmCapacityReservationGroupId", current == null ? default : ((FooData)current).Properties == null ? default : ((FooData)current).Properties.ComputeFleetVmProfile == null ? default : ((FooData)current).Properties.ComputeFleetVmProfile.CapacityReservation == null ? default : ((FooData)current).Properties.ComputeFleetVmProfile.CapacityReservation.CapacityReservationGroup == null ? default : ((FooData)current).Properties.ComputeFleetVmProfile.CapacityReservation.CapacityReservationGroup.Id, CreateModel), Models.ModelFactoryPropertyBag.Get<ExtendedLocation>(properties, "ExtendedLocation", current == null ? default : ((FooData)current).ExtendedLocation, CreateModel), Models.ModelFactoryPropertyBag.Get<ManagedServiceIdentity>(properties, "Identity", current == null ? default : ((FooData)current).Identity, CreateModel), Models.ModelFactoryPropertyBag.Get<ArmPlan>(properties, "Plan", current == null ? default : ((FooData)current).Plan, CreateModel));
+            }
+            if (modelType == typeof(FooProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooProperties), new string[] { "ServiceUri", "Something", "BoolValue", "FloatValue", "DoubleValue", "Prop1", "Prop2", "NestedPropertyProperties", "FlattenedProperty", "VmGalleryApplications", "ETag", "WritableSubResourceProp", "ComputeFleetVmCapacityReservationGroupId" });
+                return MgmtTypeSpecTestsModelFactory.FooProperties(Models.ModelFactoryPropertyBag.Get<Uri>(properties, "ServiceUri", current == null ? default : ((FooProperties)current).ServiceUri, CreateModel), Models.ModelFactoryPropertyBag.Get<ManagedServiceIdentity>(properties, "Something", current == null ? default : ((FooProperties)current).Something, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "BoolValue", current == null ? default : ((FooProperties)current).BoolValue, CreateModel), Models.ModelFactoryPropertyBag.Get<float?>(properties, "FloatValue", current == null ? default : ((FooProperties)current).FloatValue, CreateModel), Models.ModelFactoryPropertyBag.Get<double?>(properties, "DoubleValue", current == null ? default : ((FooProperties)current).DoubleValue, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "Prop1", current == null ? default : ((FooProperties)current).Prop1, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<int>>(properties, "Prop2", current == null ? default : ((FooProperties)current).Prop2, CreateModel), Models.ModelFactoryPropertyBag.Get<FooProperties>(properties, "NestedPropertyProperties", current == null ? default : ((FooProperties)current).NestedProperty == null ? default : ((FooProperties)current).NestedProperty.Properties, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "FlattenedProperty", current == null ? default : ((FooProperties)current).OptionalProperty == null ? default : ((FooProperties)current).OptionalProperty.FlattenedProperty, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "VmGalleryApplications", current == null ? default : ((FooProperties)current).VmProfile == null ? default : ((FooProperties)current).VmProfile.ApplicationProfile == null ? default : ((FooProperties)current).VmProfile.ApplicationProfile.GalleryApplications, CreateModel), Models.ModelFactoryPropertyBag.Get<ETag?>(properties, "ETag", current == null ? default : ((FooProperties)current).ETag, CreateModel), Models.ModelFactoryPropertyBag.Get<WritableSubResource>(properties, "WritableSubResourceProp", current == null ? default : ((FooProperties)current).WritableSubResourceProp, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "ComputeFleetVmCapacityReservationGroupId", current == null ? default : ((FooProperties)current).ComputeFleetVmProfile == null ? default : ((FooProperties)current).ComputeFleetVmProfile.CapacityReservation == null ? default : ((FooProperties)current).ComputeFleetVmProfile.CapacityReservation.CapacityReservationGroup == null ? default : ((FooProperties)current).ComputeFleetVmProfile.CapacityReservation.CapacityReservationGroup.Id, CreateModel));
+            }
+            if (modelType == typeof(FooActionRequest))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooActionRequest), new string[] { "Id" });
+                return MgmtTypeSpecTestsModelFactory.FooActionRequest(Models.ModelFactoryPropertyBag.Get<string>(properties, "Id", current == null ? default : ((FooActionRequest)current).Id, CreateModel));
+            }
+            if (modelType == typeof(FooActionResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooActionResult), new string[] { "Msg", "Error" });
+                return MgmtTypeSpecTestsModelFactory.FooActionResult(Models.ModelFactoryPropertyBag.Get<string>(properties, "Msg", current == null ? default : ((FooActionResult)current).Msg, CreateModel), Models.ModelFactoryPropertyBag.Get<ResponseError>(properties, "Error", current == null ? default : ((FooActionResult)current).Error, CreateModel));
+            }
+            if (modelType == typeof(FooDependency))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooDependency), new string[] { "DependencyName", "Version" });
+                return MgmtTypeSpecTestsModelFactory.FooDependency(Models.ModelFactoryPropertyBag.Get<string>(properties, "DependencyName", current == null ? default : ((FooDependency)current).DependencyName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Version", current == null ? default : ((FooDependency)current).Version, CreateModel));
+            }
+            if (modelType == typeof(FooSettingsData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooSettingsData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.FooSettingsData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((FooSettingsData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((FooSettingsData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((FooSettingsData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((FooSettingsData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<FooSettingsProperties>(properties, "Properties", current == null ? default : ((FooSettingsData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(FooSettingsProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooSettingsProperties), new string[] { "Marketplace", "User", "ProvisioningState", "AccessControlEnabled", "MetaDatas" });
+                return MgmtTypeSpecTestsModelFactory.FooSettingsProperties(Models.ModelFactoryPropertyBag.Get<MarketplaceDetails>(properties, "Marketplace", current == null ? default : ((FooSettingsProperties)current).Marketplace, CreateModel), Models.ModelFactoryPropertyBag.Get<UserDetails>(properties, "User", current == null ? default : ((FooSettingsProperties)current).User, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((FooSettingsProperties)current).ProvisioningState, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "AccessControlEnabled", current == null ? default : ((FooSettingsProperties)current).AccessControlEnabled, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "MetaDatas", current == null ? default : ((FooSettingsProperties)current).MetaData == null ? default : ((FooSettingsProperties)current).MetaData.MetaDatas, CreateModel));
+            }
+            if (modelType == typeof(MarketplaceDetails))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(MarketplaceDetails), new string[] { "SubscriptionId", "SubscriptionStatus", "SaasResourceId", "OfferDetails" });
+                return MgmtTypeSpecTestsModelFactory.MarketplaceDetails(Models.ModelFactoryPropertyBag.Get<string>(properties, "SubscriptionId", current == null ? default : ((MarketplaceDetails)current).SubscriptionId, CreateModel), Models.ModelFactoryPropertyBag.Get<MarketplaceSubscriptionStatus?>(properties, "SubscriptionStatus", current == null ? default : ((MarketplaceDetails)current).SubscriptionStatus, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SaasResourceId", current == null ? default : ((MarketplaceDetails)current).SaasResourceId, CreateModel), Models.ModelFactoryPropertyBag.Get<OfferDetails>(properties, "OfferDetails", current == null ? default : ((MarketplaceDetails)current).OfferDetails, CreateModel));
+            }
+            if (modelType == typeof(OfferDetails))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(OfferDetails), new string[] { "PublisherId", "OfferId", "PlanId", "PlanName", "TermUnit", "TermId" });
+                return MgmtTypeSpecTestsModelFactory.OfferDetails(Models.ModelFactoryPropertyBag.Get<string>(properties, "PublisherId", current == null ? default : ((OfferDetails)current).PublisherId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "OfferId", current == null ? default : ((OfferDetails)current).OfferId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "PlanId", current == null ? default : ((OfferDetails)current).PlanId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "PlanName", current == null ? default : ((OfferDetails)current).PlanName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "TermUnit", current == null ? default : ((OfferDetails)current).TermUnit, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "TermId", current == null ? default : ((OfferDetails)current).TermId, CreateModel));
+            }
+            if (modelType == typeof(UserDetails))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(UserDetails), new string[] { "FirstName", "LastName", "EmailAddress", "Upn", "PhoneNumber" });
+                return MgmtTypeSpecTestsModelFactory.UserDetails(Models.ModelFactoryPropertyBag.Get<string>(properties, "FirstName", current == null ? default : ((UserDetails)current).FirstName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "LastName", current == null ? default : ((UserDetails)current).LastName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "EmailAddress", current == null ? default : ((UserDetails)current).EmailAddress, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Upn", current == null ? default : ((UserDetails)current).Upn, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "PhoneNumber", current == null ? default : ((UserDetails)current).PhoneNumber, CreateModel));
+            }
+            if (modelType == typeof(FooConfigurationPatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooConfigurationPatch), new string[] { "Properties" });
+                return MgmtTypeSpecTestsModelFactory.FooConfigurationPatch(Models.ModelFactoryPropertyBag.Get<FooSettingsUpdateProperties>(properties, "Properties", current == null ? default : ((FooConfigurationPatch)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(FooSettingsUpdateProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(FooSettingsUpdateProperties), new string[] { "Marketplace", "User", "AccessControlEnabled" });
+                return MgmtTypeSpecTestsModelFactory.FooSettingsUpdateProperties(Models.ModelFactoryPropertyBag.Get<MarketplaceDetails>(properties, "Marketplace", current == null ? default : ((FooSettingsUpdateProperties)current).Marketplace, CreateModel), Models.ModelFactoryPropertyBag.Get<UserDetails>(properties, "User", current == null ? default : ((FooSettingsUpdateProperties)current).User, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "AccessControlEnabled", current == null ? default : ((FooSettingsUpdateProperties)current).AccessControlEnabled, CreateModel));
+            }
+            if (modelType == typeof(BarData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BarData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.BarData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((BarData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((BarData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((BarData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((BarData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((BarData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((BarData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<BarProperties>(properties, "Properties", current == null ? default : ((BarData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(BarProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BarProperties), new string[] { "ServiceUri", "Something", "BoolValue", "FloatValue", "DoubleValue" });
+                return MgmtTypeSpecTestsModelFactory.BarProperties(Models.ModelFactoryPropertyBag.Get<Uri>(properties, "ServiceUri", current == null ? default : ((BarProperties)current).ServiceUri, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Something", current == null ? default : ((BarProperties)current).Something, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "BoolValue", current == null ? default : ((BarProperties)current).BoolValue, CreateModel), Models.ModelFactoryPropertyBag.Get<float?>(properties, "FloatValue", current == null ? default : ((BarProperties)current).FloatValue, CreateModel), Models.ModelFactoryPropertyBag.Get<double?>(properties, "DoubleValue", current == null ? default : ((BarProperties)current).DoubleValue, CreateModel));
+            }
+            if (modelType == typeof(LimitJsonObject))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(LimitJsonObject), Array.Empty<string>());
+                return LimitJsonObject(default);
+            }
+            if (modelType == typeof(Employee))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(Employee), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.Employee(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((Employee)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((Employee)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((Employee)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((Employee)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((Employee)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((Employee)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<EmployeeProperties>(properties, "Properties", current == null ? default : ((Employee)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(EmployeeProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EmployeeProperties), new string[] { "Age", "City" });
+                return MgmtTypeSpecTestsModelFactory.EmployeeProperties(Models.ModelFactoryPropertyBag.Get<int?>(properties, "Age", current == null ? default : ((EmployeeProperties)current).Age, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "City", current == null ? default : ((EmployeeProperties)current).City, CreateModel));
+            }
+            if (modelType == typeof(BazData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BazData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.BazData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((BazData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((BazData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((BazData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((BazData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((BazData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((BazData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<BazProperties>(properties, "Properties", current == null ? default : ((BazData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(BazProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BazProperties), new string[] { "Something", "BoolValue" });
+                return MgmtTypeSpecTestsModelFactory.BazProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Something", current == null ? default : ((BazProperties)current).Something, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "BoolValue", current == null ? default : ((BazProperties)current).BoolValue, CreateModel));
+            }
+            if (modelType == typeof(ZooData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Something", "RequiredInt", "RequiredFixedEnum", "RequiredExtensibleEnum", "RequiredString", "ExtendedLocation" });
+                return MgmtTypeSpecTestsModelFactory.ZooData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ZooData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ZooData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ZooData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ZooData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((ZooData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((ZooData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Something", current == null ? default : ((ZooData)current).Properties == null ? default : ((ZooData)current).Properties.Something, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "RequiredInt", current == null ? default : ((ZooData)current).Properties == null ? default : ((ZooData)current).Properties.RequiredInt, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooFixedMode?>(properties, "RequiredFixedEnum", current == null ? default : ((ZooData)current).Properties == null ? default : ((ZooData)current).Properties.RequiredFixedEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooProvisioningState?>(properties, "RequiredExtensibleEnum", current == null ? default : ((ZooData)current).Properties == null ? default : ((ZooData)current).Properties.RequiredExtensibleEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "RequiredString", current == null ? default : ((ZooData)current).Properties == null ? default : ((ZooData)current).Properties.RequiredString, CreateModel), Models.ModelFactoryPropertyBag.Get<ExtendedLocation>(properties, "ExtendedLocation", current == null ? default : ((ZooData)current).ExtendedLocation, CreateModel));
+            }
+            if (modelType == typeof(ZooProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooProperties), new string[] { "Something", "RequiredInt", "RequiredFixedEnum", "RequiredExtensibleEnum", "RequiredString" });
+                return MgmtTypeSpecTestsModelFactory.ZooProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Something", current == null ? default : ((ZooProperties)current).Something, CreateModel), Models.ModelFactoryPropertyBag.Get<int>(properties, "RequiredInt", current == null ? default : ((ZooProperties)current).RequiredInt, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooFixedMode>(properties, "RequiredFixedEnum", current == null ? default : ((ZooProperties)current).RequiredFixedEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooProvisioningState>(properties, "RequiredExtensibleEnum", current == null ? default : ((ZooProperties)current).RequiredExtensibleEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "RequiredString", current == null ? default : ((ZooProperties)current).RequiredString, CreateModel));
+            }
+            if (modelType == typeof(ZooPatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooPatch), new string[] { "Tags", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.ZooPatch(Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((ZooPatch)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooUpdateProperties>(properties, "Properties", current == null ? default : ((ZooPatch)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(ZooUpdateProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooUpdateProperties), new string[] { "Something", "RequiredInt", "RequiredFixedEnum", "RequiredExtensibleEnum", "RequiredString" });
+                return MgmtTypeSpecTestsModelFactory.ZooUpdateProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Something", current == null ? default : ((ZooUpdateProperties)current).Something, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "RequiredInt", current == null ? default : ((ZooUpdateProperties)current).RequiredInt, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooFixedMode?>(properties, "RequiredFixedEnum", current == null ? default : ((ZooUpdateProperties)current).RequiredFixedEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<ZooProvisioningState?>(properties, "RequiredExtensibleEnum", current == null ? default : ((ZooUpdateProperties)current).RequiredExtensibleEnum, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "RequiredString", current == null ? default : ((ZooUpdateProperties)current).RequiredString, CreateModel));
+            }
+            if (modelType == typeof(ZooAddressListListResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooAddressListListResult), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.ZooAddressListListResult(Models.ModelFactoryPropertyBag.Get<IEnumerable<SubResource>>(properties, "Value", current == null ? default : ((ZooAddressListListResult)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "NextLink", current == null ? default : ((ZooAddressListListResult)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(ZooRecommendation))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ZooRecommendation), new string[] { "RecommendedValue", "Reason" });
+                return MgmtTypeSpecTestsModelFactory.ZooRecommendation(Models.ModelFactoryPropertyBag.Get<string>(properties, "RecommendedValue", current == null ? default : ((ZooRecommendation)current).RecommendedValue, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Reason", current == null ? default : ((ZooRecommendation)current).Reason, CreateModel));
+            }
+            if (modelType == typeof(IssueTestResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(IssueTestResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.IssueTestResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((IssueTestResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((IssueTestResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((IssueTestResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((IssueTestResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((IssueTestResourceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((IssueTestResourceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<IssueTestBaseProperties>(properties, "Properties", current == null ? default : ((IssueTestResourceData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(IssueTestBaseProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(IssueTestBaseProperties), new string[] { "DisplayName", "InnerValue", "InnerFlag", "Status" });
+                return MgmtTypeSpecTestsModelFactory.IssueTestBaseProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((IssueTestBaseProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "InnerValue", current == null ? default : ((IssueTestBaseProperties)current).NestedConfig == null ? default : ((IssueTestBaseProperties)current).NestedConfig.InnerValue, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "InnerFlag", current == null ? default : ((IssueTestBaseProperties)current).NestedConfig == null ? default : ((IssueTestBaseProperties)current).NestedConfig.InnerFlag, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((IssueTestBaseProperties)current).Status, CreateModel));
+            }
+            if (modelType == typeof(IssueTestResourcePatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(IssueTestResourcePatch), new string[] { "Tags", "DisplayName", "Status", "InnerValue", "InnerFlag", "UpdateOnlyValue" });
+                return MgmtTypeSpecTestsModelFactory.IssueTestResourcePatch(Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((IssueTestResourcePatch)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((IssueTestResourcePatch)current).Properties == null ? default : ((IssueTestResourcePatch)current).Properties.DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((IssueTestResourcePatch)current).Properties == null ? default : ((IssueTestResourcePatch)current).Properties.Status, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "InnerValue", current == null ? default : ((IssueTestResourcePatch)current).Properties == null ? default : ((IssueTestResourcePatch)current).Properties.NestedConfig == null ? default : ((IssueTestResourcePatch)current).Properties.NestedConfig.InnerValue, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "InnerFlag", current == null ? default : ((IssueTestResourcePatch)current).Properties == null ? default : ((IssueTestResourcePatch)current).Properties.NestedConfig == null ? default : ((IssueTestResourcePatch)current).Properties.NestedConfig.InnerFlag, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "UpdateOnlyValue", current == null ? default : ((IssueTestResourcePatch)current).Properties == null ? default : ((IssueTestResourcePatch)current).Properties.UpdateOnlyValue, CreateModel));
+            }
+            if (modelType == typeof(EndpointResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EndpointResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "EndpointProp" });
+                return MgmtTypeSpecTestsModelFactory.EndpointResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((EndpointResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((EndpointResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((EndpointResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((EndpointResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "EndpointProp", current == null ? default : ((EndpointResourceData)current).Properties == null ? default : ((EndpointResourceData)current).Properties.Prop, CreateModel));
+            }
+            if (modelType == typeof(SelfHelpResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SelfHelpResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "SelfHelpId" });
+                return MgmtTypeSpecTestsModelFactory.SelfHelpResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SelfHelpResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SelfHelpResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SelfHelpResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SelfHelpResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SelfHelpId", current == null ? default : ((SelfHelpResourceData)current).Properties == null ? default : ((SelfHelpResourceData)current).Properties.SelfHelpId, CreateModel));
+            }
+            if (modelType == typeof(CheckNameAvailabilityRequest))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CheckNameAvailabilityRequest), new string[] { "Name", "Type" });
+                return MgmtTypeSpecTestsModelFactory.CheckNameAvailabilityRequest(Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((CheckNameAvailabilityRequest)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((CheckNameAvailabilityRequest)current).Type, CreateModel));
+            }
+            if (modelType == typeof(CheckNameAvailabilityResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CheckNameAvailabilityResult), new string[] { "NameAvailable", "Reason", "Message" });
+                return MgmtTypeSpecTestsModelFactory.CheckNameAvailabilityResult(Models.ModelFactoryPropertyBag.Get<bool>(properties, "NameAvailable", current == null ? default : ((CheckNameAvailabilityResult)current).NameAvailable, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Reason", current == null ? default : ((CheckNameAvailabilityResult)current).Reason, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Message", current == null ? default : ((CheckNameAvailabilityResult)current).Message, CreateModel));
+            }
+            if (modelType == typeof(PlaywrightQuotaData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PlaywrightQuotaData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.PlaywrightQuotaData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((PlaywrightQuotaData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((PlaywrightQuotaData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((PlaywrightQuotaData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((PlaywrightQuotaData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<PlaywrightQuotaProperties>(properties, "Properties", current == null ? default : ((PlaywrightQuotaData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(PlaywrightQuotaProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PlaywrightQuotaProperties), new string[] { "FreeTrial", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.PlaywrightQuotaProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "FreeTrial", current == null ? default : ((PlaywrightQuotaProperties)current).FreeTrial, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ProvisioningState", current == null ? default : ((PlaywrightQuotaProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(JobResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(JobResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "JobName" });
+                return MgmtTypeSpecTestsModelFactory.JobResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((JobResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((JobResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((JobResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((JobResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((JobResourceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((JobResourceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "JobName", current == null ? default : ((JobResourceData)current).Properties == null ? default : ((JobResourceData)current).Properties.JobName, CreateModel));
+            }
+            if (modelType == typeof(JobResourceCustomUpdate))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(JobResourceCustomUpdate), new string[] { "JobName", "Tags" });
+                return MgmtTypeSpecTestsModelFactory.JobResourceCustomUpdate(Models.ModelFactoryPropertyBag.Get<string>(properties, "JobName", current == null ? default : ((JobResourceCustomUpdate)current).Properties == null ? default : ((JobResourceCustomUpdate)current).Properties.JobName, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((JobResourceCustomUpdate)current).Tags, CreateModel));
+            }
+            if (modelType == typeof(HciVmInstanceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(HciVmInstanceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "HciVmInstanceSku" });
+                return MgmtTypeSpecTestsModelFactory.HciVmInstanceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((HciVmInstanceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((HciVmInstanceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((HciVmInstanceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((HciVmInstanceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "HciVmInstanceSku", current == null ? default : ((HciVmInstanceData)current).Properties == null ? default : ((HciVmInstanceData)current).Properties.Sku, CreateModel));
+            }
+            if (modelType == typeof(GroupQuotaSubscriptionRequestStatusData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GroupQuotaSubscriptionRequestStatusData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.GroupQuotaSubscriptionRequestStatusData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((GroupQuotaSubscriptionRequestStatusData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((GroupQuotaSubscriptionRequestStatusData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((GroupQuotaSubscriptionRequestStatusData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((GroupQuotaSubscriptionRequestStatusData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<GroupQuotaLimitProperties>(properties, "Properties", current == null ? default : ((GroupQuotaSubscriptionRequestStatusData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(GroupQuotaLimitProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GroupQuotaLimitProperties), new string[] { "ResourceName", "Limit", "Comment", "Unit", "AvailableLimit", "AllocatedToSubscriptionsValue" });
+                return MgmtTypeSpecTestsModelFactory.GroupQuotaLimitProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "ResourceName", current == null ? default : ((GroupQuotaLimitProperties)current).ResourceName, CreateModel), Models.ModelFactoryPropertyBag.Get<long?>(properties, "Limit", current == null ? default : ((GroupQuotaLimitProperties)current).Limit, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Comment", current == null ? default : ((GroupQuotaLimitProperties)current).Comment, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Unit", current == null ? default : ((GroupQuotaLimitProperties)current).Unit, CreateModel), Models.ModelFactoryPropertyBag.Get<long?>(properties, "AvailableLimit", current == null ? default : ((GroupQuotaLimitProperties)current).AvailableLimit, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<AllocatedToSubscription>>(properties, "AllocatedToSubscriptionsValue", current == null ? default : ((GroupQuotaLimitProperties)current).AllocatedToSubscriptions == null ? default : ((GroupQuotaLimitProperties)current).AllocatedToSubscriptions.Value, CreateModel));
+            }
+            if (modelType == typeof(GroupQuotaDetails))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GroupQuotaDetails), new string[] { "ResourceName", "Limit", "Comment", "Unit", "AvailableLimit", "AllocatedToSubscriptionsValue" });
+                return MgmtTypeSpecTestsModelFactory.GroupQuotaDetails(Models.ModelFactoryPropertyBag.Get<string>(properties, "ResourceName", current == null ? default : ((GroupQuotaDetails)current).ResourceName, CreateModel), Models.ModelFactoryPropertyBag.Get<long?>(properties, "Limit", current == null ? default : ((GroupQuotaDetails)current).Limit, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Comment", current == null ? default : ((GroupQuotaDetails)current).Comment, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Unit", current == null ? default : ((GroupQuotaDetails)current).Unit, CreateModel), Models.ModelFactoryPropertyBag.Get<long?>(properties, "AvailableLimit", current == null ? default : ((GroupQuotaDetails)current).AvailableLimit, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<AllocatedToSubscription>>(properties, "AllocatedToSubscriptionsValue", current == null ? default : ((GroupQuotaDetails)current).AllocatedToSubscriptions == null ? default : ((GroupQuotaDetails)current).AllocatedToSubscriptions.Value, CreateModel));
+            }
+            if (modelType == typeof(AllocatedToSubscription))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(AllocatedToSubscription), new string[] { "SubscriptionId", "QuotaAllocated" });
+                return MgmtTypeSpecTestsModelFactory.AllocatedToSubscription(Models.ModelFactoryPropertyBag.Get<string>(properties, "SubscriptionId", current == null ? default : ((AllocatedToSubscription)current).SubscriptionId, CreateModel), Models.ModelFactoryPropertyBag.Get<long?>(properties, "QuotaAllocated", current == null ? default : ((AllocatedToSubscription)current).QuotaAllocated, CreateModel));
+            }
+            if (modelType == typeof(SubscriptionQuotaAllocationsListData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SubscriptionQuotaAllocationsListData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.SubscriptionQuotaAllocationsListData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SubscriptionQuotaAllocationsListData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SubscriptionQuotaAllocationsListData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SubscriptionQuotaAllocationsListData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SubscriptionQuotaAllocationsListData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<SubscriptionQuotaAllocationsListProperties>(properties, "Properties", current == null ? default : ((SubscriptionQuotaAllocationsListData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(SubscriptionQuotaAllocationsListProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SubscriptionQuotaAllocationsListProperties), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.SubscriptionQuotaAllocationsListProperties(Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "Value", current == null ? default : ((SubscriptionQuotaAllocationsListProperties)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "NextLink", current == null ? default : ((SubscriptionQuotaAllocationsListProperties)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(QueryNetworkSiblingSetRequest))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(QueryNetworkSiblingSetRequest), new string[] { "Location", "SubscriptionId" });
+                return MgmtTypeSpecTestsModelFactory.QueryNetworkSiblingSetRequest(Models.ModelFactoryPropertyBag.Get<string>(properties, "Location", current == null ? default : ((QueryNetworkSiblingSetRequest)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SubscriptionId", current == null ? default : ((QueryNetworkSiblingSetRequest)current).SubscriptionId, CreateModel));
+            }
+            if (modelType == typeof(NetworkSiblingSet))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(NetworkSiblingSet), new string[] { "Id", "Name", "Type", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.NetworkSiblingSet(Models.ModelFactoryPropertyBag.Get<string>(properties, "Id", current == null ? default : ((NetworkSiblingSet)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((NetworkSiblingSet)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((NetworkSiblingSet)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<NetworkSiblingSetProperties>(properties, "Properties", current == null ? default : ((NetworkSiblingSet)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(NetworkSiblingSetProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(NetworkSiblingSetProperties), new string[] { "Siblings", "Status" });
+                return MgmtTypeSpecTestsModelFactory.NetworkSiblingSetProperties(Models.ModelFactoryPropertyBag.Get<IEnumerable<NetworkSibling>>(properties, "Siblings", current == null ? default : ((NetworkSiblingSetProperties)current).Siblings, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((NetworkSiblingSetProperties)current).Status, CreateModel));
+            }
+            if (modelType == typeof(NetworkSibling))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(NetworkSibling), new string[] { "SubscriptionId", "ResourceGroupName", "NetworkInterfaceId" });
+                return MgmtTypeSpecTestsModelFactory.NetworkSibling(Models.ModelFactoryPropertyBag.Get<string>(properties, "SubscriptionId", current == null ? default : ((NetworkSibling)current).SubscriptionId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ResourceGroupName", current == null ? default : ((NetworkSibling)current).ResourceGroupName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "NetworkInterfaceId", current == null ? default : ((NetworkSibling)current).NetworkInterfaceId, CreateModel));
+            }
+            if (modelType == typeof(JooData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(JooData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.JooData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((JooData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((JooData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((JooData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((JooData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((JooData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((JooData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<JooProperties>(properties, "Properties", current == null ? default : ((JooData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(JooProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(JooProperties), new string[] { "Name", "PredictionInputHistoricalData" });
+                return MgmtTypeSpecTestsModelFactory.JooProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((JooProperties)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<long>>(properties, "PredictionInputHistoricalData", current == null ? default : ((JooProperties)current).Prediction == null ? default : ((JooProperties)current).Prediction.PredictionInput == null ? default : ((JooProperties)current).Prediction.PredictionInput.HistoricalData, CreateModel));
+            }
+            if (modelType == typeof(SAPVirtualInstanceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SAPVirtualInstanceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "SAPVirtualInstanceName" });
+                return MgmtTypeSpecTestsModelFactory.SAPVirtualInstanceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SAPVirtualInstanceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SAPVirtualInstanceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SAPVirtualInstanceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SAPVirtualInstanceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SAPVirtualInstanceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((SAPVirtualInstanceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SAPVirtualInstanceName", current == null ? default : ((SAPVirtualInstanceData)current).Properties == null ? default : ((SAPVirtualInstanceData)current).Properties.Name, CreateModel));
+            }
+            if (modelType == typeof(SAPAvailabilityZoneDetailsRequest))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SAPAvailabilityZoneDetailsRequest), new string[] { "PreferredAvailabilityZone" });
+                return MgmtTypeSpecTestsModelFactory.SAPAvailabilityZoneDetailsRequest(Models.ModelFactoryPropertyBag.Get<string>(properties, "PreferredAvailabilityZone", current == null ? default : ((SAPAvailabilityZoneDetailsRequest)current).PreferredAvailabilityZone, CreateModel));
+            }
+            if (modelType == typeof(SAPAvailabilityZoneDetailsResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SAPAvailabilityZoneDetailsResult), new string[] { "RecommendedAvailabilityZonePair" });
+                return MgmtTypeSpecTestsModelFactory.SAPAvailabilityZoneDetailsResult(Models.ModelFactoryPropertyBag.Get<string>(properties, "RecommendedAvailabilityZonePair", current == null ? default : ((SAPAvailabilityZoneDetailsResult)current).RecommendedAvailabilityZonePair, CreateModel));
+            }
+            if (modelType == typeof(BestPracticeData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BestPracticeData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties", "ExtendedLocation" });
+                return MgmtTypeSpecTestsModelFactory.BestPracticeData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((BestPracticeData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((BestPracticeData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((BestPracticeData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((BestPracticeData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<BestPracticeProperties>(properties, "Properties", current == null ? default : ((BestPracticeData)current).Properties, CreateModel), Models.ModelFactoryPropertyBag.Get<ExtendedLocationOptionalModel>(properties, "ExtendedLocation", current == null ? default : ((BestPracticeData)current).ExtendedLocation, CreateModel));
+            }
+            if (modelType == typeof(BestPracticeProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BestPracticeProperties), new string[] { "ProvisioningState", "Description" });
+                return MgmtTypeSpecTestsModelFactory.BestPracticeProperties(Models.ModelFactoryPropertyBag.Get<ResourceProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((BestPracticeProperties)current).ProvisioningState, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((BestPracticeProperties)current).Description, CreateModel));
+            }
+            if (modelType == typeof(ExtendedLocationOptionalModel))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ExtendedLocationOptionalModel), new string[] { "Name", "Type" });
+                return MgmtTypeSpecTestsModelFactory.ExtendedLocationOptionalModel(Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ExtendedLocationOptionalModel)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ExtendedLocationType?>(properties, "Type", current == null ? default : ((ExtendedLocationOptionalModel)current).Type, CreateModel));
+            }
+            if (modelType == typeof(BestPracticeUpdate))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BestPracticeUpdate), new string[] { "BestPracticeUpdateDescription" });
+                return MgmtTypeSpecTestsModelFactory.BestPracticeUpdate(Models.ModelFactoryPropertyBag.Get<string>(properties, "BestPracticeUpdateDescription", current == null ? default : ((BestPracticeUpdate)current).Properties == null ? default : ((BestPracticeUpdate)current).Properties.Description, CreateModel));
+            }
+            if (modelType == typeof(ResourceTypeTestResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ResourceTypeTestResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.ResourceTypeTestResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ResourceTypeTestResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ResourceTypeTestResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ResourceTypeTestResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ResourceTypeTestResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((ResourceTypeTestResourceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((ResourceTypeTestResourceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceTypeTestProperties>(properties, "Properties", current == null ? default : ((ResourceTypeTestResourceData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(ResourceTypeTestProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ResourceTypeTestProperties), new string[] { "OptionalResourceType", "Status" });
+                return MgmtTypeSpecTestsModelFactory.ResourceTypeTestProperties(Models.ModelFactoryPropertyBag.Get<ResourceType?>(properties, "OptionalResourceType", current == null ? default : ((ResourceTypeTestProperties)current).OptionalResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((ResourceTypeTestProperties)current).Status, CreateModel));
+            }
+            if (modelType == typeof(SampleData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SampleData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.SampleData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SampleData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SampleData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SampleData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SampleData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SampleData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((SampleData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<SampleDataProperties>(properties, "Properties", current == null ? default : ((SampleData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(SampleDataProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SampleDataProperties), new string[] { "SampleValue", "AnotherValue" });
+                return MgmtTypeSpecTestsModelFactory.SampleDataProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "SampleValue", current == null ? default : ((SampleDataProperties)current).SampleValue, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "AnotherValue", current == null ? default : ((SampleDataProperties)current).AnotherValue, CreateModel));
+            }
+            if (modelType == typeof(ScheduledActionResources))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ScheduledActionResources), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.ScheduledActionResources(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ScheduledActionResources)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ScheduledActionResources)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ScheduledActionResources)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ScheduledActionResources)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<ScheduledActionsExtensionProperties>(properties, "Properties", current == null ? default : ((ScheduledActionResources)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(ScheduledActionsExtensionProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ScheduledActionsExtensionProperties), new string[] { "ActionId", "Status" });
+                return MgmtTypeSpecTestsModelFactory.ScheduledActionsExtensionProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "ActionId", current == null ? default : ((ScheduledActionsExtensionProperties)current).ActionId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((ScheduledActionsExtensionProperties)current).Status, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworksData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworksData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworksData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((WorkloadNetworksData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((WorkloadNetworksData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((WorkloadNetworksData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((WorkloadNetworksData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((WorkloadNetworksData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((WorkloadNetworksData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<WorkloadNetworksProperties>(properties, "Properties", current == null ? default : ((WorkloadNetworksData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworksProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworksProperties), new string[] { "DisplayName", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworksProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((WorkloadNetworksProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ProvisioningState", current == null ? default : ((WorkloadNetworksProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworkVmGroupData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworkVmGroupData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworkVmGroupData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((WorkloadNetworkVmGroupData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((WorkloadNetworkVmGroupData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((WorkloadNetworkVmGroupData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((WorkloadNetworkVmGroupData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((WorkloadNetworkVmGroupData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((WorkloadNetworkVmGroupData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<WorkloadNetworkVmGroupProperties>(properties, "Properties", current == null ? default : ((WorkloadNetworkVmGroupData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworkVmGroupProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworkVmGroupProperties), new string[] { "DisplayName", "Members", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworkVmGroupProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((WorkloadNetworkVmGroupProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "Members", current == null ? default : ((WorkloadNetworkVmGroupProperties)current).Members, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ProvisioningState", current == null ? default : ((WorkloadNetworkVmGroupProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworkSegmentData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworkSegmentData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworkSegmentData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((WorkloadNetworkSegmentData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((WorkloadNetworkSegmentData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((WorkloadNetworkSegmentData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((WorkloadNetworkSegmentData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((WorkloadNetworkSegmentData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((WorkloadNetworkSegmentData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<WorkloadNetworkSegmentProperties>(properties, "Properties", current == null ? default : ((WorkloadNetworkSegmentData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(WorkloadNetworkSegmentProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(WorkloadNetworkSegmentProperties), new string[] { "DisplayName", "ConnectedGateway", "Subnet", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.WorkloadNetworkSegmentProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((WorkloadNetworkSegmentProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ConnectedGateway", current == null ? default : ((WorkloadNetworkSegmentProperties)current).ConnectedGateway, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Subnet", current == null ? default : ((WorkloadNetworkSegmentProperties)current).Subnet, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ProvisioningState", current == null ? default : ((WorkloadNetworkSegmentProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(TargetData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TargetData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties", "Location" });
+                return MgmtTypeSpecTestsModelFactory.TargetData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TargetData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TargetData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((TargetData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((TargetData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, BinaryData>>(properties, "Properties", current == null ? default : ((TargetData)current).Properties, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation?>(properties, "Location", current == null ? default : ((TargetData)current).Location, CreateModel));
+            }
+            if (modelType == typeof(ClusterData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ClusterData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "HighAvailability", "MinimumTlsVersion", "HostName", "ProvisioningState", "RedundancyMode", "ResourceState", "RedisVersion", "PrivateEndpointConnections", "CustomerManagedKeyEncryption", "MaintenanceWindows", "PublicNetworkAccess" });
+                return MgmtTypeSpecTestsModelFactory.ClusterData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ClusterData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ClusterData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ClusterData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ClusterData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((ClusterData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((ClusterData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<HighAvailability?>(properties, "HighAvailability", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.HighAvailability, CreateModel), Models.ModelFactoryPropertyBag.Get<TlsVersion?>(properties, "MinimumTlsVersion", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.MinimumTlsVersion, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "HostName", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.HostName, CreateModel), Models.ModelFactoryPropertyBag.Get<ProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.ProvisioningState, CreateModel), Models.ModelFactoryPropertyBag.Get<RedundancyMode?>(properties, "RedundancyMode", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.RedundancyMode, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceState?>(properties, "ResourceState", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.ResourceState, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "RedisVersion", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.RedisVersion, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<RedisPrivateEndpointConnection>>(properties, "PrivateEndpointConnections", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.PrivateEndpointConnections, CreateModel), Models.ModelFactoryPropertyBag.Get<CustomerManagedKeyEncryption>(properties, "CustomerManagedKeyEncryption", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.Encryption == null ? default : ((ClusterData)current).Properties.Encryption.CustomerManagedKeyEncryption, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<MaintenanceWindow>>(properties, "MaintenanceWindows", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.MaintenanceConfiguration == null ? default : ((ClusterData)current).Properties.MaintenanceConfiguration.MaintenanceWindows, CreateModel), Models.ModelFactoryPropertyBag.Get<PublicNetworkAccess?>(properties, "PublicNetworkAccess", current == null ? default : ((ClusterData)current).Properties == null ? default : ((ClusterData)current).Properties.PublicNetworkAccess, CreateModel));
+            }
+            if (modelType == typeof(CustomerManagedKeyEncryption))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CustomerManagedKeyEncryption), new string[] { "KeyEncryptionKeyIdentity", "KeyEncryptionKeyUri" });
+                return MgmtTypeSpecTestsModelFactory.CustomerManagedKeyEncryption(Models.ModelFactoryPropertyBag.Get<KeyEncryptionKeyIdentity>(properties, "KeyEncryptionKeyIdentity", current == null ? default : ((CustomerManagedKeyEncryption)current).KeyEncryptionKeyIdentity, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "KeyEncryptionKeyUri", current == null ? default : ((CustomerManagedKeyEncryption)current).KeyEncryptionKeyUri, CreateModel));
+            }
+            if (modelType == typeof(KeyEncryptionKeyIdentity))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(KeyEncryptionKeyIdentity), new string[] { "UserAssignedIdentityResourceId", "IdentityType" });
+                return MgmtTypeSpecTestsModelFactory.KeyEncryptionKeyIdentity(Models.ModelFactoryPropertyBag.Get<string>(properties, "UserAssignedIdentityResourceId", current == null ? default : ((KeyEncryptionKeyIdentity)current).UserAssignedIdentityResourceId, CreateModel), Models.ModelFactoryPropertyBag.Get<CmkIdentityType?>(properties, "IdentityType", current == null ? default : ((KeyEncryptionKeyIdentity)current).IdentityType, CreateModel));
+            }
+            if (modelType == typeof(MaintenanceWindow))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(MaintenanceWindow), new string[] { "DayOfWeek", "StartHour", "Duration" });
+                return MgmtTypeSpecTestsModelFactory.MaintenanceWindow(Models.ModelFactoryPropertyBag.Get<DayOfWeek?>(properties, "DayOfWeek", current == null ? default : ((MaintenanceWindow)current).DayOfWeek, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "StartHour", current == null ? default : ((MaintenanceWindow)current).StartHour, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "Duration", current == null ? default : ((MaintenanceWindow)current).Duration, CreateModel));
+            }
+            if (modelType == typeof(RedisPrivateEndpointConnection))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(RedisPrivateEndpointConnection), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.RedisPrivateEndpointConnection(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((RedisPrivateEndpointConnection)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((RedisPrivateEndpointConnection)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((RedisPrivateEndpointConnection)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((RedisPrivateEndpointConnection)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<RedisPrivateEndpointConnectionProperties>(properties, "Properties", current == null ? default : ((RedisPrivateEndpointConnection)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(RedisPrivateEndpointConnectionProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(RedisPrivateEndpointConnectionProperties), new string[] { "PrivateEndpointId", "PrivateLinkServiceConnectionState", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.RedisPrivateEndpointConnectionProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "PrivateEndpointId", current == null ? default : ((RedisPrivateEndpointConnectionProperties)current).PrivateEndpoint == null ? default : ((RedisPrivateEndpointConnectionProperties)current).PrivateEndpoint.Id, CreateModel), Models.ModelFactoryPropertyBag.Get<RedisPrivateLinkServiceConnectionState>(properties, "PrivateLinkServiceConnectionState", current == null ? default : ((RedisPrivateEndpointConnectionProperties)current).PrivateLinkServiceConnectionState, CreateModel), Models.ModelFactoryPropertyBag.Get<ProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((RedisPrivateEndpointConnectionProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(RedisPrivateLinkServiceConnectionState))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(RedisPrivateLinkServiceConnectionState), new string[] { "Status", "Description", "ActionsRequired" });
+                return MgmtTypeSpecTestsModelFactory.RedisPrivateLinkServiceConnectionState(Models.ModelFactoryPropertyBag.Get<RedisPrivateEndpointServiceConnectionStatus?>(properties, "Status", current == null ? default : ((RedisPrivateLinkServiceConnectionState)current).Status, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((RedisPrivateLinkServiceConnectionState)current).Description, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ActionsRequired", current == null ? default : ((RedisPrivateLinkServiceConnectionState)current).ActionsRequired, CreateModel));
+            }
+            if (modelType == typeof(DuplicatePropertyTestData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(DuplicatePropertyTestData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "BaseOnlyProperty", "OverridableProperty" });
+                return MgmtTypeSpecTestsModelFactory.DuplicatePropertyTestData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((DuplicatePropertyTestData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((DuplicatePropertyTestData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((DuplicatePropertyTestData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((DuplicatePropertyTestData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((DuplicatePropertyTestData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((DuplicatePropertyTestData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "BaseOnlyProperty", current == null ? default : ((DuplicatePropertyTestData)current).Properties == null ? default : ((DuplicatePropertyTestData)current).Properties.BaseOnlyProperty, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "OverridableProperty", current == null ? default : ((DuplicatePropertyTestData)current).Properties == null ? default : ((DuplicatePropertyTestData)current).Properties.OverridableProperty, CreateModel));
+            }
+            if (modelType == typeof(ServiceGroupSiteData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ServiceGroupSiteData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.ServiceGroupSiteData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ServiceGroupSiteData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ServiceGroupSiteData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ServiceGroupSiteData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ServiceGroupSiteData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<ServiceGroupSiteProperties>(properties, "Properties", current == null ? default : ((ServiceGroupSiteData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(ServiceGroupSiteProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ServiceGroupSiteProperties), new string[] { "DisplayName", "Description", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.ServiceGroupSiteProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((ServiceGroupSiteProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((ServiceGroupSiteProperties)current).Description, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((ServiceGroupSiteProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(TrafficProfileData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficProfileData), new string[] { "Id", "Name", "Type", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.TrafficProfileData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TrafficProfileData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TrafficProfileData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((TrafficProfileData)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((TrafficProfileData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Location", current == null ? default : ((TrafficProfileData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<TrafficProfileProperties>(properties, "Properties", current == null ? default : ((TrafficProfileData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(TrafficProfileProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficProfileProperties), new string[] { "ProfileStatus", "TrafficRoutingMethod" });
+                return MgmtTypeSpecTestsModelFactory.TrafficProfileProperties(Models.ModelFactoryPropertyBag.Get<TrafficProfileStatus?>(properties, "ProfileStatus", current == null ? default : ((TrafficProfileProperties)current).ProfileStatus, CreateModel), Models.ModelFactoryPropertyBag.Get<TrafficRoutingMethod?>(properties, "TrafficRoutingMethod", current == null ? default : ((TrafficProfileProperties)current).TrafficRoutingMethod, CreateModel));
+            }
+            if (modelType == typeof(TrafficTrackedResource))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficTrackedResource), new string[] { "Id", "Name", "Type", "Tags", "Location" });
+                return MgmtTypeSpecTestsModelFactory.TrafficTrackedResource(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TrafficTrackedResource)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TrafficTrackedResource)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((TrafficTrackedResource)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((TrafficTrackedResource)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Location", current == null ? default : ((TrafficTrackedResource)current).Location, CreateModel));
+            }
+            if (modelType == typeof(TrafficResource))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficResource), new string[] { "Id", "Name", "Type" });
+                return MgmtTypeSpecTestsModelFactory.TrafficResource(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TrafficResource)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TrafficResource)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((TrafficResource)current).Type, CreateModel));
+            }
+            if (modelType == typeof(TrafficEndpointData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficEndpointData), new string[] { "Id", "Name", "Type", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.TrafficEndpointData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TrafficEndpointData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TrafficEndpointData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((TrafficEndpointData)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<TrafficEndpointProperties>(properties, "Properties", current == null ? default : ((TrafficEndpointData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(TrafficEndpointProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficEndpointProperties), new string[] { "TargetResourceId", "Target", "EndpointStatus", "Weight", "Priority", "EndpointLocation" });
+                return MgmtTypeSpecTestsModelFactory.TrafficEndpointProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "TargetResourceId", current == null ? default : ((TrafficEndpointProperties)current).TargetResourceId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Target", current == null ? default : ((TrafficEndpointProperties)current).Target, CreateModel), Models.ModelFactoryPropertyBag.Get<TrafficEndpointStatus?>(properties, "EndpointStatus", current == null ? default : ((TrafficEndpointProperties)current).EndpointStatus, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "Weight", current == null ? default : ((TrafficEndpointProperties)current).Weight, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "Priority", current == null ? default : ((TrafficEndpointProperties)current).Priority, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "EndpointLocation", current == null ? default : ((TrafficEndpointProperties)current).EndpointLocation, CreateModel));
+            }
+            if (modelType == typeof(TrafficProxyResource))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TrafficProxyResource), new string[] { "Id", "Name", "Type" });
+                return MgmtTypeSpecTestsModelFactory.TrafficProxyResource(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TrafficProxyResource)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TrafficProxyResource)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((TrafficProxyResource)current).Type, CreateModel));
+            }
+            if (modelType == typeof(VmConfigurationAssignmentData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(VmConfigurationAssignmentData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.VmConfigurationAssignmentData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((VmConfigurationAssignmentData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((VmConfigurationAssignmentData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((VmConfigurationAssignmentData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((VmConfigurationAssignmentData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<VmConfigurationAssignmentProperties>(properties, "Properties", current == null ? default : ((VmConfigurationAssignmentData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(VmConfigurationAssignmentProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(VmConfigurationAssignmentProperties), new string[] { "ConfigurationName", "ComplianceStatus" });
+                return MgmtTypeSpecTestsModelFactory.VmConfigurationAssignmentProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "ConfigurationName", current == null ? default : ((VmConfigurationAssignmentProperties)current).ConfigurationName, CreateModel), Models.ModelFactoryPropertyBag.Get<VmConfigurationAssignmentPropertiesComplianceStatus?>(properties, "ComplianceStatus", current == null ? default : ((VmConfigurationAssignmentProperties)current).ComplianceStatus, CreateModel));
+            }
+            if (modelType == typeof(HcrpConfigurationAssignmentData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(HcrpConfigurationAssignmentData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.HcrpConfigurationAssignmentData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((HcrpConfigurationAssignmentData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((HcrpConfigurationAssignmentData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((HcrpConfigurationAssignmentData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((HcrpConfigurationAssignmentData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<HcrpConfigurationAssignmentProperties>(properties, "Properties", current == null ? default : ((HcrpConfigurationAssignmentData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(HcrpConfigurationAssignmentProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(HcrpConfigurationAssignmentProperties), new string[] { "ConfigurationName", "MachineComplianceStatus" });
+                return MgmtTypeSpecTestsModelFactory.HcrpConfigurationAssignmentProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "ConfigurationName", current == null ? default : ((HcrpConfigurationAssignmentProperties)current).ConfigurationName, CreateModel), Models.ModelFactoryPropertyBag.Get<HcrpConfigurationAssignmentPropertiesMachineComplianceStatus?>(properties, "MachineComplianceStatus", current == null ? default : ((HcrpConfigurationAssignmentProperties)current).MachineComplianceStatus, CreateModel));
+            }
+            if (modelType == typeof(PolicyAssignmentData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PolicyAssignmentData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.PolicyAssignmentData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((PolicyAssignmentData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((PolicyAssignmentData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((PolicyAssignmentData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((PolicyAssignmentData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<PolicyAssignmentProperties>(properties, "Properties", current == null ? default : ((PolicyAssignmentData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(PolicyAssignmentProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PolicyAssignmentProperties), new string[] { "DisplayName", "Description" });
+                return MgmtTypeSpecTestsModelFactory.PolicyAssignmentProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((PolicyAssignmentProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((PolicyAssignmentProperties)current).Description, CreateModel));
+            }
+            if (modelType == typeof(DeleteFinalResultTestData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(DeleteFinalResultTestData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "DeleteFinalResultTestMarker" });
+                return MgmtTypeSpecTestsModelFactory.DeleteFinalResultTestData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((DeleteFinalResultTestData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((DeleteFinalResultTestData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((DeleteFinalResultTestData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((DeleteFinalResultTestData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((DeleteFinalResultTestData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((DeleteFinalResultTestData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "DeleteFinalResultTestMarker", current == null ? default : ((DeleteFinalResultTestData)current).Properties == null ? default : ((DeleteFinalResultTestData)current).Properties.Marker, CreateModel));
+            }
+            if (modelType == typeof(CustomBaseTypeResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CustomBaseTypeResourceData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "CustomBaseTypeResourceDescription" });
+                return MgmtTypeSpecTestsModelFactory.CustomBaseTypeResourceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((CustomBaseTypeResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((CustomBaseTypeResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((CustomBaseTypeResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((CustomBaseTypeResourceData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((CustomBaseTypeResourceData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((CustomBaseTypeResourceData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "CustomBaseTypeResourceDescription", current == null ? default : ((CustomBaseTypeResourceData)current).Properties == null ? default : ((CustomBaseTypeResourceData)current).Properties.Description, CreateModel));
+            }
+            if (modelType == typeof(TestCertificateData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TestCertificateData), new string[] { "Id", "Name", "ResourceType", "SystemData", "TestCertificateThumbprint" });
+                return MgmtTypeSpecTestsModelFactory.TestCertificateData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TestCertificateData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TestCertificateData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((TestCertificateData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((TestCertificateData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "TestCertificateThumbprint", current == null ? default : ((TestCertificateData)current).Properties == null ? default : ((TestCertificateData)current).Properties.Thumbprint, CreateModel));
+            }
+            if (modelType == typeof(TestCertificateCreateOrUpdateContent))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TestCertificateCreateOrUpdateContent), new string[] { "Properties" });
+                return MgmtTypeSpecTestsModelFactory.TestCertificateCreateOrUpdateContent(Models.ModelFactoryPropertyBag.Get<TestCertificateCreateOrUpdateProperties>(properties, "Properties", current == null ? default : ((TestCertificateCreateOrUpdateContent)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(TestCertificateCreateOrUpdateProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TestCertificateCreateOrUpdateProperties), new string[] { "ThumbprintAlgorithm", "ThumbprintString" });
+                return MgmtTypeSpecTestsModelFactory.TestCertificateCreateOrUpdateProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "ThumbprintAlgorithm", current == null ? default : ((TestCertificateCreateOrUpdateProperties)current).ThumbprintAlgorithm, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ThumbprintString", current == null ? default : ((TestCertificateCreateOrUpdateProperties)current).ThumbprintString, CreateModel));
+            }
+            if (modelType == typeof(SharedConfigData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SharedConfigData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.SharedConfigData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SharedConfigData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SharedConfigData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SharedConfigData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SharedConfigData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SharedConfigData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((SharedConfigData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<SharedConfigProperties>(properties, "Properties", current == null ? default : ((SharedConfigData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(SharedConfigProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SharedConfigProperties), new string[] { "DisplayName", "Description", "ProvisioningState" });
+                return MgmtTypeSpecTestsModelFactory.SharedConfigProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "DisplayName", current == null ? default : ((SharedConfigProperties)current).DisplayName, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((SharedConfigProperties)current).Description, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceProvisioningState?>(properties, "ProvisioningState", current == null ? default : ((SharedConfigProperties)current).ProvisioningState, CreateModel));
+            }
+            if (modelType == typeof(ContainerItemLikeListResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ContainerItemLikeListResult), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.ContainerItemLikeListResult(Models.ModelFactoryPropertyBag.Get<IEnumerable<ContainerItemLike>>(properties, "Value", current == null ? default : ((ContainerItemLikeListResult)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "NextLink", current == null ? default : ((ContainerItemLikeListResult)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(ContainerItemLike))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(ContainerItemLike), new string[] { "Id", "Name", "ResourceType", "SystemData", "ETag", "ContainerItemLikeSomething" });
+                return MgmtTypeSpecTestsModelFactory.ContainerItemLike(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((ContainerItemLike)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((ContainerItemLike)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((ContainerItemLike)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((ContainerItemLike)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ETag", current == null ? default : ((ContainerItemLike)current).ETag, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ContainerItemLikeSomething", current == null ? default : ((ContainerItemLike)current).Properties == null ? default : ((ContainerItemLike)current).Properties.Something, CreateModel));
+            }
+            if (modelType == typeof(EntityResourceLike))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EntityResourceLike), new string[] { "Id", "Name", "ResourceType", "SystemData", "ETag" });
+                return MgmtTypeSpecTestsModelFactory.EntityResourceLike(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((EntityResourceLike)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((EntityResourceLike)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((EntityResourceLike)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((EntityResourceLike)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ETag", current == null ? default : ((EntityResourceLike)current).ETag, CreateModel));
+            }
+            if (modelType == typeof(SharedParamReproListResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SharedParamReproListResult), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.SharedParamReproListResult(Models.ModelFactoryPropertyBag.Get<IEnumerable<DerivedPatch>>(properties, "Value", current == null ? default : ((SharedParamReproListResult)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "NextLink", current == null ? default : ((SharedParamReproListResult)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(DerivedPatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(DerivedPatch), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "DerivedProp" });
+                return MgmtTypeSpecTestsModelFactory.DerivedPatch(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((DerivedPatch)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((DerivedPatch)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((DerivedPatch)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((DerivedPatch)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((DerivedPatch)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "DerivedProp", current == null ? default : ((DerivedPatch)current).DerivedProp, CreateModel));
+            }
+            if (modelType == typeof(CustomPatchBase))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CustomPatchBase), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags" });
+                return MgmtTypeSpecTestsModelFactory.CustomPatchBase(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((CustomPatchBase)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((CustomPatchBase)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((CustomPatchBase)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((CustomPatchBase)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((CustomPatchBase)current).Tags, CreateModel));
+            }
+            if (modelType == typeof(SiblingPatchListResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SiblingPatchListResult), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.SiblingPatchListResult(Models.ModelFactoryPropertyBag.Get<IEnumerable<SiblingPatch>>(properties, "Value", current == null ? default : ((SiblingPatchListResult)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "NextLink", current == null ? default : ((SiblingPatchListResult)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(SiblingPatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SiblingPatch), new string[] { "Id", "Name", "ResourceType", "SystemData", "SiblingProp" });
+                return MgmtTypeSpecTestsModelFactory.SiblingPatch(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SiblingPatch)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SiblingPatch)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((SiblingPatch)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((SiblingPatch)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SiblingProp", current == null ? default : ((SiblingPatch)current).SiblingProp, CreateModel));
+            }
+            if (modelType == typeof(PolyDeviceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(PolyDeviceData), new string[] { "Id", "Name", "ResourceType", "SystemData" });
+                return MgmtTypeSpecTestsModelFactory.PolyDeviceData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((PolyDeviceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((PolyDeviceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((PolyDeviceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((PolyDeviceData)current).SystemData, CreateModel), default);
+            }
+            if (modelType == typeof(TypeAPolyDevice))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(TypeAPolyDevice), new string[] { "Id", "Name", "ResourceType", "SystemData", "TypeAPolyDeviceDescription" });
+                return MgmtTypeSpecTestsModelFactory.TypeAPolyDevice(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((TypeAPolyDevice)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((TypeAPolyDevice)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((TypeAPolyDevice)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((TypeAPolyDevice)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "TypeAPolyDeviceDescription", current == null ? default : ((TypeAPolyDevice)current).Properties == null ? default : ((TypeAPolyDevice)current).Properties.Description, CreateModel));
+            }
+            if (modelType == typeof(GrandparentFlattenLeafListResult))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GrandparentFlattenLeafListResult), new string[] { "Value", "NextLink" });
+                return MgmtTypeSpecTestsModelFactory.GrandparentFlattenLeafListResult(Models.ModelFactoryPropertyBag.Get<IEnumerable<GrandparentFlattenLeaf>>(properties, "Value", current == null ? default : ((GrandparentFlattenLeafListResult)current).Value, CreateModel), Models.ModelFactoryPropertyBag.Get<Uri>(properties, "NextLink", current == null ? default : ((GrandparentFlattenLeafListResult)current).NextLink, CreateModel));
+            }
+            if (modelType == typeof(GrandparentFlattenLeaf))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GrandparentFlattenLeaf), new string[] { "Id", "Name", "ResourceType", "SystemData", "IdentifierUniqueId", "GrandparentFlattenLeafDisclaimer" });
+                return MgmtTypeSpecTestsModelFactory.GrandparentFlattenLeaf(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((GrandparentFlattenLeaf)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((GrandparentFlattenLeaf)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((GrandparentFlattenLeaf)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((GrandparentFlattenLeaf)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "IdentifierUniqueId", current == null ? default : ((GrandparentFlattenLeaf)current).Identifier == null ? default : ((GrandparentFlattenLeaf)current).Identifier.UniqueId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "GrandparentFlattenLeafDisclaimer", current == null ? default : ((GrandparentFlattenLeaf)current).Properties == null ? default : ((GrandparentFlattenLeaf)current).Properties.Disclaimer, CreateModel));
+            }
+            if (modelType == typeof(GrandparentFlattenProxyGrandparentFlattenLeafProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GrandparentFlattenProxyGrandparentFlattenLeafProperties), new string[] { "Id", "Name", "ResourceType", "SystemData", "IdentifierUniqueId", "GrandparentFlattenLeafDisclaimer" });
+                return MgmtTypeSpecTestsModelFactory.GrandparentFlattenProxyGrandparentFlattenLeafProperties(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "IdentifierUniqueId", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Identifier == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Identifier.UniqueId, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "GrandparentFlattenLeafDisclaimer", current == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Properties == null ? default : ((GrandparentFlattenProxyGrandparentFlattenLeafProperties)current).Properties.Disclaimer, CreateModel));
+            }
+            if (modelType == typeof(GrandparentFlattenBase))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(GrandparentFlattenBase), new string[] { "Id", "Name", "ResourceType", "SystemData", "IdentifierUniqueId" });
+                return MgmtTypeSpecTestsModelFactory.GrandparentFlattenBase(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((GrandparentFlattenBase)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((GrandparentFlattenBase)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((GrandparentFlattenBase)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((GrandparentFlattenBase)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "IdentifierUniqueId", current == null ? default : ((GrandparentFlattenBase)current).Identifier == null ? default : ((GrandparentFlattenBase)current).Identifier.UniqueId, CreateModel));
+            }
+            if (modelType == typeof(CycleTestStoreData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CycleTestStoreData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.CycleTestStoreData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((CycleTestStoreData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((CycleTestStoreData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((CycleTestStoreData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((CycleTestStoreData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((CycleTestStoreData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((CycleTestStoreData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<CycleTestStoreProperties>(properties, "Properties", current == null ? default : ((CycleTestStoreData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(CycleTestStoreProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CycleTestStoreProperties), new string[] { "Endpoint", "Connections" });
+                return MgmtTypeSpecTestsModelFactory.CycleTestStoreProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Endpoint", current == null ? default : ((CycleTestStoreProperties)current).Endpoint, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<CycleTestConnectionReference>>(properties, "Connections", current == null ? default : ((CycleTestStoreProperties)current).Connections, CreateModel));
+            }
+            if (modelType == typeof(CycleTestConnectionReference))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(CycleTestConnectionReference), new string[] { "Id", "Name", "ResourceType", "SystemData", "ProvisioningState", "Description" });
+                return MgmtTypeSpecTestsModelFactory.CycleTestConnectionReference(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((CycleTestConnectionReference)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((CycleTestConnectionReference)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((CycleTestConnectionReference)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((CycleTestConnectionReference)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ProvisioningState", current == null ? default : ((CycleTestConnectionReference)current).Properties == null ? default : ((CycleTestConnectionReference)current).Properties.ProvisioningState, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((CycleTestConnectionReference)current).Properties == null ? default : ((CycleTestConnectionReference)current).Properties.Description, CreateModel));
+            }
+            if (modelType == typeof(EventGridTopicData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EventGridTopicData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "EventGridTopicEndpoint" });
+                return MgmtTypeSpecTestsModelFactory.EventGridTopicData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((EventGridTopicData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((EventGridTopicData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((EventGridTopicData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((EventGridTopicData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((EventGridTopicData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((EventGridTopicData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "EventGridTopicEndpoint", current == null ? default : ((EventGridTopicData)current).Properties == null ? default : ((EventGridTopicData)current).Properties.Endpoint, CreateModel));
+            }
+            if (modelType == typeof(EventGridDomainData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EventGridDomainData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Tags", "Location", "EventGridDomainEndpoint" });
+                return MgmtTypeSpecTestsModelFactory.EventGridDomainData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((EventGridDomainData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((EventGridDomainData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((EventGridDomainData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((EventGridDomainData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((EventGridDomainData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<AzureLocation>(properties, "Location", current == null ? default : ((EventGridDomainData)current).Location, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "EventGridDomainEndpoint", current == null ? default : ((EventGridDomainData)current).Properties == null ? default : ((EventGridDomainData)current).Properties.Endpoint, CreateModel));
+            }
+            if (modelType == typeof(EventGridPrivateEndpointConnectionData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EventGridPrivateEndpointConnectionData), new string[] { "Id", "Name", "ResourceType", "SystemData", "Properties" });
+                return MgmtTypeSpecTestsModelFactory.EventGridPrivateEndpointConnectionData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((EventGridPrivateEndpointConnectionData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((EventGridPrivateEndpointConnectionData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType>(properties, "ResourceType", current == null ? default : ((EventGridPrivateEndpointConnectionData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((EventGridPrivateEndpointConnectionData)current).SystemData, CreateModel), Models.ModelFactoryPropertyBag.Get<EventGridPrivateEndpointConnectionProperties>(properties, "Properties", current == null ? default : ((EventGridPrivateEndpointConnectionData)current).Properties, CreateModel));
+            }
+            if (modelType == typeof(EventGridPrivateEndpointConnectionProperties))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(EventGridPrivateEndpointConnectionProperties), new string[] { "Status", "Description" });
+                return MgmtTypeSpecTestsModelFactory.EventGridPrivateEndpointConnectionProperties(Models.ModelFactoryPropertyBag.Get<string>(properties, "Status", current == null ? default : ((EventGridPrivateEndpointConnectionProperties)current).Status, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Description", current == null ? default : ((EventGridPrivateEndpointConnectionProperties)current).Description, CreateModel));
+            }
+            if (modelType == typeof(SolutionsApplicationDefinitionData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SolutionsApplicationDefinitionData), new string[] { "Id", "Name", "Type", "Tags", "ManagedBy", "SolutionsApplicationDefinitionDisplayName" });
+                return MgmtTypeSpecTestsModelFactory.SolutionsApplicationDefinitionData(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SolutionsApplicationDefinitionData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SolutionsApplicationDefinitionData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((SolutionsApplicationDefinitionData)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SolutionsApplicationDefinitionData)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ManagedBy", current == null ? default : ((SolutionsApplicationDefinitionData)current).ManagedBy, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "SolutionsApplicationDefinitionDisplayName", current == null ? default : ((SolutionsApplicationDefinitionData)current).Properties == null ? default : ((SolutionsApplicationDefinitionData)current).Properties.DisplayName, CreateModel));
+            }
+            if (modelType == typeof(SolutionsGenericResource))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SolutionsGenericResource), new string[] { "Id", "Name", "Type", "Tags", "ManagedBy" });
+                return MgmtTypeSpecTestsModelFactory.SolutionsGenericResource(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SolutionsGenericResource)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SolutionsGenericResource)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((SolutionsGenericResource)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SolutionsGenericResource)current).Tags, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "ManagedBy", current == null ? default : ((SolutionsGenericResource)current).ManagedBy, CreateModel));
+            }
+            if (modelType == typeof(SolutionsResource))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SolutionsResource), new string[] { "Id", "Name", "Type", "Tags" });
+                return MgmtTypeSpecTestsModelFactory.SolutionsResource(Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((SolutionsResource)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((SolutionsResource)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Type", current == null ? default : ((SolutionsResource)current).Type, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SolutionsResource)current).Tags, CreateModel));
+            }
+            if (modelType == typeof(SolutionsApplicationDefinitionPatch))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(SolutionsApplicationDefinitionPatch), new string[] { "Tags" });
+                return MgmtTypeSpecTestsModelFactory.SolutionsApplicationDefinitionPatch(Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "Tags", current == null ? default : ((SolutionsApplicationDefinitionPatch)current).Tags, CreateModel));
+            }
+            if (modelType == typeof(BarSettingsResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BarSettingsResourceData), new string[] { "StringArray", "DiscriminatorProperty", "IsEnabled", "PropertyLeft", "AnotherPropertyLeft", "InnerProp1", "InnerProp2", "MiddleProp1", "MiddleProp2", "Prop1", "Prop2", "OptionalFlattenPropertyRandomCollectionProp", "Id", "Name", "ResourceType", "SystemData" });
+                return MgmtTypeSpecTestsModelFactory.BarSettingsResourceData(Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "StringArray", current == null ? default : ((BarSettingsResourceData)current).StringArray, CreateModel), Models.ModelFactoryPropertyBag.Get<LimitJsonObject>(properties, "DiscriminatorProperty", current == null ? default : ((BarSettingsResourceData)current).DiscriminatorProperty, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "IsEnabled", current == null ? default : ((BarSettingsResourceData)current).Properties == null ? default : ((BarSettingsResourceData)current).Properties.IsEnabled, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "PropertyLeft", current == null ? default : ((BarSettingsResourceData)current).Property == null ? default : ((BarSettingsResourceData)current).Property.Left, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "AnotherPropertyLeft", current == null ? default : ((BarSettingsResourceData)current).AnotherProperty == null ? default : ((BarSettingsResourceData)current).AnotherProperty.Left, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "InnerProp1", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.InnerProp1, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "InnerProp2", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.InnerProp2, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "MiddleProp1", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.MiddleProp1, CreateModel), Models.ModelFactoryPropertyBag.Get<IDictionary<string, string>>(properties, "MiddleProp2", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.MiddleProp2, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "Prop1", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.Prop1, CreateModel), Models.ModelFactoryPropertyBag.Get<int?>(properties, "Prop2", current == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty == null ? default : ((BarSettingsResourceData)current).FlattenedNestedProperty.Prop2, CreateModel), Models.ModelFactoryPropertyBag.Get<IEnumerable<string>>(properties, "OptionalFlattenPropertyRandomCollectionProp", current == null ? default : ((BarSettingsResourceData)current).OptionalFlattenProperty == null ? default : ((BarSettingsResourceData)current).OptionalFlattenProperty.RandomCollectionProp, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((BarSettingsResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((BarSettingsResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType?>(properties, "ResourceType", current == null ? default : ((BarSettingsResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((BarSettingsResourceData)current).SystemData, CreateModel));
+            }
+            if (modelType == typeof(BarQuotaResourceData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(BarQuotaResourceData), new string[] { "BarQuotaLeft", "Id", "Name", "ResourceType", "SystemData" });
+                return MgmtTypeSpecTestsModelFactory.BarQuotaResourceData(Models.ModelFactoryPropertyBag.Get<string>(properties, "BarQuotaLeft", current == null ? default : ((BarQuotaResourceData)current).Properties == null ? default : ((BarQuotaResourceData)current).Properties.Left, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((BarQuotaResourceData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((BarQuotaResourceData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType?>(properties, "ResourceType", current == null ? default : ((BarQuotaResourceData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((BarQuotaResourceData)current).SystemData, CreateModel));
+            }
+            if (modelType == typeof(MultiFlattenTestData))
+            {
+                Models.ModelFactoryPropertyBag.Validate(properties, typeof(MultiFlattenTestData), new string[] { "Channel", "Disabled", "InnerSelectionType", "Id", "Name", "ResourceType", "SystemData" });
+                return MgmtTypeSpecTestsModelFactory.MultiFlattenTestData(Models.ModelFactoryPropertyBag.Get<FlattenChannel?>(properties, "Channel", current == null ? default : ((MultiFlattenTestData)current).Properties == null ? default : ((MultiFlattenTestData)current).Properties.Channel, CreateModel), Models.ModelFactoryPropertyBag.Get<bool?>(properties, "Disabled", current == null ? default : ((MultiFlattenTestData)current).Properties == null ? default : ((MultiFlattenTestData)current).Properties.Disabled, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "InnerSelectionType", current == null ? default : ((MultiFlattenTestData)current).Properties == null ? default : ((MultiFlattenTestData)current).Properties.Inner == null ? default : ((MultiFlattenTestData)current).Properties.Inner.SelectionType, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceIdentifier>(properties, "Id", current == null ? default : ((MultiFlattenTestData)current).Id, CreateModel), Models.ModelFactoryPropertyBag.Get<string>(properties, "Name", current == null ? default : ((MultiFlattenTestData)current).Name, CreateModel), Models.ModelFactoryPropertyBag.Get<ResourceType?>(properties, "ResourceType", current == null ? default : ((MultiFlattenTestData)current).ResourceType, CreateModel), Models.ModelFactoryPropertyBag.Get<SystemData>(properties, "SystemData", current == null ? default : ((MultiFlattenTestData)current).SystemData, CreateModel));
+            }
+            throw new ArgumentException("The requested type is not a supported model.", "modelType");
         }
     }
 }

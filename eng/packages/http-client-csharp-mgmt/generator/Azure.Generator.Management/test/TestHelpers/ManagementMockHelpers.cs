@@ -97,6 +97,20 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             return mockPluginInstance;
         }
 
+        /// <summary>
+        /// Supplies the embedded helper normally emitted by <see cref="ManagementClientGenerator.WriteAdditionalFiles"/>
+        /// when compiling model factory providers directly, without writing generated files to disk.
+        /// </summary>
+        public static (string Name, string Content) GetModelFactoryHelperSource(ModelFactoryProvider factory)
+        {
+            using var stream = typeof(ManagementClientGenerator).Assembly.GetManifestResourceStream(
+                "Azure.Generator.Management.Assets.ModelFactoryPropertyBag.cs")
+                ?? throw new InvalidOperationException("The model factory property bag helper asset is missing.");
+            using var reader = new StreamReader(stream);
+            return ("ModelFactoryPropertyBag.cs", reader.ReadToEnd().Replace(
+                "namespace Generated", $"namespace {factory.Type.Namespace}"));
+        }
+
         public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
             var currentType = typeProvider.GetType();
