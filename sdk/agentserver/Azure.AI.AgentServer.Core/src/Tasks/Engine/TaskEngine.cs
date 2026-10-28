@@ -156,6 +156,12 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationToken cancellationToken)
     {
         TaskRegistration registration = _registry.Get(name);
+        if (!registration.IsEnabled)
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.NotEnabled,
+                $"Task '{name}' is disabled for this host.");
+        }
         bool multiTurn = registration.MultiTurn;
 
         // Identity rules enforced BEFORE any network round-trip (FR-005 / FR-006 / C-ID-1).
@@ -2505,7 +2511,9 @@ internal sealed partial class TaskEngine : IDisposable
     private async Task<IActiveRun?> TryReclaimStaleFromStoreAsync(
         string name, string taskId, CancellationToken cancellationToken)
     {
-        if (!_registry.TryGet(name, out TaskRegistration registration) || registration.RecoverDispatch is null)
+        if (!_registry.TryGet(name, out TaskRegistration registration)
+            || registration.RecoverDispatch is null
+            || !registration.IsEnabled)
         {
             return null;
         }
@@ -2745,6 +2753,14 @@ internal sealed partial class TaskEngine : IDisposable
                 continue;
             }
 
+            string name = record.Source?.Name ?? string.Empty;
+            if (!_registry.TryGet(name, out TaskRegistration registration)
+                || registration.RecoverDispatch is null
+                || !registration.IsEnabled)
+            {
+                continue;
+            }
+
             // One-time legacy cleanup (spec §20/§38): a stale in_progress record that lacks
             // payload.schema_version is a pre-schema record with the old wire format and cannot
             // be recovered — delete it (force past the live lease) instead of re-invoking.
@@ -2766,12 +2782,6 @@ internal sealed partial class TaskEngine : IDisposable
             }
 
             if (record.Lease is not null && !string.Equals(record.Lease.Owner, _owner, StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            string name = record.Source?.Name ?? string.Empty;
-            if (!_registry.TryGet(name, out TaskRegistration registration) || registration.RecoverDispatch is null)
             {
                 continue;
             }

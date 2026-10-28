@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -53,6 +54,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
 
         group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
+        group.AddEndpointFilter(async (context, next) =>
+        {
+            IServiceProvider provider = context.HttpContext.RequestServices;
+            ResponsesServerOptions options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+            bool enabled = options.ResilientBackground || options.SteerableConversations;
+            using (provider.EnterResilientTaskScope(enabled))
+            {
+                object? result = await next(context);
+                return result is IResult response ? new TaskScopedResult(response, enabled) : result;
+            }
+        });
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>
         {
@@ -82,6 +94,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         group.WithTags("Responses");
 
         return group;
+    }
+
+    private sealed class TaskScopedResult(IResult inner, bool enabled) : IResult
+    {
+        public async Task ExecuteAsync(HttpContext httpContext)
+        {
+            using (httpContext.RequestServices.EnterResilientTaskScope(enabled))
+            {
+                await inner.ExecuteAsync(httpContext);
+            }
+        }
     }
 
     /// <summary>

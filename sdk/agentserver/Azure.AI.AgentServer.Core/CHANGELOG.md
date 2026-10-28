@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added protocol-scoped task access for composed hosts and per-task activation
+  checks, so a protocol disabled for this host cannot start or recover its tasks
+  merely because another protocol enabled the shared runtime.
+
 ### Breaking Changes
 
 ### Bugs Fixed

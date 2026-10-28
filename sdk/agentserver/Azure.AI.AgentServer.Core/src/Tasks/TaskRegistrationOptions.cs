@@ -33,4 +33,11 @@ public sealed class TaskRegistrationOptions
 
     /// <summary>The retry policy for handler failures. <see langword="null"/> uses the framework default.</summary>
     public TaskRetryPolicy? Retry { get; set; }
+
+    /// <summary>
+    /// An optional activation check for tasks owned by a protocol. Disabled registrations
+    /// cannot start or recover even when another protocol enables the shared task runtime.
+    /// </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public Func<bool>? IsEnabled { get; set; }
 }

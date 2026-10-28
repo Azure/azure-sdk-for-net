@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 internal sealed class TaskEngineAccessor
 {
     private static readonly AsyncLocal<RecoveryHandlerScope?> s_recoveryHandlerScope = new();
+    private static readonly AsyncLocal<ProtocolScope?> s_protocolScope = new();
     private readonly ResilientTaskEnablementState _enablement;
     private TaskEngine? _engine;
 
@@ -41,6 +42,15 @@ internal sealed class TaskEngineAccessor
     /// <summary>Returns the engine, or throws if it has not been populated yet.</summary>
     public TaskEngine Require()
     {
+        ProtocolScope? scope = s_protocolScope.Value;
+        if (scope is not null
+            && (!scope.Enabled || !ReferenceEquals(scope.Enablement, _enablement)))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.NotEnabled,
+                "Resilient tasks are disabled for this protocol.");
+        }
+
         if (!_enablement.IsConfigured)
         {
             throw new ResilientTaskException(
@@ -67,6 +77,31 @@ internal sealed class TaskEngineAccessor
         var scope = new RecoveryHandlerScope(engine, s_recoveryHandlerScope.Value);
         s_recoveryHandlerScope.Value = scope;
         return scope;
+    }
+
+    internal static IDisposable EnterProtocolScope(ResilientTaskEnablementState? enablement, bool enabled)
+    {
+        var scope = new ProtocolScope(enablement, enabled, s_protocolScope.Value);
+        s_protocolScope.Value = scope;
+        return scope;
+    }
+
+    private sealed class ProtocolScope(
+        ResilientTaskEnablementState? enablement,
+        bool enabled,
+        ProtocolScope? priorScope) : IDisposable
+    {
+        public ResilientTaskEnablementState? Enablement { get; } = enablement;
+
+        public bool Enabled { get; } = enabled;
+
+        public void Dispose()
+        {
+            if (ReferenceEquals(s_protocolScope.Value, this))
+            {
+                s_protocolScope.Value = priorScope;
+            }
+        }
     }
 
     private sealed class RecoveryHandlerScope(

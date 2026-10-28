@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,13 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
         group.AddEndpointFilter<VoiceRegistrationGuardFilter>();
+        group.AddEndpointFilter(async (context, next) =>
+        {
+            using (context.HttpContext.RequestServices.EnterResilientTaskScope())
+            {
+                return await next(context);
+            }
+        });
 
         // Register Invocations protocol identity with the version registry (if available)
         var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();

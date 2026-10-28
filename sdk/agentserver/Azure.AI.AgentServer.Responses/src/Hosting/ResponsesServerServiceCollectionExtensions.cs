@@ -174,9 +174,8 @@ public static class ResponsesServerServiceCollectionExtensions
             TimeSpan streamTtl = serviceProvider
                 .GetRequiredService<IOptions<InMemoryProviderOptions>>()
                 .Value.EventStreamTtl;
-            bool resilientTasksEnabled = serviceProvider
-                .GetRequiredService<IOptions<ResilientTaskOptions>>()
-                .Value.Enabled;
+            bool resilientTasksEnabled = responseOptions.ResilientBackground
+                || responseOptions.SteerableConversations;
             var streamOptions = new AgentEventStreamOptions();
             if (resilientTasksEnabled && hostedStorage is null)
             {
@@ -196,8 +195,9 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());
 
         // Compose the Core resilient-task primitive (do NOT reinvent recovery/leasing/steering).
-        // The Core task subsystem is registered in every host but activated only when a
-        // Responses feature flag or an explicit Core opt-in enables it. When enabled, response
+        // The Core task subsystem is registered in every host. Responses activates its task
+        // registrations only when a Responses feature flag is enabled; an explicit Core opt-in
+        // for Invocations does not activate Responses. When enabled, response
         // orchestration runs inside a Core task: its engine owns crash recovery (TaskDurabilityService
         // cold-start scan), leasing, and steering. This composition is active in BOTH local and hosted
         // environments; hosted mode selects the hosted task store via AddResilientTasks(credential),
@@ -222,13 +222,15 @@ public static class ResponsesServerServiceCollectionExtensions
             ResponseTaskInput,
             ResponseTaskOutput,
             ResponsesResilientTaskHandler>(
-            ResponsesResilientTaskHandler.OneShotTaskName);
+            ResponsesResilientTaskHandler.OneShotTaskName,
+            configure: options => options.IsEnabled = taskOptions.IsEnabled);
         services.AddResilientMultiTurnTask<
             ResponseTaskInput,
             ResponseTaskOutput,
             ResponsesResilientTaskHandler>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            isSteerable: taskOptions.IsSteerable);
+            isSteerable: taskOptions.IsSteerable,
+            configure: options => options.IsEnabled = taskOptions.IsEnabled);
 
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();

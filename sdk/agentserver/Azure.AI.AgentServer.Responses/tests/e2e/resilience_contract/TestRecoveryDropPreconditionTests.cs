@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
@@ -25,6 +26,28 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 [NonParallelizable]
 public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
 {
+    [Test]
+    public async Task DisabledResponses_DoesNotRecoverWhenCoreIsEnabledForInvocations()
+    {
+        await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
+            responseId: IdGenerator.NewResponseId(),
+            disposition: ResponseRecoveryPayload.DispositionReinvoke,
+            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+
+        var handler = new TestHandler();
+        using var factory = new TestWebApplicationFactory(
+            handler,
+            configureTestServices: services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));
+            });
+        using var client = factory.CreateClient();
+
+        Assert.That(RecoveryEntryCount(), Is.EqualTo(1));
+        Assert.That(handler.CallCount, Is.Zero);
+    }
+
     [Test]
     public async Task DefinitiveNotFound_DropsEntry_WithoutDispatch()
     {

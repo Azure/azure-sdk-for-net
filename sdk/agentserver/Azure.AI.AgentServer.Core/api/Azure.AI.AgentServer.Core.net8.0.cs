@@ -398,6 +398,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
     }
     public static partial class ResilientTaskEnablementExtensions
     {
+        public static System.IDisposable EnterResilientTaskScope(this System.IServiceProvider provider, bool? enabled = default(bool?)) { throw null; }
         public static Azure.AI.AgentServer.Core.AgentHostBuilder SetResilientTasksEnabled(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, bool enabled = true) { throw null; }
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection SetResilientTasksEnabled(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, bool enabled = true) { throw null; }
         public static Microsoft.Extensions.Hosting.IHostApplicationBuilder SetResilientTasksEnabled(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, bool enabled = true) { throw null; }
@@ -530,6 +531,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
     public sealed partial class TaskRegistrationOptions
     {
         public TaskRegistrationOptions() { }
+        public System.Func<bool>? IsEnabled { get { throw null; } set { } }
         public Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy? Retry { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
         public string? Title { get { throw null; } set { } }

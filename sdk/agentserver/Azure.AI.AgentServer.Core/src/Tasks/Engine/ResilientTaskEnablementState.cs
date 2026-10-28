@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 internal sealed class ResilientTaskEnablementState
 {
     private int _configured;
+    private int _explicitlyEnabled;
     private int _ready;
 
     public ResilientTaskEnablementState(
@@ -21,7 +22,15 @@ internal sealed class ResilientTaskEnablementState
 
     public bool IsConfigured => Volatile.Read(ref _configured) != 0;
 
+    public bool IsExplicitlyEnabled => Volatile.Read(ref _explicitlyEnabled) != 0;
+
     public bool IsReady => Volatile.Read(ref _ready) != 0;
+
+    public void SetExplicitlyEnabled(bool enabled)
+    {
+        Volatile.Write(ref _explicitlyEnabled, enabled ? 1 : 0);
+        SetConfigured(enabled);
+    }
 
     public void SetConfigured(bool enabled)
     {

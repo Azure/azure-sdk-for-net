@@ -23,7 +23,7 @@ public static class ResilientTaskEnablementExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         ResilientTaskEnablementState state = GetOrCreateState(services);
-        state.SetConfigured(enabled);
+        state.SetExplicitlyEnabled(enabled);
         services.Configure<ResilientTaskOptions>(options => options.Enabled = enabled);
         if (enabled)
         {
@@ -64,6 +64,23 @@ public static class ResilientTaskEnablementExtensions
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.SetResilientTasksEnabled(enabled);
         return builder;
+    }
+
+    /// <summary>
+    /// Scopes task access to the current protocol. Without an explicit value, access follows
+    /// the Core opt-in rather than activation requested by another protocol.
+    /// </summary>
+    /// <param name="provider">The owning application's service provider.</param>
+    /// <param name="enabled">Whether the protocol has enabled task execution, or
+    /// <see langword="null"/> to use the explicit Core opt-in.</param>
+    /// <returns>A scope that restores the prior protocol's task access when disposed.</returns>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public static IDisposable EnterResilientTaskScope(
+        this IServiceProvider provider, bool? enabled = null)
+    {
+        ArgumentNullException.ThrowIfNull(provider);
+        ResilientTaskEnablementState? state = provider.GetService<ResilientTaskEnablementState>();
+        return TaskEngineAccessor.EnterProtocolScope(state, enabled ?? state?.IsExplicitlyEnabled == true);
     }
 
     internal static ResilientTaskEnablementState GetOrCreateState(IServiceCollection services)

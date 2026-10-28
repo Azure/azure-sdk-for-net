@@ -146,9 +146,10 @@ task engine, task store, or hosted credential; it does not run a startup recover
 or periodic recovery loop. Starting a registered task throws a
 `ResilientTaskException` with `ResilientTaskErrorCode.NotEnabled`.
 
-Responses applications normally opt in through
-`ResponsesServerOptions.ResilientBackground = true`, which enables the same Core
-runtime automatically.
+Responses applications opt in independently through
+`ResponsesServerOptions.ResilientBackground` or `SteerableConversations`. A
+Responses opt-in does not enable Invocations tasks in a composed host, and
+the Core switch alone does not opt Responses in.
 
 ### One-shot
 

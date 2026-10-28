@@ -15,6 +15,9 @@
 
 ### Other Changes
 
+- In a composed host, Invocations tasks still require `SetResilientTasksEnabled()`
+  even when Responses independently enables the shared Core runtime. This
+  protocol-scoped behavior requires Core `1.0.0-beta.31` or later.
 - Updated resilient task samples to call `SetResilientTasksEnabled()` explicitly; task
   registration alone no longer activates storage or recovery.
 - Updated the resilient research sample to use constructor-injected task handlers and

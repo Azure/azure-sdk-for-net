@@ -17,6 +17,25 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class ResilientTaskEnablementTests
 {
     [Test]
+    public void ProtocolScope_DoesNotGrantTaskAccessToAnotherHost()
+    {
+        var first = new ResilientTaskEnablementState(enabled: true, ready: true);
+        var second = new ResilientTaskEnablementState(enabled: true, ready: true);
+        var otherHostTask = new TaskEngineAccessor(second);
+
+        using (TaskEngineAccessor.EnterProtocolScope(first, enabled: true))
+        {
+            ResilientTaskException exception = Assert.Throws<ResilientTaskException>(
+                () => otherHostTask.Require())!;
+            Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.NotEnabled));
+        }
+
+        Assert.That(
+            Assert.Throws<InvalidOperationException>(() => otherHostTask.Require())!.Message,
+            Does.Contain("not available yet"));
+    }
+
+    [Test]
     public async Task RegisteredTask_DefaultsDisabled_AndDoesNotResolveStoreAtStartup()
     {
         int storeResolutions = 0;

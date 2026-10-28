@@ -65,6 +65,8 @@ internal sealed class TaskRegistration
     /// <summary>The per-task registration options, if any.</summary>
     public TaskRegistrationOptions? Options { get; }
 
+    public bool IsEnabled => Options?.IsEnabled?.Invoke() ?? true;
+
     /// <summary>
     /// Optional source-generated <see cref="System.Text.Json.Serialization.Metadata.JsonTypeInfo"/>
     /// for the input type, supplied by a Native-AOT / trimming-safe registration overload. When set,
