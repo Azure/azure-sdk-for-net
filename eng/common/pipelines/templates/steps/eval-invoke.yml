@@ -16,6 +16,10 @@ parameters:
   - name: azureSubscription
     type: string
     default: opensource-api-connection
+  - name: vallyArguments
+    # Supplementary --tag/--runs/--workers/--timeout argument pairs, not shell text.
+    type: object
+    default: []
 
 steps:
   - ${{ if parameters.UseAzSdkAuthentication }}:
@@ -34,6 +38,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ convertToJson(parameters.vallyArguments) }}
 
   - ${{ else }}:
     - script: |
@@ -46,3 +51,4 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ convertToJson(parameters.vallyArguments) }}

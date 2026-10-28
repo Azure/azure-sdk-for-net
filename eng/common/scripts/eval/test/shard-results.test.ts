@@ -70,7 +70,7 @@ function runSummary(root, shards, options = {}) {
     const child = runCli("build-eval-summary.ts", [
         "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"),
         "--output-path", output,
-    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix });
+    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix, ...options.env });
     return {
         child, markdown: fs.readFileSync(output, "utf8"),
         result: readJson(path.join(root, "summary", "eval-summary.json")),
@@ -85,6 +85,63 @@ test("expected shards come from the full Prepare matrix, not arrived artifacts o
     for (const invalid of [undefined, "not JSON", {}, [], null, true, 1, { a: null }, { a: { shardName: "../escape" } },
         { a: { shardName: "" } }, { a: { shardName: "x".repeat(201) } }, { a: { shardName: "same" }, b: { shardName: "same" } }]) {
         assert.throws(() => expectedShardsFromMatrix(invalid));
+    }
+});
+
+test("same-build tracks select their own artifacts and authoritative retry evidence", (t) => {
+    const root = setup(t);
+    const shard = "area_same";
+    const matrix = { leg: { shardName: shard } };
+    const timeline = { records: [
+        { type: "Job", identifier: "EvalForced.RunShard.leg", attempt: 1, state: "completed", result: "succeeded" },
+        { type: "Job", identifier: "EvalForced.RunShard.leg", attempt: 2, state: "completed", result: "failed" },
+        { type: "Job", identifier: "EvalTrigger.RunShard.leg", attempt: 3, state: "completed", result: "succeeded" },
+    ] };
+    for (const [namespace, attempt] of [["forced", 1], ["forced", 2], ["trigger", 3], ["forced-extra", 4]]) {
+        const source = invocation(root, `${namespace}-${attempt}`);
+        stageShardResults({ resultsRoot: source,
+            outputDirectory: path.join(root, "download", `eval-result-${namespace}-${shard}-${attempt}`),
+            shardName: shard, attempt });
+    }
+    const evidence = latestShardAttempts(timeline, matrix, "EvalForced");
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify(evidence));
+    const result = runSummary(root, [shard], { env: { EVAL_ARTIFACT_NAMESPACE: "forced" } });
+    assert.equal(result.child.status, 0, result.child.stderr);
+    assert.equal(result.result.complete, true);
+    assert.deepEqual(result.index.attempts, [{
+        shard, attempt: 2, directory: `eval-result-forced-${shard}-2`,
+    }]);
+    assert.equal(result.result.totals.scenarios, 1);
+    assert.deepEqual(latestShardAttempts(timeline, matrix, "EvalTrigger").attempts[shard], { attempt: 3, complete: true });
+    assert.throws(() => latestShardAttempts(timeline, matrix, "../Eval"), /Invalid eval stage/);
+    // A newer failed attempt without an artifact must not reuse the older complete run.
+    const selectedRoot = path.join(root, "selected-missing");
+    const missing = selectSummaryResults({
+        resultsRoot: path.join(root, "download"), selectedRoot, expectedShards: [shard],
+        artifactNamespace: "forced",
+        jobAttempts: { schemaVersion: 1, valid: true, attempts: { [shard]: { attempt: 4, complete: true } } },
+    });
+    assert.equal(missing.complete, false);
+    assert.deepEqual(missing.shardInput.attempts, []);
+});
+
+test("empty artifact namespace preserves legacy names and invalid namespaces are rejected", (t) => {
+    const root = setup(t);
+    const shard = "area_test";
+    artifact(root, shard, 1);
+    const result = selectSummaryResults({
+        resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, "selected"),
+        expectedShards: [shard], jobAttempts: readJson(path.join(root, "job-attempts.json")),
+        artifactNamespace: "",
+    });
+    assert.equal(result.complete, true);
+    assert.deepEqual(result.shardInput.attempts, [{ shard, attempt: 1, directory: `eval-result-${shard}-1` }]);
+    for (const [index, namespace] of ["../escape", "with spaces", "/", null, 123, "x".repeat(201)].entries()) {
+        assert.throws(() => selectSummaryResults({
+            resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, `invalid-${index}`),
+            expectedShards: [shard], jobAttempts: readJson(path.join(root, "job-attempts.json")),
+            artifactNamespace: namespace,
+        }), /Invalid artifact namespace/);
     }
 });
 
