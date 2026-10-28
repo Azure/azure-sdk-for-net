@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await host.StartAsync();
                 try
                 {
-                    await s_completed.Task.WaitAsync(TimeSpan.FromSeconds(processingSeconds + batchWaitSeconds + 60));
+                    await s_completed.Task.TimeoutAfter(TimeSpan.FromSeconds(processingSeconds + batchWaitSeconds + 60));
                 }
                 finally
                 {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host;
@@ -358,7 +359,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 .Returns(async (TriggeredFunctionData _, CancellationToken token) =>
                 {
                     invoked.TrySetResult(true);
-                    await release.Task.WaitAsync(token);
+                    var cancelled = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    using (token.Register(() => cancelled.TrySetCanceled()))
+                    {
+                        Task completed = await Task.WhenAny(release.Task, cancelled.Task);
+                        await completed;
+                    }
                     if (outcome == "throw")
                     {
                         throw new InvalidOperationException("Handler failure");
@@ -380,27 +386,26 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _functionId, ServiceBusEntityType.Queue, _entityPath, false, true, options.MaxMessageBatchSize,
                 executor.Object, options, _connection, _mockMessagingProvider.Object, _loggerFactory, false,
                 _mockClientFactory.Object, _concurrencyManager, drainManager.Object);
-            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             Task stopping = null;
             await listener.StartAsync(CancellationToken.None);
             try
             {
-                var renewalToken = await renewed.Task.WaitAsync(timeout.Token);
+                var renewalToken = await renewed.Task.TimeoutAfterDefault();
                 if (waitForBatch)
                 {
                     Assert.IsFalse(invoked.Task.IsCompleted, "Renewal must start before the partial batch is dispatched.");
                 }
                 else
                 {
-                    await invoked.Task.WaitAsync(timeout.Token);
+                    await invoked.Task.TimeoutAfterDefault();
                 }
 
                 stopping = listener.StopAsync(CancellationToken.None);
-                await invoked.Task.WaitAsync(timeout.Token);
+                await invoked.Task.TimeoutAfterDefault();
                 Assert.AreEqual(outcome == "cancel", renewalToken.IsCancellationRequested,
                     "Only non-drain shutdown should cancel renewal before the invocation finishes.");
                 release.TrySetResult(true);
-                await stopping.WaitAsync(timeout.Token);
+                await stopping.TimeoutAfterDefault();
                 Assert.IsTrue(renewalToken.IsCancellationRequested);
                 receiver.Verify(r => r.CompleteMessageAsync(message, It.IsAny<CancellationToken>()),
                     outcome == "success" ? Times.Once() : Times.Never());
