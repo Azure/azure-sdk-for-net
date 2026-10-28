@@ -982,7 +982,6 @@ namespace Azure.Provisioning.Primitives
     {
         public ResourceReference(Azure.Provisioning.BicepValue<string> reference) { }
         public T? Value { get { throw null; } set { } }
-        public void Clear() { }
     }
     public partial class StaticResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {

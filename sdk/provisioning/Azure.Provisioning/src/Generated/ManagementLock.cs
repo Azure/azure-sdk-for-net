@@ -82,45 +82,6 @@ public partial class ManagementLock : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// Gets or sets the resource to which this extension resource applies.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Add the target resource to the same <see cref="Infrastructure"/>, either as a new
-    /// resource or as an existing one declared with <c>FromExisting</c>. A reference to a
-    /// new resource also establishes an implicit deployment dependency.
-    /// </para>
-    /// <para>
-    /// When null, this resource applies to the deployment scope (see
-    /// <see cref="Infrastructure.TargetScope"/>). Assigning null clears a previously
-    /// assigned resource and omits the Bicep scope property.
-    /// </para>
-    /// <para>
-    /// This property cannot move the resource to a different deployment scope. For
-    /// example, a resource group declared in a subscription-scoped infrastructure
-    /// cannot be used. To target a resource group, deploy at resource group scope and
-    /// leave this property unset.
-    /// </para>
-    /// </remarks>
-    public ProvisionableResource? Scope
-    {
-        get { Initialize(); return _scope!.Value; }
-        set
-        {
-            Initialize();
-            if (value is null)
-            {
-                _scope!.Clear();
-            }
-            else
-            {
-                _scope!.Value = value;
-            }
-        }
-    }
-    private ResourceReference<ProvisionableResource>? _scope;
-
-    /// <summary>
     /// Creates a new ManagementLock.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -147,8 +108,10 @@ public partial class ManagementLock : ProvisionableResource
         _owners = DefineListProperty<ManagementLockOwner>("Owners", ["properties", "owners"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _scope = DefineResource<ProvisionableResource>("Scope", ["scope"]);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported ManagementLock resource versions.

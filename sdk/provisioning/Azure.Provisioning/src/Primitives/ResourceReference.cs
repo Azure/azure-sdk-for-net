@@ -34,8 +34,7 @@ public class ResourceReference<T>(BicepValue<string> reference) where T : Provis
     /// Clears the referenced resource so that the property is omitted from
     /// the compiled Bicep rather than emitted as <c>null</c>.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Clear()
+    internal void Clear()
     {
         _value = null;
         _reference.ClearValue();

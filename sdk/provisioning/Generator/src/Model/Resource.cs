@@ -23,10 +23,6 @@ public class Resource(Specification spec, Type armType)
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
-    /// <summary>
-    /// Whether to generate an optional resource reference for an extension resource's scope.
-    /// </summary>
-    public bool HasScope { get; set; } = false;
     public SimpleModel? GetKeysType { get; set; }
     public bool GetKeysIsList { get; set; }
 
@@ -129,53 +125,6 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"private ResourceReference<{ParentResource.Name}>? _parent;");
                     }
 
-                    if (HasScope)
-                    {
-                        if (fence.RequiresSeparator) { writer.WriteLine(); }
-                        writer.WriteLine("/// <summary>");
-                        writer.WriteLine("/// Gets or sets the resource to which this extension resource applies.");
-                        writer.WriteLine("/// </summary>");
-                        writer.WriteLine("/// <remarks>");
-                        writer.WriteLine("/// <para>");
-                        writer.WriteLine("/// Add the target resource to the same <see cref=\"Infrastructure\"/>, either as a new");
-                        writer.WriteLine("/// resource or as an existing one declared with <c>FromExisting</c>. A reference to a");
-                        writer.WriteLine("/// new resource also establishes an implicit deployment dependency.");
-                        writer.WriteLine("/// </para>");
-                        writer.WriteLine("/// <para>");
-                        writer.WriteLine("/// When null, this resource applies to the deployment scope (see");
-                        writer.WriteLine("/// <see cref=\"Infrastructure.TargetScope\"/>). Assigning null clears a previously");
-                        writer.WriteLine("/// assigned resource and omits the Bicep scope property.");
-                        writer.WriteLine("/// </para>");
-                        writer.WriteLine("/// <para>");
-                        writer.WriteLine("/// This property cannot move the resource to a different deployment scope. For");
-                        writer.WriteLine("/// example, a resource group declared in a subscription-scoped infrastructure");
-                        writer.WriteLine("/// cannot be used. To target a resource group, deploy at resource group scope and");
-                        writer.WriteLine("/// leave this property unset.");
-                        writer.WriteLine("/// </para>");
-                        writer.WriteLine("/// </remarks>");
-                        writer.WriteLine("public ProvisionableResource? Scope");
-                        using (writer.Scope("{", "}"))
-                        {
-                            writer.WriteLine("get { Initialize(); return _scope!.Value; }");
-                            writer.WriteLine("set");
-                            using (writer.Scope("{", "}"))
-                            {
-                                writer.WriteLine("Initialize();");
-                                writer.WriteLine("if (value is null)");
-                                using (writer.Scope("{", "}"))
-                                {
-                                    writer.WriteLine("_scope!.Clear();");
-                                }
-                                writer.WriteLine("else");
-                                using (writer.Scope("{", "}"))
-                                {
-                                    writer.WriteLine("_scope!.Value = value;");
-                                }
-                            }
-                        }
-                        writer.WriteLine("private ResourceReference<ProvisionableResource>? _scope;");
-                    }
-
                     // Write the default value partial methods
                     foreach (Property property in Properties.Where(p => p.GenerateDefaultValue))
                     {
@@ -264,10 +213,6 @@ public class Resource(Specification spec, Type armType)
                         if (ParentResource is not null)
                         {
                             writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
-                        }
-                        if (HasScope)
-                        {
-                            writer.WriteLine("_scope = DefineResource<ProvisionableResource>(\"Scope\", [\"scope\"]);");
                         }
                     }
 
@@ -452,3 +397,4 @@ public class Resource(Specification spec, Type armType)
             });
     }
 }
+
