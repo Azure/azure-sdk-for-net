@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a CVE analysis summary. </summary>
-    public partial class CveSummaryResource : FirmwareAnalysisSummaryProperties
+    public partial class CveAnalysisSummary : FirmwareAnalysisSummaryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="CveSummaryResource"/>. </summary>
-        public CveSummaryResource() : base(FirmwareAnalysisSummaryType.Cve)
+        /// <summary> Initializes a new instance of <see cref="CveAnalysisSummary"/>. </summary>
+        public CveAnalysisSummary() : base(FirmwareAnalysisSummaryType.Cve)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CveSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveAnalysisSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
         /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
         /// <param name="schemaVersion"> Schema version of the CVE data for this firmware. </param>
-        internal CveSummaryResource(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, string schemaVersion) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        internal CveAnalysisSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, string schemaVersion) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalCveCount = totalCveCount;
             CriticalCveCount = criticalCveCount;

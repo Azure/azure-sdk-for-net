@@ -14,51 +14,51 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for Password hash analysis summary. </summary>
-    public partial class PasswordHashSummaryResource : FirmwareAnalysisSummaryProperties, IJsonModel<PasswordHashSummaryResource>
+    public partial class PasswordHashSummary : FirmwareAnalysisSummaryProperties, IJsonModel<PasswordHashSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePasswordHashSummaryResource(document.RootElement, options);
+                        return DeserializePasswordHashSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashSummaryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PasswordHashSummaryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PasswordHashSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PasswordHashSummaryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PasswordHashSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PasswordHashSummaryResource IPersistableModel<PasswordHashSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PasswordHashSummaryResource)PersistableModelCreateCore(data, options);
+        PasswordHashSummary IPersistableModel<PasswordHashSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (PasswordHashSummary)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PasswordHashSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PasswordHashSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PasswordHashSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PasswordHashSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashSummaryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TotalPasswordHashCount))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PasswordHashSummaryResource IJsonModel<PasswordHashSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PasswordHashSummaryResource)JsonModelCreateCore(ref reader, options);
+        PasswordHashSummary IJsonModel<PasswordHashSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PasswordHashSummary)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PasswordHashSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PasswordHashSummaryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PasswordHashSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePasswordHashSummaryResource(document.RootElement, options);
+            return DeserializePasswordHashSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PasswordHashSummaryResource DeserializePasswordHashSummaryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static PasswordHashSummary DeserializePasswordHashSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PasswordHashSummaryResource(summaryType, provisioningState, additionalBinaryDataProperties, totalPasswordHashCount);
+            return new PasswordHashSummary(summaryType, provisioningState, additionalBinaryDataProperties, totalPasswordHashCount);
         }
     }
 }

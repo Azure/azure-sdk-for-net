@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary>
     /// Properties of an analysis summary.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummary"/>, <see cref="CveSummaryResource"/>, <see cref="FirmwareSummary"/>, <see cref="PasswordHashSummaryResource"/>, <see cref="SbomSummaryResource"/>, and <see cref="UnsafeFunctionCallsSummaryResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveAnalysisSummary"/>, <see cref="CveSummary"/>, <see cref="FirmwareSummary"/>, <see cref="PasswordHashSummary"/>, <see cref="SbomSummary"/>, and <see cref="UnsafeFunctionCallsSummary"/>.
     /// </summary>
     public abstract partial class FirmwareAnalysisSummaryProperties
     {

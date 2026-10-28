@@ -14,51 +14,51 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for SBOM analysis summary. </summary>
-    public partial class SbomSummaryResource : FirmwareAnalysisSummaryProperties, IJsonModel<SbomSummaryResource>
+    public partial class SbomSummary : FirmwareAnalysisSummaryProperties, IJsonModel<SbomSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SbomSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SbomSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSbomSummaryResource(document.RootElement, options);
+                        return DeserializeSbomSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SbomSummaryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SbomSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SbomSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SbomSummaryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SbomSummaryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SbomSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SbomSummaryResource IPersistableModel<SbomSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SbomSummaryResource)PersistableModelCreateCore(data, options);
+        SbomSummary IPersistableModel<SbomSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (SbomSummary)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SbomSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SbomSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SbomSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SbomSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SbomSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SbomSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomSummaryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TotalComponentCount))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SbomSummaryResource IJsonModel<SbomSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SbomSummaryResource)JsonModelCreateCore(ref reader, options);
+        SbomSummary IJsonModel<SbomSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SbomSummary)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SbomSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SbomSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomSummaryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSbomSummaryResource(document.RootElement, options);
+            return DeserializeSbomSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SbomSummaryResource DeserializeSbomSummaryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static SbomSummary DeserializeSbomSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SbomSummaryResource(summaryType, provisioningState, additionalBinaryDataProperties, totalComponentCount);
+            return new SbomSummary(summaryType, provisioningState, additionalBinaryDataProperties, totalComponentCount);
         }
     }
 }

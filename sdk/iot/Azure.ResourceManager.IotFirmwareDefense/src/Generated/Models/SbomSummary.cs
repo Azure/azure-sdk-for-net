@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for SBOM analysis summary. </summary>
-    public partial class SbomSummaryResource : FirmwareAnalysisSummaryProperties
+    public partial class SbomSummary : FirmwareAnalysisSummaryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="SbomSummaryResource"/>. </summary>
-        public SbomSummaryResource() : base(FirmwareAnalysisSummaryType.Sbom)
+        /// <summary> Initializes a new instance of <see cref="SbomSummary"/>. </summary>
+        public SbomSummary() : base(FirmwareAnalysisSummaryType.Sbom)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SbomSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SbomSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalComponentCount"> Total number of SBOM components found. </param>
-        internal SbomSummaryResource(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalComponentCount) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        internal SbomSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalComponentCount) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalComponentCount = totalComponentCount;
         }

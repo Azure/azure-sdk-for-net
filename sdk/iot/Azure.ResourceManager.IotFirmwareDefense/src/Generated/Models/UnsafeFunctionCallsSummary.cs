@@ -12,15 +12,15 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for unsafe function calls analysis summary. </summary>
-    public partial class UnsafeFunctionCallsSummaryResource : FirmwareAnalysisSummaryProperties
+    public partial class UnsafeFunctionCallsSummary : FirmwareAnalysisSummaryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummaryResource"/>. </summary>
-        public UnsafeFunctionCallsSummaryResource() : base(FirmwareAnalysisSummaryType.UnsafeFunctionCalls)
+        /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummary"/>. </summary>
+        public UnsafeFunctionCallsSummary() : base(FirmwareAnalysisSummaryType.UnsafeFunctionCalls)
         {
             UnsafeCallTotals = new ChangeTrackingList<FunctionCall>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalUnsafeCallCount"> Total number of unsafe function calls found. </param>
         /// <param name="totalNetworkCallCount"> Total number of network calls found. </param>
         /// <param name="unsafeCallTotals"> Total unsafe function call counts per function across all binaries. </param>
-        internal UnsafeFunctionCallsSummaryResource(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalFileCount, long? totalUnsafeCallCount, long? totalNetworkCallCount, IList<FunctionCall> unsafeCallTotals) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        internal UnsafeFunctionCallsSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalFileCount, long? totalUnsafeCallCount, long? totalNetworkCallCount, IList<FunctionCall> unsafeCallTotals) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalFileCount = totalFileCount;
             TotalUnsafeCallCount = totalUnsafeCallCount;

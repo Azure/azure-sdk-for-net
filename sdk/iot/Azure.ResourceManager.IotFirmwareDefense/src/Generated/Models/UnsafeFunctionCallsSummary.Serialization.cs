@@ -13,52 +13,52 @@ using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties for a CVE analysis summary. </summary>
-    public partial class CveSummaryResource : FirmwareAnalysisSummaryProperties, IJsonModel<CveSummaryResource>
+    /// <summary> Properties for unsafe function calls analysis summary. </summary>
+    public partial class UnsafeFunctionCallsSummary : FirmwareAnalysisSummaryProperties, IJsonModel<UnsafeFunctionCallsSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UnsafeFunctionCallsSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCveSummaryResource(document.RootElement, options);
+                        return DeserializeUnsafeFunctionCallsSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveSummaryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnsafeFunctionCallsSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UnsafeFunctionCallsSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CveSummaryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnsafeFunctionCallsSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CveSummaryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UnsafeFunctionCallsSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CveSummaryResource IPersistableModel<CveSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (CveSummaryResource)PersistableModelCreateCore(data, options);
+        UnsafeFunctionCallsSummary IPersistableModel<UnsafeFunctionCallsSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnsafeFunctionCallsSummary)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CveSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UnsafeFunctionCallsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CveSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UnsafeFunctionCallsSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,69 +69,59 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UnsafeFunctionCallsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummaryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UnsafeFunctionCallsSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TotalCveCount))
+            if (Optional.IsDefined(TotalFileCount))
             {
-                writer.WritePropertyName("totalCveCount"u8);
-                writer.WriteNumberValue(TotalCveCount.Value);
+                writer.WritePropertyName("totalFileCount"u8);
+                writer.WriteNumberValue(TotalFileCount.Value);
             }
-            if (Optional.IsDefined(CriticalCveCount))
+            if (Optional.IsDefined(TotalUnsafeCallCount))
             {
-                writer.WritePropertyName("criticalCveCount"u8);
-                writer.WriteNumberValue(CriticalCveCount.Value);
+                writer.WritePropertyName("totalUnsafeCallCount"u8);
+                writer.WriteNumberValue(TotalUnsafeCallCount.Value);
             }
-            if (Optional.IsDefined(HighCveCount))
+            if (Optional.IsDefined(TotalNetworkCallCount))
             {
-                writer.WritePropertyName("highCveCount"u8);
-                writer.WriteNumberValue(HighCveCount.Value);
+                writer.WritePropertyName("totalNetworkCallCount"u8);
+                writer.WriteNumberValue(TotalNetworkCallCount.Value);
             }
-            if (Optional.IsDefined(MediumCveCount))
+            if (Optional.IsCollectionDefined(UnsafeCallTotals))
             {
-                writer.WritePropertyName("mediumCveCount"u8);
-                writer.WriteNumberValue(MediumCveCount.Value);
-            }
-            if (Optional.IsDefined(LowCveCount))
-            {
-                writer.WritePropertyName("lowCveCount"u8);
-                writer.WriteNumberValue(LowCveCount.Value);
-            }
-            if (Optional.IsDefined(UnknownCveCount))
-            {
-                writer.WritePropertyName("unknownCveCount"u8);
-                writer.WriteNumberValue(UnknownCveCount.Value);
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion"u8);
-                writer.WriteStringValue(SchemaVersion);
+                writer.WritePropertyName("unsafeCallTotals"u8);
+                writer.WriteStartArray();
+                foreach (FunctionCall item in UnsafeCallTotals)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CveSummaryResource IJsonModel<CveSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CveSummaryResource)JsonModelCreateCore(ref reader, options);
+        UnsafeFunctionCallsSummary IJsonModel<UnsafeFunctionCallsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnsafeFunctionCallsSummary)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UnsafeFunctionCallsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveSummaryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UnsafeFunctionCallsSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCveSummaryResource(document.RootElement, options);
+            return DeserializeUnsafeFunctionCallsSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CveSummaryResource DeserializeCveSummaryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnsafeFunctionCallsSummary DeserializeUnsafeFunctionCallsSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,13 +130,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             FirmwareAnalysisSummaryType summaryType = default;
             FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? totalCveCount = default;
-            long? criticalCveCount = default;
-            long? highCveCount = default;
-            long? mediumCveCount = default;
-            long? lowCveCount = default;
-            long? unknownCveCount = default;
-            string schemaVersion = default;
+            long? totalFileCount = default;
+            long? totalUnsafeCallCount = default;
+            long? totalNetworkCallCount = default;
+            IList<FunctionCall> unsafeCallTotals = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("summaryType"u8))
@@ -163,63 +150,45 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     provisioningState = new FirmwareProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("totalCveCount"u8))
+                if (prop.NameEquals("totalFileCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCveCount = prop.Value.GetInt64();
+                    totalFileCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("criticalCveCount"u8))
+                if (prop.NameEquals("totalUnsafeCallCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    criticalCveCount = prop.Value.GetInt64();
+                    totalUnsafeCallCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("highCveCount"u8))
+                if (prop.NameEquals("totalNetworkCallCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highCveCount = prop.Value.GetInt64();
+                    totalNetworkCallCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("mediumCveCount"u8))
+                if (prop.NameEquals("unsafeCallTotals"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mediumCveCount = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("lowCveCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    List<FunctionCall> array = new List<FunctionCall>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(FunctionCall.DeserializeFunctionCall(item, options));
                     }
-                    lowCveCount = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("unknownCveCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    unknownCveCount = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("schemaVersion"u8))
-                {
-                    schemaVersion = prop.Value.GetString();
+                    unsafeCallTotals = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,17 +196,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CveSummaryResource(
+            return new UnsafeFunctionCallsSummary(
                 summaryType,
                 provisioningState,
                 additionalBinaryDataProperties,
-                totalCveCount,
-                criticalCveCount,
-                highCveCount,
-                mediumCveCount,
-                lowCveCount,
-                unknownCveCount,
-                schemaVersion);
+                totalFileCount,
+                totalUnsafeCallCount,
+                totalNetworkCallCount,
+                unsafeCallTotals ?? new ChangeTrackingList<FunctionCall>());
         }
     }
 }

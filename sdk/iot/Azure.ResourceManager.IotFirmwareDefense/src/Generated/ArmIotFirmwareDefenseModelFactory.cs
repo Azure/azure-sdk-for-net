@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary>
         /// Properties of an analysis summary.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.CveSummaryResource"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.PasswordHashSummaryResource"/>, <see cref="Models.SbomSummaryResource"/>, and <see cref="Models.UnsafeFunctionCallsSummaryResource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
         /// </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -669,10 +669,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
         /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
         /// <param name="schemaVersion"> Schema version of the CVE data for this firmware. </param>
-        /// <returns> A new <see cref="Models.CveSummaryResource"/> instance for mocking. </returns>
-        public static CveSummaryResource CveSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, string schemaVersion = default)
+        /// <returns> A new <see cref="Models.CveAnalysisSummary"/> instance for mocking. </returns>
+        public static CveAnalysisSummary CveAnalysisSummary(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, string schemaVersion = default)
         {
-            return new CveSummaryResource(
+            return new CveAnalysisSummary(
                 FirmwareAnalysisSummaryType.Cve,
                 provisioningState,
                 default,
@@ -688,19 +688,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Properties for SBOM analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalComponentCount"> Total number of SBOM components found. </param>
-        /// <returns> A new <see cref="Models.SbomSummaryResource"/> instance for mocking. </returns>
-        public static SbomSummaryResource SbomSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalComponentCount = default)
+        /// <returns> A new <see cref="Models.SbomSummary"/> instance for mocking. </returns>
+        public static SbomSummary SbomSummary(FirmwareProvisioningState? provisioningState = default, long? totalComponentCount = default)
         {
-            return new SbomSummaryResource(FirmwareAnalysisSummaryType.Sbom, provisioningState, default, totalComponentCount);
+            return new SbomSummary(FirmwareAnalysisSummaryType.Sbom, provisioningState, default, totalComponentCount);
         }
 
         /// <summary> Properties for Password hash analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalPasswordHashCount"> Total number of password hashes found. </param>
-        /// <returns> A new <see cref="Models.PasswordHashSummaryResource"/> instance for mocking. </returns>
-        public static PasswordHashSummaryResource PasswordHashSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalPasswordHashCount = default)
+        /// <returns> A new <see cref="Models.PasswordHashSummary"/> instance for mocking. </returns>
+        public static PasswordHashSummary PasswordHashSummary(FirmwareProvisioningState? provisioningState = default, long? totalPasswordHashCount = default)
         {
-            return new PasswordHashSummaryResource(FirmwareAnalysisSummaryType.PasswordHash, provisioningState, default, totalPasswordHashCount);
+            return new PasswordHashSummary(FirmwareAnalysisSummaryType.PasswordHash, provisioningState, default, totalPasswordHashCount);
         }
 
         /// <summary> Properties for unsafe function calls analysis summary. </summary>
@@ -709,12 +709,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalUnsafeCallCount"> Total number of unsafe function calls found. </param>
         /// <param name="totalNetworkCallCount"> Total number of network calls found. </param>
         /// <param name="unsafeCallTotals"> Total unsafe function call counts per function across all binaries. </param>
-        /// <returns> A new <see cref="Models.UnsafeFunctionCallsSummaryResource"/> instance for mocking. </returns>
-        public static UnsafeFunctionCallsSummaryResource UnsafeFunctionCallsSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalFileCount = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, IEnumerable<FunctionCall> unsafeCallTotals = default)
+        /// <returns> A new <see cref="Models.UnsafeFunctionCallsSummary"/> instance for mocking. </returns>
+        public static UnsafeFunctionCallsSummary UnsafeFunctionCallsSummary(FirmwareProvisioningState? provisioningState = default, long? totalFileCount = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, IEnumerable<FunctionCall> unsafeCallTotals = default)
         {
             unsafeCallTotals ??= new ChangeTrackingList<FunctionCall>();
 
-            return new UnsafeFunctionCallsSummaryResource(
+            return new UnsafeFunctionCallsSummary(
                 FirmwareAnalysisSummaryType.UnsafeFunctionCalls,
                 provisioningState,
                 default,
