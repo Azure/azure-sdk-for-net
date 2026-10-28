@@ -56,6 +56,10 @@ public class ModelReaderWriterOptions
     /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/> in the specified format
     /// that copies the proxy registrations and configured context from <paramref name="options"/>.
     /// </summary>
+    /// <remarks>
+    /// Conditional proxies still receive the original <paramref name="options"/> instance in <c>CanHandle</c>,
+    /// preserving derived options types and custom flags. Its <see cref="Format"/> is not the copy's format.
+    /// </remarks>
     /// <param name="format">The format to read and write models. Pass in 'W' to use the service-defined wire format.</param>
     /// <param name="options">The options containing the proxies to reuse.</param>
     public ModelReaderWriterOptions(string format, ModelReaderWriterOptions options)
@@ -151,6 +155,8 @@ public class ModelReaderWriterOptions
     /// Registering a proxy does not automatically apply it throughout an object graph.
     /// When writing nested models, serializers must resolve child proxies and forward the options they receive.
     /// Calling a child's original writer directly bypasses proxy resolution.
+    /// Registrations are keyed by the exact type: when writing, a proxy applies only to instances whose runtime
+    /// type is exactly <typeparamref name="T"/>, not to derived instances.
     /// </remarks>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
@@ -170,6 +176,8 @@ public class ModelReaderWriterOptions
     /// Registering a proxy does not automatically apply it throughout an object graph.
     /// When writing nested models, serializers must resolve child proxies and forward the options they receive.
     /// Calling a child's original writer directly bypasses proxy resolution.
+    /// Registrations are keyed by the exact type: when writing, a proxy applies only to instances whose runtime
+    /// type is exactly <typeparamref name="T"/>, not to derived instances.
     /// </remarks>
     /// <param name="proxy">The conditional proxy.</param>
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)

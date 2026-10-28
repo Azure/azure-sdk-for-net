@@ -15,6 +15,12 @@ namespace System.ClientModel.Primitives;
 /// The context passed to <c>CanHandle</c> is never null. Standalone proxy resolution and
 /// request-body serialization require options configured with a context. A
 /// <see cref="ModelReaderWriter"/> operation supplies its own context.
+/// <para>
+/// The options passed to <c>CanHandle</c> are the options supplied by the caller, so derived options types and
+/// custom flags are preserved. When the caller's options were copied with a different format, for example
+/// <c>new ModelReaderWriterOptions("W", options)</c>, <c>CanHandle</c> still receives the original instance and
+/// its <see cref="ModelReaderWriterOptions.Format"/> is the original format, not the copy's.
+/// </para>
 /// </remarks>
 /// <typeparam name="T">The model type this proxy handles.</typeparam>
 public abstract class ConditionalModelProxy<T>

@@ -236,7 +236,11 @@ public abstract class BinaryContent : IDisposable
 
         public ModelBinaryContent(T model, ModelReaderWriterOptions options)
         {
-            _options = ModelReaderWriter.GetOptions(options);
+            // Deferred serialization needs execution state that no other body or nested write can overwrite,
+            // so core-owned options received from a nested write are copied rather than shared.
+            _options = options is { IsCoreOwned: true }
+                ? new ModelReaderWriterOptions(options)
+                : ModelReaderWriter.GetOptions(options);
             _model = _options.ResolveProxy((IPersistableModel<T>)model);
             _writeAsJson = ModelReaderWriter.ShouldWriteAsJson(_model, _options);
 

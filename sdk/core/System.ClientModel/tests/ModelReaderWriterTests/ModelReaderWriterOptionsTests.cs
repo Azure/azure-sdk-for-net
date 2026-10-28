@@ -492,12 +492,76 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsNull(options.ProxiedModel);
         }
 
+        [Test]
+        public void BinaryContent_NestedDeferredBodiesDoNotShareProxyState()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)new DeferredBodiesParentProxy());
+            options.AddProxy<PlainTextModel>((IJsonModel<PlainTextModel>)new ProxiedValueProxy());
+
+            string json = ModelReaderWriter.Write(new SimpleModel(), options).ToString();
+
+            Assert.AreEqual("[{\"proxied\":\"first\"},{\"proxied\":\"second\"}]", json);
+        }
+
         private static string WriteBinaryContent(PlainTextModel model, ModelReaderWriterOptions options)
         {
             using BinaryContent content = BinaryContent.Create(model, options);
             using var stream = new MemoryStream();
             content.WriteTo(stream);
             return BinaryData.FromBytes(stream.ToArray()).ToString();
+        }
+
+        // Forwards the received core-owned options to two BinaryContent instances and only
+        // serializes them after both exist.
+        private sealed class DeferredBodiesParentProxy : IJsonModel<SimpleModel>
+        {
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                using BinaryContent first = BinaryContent.Create(new PlainTextModel { Value = "first" }, options);
+                using BinaryContent second = BinaryContent.Create(new PlainTextModel { Value = "second" }, options);
+
+                writer.WriteStartArray();
+                foreach (BinaryContent content in new[] { first, second })
+                {
+                    using var stream = new MemoryStream();
+                    content.WriteTo(stream);
+                    writer.WriteRawValue(stream.ToArray());
+                }
+                writer.WriteEndArray();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        private sealed class ProxiedValueProxy : IJsonModel<PlainTextModel>
+        {
+            PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteString("proxied"u8, ((PlainTextModel)options.ProxiedModel!).Value);
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                => throw new NotSupportedException();
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         private sealed class PersistableWriteProxy : IPersistableModel<PlainTextModel>
@@ -1065,6 +1129,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
+        public void FormatAndOptionsConstructor_FormatChangingCopyPassesOriginalOptionsToCanHandle()
+        {
+            var userOptions = new FlaggedOptions(useProxy: true);
+            var proxy = new OptionsRecordingProxy();
+            userOptions.AddProxy<SimpleModel>(proxy);
+
+            var copy = new ModelReaderWriterOptions("PT", userOptions);
+            ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), copy);
+
+            Assert.AreEqual("PT", copy.Format);
+            Assert.AreSame(userOptions, proxy.SeenOptions);
+            Assert.AreEqual("J", proxy.SeenOptions!.Format);
+        }
+
+        [Test]
         public void FormatAndOptionsConstructor_RejectsNullOptions()
         {
             Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("W", (ModelReaderWriterOptions)null!));
@@ -1256,6 +1335,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
                 => options is FlaggedOptions flagged && flagged.UseProxy;
+        }
+
+        /// <summary>
+        /// A conditional proxy that records the options passed to <c>CanHandle</c> and never handles the request.
+        /// </summary>
+        private class OptionsRecordingProxy : ConditionalModelProxy<SimpleModel>
+        {
+            public OptionsRecordingProxy() : base(new TrackingModel()) { }
+
+            public ModelReaderWriterOptions? SeenOptions { get; private set; }
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            {
+                SeenOptions = options;
+                return false;
+            }
+
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+            {
+                SeenOptions = options;
+                return false;
+            }
         }
 
         /// <summary>

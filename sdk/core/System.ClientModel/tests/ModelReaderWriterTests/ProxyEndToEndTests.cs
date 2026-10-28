@@ -417,5 +417,48 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.IsInstanceOf<UnknownResponseTool>(client.GetTool("clone"));
         }
+
+        [Test]
+        public void Write_BaseTypeRegistrationDoesNotApplyToDerivedInstance()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var baseProxy = new SentinelModel<ResponseTool>("base");
+            options.AddProxy<ResponseTool>(baseProxy);
+            var tool = new AzureSearchTool("docs");
+            string original = ModelReaderWriter.Write(tool, new ModelReaderWriterOptions("J")).ToString();
+
+            Assert.AreEqual(original, ModelReaderWriter.Write<ResponseTool>(tool, options).ToString());
+            Assert.IsNull(baseProxy.ProxiedModelAtWrite);
+
+            options.AddProxy<AzureSearchTool>(new SentinelModel<AzureSearchTool>("exact"));
+
+            Assert.AreEqual("{\"sentinel\":\"exact\"}", ModelReaderWriter.Write<ResponseTool>(tool, options).ToString());
+        }
+
+        // Writes a distinct sentinel document so a test can tell the proxy, not the original model, wrote.
+        private sealed class SentinelModel<T> : IJsonModel<T>
+        {
+            private readonly string _name;
+
+            public SentinelModel(string name) => _name = name;
+
+            public object? ProxiedModelAtWrite { get; private set; }
+
+            T IJsonModel<T>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException();
+
+            void IJsonModel<T>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                ProxiedModelAtWrite = options.ProxiedModel;
+                writer.WriteStartObject();
+                writer.WriteString("sentinel"u8, _name);
+                writer.WriteEndObject();
+            }
+
+            T IPersistableModel<T>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException();
+
+            BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options) => BinaryData.FromString($"{{\"sentinel\":\"{_name}\"}}");
+
+            string IPersistableModel<T>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
     }
 }

@@ -258,6 +258,168 @@ internal class ModelReaderWriterSamples
         }
     }
 
+    public void ClientOptions_AddProxy()
+    {
+        #region Snippet:Readme_ClientOptions_AddProxy
+        var clientOptions = new ClientPipelineOptions();
+        clientOptions.AddProxy<OutputModel>(new OutputModelProxy());
+        // Pass clientOptions to the generated client constructor.
+        #endregion
+    }
+
+    public void Conditional_Proxy_WithContext()
+    {
+        #region Snippet:Readme_Options_With_Context
+        var options = new ModelReaderWriterOptions("J", MyProjectContext.Default);
+        options.AddProxy<BaseModel>(new DerivedModelProxy());
+        #endregion
+    }
+
+    public void Conditional_Proxy_CopyWithContext()
+    {
+        var configuredOptions = new ModelReaderWriterOptions("J");
+        BaseModel model = new DerivedModel();
+
+        #region Snippet:Readme_Options_Copy_With_Context
+        var options = new ModelReaderWriterOptions("J", configuredOptions, MyProjectContext.Default);
+        using BinaryContent content = BinaryContent.Create(model, options);
+        #endregion
+    }
+
+    internal class BaseModel : IPersistableModel<BaseModel>
+    {
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class DerivedModel : BaseModel
+    {
+    }
+
+    internal class DerivedModelImpl : IPersistableModel<BaseModel>
+    {
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #region Snippet:Readme_Conditional_Proxy
+    public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
+    {
+        public DerivedModelProxy() : base(new DerivedModelImpl()) { }
+
+        // Only handle if the JSON contains "kind": "derived"
+        public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return doc.RootElement.TryGetProperty("kind", out var kind)
+                && kind.GetString() == "derived";
+        }
+
+        public override bool CanHandle(BaseModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is DerivedModel;
+    }
+    #endregion
+
+    internal class Node : IJsonModel<Node>
+    {
+        public string Name { get; set; } = "";
+
+        public Node? Child { get; set; }
+
+        Node IJsonModel<Node>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IJsonModel<Node>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        Node IPersistableModel<Node>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<Node>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<Node>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NodeProxy : IJsonModel<Node>
+    {
+        #region Snippet:Readme_Nested_Proxy_Write
+        void IJsonModel<Node>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            Node parent = (Node)options.ProxiedModel!;
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("child");
+            if (parent.Child is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                options.ResolveProxy((IJsonModel<Node>)parent.Child).Write(writer, options);
+            }
+
+            // Use the captured parent: ProxiedModel may now refer to the child or be null.
+            writer.WriteString("name", parent.Name);
+            writer.WriteEndObject();
+        }
+        #endregion
+
+        Node IJsonModel<Node>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        Node IPersistableModel<Node>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<Node>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<Node>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     internal class OutputModel : IJsonModel<OutputModel>
     {
         OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

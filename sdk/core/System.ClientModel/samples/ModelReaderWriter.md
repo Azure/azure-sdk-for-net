@@ -61,7 +61,7 @@ In more advanced scenarios a library user might want to override the behavior of
 
 For a client that uses `ClientPipelineOptions`, register a proxy on the client options **before constructing the client**:
 
-```csharp
+```C# Snippet:Readme_ClientOptions_AddProxy
 var clientOptions = new ClientPipelineOptions();
 clientOptions.AddProxy<OutputModel>(new OutputModelProxy());
 // Pass clientOptions to the generated client constructor.
@@ -118,7 +118,7 @@ BinaryData data = ((IPersistableModel<InputModel>)resolved).Write(options);
 
 A conditional proxy inspects the data or model before deciding whether to handle it. Extend `ConditionalModelProxy<T>` and override `CanHandle`.
 
-```csharp
+```C# Snippet:Readme_Conditional_Proxy
 public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
 {
     public DerivedModelProxy() : base(new DerivedModelImpl()) { }
@@ -147,16 +147,16 @@ context instead.
 For standalone `ResolveProxy` calls or `BinaryContent.Create` with conditional
 proxies, configure a context on the options:
 
-```csharp
-var options = new ModelReaderWriterOptions("J", MyLibraryContext.Default);
+```C# Snippet:Readme_Options_With_Context
+var options = new ModelReaderWriterOptions("J", MyProjectContext.Default);
 options.AddProxy<BaseModel>(new DerivedModelProxy());
 ```
 
 Client-library authors can copy registrations while supplying their library's
 generated context for request-body serialization:
 
-```csharp
-var options = new ModelReaderWriterOptions("J", configuredOptions, MyLibraryContext.Default);
+```C# Snippet:Readme_Options_Copy_With_Context
+var options = new ModelReaderWriterOptions("J", configuredOptions, MyProjectContext.Default);
 using BinaryContent content = BinaryContent.Create(model, options);
 ```
 
@@ -178,6 +178,9 @@ For each registered proxy:
 **Write path:** Call `options.ResolveProxy(model)`, proxies are consulted first-to-last in the order they were registered. The proxy that should be applied is returned and can be used to write through the applicable model interface.
 
 **Read path:** Use `ModelReaderWriter.Read<T>(data, options)`, proxies are consulted first-to-last internally and the applicable proxy is used during the read process.
+
+> [!NOTE]
+> Registrations are keyed by the exact registered type. A proxy registered with `AddProxy<BaseModel>` applies when reading `BaseModel`, but when writing it applies only to instances whose runtime type is exactly `BaseModel`; derived instances are written by their own serializer. To override how a derived type is written, register the proxy for that derived type.
 
 ```C# Snippet:Readme_Proxy_Chain
 string json = @"{
@@ -217,7 +220,7 @@ in a local variable before resolving children.
 For example, suppose `Node` implements `IJsonModel<Node>` and has `Name` and
 `Node? Child` properties. The following method belongs to a proxy for `Node`:
 
-```csharp
+```C# Snippet:Readme_Nested_Proxy_Write
 void IJsonModel<Node>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
 {
     Node parent = (Node)options.ProxiedModel!;
