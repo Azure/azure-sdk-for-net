@@ -390,11 +390,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         [Experimental("AAIP001")]
         public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
             return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary>
         /// The external agent definition. Represents a third-party agent hosted outside Foundry (for example, on GCP or AWS).
@@ -2755,6 +2759,8 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         [Experimental("AAIP001")]
         public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
         {
@@ -2768,6 +2774,8 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null,
                 toolParameters);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> A browser automation tool stored in a toolbox. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
