@@ -14,59 +14,59 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// Authentication properties for a non-Azure S3-compatible source.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobAccessPointAccessKeyAuthPropertiesPatch"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobAccessPointAccessKeyAuthenticationProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBlobAccessPointRemoteAuthPropertiesPatch))]
-    public abstract partial class BlobAccessPointRemoteAuthPropertiesPatch : IJsonModel<BlobAccessPointRemoteAuthPropertiesPatch>
+    [PersistableModelProxy(typeof(UnknownBlobAccessPointRemoteAuthenticationProperties))]
+    public abstract partial class BlobAccessPointRemoteAuthenticationProperties : IJsonModel<BlobAccessPointRemoteAuthenticationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BlobAccessPointRemoteAuthPropertiesPatch"/> for deserialization. </summary>
-        internal BlobAccessPointRemoteAuthPropertiesPatch()
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPointRemoteAuthenticationProperties"/> for deserialization. </summary>
+        internal BlobAccessPointRemoteAuthenticationProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobAccessPointRemoteAuthPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BlobAccessPointRemoteAuthenticationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBlobAccessPointRemoteAuthPropertiesPatch(document.RootElement, options);
+                        return DeserializeBlobAccessPointRemoteAuthenticationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthPropertiesPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthenticationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthPropertiesPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthenticationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BlobAccessPointRemoteAuthPropertiesPatch IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BlobAccessPointRemoteAuthenticationProperties IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BlobAccessPointRemoteAuthPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BlobAccessPointRemoteAuthenticationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthPropertiesPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthenticationProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BlobAccessPointRemoteAuthPropertiesPatch IJsonModel<BlobAccessPointRemoteAuthPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BlobAccessPointRemoteAuthenticationProperties IJsonModel<BlobAccessPointRemoteAuthenticationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobAccessPointRemoteAuthPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BlobAccessPointRemoteAuthenticationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPointRemoteAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthPropertiesPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobAccessPointRemoteAuthenticationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBlobAccessPointRemoteAuthPropertiesPatch(document.RootElement, options);
+            return DeserializeBlobAccessPointRemoteAuthenticationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobAccessPointRemoteAuthPropertiesPatch DeserializeBlobAccessPointRemoteAuthPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static BlobAccessPointRemoteAuthenticationProperties DeserializeBlobAccessPointRemoteAuthenticationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Storage.Models
                 switch (discriminator.GetString())
                 {
                     case "AccessKey":
-                        return BlobAccessPointAccessKeyAuthPropertiesPatch.DeserializeBlobAccessPointAccessKeyAuthPropertiesPatch(element, options);
+                        return BlobAccessPointAccessKeyAuthenticationProperties.DeserializeBlobAccessPointAccessKeyAuthenticationProperties(element, options);
                 }
             }
-            return UnknownBlobAccessPointRemoteAuthPropertiesPatch.DeserializeUnknownBlobAccessPointRemoteAuthPropertiesPatch(element, options);
+            return UnknownBlobAccessPointRemoteAuthenticationProperties.DeserializeUnknownBlobAccessPointRemoteAuthenticationProperties(element, options);
         }
     }
 }

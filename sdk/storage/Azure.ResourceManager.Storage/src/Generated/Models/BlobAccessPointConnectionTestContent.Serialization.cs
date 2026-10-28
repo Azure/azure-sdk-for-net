@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            string uniqueId = default;
+            Guid uniqueId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("uniqueId"u8))
                 {
-                    uniqueId = prop.Value.GetString();
+                    uniqueId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
