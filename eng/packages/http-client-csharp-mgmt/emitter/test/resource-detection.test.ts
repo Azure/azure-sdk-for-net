@@ -14,7 +14,8 @@ import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
-  ResourceScopeKind
+  ResourceScopeKind,
+  convertArmProviderSchemaToArguments
 } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -2348,6 +2349,8 @@ interface SharedConfigs {
       "PublicSharedConfig",
       "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
     );
+    strictEqual(subResource.metadata.resourceNameIsExplicit, true);
+    strictEqual(rgResource.metadata.resourceNameIsExplicit, undefined);
 
     // The operation paths are authoritative: both remaining List operations
     // have the sharedConfigs resource type, so they belong to SharedConfig.
@@ -5218,6 +5221,15 @@ interface RecordSets {
       armProviderSchema.resources[0].metadata.resourceName,
       "DnsRecordSet"
     );
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      convertArmProviderSchemaToArguments(armProviderSchema).resources[0]
+        .resourceNameIsExplicit,
+      true
+    );
   });
 
   it("resource-name override - map for expandable {parentType} resource", async () => {
@@ -5340,6 +5352,8 @@ interface PrivateEndpointConnections {
       domainPec.metadata.resourceName,
       "DomainPrivateEndpointConnectionCustom"
     );
+    strictEqual(topicPec.metadata.resourceNameIsExplicit, true);
+    strictEqual(domainPec.metadata.resourceNameIsExplicit, true);
 
     // Underlying model unchanged.
     strictEqual(topicPec.resourceModelId, domainPec.resourceModelId);

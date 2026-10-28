@@ -158,7 +158,6 @@
             "$id": "13",
             "name": "put",
             "isExactName": false,
-            "resourceName": "Recursive",
             "accessibility": "public",
             "parameters": [
               {
@@ -294,7 +293,6 @@
             "$id": "19",
             "name": "get",
             "isExactName": false,
-            "resourceName": "Recursive",
             "accessibility": "public",
             "parameters": [
               {

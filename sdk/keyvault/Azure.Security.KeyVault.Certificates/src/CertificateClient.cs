@@ -894,7 +894,8 @@ namespace Azure.Security.KeyVault.Certificates
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-            try { return _generated.PurgeDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken }); }
+            try
+            { return _generated.PurgeDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken }); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -915,7 +916,8 @@ namespace Azure.Security.KeyVault.Certificates
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-            try { return await _generated.PurgeDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false); }
+            try
+            { return await _generated.PurgeDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -1775,8 +1777,8 @@ namespace Azure.Security.KeyVault.Certificates
                 return response.Status switch
                 {
                     200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
-                    404        => Response.FromValue<CertificateOperationProperties>(null, response),
-                    _          => throw new RequestFailedException(response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e) { scope.Failed(e); throw; }
@@ -1796,8 +1798,8 @@ namespace Azure.Security.KeyVault.Certificates
                 return response.Status switch
                 {
                     200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
-                    404        => Response.FromValue<CertificateOperationProperties>(null, response),
-                    _          => throw new RequestFailedException(response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e) { scope.Failed(e); throw; }
@@ -1880,15 +1882,16 @@ namespace Azure.Security.KeyVault.Certificates
         // throwing - that's the contract the customer relied on.
         private static string MapApiVersion(CertificateClientOptions.ServiceVersion version) => version switch
         {
-            CertificateClientOptions.ServiceVersion.V7_0                => "7.0",
-            CertificateClientOptions.ServiceVersion.V7_1                => "7.1",
-            CertificateClientOptions.ServiceVersion.V7_2                => "7.2",
-            CertificateClientOptions.ServiceVersion.V7_3                => "7.3",
-            CertificateClientOptions.ServiceVersion.V7_4                => "7.4",
-            CertificateClientOptions.ServiceVersion.V7_5                => "7.5",
-            CertificateClientOptions.ServiceVersion.V7_6                => "7.6",
-            CertificateClientOptions.ServiceVersion.V2025_07_01         => "2025-07-01",
+            CertificateClientOptions.ServiceVersion.V7_0 => "7.0",
+            CertificateClientOptions.ServiceVersion.V7_1 => "7.1",
+            CertificateClientOptions.ServiceVersion.V7_2 => "7.2",
+            CertificateClientOptions.ServiceVersion.V7_3 => "7.3",
+            CertificateClientOptions.ServiceVersion.V7_4 => "7.4",
+            CertificateClientOptions.ServiceVersion.V7_5 => "7.5",
+            CertificateClientOptions.ServiceVersion.V7_6 => "7.6",
+            CertificateClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
             CertificateClientOptions.ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
+            CertificateClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,
@@ -1926,11 +1929,13 @@ namespace Azure.Security.KeyVault.Certificates
                     scope.Start();
                     try
                     {
-                        if (!e.MoveNext()) { scope.Dispose(); yield break; }
+                        if (!e.MoveNext())
+                        { scope.Dispose(); yield break; }
                         page = e.Current;
                         values = new List<TOut>(page.Values.Count);
                         // Map page items inside the scope so deserialization failures are recorded as Failed.
-                        foreach (TIn v in page.Values) values.Add(_map(v));
+                        foreach (TIn v in page.Values)
+                            values.Add(_map(v));
                     }
                     catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                     scope.Dispose();
@@ -1960,10 +1965,12 @@ namespace Azure.Security.KeyVault.Certificates
                         scope.Start();
                         try
                         {
-                            if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
+                            if (!await e.MoveNextAsync().ConfigureAwait(false))
+                            { scope.Dispose(); yield break; }
                             page = e.Current;
                             values = new List<TOut>(page.Values.Count);
-                            foreach (TIn v in page.Values) values.Add(_map(v));
+                            foreach (TIn v in page.Values)
+                                values.Add(_map(v));
                         }
                         catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                         scope.Dispose();

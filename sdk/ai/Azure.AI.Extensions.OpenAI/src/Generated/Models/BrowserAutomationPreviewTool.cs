@@ -9,7 +9,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+    /// <summary>
+    /// The input definition information for a Browser Automation Tool, as used to configure an Agent.
+    /// BrowserAutomationPreviewTool is deprecated.
+    /// Please use BrowserAutomationTool instead.
+    /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+    /// </summary>
+    [Obsolete("This legacy Browser Automation tool is deprecated and is no longer available. Please use the latest Browser Automation tool instead. See https://aka.ms/bat/docs.")]
     [Experimental("AAIP001")]
     public partial class BrowserAutomationPreviewTool : ResponseTool
     {

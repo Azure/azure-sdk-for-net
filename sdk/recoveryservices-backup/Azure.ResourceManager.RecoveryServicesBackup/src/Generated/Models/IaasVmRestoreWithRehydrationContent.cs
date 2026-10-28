@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmRestoreWithRehydrationContent : IaasVmRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmRestoreWithRehydrationContent"/>. </summary>
-        public IaasVmRestoreWithRehydrationContent()
+        public IaasVmRestoreWithRehydrationContent() : base("IaasVMRestoreWithRehydrationRequest")
         {
         }
 

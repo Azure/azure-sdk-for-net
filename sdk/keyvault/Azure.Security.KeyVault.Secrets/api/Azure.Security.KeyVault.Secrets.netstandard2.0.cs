@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
-        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V2025_07_01) { }
+        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V2026_04_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -122,6 +122,7 @@ namespace Azure.Security.KeyVault.Secrets
             V7_5 = 5,
             V7_6 = 6,
             V2025_07_01 = 7,
+            V2026_04_01 = 8,
         }
     }
     public partial class SecretClientSettings : System.ClientModel.Primitives.ClientSettings
