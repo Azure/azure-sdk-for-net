@@ -11,6 +11,8 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
@@ -65,6 +67,7 @@ namespace Azure.Generator.Management
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.RemoveUnsafeHistoricalFactoryOverloads(modelFactory);
+                GenericModelFactoryMethods.AddTo(modelFactory);
             }
             else
             {
@@ -135,6 +138,20 @@ namespace Azure.Generator.Management
         /// <summary>
         /// Management plane SDKs do not need ConfigurationSchema.json generation.
         /// </summary>
-        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
+        public override async Task WriteAdditionalFiles(string outputPath)
+        {
+            var factory = OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().FirstOrDefault();
+            if (factory is null)
+            {
+                return;
+            }
+            using var stream = typeof(ManagementClientGenerator).Assembly.GetManifestResourceStream(
+                "Azure.Generator.Management.Assets.ModelFactoryPropertyBag.cs")!;
+            using var reader = new StreamReader(stream);
+            var source = (await reader.ReadToEndAsync()).Replace("namespace Generated", $"namespace {factory.Type.Namespace}");
+            var directory = Path.Combine(outputPath, "src", "Generated", "Internal");
+            Directory.CreateDirectory(directory);
+            await File.WriteAllTextAsync(Path.Combine(directory, "ModelFactoryPropertyBag.cs"), source);
+        }
     }
 }

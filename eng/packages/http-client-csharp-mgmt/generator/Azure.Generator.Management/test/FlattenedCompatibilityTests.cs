@@ -1524,6 +1524,7 @@ namespace Azure.Generator.Mgmt.Tests
                     or "ModelSerializationExtensions" or "TypeFormatters" or "SerializationFormat" or "SamplesContext").ToArray();
             var documents = types.Concat(types.SelectMany(t => t.SerializationProviders))
                 .Select(t => (t.Name + ".cs", plugin.GetWriter(t).Write().Content))
+                .Concat(types.OfType<ModelFactoryProvider>().Select(ManagementMockHelpers.GetModelFactoryHelperSource))
                 // Scalar JSON paths do not need the separately source-generated context type builders.
                 .Append(("Context.cs", """
                     namespace Samples

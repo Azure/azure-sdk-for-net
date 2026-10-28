@@ -15,6 +15,8 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Assets\README.md.template" />
+		<Compile Remove="Assets\ModelFactoryPropertyBag.cs" />
+		<EmbeddedResource Include="Assets\ModelFactoryPropertyBag.cs" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
