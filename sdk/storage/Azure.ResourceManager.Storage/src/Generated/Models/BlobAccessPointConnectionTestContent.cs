@@ -19,18 +19,15 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="BlobAccessPointConnectionTestContent"/>. </summary>
         /// <param name="uniqueId"> The system-generated unique identifier of the Blob Access Point configuration, as returned by a read operation. This value must match the configuration named in the request path, and is required so that a configuration which was deleted and recreated under the same name is not tested by mistake. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uniqueId"/> is null. </exception>
-        public BlobAccessPointConnectionTestContent(string uniqueId)
+        public BlobAccessPointConnectionTestContent(Guid uniqueId)
         {
-            Argument.AssertNotNull(uniqueId, nameof(uniqueId));
-
             UniqueId = uniqueId;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobAccessPointConnectionTestContent"/>. </summary>
         /// <param name="uniqueId"> The system-generated unique identifier of the Blob Access Point configuration, as returned by a read operation. This value must match the configuration named in the request path, and is required so that a configuration which was deleted and recreated under the same name is not tested by mistake. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobAccessPointConnectionTestContent(string uniqueId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobAccessPointConnectionTestContent(Guid uniqueId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +35,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The system-generated unique identifier of the Blob Access Point configuration, as returned by a read operation. This value must match the configuration named in the request path, and is required so that a configuration which was deleted and recreated under the same name is not tested by mistake. </summary>
         [WirePath("uniqueId")]
-        public string UniqueId { get; }
+        public Guid UniqueId { get; }
     }
 }

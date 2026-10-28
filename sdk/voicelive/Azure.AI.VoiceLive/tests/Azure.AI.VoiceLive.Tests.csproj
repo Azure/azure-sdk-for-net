@@ -8,7 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.AI.VoiceLive.csproj" />
+    <ProjectReference Include="..\src\Azure.AI.VoiceLive.csproj">
+      <!-- Exercise the netstandard SDK's non-Framework handshake in the existing .NET 8 CI jobs. -->
+      <SetTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">TargetFramework=netstandard2.0</SetTargetFramework>
+      <SkipGetTargetFrameworkProperties Condition="'$(TargetFramework)' == 'net8.0'">true</SkipGetTargetFrameworkProperties>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
