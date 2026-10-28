@@ -1,14 +1,14 @@
 # Release History
 
-## 1.7.0-beta.2 (Unreleased)
+## 1.7.0-beta.2 (2026-10-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded Microsoft.CognitiveServices from 2026-09-15-preview to 2026-11-15-preview
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.63.0 to 1.64.0
 
 ## 1.7.0-beta.1 (2026-10-26)
 

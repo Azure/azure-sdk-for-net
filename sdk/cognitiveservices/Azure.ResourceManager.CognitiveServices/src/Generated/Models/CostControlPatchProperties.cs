@@ -11,48 +11,127 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The properties that can be changed on a cost control. </summary>
+    /// <summary> Optional edits to a budget. Omitted properties retain their existing values; no defaults are applied. </summary>
     public partial class CostControlPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private string _displayName;
-        private bool _displayNameIsDefined;
+        private CostControlFilter _filter;
+        private bool _filterIsDefined;
+        private CostControlProviderPropertiesPatch _providerProperties;
+        private bool _providerPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CostControlPatchProperties"/>. </summary>
         public CostControlPatchProperties()
         {
-            Rules = new ChangeTrackingList<CostControlRule>();
+            Grouping = new ChangeTrackingList<CostControlGrouping>();
+            Notifications = new ChangeTrackingDictionary<string, CostControlNotificationPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CostControlPatchProperties"/>. </summary>
-        /// <param name="displayName"> An optional human-readable name for the cost control. Set this property to null to clear it. </param>
-        /// <param name="rules"> The complete replacement set of cost control rules. </param>
+        /// <param name="provider"> The resource provider. If supplied, it must be Microsoft.CognitiveServices and cannot be null. </param>
+        /// <param name="grouping"> Replaces additional grouping. Omission preserves grouping; an empty array restores the owner's default counter. Null is not accepted. </param>
+        /// <param name="category"> The existing measurement category. Changing it after creation is not supported. </param>
+        /// <param name="amount"> Replaces the positive budget amount in United States dollars or whole tokens, according to category. Token amounts cannot exceed 9223372036854775807. </param>
+        /// <param name="timeGrain"> Replaces the calendar-aligned UTC renewal interval. </param>
+        /// <param name="timePeriod"> Merges supplied dates into the existing validity window; omitted dates remain unchanged. </param>
+        /// <param name="filter"> Replaces the complete traffic filter. Set to null to select all eligible traffic within the owner's scope. </param>
+        /// <param name="notifications">
+        /// Merges notifications by case-insensitive name, preserving existing name casing. Null entries delete notifications; null clears the collection.
+        /// An empty object leaves existing notifications unchanged. New entries must supply all required notification fields after merging.
+        /// </param>
+        /// <param name="providerProperties"> Merges provider-specific settings. Set to null to remove all blocking actions; omission preserves them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostControlPatchProperties(string displayName, IList<CostControlRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostControlPatchProperties(CostControlPatchPropertiesProvider? provider, IList<CostControlGrouping> grouping, CostControlCategory? category, double? amount, CostControlTimeGrain? timeGrain, CostControlTimePeriodPatch timePeriod, CostControlFilter filter, IDictionary<string, CostControlNotificationPatch> notifications, CostControlProviderPropertiesPatch providerProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _displayName = displayName;
-            Rules = rules;
+            Provider = provider;
+            Grouping = grouping;
+            Category = category;
+            Amount = amount;
+            TimeGrain = timeGrain;
+            TimePeriod = timePeriod;
+            _filter = filter;
+            Notifications = notifications;
+            _providerProperties = providerProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> An optional human-readable name for the cost control. Set this property to null to clear it. </summary>
-        [WirePath("displayName")]
-        public string DisplayName
+        /// <summary> The resource provider. If supplied, it must be Microsoft.CognitiveServices and cannot be null. </summary>
+        [WirePath("provider")]
+        public CostControlPatchPropertiesProvider? Provider { get; set; }
+
+        /// <summary> Replaces additional grouping. Omission preserves grouping; an empty array restores the owner's default counter. Null is not accepted. </summary>
+        [WirePath("grouping")]
+        public IList<CostControlGrouping> Grouping { get; }
+
+        /// <summary> The existing measurement category. Changing it after creation is not supported. </summary>
+        [WirePath("category")]
+        public CostControlCategory? Category { get; set; }
+
+        /// <summary> Replaces the positive budget amount in United States dollars or whole tokens, according to category. Token amounts cannot exceed 9223372036854775807. </summary>
+        [WirePath("amount")]
+        public double? Amount { get; set; }
+
+        /// <summary> Replaces the calendar-aligned UTC renewal interval. </summary>
+        [WirePath("timeGrain")]
+        public CostControlTimeGrain? TimeGrain { get; set; }
+
+        /// <summary> Merges supplied dates into the existing validity window; omitted dates remain unchanged. </summary>
+        [WirePath("timePeriod")]
+        public CostControlTimePeriodPatch TimePeriod { get; set; }
+
+        /// <summary> Replaces the complete traffic filter. Set to null to select all eligible traffic within the owner's scope. </summary>
+        [WirePath("filter")]
+        public CostControlFilter Filter
         {
             get
             {
-                return _displayName;
+                return _filter;
             }
             set
             {
-                _displayName = value;
-                _displayNameIsDefined = true;
+                _filter = value;
+                _filterIsDefined = true;
             }
         }
 
-        /// <summary> The complete replacement set of cost control rules. </summary>
-        [WirePath("rules")]
-        public IList<CostControlRule> Rules { get; }
+        /// <summary>
+        /// Merges notifications by case-insensitive name, preserving existing name casing. Null entries delete notifications; null clears the collection.
+        /// An empty object leaves existing notifications unchanged. New entries must supply all required notification fields after merging.
+        /// </summary>
+        [WirePath("notifications")]
+        public IDictionary<string, CostControlNotificationPatch> Notifications { get; set; }
+
+        /// <summary> Merges provider-specific settings. Set to null to remove all blocking actions; omission preserves them. </summary>
+        [WirePath("providerProperties")]
+        internal CostControlProviderPropertiesPatch ProviderProperties
+        {
+            get
+            {
+                return _providerProperties;
+            }
+            set
+            {
+                _providerProperties = value;
+                _providerPropertiesIsDefined = true;
+            }
+        }
+
+        /// <summary>
+        /// Merges actions by case-insensitive name, preserving existing name casing. Null entries delete actions; null clears the collection.
+        /// An empty object leaves actions unchanged. New entries must supply all required action fields after merging.
+        /// </summary>
+        [WirePath("providerProperties.actions")]
+        public IDictionary<string, CostControlActionPatch> ProviderActions
+        {
+            get
+            {
+                if (ProviderProperties is null)
+                {
+                    ProviderProperties = new CostControlProviderPropertiesPatch();
+                }
+                return ProviderProperties.Actions;
+            }
+        }
     }
 }

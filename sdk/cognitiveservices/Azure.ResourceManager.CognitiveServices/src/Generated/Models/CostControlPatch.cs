@@ -11,27 +11,27 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The request used to update a cost control. </summary>
-    public partial class CognitiveServicesAccountCostControlPatch
+    /// <summary> A partial budget update. An empty properties object is a no-op and retains the entity tag. </summary>
+    public partial class CostControlPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountCostControlPatch"/>. </summary>
-        public CognitiveServicesAccountCostControlPatch()
+        /// <summary> Initializes a new instance of <see cref="CostControlPatch"/>. </summary>
+        public CostControlPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountCostControlPatch"/>. </summary>
-        /// <param name="properties"> The cost control properties to update. </param>
+        /// <summary> Initializes a new instance of <see cref="CostControlPatch"/>. </summary>
+        /// <param name="properties"> The budget properties to merge into the existing control. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountCostControlPatch(CostControlPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostControlPatch(CostControlPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The cost control properties to update. </summary>
+        /// <summary> The budget properties to merge into the existing control. </summary>
         [WirePath("properties")]
         public CostControlPatchProperties Properties { get; set; }
     }

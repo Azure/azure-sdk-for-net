@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -326,21 +325,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CostControlIds))
-            {
-                writer.WritePropertyName("costControlIds"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in CostControlIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
             {
                 if (CostControlConnections != null)
@@ -431,9 +415,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
+            CapabilitySettings capabilitySettings = default;
             IList<AgentHostingConfiguration> agentHostingConfigurations = default;
-            IList<ResourceIdentifier> costControlIds = default;
             bool costControlConnectionsIsDefined = false;
             CostControlConnections costControlConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -810,7 +793,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
+                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentHostingConfigurations"u8))
@@ -825,27 +808,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
                     }
                     agentHostingConfigurations = array;
-                    continue;
-                }
-                if (prop.NameEquals("costControlIds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    costControlIds = array;
                     continue;
                 }
                 if (prop.NameEquals("costControlConnections"u8))
@@ -903,7 +865,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 associatedProjects ?? new ChangeTrackingList<string>(),
                 capabilitySettings,
                 agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
-                costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 costControlConnections,
                 additionalBinaryDataProperties)
             {

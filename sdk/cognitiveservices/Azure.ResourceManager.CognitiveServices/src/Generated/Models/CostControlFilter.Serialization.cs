@@ -9,67 +9,59 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The request used to update a cost control. </summary>
-    public partial class CognitiveServicesAccountCostControlPatch : IJsonModel<CognitiveServicesAccountCostControlPatch>
+    /// <summary>
+    /// Traffic selection using exactly one of tags or and. Tag names must be unique across the complete expression.
+    /// Filters narrow the owner's scope and cannot extend a project-owned control to another project.
+    /// </summary>
+    public partial class CostControlFilter : IJsonModel<CostControlFilter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServicesAccountCostControlPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CostControlFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountCostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCognitiveServicesAccountCostControlPatch(document.RootElement, options);
+                        return DeserializeCostControlFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountCostControlPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountCostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountCostControlPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServicesAccountCostControlPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostControlFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesAccountCostControlPatch IPersistableModel<CognitiveServicesAccountCostControlPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CostControlFilter IPersistableModel<CostControlFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServicesAccountCostControlPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="cognitiveServicesAccountCostControlPatch"> The <see cref="CognitiveServicesAccountCostControlPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CognitiveServicesAccountCostControlPatch cognitiveServicesAccountCostControlPatch)
-        {
-            if (cognitiveServicesAccountCostControlPatch == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(cognitiveServicesAccountCostControlPatch, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<CostControlFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServicesAccountCostControlPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostControlFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +72,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountCostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountCostControlPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Tags))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteObjectValue(Tags, options);
+            }
+            if (Optional.IsCollectionDefined(And))
+            {
+                writer.WritePropertyName("and"u8);
+                writer.WriteStartArray();
+                foreach (CostControlFilter item in And)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,40 +111,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesAccountCostControlPatch IJsonModel<CognitiveServicesAccountCostControlPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CostControlFilter IJsonModel<CostControlFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServicesAccountCostControlPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CostControlFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountCostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountCostControlPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlFilter)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCognitiveServicesAccountCostControlPatch(document.RootElement, options);
+            return DeserializeCostControlFilter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServicesAccountCostControlPatch DeserializeCognitiveServicesAccountCostControlPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static CostControlFilter DeserializeCostControlFilter(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CostControlPatchProperties properties = default;
+            CostControlTagFilter tags = default;
+            IList<CostControlFilter> @and = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = CostControlPatchProperties.DeserializeCostControlPatchProperties(prop.Value, options);
+                    tags = CostControlTagFilter.DeserializeCostControlTagFilter(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("and"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CostControlFilter> array = new List<CostControlFilter>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeCostControlFilter(item, options));
+                    }
+                    @and = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CognitiveServicesAccountCostControlPatch(properties, additionalBinaryDataProperties);
+            return new CostControlFilter(tags, @and ?? new ChangeTrackingList<CostControlFilter>(), additionalBinaryDataProperties);
         }
     }
 }

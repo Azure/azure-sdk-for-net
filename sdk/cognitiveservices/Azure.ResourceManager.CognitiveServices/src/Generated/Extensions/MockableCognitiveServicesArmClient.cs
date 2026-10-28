@@ -349,5 +349,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             CognitiveServicesAccountCostControlResource.ValidateResourceId(id);
             return new CognitiveServicesAccountCostControlResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesProjectCostControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesProjectCostControlResource"/> object. </returns>
+        public virtual CognitiveServicesProjectCostControlResource GetCognitiveServicesProjectCostControlResource(ResourceIdentifier id)
+        {
+            CognitiveServicesProjectCostControlResource.ValidateResourceId(id);
+            return new CognitiveServicesProjectCostControlResource(Client, id);
+        }
     }
 }

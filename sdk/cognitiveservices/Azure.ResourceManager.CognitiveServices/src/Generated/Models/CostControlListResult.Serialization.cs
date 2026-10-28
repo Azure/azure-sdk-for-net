@@ -14,7 +14,7 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> A page of cost controls. </summary>
+    /// <summary> A page of cost controls owned by an account. </summary>
     internal partial class CostControlListResult : IJsonModel<CostControlListResult>
     {
         /// <summary> Initializes a new instance of <see cref="CostControlListResult"/> for deserialization. </summary>

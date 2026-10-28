@@ -23,23 +23,43 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiAcsInterventionPoints"/>. </summary>
+        /// <param name="agentStartup"> The policy evaluated when the agent execution session starts. </param>
         /// <param name="input"> The policy evaluated for user input. </param>
+        /// <param name="preModelCall"> The policy evaluated before a model call. </param>
+        /// <param name="postModelCall"> The policy evaluated after a model call. </param>
         /// <param name="preToolCall"> The policy evaluated before a tool call. </param>
         /// <param name="postToolCall"> The policy evaluated after a tool call. </param>
         /// <param name="output"> The policy evaluated for final output. </param>
+        /// <param name="agentShutdown"> The policy evaluated when the agent execution session shuts down. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiAcsInterventionPoints(RaiAcsInterventionPoint input, RaiAcsToolInterventionPoint preToolCall, RaiAcsToolInterventionPoint postToolCall, RaiAcsInterventionPoint output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiAcsInterventionPoints(RaiAcsAgentStartupInterventionPoint agentStartup, RaiAcsInterventionPoint input, RaiAcsPreModelCallInterventionPoint preModelCall, RaiAcsPostModelCallInterventionPoint postModelCall, RaiAcsToolInterventionPoint preToolCall, RaiAcsToolInterventionPoint postToolCall, RaiAcsInterventionPoint output, RaiAcsAgentShutdownInterventionPoint agentShutdown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AgentStartup = agentStartup;
             Input = input;
+            PreModelCall = preModelCall;
+            PostModelCall = postModelCall;
             PreToolCall = preToolCall;
             PostToolCall = postToolCall;
             Output = output;
+            AgentShutdown = agentShutdown;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The policy evaluated when the agent execution session starts. </summary>
+        [WirePath("agent_startup")]
+        public RaiAcsAgentStartupInterventionPoint AgentStartup { get; set; }
 
         /// <summary> The policy evaluated for user input. </summary>
         [WirePath("input")]
         public RaiAcsInterventionPoint Input { get; set; }
+
+        /// <summary> The policy evaluated before a model call. </summary>
+        [WirePath("pre_model_call")]
+        public RaiAcsPreModelCallInterventionPoint PreModelCall { get; set; }
+
+        /// <summary> The policy evaluated after a model call. </summary>
+        [WirePath("post_model_call")]
+        public RaiAcsPostModelCallInterventionPoint PostModelCall { get; set; }
 
         /// <summary> The policy evaluated before a tool call. </summary>
         [WirePath("pre_tool_call")]
@@ -52,5 +72,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The policy evaluated for final output. </summary>
         [WirePath("output")]
         public RaiAcsInterventionPoint Output { get; set; }
+
+        /// <summary> The policy evaluated when the agent execution session shuts down. </summary>
+        [WirePath("agent_shutdown")]
+        public RaiAcsAgentShutdownInterventionPoint AgentShutdown { get; set; }
     }
 }

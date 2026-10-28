@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesAccountCostControlResource.ResourceType, out string cognitiveServicesAccountCostControlApiVersion);
             _costControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountCostControlResource.ResourceType.Namespace, Diagnostics);
-            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-09-15-preview");
+            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Creates or replaces a cost control.
+        /// Creates or replaces an account-owned budget synchronously. An omitted grouping selects the account's default counter.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Creates or replaces a cost control.
+        /// Creates or replaces an account-owned budget synchronously. An omitted grouping selects the account's default counter.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control, or returns 304 when the supplied entity tag matches.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -179,15 +179,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetAsync(string costControlName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetAsync(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control, or returns 304 when the supplied entity tag matches.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -228,15 +229,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CognitiveServicesAccountCostControlResource> Get(string costControlName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesAccountCostControlResource> Get(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -248,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +267,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Lists the cost controls owned by an account.
+        /// Lists account-owned cost controls using the budget representation. An unrepresentable legacy entry causes the complete list request to fail.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -277,7 +279,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +301,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Lists the cost controls owned by an account.
+        /// Lists account-owned cost controls using the budget representation. An unrepresentable legacy entry causes the complete list request to fail.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -311,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,15 +347,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string costControlName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -365,7 +368,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -402,15 +405,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string costControlName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -422,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -459,15 +463,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CognitiveServicesAccountCostControlResource>> GetIfExistsAsync(string costControlName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CognitiveServicesAccountCostControlResource>> GetIfExistsAsync(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -479,7 +484,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -520,15 +525,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CognitiveServicesAccountCostControlResource> GetIfExists(string costControlName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CognitiveServicesAccountCostControlResource> GetIfExists(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
@@ -540,7 +546,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, ifNoneMatch, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
