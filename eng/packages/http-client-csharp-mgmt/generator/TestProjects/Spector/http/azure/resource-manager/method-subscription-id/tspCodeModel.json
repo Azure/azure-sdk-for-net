@@ -2935,7 +2935,6 @@
                     "$id": "196",
                     "name": "get",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource1",
                     "doc": "Get a SubscriptionResource1",
                     "accessibility": "public",
                     "parameters": [
@@ -3238,7 +3237,6 @@
                     "$id": "213",
                     "name": "put",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource1",
                     "doc": "Create a SubscriptionResource1",
                     "accessibility": "public",
                     "parameters": [
@@ -3654,7 +3652,6 @@
                     "$id": "234",
                     "name": "delete",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource1",
                     "doc": "Delete a SubscriptionResource1",
                     "accessibility": "public",
                     "parameters": [
@@ -3971,7 +3968,6 @@
                     "$id": "253",
                     "name": "get",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource2",
                     "doc": "Get a SubscriptionResource2",
                     "accessibility": "public",
                     "parameters": [
@@ -4312,7 +4308,6 @@
                     "$id": "273",
                     "name": "put",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource2",
                     "doc": "Create a SubscriptionResource2",
                     "accessibility": "public",
                     "parameters": [
@@ -4728,7 +4723,6 @@
                     "$id": "294",
                     "name": "delete",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource2",
                     "doc": "Delete a SubscriptionResource2",
                     "accessibility": "public",
                     "parameters": [
@@ -5140,7 +5134,6 @@
                     "$id": "320",
                     "name": "get",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource",
                     "doc": "Get a SubscriptionResource",
                     "accessibility": "public",
                     "parameters": [
@@ -5443,7 +5436,6 @@
                     "$id": "337",
                     "name": "put",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource",
                     "doc": "Create a SubscriptionResource",
                     "accessibility": "public",
                     "parameters": [
@@ -5859,7 +5851,6 @@
                     "$id": "358",
                     "name": "delete",
                     "isExactName": false,
-                    "resourceName": "SubscriptionResource",
                     "doc": "Delete a SubscriptionResource",
                     "accessibility": "public",
                     "parameters": [
@@ -6176,7 +6167,6 @@
                     "$id": "377",
                     "name": "get",
                     "isExactName": false,
-                    "resourceName": "ResourceGroupResource",
                     "doc": "Get a ResourceGroupResource",
                     "accessibility": "public",
                     "parameters": [
@@ -6629,7 +6619,6 @@
                     "$id": "402",
                     "name": "put",
                     "isExactName": false,
-                    "resourceName": "ResourceGroupResource",
                     "doc": "Create a ResourceGroupResource",
                     "accessibility": "public",
                     "parameters": [
@@ -7121,7 +7110,6 @@
                     "$id": "425",
                     "name": "delete",
                     "isExactName": false,
-                    "resourceName": "ResourceGroupResource",
                     "doc": "Delete a ResourceGroupResource",
                     "accessibility": "public",
                     "parameters": [
@@ -7517,7 +7505,6 @@
                 "$id": "446",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [

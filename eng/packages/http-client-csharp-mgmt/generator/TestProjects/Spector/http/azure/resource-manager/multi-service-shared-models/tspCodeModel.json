@@ -2133,7 +2133,6 @@
                 "$id": "141",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "VirtualMachine",
                 "doc": "Retrieves information about the model view or the instance view of a virtual machine.",
                 "accessibility": "public",
                 "parameters": [
@@ -2586,7 +2585,6 @@
                 "$id": "166",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "VirtualMachine",
                 "doc": "The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.",
                 "accessibility": "public",
                 "parameters": [
@@ -3174,7 +3172,6 @@
                 "$id": "195",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StorageAccount",
                 "doc": "Gets information about a storage account.",
                 "accessibility": "public",
                 "parameters": [
@@ -3627,7 +3624,6 @@
                 "$id": "220",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "StorageAccount",
                 "doc": "Creates or updates a storage account.",
                 "accessibility": "public",
                 "parameters": [

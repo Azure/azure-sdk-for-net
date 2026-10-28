@@ -90,6 +90,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string OdbcValue = "Odbc";
         private const string GenericRestValue = "GenericRest";
         private const string RemoteToolValue = "RemoteTool";
+        /// <summary> Connection to an endpoint described by an OpenAPI specification. </summary>
+        private const string OpenApiValue = "OpenAPI";
         private const string AmazonMwsValue = "AmazonMws";
         private const string ConcurValue = "Concur";
         private const string DynamicsValue = "Dynamics";
@@ -370,6 +372,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the RemoteTool. </summary>
         public static CognitiveServicesConnectionCategory RemoteTool { get; } = new CognitiveServicesConnectionCategory(RemoteToolValue);
+
+        /// <summary> Connection to an endpoint described by an OpenAPI specification. </summary>
+        public static CognitiveServicesConnectionCategory OpenApi { get; } = new CognitiveServicesConnectionCategory(OpenApiValue);
 
         /// <summary> Gets the AmazonMws. </summary>
         public static CognitiveServicesConnectionCategory AmazonMws { get; } = new CognitiveServicesConnectionCategory(AmazonMwsValue);

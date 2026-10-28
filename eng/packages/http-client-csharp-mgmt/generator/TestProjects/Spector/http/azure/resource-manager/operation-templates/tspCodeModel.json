@@ -5356,7 +5356,6 @@
                 "$id": "356",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
@@ -5573,7 +5572,6 @@
                 "$id": "367",
                 "name": "checkGlobal",
                 "isExactName": false,
-                "resourceName": "CheckNameAvailability",
                 "doc": "Implements global CheckNameAvailability operations",
                 "accessibility": "public",
                 "parameters": [
@@ -5950,7 +5948,6 @@
                 "$id": "388",
                 "name": "checkLocal",
                 "isExactName": false,
-                "resourceName": "CheckNameAvailability",
                 "doc": "Implements local CheckNameAvailability operations",
                 "accessibility": "public",
                 "parameters": [
@@ -6393,7 +6390,6 @@
                 "$id": "413",
                 "name": "createOrReplace",
                 "isExactName": false,
-                "resourceName": "Order",
                 "doc": "Create a Order",
                 "accessibility": "public",
                 "parameters": [
@@ -6995,7 +6991,6 @@
                 "$id": "444",
                 "name": "export",
                 "isExactName": false,
-                "resourceName": "Lro",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -7532,7 +7527,6 @@
                 "$id": "471",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Order",
                 "doc": "Delete a Order",
                 "accessibility": "public",
                 "parameters": [
@@ -7898,7 +7892,6 @@
                 "$id": "490",
                 "name": "exportArray",
                 "isExactName": false,
-                "resourceName": "Lro",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -8271,7 +8264,6 @@
                 "$id": "510",
                 "name": "getLro",
                 "isExactName": false,
-                "resourceName": "CostReport",
                 "doc": "Get a CostReport",
                 "accessibility": "public",
                 "parameters": [
@@ -8629,7 +8621,6 @@
                 "$id": "530",
                 "name": "postPagingLro",
                 "isExactName": false,
-                "resourceName": "LroPaging",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -9142,7 +9133,6 @@
                 "$id": "557",
                 "name": "postPagingLroWithBody",
                 "isExactName": false,
-                "resourceName": "LroPaging",
                 "doc": "A long-running resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -9746,7 +9736,6 @@
                 "$id": "586",
                 "name": "routedGet",
                 "isExactName": false,
-                "resourceName": "Legacy",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -10229,7 +10218,6 @@
                 "$id": "615",
                 "name": "createOrReplaceOptionalBody",
                 "isExactName": false,
-                "resourceName": "Configuration",
                 "doc": "Create a Configuration",
                 "accessibility": "public",
                 "parameters": [
@@ -10768,7 +10756,6 @@
                 "$id": "642",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Widget",
                 "doc": "Get a Widget",
                 "accessibility": "public",
                 "parameters": [
@@ -11221,7 +11208,6 @@
                 "$id": "667",
                 "name": "patch",
                 "isExactName": false,
-                "resourceName": "Widget",
                 "doc": "Update a Widget",
                 "accessibility": "public",
                 "parameters": [
@@ -11695,7 +11681,6 @@
                 "$id": "690",
                 "name": "post",
                 "isExactName": false,
-                "resourceName": "OptionalBody",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -12169,7 +12154,6 @@
                 "$id": "713",
                 "name": "providerPost",
                 "isExactName": false,
-                "resourceName": "OptionalBody",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -12532,7 +12516,6 @@
                 "$id": "732",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Monitor",
                 "doc": "Get a Monitor",
                 "accessibility": "public",
                 "parameters": [
@@ -12985,7 +12968,6 @@
                 "$id": "757",
                 "name": "postActionPaging",
                 "isExactName": false,
-                "resourceName": "Paging",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -13475,7 +13457,6 @@
                 "$id": "780",
                 "name": "markAsPageable",
                 "isExactName": false,
-                "resourceName": "Collection",
                 "doc": "List Collection resources by Monitor",
                 "accessibility": "public",
                 "parameters": [

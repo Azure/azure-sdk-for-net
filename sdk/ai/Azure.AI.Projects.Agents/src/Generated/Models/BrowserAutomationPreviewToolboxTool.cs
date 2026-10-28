@@ -9,7 +9,13 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A browser automation tool stored in a toolbox. </summary>
+    /// <summary>
+    /// A browser automation tool stored in a toolbox.
+    /// BrowserAutomationPreviewToolboxTool is deprecated.
+    /// Please use BrowserAutomationToolboxTool instead.
+    /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+    /// </summary>
+    [Obsolete("This legacy Browser Automation tool is deprecated and is no longer available. Please use the latest Browser Automation tool instead. See https://aka.ms/bat/docs.")]
     [Experimental("AAIP001")]
     public partial class BrowserAutomationPreviewToolboxTool : ToolboxTool
     {

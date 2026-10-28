@@ -14,7 +14,8 @@ import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
-  ResourceScopeKind
+  ResourceScopeKind,
+  convertArmProviderSchemaToArguments
 } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -5237,6 +5238,11 @@ interface RecordSets {
     );
     strictEqual(
       armProviderSchema.resources[0].metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      convertArmProviderSchemaToArguments(armProviderSchema).resources[0]
+        .resourceNameIsExplicit,
       true
     );
   });

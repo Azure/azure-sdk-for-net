@@ -28741,7 +28741,6 @@
             "$id": "1848",
             "name": "previewActions",
             "isExactName": false,
-            "resourceName": "MgmtTypeSpec",
             "doc": "Runs the input conditions against input object metadata properties and designates matched objects in response.",
             "accessibility": "public",
             "parameters": [
@@ -32532,7 +32531,6 @@
                 "$id": "2285",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
@@ -32751,7 +32749,6 @@
                 "$id": "2296",
                 "name": "GetAllPrivateLinkResources",
                 "isExactName": false,
-                "resourceName": "PrivateLink",
                 "doc": "list private links on the given resource",
                 "accessibility": "public",
                 "parameters": [
@@ -33145,7 +33142,6 @@
                 "$id": "2315",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PrivateEndpointConnection",
                 "doc": "Gets the specified private endpoint connection associated with the storage sync service.",
                 "accessibility": "public",
                 "parameters": [
@@ -33573,7 +33569,6 @@
                 "$id": "2338",
                 "name": "create",
                 "isExactName": false,
-                "resourceName": "PrivateEndpointConnection",
                 "doc": "Update the state of specified private endpoint connection associated with the storage sync service.",
                 "accessibility": "public",
                 "parameters": [
@@ -34251,7 +34246,6 @@
                 "$id": "2375",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "StorageSyncService",
                 "doc": "Gets the specified storage sync service.",
                 "accessibility": "public",
                 "parameters": [
@@ -34692,7 +34686,6 @@
                 "$id": "2398",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Create a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -35221,7 +35214,6 @@
                 "$id": "2423",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Get a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -35601,7 +35593,6 @@
                 "$id": "2442",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Delete a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -35968,7 +35959,6 @@
                 "$id": "2461",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "List Foo resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -36297,7 +36287,6 @@
                 "$id": "2476",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "List Foo resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -36527,7 +36516,6 @@
                 "$id": "2487",
                 "name": "fooAction",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -37058,7 +37046,6 @@
                 "$id": "2513",
                 "name": "listDependencies",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -37445,7 +37432,6 @@
                 "$id": "2533",
                 "name": "splitDependencies",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -37869,7 +37855,6 @@
                 "$id": "2554",
                 "name": "getProvisioningState",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "Get the provisioning state of a Foo resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -38245,7 +38230,6 @@
                 "$id": "2573",
                 "name": "getMetadata",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "Get raw metadata (Record<unknown>) for a Foo resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -38685,7 +38669,6 @@
                 "$id": "2596",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "FooSettings",
                 "doc": "Get a FooSettings",
                 "accessibility": "public",
                 "parameters": [
@@ -39005,7 +38988,6 @@
                 "$id": "2611",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "FooSettings",
                 "doc": "Create a FooSettings",
                 "accessibility": "public",
                 "parameters": [
@@ -39430,7 +39412,6 @@
                 "$id": "2630",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "FooSettings",
                 "doc": "Update a FooSettings",
                 "accessibility": "public",
                 "parameters": [
@@ -39837,7 +39818,6 @@
                 "$id": "2649",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "FooSettings",
                 "doc": "Delete a FooSettings",
                 "accessibility": "public",
                 "parameters": [
@@ -40164,7 +40144,6 @@
                 "$id": "2666",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "List Bar resources by Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -40560,7 +40539,6 @@
                 "$id": "2685",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Create a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -41156,7 +41134,6 @@
                 "$id": "2714",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Delete a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -41651,7 +41628,6 @@
                 "$id": "2741",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "BarSettingsResource",
                 "doc": "Create a BarSettingsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -42247,7 +42223,6 @@
                 "$id": "2770",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BarSettingsResource",
                 "doc": "Get a BarSettingsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -42755,7 +42730,6 @@
                 "$id": "2797",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BarQuotaResource",
                 "doc": "Get a BarQuotaResource",
                 "accessibility": "public",
                 "parameters": [
@@ -43261,7 +43235,6 @@
                 "$id": "2822",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "BarQuotaResource",
                 "doc": "Update a BarQuotaResource",
                 "accessibility": "public",
                 "parameters": [
@@ -43967,7 +43940,6 @@
                 "$id": "2857",
                 "name": "GetEmployees",
                 "isExactName": false,
-                "resourceName": "Employee",
                 "doc": "List Employee resources by Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -44495,7 +44467,6 @@
                 "$id": "2884",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "Create a Baz",
                 "accessibility": "public",
                 "parameters": [
@@ -45024,7 +44995,6 @@
                 "$id": "2909",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "Get a Baz",
                 "accessibility": "public",
                 "parameters": [
@@ -45404,7 +45374,6 @@
                 "$id": "2928",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "Delete a Baz",
                 "accessibility": "public",
                 "parameters": [
@@ -45771,7 +45740,6 @@
                 "$id": "2947",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "Update a Baz",
                 "accessibility": "public",
                 "parameters": [
@@ -46290,7 +46258,6 @@
                 "$id": "2972",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "List Baz resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -46619,7 +46586,6 @@
                 "$id": "2987",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "Baz",
                 "doc": "List Baz resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -46999,7 +46965,6 @@
                 "$id": "3008",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "Create a Zoo",
                 "accessibility": "public",
                 "parameters": [
@@ -47528,7 +47493,6 @@
                 "$id": "3033",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "Get a Zoo",
                 "accessibility": "public",
                 "parameters": [
@@ -47908,7 +47872,6 @@
                 "$id": "3052",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "Delete a Zoo",
                 "accessibility": "public",
                 "parameters": [
@@ -48275,7 +48238,6 @@
                 "$id": "3071",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "Update a Zoo",
                 "accessibility": "public",
                 "parameters": [
@@ -48794,7 +48756,6 @@
                 "$id": "3096",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "List Zoo resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -49123,7 +49084,6 @@
                 "$id": "3111",
                 "name": "GetZoosCustom",
                 "isExactName": false,
-                "resourceName": "Zoo",
                 "doc": "List Zoo resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -49357,7 +49317,6 @@
                 "$id": "3122",
                 "name": "zooAddressList",
                 "isExactName": false,
-                "resourceName": "Zoos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -49785,7 +49744,6 @@
                 "$id": "3145",
                 "name": "deleteZooItems",
                 "isExactName": false,
-                "resourceName": "Zoos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -50332,7 +50290,6 @@
                 "$id": "3174",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "IssueTestResource",
                 "doc": "Get a IssueTestResource",
                 "accessibility": "public",
                 "parameters": [
@@ -50712,7 +50669,6 @@
                 "$id": "3193",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "IssueTestResource",
                 "doc": "Create a IssueTestResource",
                 "accessibility": "public",
                 "parameters": [
@@ -51241,7 +51197,6 @@
                 "$id": "3218",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "IssueTestResource",
                 "doc": "Update a IssueTestResource",
                 "accessibility": "public",
                 "parameters": [
@@ -51760,7 +51715,6 @@
                 "$id": "3243",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "IssueTestResource",
                 "doc": "List IssueTestResource resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -52150,7 +52104,6 @@
                 "$id": "3262",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EndpointResource",
                 "doc": "Gets the endpoint to the resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -52422,7 +52375,6 @@
                 "$id": "3277",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "EndpointResource",
                 "doc": "Create or update the endpoint to the target resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -52789,7 +52741,6 @@
                 "$id": "3296",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "EndpointResource",
                 "doc": "Update the endpoint to the target resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -53156,7 +53107,6 @@
                 "$id": "3315",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "EndpointResource",
                 "doc": "Deletes the endpoint access to the target resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -53382,7 +53332,6 @@
                 "$id": "3328",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "EndpointResource",
                 "doc": "List EndpointResource resources by parent",
                 "accessibility": "public",
                 "parameters": [
@@ -53664,7 +53613,6 @@
                 "$id": "3343",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SelfHelpResource",
                 "doc": "Get a SelfHelpResource",
                 "accessibility": "public",
                 "parameters": [
@@ -53992,7 +53940,6 @@
                 "$id": "3362",
                 "name": "checkNameAvailability",
                 "isExactName": false,
-                "resourceName": "CheckNameAvailabilityOperationGroup",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -54343,7 +54290,6 @@
                 "$id": "3381",
                 "name": "getDetails",
                 "isExactName": false,
-                "resourceName": "SelfHelpScopeQueryOperationGroup",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -54644,7 +54590,6 @@
                 "$id": "3400",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PlaywrightQuota",
                 "doc": "Get subscription-level location-based Playwright quota resource by name.",
                 "accessibility": "public",
                 "parameters": [
@@ -55002,7 +54947,6 @@
                 "$id": "3419",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "PlaywrightQuota",
                 "doc": "List Playwright quota resources for a given subscription Id.",
                 "accessibility": "public",
                 "parameters": [
@@ -55317,7 +55261,6 @@
                 "$id": "3436",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "PlaywrightQuota",
                 "doc": "Create a PlaywrightQuota",
                 "accessibility": "public",
                 "parameters": [
@@ -55849,7 +55792,6 @@
                 "$id": "3463",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "JobResource",
                 "doc": "Gets information about the specified job.",
                 "accessibility": "public",
                 "parameters": [
@@ -56279,7 +56221,6 @@
                 "$id": "3486",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "JobResource",
                 "doc": "Creates or updates a job resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -56908,7 +56849,6 @@
                 "$id": "3519",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "JobResource",
                 "doc": "Update a JobResource",
                 "accessibility": "public",
                 "parameters": [
@@ -57538,7 +57478,6 @@
                 "$id": "3552",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "HciVmInstance",
                 "doc": "Gets a virtual machine instance",
                 "accessibility": "public",
                 "parameters": [
@@ -57804,7 +57743,6 @@
                 "$id": "3567",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "GroupQuotaSubscriptionRequestStatus",
                 "doc": "Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.",
                 "accessibility": "public",
                 "parameters": [
@@ -58150,7 +58088,6 @@
                 "$id": "3586",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SubscriptionQuotaAllocationsList",
                 "doc": "Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.",
                 "accessibility": "public",
                 "parameters": [
@@ -58759,7 +58696,6 @@
                 "$id": "3619",
                 "name": "queryNetworkSiblingSet",
                 "isExactName": false,
-                "resourceName": "NetworkProviderActions",
                 "doc": "Query network sibling set - a provider-level async action.\nThis is a non-resource LRO operation that returns NetworkSiblingSet.",
                 "accessibility": "public",
                 "parameters": [
@@ -59146,7 +59082,6 @@
                 "$id": "3638",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Joo",
                 "doc": "Create a Joo",
                 "accessibility": "public",
                 "parameters": [
@@ -59639,7 +59574,6 @@
                 "$id": "3661",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Joo",
                 "doc": "Get a Joo",
                 "accessibility": "public",
                 "parameters": [
@@ -60019,7 +59953,6 @@
                 "$id": "3680",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Joo",
                 "doc": "Delete a Joo",
                 "accessibility": "public",
                 "parameters": [
@@ -60447,7 +60380,6 @@
                 "$id": "3703",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SAPVirtualInstance",
                 "doc": "Gets a Virtual Instance for SAP solutions resource",
                 "accessibility": "public",
                 "parameters": [
@@ -60827,7 +60759,6 @@
                 "$id": "3722",
                 "name": "create",
                 "isExactName": false,
-                "resourceName": "SAPVirtualInstance",
                 "doc": "Creates a Virtual Instance for SAP solutions (VIS) resource",
                 "accessibility": "public",
                 "parameters": [
@@ -61356,7 +61287,6 @@
                 "$id": "3747",
                 "name": "getAvailabilityZoneDetails",
                 "isExactName": false,
-                "resourceName": "SAPVirtualInstances",
                 "doc": "Get the recommended SAP Availability Zone Pair Details for your region.",
                 "accessibility": "public",
                 "parameters": [
@@ -61812,7 +61742,6 @@
                 "$id": "3772",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Get a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -62012,7 +61941,6 @@
                 "$id": "3783",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Create a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -62325,7 +62253,6 @@
                 "$id": "3798",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Update a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -62620,7 +62547,6 @@
                 "$id": "3813",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Delete a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -62774,7 +62700,6 @@
                 "$id": "3822",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "List a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -62999,7 +62924,6 @@
                 "$id": "3833",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Get a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -63252,7 +63176,6 @@
                 "$id": "3848",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Create a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -63618,7 +63541,6 @@
                 "$id": "3867",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Update a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -63966,7 +63888,6 @@
                 "$id": "3886",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "Delete a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -64173,7 +64094,6 @@
                 "$id": "3899",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "BestPractice",
                 "doc": "List a BestPractice",
                 "accessibility": "public",
                 "parameters": [
@@ -64450,7 +64370,6 @@
                 "$id": "3914",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ResourceTypeTestResource",
                 "doc": "Get a test resource with nullable ResourceType",
                 "accessibility": "public",
                 "parameters": [
@@ -64830,7 +64749,6 @@
                 "$id": "3933",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ResourceTypeTestResource",
                 "doc": "Create or update a test resource",
                 "accessibility": "public",
                 "parameters": [
@@ -65384,7 +65302,6 @@
                 "$id": "3960",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "SampleData",
                 "doc": "Create a SampleData",
                 "accessibility": "public",
                 "parameters": [
@@ -65913,7 +65830,6 @@
                 "$id": "3985",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SampleData",
                 "doc": "Get a SampleData",
                 "accessibility": "public",
                 "parameters": [
@@ -66293,7 +66209,6 @@
                 "$id": "4004",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "SampleData",
                 "doc": "Delete a SampleData",
                 "accessibility": "public",
                 "parameters": [
@@ -66660,7 +66575,6 @@
                 "$id": "4023",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "SampleData",
                 "doc": "List SampleData resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -67050,7 +66964,6 @@
                 "$id": "4042",
                 "name": "listByVms",
                 "isExactName": false,
-                "resourceName": "ScheduledActionResources",
                 "doc": "List ScheduledActionResources resources by parent",
                 "accessibility": "public",
                 "parameters": [
@@ -67332,7 +67245,6 @@
                 "$id": "4057",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworks",
                 "doc": "Get a WorkloadNetworks",
                 "accessibility": "public",
                 "parameters": [
@@ -67712,7 +67624,6 @@
                 "$id": "4076",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworks",
                 "doc": "Create a WorkloadNetworks",
                 "accessibility": "public",
                 "parameters": [
@@ -68241,7 +68152,6 @@
                 "$id": "4101",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworks",
                 "doc": "Delete a WorkloadNetworks",
                 "accessibility": "public",
                 "parameters": [
@@ -68608,7 +68518,6 @@
                 "$id": "4120",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworks",
                 "doc": "List WorkloadNetworks resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -68998,7 +68907,6 @@
                 "$id": "4139",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkVmGroup",
                 "doc": "Create or update a VM Group.",
                 "accessibility": "public",
                 "parameters": [
@@ -69527,7 +69435,6 @@
                 "$id": "4164",
                 "name": "UpdateVmGroup",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkVmGroup",
                 "doc": "Update a VM Group.\nUses",
                 "accessibility": "public",
                 "parameters": [
@@ -70050,7 +69957,6 @@
                 "$id": "4189",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkVmGroup",
                 "doc": "List VM Groups.",
                 "accessibility": "public",
                 "parameters": [
@@ -70440,7 +70346,6 @@
                 "$id": "4208",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkSegment",
                 "doc": "Create or update a Segment.",
                 "accessibility": "public",
                 "parameters": [
@@ -70969,7 +70874,6 @@
                 "$id": "4233",
                 "name": "UpdateSegment",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkSegment",
                 "doc": "Update a Segment.\nUses",
                 "accessibility": "public",
                 "parameters": [
@@ -71492,7 +71396,6 @@
                 "$id": "4258",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkSegment",
                 "doc": "List Segments.",
                 "accessibility": "public",
                 "parameters": [
@@ -71882,7 +71785,6 @@
                 "$id": "4277",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Target",
                 "doc": "Get a Target resource that extends a tracked regional resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -72511,7 +72413,6 @@
                 "$id": "4308",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Target",
                 "doc": "Create or update a Target resource that extends a tracked regional resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -73253,7 +73154,6 @@
                 "$id": "4343",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Target",
                 "doc": "Delete a Target resource that extends a tracked regional resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -73836,7 +73736,6 @@
                 "$id": "4372",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Target",
                 "doc": "Get a list of Target resources that extend a tracked regional resource.",
                 "accessibility": "public",
                 "parameters": [
@@ -74525,7 +74424,6 @@
                 "$id": "4407",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "Get a Cluster",
                 "accessibility": "public",
                 "parameters": [
@@ -74905,7 +74803,6 @@
                 "$id": "4426",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "Create a Cluster",
                 "accessibility": "public",
                 "parameters": [
@@ -75434,7 +75331,6 @@
                 "$id": "4451",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "Update a Cluster",
                 "accessibility": "public",
                 "parameters": [
@@ -75953,7 +75849,6 @@
                 "$id": "4476",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "Delete a Cluster",
                 "accessibility": "public",
                 "parameters": [
@@ -76328,7 +76223,6 @@
                 "$id": "4495",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "List Cluster resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -76657,7 +76551,6 @@
                 "$id": "4510",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "Cluster",
                 "doc": "List Cluster resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -76948,7 +76841,6 @@
                 "$id": "4525",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DuplicatePropertyTest",
                 "doc": "Get a DuplicatePropertyTest",
                 "accessibility": "public",
                 "parameters": [
@@ -77328,7 +77220,6 @@
                 "$id": "4544",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "DuplicatePropertyTest",
                 "doc": "Create a DuplicatePropertyTest",
                 "accessibility": "public",
                 "parameters": [
@@ -77857,7 +77748,6 @@
                 "$id": "4569",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "DuplicatePropertyTest",
                 "doc": "Delete a DuplicatePropertyTest",
                 "accessibility": "public",
                 "parameters": [
@@ -78224,7 +78114,6 @@
                 "$id": "4588",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "DuplicatePropertyTest",
                 "doc": "List DuplicatePropertyTest resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -78614,7 +78503,6 @@
                 "$id": "4607",
                 "name": "listByServiceGroup",
                 "isExactName": false,
-                "resourceName": "ServiceGroupSite",
                 "doc": "list Site at ServiceGroup scope",
                 "accessibility": "public",
                 "parameters": [
@@ -78844,7 +78732,6 @@
                 "$id": "4618",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ServiceGroupSite",
                 "doc": "Get Site at ServiceGroup scope",
                 "accessibility": "public",
                 "parameters": [
@@ -79125,7 +79012,6 @@
                 "$id": "4633",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ServiceGroupSite",
                 "doc": "create or update Site at ServiceGroup scope",
                 "accessibility": "public",
                 "parameters": [
@@ -79620,7 +79506,6 @@
                 "$id": "4658",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "TrafficProfile",
                 "doc": "Get a TrafficProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -79979,7 +79864,6 @@
                 "$id": "4677",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "TrafficProfile",
                 "doc": "Create a TrafficProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -80451,7 +80335,6 @@
                 "$id": "4700",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "TrafficProfile",
                 "doc": "Delete a TrafficProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -80764,7 +80647,6 @@
                 "$id": "4717",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "TrafficProfile",
                 "doc": "List TrafficProfile resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -81154,7 +81036,6 @@
                 "$id": "4736",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "TrafficEndpoint",
                 "doc": "Get a TrafficEndpoint",
                 "accessibility": "public",
                 "parameters": [
@@ -81564,7 +81445,6 @@
                 "$id": "4759",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "TrafficEndpoint",
                 "doc": "Create a TrafficEndpoint",
                 "accessibility": "public",
                 "parameters": [
@@ -82087,7 +81967,6 @@
                 "$id": "4786",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "TrafficEndpoint",
                 "doc": "Delete a TrafficEndpoint",
                 "accessibility": "public",
                 "parameters": [
@@ -82507,7 +82386,6 @@
                 "$id": "4811",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "VmConfigurationAssignment",
                 "doc": "Get a VM configuration assignment",
                 "accessibility": "public",
                 "parameters": [
@@ -82835,7 +82713,6 @@
                 "$id": "4830",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "HcrpConfigurationAssignment",
                 "doc": "Get an HCRP configuration assignment",
                 "accessibility": "public",
                 "parameters": [
@@ -83163,7 +83040,6 @@
                 "$id": "4849",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "MultiFlattenTest",
                 "doc": "Get a MultiFlattenTest",
                 "accessibility": "public",
                 "parameters": [
@@ -83610,7 +83486,6 @@
                 "$id": "4872",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "MultiFlattenTest",
                 "doc": "Create a MultiFlattenTest",
                 "accessibility": "public",
                 "parameters": [
@@ -84267,7 +84142,6 @@
                 "$id": "4905",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Get a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -84677,7 +84551,6 @@
                 "$id": "4928",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Create a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -85200,7 +85073,6 @@
                 "$id": "4955",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Delete a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -85556,7 +85428,6 @@
                 "$id": "4976",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "List a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -85992,7 +85863,6 @@
                 "$id": "4999",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Get a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -86402,7 +86272,6 @@
                 "$id": "5022",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Create a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -86925,7 +86794,6 @@
                 "$id": "5049",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "Delete a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -87281,7 +87149,6 @@
                 "$id": "5070",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "PolicyAssignment",
                 "doc": "List a PolicyAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -87717,7 +87584,6 @@
                 "$id": "5093",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "DeleteFinalResultTest",
                 "doc": "Create a DeleteFinalResultTest",
                 "accessibility": "public",
                 "parameters": [
@@ -88313,7 +88179,6 @@
                 "$id": "5122",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DeleteFinalResultTest",
                 "doc": "Get a DeleteFinalResultTest",
                 "accessibility": "public",
                 "parameters": [
@@ -88760,7 +88625,6 @@
                 "$id": "5145",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "DeleteFinalResultTest",
                 "doc": "Delete a DeleteFinalResultTest",
                 "accessibility": "public",
                 "parameters": [
@@ -89262,7 +89126,6 @@
                 "$id": "5172",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "CustomBaseTypeResource",
                 "doc": "Get a CustomBaseTypeResource",
                 "accessibility": "public",
                 "parameters": [
@@ -89642,7 +89505,6 @@
                 "$id": "5191",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "CustomBaseTypeResource",
                 "doc": "Create a CustomBaseTypeResource",
                 "accessibility": "public",
                 "parameters": [
@@ -90232,7 +90094,6 @@
                 "$id": "5220",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "TestCertificate",
                 "doc": "Gets information about the specified certificate.",
                 "accessibility": "public",
                 "parameters": [
@@ -90612,7 +90473,6 @@
                 "$id": "5239",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "TestCertificate",
                 "doc": "Creates or updates a certificate.",
                 "accessibility": "public",
                 "parameters": [
@@ -91141,7 +91001,6 @@
                 "$id": "5264",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "TestCertificate",
                 "doc": "Updates a certificate.",
                 "accessibility": "public",
                 "parameters": [
@@ -91616,7 +91475,6 @@
                 "$id": "5287",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "TestCertificate",
                 "doc": "Deletes a certificate.",
                 "accessibility": "public",
                 "parameters": [
@@ -92012,7 +91870,6 @@
                 "$id": "5308",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "Get a SharedConfig",
                 "accessibility": "public",
                 "parameters": [
@@ -92288,7 +92145,6 @@
                 "$id": "5323",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "List a SharedConfig",
                 "accessibility": "public",
                 "parameters": [
@@ -92575,7 +92431,6 @@
                 "$id": "5338",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "Get a SharedConfig",
                 "accessibility": "public",
                 "parameters": [
@@ -92950,7 +92805,6 @@
                 "$id": "5357",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "Create a SharedConfig",
                 "accessibility": "public",
                 "parameters": [
@@ -93474,7 +93328,6 @@
                 "$id": "5382",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "Delete a SharedConfig",
                 "accessibility": "public",
                 "parameters": [
@@ -93803,7 +93656,6 @@
                 "$id": "5399",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "SharedConfig",
                 "doc": "List SharedConfig resources by scope",
                 "accessibility": "public",
                 "parameters": [
@@ -94188,7 +94040,6 @@
                 "$id": "5418",
                 "name": "listContainerItems",
                 "isExactName": false,
-                "resourceName": "EntityResourceRepro",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -94629,7 +94480,6 @@
                 "$id": "5441",
                 "name": "listDerivedPatches",
                 "isExactName": false,
-                "resourceName": "SharedParamRepro",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -95009,7 +94859,6 @@
                 "$id": "5460",
                 "name": "listSiblingPatches",
                 "isExactName": false,
-                "resourceName": "SharedParamRepro",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -95450,7 +95299,6 @@
                 "$id": "5483",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PolyDevice",
                 "doc": "Get a PolyDevice",
                 "accessibility": "public",
                 "parameters": [
@@ -95717,7 +95565,6 @@
                 "$id": "5498",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "PolyDevice",
                 "doc": "Create a PolyDevice",
                 "accessibility": "public",
                 "parameters": [
@@ -96194,7 +96041,6 @@
                 "$id": "5523",
                 "name": "listGrandparentFlattenLeaves",
                 "isExactName": false,
-                "resourceName": "GrandparentFlattenRepro",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -96635,7 +96481,6 @@
                 "$id": "5546",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "CycleTestStore",
                 "doc": "Get a CycleTestStore",
                 "accessibility": "public",
                 "parameters": [
@@ -97015,7 +96860,6 @@
                 "$id": "5565",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "CycleTestStore",
                 "doc": "Create a CycleTestStore",
                 "accessibility": "public",
                 "parameters": [
@@ -97605,7 +97449,6 @@
                 "$id": "5594",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EventGridTopic",
                 "doc": "Get a EventGridTopic",
                 "accessibility": "public",
                 "parameters": [
@@ -97985,7 +97828,6 @@
                 "$id": "5613",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "EventGridTopic",
                 "doc": "Create a EventGridTopic",
                 "accessibility": "public",
                 "parameters": [
@@ -98514,7 +98356,6 @@
                 "$id": "5638",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "EventGridTopic",
                 "doc": "Delete a EventGridTopic",
                 "accessibility": "public",
                 "parameters": [
@@ -98881,7 +98722,6 @@
                 "$id": "5657",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "EventGridTopic",
                 "doc": "List EventGridTopic resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -99271,7 +99111,6 @@
                 "$id": "5676",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EventGridDomain",
                 "doc": "Get a EventGridDomain",
                 "accessibility": "public",
                 "parameters": [
@@ -99651,7 +99490,6 @@
                 "$id": "5695",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "EventGridDomain",
                 "doc": "Create a EventGridDomain",
                 "accessibility": "public",
                 "parameters": [
@@ -100180,7 +100018,6 @@
                 "$id": "5720",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "EventGridDomain",
                 "doc": "Delete a EventGridDomain",
                 "accessibility": "public",
                 "parameters": [
@@ -100547,7 +100384,6 @@
                 "$id": "5739",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "EventGridDomain",
                 "doc": "List EventGridDomain resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -100937,7 +100773,6 @@
                 "$id": "5758",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EventGridPrivateEndpointConnections",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -101402,7 +101237,6 @@
                 "$id": "5783",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "EventGridPrivateEndpointConnections",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -101950,7 +101784,6 @@
                 "$id": "5812",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "EventGridPrivateEndpointConnections",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -102455,7 +102288,6 @@
                 "$id": "5841",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SolutionsApplicationDefinition",
                 "doc": "Gets the managed application definition on a disambiguated route.",
                 "accessibility": "public",
                 "parameters": [
@@ -102858,7 +102690,6 @@
                 "$id": "5860",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "SolutionsApplicationDefinition",
                 "doc": "Creates or updates a managed application definition on a disambiguated route.",
                 "accessibility": "public",
                 "parameters": [
@@ -103366,7 +103197,6 @@
                 "$id": "5883",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "SolutionsApplicationDefinition",
                 "doc": "Updates the managed application definition on a disambiguated route.",
                 "accessibility": "public",
                 "parameters": [
@@ -103921,7 +103751,6 @@
                 "$id": "5910",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "IpAddress",
                 "doc": "Get a IpAddress",
                 "accessibility": "public",
                 "parameters": [
@@ -104301,7 +104130,6 @@
                 "$id": "5929",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "IpAddress",
                 "doc": "List IpAddress resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -104691,7 +104519,6 @@
                 "$id": "5948",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Get a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -105138,7 +104965,6 @@
                 "$id": "5971",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Update a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -105736,7 +105562,6 @@
                 "$id": "6002",
                 "name": "recommend",
                 "isExactName": false,
-                "resourceName": "Zoos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -106172,7 +105997,6 @@
                 "$id": "6025",
                 "name": "GetVmGroup",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkVmGroup",
                 "doc": "Get a VM Group by name.\nUses",
                 "accessibility": "public",
                 "parameters": [
@@ -106556,7 +106380,6 @@
                 "$id": "6044",
                 "name": "DeleteVmGroup",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkVmGroup",
                 "doc": "Delete a VM Group.\nUses",
                 "accessibility": "public",
                 "parameters": [
@@ -106927,7 +106750,6 @@
                 "$id": "6063",
                 "name": "GetSegment",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkSegment",
                 "doc": "Get a Segment by name.\nUses",
                 "accessibility": "public",
                 "parameters": [
@@ -107311,7 +107133,6 @@
                 "$id": "6082",
                 "name": "DeleteSegment",
                 "isExactName": false,
-                "resourceName": "WorkloadNetworkSegment",
                 "doc": "Delete a Segment.\nUses",
                 "accessibility": "public",
                 "parameters": [

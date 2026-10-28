@@ -4055,7 +4055,6 @@
                 "$id": "309",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "Get a TopLevelTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -4470,7 +4469,6 @@
                 "$id": "331",
                 "name": "createOrReplace",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "Create a TopLevelTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -4998,7 +4996,6 @@
                 "$id": "356",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "Update a TopLevelTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -5516,7 +5513,6 @@
                 "$id": "381",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "Delete a TopLevelTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -5882,7 +5878,6 @@
                 "$id": "400",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "List TopLevelTrackedResource resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -6210,7 +6205,6 @@
                 "$id": "415",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "TopLevelTrackedResource",
                 "doc": "List TopLevelTrackedResource resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -6439,7 +6433,6 @@
                 "$id": "426",
                 "name": "actionSync",
                 "isExactName": false,
-                "resourceName": "TopLevel",
                 "doc": "A synchronous resource action that returns no content.",
                 "accessibility": "public",
                 "parameters": [
@@ -6919,7 +6912,6 @@
                 "$id": "451",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "NestedProxyResource",
                 "doc": "Get a NestedProxyResource",
                 "accessibility": "public",
                 "parameters": [
@@ -7439,7 +7431,6 @@
                 "$id": "480",
                 "name": "createOrReplace",
                 "isExactName": false,
-                "resourceName": "NestedProxyResource",
                 "doc": "Create a NestedProxyResource",
                 "accessibility": "public",
                 "parameters": [
@@ -8034,7 +8025,6 @@
                 "$id": "509",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "NestedProxyResource",
                 "doc": "Update a NestedProxyResource",
                 "accessibility": "public",
                 "parameters": [
@@ -8619,7 +8609,6 @@
                 "$id": "538",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "NestedProxyResource",
                 "doc": "Delete a NestedProxyResource",
                 "accessibility": "public",
                 "parameters": [
@@ -9052,7 +9041,6 @@
                 "$id": "561",
                 "name": "listByTopLevelTrackedResource",
                 "isExactName": false,
-                "resourceName": "NestedProxyResource",
                 "doc": "List NestedProxyResource resources by TopLevelTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -9507,7 +9495,6 @@
                 "$id": "584",
                 "name": "getByResourceGroup",
                 "isExactName": false,
-                "resourceName": "SingletonTrackedResource",
                 "doc": "Get a SingletonTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -9893,7 +9880,6 @@
                 "$id": "605",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "SingletonTrackedResource",
                 "doc": "Create a SingletonTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -10354,7 +10340,6 @@
                 "$id": "626",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "SingletonTrackedResource",
                 "doc": "Update a SingletonTrackedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -10822,7 +10807,6 @@
                 "$id": "649",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ExtensionsResource",
                 "doc": "Get a ExtensionsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -11131,7 +11115,6 @@
                 "$id": "667",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ExtensionsResource",
                 "doc": "Create a ExtensionsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -11551,7 +11534,6 @@
                 "$id": "688",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "ExtensionsResource",
                 "doc": "Update a ExtensionsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -11917,7 +11899,6 @@
                 "$id": "707",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "ExtensionsResource",
                 "doc": "Delete a ExtensionsResource",
                 "accessibility": "public",
                 "parameters": [
@@ -12142,7 +12123,6 @@
                 "$id": "720",
                 "name": "listByScope",
                 "isExactName": false,
-                "resourceName": "ExtensionsResource",
                 "doc": "List ExtensionsResource resources by parent",
                 "accessibility": "public",
                 "parameters": [
@@ -12422,7 +12402,6 @@
                 "$id": "735",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "LocationResource",
                 "doc": "Get a LocationResource",
                 "accessibility": "public",
                 "parameters": [
@@ -12861,7 +12840,6 @@
                 "$id": "762",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "LocationResource",
                 "doc": "Create a LocationResource",
                 "accessibility": "public",
                 "parameters": [
@@ -13339,7 +13317,6 @@
                 "$id": "787",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "LocationResource",
                 "doc": "Update a LocationResource",
                 "accessibility": "public",
                 "parameters": [
@@ -13799,7 +13776,6 @@
                 "$id": "812",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "LocationResource",
                 "doc": "Delete a LocationResource",
                 "accessibility": "public",
                 "parameters": [
@@ -14118,7 +14094,6 @@
                 "$id": "831",
                 "name": "listByLocation",
                 "isExactName": false,
-                "resourceName": "LocationResource",
                 "doc": "List LocationResource resources by SubscriptionLocationResource",
                 "accessibility": "public",
                 "parameters": [

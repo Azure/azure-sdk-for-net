@@ -2015,7 +2015,6 @@
                 "$id": "134",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "VirtualMachine",
                 "doc": "Retrieves information about the model view or the instance view of a virtual machine.",
                 "accessibility": "public",
                 "parameters": [
@@ -2469,7 +2468,6 @@
                 "$id": "159",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "VirtualMachine",
                 "doc": "The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.",
                 "accessibility": "public",
                 "parameters": [
@@ -3059,7 +3057,6 @@
                 "$id": "188",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Disk",
                 "doc": "Gets information about a disk.",
                 "accessibility": "public",
                 "parameters": [
@@ -3513,7 +3510,6 @@
                 "$id": "213",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Disk",
                 "doc": "Creates or updates a disk.",
                 "accessibility": "public",
                 "parameters": [

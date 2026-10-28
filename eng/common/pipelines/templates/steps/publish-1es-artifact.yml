@@ -6,12 +6,14 @@
 # ArtifactPath - The path we will be publishing.
 # CustomCondition - Used if there is additional logic necessary to prevent attempt of publish.
 # SbomEnabled - Set whether to auto-inject 1es pipeline template sbom tasks
+# SbomGenerationTimeoutInMinutes - Budget for each injected SBOM generation task and its runner.
 
 parameters:
   ArtifactName: ''
   ArtifactPath: ''
   CustomCondition: true
   SbomEnabled: true
+  SbomGenerationTimeoutInMinutes: 30
 
 steps:
   - pwsh: |
@@ -31,6 +33,7 @@ steps:
     inputs:
       artifactName: '$(PublishArtifactName)'
       targetPath: '${{ parameters.ArtifactPath }}'
+      sbomGenerationTimeoutInMinutes: ${{ parameters.SbomGenerationTimeoutInMinutes }}
       # Disable sbom generation by default for our public or pull request validation builds to avoid unnecessary work
       ${{ if or(eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
         sbomEnabled: false
