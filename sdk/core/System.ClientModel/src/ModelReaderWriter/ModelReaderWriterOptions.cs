@@ -141,10 +141,13 @@ public class ModelReaderWriterOptions
         if (_isFrozen)
         {
             throw new InvalidOperationException(
-                "Proxies cannot be added to the default ModelReaderWriterOptions.Json or ModelReaderWriterOptions.Xml instances. " +
-                "Create a new ModelReaderWriterOptions instance to register proxies.");
+                "Proxies cannot be added to frozen ModelReaderWriterOptions, such as the default " +
+                "ModelReaderWriterOptions.Json and ModelReaderWriterOptions.Xml instances or the options of frozen " +
+                "client options. Create a new ModelReaderWriterOptions instance to register proxies.");
         }
     }
+
+    internal void Freeze() => _isFrozen = true;
 
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> as a proxy for the specified type.

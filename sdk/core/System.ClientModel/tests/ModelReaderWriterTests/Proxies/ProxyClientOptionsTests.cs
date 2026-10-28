@@ -59,6 +59,53 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         }
 
         [Test]
+        public void ClientOptions_FreezeFreezesRegisteredProxies()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new MockPipelineTransport("transport", 200)
+            };
+            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
+            ModelReaderWriterOptions registrations = options.ModelReaderWriterOptions!;
+
+            options.Freeze();
+
+            Assert.Throws<InvalidOperationException>(
+                () => registrations.AddProxy<TestTool>(new DerivedTestToolProxy("other")));
+            Assert.That(Read(SpecialToolJson, registrations), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, registrations).GetType(), Is.EqualTo(typeof(TestTool)));
+        }
+
+        [Test]
+        public void ClientOptions_CreatingAPipelineFreezesRegisteredProxies()
+        {
+            var options = new ClientPipelineOptions
+            {
+                Transport = new MockPipelineTransport("transport", 200)
+            };
+            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
+
+            ClientPipeline.Create(options);
+
+            Assert.Throws<InvalidOperationException>(
+                () => options.ModelReaderWriterOptions!.AddProxy<TestTool>(new DerivedTestToolProxy("other")));
+        }
+
+        [Test]
+        public void ClientOptionsClone_OfFrozenOptionsAcceptsNewProxies()
+        {
+            var options = new ClientPipelineOptions();
+            options.AddProxy<TestTool>(new DerivedTestToolProxy("special"));
+            options.Freeze();
+
+            ClientPipelineOptions clone = options.Clone();
+            clone.AddProxy<TestTool>(new DerivedTestToolProxy("other"));
+
+            Assert.That(Read(OtherToolJson, clone.ModelReaderWriterOptions), Is.InstanceOf<DerivedTestTool>());
+            Assert.That(Read(OtherToolJson, options.ModelReaderWriterOptions).GetType(), Is.EqualTo(typeof(TestTool)));
+        }
+
+        [Test]
         public void ClientOptionsClone_SeparatesProxyRegistrations()
         {
             var options = new ClientPipelineOptions();

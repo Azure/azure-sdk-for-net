@@ -342,6 +342,7 @@ public class ClientPipelineOptions
     {
         _frozen = true;
         _loggingOptions?.Freeze();
+        _modelReaderWriterOptions?.Freeze();
     }
 
     /// <summary>
