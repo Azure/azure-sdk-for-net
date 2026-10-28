@@ -1,50 +1,51 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.Text.Json;
+using OpenAILike.Responses;
 
-namespace System.ClientModel.Tests.Proxy.ThirdPartyB
+namespace FoundryLikeA
 {
     /// <summary>
-    /// Conditional proxy that takes over only when the payload's "type" discriminator is
-    /// "bing_grounding". Otherwise it declines so the chain continues to the next proxy / base.
+    /// Conditional proxy that takes over deserialization only when the payload's "type" discriminator
+    /// is "azure_search". Otherwise it declines and the chain falls through to the next proxy / base.
     /// </summary>
-    public sealed class BingGroundingToolProxy : ConditionalModelProxy<ResponseTool>
+    public sealed class AzureSearchToolProxy : ConditionalModelProxy<ResponseTool>
     {
-        public BingGroundingToolProxy() : base(new BingGroundingToolModel())
+        public AzureSearchToolProxy() : base(new AzureSearchToolModel())
         {
         }
 
-        public override bool CanHandle(ResponseTool model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is BingGroundingTool;
+        public override bool CanHandle(ResponseTool model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is AzureSearchTool;
 
         public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
         {
             using JsonDocument doc = JsonDocument.Parse(BinaryData.FromBytes(data).ToString());
-            return doc.RootElement.TryGetProperty("type", out var t) && t.GetString() == "bing_grounding";
+            return doc.RootElement.TryGetProperty("type", out var t) && t.GetString() == "azure_search";
         }
 
         public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
         {
             Utf8JsonReader copy = reader;
             using JsonDocument doc = JsonDocument.ParseValue(ref copy);
-            return doc.RootElement.TryGetProperty("type", out var t) && t.GetString() == "bing_grounding";
+            return doc.RootElement.TryGetProperty("type", out var t) && t.GetString() == "azure_search";
         }
 
-        private sealed class BingGroundingToolModel : IJsonModel<ResponseTool>
+        private sealed class AzureSearchToolModel : IJsonModel<ResponseTool>
         {
             ResponseTool IJsonModel<ResponseTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 using JsonDocument doc = JsonDocument.ParseValue(ref reader);
-                return BingGroundingTool.Deserialize(doc.RootElement);
+                return AzureSearchTool.Deserialize(doc.RootElement);
             }
 
             void IJsonModel<ResponseTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
                 => ((IJsonModel<ResponseTool>)options.ProxiedModel!).Write(writer, options);
 
             ResponseTool IPersistableModel<ResponseTool>.Create(BinaryData data, ModelReaderWriterOptions options)
-                => BingGroundingTool.Deserialize(JsonDocument.Parse(data.ToString()).RootElement);
+                => AzureSearchTool.Deserialize(JsonDocument.Parse(data.ToString()).RootElement);
 
             BinaryData IPersistableModel<ResponseTool>.Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write((ResponseTool)options.ProxiedModel!, options);

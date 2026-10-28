@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.Text.Json;
+using OpenAILike.Responses;
 
-namespace System.ClientModel.Tests.Proxy.ThirdPartyB
+namespace FoundryLikeB
 {
     /// <summary>
-    /// A second new ResponseTool subtype, defined in an independent third-party assembly and selected
-    /// by the "bing_grounding" discriminator. Proves multiple libraries can extend the same base type.
+    /// A second <see cref="ResponseTool"/> subtype, defined in an independent library and selected by the
+    /// "bing_grounding" discriminator. FoundryLikeB does not know about FoundryLikeA; both extend the same base type.
     /// </summary>
     public sealed class BingGroundingTool : ResponseTool
     {

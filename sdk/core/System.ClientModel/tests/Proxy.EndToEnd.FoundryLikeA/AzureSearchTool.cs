@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.Text.Json;
+using OpenAILike.Responses;
 
-namespace System.ClientModel.Tests.Proxy.FirstPartyA
+namespace FoundryLikeA
 {
     /// <summary>
-    /// A new ResponseTool subtype the base "OpenAI-like" library does not know about. It is defined
-    /// in this first-party assembly (a Microsoft library that extends OpenAI) and is selected purely
-    /// by the "azure_search" discriminator.
+    /// A <see cref="ResponseTool"/> subtype the base "OpenAI-like" library does not know about. FoundryLikeA is an
+    /// independent library that extends <see cref="ResponseTool"/> from its own assembly and does not know about
+    /// FoundryLikeB. It is selected purely by the "azure_search" discriminator.
     /// </summary>
     public sealed class AzureSearchTool : ResponseTool
     {

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Mock third-party library #2. Adds a BingGroundingTool subtype and a conditional proxy that intercepts the "bing_grounding" discriminator, proving multiple independent libraries extend the same base.</Description>
+    <Description>Mock "Foundry-like" library B. Adds a BingGroundingTool subtype, a conditional proxy for the "bing_grounding" discriminator, and a registration helper for its complete proxy set, independent of library A.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
     <Nullable>enable</Nullable>

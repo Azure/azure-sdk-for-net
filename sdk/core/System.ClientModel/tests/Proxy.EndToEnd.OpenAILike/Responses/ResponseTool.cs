@@ -3,31 +3,28 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.Proxy.OpenAILike
+namespace OpenAILike.Responses
 {
     /// <summary>
     /// Mock of an OpenAI-style discriminated "tool" type. The base library knows its own
     /// subtypes (selected by the "type" discriminator) and falls back to
-    /// <see cref="UnknownResponseTool"/> for any discriminator it does not recognize. Third-party
-    /// libraries extend this set by registering conditional proxies, without the base library
-    /// knowing about them.
+    /// <see cref="UnknownResponseTool"/> for any discriminator it does not recognize. Other libraries
+    /// extend this set from their own assemblies by subclassing it through the
+    /// <c>protected internal</c> constructor and registering conditional proxies, without the base
+    /// library knowing about them.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResponseTool))]
     public abstract class ResponseTool : IJsonModel<ResponseTool>
     {
-        protected ResponseTool(string type, IDictionary<string, BinaryData>? rawData = null)
+        protected internal ResponseTool(string type)
         {
             Type = type;
-            RawData = rawData ?? new Dictionary<string, BinaryData>();
         }
 
         /// <summary>The discriminator value (e.g. "function", "azure_search", "bing_grounding").</summary>
         public string Type { get; }
-
-        internal IDictionary<string, BinaryData> RawData { get; }
 
         void IJsonModel<ResponseTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +36,9 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
         }
 
         /// <summary>Writes the subtype-specific properties (the discriminator is already written).</summary>
-        protected abstract void WriteProperties(Utf8JsonWriter writer);
+        protected virtual void WriteProperties(Utf8JsonWriter writer)
+        {
+        }
 
         ResponseTool IJsonModel<ResponseTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {

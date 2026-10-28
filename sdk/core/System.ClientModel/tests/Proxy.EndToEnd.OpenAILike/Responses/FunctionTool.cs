@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.Proxy.OpenAILike
+namespace OpenAILike.Responses
 {
     /// <summary>A known tool the base library can deserialize on its own (no proxy needed).</summary>
     public sealed class FunctionTool : ResponseTool

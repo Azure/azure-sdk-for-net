@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Mock "Foundry-like" third-party library #1. Adds an AzureSearchTool subtype and a conditional proxy that intercepts the "azure_search" discriminator.</Description>
+    <Description>Mock "Foundry-like" library A. Adds an AzureSearchTool subtype, a conditional proxy for the "azure_search" discriminator, a registration helper for its complete proxy set, and a wrapper client that registers it internally.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
     <Nullable>enable</Nullable>

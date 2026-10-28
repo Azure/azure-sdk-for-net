@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace System.ClientModel.Tests.Proxy.OpenAILike
+namespace OpenAILike.Responses
 {
     [ModelReaderWriterBuildable(typeof(ResponseTool))]
     internal partial class ResponseToolsContext : ModelReaderWriterContext

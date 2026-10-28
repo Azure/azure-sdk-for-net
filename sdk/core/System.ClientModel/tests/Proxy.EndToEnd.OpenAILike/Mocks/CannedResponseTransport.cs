@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,22 +11,25 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
+namespace OpenAILike.Mocks
 {
     /// <summary>
-    /// A tiny self-contained <see cref="PipelineTransport"/> that returns a fixed, "canned" response
-    /// body for every request — the equivalent of mocking the service response. Used by both the
-    /// end-to-end tests and the runnable console program so a real <see cref="ClientPipeline"/> can be
-    /// exercised without a network call. This is test scaffolding, not part of the mock library's API.
+    /// A tiny self-contained <see cref="PipelineTransport"/> that returns "canned" response bodies —
+    /// the equivalent of mocking the service response — so a real <see cref="ClientPipeline"/> can be
+    /// exercised without a network call. It either answers every request with the same body or, when
+    /// created with <see cref="Sequence"/>, answers successive requests with successive bodies. This is
+    /// test scaffolding, not part of the mock library's API.
     /// </summary>
     public sealed class CannedResponseTransport : PipelineTransport
     {
-        private readonly byte[] _body;
+        private readonly byte[]? _body;
+        private readonly ConcurrentQueue<byte[]>? _bodies;
         private readonly int _status;
         private readonly Barrier? _processBarrier;
 
         public ConcurrentQueue<BinaryData> RequestBodies { get; } = new();
         public ConcurrentQueue<Uri> RequestUris { get; } = new();
+        public ConcurrentQueue<string> RequestMethods { get; } = new();
 
         /// <summary>Creates a transport that answers every request with <paramref name="responseBody"/>.</summary>
         public CannedResponseTransport(string responseBody, int status = 200, Barrier? processBarrier = null)
@@ -34,12 +39,22 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
             _processBarrier = processBarrier;
         }
 
+        private CannedResponseTransport(string[] responseBodies)
+        {
+            _bodies = new ConcurrentQueue<byte[]>(Array.ConvertAll(responseBodies, Encoding.UTF8.GetBytes));
+            _status = 200;
+        }
+
+        /// <summary>Creates a transport that answers the Nth request with the Nth body and fails once they run out.</summary>
+        public static CannedResponseTransport Sequence(params string[] responseBodies) => new(responseBodies);
+
         protected override PipelineMessage CreateMessageCore() => new CannedMessage();
 
         protected override void ProcessCore(PipelineMessage message)
         {
             RequestUris.Enqueue(message.Request.Uri
                 ?? throw new InvalidOperationException("Request URI was not set."));
+            RequestMethods.Enqueue(message.Request.Method);
 
             if (message.Request.Content is { } content)
             {
@@ -53,7 +68,9 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike.Mocks
                 throw new TimeoutException("Concurrent client calls did not overlap.");
             }
 
-            ((CannedMessage)message).SetResponse(new CannedResponse(_status, _body));
+            byte[] body = _body
+                ?? (_bodies!.TryDequeue(out byte[]? next) ? next : throw new InvalidOperationException("No canned response is left."));
+            ((CannedMessage)message).SetResponse(new CannedResponse(_status, body));
         }
 
         protected override ValueTask ProcessCoreAsync(PipelineMessage message)
