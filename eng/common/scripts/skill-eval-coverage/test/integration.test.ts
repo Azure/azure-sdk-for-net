@@ -10,7 +10,6 @@ import { parse } from "yaml";
 import { CONFIG_PATH, checkCoverage, parseConfig } from "../coverage.ts";
 import type { CoverageReport } from "../coverage.ts";
 import { gitSnapshot, workingSnapshot } from "../check.ts";
-import { globFiles, matchesGlob } from "../../eval/lib/glob.ts";
 
 type WorkflowStep = { run?: string; uses?: string };
 
@@ -19,7 +18,7 @@ const repoRoot = path.resolve(packageRoot, "../../../..");
 const checker = path.join(packageRoot, "check.ts");
 const skill = (name: string) => `.github/skills/${name}/SKILL.md`;
 const evaluation = (name: string) => `.github/skills/${name}/evals/eval.yaml`;
-const config = { skillsRoot: ".github/skills", pipelines: ["pipeline.yml"], workflow: ".github/workflows/skill-eval.yml",
+const config = { skillsRoot: ".github/skills", workflow: ".github/workflows/skill-eval.yml",
   dashboardUrl: "https://dashboard.example.test/", authoringGuideUrl: "https://github.com/test/repo/guide" };
 
 function write(root: string, file: string, text: string): void {
@@ -39,7 +38,6 @@ function fixture(): string {
   git(root, "config", "user.name", "Coverage Test");
   git(root, "config", "core.autocrlf", "false");
   write(root, CONFIG_PATH, JSON.stringify(config));
-  write(root, "pipeline.yml", "vallyRoot: .github/skills\nevalGlobs: ['*/evals/eval.yaml']\n");
   write(root, skill("old"), "# Old skill\n");
   write(root, evaluation("old"), "stimuli: [{name: test, prompt: test}]\n");
   git(root, "add", ".");
@@ -102,32 +100,34 @@ test("missing Git base is an error, not a false passing empty diff", () => {
   finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
-test("in-memory discovery matches the real shared filesystem globber", () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "skill-coverage-globs-"));
-  const files = ["a/evals/eval.yaml", "a/evals/.hidden.eval.yaml", "a/evals/trigger.eval.yaml",
-    "a/evals/nested/test.eval.yaml", "a/evals/{eval,trigger}.yaml", "a/evals/[ab].yaml", "b/evals/eval.yaml"];
+test("the standalone checker runs in a consumer without Tools pipelines or shared Eval scripts", () => {
+  const root = fixture();
   try {
-    for (const file of files) write(root, file, "test");
-    for (const pattern of ["*/evals/*.eval.yaml", "*/evals/eval.yaml", "**/*.yaml", "*/evals/{eval,trigger}.yaml",
-      "a/evals/[ab].yaml", "?/evals/eval.yaml", "a/**/test.eval.yaml", "**"]) {
-      const actual = globFiles(root, pattern).map((file) => path.relative(root, file).split(path.sep).join("/")).sort();
-      assert.deepEqual(files.filter((file) => matchesGlob(file, pattern)).sort(), actual, pattern);
+    const consumer = path.join(root, "checker");
+    fs.mkdirSync(consumer);
+    for (const file of ["coverage.ts", "check.ts", "github.ts", "package.json"]) {
+      fs.copyFileSync(path.join(packageRoot, file), path.join(consumer, file));
     }
+    fs.symlinkSync(path.join(packageRoot, "node_modules"), path.join(consumer, "node_modules"),
+      process.platform === "win32" ? "junction" : "dir");
+    const result = spawnSync(process.execPath, [path.join(consumer, "check.ts"), "--repo-root", root, "--all", "--json"], {
+      encoding: "utf8", timeout: 30000,
+      env: { ...process.env, GITHUB_ACTIONS: "false", GITHUB_STEP_SUMMARY: "" },
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout).skills.map((item: { name: string; status: string }) => [item.name, item.status]), [["old", "present"]]);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
-test("coverage rejects the same whitespace path as the actual pipeline collector", async () => {
+test("Eval presence is independent of pipeline availability and collector path restrictions", async () => {
   const root = fixture();
   try {
     fs.unlinkSync(path.join(root, evaluation("old")));
     const file = ".github/skills/old/evals/starter case.eval.yaml";
     write(root, file, "stimuli: [{name: test, prompt: test}]\n");
-    write(root, "pipeline.yml", "vallyRoot: .github/skills\nevalGlobs: ['*/evals/*.eval.yaml']\n");
-    const { getEvalFiles } = await import(new URL("../../eval/collect-stimuli.ts", import.meta.url).href);
-    assert.throws(() => getEvalFiles([path.join(root, config.skillsRoot)], ["*/evals/*.eval.yaml"]), /contains whitespace/);
     const report = await checkCoverage(workingSnapshot(root), parseConfig(JSON.stringify(config)), [skill("old")]);
-    assert.equal(report.skills[0].status, "missing");
-    assert.deepEqual(report.skills[0].evals, []);
+    assert.equal(report.skills[0].status, "present");
+    assert.deepEqual(report.skills[0].evals, [file]);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
@@ -162,7 +162,8 @@ test("read-only workflow preserves the exact blocking lint job", () => {
   assert.equal(coverage["continue-on-error"], undefined);
   assert.equal(coverage.outputs.run_lint, "${{ steps.coverage.outputs.run_lint }}");
   assert.equal(coverage.steps.find((step: WorkflowStep) => step.run?.endsWith("github.ts")).id, "coverage");
-  assert.ok(coverage.steps.some((step: WorkflowStep) => step.run?.includes("npm test")));
+  assert.deepEqual(Object.keys(workflow.jobs), ["skill-eval-coverage", "check-skills"]);
+  assert.ok(coverage.steps.every((step: WorkflowStep) => !step.run?.includes("--test") && !step.run?.includes("npm test")));
 });
 
 test("write-enabled reporter uses only default-branch code, no PR artifacts or code checkout", () => {
@@ -175,14 +176,16 @@ test("write-enabled reporter uses only default-branch code, no PR artifacts or c
   const checkout = job.steps.find((step: WorkflowStep) => step.uses?.startsWith("actions/checkout@"));
   assert.equal(checkout.with.ref, "${{ github.event.repository.default_branch }}");
   assert.equal(checkout.with["persist-credentials"], false);
+  assert.equal(checkout.with["sparse-checkout-cone-mode"], false);
+  assert.equal(checkout.with["sparse-checkout"], "/.github/skill-eval-coverage.json\n/eng/common/scripts/skill-eval-coverage/\n");
   assert.equal(workflow.concurrency["cancel-in-progress"], false);
   assert.ok(job.steps.some((step: WorkflowStep) => step.run?.endsWith("github.ts --post-comment")));
   assert.ok(job.steps.every((step: WorkflowStep) => !step.uses?.includes("download-artifact") && !step.run?.includes("vally eval")));
 });
 
-test("lint, coverage and trusted reporting all use Node 24", () => {
+test("lint, coverage, script tests and trusted reporting all use Node 24", () => {
   let setupSteps = 0;
-  for (const file of ["skill-eval.yml", "skill-eval-coverage-comment.yml"]) {
+  for (const file of ["skill-eval.yml", "skill-eval-coverage-comment.yml", "skill-eval-coverage-tests.yml"]) {
     const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows", file), "utf8"));
     for (const [name, job] of Object.entries(workflow.jobs) as [string, { steps: (WorkflowStep & { with?: Record<string, unknown> })[] }][]) {
       const setup = job.steps.filter((step) => step.uses?.startsWith("actions/setup-node@"));
@@ -191,49 +194,49 @@ test("lint, coverage and trusted reporting all use Node 24", () => {
       setupSteps += setup.length;
     }
   }
-  assert.equal(setupSteps, 3);
+  assert.equal(setupSteps, 4);
 });
 
-test("coverage workflows use readable releases backed by a complete workflow dependency lock", () => {
-  const files = [".github/workflows/skill-eval.yml", ".github/workflows/skill-eval-coverage-comment.yml"];
-  const lock = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/actions.lock"), "utf8"));
-  assert.equal(lock.version, "v0.0.3");
-  assert.deepEqual(Object.keys(lock.workflows).sort(), [...files].sort());
+test("coverage workflows pin actions directly to exact commits", () => {
+  const files = [".github/workflows/skill-eval.yml", ".github/workflows/skill-eval-coverage-comment.yml",
+    ".github/workflows/skill-eval-coverage-tests.yml"];
+  assert.equal(fs.existsSync(path.join(repoRoot, ".github/workflows/actions.lock")), false);
   for (const file of files) {
     const workflow = parse(fs.readFileSync(path.join(repoRoot, file), "utf8"));
-    const refs = new Set<string>();
     for (const job of Object.values(workflow.jobs) as { steps: WorkflowStep[] }[]) {
       for (const step of job.steps) {
-        if (!step.uses) continue;
-        assert.match(step.uses, /^[^@\s]+@v\d+\.\d+\.\d+$/);
-        refs.add(step.uses);
-        const entry = lock.dependencies[step.uses];
-        assert.ok(entry, `${file}: ${step.uses} must be locked`);
-        assert.equal(entry.ref, step.uses.split("@")[1]);
-        assert.match(entry.commit, /^sha1-[a-f0-9]{40}$/);
-        assert.ok(Number.isSafeInteger(entry.owner_id) && entry.owner_id > 0);
-        assert.ok(Number.isSafeInteger(entry.repo_id) && entry.repo_id > 0);
+        if (step.uses) assert.match(step.uses, /^[^@\s]+@[a-f0-9]{40}$/, file);
+        assert.ok(!step.run?.includes("gh actions-lock"), file);
       }
     }
-    assert.deepEqual([...lock.workflows[file]].sort(), [...refs].sort());
   }
 });
 
-test("workflow dependency verification is frozen and scoped to the two coverage workflows", () => {
-  const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/skill-eval.yml"), "utf8"));
-  assert.ok(workflow.on.push.paths.includes(".github/workflows/actions.lock"));
-  const step = workflow.jobs["skill-eval-coverage"].steps.find((item: WorkflowStep) => item.run?.includes("gh actions-lock --verify"));
-  assert.ok(step, "verify the generated dependency pins against GitHub, not only offline coverage");
-  assert.equal(step.run, "gh extension install github/gh-actions-lock --pin v0.3.0\ngh actions-lock --verify .github/workflows/skill-eval.yml .github/workflows/skill-eval-coverage-comment.yml\n");
-  assert.equal(step.env.GH_TOKEN, "${{ github.token }}");
-  assert.equal(step["continue-on-error"], undefined);
+test("script tests have a separate read-only workflow and all checker installs use frozen pnpm", () => {
+  const testWorkflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows/skill-eval-coverage-tests.yml"), "utf8"));
+  assert.deepEqual(testWorkflow.permissions, { contents: "read" });
+  assert.deepEqual(Object.keys(testWorkflow.on).sort(), ["pull_request", "push", "workflow_dispatch"]);
+  assert.ok(testWorkflow.jobs.test.steps.some((step: WorkflowStep) => step.run === "node --test eng/common/scripts/skill-eval-coverage/test/*.test.ts"));
+  assert.equal(testWorkflow.jobs.test["continue-on-error"], undefined);
+  for (const [file, name] of [["skill-eval.yml", "skill-eval-coverage"], ["skill-eval-coverage-comment.yml", "comment"],
+    ["skill-eval-coverage-tests.yml", "test"]]) {
+    const workflow = parse(fs.readFileSync(path.join(repoRoot, ".github/workflows", file), "utf8"));
+    const install = workflow.jobs[name].steps.find((step: WorkflowStep) => step.run?.includes("pnpm.mjs"));
+    assert.ok(install, file);
+    assert.match(install.run, /pnpm@12\.6\.0/);
+    assert.match(install.run, /--ignore-workspace install --pm-on-fail=ignore --frozen-lockfile --prod --ignore-scripts/);
+    assert.equal(install.env, undefined, "checker dependency installs must not receive the GitHub token");
+  }
 });
 
 test("checker package has exactly one frozen parser dependency and no local workspace links", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(packageRoot, "package.json"), "utf8"));
-  const lock = JSON.parse(fs.readFileSync(path.join(packageRoot, "package-lock.json"), "utf8"));
+  const lock = parse(fs.readFileSync(path.join(packageRoot, "pnpm-lock.yaml"), "utf8"));
   assert.deepEqual(manifest.dependencies, { yaml: "2.9.1" });
-  assert.deepEqual(Object.keys(lock.packages).sort(), ["", "node_modules/yaml"]);
-  assert.equal(lock.packages["node_modules/yaml"].resolved, "https://registry.npmjs.org/yaml/-/yaml-2.9.1.tgz");
-  assert.equal(lock.packages["node_modules/yaml"].version, manifest.dependencies.yaml);
+  assert.equal(manifest.packageManager, "pnpm@12.6.0");
+  assert.deepEqual(Object.keys(lock.importers), ["."]);
+  assert.deepEqual(lock.importers["."].dependencies, { yaml: { specifier: "2.9.1", version: "2.9.1" } });
+  assert.deepEqual(Object.keys(lock.packages), ["yaml@2.9.1"]);
+  assert.equal(lock.packages["yaml@2.9.1"].resolution.integrity, "sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==");
+  assert.equal(fs.existsSync(path.join(packageRoot, "package-lock.json")), false);
 });

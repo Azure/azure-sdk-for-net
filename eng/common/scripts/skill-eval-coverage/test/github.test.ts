@@ -25,7 +25,7 @@ after(() => {
 const repo = "test/repo";
 const head = "a".repeat(40);
 const config: CoverageConfig = {
-  skillsRoot: ".github/skills", pipelines: ["pipeline.yml"], workflow: ".github/workflows/skill-eval.yml",
+  skillsRoot: ".github/skills", workflow: ".github/workflows/skill-eval.yml",
   dashboardUrl: "https://dashboard.example.test/", authoringGuideUrl: "https://github.com/test/repo/blob/main/guide.md",
 };
 const skillFile = ".github/skills/example/SKILL.md";
@@ -34,7 +34,6 @@ const stimulus = "stimuli: [{name: trigger-example, prompt: test}]\n";
 
 function fixture(covered = true) {
   const files = new Map<string, string>([
-    ["pipeline.yml", "vallyRoot: .github/skills\nevalGlobs: ['*/evals/eval.yaml']\n"],
     [skillFile, "# Example"], ...(covered ? [[evalFile, stimulus] as [string, string]] : []),
   ]);
   const entries = () => [...files.entries()].map(([file, text]) => ({
@@ -112,7 +111,8 @@ for (const covered of [true, false]) {
     assert.match(body, /Build result.*success/);
     assert.match(body, /Attempt.*1/);
     assert.ok(body.includes(head));
-    assert.ok(f.calls.some((route) => route.includes("/git/blobs/")));
+    assert.ok(f.calls.some((route) => route.includes("/git/trees/")));
+    assert.equal(f.calls.some((route) => route.includes("/git/blobs/")), covered);
     if (covered) assert.doesNotMatch(body, /This warning will become|you may proceed/);
     else {
       assert.match(body, /This warning will become a build blocker by \*\*November 9, 2026\*\*/);
@@ -162,6 +162,14 @@ for (const empty of [false, true]) {
     assert.ok(f.calls.every((route) => !route.includes("/git/")));
   });
 }
+
+test("pipeline-only changes neither read skill trees nor create coverage comments", async () => {
+  const f = fixture();
+  f.changed.splice(0, 1, { filename: "eng/common/pipelines/skill-eval.yml" });
+  assert.equal(await reportCompletedRun(f.api, repo, 42, config, "https://github.com"), "skipped");
+  assert.equal(f.writes.length, 0);
+  assert.ok(f.calls.every((route) => !route.includes("/git/")));
+});
 
 test("lint selection preserves original paths even when skill coverage is missing", () => {
   for (const file of [skillFile, evalFile, ".github/skills/example/references/guide.md",

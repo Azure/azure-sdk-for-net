@@ -166,7 +166,7 @@ export function shouldRunLint(paths: string[]): boolean {
 
 function affectsCoverage(paths: string[], config: CoverageConfig): boolean {
   return paths.some((file) => file.startsWith(config.skillsRoot + "/") ||
-    file === CONFIG_PATH || config.pipelines.includes(file));
+    file === CONFIG_PATH);
 }
 
 export async function checkPullRequest(
@@ -174,7 +174,7 @@ export async function checkPullRequest(
 ): Promise<CoverageReport> {
   const paths = changedPaths ?? await getChangedPaths(api, repo, pr);
   if (!affectsCoverage(paths, config)) {
-    return { skills: [], configurationIssues: [], fullScan: false };
+    return { skills: [], fullScan: false };
   }
   return checkCoverage(await remoteSnapshot(api, repo, pr.head.sha), config, paths);
 }
@@ -222,7 +222,7 @@ export async function reportCompletedRun(
     const changedPaths = await getChangedPaths(api, repo, pr);
     relevant = affectsCoverage(changedPaths, config);
     report = await checkPullRequest(api, repo, pr, config, changedPaths);
-    relevant = report.skills.length > 0 || report.configurationIssues.length > 0;
+    relevant = report.skills.length > 0;
   }
   catch { console.warn("Coverage could not be determined; the PR comment will not claim a pass."); }
   const sourceUrl = `${serverUrl}/${repo}/blob/${run.head_sha}`;

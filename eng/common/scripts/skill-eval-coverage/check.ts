@@ -87,7 +87,6 @@ export function writeSummary(report: CoverageReport | null, markdown: string): v
       for (const skill of report.skills.filter((item) => item.status === "missing")) {
         console.log(`::warning::${escape(`Skill ${skill.name}: ${skill.issues.join(" ")}`)}`);
       }
-      for (const issue of report.configurationIssues) console.log(`::warning::${escape(issue)}`);
     }
   }
 }

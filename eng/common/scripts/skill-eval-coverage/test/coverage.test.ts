@@ -1,4 +1,4 @@
-// Covers coverage scope, alternate suites, malformed inputs, and safe PR Markdown.
+// Covers skill-local Eval presence, malformed inputs, scope, and safe PR Markdown.
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
@@ -9,19 +9,16 @@ import type { CoverageConfig, RepositorySnapshot } from "../coverage.ts";
 
 const config: CoverageConfig = {
   skillsRoot: ".github/skills",
-  pipelines: ["eng/common/pipelines/skill-eval.yml", "eng/pipelines/benchmark.yml"],
   workflow: ".github/workflows/skill-eval.yml",
   dashboardUrl: "https://dashboard.example.test/",
   authoringGuideUrl: "https://github.com/test/repo/blob/main/guide.md",
 };
-const pipeline = "parameters:\n  vallyRoot: .github/skills\n  evalGlobs:\n    - '*/evals/*.eval.yaml'\n    - '*/evals/eval.yaml'\n";
-const benchmark = "jobs:\n  - parameters:\n      vallyRoot: .github/skills/alternate/evaluate\n      evalGlobs: ['evals/*.eval.yaml']\n";
 const stimulus = "name: example\nstimuli:\n  - name: trigger-example\n    prompt: Test the skill\n    graders: [{type: skill-invocation}]\n";
 const skill = (name: string) => `.github/skills/${name}/SKILL.md`;
 const evaluation = (name: string) => `.github/skills/${name}/evals/eval.yaml`;
 
 function snapshot(extra: Record<string, string>, modes: Record<string, string> = {}): RepositorySnapshot {
-  const contents = { [config.pipelines[0]]: pipeline, [config.pipelines[1]]: benchmark, ...extra };
+  const contents = extra;
   return {
     files: Object.entries(contents).map(([file, text]) => ({
       path: file, mode: modes[file] ?? "100644", size: Buffer.byteLength(text),
@@ -59,61 +56,57 @@ test("guides and fixture directories without SKILL.md do not invent skills", asy
   assert.deepEqual(report.skills, []);
 });
 
-test("alternate benchmark is covered using the pipeline's actual discovery configuration", async () => {
+test("skill-local Eval presence does not read or depend on an execution pipeline", async () => {
+  const source = snapshot({ [skill("example")]: "# Skill", [evaluation("example")]: stimulus });
+  const read = source.read;
+  source.read = async (file) => {
+    assert.ok(file.startsWith(".github/skills/example/"), "presence discovery must start from the skill folder");
+    return read(file);
+  };
+  const report = await checkCoverage(source, config, [skill("example")]);
+  assert.equal(report.skills[0].status, "present");
+  assert.deepEqual(report.skills[0].evals, [evaluation("example")]);
+});
+
+test("alternate benchmark is covered by its skill-local Eval folder", async () => {
   const file = ".github/skills/alternate/evaluate/evals/001001.eval.yaml";
   const report = await checkCoverage(snapshot({ [skill("alternate")]: "# Skill", [file]: stimulus }), config, [skill("alternate")]);
   assert.equal(report.skills[0].status, "present");
   assert.deepEqual(report.skills[0].evals, [file]);
 });
 
-test("an existing Eval outside the pipeline glob is reported as undiscovered", async () => {
+test("nested skill Evals count without pipeline registration", async () => {
   const file = ".github/skills/example/evals/nested/behavior.eval.yaml";
   const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [file]: stimulus }), config, [skill("example")]);
-  assert.equal(report.skills[0].status, "missing");
-  assert.deepEqual(report.skills[0].undiscovered, [file]);
-  assert.match(report.skills[0].issues.join(" "), /no configured pipeline discovers/);
-});
-
-test("fixing discovery clears the missing-coverage result without historical state", async () => {
-  const file = ".github/skills/example/evals/nested/behavior.eval.yaml";
-  const source = snapshot({ [skill("example")]: "# Skill", [file]: stimulus,
-    [config.pipelines[0]]: "vallyRoot: .github/skills\nevalGlobs: ['*/evals/**/*.eval.yaml']\n" });
-  const report = await checkCoverage(source, config, [config.pipelines[0]]);
   assert.equal(report.skills[0].status, "present");
-  assert.deepEqual(report.skills[0].undiscovered, []);
-  assert.equal(hasCoverageWarnings(report), false);
-});
-
-test("discovery uses the shared pipeline glob rules for dots and literal metacharacters", async () => {
-  const file = ".github/skills/example/evals/.hidden.eval.yaml";
-  const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [file]: stimulus }), config, [skill("example")]);
-  assert.equal(report.skills[0].status, "present");
-  const literal = await checkCoverage(snapshot({ [skill("example")]: "# Skill", [evaluation("example")]: stimulus,
-    [config.pipelines[0]]: "vallyRoot: .github/skills\nevalGlobs: ['*/evals/{eval,trigger}.yaml']\n" }), config, [skill("example")]);
-  assert.equal(literal.skills[0].status, "missing");
+  assert.deepEqual(report.skills[0].evals, [file]);
 });
 
 for (const [name, file] of [
+  ["example", ".github/skills/example/eval.yaml"],
+  ["example", ".github/skills/example/eval.yml"],
+  ["example", ".github/skills/example/evals/.hidden.eval.yaml"],
   ["example", ".github/skills/example/evals/starter case.eval.yaml"],
   ["example", ".github/skills/example/evals/starter\u00a0case.eval.yaml"],
   ["example skill", ".github/skills/example skill/evals/starter.eval.yaml"],
+  ["alternate suite", ".github/skills/alternate suite/evaluate/evals/starter.eval.yml"],
 ]) {
-  test(`collector-incompatible whitespace cannot count as coverage: ${file}`, async () => {
+  test(`associated Eval presence is independent of runner path restrictions: ${file}`, async () => {
     const report = await checkCoverage(snapshot({ [skill(name)]: "# Skill", [file]: stimulus }), config, [skill(name)]);
-    assert.equal(report.skills[0].status, "missing");
-    assert.deepEqual(report.skills[0].evals, []);
-    assert.match(report.skills[0].issues.join(" "), /whitespace/);
+    assert.equal(report.skills[0].status, "present");
+    assert.deepEqual(report.skills[0].evals, [file]);
   });
 }
 
-test("whitespace in a benchmark root is not part of its collector-relative Eval path", async () => {
-  const name = "alternate suite";
-  const file = `.github/skills/${name}/evaluate/evals/starter.eval.yaml`;
-  const report = await checkCoverage(snapshot({ [skill(name)]: "# Skill", [file]: stimulus,
-    [config.pipelines[1]]: `vallyRoot: .github/skills/${name}/evaluate\nevalGlobs: ['evals/*.eval.yaml']\n`,
-  }), config, [skill(name)]);
-  assert.equal(report.skills[0].status, "present");
-  assert.deepEqual(report.skills[0].evals, [file]);
+test("fixtures, unrelated YAML and another skill's Evals cannot provide presence", async () => {
+  const report = await checkCoverage(snapshot({ [skill("example")]: "# Skill",
+    ".github/skills/example/evals/fixtures/starter.eval.yaml": stimulus,
+    ".github/skills/example/evals/tspconfig.yaml": stimulus,
+    ".github/skills/example/references/eval.yaml": stimulus,
+    [skill("other")]: "# Other", [evaluation("other")]: stimulus,
+  }), config, [skill("example")]);
+  assert.equal(report.skills[0].status, "missing");
+  assert.deepEqual(report.skills[0].evals, []);
 });
 
 for (const [label, text] of Object.entries({
@@ -175,7 +168,7 @@ test("oversized Evals and symlink skill definitions warn without following links
   assert.ok(report.skills.every((item) => item.status === "missing"));
 });
 
-for (const change of [CONFIG_PATH, config.pipelines[0], ".github/skills/.vally.yaml"]) {
+for (const change of [CONFIG_PATH, ".github/skills/.vally.yaml"]) {
   test(`shared configuration change inventories all skills: ${change}`, async () => {
     const report = await checkCoverage(snapshot({ [skill("first")]: "# Skill", [skill("second")]: "# Skill" }), config, [change]);
     assert.equal(report.fullScan, true);
@@ -183,11 +176,11 @@ for (const change of [CONFIG_PATH, config.pipelines[0], ".github/skills/.vally.y
   });
 }
 
-test("broken discovery configuration warns instead of claiming a pass", async () => {
-  const report = await checkCoverage(snapshot({ [config.pipelines[0]]: "not: discovery", [skill("example")]: "# Skill",
-    [evaluation("example")]: stimulus }), config, [skill("example")]);
-  assert.equal(hasCoverageWarnings(report), true);
-  assert.match(report.configurationIssues[0], /Cannot read literal/);
+test("pipeline-only changes do not select skills or alter Eval presence", async () => {
+  const report = await checkCoverage(snapshot({ "pipeline.yml": "not: discovery", [skill("example")]: "# Skill",
+    [evaluation("example")]: stimulus }), config, ["pipeline.yml"]);
+  assert.equal(report.fullScan, false);
+  assert.deepEqual(report.skills, []);
 });
 
 test("transport errors propagate rather than treating an unread Eval as covered", async () => {
@@ -205,6 +198,7 @@ test("both coverage outcomes, deleted-only, and unknown results keep dashboard a
     assert.ok(markdown.includes(config.authoringGuideUrl));
     assert.match(markdown, text ? /coverage present/ : /coverage missing/);
     assert.match(markdown, /does not run Evals/);
+    assert.match(markdown, /Semantic coverage of the skill's capabilities is not assessed/);
     assert.doesNotMatch(markdown, /Evals passed/);
     if (text) assert.doesNotMatch(markdown, /This warning will become|you may proceed/);
     else {
@@ -235,5 +229,5 @@ test("configuration and repository paths reject traversal, commands and insecure
   }
   assert.deepEqual(parseConfig(JSON.stringify(config)), config);
   assert.throws(() => parseConfig(JSON.stringify({ ...config, dashboardUrl: "http://host/" })));
-  assert.throws(() => parseConfig(JSON.stringify({ ...config, pipelines: [] })));
+  assert.throws(() => parseConfig("null"));
 });
