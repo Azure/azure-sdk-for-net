@@ -1788,7 +1788,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0")],
             cpu: "0.5",
             memory: "1Gi"
         )

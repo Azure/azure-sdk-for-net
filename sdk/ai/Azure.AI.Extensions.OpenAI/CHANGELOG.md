@@ -13,6 +13,9 @@
 
 ### Other Changes
 
+### Sample Updates
+- Added sample for Hosted Agent identity isolation.
+
 ## 3.0.0-beta.5 (2026-10-16)
 
 ### Breaking Changes
