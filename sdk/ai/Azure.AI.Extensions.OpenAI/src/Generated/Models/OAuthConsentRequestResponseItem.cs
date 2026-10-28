@@ -3,7 +3,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
@@ -13,8 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP002")]
     public partial class OAuthConsentRequestResponseItem : ResponseItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> The link the user can use to perform OAuth consent. </summary>
         public Uri ConsentLink { get; set; }

@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
@@ -28,6 +29,7 @@ internal sealed class NormalizingAsyncStreamingCollectionResult : AsyncCollectio
         => null;
 
 #pragma warning disable CS1998 // async iterator with no await — intentional, mirrors the sync version
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
     {
         // Yield a single sentinel page so GetValuesFromPageAsync is invoked exactly once and the

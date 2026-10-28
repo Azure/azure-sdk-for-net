@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+[CodeGenSuppress("Patch")]
 public partial class OAuthConsentRequestResponseItem
 {
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
@@ -31,5 +32,22 @@ public partial class OAuthConsentRequestResponseItem
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
     internal OAuthConsentRequestResponseItem() : base(ResponseItemKind.OAuthConsentRequest)
     {
+    }
+
+    /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <param name="agentReference"> The agent that created the item. </param>
+    /// <param name="responseId"> The response on which the item is created. </param>
+    /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
+    /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+    /// <param name="patch"></param>
+    internal OAuthConsentRequestResponseItem(ResponseItemKind type, string id, AgentReference agentReference, string responseId, Uri consentLink, string serverLabel, in JsonPatch patch) : base(type)
+    {
+        _patch = patch;
+        this.ApplyAgentAttribution(agentReference, responseId, null);
+        Id = id;
+        ConsentLink = consentLink;
+        ServerLabel = serverLabel;
     }
 }
