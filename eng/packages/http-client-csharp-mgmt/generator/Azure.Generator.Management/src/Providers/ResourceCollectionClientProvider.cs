@@ -135,6 +135,7 @@ namespace Azure.Generator.Management.Providers
                     parameterName,
                     $"The {parameterName} for the resource.",
                     parameterTypes[index],
+                    location: ParameterLocation.Path,
                     wireInfo: new WireInformation(SerializationFormat.Default, contextualParameter.VariableName),
                     inputParameter: inputParameter));
                 var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{parameterName}", this, description: $"The {parameterName}.");

@@ -184,32 +184,32 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(renderedCollection, Does.Contain($"_{expectedName} = {expectedName};"));
         }
 
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(true, true)]
-        public void ExistingMockableAndExtensionAccessorNamesArePreserved(bool published, bool extension)
+        [Test]
+        public void ExistingMockableAndExtensionAccessorNamesArePreserved(
+            [Values] bool published,
+            [Values] bool extension,
+            [Values("iPv6Name", "IPv6Name")] string existingName)
         {
             var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource("IPv6Name", childHasParent: false);
             var source = extension
-                ? """
+                ? $$"""
                   namespace Samples
                   {
                       public partial class ChildTypeCollection { }
                       public static partial class SamplesExtensions
                       {
                           public static ChildTypeCollection GetChildTypes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string parentName, string wrongReceiverName) => null;
-                          public static ChildTypeCollection GetChildTypes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string parentName, string iPv6Name) => null;
+                          public static ChildTypeCollection GetChildTypes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string parentName, string {{existingName}}) => null;
                       }
                   }
                   """
-                : """
+                : $$"""
                   namespace Samples { public partial class ChildTypeCollection { } }
                   namespace Samples.Mocking
                   {
                       public partial class MockableSamplesResourceGroupResource
                       {
-                          public virtual Samples.ChildTypeCollection GetChildTypes(string parentName, string iPv6Name) => null;
+                          public virtual Samples.ChildTypeCollection GetChildTypes(string parentName, string {{existingName}}) => null;
                       }
                   }
                   """;
@@ -221,9 +221,73 @@ namespace Azure.Generator.Management.Tests.Providers
                 lastContractCompilation: published ? () => compilation : null);
             var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().Single(p => p.Name == "ChildTypeCollection");
             var parameter = collection.PathParameters.Single(p => p.WireInfo.SerializedName == "IPv6Name");
-            Assert.That(parameter.Name, Is.EqualTo("iPv6Name"));
-            Assert.That(parameter.Field!.Name, Is.EqualTo("_iPv6Name"));
-            Assert.That(collection.Methods.Single(m => m.Signature.Name == "GetAll").BodyStatements!.ToDisplayString(), Does.Contain("_iPv6Name"));
+            Assert.That(parameter.Name, Is.EqualTo(existingName));
+            Assert.That(parameter.Field!.Name, Is.EqualTo($"_{existingName}"));
+            Assert.That(collection.Methods.Single(m => m.Signature.Name == "GetAll").BodyStatements!.ToDisplayString(), Does.Contain($"_{existingName}"));
+            if (published)
+            {
+                VerifyExtensionAccessor(plugin.Object.OutputLibrary.ExtensionProvider, existingName);
+            }
+        }
+
+        [Test]
+        public void MockableAndExtensionAccessorContractsPreserveIndependentNames([Values] bool exactInputName)
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource(
+                "IPv6Name", clientParameterName: exactInputName ? "IPv6ExactName" : null, isExactName: exactInputName, childHasParent: false);
+            var source = """
+                namespace Samples
+                {
+                    public partial class ChildTypeCollection { }
+                    public static partial class SamplesExtensions
+                    {
+                        public static ChildTypeCollection GetChildTypes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string parentName, string wrongReceiverName) => null;
+                        public static ChildTypeCollection GetChildTypes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string parentName, string sourceIPv6Name) => null;
+                    }
+                }
+                namespace Samples.Mocking
+                {
+                    public partial class MockableSamplesResourceGroupResource
+                    {
+                        public virtual Samples.ChildTypeCollection GetChildTypes(string parentName, string sourceIpv6Name) => null;
+                    }
+                }
+                """;
+            var compilation = Helpers.BuildCompilation([("AccessorContracts.cs", source)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient],
+                lastContractCompilation: () => compilation);
+            var library = plugin.Object.OutputLibrary;
+            var collection = library.TypeProviders.OfType<ResourceCollectionClientProvider>().Single(p => p.Name == "ChildTypeCollection");
+            var mockableName = exactInputName ? "IPv6ExactName" : "sourceIpv6Name";
+            Assert.That(collection.PathParameters.Single(p => p.WireInfo.SerializedName == "IPv6Name").Name, Is.EqualTo(mockableName));
+            var mockable = library.MockableResourceProviders.Single(p => p.Name == "MockableSamplesResourceGroupResource");
+            var accessor = mockable.Methods.Single(m => m.Signature.Name == "GetChildTypes");
+            Assert.That(accessor.Signature.Parameters[1].Name, Is.EqualTo(mockableName));
+            VerifyExtensionAccessor(library.ExtensionProvider, exactInputName ? "IPv6ExactName" : "sourceIPv6Name");
+        }
+
+        [TestCase("IPv6Name")]
+        [TestCase("iPv6Name")]
+        public void ExactExtensionAccessorNamesArePreserved(string exactName)
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource(
+                "wireIPv6Name", clientParameterName: exactName, isExactName: true, childHasParent: false);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parentClient, childClient]);
+
+            VerifyExtensionAccessor(plugin.Object.OutputLibrary.ExtensionProvider, exactName);
+        }
+
+        private static void VerifyExtensionAccessor(ExtensionProvider extension, string expectedName)
+        {
+            var accessor = extension.Methods.Single(m => m.Signature.Name == "GetChildTypes" &&
+                m.Signature.Parameters[0].Type.Equals(typeof(Azure.ResourceManager.Resources.ResourceGroupResource)));
+            Assert.That(accessor.Signature.Parameters[2].Name, Is.EqualTo(expectedName));
+            var rendered = new TypeProviderWriter(new TestTypeProvider(
+                name: extension.Name, ns: extension.Type.Namespace, declarationModifiers: extension.DeclarationModifiers, methods: [accessor])).Write().Content;
+            Assert.That(rendered, Does.Contain($"string {expectedName}"));
+            Assert.That(rendered, Does.Contain($".GetChildTypes(parentName, {expectedName})"));
         }
 
         [TestCase("ref", false)]

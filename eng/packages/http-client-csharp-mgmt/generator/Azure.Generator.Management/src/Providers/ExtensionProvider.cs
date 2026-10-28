@@ -135,7 +135,7 @@ namespace Azure.Generator.Management.Providers
             ParameterProvider DuplicateParameter(ParameterProvider original, int index)
             {
                 var name = original.Name;
-                if (original.Location == ParameterLocation.Body && original.InputParameter?.IsExactName != true)
+                if (original.Location is ParameterLocation.Body or ParameterLocation.Path && original.InputParameter?.IsExactName != true)
                 {
                     name = SynthesizedParameterNameHelper.GetExistingParameterName(
                         this, target.Name, [coreType, .. target.Parameters.Select(p => p.Type)], index + 1) ?? name;
