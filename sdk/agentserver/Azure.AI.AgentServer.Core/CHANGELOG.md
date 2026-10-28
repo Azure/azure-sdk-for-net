@@ -5,8 +5,10 @@
 ### Features Added
 
 - Added protocol-scoped task access for composed hosts and per-task activation
-  checks, so a protocol disabled for this host cannot start or recover its tasks
-  merely because another protocol enabled the shared runtime.
+  checks, stamping the owning protocol on new task records so a disabled
+  protocol cannot start or recover its tasks merely because another protocol
+  enabled the shared runtime. Legacy unmarked application tasks require the
+  explicit Core switch for recovery.
 
 ### Breaking Changes
 

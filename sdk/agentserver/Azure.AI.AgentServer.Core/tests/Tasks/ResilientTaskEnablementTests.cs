@@ -21,9 +21,10 @@ public sealed class ResilientTaskEnablementTests
     {
         var first = new ResilientTaskEnablementState(enabled: true, ready: true);
         var second = new ResilientTaskEnablementState(enabled: true, ready: true);
+        second.SetExplicitlyEnabled(true);
         var otherHostTask = new TaskEngineAccessor(second);
 
-        using (TaskEngineAccessor.EnterProtocolScope(first, enabled: true))
+        using (TaskEngineAccessor.EnterProtocolScope(first, "invocations", enabled: true))
         {
             ResilientTaskException exception = Assert.Throws<ResilientTaskException>(
                 () => otherHostTask.Require())!;

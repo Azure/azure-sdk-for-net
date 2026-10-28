@@ -105,6 +105,7 @@ public static class ResponsesServerServiceCollectionExtensions
         // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
         var taskOptions = new ResponsesResilientTaskOptions();
+        services.RegisterResilientTaskProtocol("responses", taskOptions.IsEnabled);
         services.AddHostedService(serviceProvider =>
         {
             taskOptions.Initialize(

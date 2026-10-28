@@ -35,6 +35,7 @@ internal sealed partial class TaskEngine : IDisposable
     private readonly AgentEventStreamRegistry _streams;
     private readonly ILogger _logger;
     private readonly IServiceScopeFactory? _scopeFactory;
+    private readonly ResilientTaskEnablementState? _enablement;
     private readonly string _agentName;
     private readonly string _sessionId;
     private readonly string _owner;
@@ -66,7 +67,8 @@ internal sealed partial class TaskEngine : IDisposable
         string sessionId,
         AgentEventStreamRegistry streams,
         ILogger? logger = null,
-        IServiceScopeFactory? scopeFactory = null)
+        IServiceScopeFactory? scopeFactory = null,
+        ResilientTaskEnablementState? enablement = null)
     {
         _store = store ?? throw new ArgumentNullException(nameof(store));
         _registry = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -76,6 +78,7 @@ internal sealed partial class TaskEngine : IDisposable
         _owner = LeaseManager.FormatOwner(agentName, sessionId);
         _logger = logger ?? NullLogger.Instance;
         _scopeFactory = scopeFactory;
+        _enablement = enablement;
         _serializer = new TaskWriteSerializer(store);
         _lease = new LeaseManager(_serializer);
     }
@@ -156,7 +159,8 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationToken cancellationToken)
     {
         TaskRegistration registration = _registry.Get(name);
-        if (!registration.IsEnabled)
+        string protocol = TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+        if (!RegistrationEnabled(registration, protocol))
         {
             throw new ResilientTaskException(
                 ResilientTaskErrorCode.NotEnabled,
@@ -286,6 +290,14 @@ internal sealed partial class TaskEngine : IDisposable
         bool persistInputId, TInput input, RunOptions? options, CancellationToken cancellationToken)
     {
         EnsureTaskName(existing.Name, registration.Name, taskId);
+        string protocol = TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+        if (!string.Equals(existing.Protocol, protocol, StringComparison.Ordinal))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' belongs to protocol '{existing.Protocol}', not '{protocol}'.");
+        }
+
         if (existing.DeleteRequested)
         {
             throw CreateDeletingConflict(taskId);
@@ -526,6 +538,58 @@ internal sealed partial class TaskEngine : IDisposable
         }
     }
 
+    private bool RegistrationEnabled(TaskRegistration registration, string? protocol)
+    {
+        if (protocol == string.Empty)
+        {
+            return false;
+        }
+
+        if (_enablement is null || protocol is null)
+        {
+            return registration.IsEnabled;
+        }
+
+        return _enablement.IsProtocolEnabled(protocol)
+            && (registration.Options?.IsEnabled?.Invoke() ?? true);
+    }
+
+    private string? PersistedProtocol(TaskRecord record)
+    {
+        if (record.Payload is not JsonObject payload
+            || !payload.TryGetPropertyValue(TaskWireKeys.PayloadProtocolScope, out JsonNode? value))
+        {
+            return null;
+        }
+
+        if (value is JsonValue scalar
+            && scalar.TryGetValue(out string? protocol)
+            && !string.IsNullOrWhiteSpace(protocol))
+        {
+            return protocol;
+        }
+
+        _logger.RecoveryScanFailed("InvalidProtocolScope");
+        return string.Empty;
+    }
+
+    private string RecordProtocol(TaskRecord record, TaskRegistration registration)
+        => PersistedProtocol(record)
+            ?? (registration.Options?.IsEnabled is null
+                ? TaskWireKeys.ProtocolCore
+                : TaskWireKeys.ProtocolResponses);
+
+    private void EnsureProtocolOwner(TaskRecord record, TaskRegistration registration, string expectedProtocol)
+    {
+        string actualProtocol = RecordProtocol(record, registration);
+        if (!string.Equals(actualProtocol, expectedProtocol, StringComparison.Ordinal))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.Conflict,
+                $"Task '{record.Id}' belongs to protocol '{actualProtocol}', not '{expectedProtocol}'.");
+        }
+    }
+
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
         CancellationToken cancellationToken)
@@ -552,6 +616,11 @@ internal sealed partial class TaskEngine : IDisposable
         // Stamp the schema version at create (spec §20/§38). Its presence is REQUIRED: a stale
         // in_progress record lacking it is legacy and deleted (not recovered) by the recovery scan.
         payload[TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue;
+        if (_enablement is not null)
+        {
+            payload[TaskWireKeys.PayloadProtocolScope] =
+                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+        }
 
         EntryMode entryMode = EntryMode.Fresh;
         TaskRecord record;
@@ -582,6 +651,9 @@ internal sealed partial class TaskEngine : IDisposable
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
                 ?? throw new ResilientTaskException(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is gone.") { CurrentStatus = TaskRunStatus.Completed };
             EnsureTaskName(current.Source?.Name, name, taskId);
+            EnsureProtocolOwner(
+                current, registration,
+                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
                 throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
@@ -603,7 +675,7 @@ internal sealed partial class TaskEngine : IDisposable
 
         TaskRunState<TOutput> runState =
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
-        var activeRun = new ActiveRun<TOutput>(name, runState);
+        var activeRun = new ActiveRun<TOutput>(name, runState, RecordProtocol(record, registration));
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         if (entryMode == EntryMode.Fresh)
         {
@@ -705,6 +777,11 @@ internal sealed partial class TaskEngine : IDisposable
                 [TaskWireKeys.PayloadTurnStartedAt] = nowIso,
                 [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
             };
+            if (_enablement is not null)
+            {
+                payload[TaskWireKeys.PayloadProtocolScope] =
+                    TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore;
+            }
             if (persistInputId)
             {
                 payload[TaskWireKeys.PayloadLastInputId] = inputId;
@@ -736,6 +813,9 @@ internal sealed partial class TaskEngine : IDisposable
                 if (observed is not null)
                 {
                     EnsureTaskName(observed.Source?.Name, name, taskId);
+                    EnsureProtocolOwner(
+                        observed, registration,
+                        TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
                     CheckInputPrecondition(observed, options?.IfLastInputId);
                 }
 
@@ -762,6 +842,9 @@ internal sealed partial class TaskEngine : IDisposable
         else
         {
             EnsureTaskName(current.Source?.Name, name, taskId);
+            EnsureProtocolOwner(
+                current, registration,
+                TaskEngineAccessor.ActiveProtocol(_enablement) ?? TaskWireKeys.ProtocolCore);
 
             // ifLastInputId precondition (FR-006).
             CheckInputPrecondition(current, options?.IfLastInputId);
@@ -827,7 +910,7 @@ internal sealed partial class TaskEngine : IDisposable
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         bool steerable = registration.Steerable;
-        var activeRun = new ActiveRun<TOutput>(name, runState)
+        var activeRun = new ActiveRun<TOutput>(name, runState, RecordProtocol(record, registration))
         {
             Steerable = steerable,
         };
@@ -2512,14 +2595,18 @@ internal sealed partial class TaskEngine : IDisposable
         string name, string taskId, CancellationToken cancellationToken)
     {
         if (!_registry.TryGet(name, out TaskRegistration registration)
-            || registration.RecoverDispatch is null
-            || !registration.IsEnabled)
+            || registration.RecoverDispatch is null)
         {
             return null;
         }
 
         TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
         if (record is null || record.Status != TaskWireKeys.StatusInProgress)
+        {
+            return null;
+        }
+
+        if (!RegistrationEnabled(registration, PersistedProtocol(record)))
         {
             return null;
         }
@@ -2577,6 +2664,11 @@ internal sealed partial class TaskEngine : IDisposable
     /// <returns>A task that completes when recovery dispatch has started.</returns>
     internal async Task RecoverAsync<TInput, TOutput>(TaskRegistration registration, TaskRecord record)
     {
+        string protocol = PersistedProtocol(record)
+            ?? (registration.Options?.IsEnabled is null ? TaskWireKeys.ProtocolCore : TaskWireKeys.ProtocolResponses);
+        using IDisposable? scope = _enablement is not null
+            ? TaskEngineAccessor.EnterProtocolScope(_enablement, protocol, enabled: true)
+            : null;
         EnterStartOperation();
         var admission = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         try
@@ -2648,7 +2740,8 @@ internal sealed partial class TaskEngine : IDisposable
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         bool steerable = registration.Steerable;
-        var activeRun = new ActiveRun<TOutput>(registration.Name, runState)
+        var activeRun = new ActiveRun<TOutput>(
+            registration.Name, runState, RecordProtocol(record, registration))
         {
             Steerable = steerable,
         };
@@ -2756,7 +2849,7 @@ internal sealed partial class TaskEngine : IDisposable
             string name = record.Source?.Name ?? string.Empty;
             if (!_registry.TryGet(name, out TaskRegistration registration)
                 || registration.RecoverDispatch is null
-                || !registration.IsEnabled)
+                || !RegistrationEnabled(registration, PersistedProtocol(record)))
             {
                 continue;
             }
@@ -3113,6 +3206,8 @@ internal sealed partial class TaskEngine : IDisposable
     {
         string Name { get; }
 
+        string Protocol { get; }
+
         string TaskId { get; }
 
         string InputId { get; }
@@ -3144,14 +3239,22 @@ internal sealed partial class TaskEngine : IDisposable
         private readonly TaskCompletionSource _producerStopped = new(TaskCreationOptions.RunContinuationsAsynchronously);
         private RunAdmission _admission;
 
-        public ActiveRun(string name, TaskRunState<TOutput> state)
+        public ActiveRun(string name, TaskRunState<TOutput> state, string protocol)
         {
             Name = name;
+            Protocol = protocol;
             _state = state;
             _inputs.Add(state);
         }
 
+        public ActiveRun(string name, TaskRunState<TOutput> state)
+            : this(name, state, TaskWireKeys.ProtocolCore)
+        {
+        }
+
         public string Name { get; }
+
+        public string Protocol { get; }
 
         /// <summary>The in-process steering coordinator. Lazily created on first access so a
         /// non-steerable task never allocates a steering queue (pay-for-what-you-use, FR-038).

@@ -37,6 +37,7 @@ public sealed class TaskRegistrationOptions
     /// <summary>
     /// An optional activation check for tasks owned by a protocol. Disabled registrations
     /// cannot start or recover even when another protocol enables the shared task runtime.
+    /// Tasks without a check use their creating protocol's scope for fresh starts and recovery.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public Func<bool>? IsEnabled { get; set; }

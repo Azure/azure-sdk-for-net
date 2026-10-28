@@ -59,7 +59,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
             IServiceProvider provider = context.HttpContext.RequestServices;
             ResponsesServerOptions options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
             bool enabled = options.ResilientBackground || options.SteerableConversations;
-            using (provider.EnterResilientTaskScope(enabled))
+            using (provider.EnterResilientTaskScope("responses", enabled))
             {
                 object? result = await next(context);
                 return result is IResult response ? new TaskScopedResult(response, enabled) : result;
@@ -100,7 +100,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
     {
         public async Task ExecuteAsync(HttpContext httpContext)
         {
-            using (httpContext.RequestServices.EnterResilientTaskScope(enabled))
+            using (httpContext.RequestServices.EnterResilientTaskScope("responses", enabled))
             {
                 await inner.ExecuteAsync(httpContext);
             }

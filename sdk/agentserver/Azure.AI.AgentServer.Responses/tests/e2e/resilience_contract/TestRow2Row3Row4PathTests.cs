@@ -250,7 +250,7 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
             await Task.Delay(25);
         }
 
-        Assert.That(last, Is.EqualTo(expected), message);
+        Assert.Fail($"{message} No complete matching task-store snapshot was observed; last count: {last}.");
     }
 
     private static async Task<string> CreateBackgroundAsync(HttpClient client, bool stream)

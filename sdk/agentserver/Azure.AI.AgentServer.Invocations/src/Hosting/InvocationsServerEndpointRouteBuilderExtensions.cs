@@ -35,7 +35,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         group.AddEndpointFilter<VoiceRegistrationGuardFilter>();
         group.AddEndpointFilter(async (context, next) =>
         {
-            using (context.HttpContext.RequestServices.EnterResilientTaskScope())
+            using (context.HttpContext.RequestServices.EnterResilientTaskScope("invocations"))
             {
                 return await next(context);
             }

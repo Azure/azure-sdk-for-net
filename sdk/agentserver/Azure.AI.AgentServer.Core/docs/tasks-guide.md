@@ -149,7 +149,12 @@ or periodic recovery loop. Starting a registered task throws a
 Responses applications opt in independently through
 `ResponsesServerOptions.ResilientBackground` or `SteerableConversations`. A
 Responses opt-in does not enable Invocations tasks in a composed host, and
-the Core switch alone does not opt Responses in.
+the Core switch alone does not opt Responses in. Application tasks started
+within a Responses handler inherit its protocol scope and recover only when
+that protocol remains enabled after restart; unscoped Core tasks and Invocations
+tasks still require the explicit Core switch. Older task records without an
+owner marker are recovered as Core-owned unless the registration supplies its
+own activation check.
 
 ### One-shot
 
