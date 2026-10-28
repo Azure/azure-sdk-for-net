@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <!-- Native v1.0 protocol types and transport; isolated pending dependency review. -->
+    <PackageVersion Include="A2A.AspNetCore" Version="1.0.0-preview3" />
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Update="NUnit3TestAdapter" Version="5.1.0" />
+  </ItemGroup>
+</Project>
