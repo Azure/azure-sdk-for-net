@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.Provisioning;
+using Azure.Provisioning.Internal;
 using Azure.Provisioning.Primitives;
 using System;
 using System.ComponentModel;
@@ -89,7 +90,7 @@ public partial class ManagementLock : ProvisionableResource
         get { Initialize(); return _scope!.Value; }
         set { Initialize(); _scope!.Value = value; }
     }
-    private ResourceReference<ProvisionableResource>? _scope;
+    private ProvisioningResourceReference<ProvisionableResource>? _scope;
 
     /// <summary>
     /// Creates a new ManagementLock.
@@ -118,7 +119,7 @@ public partial class ManagementLock : ProvisionableResource
         _owners = DefineListProperty<ManagementLockOwner>("Owners", ["properties", "owners"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _scope = DefineResource<ProvisionableResource>(nameof(Scope), ["scope"]);
+        _scope = new(DefineProperty<string>(nameof(Scope), ["scope"]));
     }
 
     /// <summary>

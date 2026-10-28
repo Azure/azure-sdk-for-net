@@ -383,6 +383,9 @@ internal class SampleTests
                     };
                     identityLock.Scope = identity;
                     Assert.That(identityLock.Scope, Is.SameAs(identity));
+                    identityLock.Scope = null;
+                    Assert.That(identityLock.Scope, Is.Null);
+                    identityLock.Scope = identity;
                     if (explicitDependency)
                     {
                         identityLock.DependsOn.Add(identity);
@@ -408,8 +411,9 @@ internal class SampleTests
             """);
     }
 
-    [Test]
-    public async Task ManagementLockWithoutResourceScope()
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ManagementLockWithoutResourceScope(bool clearScope)
     {
         await using Trycep test = new Trycep()
             .Define(
@@ -426,6 +430,13 @@ internal class SampleTests
                         Level = ManagementLockLevel.ReadOnly
                     };
                     Assert.That(identityLock.Scope, Is.Null);
+                    if (clearScope)
+                    {
+                        identityLock.Scope = identity;
+                        identityLock.Scope = null;
+                        identityLock.Scope = null;
+                        Assert.That(identityLock.Scope, Is.Null);
+                    }
                     identityLock.DependsOn.Add(identity);
                     infra.Add(identityLock);
                     return infra;

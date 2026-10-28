@@ -472,7 +472,7 @@ infra.Add(storageLock);
 
 Setting `Scope` emits `scope: storage` on the lock. Because the storage account is deployed by the same infrastructure, the reference also establishes an implicit deployment dependency, so `DependsOn` is not needed. To lock a resource that already exists, declare it with `FromExisting` (for example, `StorageAccount.FromExisting`) and add it to the same infrastructure.
 
-Leaving `Scope` unset applies the lock to the deployment scope; in a resource group deployment, that is the whole resource group. Like other generated resource references, explicitly assigning `null` emits `scope: null`, which Bicep rejects; it does not clear the property. Adding a resource to `DependsOn` alone does not scope the lock to that resource.
+Leaving `Scope` unset, or assigning `null` to clear it, applies the lock to the deployment scope; in a resource group deployment, that is the whole resource group. Assigning `null` removes the reference instead of emitting `scope: null`. Adding a resource to `DependsOn` alone does not scope the lock to that resource.
 
 `Scope` cannot change the deployment scope. With `TargetScope = DeploymentScope.Subscription`, assigning a `ResourceGroup` produces Bicep that fails to compile (BCP139). To lock a resource group, deploy the lock at resource group scope and leave `Scope` unset.
 

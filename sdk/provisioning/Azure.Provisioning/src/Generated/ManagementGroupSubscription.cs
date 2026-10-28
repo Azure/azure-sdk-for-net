@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Core;
+using Azure.Provisioning.Internal;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -91,7 +92,7 @@ public partial class ManagementGroupSubscription : ProvisionableResource
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<ManagementGroup>? _parent;
+    private ProvisioningResourceReference<ManagementGroup>? _parent;
 
     /// <summary>
     /// Creates a new ManagementGroupSubscription.
@@ -121,7 +122,7 @@ public partial class ManagementGroupSubscription : ProvisionableResource
         _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _tenant = DefineProperty<string>("Tenant", ["properties", "tenant"], isOutput: true);
-        _parent = DefineResource<ManagementGroup>("Parent", ["parent"], isRequired: true);
+        _parent = new(DefineProperty<string>(nameof(Parent), ["parent"], isRequired: true));
     }
 
     /// <summary>

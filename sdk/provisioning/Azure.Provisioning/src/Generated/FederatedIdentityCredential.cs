@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.Provisioning;
+using Azure.Provisioning.Internal;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
@@ -85,7 +86,7 @@ public partial class FederatedIdentityCredential : ProvisionableResource
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<UserAssignedIdentity>? _parent;
+    private ProvisioningResourceReference<UserAssignedIdentity>? _parent;
 
     /// <summary>
     /// Creates a new FederatedIdentityCredential.
@@ -114,7 +115,7 @@ public partial class FederatedIdentityCredential : ProvisionableResource
         _subject = DefineProperty<string>("Subject", ["properties", "subject"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<UserAssignedIdentity>("Parent", ["parent"], isRequired: true);
+        _parent = new(DefineProperty<string>(nameof(Parent), ["parent"], isRequired: true));
     }
 
     /// <summary>
