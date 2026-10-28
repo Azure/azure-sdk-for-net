@@ -13,7 +13,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies.Support
     {
         private readonly bool _handleRead;
         public bool CreateWasCalled => ((TrackingModel)Model).CreateWasCalled;
-        public bool WriteWasCalled => ((TrackingModel)Model).WriteWasCalled;
         public object? CapturedProxiedModelOnCreate => ((TrackingModel)Model).CapturedProxiedModelOnBinaryCreate ?? ((TrackingModel)Model).CapturedProxiedModelOnReaderCreate;
 
         public ChainProxy(bool handleRead)

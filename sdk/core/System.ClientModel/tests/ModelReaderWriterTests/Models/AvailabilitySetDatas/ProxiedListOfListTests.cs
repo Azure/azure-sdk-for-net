@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
-    public partial class ProxiedListOfListTests : MrwCollectionTests<List<List<AvailabilitySetData>>, AvailabilitySetData>
+    public class ProxiedListOfListTests : MrwCollectionTests<List<List<AvailabilitySetData>>, AvailabilitySetData>
     {
         protected override string CollectionTypeName => "List<List<AvailabilitySetData>>";
 
@@ -23,7 +23,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 #if SOURCE_GENERATOR
         protected override ModelReaderWriterContext Context => BasicContext.Default;
 #else
-        protected override ModelReaderWriterContext Context => new LocalContext();
+        protected override ModelReaderWriterContext Context => new ListOfListTests.LocalContext();
 #endif
 
         protected override List<List<AvailabilitySetData>> GetModelInstance()

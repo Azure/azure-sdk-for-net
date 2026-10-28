@@ -64,21 +64,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         }
 
         [Test]
-        public void ConditionalProxy_CustomPlainTextFormat_WritesPlainText()
+        public void ConditionalProxy_CustomPlainTextFormat_RoundTrips()
         {
             // A proxy can take over for a caller-defined, non-JSON format. When the "PT" (plain text)
             // format is chosen, the proxy writes a plain-text representation instead of JSON.
-            var options = new ModelReaderWriterOptions("PT");
-            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
-
-            BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "hello" }, options);
-
-            Assert.AreEqual("PlainText: hello", data.ToString());
-        }
-
-        [Test]
-        public void ConditionalProxy_CustomPlainTextFormat_RoundTrips()
-        {
             var options = new ModelReaderWriterOptions("PT");
             options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
 

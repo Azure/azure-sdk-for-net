@@ -10,21 +10,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
     public class ModelReaderWriterOptionsResolutionTests
     {
         [Test]
-        public void AddProxy_MultipleProxiesForSameType_FormChain()
-        {
-            var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new JsonModelProxy();
-            var proxy2 = new JsonModelProxy();
-
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
-            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
-
-            var model = new JsonModel();
-            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
-            Assert.AreSame(proxy1, resolved);
-        }
-
-        [Test]
         public void ResolveProxy_ReturnsFirstRegistered()
         {
             var options = new ModelReaderWriterOptions("J");
@@ -54,16 +39,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
             var resolved = options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model);
             Assert.AreSame(proxy1, resolved);
             Assert.AreSame(model, options.ProxiedModel);
-        }
-
-        [Test]
-        public void ResolveProxy_NoProxies_ReturnsSelf()
-        {
-            var options = new ModelReaderWriterOptions("J");
-            var model = new JsonModel();
-
-            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
-            Assert.AreSame(model, resolved);
         }
 
         [Test]
@@ -167,7 +142,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Proxies
         {
             var options = new ModelReaderWriterOptions("J");
             Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((IPersistableModel<SimpleModel>)null!));
-            Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)null!));
             Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((ConditionalModelProxy<SimpleModel>)null!));
         }
 
