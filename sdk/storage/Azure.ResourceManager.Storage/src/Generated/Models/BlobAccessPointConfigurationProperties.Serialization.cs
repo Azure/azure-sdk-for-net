@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
-                writer.WriteStringValue(UniqueId);
+                writer.WriteStringValue(UniqueId.Value);
             }
             if (Optional.IsDefined(State))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            string uniqueId = default;
+            Guid? uniqueId = default;
             BlobAccessPointConfigurationState? state = default;
             string description = default;
             BlobAccessPointConnectionTestStatus? lastConnectionTestStatus = default;
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("uniqueId"u8))
                 {
-                    uniqueId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uniqueId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
