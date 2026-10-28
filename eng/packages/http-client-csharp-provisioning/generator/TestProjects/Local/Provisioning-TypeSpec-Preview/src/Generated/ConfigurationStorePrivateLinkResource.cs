@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ProvisioningTypeSpecPreviewPrivateLinkResourceProperties _properties;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ProvisioningResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new ConfigurationStorePrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProvisioningTypeSpecPreviewPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }, isRequired: true));
             DefineAdditionalProperties();
         }
 

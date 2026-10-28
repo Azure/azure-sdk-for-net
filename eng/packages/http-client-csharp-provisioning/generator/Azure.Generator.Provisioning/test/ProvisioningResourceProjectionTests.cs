@@ -211,6 +211,13 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(provider.ResourceProjection!.WritableScopes, Does.Contain(ResourceScope.Extension));
             Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
             Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
+            Assert.That(provider.Fields.Single(field => field.Name == "_scope").Type.Name,
+                Is.EqualTo("ProvisioningResourceReference"));
+            string generated = new TypeProviderWriter(provider).Write().Content;
+            Assert.That(generated, Does.Contain("DefineProperty<string>(nameof(Scope)"));
+            Assert.That(generated, Does.Not.Contain("DefineResource<"));
+            Assert.That(ProvisioningGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ProvisioningResourceReferenceProvider>().Count(), Is.EqualTo(1));
         }
 
         [Test]
@@ -727,6 +734,12 @@ namespace Azure.Generator.Provisioning.Tests
             var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
 
             Assert.That(parentProperty.Type.FullyQualifiedName, Is.EqualTo(providers[0].Type.FullyQualifiedName));
+            Assert.That(providers[1].Fields.Single(field => field.Name == "_parent").Type.Name,
+                Is.EqualTo("ProvisioningResourceReference"));
+            string generated = new TypeProviderWriter(providers[1]).Write().Content;
+            Assert.That(generated, Does.Contain("DefineProperty<string>(nameof(Parent)"));
+            Assert.That(generated, Does.Contain("isRequired: true"));
+            Assert.That(generated, Does.Not.Contain("DefineResource<"));
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.False);

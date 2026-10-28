@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private SystemData _systemData;
         private DiscriminatedResourceProfileProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ProvisioningResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new DiscriminatedResourceProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DiscriminatedResourceProfileProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }, isRequired: true));
             DefineAdditionalProperties();
         }
 

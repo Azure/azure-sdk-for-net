@@ -242,20 +242,30 @@ The following snippets abbreviate the generated accessor bodies to emphasize the
 // Structural child resource
 public ConfigurationStore Parent { get; set; }
 
-_parent = DefineResource<ConfigurationStore>(
-    "Parent",
+_parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(
+    nameof(Parent),
     new[] { "parent" },
-    isRequired: true);
+    isRequired: true));
 ```
 
 ```csharp
 // Writable extension resource
 public ProvisionableResource Scope { get; set; }
 
-_scope = DefineResource<ProvisionableResource>(
+_scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(
     nameof(Scope),
-    new[] { "scope" });
+    new[] { "scope" }));
 ```
+
+Libraries with generated `Parent` or `Scope` properties emit one internal sealed
+`ProvisioningResourceReference<T>` helper in `Generated/Internal`, using the library's
+namespace. Each accessor calls `Initialize()` before reading or writing its private
+helper's `Value`. Assigning a resource caches it and sets the underlying Bicep value to
+its identifier expression. Assigning `null` clears both the cached resource and the
+underlying value, omitting the relationship instead of emitting an explicit null.
+Clearing a required `Parent` leaves it unset for required-property validation.
+Ordinary `BicepValue<T>` null semantics and the public `ResourceReference<T>` helper
+remain unchanged.
 
 #### Name Generation
 

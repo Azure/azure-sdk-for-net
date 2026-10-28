@@ -78,6 +78,8 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
+        internal bool HasResourceReference => ImmediateParentResource is not null || _resourceProjection?.IsExtensionResource == true;
+
         /// <summary>
         /// Gets the resolved parent only when its resource type is the immediate structural parent type.
         /// </summary>
@@ -220,7 +222,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 _parentField = new FieldProvider(
                     FieldModifiers.Private,
-                    new CSharpType(typeof(ResourceReference<>), _parentType),
+                    ProvisioningGenerator.Instance.OutputLibrary.ResourceReference.Type.MakeGenericType([_parentType]),
                     "_parent",
                     this);
                 _parentProperty = BuildParentProperty(_parentField, _parentType);
@@ -231,7 +233,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 _scopeField = new FieldProvider(
                     FieldModifiers.Private,
-                    new CSharpType(typeof(ResourceReference<>), typeof(ProvisionableResource)),
+                    ProvisioningGenerator.Instance.OutputLibrary.ResourceReference.Type.MakeGenericType([typeof(ProvisionableResource)]),
                     "_scope",
                     this);
                 _scopeProperty = BuildScopeProperty(_scopeField);
@@ -604,34 +606,33 @@ namespace Azure.Generator.Provisioning.Providers
                 ).Terminate());
             }
 
-            // Add DefineResource call only for an immediate structural parent
+            // Register the underlying Bicep value while keeping the resource cache in the helper.
             if (_parentField != null && _parentType != null)
             {
                 statements.Add(_parentField.Assign(
-                    This.Invoke(
-                        "DefineResource",
+                    New.Instance(_parentField.Type, [This.Invoke(
+                        "DefineProperty",
                         [
                             Nameof(Identifier("Parent")),
                             New.Array(typeof(string), [Literal("parent")]),
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],
-                        [_parentType],
-                        false)
+                        [typeof(string)],
+                        false)])
                 ).Terminate());
             }
 
-            // Add DefineResource call for scope on extension resources.
             if (_scopeField != null)
             {
                 statements.Add(_scopeField.Assign(
-                    This.Invoke(
-                        "DefineResource",
+                    New.Instance(_scopeField.Type, [This.Invoke(
+                        "DefineProperty",
                         [
                             Nameof(Identifier("Scope")),
                             New.Array(typeof(string), [Literal("scope")])
                         ],
-                        [typeof(ProvisionableResource)],
-                        false)
+                        [typeof(string)],
+                        false)])
                 ).Terminate());
             }
 

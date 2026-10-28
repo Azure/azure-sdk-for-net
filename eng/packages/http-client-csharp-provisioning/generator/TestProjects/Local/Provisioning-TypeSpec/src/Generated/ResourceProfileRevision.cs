@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ResourceProfileRevisionProperties _properties;
-        private ResourceReference<ResourceProfile> _parent;
+        private ProvisioningResourceReference<ResourceProfile> _parent;
 
         /// <summary> Creates a new ResourceProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ResourceProfileRevisionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ResourceProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ResourceProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }, isRequired: true));
             DefineAdditionalProperties();
         }
 
