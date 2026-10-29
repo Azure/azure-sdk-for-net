@@ -501,7 +501,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -535,7 +537,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -850,8 +854,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -955,8 +958,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -1032,7 +1034,7 @@ public class AgentsTests : AgentsTestBase
             }
             else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
             {
-                Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+                Assert.Fail($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
             }
             else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
             {
@@ -1779,6 +1781,65 @@ public class AgentsTests : AgentsTestBase
         response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
         Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestHostedAgentIdentity()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id1"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient1 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ResponseResult response = await responseClient1.CreateResponseAsync("1 + 1 = ?");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        // Another identity
+        responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id2"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient2 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ClientResultException error = Assert.ThrowsAsync<ClientResultException>(async () => await responseClient2.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id));
+        Assert.That(error.Status, Is.EqualTo(404));
+        response = await responseClient1.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }
 
     [RecordedTest]

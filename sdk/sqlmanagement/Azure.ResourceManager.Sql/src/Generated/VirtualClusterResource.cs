@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualClusterApiVersion);
             _virtualClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _virtualClustersRestClient = new VirtualClusters(_virtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualClusterApiVersion ?? "2025-08-01-preview");
+            _virtualClustersRestClient = new VirtualClusters(_virtualClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sql/virtualClusters", out string virtualClustersApiVersionOverride) ? virtualClustersApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

@@ -21,6 +21,228 @@ namespace Azure.Generator.Mgmt.Tests
     internal class ModelFactoryVisitorTests
     {
         [Test]
+        public void ConstructorRepairPreservesDefaultEnumDiscriminator(
+            [Values(false, true)] bool isExtensible,
+            [Values(false, true)] bool isNullable,
+            [Values("visitor", "writer", "hidden")] string repairKind)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "DiscriminatorKind", [("Known", "Known")], access: "internal",
+                isExtensible: isExtensible, clientNamespace: "Samples.Models");
+            var derivedModel = InputFactory.Model(
+                "KnownDiscriminatorModel", properties: [], discriminatedKind: "Known");
+            var baseModel = InputFactory.Model(
+                "DiscriminatorModel",
+                properties: [InputFactory.Property("kind",
+                    isNullable ? new InputNullableType(discriminatorEnum) : discriminatorEnum,
+                    isRequired: true, isDiscriminator: true)],
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, derivedModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.Name == "DiscriminatorModel");
+            var conversion = isExtensible
+                ? "new global::Samples.Models.DiscriminatorKind(kind)"
+                : "kind.ToDiscriminatorKind()";
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(conversion),
+                "Keep the supplied-input discriminator repair as a separate invariant.");
+
+            if (repairKind == "hidden")
+            {
+                var signature = method.Signature;
+                var hiddenSignature = new MethodSignature(
+                    signature.Name, signature.Description, signature.Modifiers, signature.ReturnType,
+                    signature.ReturnDescription,
+                    [.. signature.Parameters, new ParameterProvider("legacyValue", $"Legacy input.", typeof(string), Default)],
+                    [new AttributeStatement(typeof(System.ComponentModel.EditorBrowsableAttribute),
+                        FrameworkEnumValue(System.ComponentModel.EditorBrowsableState.Never))]);
+                method = new MethodProvider(hiddenSignature, method.BodyStatements!, modelFactory);
+                modelFactory.Update(methods: [.. modelFactory.Methods, method]);
+            }
+
+            if (repairKind == "visitor")
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            }
+            else
+            {
+                _ = plugin.Object.GetWriter(modelFactory).Write();
+            }
+
+            var defaultValue = isNullable
+                ? "((global::Samples.Models.DiscriminatorKind?)default)"
+                : "((global::Samples.Models.DiscriminatorKind)default)";
+            Assert.That(method.BodyStatements!.ToDisplayString(),
+                Does.Contain($"(kind is null) ? {defaultValue} : {conversion}"),
+                "Omitted/null factory inputs must preserve the constructor's typed default, including null for nullable enums.");
+            var afterRepair = method.BodyStatements!.ToDisplayString();
+            _ = plugin.Object.GetWriter(modelFactory).Write();
+            Assert.That(method.BodyStatements!.ToDisplayString(), Is.EqualTo(afterRepair),
+                "Repeated repair must retain both the null guard and supplied-input conversion.");
+        }
+
+        [TestCase("ExecutionIdentity", false)]
+        [TestCase("ReferencedExecutionIdentity", false)]
+        [TestCase("ExecutionIdentity", true)]
+        [TestCase("ReferencedExecutionIdentity", true)]
+        public void ConstructorRepairPreservesInternalEnumDiscriminator(string factoryName, bool repairAtWriteTime)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "ExecutionIdentityProvisioningMode",
+                [("Referenced", "Referenced")],
+                access: "internal",
+                isExtensible: true,
+                clientNamespace: "Samples.Models");
+            var discriminatorProperty = InputFactory.Property(
+                "provisioningMode", discriminatorEnum, isRequired: true, isDiscriminator: true);
+            InputModelProperty[] properties =
+            [
+                discriminatorProperty,
+                InputFactory.Property("scope", InputPrimitiveType.String)
+            ];
+            var derivedModel = InputFactory.Model(
+                "ReferencedExecutionIdentity",
+                properties: properties,
+                discriminatedKind: "Referenced");
+            var baseModel = InputFactory.Model(
+                "ExecutionIdentity",
+                properties: properties,
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [derivedModel, baseModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.Name == factoryName);
+            var isBaseFactory = factoryName == "ExecutionIdentity";
+            var expectedDiscriminator = isBaseFactory
+                ? "new global::Samples.Models.ExecutionIdentityProvisioningMode(provisioningMode)"
+                : "global::Samples.Models.ExecutionIdentityProvisioningMode.Referenced";
+
+            // Anchor the regression in the correct upstream factory, without a previous API contract.
+            if (isBaseFactory)
+            {
+                Assert.That(method.Signature.Parameters.Single(p => p.Name == "provisioningMode").Type,
+                    Is.EqualTo(new CSharpType(typeof(string))));
+            }
+            else
+            {
+                Assert.That(method.Signature.Parameters.Any(p => p.Name == "provisioningMode"), Is.False);
+            }
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator),
+                "The upstream factory must supply the discriminator before management repair.");
+
+            if (repairAtWriteTime)
+            {
+                // Exercise the write-time repair independently, starting with the unmodified upstream body.
+                _ = plugin.Object.GetWriter(modelFactory).Write();
+            }
+            else
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            }
+
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator),
+                "Management constructor repair must not discard the discriminator.");
+        }
+
+        [TestCase("ExecutionIdentity")]
+        [TestCase("ReferencedExecutionIdentity")]
+        public void WriteTimeRepairPreservesHiddenOverloadDiscriminator(string factoryName)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "ExecutionIdentityProvisioningMode", [("Referenced", "Referenced")],
+                access: "internal", isExtensible: true, clientNamespace: "Samples.Models");
+            var derivedModel = InputFactory.Model(
+                "ReferencedExecutionIdentity", properties: [], discriminatedKind: "Referenced");
+            var baseModel = InputFactory.Model(
+                "ExecutionIdentity",
+                properties: [InputFactory.Property("provisioningMode", discriminatorEnum, isRequired: true, isDiscriminator: true)],
+                derivedModels: [derivedModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, derivedModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var primaryMethod = modelFactory.Methods.Single(m => m.Signature.Name == factoryName);
+            var signature = primaryMethod.Signature;
+            var hiddenSignature = new MethodSignature(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                [.. signature.Parameters, new ParameterProvider("legacyValue", $"Legacy input.", typeof(string), Default)],
+                [new AttributeStatement(typeof(System.ComponentModel.EditorBrowsableAttribute),
+                    FrameworkEnumValue(System.ComponentModel.EditorBrowsableState.Never))]);
+            // Model the direct-constructor body of a previously generated hidden overload, rather than
+            // a delegating overload that is repaired by a different path.
+            var hiddenMethod = new MethodProvider(hiddenSignature, primaryMethod.BodyStatements!, modelFactory);
+            modelFactory.Update(methods: [.. modelFactory.Methods, hiddenMethod]);
+            var expectedDiscriminator = factoryName == "ExecutionIdentity"
+                ? "new global::Samples.Models.ExecutionIdentityProvisioningMode(provisioningMode)"
+                : "global::Samples.Models.ExecutionIdentityProvisioningMode.Referenced";
+            Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(hiddenMethod), Is.True);
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+
+            // Primary repair deliberately skips hidden overloads. Only the write-time compatibility
+            // repair can update this method, so checking its body distinguishes the two paths.
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+            var generated = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(hiddenMethod.BodyStatements!.ToDisplayString(), Does.Contain(expectedDiscriminator));
+            Assert.That(generated, Does.Contain("legacyValue"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void RepeatedConstructorRepairPreservesDiscriminatorsFromEachHierarchyLevel(bool useEnum)
+        {
+            var discriminatorEnum = InputFactory.StringEnum(
+                "HierarchyKind", [("Child", "Child")], access: "internal", isExtensible: true,
+                clientNamespace: "Samples.Models");
+            var grandChildModel = InputFactory.Model(
+                "GrandChildModel", properties: [], discriminatedKind: "GrandChild");
+            var childModel = InputFactory.Model(
+                "ChildModel",
+                properties: [InputFactory.Property("nestedKind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true)],
+                discriminatedKind: "Child",
+                derivedModels: [grandChildModel]);
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                properties: [InputFactory.Property("kind", useEnum ? discriminatorEnum : InputPrimitiveType.String, isRequired: true, isDiscriminator: true)],
+                derivedModels: [childModel]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => useEnum ? [discriminatorEnum] : [],
+                inputModels: () => [baseModel, childModel, grandChildModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var baseFactory = modelFactory.Methods.Single(m => m.Signature.Name == "BaseModel");
+            var grandChildFactory = modelFactory.Methods.Single(m => m.Signature.Name == "GrandChildModel");
+            var expectedBaseDiscriminator = useEnum ? "new global::Samples.Models.HierarchyKind(kind)" : "kind";
+            var expectedParentDiscriminator = useEnum ? "global::Samples.Models.HierarchyKind.Child" : "\"Child\"";
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+
+            AssertDiscriminators();
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+            AssertDiscriminators();
+            var afterVisit = grandChildFactory.BodyStatements!.ToDisplayString();
+            _ = plugin.Object.GetWriter(modelFactory).Write();
+            AssertDiscriminators();
+            Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Is.EqualTo(afterVisit));
+
+            void AssertDiscriminators()
+            {
+                Assert.That(baseFactory.BodyStatements!.ToDisplayString(), Does.Contain(expectedBaseDiscriminator));
+                Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Does.Contain(expectedParentDiscriminator));
+                Assert.That(grandChildFactory.BodyStatements!.ToDisplayString(), Does.Contain("\"GrandChild\""));
+            }
+        }
+
+        [Test]
         public void DateTimeFactoryParameterBackCompatKeepsMrwDeserializationLocals()
         {
             var dateTimeType = new InputDateTimeType(
@@ -284,6 +506,157 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("EditorBrowsable"));
             Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void RestoringHiddenFactoryOverloadDoesNotMutateLastContractParameters()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousParameter = new ParameterProvider(
+                "value",
+                $"Published parameter description.",
+                typeof(string),
+                Default,
+                attributes: [new AttributeStatement(typeof(System.Diagnostics.CodeAnalysis.AllowNullAttribute))],
+                property: model.Properties.Single(),
+                initializationValue: Literal("initialized"),
+                location: ParameterLocation.Query,
+                wireInfo: new WireInformation(default, "publishedValue"),
+                validation: ParameterValidationType.AssertNotNull,
+                inputParameter: InputFactory.MethodParameter("value", InputPrimitiveType.String))
+            {
+                SpreadSource = model
+            };
+            var previousDescription = previousParameter.Description;
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Published factory description.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Published return description.",
+                [previousParameter]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var restoredMethod = modelFactory.Methods.Single();
+            var restoredParameter = restoredMethod.Signature.Parameters.Single();
+            Assert.Multiple(() =>
+            {
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(restoredMethod), Is.True);
+                Assert.That(restoredParameter.DefaultValue, Is.Null,
+                    "The restored hidden overload still requires an explicit argument.");
+                Assert.That(restoredParameter, Is.Not.SameAs(previousParameter),
+                    "A restored signature must own its mutable parameter providers.");
+                Assert.That(restoredParameter.Name, Is.EqualTo(previousParameter.Name));
+                Assert.That(restoredParameter.Type, Is.SameAs(previousParameter.Type));
+                Assert.That(restoredParameter.Attributes, Is.SameAs(previousParameter.Attributes));
+                Assert.That(restoredParameter.Property, Is.SameAs(previousParameter.Property));
+                Assert.That(restoredParameter.InitializationValue, Is.SameAs(previousParameter.InitializationValue));
+                Assert.That(restoredParameter.Location, Is.EqualTo(previousParameter.Location));
+                Assert.That(restoredParameter.WireInfo, Is.SameAs(previousParameter.WireInfo));
+                Assert.That(restoredParameter.Validation, Is.EqualTo(previousParameter.Validation));
+                Assert.That(restoredParameter.InputParameter, Is.SameAs(previousParameter.InputParameter));
+                Assert.That(restoredParameter.SpreadSource, Is.SameAs(previousParameter.SpreadSource));
+                Assert.That(lastContractView.Methods.Single().Signature.Parameters.Single(), Is.SameAs(previousParameter));
+                Assert.That(previousParameter.DefaultValue, Is.SameAs(Default),
+                    "Requiring a hidden overload's arguments must not change published optionality.");
+                Assert.That(previousParameter.Description, Is.SameAs(previousDescription),
+                    "Regenerating documentation must not change the historical contract either.");
+            });
+        }
+
+        [Test]
+        public void RestoredHiddenFactoryOverloadRequiresAllParametersAndKeepsCurrentOverloadOptional()
+        {
+            // Regression for #63828: DataProtectionBackup replaces the nullable enum with a settings model.
+            // MPG must restore the legacy CLR signature without giving it the current overload's defaults.
+            var state = InputFactory.StringEnum(
+                "BackupVaultImmutabilityState", [("Locked", "Locked")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var softDeleteSettings = InputFactory.Model("BackupVaultSoftDeleteSettings", properties: []);
+            var encryptionSettings = InputFactory.Model("BackupVaultEncryptionSettings", properties: []);
+            var configuration = InputFactory.Model("ImmutabilityConfiguration", properties:
+            [
+                InputFactory.Property("type", InputPrimitiveType.String),
+                InputFactory.Property("duration", InputPrimitiveType.Int32)
+            ]);
+            var immutabilitySettings = InputFactory.Model("ImmutabilitySettings", properties:
+            [
+                InputFactory.Property("state", state),
+                InputFactory.Property("configuration", configuration)
+            ]);
+            var inputModel = InputFactory.Model("BackupVaultSecuritySettings", properties:
+            [
+                InputFactory.Property("softDeleteSettings", softDeleteSettings),
+                InputFactory.Property("immutabilitySettings", immutabilitySettings),
+                InputFactory.Property("encryptionSettings", encryptionSettings)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, softDeleteSettings, immutabilitySettings, encryptionSettings, configuration],
+                inputEnums: () => [state],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public partial class BackupVaultSecuritySettings { }
+                        public partial class BackupVaultSoftDeleteSettings { }
+                        public partial class BackupVaultEncryptionSettings { }
+                        public readonly partial struct BackupVaultImmutabilityState { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.BackupVaultSecuritySettings BackupVaultSecuritySettings(
+                                Samples.Models.BackupVaultSoftDeleteSettings softDeleteSettings = default,
+                                Samples.Models.BackupVaultImmutabilityState? immutabilityState = default,
+                                Samples.Models.BackupVaultEncryptionSettings encryptionSettings = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var output = plugin.Object.OutputLibrary;
+            var factory = output.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+
+            var visitLibrary = typeof(LibraryVisitor).GetMethod(
+                "VisitLibrary", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitLibrary.Invoke(visitor, [output]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            var generated = plugin.Object.GetWriter(factory).Write().Content;
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "BackupVaultSecuritySettings").ToArray();
+            Assert.That(overloads, Has.Length.EqualTo(2), generated);
+            Assert.That(overloads.Select(m => m.Signature.Parameters[1].Type.Name),
+                Is.EquivalentTo(new[] { "BackupVaultImmutabilityState", "ImmutabilitySettings" }), generated);
+            var legacyOverload = overloads.Single(m => m.Signature.Parameters[1].Type.Name == "BackupVaultImmutabilityState");
+            var currentOverload = overloads.Single(m => m.Signature.Parameters[1].Type.Name == "ImmutabilitySettings");
+            Assert.Multiple(() =>
+            {
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(legacyOverload), Is.True);
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(currentOverload), Is.False);
+                Assert.That(legacyOverload.Signature.Parameters.Select(p => p.DefaultValue), Is.All.Null,
+                    "Hidden compatibility overloads must require every parameter, as in TypeSpec #11832.");
+                Assert.That(currentOverload.Signature.Parameters.Select(p => p.DefaultValue), Is.All.Not.Null,
+                    "The new overload must retain defaults for its optional current-model parameters.");
+            });
         }
 
         [Test]

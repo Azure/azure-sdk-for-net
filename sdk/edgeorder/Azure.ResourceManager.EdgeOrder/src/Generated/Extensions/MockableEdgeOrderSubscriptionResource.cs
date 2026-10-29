@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
         private ClientDiagnostics AddressResourcesClientDiagnostics => _addressResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AddressResources AddressResourcesRestClient => _addressResourcesRestClient ??= new AddressResources(AddressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
+        private AddressResources AddressResourcesRestClient => _addressResourcesRestClient ??= new AddressResources(AddressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EdgeOrder/addresses", out string apiVersion) ? apiVersion : "2024-02-01");
 
         private ClientDiagnostics OrderItemResourcesClientDiagnostics => _orderItemResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
+        private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EdgeOrder/orderItems", out string apiVersion0) ? apiVersion0 : "2024-02-01");
 
         private ClientDiagnostics ProductsAndConfigurationsOperationGroupClientDiagnostics => _productsAndConfigurationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("subnet")]
         internal NvaInVnetSubnetReferenceProperties Subnet { get; set; }
 
+        /// <summary> Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic, AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported. </summary>
+        [WirePath("type")]
+        public IList<NvaNicType> PropertiesType { get; }
+
         /// <summary> Specifies the name of the interface. Maximum length is 70 characters. </summary>
         [WirePath("name")]
         public string Name { get; set; }

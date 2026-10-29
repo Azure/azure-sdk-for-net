@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway backend settings. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayBackendSettingsPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayBackendSettingsPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -76,6 +76,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.Protocol = value;
+            }
+        }
+
+        /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.timeout")]
+        public int? TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.TimeoutInSeconds = value;
             }
         }
 
@@ -126,6 +144,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.PickHostNameFromBackendAddress = value;
+            }
+        }
+
+        /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
+        [WirePath("properties.enableL4ClientIpPreservation")]
+        public bool? IsL4ClientIPPreservationEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsL4ClientIPPreservationEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.IsL4ClientIPPreservationEnabled = value;
             }
         }
 

@@ -18,22 +18,26 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
-        public VirtualNetworkEncryption(bool enabled)
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
+        public VirtualNetworkEncryption(bool isEnabled)
         {
-            IsEnabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
         /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkEncryption(bool enabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = enabled;
+            IsEnabled = isEnabled;
             Enforcement = enforcement;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Indicates if encryption is enabled on the virtual network. </summary>
+        [WirePath("enabled")]
+        public bool IsEnabled { get; set; }
 
         /// <summary> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </summary>
         [WirePath("enforcement")]

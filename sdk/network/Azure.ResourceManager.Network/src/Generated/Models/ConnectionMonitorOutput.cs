@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Connection monitor output destination type. Currently, only "Workspace" is supported. </summary>
+        [WirePath("type")]
+        public OutputType? OutputType { get; set; }
+
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         [WirePath("workspaceSettings")]
         internal ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }

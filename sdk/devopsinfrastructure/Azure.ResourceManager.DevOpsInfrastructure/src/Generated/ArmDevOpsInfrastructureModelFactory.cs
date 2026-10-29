@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             organizations ??= new ChangeTrackingList<DevOpsGitHubOrganization>();
 
-            return new DevOpsGitHubOrganizationProfile(default, default, (organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>()).ToList());
+            return new DevOpsGitHubOrganizationProfile("GitHub", default, (organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>()).ToList());
         }
 
         /// <summary> Defines a GitHub organization. </summary>
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
-        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description, bool? updateDescription, IEnumerable<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias = default)
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description = default, bool? updateDescription = default, IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
         {
             organizations ??= new ChangeTrackingList<DevOpsOrganization>();
 
             return new DevOpsAzureOrganizationProfile(
-                default,
+                "AzureDevOps",
                 default,
                 description,
                 updateDescription,
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.ResourcePredictionsProfile"/> instance for mocking. </returns>
         public static ResourcePredictionsProfile ResourcePredictionsProfile(string kind = default)
         {
-            return new UnknownResourcePredictionsProfile(default, default);
+            return new UnknownResourcePredictionsProfile(kind is null ? default : new ResourcePredictionsProfileType(kind), default);
         }
 
         /// <summary> Customer provides the stand-by agent scheme. </summary>
         /// <returns> A new <see cref="Models.ManualResourcePredictionsProfile"/> instance for mocking. </returns>
         public static ManualResourcePredictionsProfile ManualResourcePredictionsProfile()
         {
-            return new ManualResourcePredictionsProfile(default, default);
+            return new ManualResourcePredictionsProfile(ResourcePredictionsProfileType.Manual, default);
         }
 
         /// <summary> The stand-by agent scheme is determined based on historical demand. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.AutomaticResourcePredictionsProfile"/> instance for mocking. </returns>
         public static AutomaticResourcePredictionsProfile AutomaticResourcePredictionsProfile(PredictionPreference? predictionPreference = default)
         {
-            return new AutomaticResourcePredictionsProfile(default, default, predictionPreference);
+            return new AutomaticResourcePredictionsProfile(ResourcePredictionsProfileType.Automatic, default, predictionPreference);
         }
 
         /// <summary> Stateless profile meaning that the machines will be cleaned up after running a job. </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.DevOpsStatelessAgentProfile"/> instance for mocking. </returns>
         public static DevOpsStatelessAgentProfile DevOpsStatelessAgentProfile(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default)
         {
-            return new DevOpsStatelessAgentProfile(default, resourcePredictions, resourcePredictionsProfile, default);
+            return new DevOpsStatelessAgentProfile("Stateless", resourcePredictions, resourcePredictionsProfile, default);
         }
 
         /// <summary> Stateful profile meaning that the machines will be returned to the pool after running a job. </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsStateful DevOpsStateful(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default, string maxAgentLifetime = default, string gracePeriodTimeSpan = default)
         {
             return new DevOpsStateful(
-                default,
+                "Stateful",
                 resourcePredictions,
                 resourcePredictionsProfile,
                 default,
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
         /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
-        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku, IEnumerable<DevOpsPoolVmImage> images, DevOpsOSProfile osProfile, DevOpsStorageProfile storageProfile, DevOpsNetworkProfile networkProfile)
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
         {
             images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
 
             return new DevOpsVmssFabricProfile(
-                default,
+                "Vmss",
                 default,
                 sku,
                 (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="provisioningScriptShouldRestart"> Determines whether the machine should be restarted after provisioning script execution for this image. </param>
         /// <param name="provisioningScriptEntryPoint"> The provisioning script entry point for this image. </param>
         /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
-        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IEnumerable<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, ResourceIdentifier provisioningScriptStorageAccountResourceId, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default, ResourceIdentifier provisioningScriptStorageAccountResourceId = default, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
         {
             aliases ??= new ChangeTrackingList<string>();
 
@@ -610,10 +610,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias)
         {
             return new DevOpsAzureOrganizationProfile(
-                default,
+                "AzureDevOps",
                 default,
                 default,
                 default,
@@ -630,10 +630,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
         /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName, IEnumerable<DevOpsPoolVmImage> images, DevOpsOSProfile osProfile, DevOpsStorageProfile storageProfile, DevOpsNetworkProfile networkProfile)
         {
             return new DevOpsVmssFabricProfile(
-                default,
+                "Vmss",
                 default,
                 skuName is null ? default : new DevOpsAzureSku(skuName, default, default, default, default),
                 (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
         /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IEnumerable<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral)
         {
             return new DevOpsPoolVmImage(
                 resourceId,

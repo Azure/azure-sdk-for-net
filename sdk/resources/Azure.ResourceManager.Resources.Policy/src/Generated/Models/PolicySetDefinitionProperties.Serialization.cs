@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 description,
                 metadata,
                 parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
-                policyDefinitions,
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
                 policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
                 version,
                 versions ?? new ChangeTrackingList<string>(),

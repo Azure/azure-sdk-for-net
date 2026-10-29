@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmNetworkSecurityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciVmNetworkSecurityGroupApiVersion);
             _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkSecurityGroupApiVersion ?? "2025-09-01-preview");
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/networkSecurityGroups", out string networkSecurityGroupsApiVersionOverride) ? networkSecurityGroupsApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        if (!TryGetMetricRoute(in metricPoint, out var instrumentationKey, out var ingestionEndpoint, out var cloudRole, out var rejection))
+                        if (!TryGetMetricRoute(in metricPoint, out var instrumentationKey, out var ingestionEndpoint, out var isAad, out var cloudRole, out var rejection))
                         {
                             // Routing dimensions are stamped upstream only on measurements meant to be
                             // routed. Host-derived instruments (runtime, process, HTTP client) carry
@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                         telemetryItem.SetCloudRole(cloudRole);
 
-                        routeBatch.GetOrAdd(ingestionEndpoint).TelemetryItems.Add(telemetryItem);
+                        routeBatch.GetOrAdd(ingestionEndpoint, isAad).TelemetryItems.Add(telemetryItem);
                         collected++;
 
                         AzureMonitorExporterEventSource.Log.RoutedMetricCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, metric.MeterName, metric.Name);
@@ -125,22 +125,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
-        /// Reads the route and cloud role off a <see cref="MetricPoint"/>'s dimensions. Only string
-        /// values are accepted (first occurrence of each key wins), matching how trace and log
-        /// routing read their attributes.
+        /// Reads the route, authentication mode, and cloud role off a <see cref="MetricPoint"/>'s
+        /// dimensions. Only string values are accepted (first occurrence of each key wins), matching
+        /// how trace and log routing read their attributes.
         /// </summary>
         internal static bool TryGetMetricRoute(
             in MetricPoint metricPoint,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint,
+            out bool isAad,
             [NotNullWhen(true)] out string? cloudRole,
             out RoutingRejectionReason reason)
         {
             object? rawKey = null;
             object? rawEndpoint = null;
+            object? rawIngestionAuth = null;
             object? rawCloudRole = null;
             bool keySeen = false;
             bool endpointSeen = false;
+            bool ingestionAuthSeen = false;
             bool cloudRoleSeen = false;
 
             foreach (var tag in metricPoint.Tags)
@@ -155,6 +158,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     rawEndpoint = tag.Value;
                     endpointSeen = true;
                 }
+                else if (!ingestionAuthSeen && tag.Key == SemanticConventions.AttributeMicrosoftIngestionAuth)
+                {
+                    rawIngestionAuth = tag.Value;
+                    ingestionAuthSeen = true;
+                }
                 else if (!cloudRoleSeen && tag.Key == SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole)
                 {
                     rawCloudRole = tag.Value;
@@ -165,13 +173,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (keySeen && endpointSeen && cloudRoleSeen)
+                if (keySeen && endpointSeen && ingestionAuthSeen && cloudRoleSeen)
                 {
                     break;
                 }
             }
 
             cloudRole = EndpointRouting.GetCloudRole(rawCloudRole as string);
+            isAad = EndpointRouting.IsAadRoute(rawIngestionAuth);
 
             // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
             // 'as string' drops it and routing fails, exactly as the trace and log paths do.

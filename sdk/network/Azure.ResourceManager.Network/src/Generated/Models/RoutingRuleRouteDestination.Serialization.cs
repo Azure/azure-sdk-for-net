@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(RoutingRuleRouteDestination)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(DestinationType.ToSerialString());
+            writer.WriteStringValue(DestinationType.ToString());
             writer.WritePropertyName("destinationAddress"u8);
             writer.WriteStringValue(DestinationAddress);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,13 +125,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            RoutingRuleDestinationType destinationType = default;
             string destinationAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToRoutingRuleDestinationType();
+                    destinationType = new RoutingRuleDestinationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationAddress"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoutingRuleRouteDestination(default, destinationAddress, additionalBinaryDataProperties);
+            return new RoutingRuleRouteDestination(destinationType, destinationAddress, additionalBinaryDataProperties);
         }
     }
 }

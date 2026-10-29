@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkProfileResource.ResourceType, out string networkProfileApiVersion);
             _networkProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkProfileApiVersion ?? "2026-03-01");
+            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

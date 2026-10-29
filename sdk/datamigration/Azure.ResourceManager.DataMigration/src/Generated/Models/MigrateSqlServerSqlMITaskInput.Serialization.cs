@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 additionalBinaryDataProperties,
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlMIDatabaseInput>(),
                 startedOn,
                 selectedLogins ?? new ChangeTrackingList<string>(),
                 selectedAgentJobs ?? new ChangeTrackingList<string>(),

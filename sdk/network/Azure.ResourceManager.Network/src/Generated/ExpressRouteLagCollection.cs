@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteLagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteLagResource.ResourceType, out string expressRouteLagApiVersion);
             _expressRouteLagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteLagResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteLagApiVersion ?? "2026-03-01");
+            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

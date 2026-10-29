@@ -105,7 +105,6 @@
             "$id": "10",
             "name": "getBody",
             "isExactName": false,
-            "resourceName": "BodyOrNoContent",
             "accessibility": "public",
             "parameters": [
               {
@@ -234,7 +233,6 @@
             "$id": "16",
             "name": "getNoContent",
             "isExactName": false,
-            "resourceName": "BodyOrNoContent",
             "accessibility": "public",
             "parameters": [
               {

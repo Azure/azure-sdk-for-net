@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     internal partial class UnknownEffectiveBaseSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEffectiveBaseSecurityAdminRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEffectiveBaseSecurityAdminRule(ResourceIdentifier id, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownEffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

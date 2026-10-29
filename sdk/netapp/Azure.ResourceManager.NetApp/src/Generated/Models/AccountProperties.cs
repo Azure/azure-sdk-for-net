@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _disableShowmount;
+        private bool _disableShowmountIsDefined;
+        private string _nfsV4IdDomain;
+        private bool _nfsV4IdDomainIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccountProperties"/>. </summary>
         public AccountProperties()
@@ -26,21 +30,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="AccountProperties"/>. </summary>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
-            EntraIdConfig = entraIdConfig;
             Encryption = encryption;
-            DisableShowmount = disableShowmount;
-            NfsV4IdDomain = nfsV4IdDomain;
+            _disableShowmount = disableShowmount;
+            _nfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
             LdapConfiguration = ldapConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,17 +54,31 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectory>();
 
-        /// <summary> Entra ID configuration for the account. </summary>
-        public EntraIdConfig EntraIdConfig { get; set; }
-
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
 
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        public bool? DisableShowmount { get; }
+        public bool? DisableShowmount
+        {
+            get
+            {
+                return _disableShowmount;
+            }
+        }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain { get; set; }
+        public string NfsV4IdDomain
+        {
+            get
+            {
+                return _nfsV4IdDomain;
+            }
+            set
+            {
+                _nfsV4IdDomain = value;
+                _nfsV4IdDomainIsDefined = true;
+            }
+        }
 
         /// <summary> MultiAD Status for the account. </summary>
         public MultiAdStatus? MultiAdStatus { get; }

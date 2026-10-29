@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridContainerServiceVirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hybridContainerServiceVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridContainerServiceVirtualNetworkApiVersion ?? "2026-04-01-preview");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridContainerService/virtualNetworks", out string virtualNetworksApiVersionOverride) ? virtualNetworksApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

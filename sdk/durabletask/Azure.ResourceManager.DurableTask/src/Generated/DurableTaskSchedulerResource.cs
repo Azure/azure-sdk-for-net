@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskSchedulerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string durableTaskSchedulerApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -398,6 +397,92 @@ namespace Azure.ResourceManager.DurableTask
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restart a Scheduler
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RestartAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Restart");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restart a Scheduler
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Restart. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Restart(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Restart");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {
@@ -678,6 +763,39 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
+        /// <summary> Gets a collection of DurableTaskDetectors in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskDetectors and their operations over a DurableTaskDetectorResource. </returns>
+        public virtual DurableTaskDetectorCollection GetDurableTaskDetectors()
+        {
+            return GetCachedClient(client => new DurableTaskDetectorCollection(client, Id));
+        }
+
+        /// <summary> Gets a diagnostic detector. </summary>
+        /// <param name="detectorId"> The name of the Detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DurableTaskDetectorResource>> GetDurableTaskDetectorAsync(string detectorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+
+            return await GetDurableTaskDetectors().GetAsync(detectorId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a diagnostic detector. </summary>
+        /// <param name="detectorId"> The name of the Detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DurableTaskDetectorResource> GetDurableTaskDetector(string detectorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+
+            return GetDurableTaskDetectors().Get(detectorId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DurableTaskSchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>
         /// <returns> An object representing collection of DurableTaskSchedulerPrivateLinkResources and their operations over a DurableTaskSchedulerPrivateLinkResource. </returns>
         public virtual DurableTaskSchedulerPrivateLinkResourceCollection GetDurableTaskSchedulerPrivateLinkResources()
@@ -782,6 +900,20 @@ namespace Azure.ResourceManager.DurableTask
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicy()
         {
             return new DurableTaskRetentionPolicyResource(Client, Id.AppendChildResource("retentionPolicies", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="TransparentDataEncryptionResource"/> along with the instance operations that can be performed on it in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
+        public virtual TransparentDataEncryptionResource GetTransparentDataEncryption()
+        {
+            return new TransparentDataEncryptionResource(Client, Id.AppendChildResource("transparentDataEncryptions", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="FailoverInstanceResource"/> along with the instance operations that can be performed on it in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
+        public virtual FailoverInstanceResource GetFailoverInstance()
+        {
+            return new FailoverInstanceResource(Client, Id.AppendChildResource("failoverInstances", "default"));
         }
     }
 }

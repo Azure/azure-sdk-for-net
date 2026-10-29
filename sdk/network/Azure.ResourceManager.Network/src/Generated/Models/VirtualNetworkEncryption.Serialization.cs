@@ -128,13 +128,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            bool isEnabled = default;
             VirtualNetworkEncryptionEnforcement? enforcement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enforcement"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkEncryption(default, enforcement, additionalBinaryDataProperties);
+            return new VirtualNetworkEncryption(isEnabled, enforcement, additionalBinaryDataProperties);
         }
     }
 }

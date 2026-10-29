@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowBuiltInTransformationMap(
                 @type,
                 description,
-                inputs,
+                inputs ?? new ChangeTrackingList<string>(),
                 expression,
                 output,
                 additionalBinaryDataProperties);

@@ -2783,7 +2783,6 @@
             "$id": "186",
             "name": "checkAvailability",
             "isExactName": false,
-            "resourceName": "ServiceOne",
             "doc": "A namespace-level operation (not inside an interface).\nTests that the generator handles operations defined directly on the namespace.",
             "accessibility": "public",
             "parameters": [
@@ -3497,7 +3496,6 @@
                 "$id": "243",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Get a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -3876,7 +3874,6 @@
                 "$id": "262",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Create a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -4404,7 +4401,6 @@
                 "$id": "287",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "Delete a Foo",
                 "accessibility": "public",
                 "parameters": [
@@ -4770,7 +4766,6 @@
                 "$id": "306",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "doc": "List Foo resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -5075,6 +5070,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],
@@ -5097,7 +5093,6 @@
                 "$id": "321",
                 "name": "listProperties",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -5483,7 +5478,6 @@
                 "$id": "341",
                 "name": "GetProperties",
                 "isExactName": false,
-                "resourceName": "Foos",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -6021,7 +6015,6 @@
                 "$id": "368",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
@@ -6160,6 +6153,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],
@@ -6237,7 +6231,6 @@
                 "$id": "379",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Get a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -6616,7 +6609,6 @@
                 "$id": "398",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Create a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -7144,7 +7136,6 @@
                 "$id": "423",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "Delete a Bar",
                 "accessibility": "public",
                 "parameters": [
@@ -7510,7 +7501,6 @@
                 "$id": "442",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "doc": "List Bar resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -7815,6 +7805,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],

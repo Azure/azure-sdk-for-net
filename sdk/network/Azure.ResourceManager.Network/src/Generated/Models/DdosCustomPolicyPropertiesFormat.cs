@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
             MitigationRules = new ChangeTrackingList<DdosMitigationRule>();
-            FrontEndIPConfiguration = new ChangeTrackingList<NetworkSubResource>();
+            FrontEndIPConfiguration = new ChangeTrackingList<WritableSubResource>();
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<DdosMitigationRule> mitigationRules, IList<NetworkSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<DdosMitigationRule> mitigationRules, IList<WritableSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
         [WirePath("frontEndIpConfiguration")]
-        public IList<NetworkSubResource> FrontEndIPConfiguration { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> FrontEndIPConfiguration { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The list of public IP addresses associated with the custom policy. This list is read-only. </summary>
         [WirePath("publicIPAddresses")]

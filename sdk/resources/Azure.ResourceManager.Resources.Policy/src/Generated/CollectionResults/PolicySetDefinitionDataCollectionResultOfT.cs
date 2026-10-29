@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <returns> The pages of PolicySetDefinitionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PolicySetDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

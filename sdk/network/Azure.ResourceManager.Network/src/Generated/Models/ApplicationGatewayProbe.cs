@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway probe. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayProbePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayProbePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -93,6 +93,42 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Path = value;
+            }
+        }
+
+        /// <summary> The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.interval")]
+        public int? IntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntervalInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.IntervalInSeconds = value;
+            }
+        }
+
+        /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.timeout")]
+        public int? TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.TimeoutInSeconds = value;
             }
         }
 
@@ -183,6 +219,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Match = value;
+            }
+        }
+
+        /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
+        [WirePath("properties.enableProbeProxyProtocolHeader")]
+        public bool? IsProbeProxyProtocolHeaderEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsProbeProxyProtocolHeaderEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.IsProbeProxyProtocolHeaderEnabled = value;
             }
         }
 

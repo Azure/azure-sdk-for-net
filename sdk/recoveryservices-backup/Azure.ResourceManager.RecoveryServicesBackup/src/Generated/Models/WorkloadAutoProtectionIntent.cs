@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadAutoProtectionIntent : RecoveryServiceVaultProtectionIntent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadAutoProtectionIntent"/>. </summary>
-        public WorkloadAutoProtectionIntent()
+        public WorkloadAutoProtectionIntent() : base("AzureWorkloadAutoProtectionIntent")
         {
         }
 

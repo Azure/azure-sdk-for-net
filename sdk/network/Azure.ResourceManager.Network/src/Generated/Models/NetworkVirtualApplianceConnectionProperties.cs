@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
         /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceConnectionProperties(string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceConnectionProperties(string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfiguration connectionRoutingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamePropertiesName = namePropertiesName;
             ProvisioningState = provisioningState;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             TunnelIdentifier = tunnelIdentifier;
             BgpPeerAddress = bgpPeerAddress;
             EnableInternetSecurity = enableInternetSecurity;
-            RoutingConfiguration = routingConfiguration;
+            ConnectionRoutingConfiguration = connectionRoutingConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        public RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
     }
 }

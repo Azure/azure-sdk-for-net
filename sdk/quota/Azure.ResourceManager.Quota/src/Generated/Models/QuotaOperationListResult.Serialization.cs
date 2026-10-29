@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaOperationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaOperationListResult(value ?? new ChangeTrackingList<QuotaOperationResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

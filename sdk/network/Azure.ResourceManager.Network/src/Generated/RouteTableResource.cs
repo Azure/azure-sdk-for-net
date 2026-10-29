@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RouteTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string routeTableApiVersion);
             _routeTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _routeTablesRestClient = new RouteTables(_routeTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, routeTableApiVersion ?? "2026-03-01");
+            _routeTablesRestClient = new RouteTables(_routeTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

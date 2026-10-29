@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRoutePortResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string expressRoutePortApiVersion);
             _expressRoutePortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortApiVersion ?? "2026-03-01");
+            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -766,6 +765,39 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ExpressRoutePortAuthorizations in the <see cref="ExpressRoutePortResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRoutePortAuthorizations and their operations over a ExpressRoutePortAuthorizationResource. </returns>
+        public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
+        {
+            return GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified authorization from the specified express route port. </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return await GetExpressRoutePortAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified authorization from the specified express route port. </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteLinks in the <see cref="ExpressRoutePortResource"/>. </summary>

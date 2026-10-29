@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteProviderPortResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="ExpressRouteProviderPortCollection"/> instance call the GetExpressRouteProviderPorts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ExpressRouteProviderPortCollection : ArmCollection
+    public partial class ExpressRouteProviderPortCollection : ArmCollection, IEnumerable<ExpressRouteProviderPortResource>, IAsyncEnumerable<ExpressRouteProviderPortResource>
     {
         private readonly ClientDiagnostics _expressRouteProviderPortsClientDiagnostics;
         private readonly ExpressRouteProviderPorts _expressRouteProviderPortsRestClient;
+        private readonly ClientDiagnostics _expressRouteProviderPortsLocationClientDiagnostics;
+        private readonly ExpressRouteProviderPortsLocation _expressRouteProviderPortsLocationRestClient;
 
         /// <summary> Initializes a new instance of ExpressRouteProviderPortCollection for mocking. </summary>
         protected ExpressRouteProviderPortCollection()
@@ -40,6 +44,8 @@ namespace Azure.ResourceManager.Network
             TryGetApiVersion(ExpressRouteProviderPortResource.ResourceType, out string expressRouteProviderPortApiVersion);
             _expressRouteProviderPortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
             _expressRouteProviderPortsRestClient = new ExpressRouteProviderPorts(_expressRouteProviderPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion ?? "2026-03-01");
+            _expressRouteProviderPortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
+            _expressRouteProviderPortsLocationRestClient = new ExpressRouteProviderPortsLocation(_expressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -149,6 +155,64 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteProviderPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRouteProviderPortData, ExpressRouteProviderPortResource>(new ExpressRouteProviderPortDataAsyncCollectionResultOfT(_expressRouteProviderPortsLocationRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ExpressRouteProviderPortCollection.GetAll"), data => new ExpressRouteProviderPortResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteProviderPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRouteProviderPortData, ExpressRouteProviderPortResource>(new ExpressRouteProviderPortDataCollectionResultOfT(_expressRouteProviderPortsLocationRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "ExpressRouteProviderPortCollection.GetAll"), data => new ExpressRouteProviderPortResource(Client, data));
         }
 
         /// <summary>
@@ -385,6 +449,22 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ExpressRouteProviderPortResource> IEnumerable<ExpressRouteProviderPortResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ExpressRouteProviderPortResource> IAsyncEnumerable<ExpressRouteProviderPortResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomRecommendationsList(value, nextLink, additionalBinaryDataProperties);
+            return new CustomRecommendationsList(value ?? new ChangeTrackingList<CustomRecommendationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

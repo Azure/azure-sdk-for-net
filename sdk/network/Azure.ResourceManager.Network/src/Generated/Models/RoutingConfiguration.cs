@@ -13,10 +13,15 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
-    public partial class RoutingConfiguration : RoutingConfigurationNfv
+    public partial class RoutingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
+        public RoutingConfiguration()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
@@ -38,6 +43,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>
         [WirePath("associatedRouteTable")]
         internal NetworkSubResource AssociatedRouteTable { get; set; }
+
+        /// <summary> The list of RouteTables to advertise the routes to. </summary>
+        [WirePath("propagatedRouteTables")]
+        public PropagatedRouteTable PropagatedRouteTables { get; set; }
 
         /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
         [WirePath("vnetRoutes")]

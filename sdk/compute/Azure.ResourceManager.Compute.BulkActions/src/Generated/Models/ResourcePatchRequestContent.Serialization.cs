@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resource-specific settings to update in a scheduled action. </summary>
+    /// <summary> Resource-specific settings to update in a recurring bulk action. </summary>
     public partial class ResourcePatchRequestContent : IJsonModel<ResourcePatchRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/> for deserialization. </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourcePatchRequestContent(resources, additionalBinaryDataProperties);
+            return new ResourcePatchRequestContent(resources ?? new ChangeTrackingList<ScheduledActionResourceInput>(), additionalBinaryDataProperties);
         }
     }
 }

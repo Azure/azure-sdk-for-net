@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string vpnGatewayApiVersion);
             _vpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnGatewayApiVersion ?? "2026-03-01");
+            _vpnGatewaysRestClient = new VpnGateways(_vpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

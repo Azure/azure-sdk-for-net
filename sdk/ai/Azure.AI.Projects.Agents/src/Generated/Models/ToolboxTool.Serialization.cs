@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An abstract representation of a tool stored in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2APreviewToolboxTool"/>, <see cref="A2AToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="ShellToolboxTool"/>, <see cref="ToolSearchToolboxTool"/>, <see cref="ToolboxSearchPreviewToolboxTool"/>, <see cref="WebIQPreviewToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, and <see cref="WorkIQPreviewToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2APreviewToolboxTool"/>, <see cref="A2AToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="BrowserAutomationToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="ShellToolboxTool"/>, <see cref="ToolSearchToolboxTool"/>, <see cref="ToolboxSearchPreviewToolboxTool"/>, <see cref="WebIQPreviewToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, and <see cref="WorkIQPreviewToolboxTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolboxTool))]
     public abstract partial class ToolboxTool : IJsonModel<ToolboxTool>
@@ -143,6 +143,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal static ToolboxTool DeserializeToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -161,6 +163,8 @@ namespace Azure.AI.Projects.Agents
                         return AzureAISearchToolboxTool.DeserializeAzureAISearchToolboxTool(element, options);
                     case "browser_automation_preview":
                         return BrowserAutomationPreviewToolboxTool.DeserializeBrowserAutomationPreviewToolboxTool(element, options);
+                    case "browser_automation":
+                        return BrowserAutomationToolboxTool.DeserializeBrowserAutomationToolboxTool(element, options);
                     case "code_interpreter":
                         return CodeInterpreterToolboxTool.DeserializeCodeInterpreterToolboxTool(element, options);
                     case "fabric_iq_preview":
@@ -189,5 +193,7 @@ namespace Azure.AI.Projects.Agents
             }
             return UnknownToolboxTool.DeserializeUnknownToolboxTool(element, options);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
     }
 }

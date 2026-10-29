@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("name")]
         public string Name { get; }
 
+        /// <summary> Sub Resource type. </summary>
+        [WirePath("type")]
+        public string ContainerNetworkInterfaceIpConfigurationType { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventGridDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EventGridDomainResource.ResourceType, out string eventGridDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainApiVersion ?? "2025-07-15-preview");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/domains", out string domainsApiVersionOverride) ? domainsApiVersionOverride : "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

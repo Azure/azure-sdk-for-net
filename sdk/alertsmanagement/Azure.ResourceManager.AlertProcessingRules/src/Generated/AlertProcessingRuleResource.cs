@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.AlertProcessingRules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AlertProcessingRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string alertProcessingRuleApiVersion);
             _alertProcessingRulesOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertProcessingRules", ResourceType.Namespace, Diagnostics);
-            _alertProcessingRulesOperationGroupRestClient = new AlertProcessingRulesOperationGroup(_alertProcessingRulesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertProcessingRuleApiVersion ?? "2021-08-08");
+            _alertProcessingRulesOperationGroupRestClient = new AlertProcessingRulesOperationGroup(_alertProcessingRulesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AlertsManagement/actionRules", out string alertProcessingRulesOperationGroupApiVersionOverride) ? alertProcessingRulesOperationGroupApiVersionOverride : "2021-08-08");
             ValidateResourceId(id);
         }
 

@@ -7,17 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using ;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The list of RouteTables to advertise the routes to. </summary>
-    public partial class PropagatedRouteTable : global::.PropagatedRouteTableNfv
+    public partial class PropagatedRouteTable
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
+        public PropagatedRouteTable()
+        {
+            Labels = new ChangeTrackingList<string>();
+            Ids = new ChangeTrackingList<WritableSubResource>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
         /// <param name="labels"> The list of labels. </param>
@@ -33,5 +39,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of labels. </summary>
         [WirePath("labels")]
         public IList<string> Labels { get; }
+
+        /// <summary> The list of resource ids of all the RouteTables. </summary>
+        [WirePath("ids")]
+        public IList<WritableSubResource> Ids { get; }
     }
 }

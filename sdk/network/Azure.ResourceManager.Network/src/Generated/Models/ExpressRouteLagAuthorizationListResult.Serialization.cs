@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExpressRouteLagAuthorizationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExpressRouteLagAuthorizationListResult(value ?? new ChangeTrackingList<ExpressRouteLagAuthorizationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
