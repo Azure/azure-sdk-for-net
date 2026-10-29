@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -171,10 +172,30 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        /// <summary>
+        /// The names of the events written to the <see cref="DiagnosticListener"/> for an activity.
+        /// </summary>
+        private sealed class DiagnosticSourceEventNames
+        {
+            public DiagnosticSourceEventNames(string activityName)
+            {
+                Start = activityName + ".Start";
+                Stop = activityName + ".Stop";
+            }
+
+            public string Start { get; }
+
+            public string Stop { get; }
+        }
+
         private class ActivityAdapter : IDisposable
         {
+            // Activity names are a small, fixed set of operation names, so cache the names of their events
+            // to avoid allocating them for every activity when there are subscribers to the DiagnosticListener.
+            private static readonly ConcurrentDictionary<string, DiagnosticSourceEventNames> s_eventNames = new();
+
             private readonly ActivitySource? _activitySource;
-            private readonly DiagnosticSource _diagnosticSource;
+            private readonly DiagnosticListener _diagnosticSource;
             private readonly string _activityName;
             private readonly System.Diagnostics.ActivityKind _kind;
             private readonly object? _diagnosticSourceArgs;
@@ -189,7 +210,7 @@ namespace Azure.Core.Pipeline
             private string? _tracestate;
             private string? _displayName;
 
-            public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+            public ActivityAdapter(ActivitySource? activitySource, DiagnosticListener diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
@@ -357,8 +378,16 @@ namespace Azure.Core.Pipeline
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency on the ActivityAdapter.Start() method, or the responsibility is on the user of this struct since the struct constructor is marked with RequiresUnreferencedCode.")]
             private void WriteStartEvent()
             {
-                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+                // Writing to a DiagnosticListener without any subscribers is a no-op, so avoid allocating the event name,
+                // which is the case when activities are only being collected through the ActivitySource.
+                if (_diagnosticSource.IsEnabled())
+                {
+                    _diagnosticSource.Write(GetEventNames(_activityName).Start, _diagnosticSourceArgs ?? _currentActivity);
+                }
             }
+
+            private static DiagnosticSourceEventNames GetEventNames(string activityName)
+                => s_eventNames.GetOrAdd(activityName, static name => new DiagnosticSourceEventNames(name));
 
             public void SetDisplayName(string displayName)
             {
@@ -443,7 +472,10 @@ namespace Azure.Core.Pipeline
                 if (activity.Duration == TimeSpan.Zero)
                     activity.SetEndTime(DateTime.UtcNow);
 
-                _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
+                if (_diagnosticSource.IsEnabled())
+                {
+                    _diagnosticSource.Write(GetEventNames(_activityName).Stop, _diagnosticSourceArgs);
+                }
 
                 activity.Dispose();
 

@@ -12,6 +12,11 @@
 
 ### Other Changes
 
+- Reduced allocations when creating diagnostic scopes, including when distributed tracing is not being collected.
+- Reduced allocations when starting and stopping activities if there are no subscribers to the `DiagnosticListener`, such as when activities are only collected with an `ActivityListener`.
+- Reduced allocations when starting and stopping activities if there are subscribers to the `DiagnosticListener`.
+- Reduced allocations when logging the headers of HTTP requests and responses.
+
 ## 1.64.0 (2026-10-26)
 
 ### Features Added

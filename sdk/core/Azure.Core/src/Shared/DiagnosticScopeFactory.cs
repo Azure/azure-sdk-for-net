@@ -21,7 +21,9 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
         private readonly bool _isStable;
+        private readonly ConcurrentDictionary<string, ActivitySource?>? _activitySourcesByScopeName;
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
+        private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, ActivitySource?>> ActivitySourcesByClientNamespace = new();
 
         /// <summary>
         /// Creates diagnostic scope factory.
@@ -50,6 +52,8 @@ namespace Azure.Core.Pipeline
                         listeners[clientNamespace] = _source;
                     }
                 }
+
+                _activitySourcesByScopeName = ActivitySourcesByClientNamespace.GetOrAdd(clientNamespace, static _ => new ConcurrentDictionary<string, ActivitySource?>());
             }
         }
 
@@ -95,6 +99,18 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
+            // Scope names are a small, fixed set of operation names for each client namespace, so cache the
+            // ActivitySource for each of them to avoid allocating its name every time a scope is created.
+            if (_activitySourcesByScopeName!.TryGetValue(name, out ActivitySource? activitySource))
+            {
+                return activitySource;
+            }
+
+            return _activitySourcesByScopeName.GetOrAdd(name, GetOrCreateActivitySource(ns, name));
+        }
+
+        private static ActivitySource? GetOrCreateActivitySource(string ns, string name)
+        {
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
             string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
 

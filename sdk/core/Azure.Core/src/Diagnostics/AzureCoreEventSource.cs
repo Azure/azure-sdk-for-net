@@ -39,6 +39,12 @@ namespace Azure.Core.Diagnostics
         private const int FailedToUpdateTransportEvent = 25;
         private const int TokenBindingEvent = 26;
 
+        private const int InitialHeadersStringBuilderCapacity = 256;
+        private const int MaxCachedHeadersStringBuilderCapacity = 1024;
+
+        [ThreadStatic]
+        private static StringBuilder? s_cachedHeadersStringBuilder;
+
         private AzureCoreEventSource() : base(EventSourceName) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
@@ -363,7 +369,11 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         private static string FormatHeaders(IEnumerable<HttpHeader> headers, HttpMessageSanitizer sanitizer)
         {
-            var stringBuilder = new StringBuilder();
+            // Headers are formatted for every request and response that is logged, so reuse a StringBuilder
+            // for each thread rather than growing a new one through several chunks every time.
+            StringBuilder stringBuilder = s_cachedHeadersStringBuilder ?? new StringBuilder(InitialHeadersStringBuilderCapacity);
+            s_cachedHeadersStringBuilder = null;
+
             foreach (HttpHeader header in headers)
             {
                 stringBuilder.Append(header.Name);
@@ -371,7 +381,15 @@ namespace Azure.Core.Diagnostics
                 stringBuilder.Append(sanitizer.SanitizeHeader(header.Name, header.Value));
                 stringBuilder.Append(Environment.NewLine);
             }
-            return stringBuilder.ToString();
+
+            string formatted = stringBuilder.ToString();
+
+            if (stringBuilder.Capacity <= MaxCachedHeadersStringBuilderCapacity)
+            {
+                s_cachedHeadersStringBuilder = stringBuilder.Clear();
+            }
+
+            return formatted;
         }
 
         [NonEvent]
