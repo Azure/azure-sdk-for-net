@@ -1,0 +1,183 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e59f1bcc12196b6bc5105594466d0e95-c2353e38480521cc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.14.0 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "617",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 17:15:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c2f88466-58b8-4627-b896-92efedd1ee5e",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "c2f88466-58b8-4627-b896-92efedd1ee5e",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171528Z:c2f88466-58b8-4627-b896-92efedd1ee5e",
+        "x-ms-throttling-version": "v2",
+        "X-MSEdge-Ref": "Ref A: 25ADF78CADD74C0DB98FAFA66BEF945F Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:28Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {},
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Sanitized",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Sanitized",
+          "quotaId": "Sanitized",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d6bc6b7235c144cb09c305e9afa37e6f-697d62b38070c35d-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1047",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 17:15:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "Sanitized",
+        "Set-Cookie": [
+          "Sanitized",
+          "Sanitized",
+          "Sanitized",
+          "Sanitized"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "9f63f753-5205-4e33-8d03-aebf9d692562",
+        "x-ms-operation-identifier": "Sanitized",
+        "x-ms-providerhub-traffic": "Sanitized",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
+        "x-ms-request-id": "a255f182-a8bf-457a-9f60-86ee368f8ffc",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171529Z:9f63f753-5205-4e33-8d03-aebf9d692562",
+        "x-ms-throttling-version": "v1",
+        "X-MSEdge-Ref": "Ref A: DD446665CDF04A95AAAAFD8661F259C0 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:28Z"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
+        "name": "compute-vmimagevalidation-vm-boot-test",
+        "type": "Microsoft.PlatformValidation/validationTests",
+        "properties": {
+          "description": "Verifies a VM can be successfully provisioned and booted from the image under test within the expected time window. Validated by provisioning a VM from the image and confirming it boots. AzCertify PolicyId: 200.3.1.18. More info: https://aka.ms/VM-Provisioning-Issue.",
+          "displayName": "VM Provisioning and Boot Check",
+          "audience": "Public",
+          "provisioningState": "Succeeded",
+          "categoryIds": [
+            "basic-vm-validation"
+          ],
+          "owners": [
+            "Sanitized"
+          ],
+          "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
+          "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "lastPublishedAt": "2026-10-09T10:03:29.5887336Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0f0372fb36c2a4f764fee6212f56929e-e1b82768096ba269-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1047",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 17:15:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "Sanitized",
+        "Set-Cookie": [
+          "Sanitized",
+          "Sanitized",
+          "Sanitized",
+          "Sanitized"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "7f47868b-8516-4b64-9e26-d8d3ba041fdf",
+        "x-ms-operation-identifier": "Sanitized",
+        "x-ms-providerhub-traffic": "Sanitized",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "1098",
+        "x-ms-request-id": "645e2f81-7e23-449e-870a-b458895dd4aa",
+        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171529Z:7f47868b-8516-4b64-9e26-d8d3ba041fdf",
+        "x-ms-throttling-version": "v1",
+        "X-MSEdge-Ref": "Ref A: 3EBDCD3F915946549597C4038A06E747 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:29Z"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
+        "name": "compute-vmimagevalidation-vm-boot-test",
+        "type": "Microsoft.PlatformValidation/validationTests",
+        "properties": {
+          "description": "Verifies a VM can be successfully provisioned and booted from the image under test within the expected time window. Validated by provisioning a VM from the image and confirming it boots. AzCertify PolicyId: 200.3.1.18. More info: https://aka.ms/VM-Provisioning-Issue.",
+          "displayName": "VM Provisioning and Boot Check",
+          "audience": "Public",
+          "provisioningState": "Succeeded",
+          "categoryIds": [
+            "basic-vm-validation"
+          ],
+          "owners": [
+            "Sanitized"
+          ],
+          "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
+          "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "lastPublishedAt": "2026-10-09T10:03:29.5887336Z"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CATALOG_TEST": "compute-vmimagevalidation-vm-boot-test",
+    "RandomSeed": "1335989915",
+    "RESOURCE_MANAGER_URL": "https://eastus2euap.management.azure.com",
+    "SERVICE_MANAGEMENT_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
+  }
+}
