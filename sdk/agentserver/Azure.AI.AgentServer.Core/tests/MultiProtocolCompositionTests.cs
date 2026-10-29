@@ -394,12 +394,9 @@ public class MultiProtocolCompositionTests
 
                 string original = (await store.GetAsync("shared-chain-1"))?.ToJson().ToJsonString()
                     ?? throw new InvalidOperationException("The first turn did not suspend its chain.");
-                using (app.App.Services.EnterResilientTaskScope("invocations"))
-                {
-                    ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
-                        () => task.StartAsync("second", new RunOptions { TaskId = "shared-chain-1" }))!;
-                    Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.Conflict));
-                }
+                ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+                    () => task.StartAsync("second", new RunOptions { TaskId = "shared-chain-1" }))!;
+                Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.Conflict));
 
                 Assert.That(
                     (await store.GetAsync("shared-chain-1"))?.ToJson().ToJsonString(),

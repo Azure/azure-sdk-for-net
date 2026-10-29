@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.8 (2026-10-28)
 
 ### Features Added
 
@@ -11,13 +11,8 @@
   or changes to generic Invocations handlers.
 - Aligned the experimental Voice caller-interruption contract with `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`, preserving playback snapshots and application-owned cancellation/history. Voice Live senders must use the same event contract. Generic raw WebSocket handlers are unchanged.
 
-### Bugs Fixed
-
 ### Other Changes
 
-- In a composed host, Invocations tasks still require `SetResilientTasksEnabled()`
-  even when Responses independently enables the shared Core runtime. This
-  protocol-scoped behavior requires Core `1.0.0-beta.31` or later.
 - Updated resilient task samples to call `SetResilientTasksEnabled()` explicitly; task
   registration alone no longer activates storage or recovery.
 - Updated the resilient research sample to use constructor-injected task handlers and
