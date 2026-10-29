@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.Network
     internal partial class VirtualNetworkAppliancePropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<double> _bandwidthGbps;
+        private NetworkSubResource _capacityProvider;
         private BicepList<VirtualNetworkApplianceIPConfiguration> _ipConfigurations;
         private BicepValue<VirtualNetworkApplianceIPVersionType> _privateIPAddressVersion;
         private BicepValue<NetworkProvisioningState> _provisioningState;
@@ -37,6 +39,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _bandwidthGbps.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CapacityProvider. </summary>
+        internal NetworkSubResource CapacityProvider
+        {
+            get
+            {
+                Initialize();
+                return _capacityProvider;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _capacityProvider, value);
             }
         }
 
@@ -100,11 +117,29 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> CapacityProviderId
+        {
+            get
+            {
+                return CapacityProvider is null ? default : CapacityProvider.Id;
+            }
+            set
+            {
+                if (CapacityProvider is null)
+                {
+                    CapacityProvider = new NetworkSubResource();
+                }
+                CapacityProvider.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualNetworkAppliancePropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _bandwidthGbps = DefineProperty<double>(nameof(BandwidthGbps), new string[] { "bandwidthInGbps" });
+            _capacityProvider = DefineModelProperty<NetworkSubResource>(nameof(CapacityProvider), new string[] { "capacityProvider" });
             _ipConfigurations = DefineListProperty<VirtualNetworkApplianceIPConfiguration>(nameof(IPConfigurations), new string[] { "ipConfigurations" }, isOutput: true);
             _privateIPAddressVersion = DefineProperty<VirtualNetworkApplianceIPVersionType>(nameof(PrivateIPAddressVersion), new string[] { "privateIPAddressVersion" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

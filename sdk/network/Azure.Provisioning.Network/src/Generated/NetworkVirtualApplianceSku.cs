@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new NetworkVirtualApplianceSku. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal NetworkVirtualApplianceSku(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkVirtualApplianceSkus", resourceVersion ?? "2026-01-01")
+        internal NetworkVirtualApplianceSku(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkVirtualApplianceSkus", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -149,6 +149,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>
