@@ -1,6 +1,12 @@
 name: GitHub Event Processor
 
 on:
+  workflow_dispatch:
+    inputs:
+      pull_request_number:
+        description: Same-repository sdkauto PR to validate changelog writeback
+        required: true
+        type: string
   issues:
     types: [edited, labeled, opened, reopened, unlabeled]
   # issue_comment is used for both issues and pull_requests
@@ -85,7 +91,7 @@ jobs:
           path: ${{ github.event_path }}
 
   event-handler:
-    if: ${{ github.event_name != 'workflow_run' && !(github.event_name == 'issues' && github.event.action == 'opened') }}
+    if: ${{ github.event_name != 'workflow_run' && github.event_name != 'workflow_dispatch' && !(github.event_name == 'issues' && github.event.action == 'opened') }}
     permissions:
       issues: write
       # PR events can dismiss approvals after untrusted changes.
@@ -117,13 +123,15 @@ jobs:
           path: ${{ github.event_path }}
 
   update-management-changelogs:
-    # This workflow comes from the default branch. Never check out or execute PR code
+    # Automatic runs use the default branch; dispatch permits explicit branch testing.
+    # Never check out or execute PR code
     # with a write token; the ADO artifact is treated only as untrusted Markdown data.
     if: >-
-      github.event_name == 'workflow_run' &&
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' &&
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.head_repository.full_name == github.repository &&
-      startsWith(github.event.workflow_run.head_branch, 'sdkauto/')
+      startsWith(github.event.workflow_run.head_branch, 'sdkauto/'))
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -144,8 +152,16 @@ jobs:
             // Verify Links usually finishes before ADO. Wait for the matching revision's
             // isolated changelog job, not the result of the entire SDK test matrix.
             let check = context.payload.check_run;
-            if (context.payload.workflow_run) {
-              const run = context.payload.workflow_run;
+            let run = context.payload.workflow_run;
+            if (context.payload.inputs?.pull_request_number) {
+              const number = context.payload.inputs.pull_request_number;
+              if (!/^[1-9]\d*$/.test(number)) throw new Error('Invalid PR number.');
+              const { data: pr } = await github.rest.pulls.get({ ...repo, pull_number: Number(number) });
+              if (pr.state !== 'open') throw new Error('PR is not open.');
+              run = { head_repository: pr.head.repo, event: 'pull_request',
+                head_branch: pr.head.ref, head_sha: pr.head.sha };
+            }
+            if (run) {
               if (run.head_repository.full_name.toLowerCase() !== `${repo.owner}/${repo.repo}`.toLowerCase() ||
                   run.event !== 'pull_request' || !run.head_branch.startsWith('sdkauto/')) return;
               const listUrl = 'https://dev.azure.com/azure-sdk/public/_apis/build/builds?definitions=7327&reasonFilter=pullRequest&queryOrder=queueTimeDescending&$top=100&api-version=7.1';

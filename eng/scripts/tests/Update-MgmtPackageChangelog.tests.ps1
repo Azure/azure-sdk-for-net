@@ -64,13 +64,14 @@ function safeRequire(name) {
     try { await new (Object.getPrototypeOf(async function(){}).constructor)('require', 'context', 'github', 'core', 'fetch', script)(
         safeRequire, { repo: { owner: 'Azure', repo: 'azure-sdk-for-net' }, payload: scenario === 'workflow-run' ?
             { workflow_run: { head_repository: { full_name: 'Azure/azure-sdk-for-net' }, event: 'pull_request', head_branch: 'sdkauto/test', head_sha: sourceSha } } :
+            scenario === 'dispatch' ? { inputs: { pull_request_number: '42' } } :
             { check_run: check } }, github, { info: () => {} }, fetch); }
     catch (e) { error = e; }
     const rejects = ['publisher', 'definition', 'failed-tool', 'artifact-source', 'download-host', 'unrelated-package', 'duplicate'];
     if (rejects.includes(scenario)) assert.ok(error, 'unsafe input must be rejected');
     else if (error) throw error;
-    assert.equal(updates.length, ['success', 'workflow-run'].includes(scenario) ? 1 : 0);
-    if (['success', 'workflow-run'].includes(scenario)) {
+    assert.equal(updates.length, ['success', 'workflow-run', 'dispatch'].includes(scenario) ? 1 : 0);
+    if (['success', 'workflow-run', 'dispatch'].includes(scenario)) {
         assert.equal(updates[0].force, false); assert.equal(updates[0].ref, 'heads/sdkauto/test');
         assert.deepEqual(trees[0].tree, [{ path: filename, mode: '100644', type: 'blob', content: 'generated changelog' }]);
     }
@@ -80,7 +81,7 @@ function safeRequire(name) {
         }
 
         It 'validates writeback scenario: <Scenario>' -TestCases @(
-                @{ Scenario = 'success' }, @{ Scenario = 'workflow-run' }, @{ Scenario = 'stale' }, @{ Scenario = 'fork' },
+                @{ Scenario = 'success' }, @{ Scenario = 'workflow-run' }, @{ Scenario = 'dispatch' }, @{ Scenario = 'stale' }, @{ Scenario = 'fork' },
                 @{ Scenario = 'non-autopr' }, @{ Scenario = 'publisher' }, @{ Scenario = 'definition' },
                 @{ Scenario = 'failed-tool' }, @{ Scenario = 'artifact-source' }, @{ Scenario = 'download-host' },
                 @{ Scenario = 'unrelated-package' }, @{ Scenario = 'duplicate' }, @{ Scenario = 'patch-only' },

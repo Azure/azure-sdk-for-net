@@ -1,11 +1,14 @@
 # Release History
 
-## 1.20.0 (2026-10-29)
+## 1.20.0 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- Obsoleted method 'Response<NetAppVolumeBackupStatus> GetLatestStatusBackup(CancellationToken cancellationToken)' in type Azure.ResourceManager.NetApp.NetAppVolumeResource
-- Obsoleted method 'Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusBackupAsync(CancellationToken cancellationToken)' in type Azure.ResourceManager.NetApp.NetAppVolumeResource
 
 ## 1.19.0 (2026-10-20)
 
