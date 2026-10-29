@@ -18,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -37,6 +38,9 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
     private readonly Dictionary<string, ModelProvider> _models = new(StringComparer.Ordinal);
     private ClientProvider _liveClient;
     private CSharpType _responseItemType;
+    private CSharpType _realtimeStatusType;
+    private CSharpType _realtimeModalityType;
+    private CSharpType _semanticVadEagernessType;
 
     protected internal static void Configure(InputNamespace input)
     {
@@ -131,8 +135,56 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         return base.VisitMemberExpression(expression, method);
     }
 
+    protected override ValueExpression VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
+    {
+        string invocation = expression.MethodSignature?.Name ?? expression.MethodName;
+        ValueExpression argument = expression.Arguments.Count > 0 ? expression.Arguments[0] : null;
+        while (argument is ScopedApi scoped)
+        {
+            argument = scoped.Original;
+        }
+        if (method.Signature.Name == "DeserializeVoiceResult" && invocation == "Read" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeOutputModality" &&
+            argument is InvokeMethodExpression bytes && bytes.InstanceReference != null)
+        {
+            _realtimeModalityType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeOutputModality");
+            return New.Instance(_realtimeModalityType, bytes.InstanceReference.Invoke(nameof(JsonElement.GetString)));
+        }
+        if (method.EnclosingType.Name == "VoiceResult" && method.Signature.Name == "JsonModelWriteCore" &&
+            invocation == "WriteObjectValue" &&
+            ((expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeResponseStatus") ||
+             argument is VariableExpression { Type.Name: "RealtimeOutputModality" }))
+        {
+            return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
+                expression.Arguments[0].Invoke(nameof(ToString)));
+        }
+        if (method.Signature.Name == "DeserializeVoiceAgentSemanticVadTurnDetection" && invocation == "Read" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel" &&
+            argument is InvokeMethodExpression eagernessBytes && eagernessBytes.InstanceReference != null)
+        {
+            _semanticVadEagernessType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeSemanticVadEagernessLevel");
+            return New.Instance(_semanticVadEagernessType, eagernessBytes.InstanceReference.Invoke(nameof(JsonElement.GetString)));
+        }
+        if (method.EnclosingType.Name == "VoiceAgentSemanticVadTurnDetection" &&
+            method.Signature.Name == "JsonModelWriteCore" && invocation == "WriteObjectValue" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel")
+        {
+            return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
+                expression.Arguments[0].Invoke(nameof(ToString)));
+        }
+        return base.VisitInvokeMethodExpression(expression, method);
+    }
+
     protected override ValueExpression VisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
     {
+        if (method.Signature.Name == "DeserializeVoiceResult" &&
+            expression.Variable is VariableExpression status && status.Declaration.RequestedName == "status")
+        {
+            ValueExpression element = method.Signature.Parameters[0].AsVariable();
+            _realtimeStatusType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeResponseStatus");
+            return new AssignmentExpression(expression.Variable,
+                New.Instance(_realtimeStatusType, element.Invoke(nameof(JsonElement.GetProperty), Literal("status")).Invoke(nameof(JsonElement.GetString))));
+        }
         if (method.Signature.Name == "DeserializeLiveClientEventLiveResponseItemCreateParam" &&
             expression.Variable is VariableExpression variable && variable.Declaration.RequestedName == "item")
         {
@@ -151,14 +203,18 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         {
             if (_responseItemType == null)
             {
-                PortableExecutableReference reference = CodeModelGenerator.Instance.AdditionalMetadataReferences
-                    .OfType<PortableExecutableReference>()
-                    .Single(candidate => string.Equals(Path.GetFileName(candidate.FilePath), "OpenAI.dll", StringComparison.OrdinalIgnoreCase));
-                Type type = Assembly.LoadFrom(reference.FilePath).GetType("OpenAI.Responses.ResponseItem", throwOnError: true);
-                _responseItemType = new CSharpType(type);
+                _responseItemType = ResolveOpenAIType("OpenAI.Responses.ResponseItem");
             }
             return _responseItemType;
         }
+    }
+
+    private static CSharpType ResolveOpenAIType(string name)
+    {
+        PortableExecutableReference reference = CodeModelGenerator.Instance.AdditionalMetadataReferences
+            .OfType<PortableExecutableReference>()
+            .Single(candidate => string.Equals(Path.GetFileName(candidate.FilePath), "OpenAI.dll", StringComparison.OrdinalIgnoreCase));
+        return new CSharpType(Assembly.LoadFrom(reference.FilePath).GetType(name, throwOnError: true));
     }
 
     private MethodProvider BuildCursorMethod(TypeProvider pager)

@@ -23,6 +23,8 @@
 - `BrowserAutomationPreviewToolboxTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationToolboxTool` instead.
 
 ### Bugs Fixed
+- Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
+- Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape`, without changing the order of its existing parameters.
 - Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
 

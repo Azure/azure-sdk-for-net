@@ -12,8 +12,7 @@ namespace Azure.AI.Projects;
 public class ProjectsRealtimeSessionClientOptions : RealtimeSessionClientOptions
 {
     /// <summary>
-    /// The optional transport selection for this session. The SDK applies the selection during connection setup.
-    /// WebRTC selects signaling over the WebSocket; the application must manage the peer connection and media.
+    /// The connection transport. WebRTC provides signaling only; your application must handle the peer connection and audio.
     /// </summary>
     public VoiceAgentTransport? Transport { get; set; }
 }

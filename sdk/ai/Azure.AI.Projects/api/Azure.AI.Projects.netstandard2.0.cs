@@ -615,6 +615,7 @@ namespace Azure.AI.Projects
         public virtual Azure.AI.Projects.AIProjectModels Models { get { throw null; } }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Extensions.OpenAI.ProjectOpenAIClient ProjectOpenAIClient { get { throw null; } }
+        public virtual Azure.AI.Projects.ProjectsLiveClient ProjectsLiveClient { get { throw null; } }
         public virtual Azure.AI.Projects.ProjectsRealtimeClient ProjectsRealtimeClient { get { throw null; } }
         public virtual Azure.AI.Projects.Evaluation.RedTeams RedTeams { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectRoutines Routines { get { throw null; } }
@@ -2169,6 +2170,37 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.ProjectsJobStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.ProjectsJobStatus left, Azure.AI.Projects.ProjectsJobStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ProjectsLiveClient
+    {
+        protected ProjectsLiveClient() { }
+        public System.Uri Endpoint { get { throw null; } }
+        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Projects.ProjectsLiveSessionClient> StartSessionAsync(string agentName, Azure.AI.Projects.ProjectsLiveSessionClientOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProjectsLiveSessionClient : System.IAsyncDisposable, System.IDisposable
+    {
+        protected ProjectsLiveSessionClient() { }
+        public Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosed SessionClosed { get { throw null; } }
+        public Azure.AI.Projects.Agents.LiveServerEventLiveSessionStarted SessionStarted { get { throw null; } }
+        public System.Net.WebSockets.WebSocketState State { get { throw null; } }
+        public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual void Dispose() { }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.AI.Projects.Agents.LiveServerEvent> ReceiveEventsAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendCommandAsync(System.BinaryData command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendEventAsync(Azure.AI.Projects.Agents.LiveClientEvent clientEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendInputAudioAsync(System.BinaryData audio, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendInputAudioAsync(System.IO.Stream audio, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProjectsLiveSessionClientOptions
+    {
+        public ProjectsLiveSessionClientOptions() { }
+        public string AgentVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
+        public string QueryString { get { throw null; } set { } }
+        public bool? Store { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> StructuredInputs { get { throw null; } }
     }
     public partial class ProjectsRealtimeClient : OpenAI.Realtime.RealtimeClient
     {

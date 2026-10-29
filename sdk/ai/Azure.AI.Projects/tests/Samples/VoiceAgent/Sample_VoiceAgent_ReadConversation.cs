@@ -29,7 +29,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
     {
 #if SNIPPET
         var projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_REALTIME_MODEL_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME;
@@ -54,9 +54,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
         try
         {
             #region Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
-            // Passing store: true (via options.QueryString) persists this session's conversation so
-            // it can be read back afterward through BetaVoiceAgentsConversations; the response.done
-            // event reports the resulting conversation ID.
+            // Save the conversation with store=true and get its ID from response.done.
             string conversationId;
             using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
                 await projectClient.ProjectsRealtimeClient.StartSessionAsync(
@@ -79,10 +77,8 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
                 }
             }
             #endregion
-
             #region Snippet:Sample_VoiceAgent_ReadConversation_Read
-            // Once the session above closes, the conversation it produced becomes readable through
-            // the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
+            // Read the saved messages and responses over REST.
             BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
             VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);
@@ -98,6 +94,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
                 Console.WriteLine($"Response {response.Id} status: {response.Status}");
             }
             #endregion
+            Assert.That(conversation.Id, Is.EqualTo(conversationId));
         }
         finally
         {

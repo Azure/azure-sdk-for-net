@@ -29,6 +29,80 @@ namespace Azure.AI.Projects.Tests;
 /// </summary>
 public class ProjectsRealtimeClientTests
 {
+    [Test]
+    public void AuthenticationUsesProviderCreatedSpecializedOptions()
+    {
+        ProviderTokenOptions created = null;
+        InvalidOperationException failure = new("Provider-options verification completed.");
+        LiveTestTokenProvider provider = new(_ => Task.FromException<AuthenticationToken>(failure), properties =>
+        {
+            Dictionary<string, object> normalized = properties.ToDictionary(pair => pair.Key, pair => pair.Value);
+            normalized["factory-normalized"] = "verified";
+            created = new ProviderTokenOptions(normalized);
+            return created;
+        });
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+
+        InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual, Is.SameAs(failure));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.LastOptions, Is.SameAs(created).And.TypeOf<ProviderTokenOptions>());
+            Assert.That(provider.LastOptions.Properties["factory-normalized"], Is.EqualTo("verified"));
+            Assert.That(provider.AsyncCalls, Is.EqualTo(1));
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public void UnsupportedAuthenticationFlowIsRejectedBeforeRequestingAToken()
+    {
+        bool supported = true;
+        LiveTestTokenProvider provider = new(
+            _ => Task.FromException<AuthenticationToken>(new AssertionException("An unsupported flow must not request a token.")),
+            properties => supported ? new GetTokenOptions(properties) : null);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+        supported = false;
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain("does not support").And.Contain("Realtime"));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public void TokenOptionsFactoryFailureIsPropagatedUnchanged()
+    {
+        bool starting = false;
+        InvalidOperationException failure = new("The provider rejected the requested authentication flow.");
+        LiveTestTokenProvider provider = new(
+            _ => Task.FromException<AuthenticationToken>(new AssertionException("A failing options factory must not request a token.")),
+            properties => starting ? throw failure : new GetTokenOptions(properties));
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        starting = true;
+
+        InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.That(actual, Is.SameAs(failure));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+        Assert.That(provider.SyncCalls, Is.Zero);
+    }
+
     // -----------------------------------------------------------------------
     // Verifies (without any live Foundry service, using a real loopback
     // HttpListener/WebSocket handshake): ProjectsRealtimeClient.StartSessionAsync
@@ -274,6 +348,8 @@ public class ProjectsRealtimeClientTests
         tcpListener.Stop();
         return port;
     }
+
+    private sealed class ProviderTokenOptions(IReadOnlyDictionary<string, object> properties) : GetTokenOptions(properties);
 
     private sealed class FakeTokenProvider : System.ClientModel.AuthenticationTokenProvider
     {
