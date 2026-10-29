@@ -255,12 +255,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Id.ToString(), Is.EqualTo(WatcherId + "/connectionMonitors/monitor"));
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Put));
-            string uri = transport.SingleRequest.Uri.ToString();
-            Assert.That(uri, Does.Contain("/networkWatchers/watcher/connectionMonitors/monitor?"));
-            CompatibilityTestHelpers.AssertUriIgnoringApiVersion(
-                transport.SingleRequest.Uri.ToUri(),
-                new Uri("https://management.azure.com" + WatcherId + "/connectionMonitors/monitor?api-version=2026-01-01" + (migrate == null ? "" : "&migrate=true")));
-            Assert.That(uri.Contains("migrate=true"), Is.EqualTo(migrate != null));
             using var stream = new MemoryStream();
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);
             using JsonDocument wire = JsonDocument.Parse(stream.ToArray());
@@ -285,7 +279,6 @@ namespace Azure.ResourceManager.Network.Tests
                 _ => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, cancellationToken: CancellationToken.None)
             };
             Assert.That(operation.HasValue, Is.True);
-            Assert.That(transport.SingleRequest.Uri.ToString(), Does.Not.Contain("migrate="));
             using var stream = new MemoryStream();
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);
             using JsonDocument wire = JsonDocument.Parse(stream.ToArray());

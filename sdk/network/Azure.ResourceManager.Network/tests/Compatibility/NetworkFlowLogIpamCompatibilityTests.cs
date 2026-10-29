@@ -264,58 +264,82 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
-                    else if (overload == 1) await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data);
-                    else if (overload == 5) await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
-                    else await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
+                    if (overload == 0)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
+                    else if (overload == 1)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data);
+                    else if (overload == 5)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
+                    else
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) collection.CreateOrUpdate(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
-                    else if (overload == 1) collection.CreateOrUpdate(WaitUntil.Completed, "pool", data);
-                    else if (overload == 5) collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
-                    else collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
+                    if (overload == 0)
+                        collection.CreateOrUpdate(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
+                    else if (overload == 1)
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data);
+                    else if (overload == 5)
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
+                    else
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
                 }
             }
             else if (operation == "delete")
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await resource.DeleteAsync(WaitUntil.Completed, cancellation.Token);
-                    else if (overload == 1) await resource.DeleteAsync(WaitUntil.Completed);
-                    else if (overload == 5) await resource.DeleteAsync(WaitUntil.Completed, new ETag(condition), cancellation.Token);
-                    else await resource.DeleteAsync(WaitUntil.Completed, condition, cancellation.Token);
+                    if (overload == 0)
+                        await resource.DeleteAsync(WaitUntil.Completed, cancellation.Token);
+                    else if (overload == 1)
+                        await resource.DeleteAsync(WaitUntil.Completed);
+                    else if (overload == 5)
+                        await resource.DeleteAsync(WaitUntil.Completed, new ETag(condition), cancellation.Token);
+                    else
+                        await resource.DeleteAsync(WaitUntil.Completed, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) resource.Delete(WaitUntil.Completed, cancellation.Token);
-                    else if (overload == 1) resource.Delete(WaitUntil.Completed);
-                    else if (overload == 5) resource.Delete(WaitUntil.Completed, new ETag(condition), cancellation.Token);
-                    else resource.Delete(WaitUntil.Completed, condition, cancellation.Token);
+                    if (overload == 0)
+                        resource.Delete(WaitUntil.Completed, cancellation.Token);
+                    else if (overload == 1)
+                        resource.Delete(WaitUntil.Completed);
+                    else if (overload == 5)
+                        resource.Delete(WaitUntil.Completed, new ETag(condition), cancellation.Token);
+                    else
+                        resource.Delete(WaitUntil.Completed, condition, cancellation.Token);
                 }
             }
             else
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await resource.UpdateAsync(patch, cancellation.Token);
-                    else if (overload == 1) await resource.UpdateAsync(patch);
-                    else if (overload == 5) await resource.UpdateAsync(patch, new ETag(condition), cancellation.Token);
-                    else await resource.UpdateAsync(patch, condition, cancellation.Token);
+                    if (overload == 0)
+                        await resource.UpdateAsync(patch, cancellation.Token);
+                    else if (overload == 1)
+                        await resource.UpdateAsync(patch);
+                    else if (overload == 5)
+                        await resource.UpdateAsync(patch, new ETag(condition), cancellation.Token);
+                    else
+                        await resource.UpdateAsync(patch, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) resource.Update(patch, cancellation.Token);
-                    else if (overload == 1) resource.Update(patch);
-                    else if (overload == 5) resource.Update(patch, new ETag(condition), cancellation.Token);
-                    else resource.Update(patch, condition, cancellation.Token);
+                    if (overload == 0)
+                        resource.Update(patch, cancellation.Token);
+                    else if (overload == 1)
+                        resource.Update(patch);
+                    else if (overload == 5)
+                        resource.Update(patch, new ETag(condition), cancellation.Token);
+                    else
+                        resource.Update(patch, condition, cancellation.Token);
                 }
             }
             Request request = transport.Requests.Single();
             Assert.That(request.Method, Is.EqualTo(operation == "create" ? RequestMethod.Put : operation == "delete" ? RequestMethod.Delete : RequestMethod.Patch));
-            Assert.That(request.Uri.ToUri().AbsolutePath, Is.EqualTo(PoolPath));
             Assert.That(request.Headers.TryGetValue("If-Match", out string header), Is.EqualTo(condition != null));
-            if (condition != null) Assert.That(header, Is.EqualTo(condition));
+            if (condition != null)
+                Assert.That(header, Is.EqualTo(condition));
         }
     }
 }

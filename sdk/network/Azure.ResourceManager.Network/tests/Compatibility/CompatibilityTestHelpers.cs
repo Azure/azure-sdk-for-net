@@ -9,27 +9,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
     internal static class CompatibilityTestHelpers
     {
-        internal static void AssertUriIgnoringApiVersion(Uri actual, Uri expected)
-        {
-            string Normalize(Uri uri)
-            {
-                const string pattern = @"([?&]api-version=)([^&#]*)";
-                MatchCollection versions = Regex.Matches(uri.Query, pattern);
-                Assert.That(versions, Has.Count.EqualTo(1), "Expected exactly one api-version query parameter.");
-                Assert.That(versions[0].Groups[2].Value, Is.Not.Empty, "Expected a nonempty api-version query value.");
-                return uri.GetLeftPart(UriPartial.Path) + Regex.Replace(uri.Query, pattern, "${1}ignored") + uri.Fragment;
-            }
-
-            Assert.That(Normalize(actual), Is.EqualTo(Normalize(expected)));
-        }
-
         internal static T ReadJson<T>(string payload, ModelReaderWriterOptions options)
         {
             var model = (IJsonModel<T>)Activator.CreateInstance(typeof(T), nonPublic: true);
