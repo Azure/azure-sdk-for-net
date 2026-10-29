@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Allow opted-in azure-rest-api-specs main runs to use the shared publisher and storage-egress policy, preserving trusted-run and completeness checks.
 - Exclude older JUnit from summaries and selected test files when it does not match the latest verified timeline attempt; keep missing results incomplete.
 - Keep shared publisher tests independent of Tools-only CI/Pester/redirect files, while retaining those checks in Tools and testing consumer copies.
 - Pass the create-only wildcard as one `--if-none-match=*` argument so Linux cannot expand it into working-directory file names.
