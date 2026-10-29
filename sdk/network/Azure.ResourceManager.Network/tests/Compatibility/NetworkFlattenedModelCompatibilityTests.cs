@@ -257,7 +257,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Put));
             string uri = transport.SingleRequest.Uri.ToString();
             Assert.That(uri, Does.Contain("/networkWatchers/watcher/connectionMonitors/monitor?"));
-            Assert.That(uri, Does.Contain("api-version=2026-01-01"));
+            CompatibilityTestHelpers.AssertUriIgnoringApiVersion(
+                transport.SingleRequest.Uri.ToUri(),
+                new Uri("https://management.azure.com" + WatcherId + "/connectionMonitors/monitor?api-version=2026-01-01" + (migrate == null ? "" : "&migrate=true")));
             Assert.That(uri.Contains("migrate=true"), Is.EqualTo(migrate != null));
             using var stream = new MemoryStream();
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);

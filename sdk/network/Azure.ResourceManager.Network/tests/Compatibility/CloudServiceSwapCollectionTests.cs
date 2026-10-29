@@ -192,7 +192,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.SingleRequest.Uri.ToUri().AbsolutePath, Is.EqualTo(ListPath));
-            Assert.That(transport.SingleRequest.Uri.ToUri().Query, Is.EqualTo("?api-version=2026-01-01"));
+            CompatibilityTestHelpers.AssertUriIgnoringApiVersion(
+                transport.SingleRequest.Uri.ToUri(),
+                new Uri("https://management.azure.com" + ListPath + "?api-version=2026-01-01"));
         }
     }
 }

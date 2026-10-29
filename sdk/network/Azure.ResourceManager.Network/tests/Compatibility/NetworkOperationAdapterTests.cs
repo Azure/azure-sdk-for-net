@@ -125,7 +125,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(operation == 0 ? SwapPath : operation == 1 ? OptionsPath : OptionsPath + "/predefinedPolicies/policy"));
-            Assert.That(transport.Requests[0].Uri.ToUri().Query, Is.EqualTo("?api-version=2026-01-01"));
+            CompatibilityTestHelpers.AssertUriIgnoringApiVersion(
+                transport.Requests[0].Uri.ToUri(),
+                new Uri("https://management.azure.com" + (operation == 0 ? SwapPath : operation == 1 ? OptionsPath : OptionsPath + "/predefinedPolicies/policy") + "?api-version=2026-01-01"));
             Assert.That(diagnostics.Scopes.Any(scope => scope.IsCompleted && scope.Exception == null), Is.True);
         }
 

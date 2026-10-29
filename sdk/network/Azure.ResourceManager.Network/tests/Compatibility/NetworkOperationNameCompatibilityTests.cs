@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (paging)
             {
                 Assert.That(count, Is.EqualTo(2));
-                Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
+                CompatibilityTestHelpers.AssertUriIgnoringApiVersion(transport.Requests[1].Uri.ToUri(), new Uri(nextLink));
             }
             else
             {
