@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Min and max value of a status code range. </summary>
-    public partial class ExpectedStatusCodeRange
+    public partial class PrivateTrafficManagerExpectedStatusCodeRange
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExpectedStatusCodeRange"/>. </summary>
-        public ExpectedStatusCodeRange()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerExpectedStatusCodeRange"/>. </summary>
+        public PrivateTrafficManagerExpectedStatusCodeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpectedStatusCodeRange"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerExpectedStatusCodeRange"/>. </summary>
         /// <param name="min"> Min status code. </param>
         /// <param name="max"> Max status code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpectedStatusCodeRange(int? min, int? max, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerExpectedStatusCodeRange(int? min, int? max, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Min = min;
             Max = max;

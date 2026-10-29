@@ -52,8 +52,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TopologyMapResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            TryGetApiVersion(ResourceType, out string topologyMapApiVersion);
             _topologyMapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateTrafficManager", ResourceType.Namespace, Diagnostics);
-            _topologyMapsRestClient = new TopologyMaps(_topologyMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/topologyMaps", out string topologyMapsApiVersionOverride) ? topologyMapsApiVersionOverride : "2026-10-01-preview");
+            _topologyMapsRestClient = new TopologyMaps(_topologyMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topologyMapApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 

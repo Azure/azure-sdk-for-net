@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The traffic routing method of the Traffic Manager profile. </summary>
-    public readonly partial struct TrafficRoutingMethod : IEquatable<TrafficRoutingMethod>
+    public readonly partial struct PrivateTrafficManagerRoutingMethod : IEquatable<PrivateTrafficManagerRoutingMethod>
     {
         private readonly string _value;
         /// <summary> Routes traffic to endpoints based on priority values, directing to the highest priority available endpoint. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Routes traffic to an endpoint by matching the virtual network of the DNS query to the endpoint's configured virtual networks. </summary>
         private const string VNetValue = "VNet";
 
-        /// <summary> Initializes a new instance of <see cref="TrafficRoutingMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerRoutingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficRoutingMethod(string value)
+        public PrivateTrafficManagerRoutingMethod(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> Routes traffic to endpoints based on priority values, directing to the highest priority available endpoint. </summary>
-        public static TrafficRoutingMethod Priority { get; } = new TrafficRoutingMethod(PriorityValue);
+        public static PrivateTrafficManagerRoutingMethod Priority { get; } = new PrivateTrafficManagerRoutingMethod(PriorityValue);
 
         /// <summary> Distributes traffic across endpoints based on assigned weight values. </summary>
-        public static TrafficRoutingMethod Weighted { get; } = new TrafficRoutingMethod(WeightedValue);
+        public static PrivateTrafficManagerRoutingMethod Weighted { get; } = new PrivateTrafficManagerRoutingMethod(WeightedValue);
 
         /// <summary> Routes traffic to an endpoint by matching the virtual network of the DNS query to the endpoint's configured virtual networks. </summary>
-        public static TrafficRoutingMethod VNet { get; } = new TrafficRoutingMethod(VNetValue);
+        public static PrivateTrafficManagerRoutingMethod VNet { get; } = new PrivateTrafficManagerRoutingMethod(VNetValue);
 
-        /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerRoutingMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TrafficRoutingMethod left, TrafficRoutingMethod right) => left.Equals(right);
+        public static bool operator ==(PrivateTrafficManagerRoutingMethod left, PrivateTrafficManagerRoutingMethod right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerRoutingMethod"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TrafficRoutingMethod left, TrafficRoutingMethod right) => !left.Equals(right);
+        public static bool operator !=(PrivateTrafficManagerRoutingMethod left, PrivateTrafficManagerRoutingMethod right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerRoutingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficRoutingMethod(string value) => new TrafficRoutingMethod(value);
+        public static implicit operator PrivateTrafficManagerRoutingMethod(string value) => new PrivateTrafficManagerRoutingMethod(value);
 
-        /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerRoutingMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TrafficRoutingMethod?(string value) => value == null ? null : new TrafficRoutingMethod(value);
+        public static implicit operator PrivateTrafficManagerRoutingMethod?(string value) => value == null ? null : new PrivateTrafficManagerRoutingMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TrafficRoutingMethod other && Equals(other);
+        public override bool Equals(object obj) => obj is PrivateTrafficManagerRoutingMethod other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TrafficRoutingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PrivateTrafficManagerRoutingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

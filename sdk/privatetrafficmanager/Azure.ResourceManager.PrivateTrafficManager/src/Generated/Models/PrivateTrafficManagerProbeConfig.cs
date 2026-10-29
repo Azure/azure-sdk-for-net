@@ -12,19 +12,19 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
-    public partial class ProbeConfig
+    public partial class PrivateTrafficManagerProbeConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProbeConfig"/>. </summary>
-        public ProbeConfig()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProbeConfig"/>. </summary>
+        public PrivateTrafficManagerProbeConfig()
         {
-            CustomHeaders = new ChangeTrackingList<ProbeCustomHeader>();
-            ExpectedStatusCodeRanges = new ChangeTrackingList<ExpectedStatusCodeRange>();
+            CustomHeaders = new ChangeTrackingList<PrivateTrafficManagerProbeCustomHeader>();
+            ExpectedStatusCodeRanges = new ChangeTrackingList<PrivateTrafficManagerExpectedStatusCodeRange>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProbeConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProbeConfig"/>. </summary>
         /// <param name="protocol"> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </param>
         /// <param name="port"> The TCP port used to probe for endpoint health. </param>
         /// <param name="path"> The path relative to the endpoint domain name used to probe for endpoint health. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="customHeaders"> List of custom headers. </param>
         /// <param name="expectedStatusCodeRanges"> List of expected status code ranges. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProbeConfig(ProbeProtocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<ProbeCustomHeader> customHeaders, IList<ExpectedStatusCodeRange> expectedStatusCodeRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProbeConfig(PrivateTrafficManagerProbeProtocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<PrivateTrafficManagerProbeCustomHeader> customHeaders, IList<PrivateTrafficManagerExpectedStatusCodeRange> expectedStatusCodeRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Port = port;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </summary>
-        public ProbeProtocol? Protocol { get; set; }
+        public PrivateTrafficManagerProbeProtocol? Protocol { get; set; }
 
         /// <summary> The TCP port used to probe for endpoint health. </summary>
         public long? Port { get; set; }
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public long? ToleratedNumberOfFailures { get; set; }
 
         /// <summary> List of custom headers. </summary>
-        public IList<ProbeCustomHeader> CustomHeaders { get; }
+        public IList<PrivateTrafficManagerProbeCustomHeader> CustomHeaders { get; }
 
         /// <summary> List of expected status code ranges. </summary>
-        public IList<ExpectedStatusCodeRange> ExpectedStatusCodeRanges { get; }
+        public IList<PrivateTrafficManagerExpectedStatusCodeRange> ExpectedStatusCodeRanges { get; }
     }
 }
