@@ -12,6 +12,8 @@ namespace Azure.AI.Projects
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _reviewTarget;
+        private bool _reviewTargetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MisalignmentErrorDetailsResource"/>. </summary>
         internal MisalignmentErrorDetailsResource()
@@ -19,16 +21,27 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="MisalignmentErrorDetailsResource"/>. </summary>
+        /// <param name="reviewTarget"></param>
         /// <param name="errorType"> An optional classification; clients must accept additional values. </param>
         /// <param name="detailedExplanation"> The public explanation for this block. </param>
         /// <param name="steer"> An optional public continuation instruction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MisalignmentErrorDetailsResource(MisalignmentErrorType? errorType, string detailedExplanation, MisalignmentSteer steer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MisalignmentErrorDetailsResource(string reviewTarget, MisalignmentErrorType? errorType, string detailedExplanation, MisalignmentSteer steer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            _reviewTarget = reviewTarget;
             ErrorType = errorType;
             DetailedExplanation = detailedExplanation;
             Steer = steer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the ReviewTarget. </summary>
+        public string ReviewTarget
+        {
+            get
+            {
+                return _reviewTarget;
+            }
         }
 
         /// <summary> An optional classification; clients must accept additional values. </summary>

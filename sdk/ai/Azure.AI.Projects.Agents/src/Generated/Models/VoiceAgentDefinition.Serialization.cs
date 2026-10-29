@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// managed speech-to-speech experience. Establish realtime voice sessions through
     /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
     /// </summary>
-    public partial class VoiceAgentDefinition : ProjectsAgentDefinition, IJsonModel<VoiceAgentDefinition>
+    public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition, IJsonModel<VoiceAgentDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -75,6 +75,11 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SubProtocol))
+            {
+                writer.WritePropertyName("sub_protocol"u8);
+                writer.WriteStringValue(SubProtocol.Value.ToString());
+            }
             if (Optional.IsDefined(ModelType))
             {
                 writer.WritePropertyName("model_type"u8);
@@ -90,11 +95,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("conversation_engine"u8);
                 writer.WriteObjectValue(ConversationEngine, options);
             }
-            if (Optional.IsDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
-            }
             if (Optional.IsDefined(Greeting))
             {
                 writer.WritePropertyName("greeting"u8);
@@ -104,6 +104,11 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("audio"u8);
                 writer.WriteObjectValue(Audio, options);
+            }
+            if (Optional.IsDefined(Soundscape))
+            {
+                writer.WritePropertyName("soundscape"u8);
+                writer.WriteObjectValue(Soundscape, options);
             }
             if (Optional.IsCollectionDefined(OutputModalities))
             {
@@ -174,26 +179,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("parallel_tool_calls"u8);
                 writer.WriteBooleanValue(ParallelToolCalls.Value);
             }
-            if (Optional.IsCollectionDefined(StructuredInputs))
-            {
-                writer.WritePropertyName("structured_inputs"u8);
-                writer.WriteStartObject();
-                foreach (var item in StructuredInputs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(SubagentConfig))
             {
                 writer.WritePropertyName("subagent_config"u8);
                 writer.WriteObjectValue(SubagentConfig, options);
-            }
-            if (Optional.IsDefined(Store))
-            {
-                writer.WritePropertyName("store"u8);
-                writer.WriteBooleanValue(Store.Value);
             }
         }
 
@@ -225,12 +214,16 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string instructions = default;
+            IDictionary<string, StructuredInputDefinition> structuredInputs = default;
+            bool? store = default;
+            VoiceAgentDefinitionSubProtocol? subProtocol = default;
             VoiceModelType? modelType = default;
             string model = default;
             VoiceConversationEngine conversationEngine = default;
-            string instructions = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
+            VoiceAgentSoundscapeConfig soundscape = default;
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
@@ -239,9 +232,7 @@ namespace Azure.AI.Projects.Agents
             IList<VoiceAgentTool> tools = default;
             BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
-            IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             VoiceAgentSubagentConfig subagentConfig = default;
-            bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -256,6 +247,43 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("instructions"u8))
+                {
+                    instructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("structured_inputs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, StructuredInputDefinition> dictionary = new Dictionary<string, StructuredInputDefinition>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
+                    }
+                    structuredInputs = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("store"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    store = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sub_protocol"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subProtocol = new VoiceAgentDefinitionSubProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model_type"u8))
@@ -281,11 +309,6 @@ namespace Azure.AI.Projects.Agents
                     conversationEngine = VoiceConversationEngine.DeserializeVoiceConversationEngine(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("instructions"u8))
-                {
-                    instructions = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("greeting"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -302,6 +325,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     audio = VoiceAgentAudioConfig.DeserializeVoiceAgentAudioConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("soundscape"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    soundscape = VoiceAgentSoundscapeConfig.DeserializeVoiceAgentSoundscapeConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -391,20 +423,6 @@ namespace Azure.AI.Projects.Agents
                     parallelToolCalls = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("structured_inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, StructuredInputDefinition> dictionary = new Dictionary<string, StructuredInputDefinition>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, StructuredInputDefinition.DeserializeStructuredInputDefinition(prop0.Value, options));
-                    }
-                    structuredInputs = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("subagent_config"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -412,15 +430,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("store"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    store = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -432,12 +441,16 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                instructions,
+                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
+                store,
+                subProtocol,
                 modelType,
                 model,
                 conversationEngine,
-                instructions,
                 greeting,
                 audio,
+                soundscape,
                 outputModalities ?? new ChangeTrackingList<VoiceOutputModality>(),
                 internalMaxOutputTokens,
                 include ?? new ChangeTrackingList<VoiceAgentSessionIncludeOption>(),
@@ -446,9 +459,7 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
                 internalToolChoice,
                 parallelToolCalls,
-                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
-                subagentConfig,
-                store);
+                subagentConfig);
         }
     }
 }

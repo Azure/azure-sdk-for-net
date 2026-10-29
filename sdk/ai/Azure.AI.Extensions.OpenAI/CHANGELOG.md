@@ -13,6 +13,8 @@
 
 ### Other Changes
 
+- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
+
 ### Sample Updates
 - Added sample for Hosted Agent identity isolation.
 
