@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.Diagnostics;
+using System.Diagnostics.Tracing;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -170,7 +170,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.That(client.Credential, Is.InstanceOf<EnvironmentCredential>());
 
             AzureEventSourceLogForwarder forwarder = provider.GetService<AzureEventSourceLogForwarder>();
-            var listener = (AzureEventSourceListener)GetNonPublicFieldValue(forwarder, "_listener");
+            var listener = (EventListener)GetNonPublicFieldValue(forwarder, "_listener");
             Assert.That(listener != null, Is.EqualTo(enableLogging));
         }
 
