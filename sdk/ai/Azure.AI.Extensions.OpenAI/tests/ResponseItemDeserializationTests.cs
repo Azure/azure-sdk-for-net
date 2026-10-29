@@ -118,7 +118,7 @@ public class ResponseItemDeserializationTests
 
         Assert.That(roundTripped, Is.TypeOf(itemType));
         Assert.That(roundTripped.Id, Is.EqualTo("item_1"));
-        Assert.That(item.Patch.GetString("$.unknown_field"u8), Is.EqualTo("some_value"));
+        Assert.That(roundTripped.Patch.GetString("$.unknown_field"u8), Is.EqualTo("some_value"));
     }
 
     [Test]

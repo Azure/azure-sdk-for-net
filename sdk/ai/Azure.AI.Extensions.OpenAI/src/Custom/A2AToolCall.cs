@@ -45,7 +45,7 @@ public partial class A2AToolCall
     /// <param name="patch"></param>
     internal A2AToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        this.ApplyPatch(patch);
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

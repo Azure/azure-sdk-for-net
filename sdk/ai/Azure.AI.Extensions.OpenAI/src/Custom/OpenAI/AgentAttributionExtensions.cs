@@ -75,29 +75,4 @@ internal static class AgentAttributionExtensions
         }
         return BinaryData.FromBytes(stream.ToArray());
     }
-
-    [Experimental("OPENAI001")]
-    internal static void ApplyPatch(this ResponseItem item, in JsonPatch patch)
-    {
-        BinaryData patchBin = null;
-        // Write JsonPatch to Memory stream as a regular JSON.
-        using (MemoryStream stream = new())
-        {
-            Utf8JsonWriter writer = new(stream);
-            patch.WriteTo(writer);
-            writer.Flush();
-            patchBin = new BinaryData(stream.ToArray());
-        }
-        if (patchBin == null || patchBin.IsEmpty)
-        {
-            return;
-        }
-        // Deserializae JSON to the correct JsonPatrch object.
-        Utf8JsonReader reader = new(patchBin);
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            item.Patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
-        }
-    }
 }

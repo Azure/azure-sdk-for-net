@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI.Responses;
@@ -14,9 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP002")]
     public partial class AgentStructuredOutputsResponseItem : ResponseItem
     {
-        [Experimental("SCME0001")]
-        private JsonPatch _patch;
-
         /// <summary>
         /// The structured output captured during the response.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
