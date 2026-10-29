@@ -1,14 +1,16 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0 (2026-11-01)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded the default API version to `2026-11-01`.
 
-### Bugs Fixed
+Compared with the previous GA SDK release (`1.3.0`, API version `2025-05-01`), this release includes the following capabilities introduced in the `1.4.0` previews:
 
-### Other Changes
+- Create serverless search services with `SearchServiceSkuName.Serverless`.
+- Configure knowledge-retrieval billing through `SearchServiceData.KnowledgeRetrieval` and `SearchServicePatch.KnowledgeRetrieval`, using `SearchKnowledgeRetrieval.Free` or `SearchKnowledgeRetrieval.Standard`.
+- Represent stopped search services with `SearchServiceStatus.Stopped`.
 
 ## 1.4.0-beta.3 (2026-09-04)
 
