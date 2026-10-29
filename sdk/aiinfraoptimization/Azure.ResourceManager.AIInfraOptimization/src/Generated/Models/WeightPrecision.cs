@@ -52,12 +52,6 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> 8-bit floating point. </summary>
         public static WeightPrecision FP8 { get; } = new WeightPrecision(FP8Value);
 
-        /// <summary> 8-bit integer. </summary>
-        public static WeightPrecision INT8 { get; } = new WeightPrecision(INT8Value);
-
-        /// <summary> 4-bit integer. </summary>
-        public static WeightPrecision INT4 { get; } = new WeightPrecision(INT4Value);
-
         /// <summary> 4-bit floating point. </summary>
         public static WeightPrecision FP4 { get; } = new WeightPrecision(FP4Value);
 

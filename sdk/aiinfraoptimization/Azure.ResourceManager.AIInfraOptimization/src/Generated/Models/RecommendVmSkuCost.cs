@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="vmHourly"> The price per hour for a single virtual machine, in the stated currency. </param>
         /// <param name="deploymentHourly"> The price per hour for the whole deployment, in the stated currency. </param>
         /// <param name="source"> The source the price was resolved from. </param>
-        internal RecommendVmSkuCost(string currencyCode, double vmHourly, double deploymentHourly, CostSource source)
+        internal RecommendVmSkuCost(string currencyCode, double vmHourly, double deploymentHourly, RecommendVmSkuCostSource source)
         {
             CurrencyCode = currencyCode;
             VmHourly = vmHourly;
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="vmHourly"> The price per hour for a single virtual machine, in the stated currency. </param>
         /// <param name="deploymentHourly"> The price per hour for the whole deployment, in the stated currency. </param>
         /// <param name="source"> The source the price was resolved from. </param>
-        /// <param name="priceAsOf"> The date and time the price was observed. </param>
+        /// <param name="priceObservedOn"> The date and time the price was observed. </param>
         /// <param name="error"> The error that prevented subscription-scoped pricing from being resolved, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuCost(string currencyCode, double vmHourly, double deploymentHourly, CostSource source, DateTimeOffset? priceAsOf, RecommendVmSkuStageError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuCost(string currencyCode, double vmHourly, double deploymentHourly, RecommendVmSkuCostSource source, DateTimeOffset? priceObservedOn, RecommendVmSkuStageError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrencyCode = currencyCode;
             VmHourly = vmHourly;
             DeploymentHourly = deploymentHourly;
             Source = source;
-            PriceAsOf = priceAsOf;
+            PriceObservedOn = priceObservedOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         public double DeploymentHourly { get; }
 
         /// <summary> The source the price was resolved from. </summary>
-        public CostSource Source { get; }
-
-        /// <summary> The date and time the price was observed. </summary>
-        public DateTimeOffset? PriceAsOf { get; }
+        public RecommendVmSkuCostSource Source { get; }
 
         /// <summary> The error that prevented subscription-scoped pricing from being resolved, if any. </summary>
         public RecommendVmSkuStageError Error { get; }

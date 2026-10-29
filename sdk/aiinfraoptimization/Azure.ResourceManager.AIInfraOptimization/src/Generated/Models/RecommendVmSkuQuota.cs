@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuQuota"/>. </summary>
         /// <param name="status"> Whether subscription quota is sufficient for the requested deployment. </param>
-        internal RecommendVmSkuQuota(QuotaStatus status)
+        internal RecommendVmSkuQuota(RecommendVmSkuQuotaStatus status)
         {
             Status = status;
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="maxAvailableReplicaCount"> The maximum number of replicas that can be deployed with the available quota. </param>
         /// <param name="increase"> The quota increase required before this option can be deployed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuQuota(QuotaStatus status, string reason, RecommendVmSkuStageError error, int? maxAvailableReplicaCount, RecommendVmSkuQuotaIncrease increase, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuQuota(RecommendVmSkuQuotaStatus status, string reason, RecommendVmSkuStageError error, int? maxAvailableReplicaCount, RecommendVmSkuQuotaIncrease increase, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Reason = reason;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> Whether subscription quota is sufficient for the requested deployment. </summary>
-        public QuotaStatus Status { get; }
+        public RecommendVmSkuQuotaStatus Status { get; }
 
         /// <summary> A human-readable explanation of the quota status. </summary>
         public string Reason { get; }

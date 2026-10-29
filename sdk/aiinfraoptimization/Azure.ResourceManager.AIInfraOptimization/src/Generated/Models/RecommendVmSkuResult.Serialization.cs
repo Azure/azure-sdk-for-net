@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             }
             writer.WritePropertyName("options"u8);
             writer.WriteStartArray();
-            foreach (RecommendVmSkuOption item in Options)
+            foreach (AIInfraOptimizationRecommendVmSkuOptionConfig item in Options)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            IList<RecommendVmSkuOption> options0 = default;
+            IList<AIInfraOptimizationRecommendVmSkuOptionConfig> options0 = default;
             RecommendVmSkuSizing sizing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("options"u8))
                 {
-                    List<RecommendVmSkuOption> array = new List<RecommendVmSkuOption>();
+                    List<AIInfraOptimizationRecommendVmSkuOptionConfig> array = new List<AIInfraOptimizationRecommendVmSkuOptionConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecommendVmSkuOption.DeserializeRecommendVmSkuOption(item, options));
+                        array.Add(AIInfraOptimizationRecommendVmSkuOptionConfig.DeserializeAIInfraOptimizationRecommendVmSkuOptionConfig(item, options));
                     }
                     options0 = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecommendVmSkuResult(options0 ?? new ChangeTrackingList<RecommendVmSkuOption>(), sizing, additionalBinaryDataProperties);
+            return new RecommendVmSkuResult(options0 ?? new ChangeTrackingList<AIInfraOptimizationRecommendVmSkuOptionConfig>(), sizing, additionalBinaryDataProperties);
         }
     }
 }

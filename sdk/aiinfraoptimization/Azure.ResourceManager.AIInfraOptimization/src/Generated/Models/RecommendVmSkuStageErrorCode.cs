@@ -12,7 +12,7 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> The reason an optional subscription-scoped stage did not complete. </summary>
-    public readonly partial struct StageErrorCode : IEquatable<StageErrorCode>
+    public readonly partial struct RecommendVmSkuStageErrorCode : IEquatable<RecommendVmSkuStageErrorCode>
     {
         private readonly string _value;
         /// <summary> The stage exceeded its deadline. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The optional evaluation call budget was exhausted. </summary>
         private const string EvaluationBudgetExceededValue = "EvaluationBudgetExceeded";
 
-        /// <summary> Initializes a new instance of <see cref="StageErrorCode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuStageErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StageErrorCode(string value)
+        public RecommendVmSkuStageErrorCode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The stage exceeded its deadline. </summary>
-        public static StageErrorCode TimedOut { get; } = new StageErrorCode(TimedOutValue);
+        public static RecommendVmSkuStageErrorCode TimedOut { get; } = new RecommendVmSkuStageErrorCode(TimedOutValue);
 
         /// <summary> The stage was throttled. </summary>
-        public static StageErrorCode Throttled { get; } = new StageErrorCode(ThrottledValue);
+        public static RecommendVmSkuStageErrorCode Throttled { get; } = new RecommendVmSkuStageErrorCode(ThrottledValue);
 
         /// <summary> The service reached its active caller partition capacity. </summary>
-        public static StageErrorCode PartitionCapacityExceeded { get; } = new StageErrorCode(PartitionCapacityExceededValue);
+        public static RecommendVmSkuStageErrorCode PartitionCapacityExceeded { get; } = new RecommendVmSkuStageErrorCode(PartitionCapacityExceededValue);
 
         /// <summary> A downstream dependency call failed. </summary>
-        public static StageErrorCode DependencyError { get; } = new StageErrorCode(DependencyErrorValue);
+        public static RecommendVmSkuStageErrorCode DependencyError { get; } = new RecommendVmSkuStageErrorCode(DependencyErrorValue);
 
         /// <summary> Required downstream data was unavailable. </summary>
-        public static StageErrorCode DataUnavailable { get; } = new StageErrorCode(DataUnavailableValue);
+        public static RecommendVmSkuStageErrorCode DataUnavailable { get; } = new RecommendVmSkuStageErrorCode(DataUnavailableValue);
 
         /// <summary> The optional evaluation call budget was exhausted. </summary>
-        public static StageErrorCode EvaluationBudgetExceeded { get; } = new StageErrorCode(EvaluationBudgetExceededValue);
+        public static RecommendVmSkuStageErrorCode EvaluationBudgetExceeded { get; } = new RecommendVmSkuStageErrorCode(EvaluationBudgetExceededValue);
 
-        /// <summary> Determines if two <see cref="StageErrorCode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuStageErrorCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StageErrorCode left, StageErrorCode right) => left.Equals(right);
+        public static bool operator ==(RecommendVmSkuStageErrorCode left, RecommendVmSkuStageErrorCode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StageErrorCode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuStageErrorCode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StageErrorCode left, StageErrorCode right) => !left.Equals(right);
+        public static bool operator !=(RecommendVmSkuStageErrorCode left, RecommendVmSkuStageErrorCode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StageErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuStageErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StageErrorCode(string value) => new StageErrorCode(value);
+        public static implicit operator RecommendVmSkuStageErrorCode(string value) => new RecommendVmSkuStageErrorCode(value);
 
-        /// <summary> Converts a string to a <see cref="StageErrorCode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuStageErrorCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StageErrorCode?(string value) => value == null ? null : new StageErrorCode(value);
+        public static implicit operator RecommendVmSkuStageErrorCode?(string value) => value == null ? null : new RecommendVmSkuStageErrorCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StageErrorCode other && Equals(other);
+        public override bool Equals(object obj) => obj is RecommendVmSkuStageErrorCode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StageErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RecommendVmSkuStageErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

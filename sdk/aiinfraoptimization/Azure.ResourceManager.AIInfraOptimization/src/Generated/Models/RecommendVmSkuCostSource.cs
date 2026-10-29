@@ -12,7 +12,7 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> The source a price was resolved from. </summary>
-    public readonly partial struct CostSource : IEquatable<CostSource>
+    public readonly partial struct RecommendVmSkuCostSource : IEquatable<RecommendVmSkuCostSource>
     {
         private readonly string _value;
         /// <summary> The price came from the public Azure retail catalog. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The price is fixed illustrative data for a contract preview. </summary>
         private const string StaticPreviewValue = "StaticPreview";
 
-        /// <summary> Initializes a new instance of <see cref="CostSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuCostSource"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostSource(string value)
+        public RecommendVmSkuCostSource(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The price came from the public Azure retail catalog. </summary>
-        public static CostSource AzureRetail { get; } = new CostSource(AzureRetailValue);
+        public static RecommendVmSkuCostSource AzureRetail { get; } = new RecommendVmSkuCostSource(AzureRetailValue);
 
         /// <summary> The price came from the caller's Azure subscription. </summary>
-        public static CostSource AzureSubscription { get; } = new CostSource(AzureSubscriptionValue);
+        public static RecommendVmSkuCostSource AzureSubscription { get; } = new RecommendVmSkuCostSource(AzureSubscriptionValue);
 
         /// <summary> The price is fixed illustrative data for a contract preview. </summary>
-        public static CostSource StaticPreview { get; } = new CostSource(StaticPreviewValue);
+        public static RecommendVmSkuCostSource StaticPreview { get; } = new RecommendVmSkuCostSource(StaticPreviewValue);
 
-        /// <summary> Determines if two <see cref="CostSource"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuCostSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CostSource left, CostSource right) => left.Equals(right);
+        public static bool operator ==(RecommendVmSkuCostSource left, RecommendVmSkuCostSource right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CostSource"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuCostSource"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CostSource left, CostSource right) => !left.Equals(right);
+        public static bool operator !=(RecommendVmSkuCostSource left, RecommendVmSkuCostSource right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CostSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuCostSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostSource(string value) => new CostSource(value);
+        public static implicit operator RecommendVmSkuCostSource(string value) => new RecommendVmSkuCostSource(value);
 
-        /// <summary> Converts a string to a <see cref="CostSource"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuCostSource"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CostSource?(string value) => value == null ? null : new CostSource(value);
+        public static implicit operator RecommendVmSkuCostSource?(string value) => value == null ? null : new RecommendVmSkuCostSource(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CostSource other && Equals(other);
+        public override bool Equals(object obj) => obj is RecommendVmSkuCostSource other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CostSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RecommendVmSkuCostSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

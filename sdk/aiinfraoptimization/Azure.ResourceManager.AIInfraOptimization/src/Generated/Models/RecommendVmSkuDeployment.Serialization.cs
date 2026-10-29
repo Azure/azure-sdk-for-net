@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 return null;
             }
             int? replicaCount = default;
-            ProcurementOption? procurementOption = default;
+            RecommendVmSkuProcurementOption? procurementOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    procurementOption = new ProcurementOption(prop.Value.GetString());
+                    procurementOption = new RecommendVmSkuProcurementOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 throw new FormatException($"The model {nameof(RecommendVmSkuSubscriptionConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IncludeQuota))
+            if (Optional.IsDefined(ShouldIncludeQuota))
             {
                 writer.WritePropertyName("includeQuota"u8);
-                writer.WriteBooleanValue(IncludeQuota.Value);
+                writer.WriteBooleanValue(ShouldIncludeQuota.Value);
             }
-            if (Optional.IsDefined(IncludePlacement))
+            if (Optional.IsDefined(ShouldIncludePlacement))
             {
                 writer.WritePropertyName("includePlacement"u8);
-                writer.WriteBooleanValue(IncludePlacement.Value);
+                writer.WriteBooleanValue(ShouldIncludePlacement.Value);
             }
-            if (Optional.IsDefined(IncludePricing))
+            if (Optional.IsDefined(ShouldIncludePricing))
             {
                 writer.WritePropertyName("includePricing"u8);
-                writer.WriteBooleanValue(IncludePricing.Value);
+                writer.WriteBooleanValue(ShouldIncludePricing.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            bool? includeQuota = default;
-            bool? includePlacement = default;
-            bool? includePricing = default;
+            bool? shouldIncludeQuota = default;
+            bool? shouldIncludePlacement = default;
+            bool? shouldIncludePricing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    includeQuota = prop.Value.GetBoolean();
+                    shouldIncludeQuota = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("includePlacement"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    includePlacement = prop.Value.GetBoolean();
+                    shouldIncludePlacement = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("includePricing"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    includePricing = prop.Value.GetBoolean();
+                    shouldIncludePricing = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecommendVmSkuSubscriptionConfig(includeQuota, includePlacement, includePricing, additionalBinaryDataProperties);
+            return new RecommendVmSkuSubscriptionConfig(shouldIncludeQuota, shouldIncludePlacement, shouldIncludePricing, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> One ranked virtual machine size recommendation. </summary>
-    public partial class RecommendVmSkuOption : IJsonModel<RecommendVmSkuOption>
+    public partial class AIInfraOptimizationRecommendVmSkuOptionConfig : IJsonModel<AIInfraOptimizationRecommendVmSkuOptionConfig>
     {
-        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuOption"/> for deserialization. </summary>
-        internal RecommendVmSkuOption()
+        /// <summary> Initializes a new instance of <see cref="AIInfraOptimizationRecommendVmSkuOptionConfig"/> for deserialization. </summary>
+        internal AIInfraOptimizationRecommendVmSkuOptionConfig()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecommendVmSkuOption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIInfraOptimizationRecommendVmSkuOptionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecommendVmSkuOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecommendVmSkuOption(document.RootElement, options);
+                        return DeserializeAIInfraOptimizationRecommendVmSkuOptionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendVmSkuOption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIInfraOptimizationRecommendVmSkuOptionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecommendVmSkuOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAIInfraOptimizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendVmSkuOption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIInfraOptimizationRecommendVmSkuOptionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecommendVmSkuOption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecommendVmSkuOption IPersistableModel<RecommendVmSkuOption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIInfraOptimizationRecommendVmSkuOptionConfig IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecommendVmSkuOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RecommendVmSkuOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIInfraOptimizationRecommendVmSkuOptionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecommendVmSkuOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendVmSkuOption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIInfraOptimizationRecommendVmSkuOptionConfig)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 writer.WritePropertyName("placement"u8);
                 writer.WriteObjectValue(Placement, options);
             }
-            if (Optional.IsDefined(AzureMlRecommended))
+            if (Optional.IsDefined(IsAzureMlRecommended))
             {
                 writer.WritePropertyName("azureMlRecommended"u8);
-                writer.WriteBooleanValue(AzureMlRecommended.Value);
+                writer.WriteBooleanValue(IsAzureMlRecommended.Value);
             }
             if (Optional.IsDefined(Benchmark))
             {
@@ -138,24 +138,24 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecommendVmSkuOption IJsonModel<RecommendVmSkuOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIInfraOptimizationRecommendVmSkuOptionConfig IJsonModel<AIInfraOptimizationRecommendVmSkuOptionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecommendVmSkuOption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIInfraOptimizationRecommendVmSkuOptionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecommendVmSkuOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIInfraOptimizationRecommendVmSkuOptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendVmSkuOption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIInfraOptimizationRecommendVmSkuOptionConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecommendVmSkuOption(document.RootElement, options);
+            return DeserializeAIInfraOptimizationRecommendVmSkuOptionConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RecommendVmSkuOption DeserializeRecommendVmSkuOption(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIInfraOptimizationRecommendVmSkuOptionConfig DeserializeAIInfraOptimizationRecommendVmSkuOptionConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             RecommendVmSkuCost cost = default;
             RecommendVmSkuQuota quota = default;
             RecommendVmSkuPlacement placement = default;
-            bool? azureMlRecommended = default;
+            bool? isAzureMlRecommended = default;
             RecommendVmSkuBenchmark benchmark = default;
             Uri documentationUri = default;
             RecommendVmSkuPerformanceEstimate performanceEstimate = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    azureMlRecommended = prop.Value.GetBoolean();
+                    isAzureMlRecommended = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("benchmark"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecommendVmSkuOption(
+            return new AIInfraOptimizationRecommendVmSkuOptionConfig(
                 vmSize,
                 recommendationRank,
                 readiness,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 cost,
                 quota,
                 placement,
-                azureMlRecommended,
+                isAzureMlRecommended,
                 benchmark,
                 documentationUri,
                 performanceEstimate,

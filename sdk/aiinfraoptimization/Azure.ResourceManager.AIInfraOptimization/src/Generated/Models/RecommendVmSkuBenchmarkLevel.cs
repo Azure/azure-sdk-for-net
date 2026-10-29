@@ -12,7 +12,7 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> How closely benchmark evidence matches a recommended topology. </summary>
-    public readonly partial struct BenchmarkLevel : IEquatable<BenchmarkLevel>
+    public readonly partial struct RecommendVmSkuBenchmarkLevel : IEquatable<RecommendVmSkuBenchmarkLevel>
     {
         private readonly string _value;
         /// <summary> The accelerator family has benchmark evidence at a different topology. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The benchmark matches the recommended node and accelerator counts. </summary>
         private const string TopologyMatchedValue = "TopologyMatched";
 
-        /// <summary> Initializes a new instance of <see cref="BenchmarkLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuBenchmarkLevel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BenchmarkLevel(string value)
+        public RecommendVmSkuBenchmarkLevel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The accelerator family has benchmark evidence at a different topology. </summary>
-        public static BenchmarkLevel Benchmarked { get; } = new BenchmarkLevel(BenchmarkedValue);
+        public static RecommendVmSkuBenchmarkLevel Benchmarked { get; } = new RecommendVmSkuBenchmarkLevel(BenchmarkedValue);
 
         /// <summary> The benchmark matches the recommended node and accelerator counts. </summary>
-        public static BenchmarkLevel TopologyMatched { get; } = new BenchmarkLevel(TopologyMatchedValue);
+        public static RecommendVmSkuBenchmarkLevel TopologyMatched { get; } = new RecommendVmSkuBenchmarkLevel(TopologyMatchedValue);
 
-        /// <summary> Determines if two <see cref="BenchmarkLevel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuBenchmarkLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BenchmarkLevel left, BenchmarkLevel right) => left.Equals(right);
+        public static bool operator ==(RecommendVmSkuBenchmarkLevel left, RecommendVmSkuBenchmarkLevel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BenchmarkLevel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuBenchmarkLevel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BenchmarkLevel left, BenchmarkLevel right) => !left.Equals(right);
+        public static bool operator !=(RecommendVmSkuBenchmarkLevel left, RecommendVmSkuBenchmarkLevel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BenchmarkLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuBenchmarkLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenchmarkLevel(string value) => new BenchmarkLevel(value);
+        public static implicit operator RecommendVmSkuBenchmarkLevel(string value) => new RecommendVmSkuBenchmarkLevel(value);
 
-        /// <summary> Converts a string to a <see cref="BenchmarkLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuBenchmarkLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BenchmarkLevel?(string value) => value == null ? null : new BenchmarkLevel(value);
+        public static implicit operator RecommendVmSkuBenchmarkLevel?(string value) => value == null ? null : new RecommendVmSkuBenchmarkLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BenchmarkLevel other && Equals(other);
+        public override bool Equals(object obj) => obj is RecommendVmSkuBenchmarkLevel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BenchmarkLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RecommendVmSkuBenchmarkLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

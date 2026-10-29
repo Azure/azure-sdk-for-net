@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="rankingPreference"> The preference used to rank the recommended options. </param>
         /// <param name="maxDeploymentCostPerHour"> The deployment-wide hourly cost ceiling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuOptimization(RankingPreference? rankingPreference, RecommendVmSkuHourlyCost maxDeploymentCostPerHour, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuOptimization(RecommendVmSkuRankingPreference? rankingPreference, RecommendVmSkuHourlyCost maxDeploymentCostPerHour, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RankingPreference = rankingPreference;
             MaxDeploymentCostPerHour = maxDeploymentCostPerHour;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The preference used to rank the recommended options. </summary>
-        public RankingPreference? RankingPreference { get; set; }
+        public RecommendVmSkuRankingPreference? RankingPreference { get; set; }
 
         /// <summary> The deployment-wide hourly cost ceiling. </summary>
         public RecommendVmSkuHourlyCost MaxDeploymentCostPerHour { get; set; }

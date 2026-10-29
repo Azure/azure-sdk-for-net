@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="replicaCount"> The number of deployment replicas used for cost, quota, and placement calculations. </param>
         /// <param name="procurementOption"> The Azure virtual machine procurement option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuDeployment(int? replicaCount, ProcurementOption? procurementOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuDeployment(int? replicaCount, RecommendVmSkuProcurementOption? procurementOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicaCount = replicaCount;
             ProcurementOption = procurementOption;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         public int? ReplicaCount { get; set; }
 
         /// <summary> The Azure virtual machine procurement option. </summary>
-        public ProcurementOption? ProcurementOption { get; set; }
+        public RecommendVmSkuProcurementOption? ProcurementOption { get; set; }
     }
 }

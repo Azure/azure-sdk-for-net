@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="modelClass"> The model size class the benchmark covers, for example `70b`. </param>
         /// <param name="scenario"> The benchmark scenario, for example `Server` or `Offline`. </param>
         /// <param name="submitterCount"> The number of submitters that published results for this configuration. </param>
-        internal RecommendVmSkuBenchmark(BenchmarkLevel level, string modelClass, string scenario, int submitterCount)
+        internal RecommendVmSkuBenchmark(RecommendVmSkuBenchmarkLevel level, string modelClass, string scenario, int submitterCount)
         {
             Level = level;
             ModelClass = modelClass;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="p99TtftMs"> The 99th-percentile time to first token observed in the benchmark, in milliseconds. </param>
         /// <param name="p99TpotMs"> The 99th-percentile time per output token observed in the benchmark, in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuBenchmark(BenchmarkLevel level, string modelClass, string scenario, int submitterCount, string submissionId, string benchmarkModel, string submitter, string system, double? throughput, string throughputUnit, string software, string operatingSystem, string weightDataTypes, double? p99TtftMs, double? p99TpotMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuBenchmark(RecommendVmSkuBenchmarkLevel level, string modelClass, string scenario, int submitterCount, string submissionId, string benchmarkModel, string submitter, string system, double? throughput, string throughputUnit, string software, string operatingSystem, string weightDataTypes, double? p99TtftMs, double? p99TpotMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Level = level;
             ModelClass = modelClass;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> How closely the benchmark evidence matches the recommended topology. </summary>
-        public BenchmarkLevel Level { get; }
+        public RecommendVmSkuBenchmarkLevel Level { get; }
 
         /// <summary> The model size class the benchmark covers, for example `70b`. </summary>
         public string ModelClass { get; }

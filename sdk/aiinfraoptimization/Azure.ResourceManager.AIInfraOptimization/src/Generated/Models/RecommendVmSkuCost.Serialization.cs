@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             writer.WriteNumberValue(DeploymentHourly);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Optional.IsDefined(PriceAsOf))
+            if (Optional.IsDefined(PriceObservedOn))
             {
                 writer.WritePropertyName("priceAsOf"u8);
-                writer.WriteStringValue(PriceAsOf.Value, "O");
+                writer.WriteStringValue(PriceObservedOn.Value, "O");
             }
             if (Optional.IsDefined(Error))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             string currencyCode = default;
             double vmHourly = default;
             double deploymentHourly = default;
-            CostSource source = default;
-            DateTimeOffset? priceAsOf = default;
+            RecommendVmSkuCostSource source = default;
+            DateTimeOffset? priceObservedOn = default;
             RecommendVmSkuStageError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 }
                 if (prop.NameEquals("source"u8))
                 {
-                    source = new CostSource(prop.Value.GetString());
+                    source = new RecommendVmSkuCostSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("priceAsOf"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    priceAsOf = prop.Value.GetDateTimeOffset("O");
+                    priceObservedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 vmHourly,
                 deploymentHourly,
                 source,
-                priceAsOf,
+                priceObservedOn,
                 error,
                 additionalBinaryDataProperties);
         }

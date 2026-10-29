@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            PlacementStatus status = default;
+            RecommendVmSkuPlacementStatus status = default;
             string reason = default;
             RecommendVmSkuStageError error = default;
             IList<string> recommendedAvailabilityZones = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new PlacementStatus(prop.Value.GetString());
+                    status = new RecommendVmSkuPlacementStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuStageError"/>. </summary>
         /// <param name="code"> The reason the stage did not complete. </param>
         /// <param name="message"> A human-readable description of the error. </param>
-        internal RecommendVmSkuStageError(StageErrorCode code, string message)
+        internal RecommendVmSkuStageError(RecommendVmSkuStageErrorCode code, string message)
         {
             Code = code;
             Message = message;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="code"> The reason the stage did not complete. </param>
         /// <param name="message"> A human-readable description of the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuStageError(StageErrorCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuStageError(RecommendVmSkuStageErrorCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The reason the stage did not complete. </summary>
-        public StageErrorCode Code { get; }
+        public RecommendVmSkuStageErrorCode Code { get; }
 
         /// <summary> A human-readable description of the error. </summary>
         public string Message { get; }

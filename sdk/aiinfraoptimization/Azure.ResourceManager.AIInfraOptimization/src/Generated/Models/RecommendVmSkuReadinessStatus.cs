@@ -12,7 +12,7 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> The current actionability of a recommended option. </summary>
-    public readonly partial struct ReadinessStatus : IEquatable<ReadinessStatus>
+    public readonly partial struct RecommendVmSkuReadinessStatus : IEquatable<RecommendVmSkuReadinessStatus>
     {
         private readonly string _value;
         /// <summary> The option can be attempted without a known prerequisite action. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The option is not available to the subscription in the requested region. </summary>
         private const string UnavailableValue = "Unavailable";
 
-        /// <summary> Initializes a new instance of <see cref="ReadinessStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuReadinessStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReadinessStatus(string value)
+        public RecommendVmSkuReadinessStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The option can be attempted without a known prerequisite action. </summary>
-        public static ReadinessStatus ReadyToAttempt { get; } = new ReadinessStatus(ReadyToAttemptValue);
+        public static RecommendVmSkuReadinessStatus ReadyToAttempt { get; } = new RecommendVmSkuReadinessStatus(ReadyToAttemptValue);
 
         /// <summary> The option requires a quota increase before deployment. </summary>
-        public static ReadinessStatus QuotaIncreaseRequired { get; } = new ReadinessStatus(QuotaIncreaseRequiredValue);
+        public static RecommendVmSkuReadinessStatus QuotaIncreaseRequired { get; } = new RecommendVmSkuReadinessStatus(QuotaIncreaseRequiredValue);
 
         /// <summary> The option requires an external verification before deployment. </summary>
-        public static ReadinessStatus VerificationRequired { get; } = new ReadinessStatus(VerificationRequiredValue);
+        public static RecommendVmSkuReadinessStatus VerificationRequired { get; } = new RecommendVmSkuReadinessStatus(VerificationRequiredValue);
 
         /// <summary> The option is not available to the subscription in the requested region. </summary>
-        public static ReadinessStatus Unavailable { get; } = new ReadinessStatus(UnavailableValue);
+        public static RecommendVmSkuReadinessStatus Unavailable { get; } = new RecommendVmSkuReadinessStatus(UnavailableValue);
 
-        /// <summary> Determines if two <see cref="ReadinessStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuReadinessStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ReadinessStatus left, ReadinessStatus right) => left.Equals(right);
+        public static bool operator ==(RecommendVmSkuReadinessStatus left, RecommendVmSkuReadinessStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ReadinessStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuReadinessStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ReadinessStatus left, ReadinessStatus right) => !left.Equals(right);
+        public static bool operator !=(RecommendVmSkuReadinessStatus left, RecommendVmSkuReadinessStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ReadinessStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuReadinessStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReadinessStatus(string value) => new ReadinessStatus(value);
+        public static implicit operator RecommendVmSkuReadinessStatus(string value) => new RecommendVmSkuReadinessStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ReadinessStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuReadinessStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReadinessStatus?(string value) => value == null ? null : new ReadinessStatus(value);
+        public static implicit operator RecommendVmSkuReadinessStatus?(string value) => value == null ? null : new RecommendVmSkuReadinessStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReadinessStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is RecommendVmSkuReadinessStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ReadinessStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RecommendVmSkuReadinessStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

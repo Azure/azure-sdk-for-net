@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            RankingPreference? rankingPreference = default;
+            RecommendVmSkuRankingPreference? rankingPreference = default;
             RecommendVmSkuHourlyCost maxDeploymentCostPerHour = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                     {
                         continue;
                     }
-                    rankingPreference = new RankingPreference(prop.Value.GetString());
+                    rankingPreference = new RecommendVmSkuRankingPreference(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxDeploymentCostPerHour"u8))

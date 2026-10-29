@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            QuotaStatus status = default;
+            RecommendVmSkuQuotaStatus status = default;
             string reason = default;
             RecommendVmSkuStageError error = default;
             int? maxAvailableReplicaCount = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new QuotaStatus(prop.Value.GetString());
+                    status = new RecommendVmSkuQuotaStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))

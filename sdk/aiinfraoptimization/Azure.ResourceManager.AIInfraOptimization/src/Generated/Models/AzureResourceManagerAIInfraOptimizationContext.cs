@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.AIInfraOptimization
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AIInfraOptimizationRecommendVmSkuOptionConfig))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuAccelerator))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuBenchmark))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuContent))]
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.AIInfraOptimization
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuMemory))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuModel))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuOptimization))]
-    [ModelReaderWriterBuildable(typeof(RecommendVmSkuOption))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuPerformanceEstimate))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuPlacement))]
     [ModelReaderWriterBuildable(typeof(RecommendVmSkuQuota))]

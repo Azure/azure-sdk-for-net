@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuReadiness"/>. </summary>
         /// <param name="status"> The current actionability of the recommendation. </param>
         /// <param name="reason"> A human-readable explanation of the readiness status. </param>
-        internal RecommendVmSkuReadiness(ReadinessStatus status, string reason)
+        internal RecommendVmSkuReadiness(RecommendVmSkuReadinessStatus status, string reason)
         {
             Status = status;
             Reason = reason;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="status"> The current actionability of the recommendation. </param>
         /// <param name="reason"> A human-readable explanation of the readiness status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuReadiness(ReadinessStatus status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuReadiness(RecommendVmSkuReadinessStatus status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Reason = reason;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The current actionability of the recommendation. </summary>
-        public ReadinessStatus Status { get; }
+        public RecommendVmSkuReadinessStatus Status { get; }
 
         /// <summary> A human-readable explanation of the readiness status. </summary>
         public string Reason { get; }

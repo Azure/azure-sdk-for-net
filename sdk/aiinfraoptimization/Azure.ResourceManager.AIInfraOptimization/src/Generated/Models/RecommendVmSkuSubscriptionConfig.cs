@@ -22,25 +22,16 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuSubscriptionConfig"/>. </summary>
-        /// <param name="includeQuota"> Whether to evaluate subscription quota for candidate virtual machine sizes. </param>
-        /// <param name="includePlacement"> Whether to query placement scores for candidate virtual machine sizes with available quota. </param>
-        /// <param name="includePricing"> Whether to fetch subscription-scoped virtual machine pricing. </param>
+        /// <param name="shouldIncludeQuota"> Whether to evaluate subscription quota for candidate virtual machine sizes. </param>
+        /// <param name="shouldIncludePlacement"> Whether to query placement scores for candidate virtual machine sizes with available quota. </param>
+        /// <param name="shouldIncludePricing"> Whether to fetch subscription-scoped virtual machine pricing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuSubscriptionConfig(bool? includeQuota, bool? includePlacement, bool? includePricing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuSubscriptionConfig(bool? shouldIncludeQuota, bool? shouldIncludePlacement, bool? shouldIncludePricing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IncludeQuota = includeQuota;
-            IncludePlacement = includePlacement;
-            IncludePricing = includePricing;
+            ShouldIncludeQuota = shouldIncludeQuota;
+            ShouldIncludePlacement = shouldIncludePlacement;
+            ShouldIncludePricing = shouldIncludePricing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Whether to evaluate subscription quota for candidate virtual machine sizes. </summary>
-        public bool? IncludeQuota { get; set; }
-
-        /// <summary> Whether to query placement scores for candidate virtual machine sizes with available quota. </summary>
-        public bool? IncludePlacement { get; set; }
-
-        /// <summary> Whether to fetch subscription-scoped virtual machine pricing. </summary>
-        public bool? IncludePricing { get; set; }
     }
 }

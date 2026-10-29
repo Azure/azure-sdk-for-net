@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            StageErrorCode code = default;
+            RecommendVmSkuStageErrorCode code = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("code"u8))
                 {
-                    code = new StageErrorCode(prop.Value.GetString());
+                    code = new RecommendVmSkuStageErrorCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

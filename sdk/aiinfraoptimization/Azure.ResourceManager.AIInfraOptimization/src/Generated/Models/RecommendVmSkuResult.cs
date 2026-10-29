@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuResult"/>. </summary>
         /// <param name="options"> The recommended virtual machine size options, ordered from the best to the worst match. </param>
         /// <param name="sizing"> The resolved workload sizing shared by every option. </param>
-        internal RecommendVmSkuResult(IEnumerable<RecommendVmSkuOption> options, RecommendVmSkuSizing sizing)
+        internal RecommendVmSkuResult(IEnumerable<AIInfraOptimizationRecommendVmSkuOptionConfig> options, RecommendVmSkuSizing sizing)
         {
             Options = options.ToList();
             Sizing = sizing;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="options"> The recommended virtual machine size options, ordered from the best to the worst match. </param>
         /// <param name="sizing"> The resolved workload sizing shared by every option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuResult(IList<RecommendVmSkuOption> options, RecommendVmSkuSizing sizing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuResult(IList<AIInfraOptimizationRecommendVmSkuOptionConfig> options, RecommendVmSkuSizing sizing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Options = options;
             Sizing = sizing;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The recommended virtual machine size options, ordered from the best to the worst match. </summary>
-        public IList<RecommendVmSkuOption> Options { get; }
+        public IList<AIInfraOptimizationRecommendVmSkuOptionConfig> Options { get; }
 
         /// <summary> The resolved workload sizing shared by every option. </summary>
         public RecommendVmSkuSizing Sizing { get; }

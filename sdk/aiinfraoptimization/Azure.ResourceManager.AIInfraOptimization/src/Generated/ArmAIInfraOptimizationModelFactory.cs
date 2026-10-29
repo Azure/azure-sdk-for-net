@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="replicaCount"> The number of deployment replicas used for cost, quota, and placement calculations. </param>
         /// <param name="procurementOption"> The Azure virtual machine procurement option. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuDeployment"/> instance for mocking. </returns>
-        public static RecommendVmSkuDeployment RecommendVmSkuDeployment(int? replicaCount = default, ProcurementOption? procurementOption = default)
+        public static RecommendVmSkuDeployment RecommendVmSkuDeployment(int? replicaCount = default, RecommendVmSkuProcurementOption? procurementOption = default)
         {
             return new RecommendVmSkuDeployment(replicaCount, procurementOption, default);
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="rankingPreference"> The preference used to rank the recommended options. </param>
         /// <param name="maxDeploymentCostPerHour"> The deployment-wide hourly cost ceiling. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuOptimization"/> instance for mocking. </returns>
-        public static RecommendVmSkuOptimization RecommendVmSkuOptimization(RankingPreference? rankingPreference = default, RecommendVmSkuHourlyCost maxDeploymentCostPerHour = default)
+        public static RecommendVmSkuOptimization RecommendVmSkuOptimization(RecommendVmSkuRankingPreference? rankingPreference = default, RecommendVmSkuHourlyCost maxDeploymentCostPerHour = default)
         {
             return new RecommendVmSkuOptimization(rankingPreference, maxDeploymentCostPerHour, default);
         }
@@ -106,24 +106,24 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The subscription-scoped lookups to include in the recommendation. </summary>
-        /// <param name="includeQuota"> Whether to evaluate subscription quota for candidate virtual machine sizes. </param>
-        /// <param name="includePlacement"> Whether to query placement scores for candidate virtual machine sizes with available quota. </param>
-        /// <param name="includePricing"> Whether to fetch subscription-scoped virtual machine pricing. </param>
+        /// <param name="shouldIncludeQuota"> Whether to evaluate subscription quota for candidate virtual machine sizes. </param>
+        /// <param name="shouldIncludePlacement"> Whether to query placement scores for candidate virtual machine sizes with available quota. </param>
+        /// <param name="shouldIncludePricing"> Whether to fetch subscription-scoped virtual machine pricing. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuSubscriptionConfig"/> instance for mocking. </returns>
-        public static RecommendVmSkuSubscriptionConfig RecommendVmSkuSubscriptionConfig(bool? includeQuota = default, bool? includePlacement = default, bool? includePricing = default)
+        public static RecommendVmSkuSubscriptionConfig RecommendVmSkuSubscriptionConfig(bool? shouldIncludeQuota = default, bool? shouldIncludePlacement = default, bool? shouldIncludePricing = default)
         {
-            return new RecommendVmSkuSubscriptionConfig(includeQuota, includePlacement, includePricing, default);
+            return new RecommendVmSkuSubscriptionConfig(shouldIncludeQuota, shouldIncludePlacement, shouldIncludePricing, default);
         }
 
         /// <summary> The recommended Azure virtual machine sizes for the workload, with the sizing calculation they were derived from. </summary>
         /// <param name="options"> The recommended virtual machine size options, ordered from the best to the worst match. </param>
         /// <param name="sizing"> The resolved workload sizing shared by every option. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuResult"/> instance for mocking. </returns>
-        public static RecommendVmSkuResult RecommendVmSkuResult(IEnumerable<RecommendVmSkuOption> options = default, RecommendVmSkuSizing sizing = default)
+        public static RecommendVmSkuResult RecommendVmSkuResult(IEnumerable<AIInfraOptimizationRecommendVmSkuOptionConfig> options = default, RecommendVmSkuSizing sizing = default)
         {
-            options ??= new ChangeTrackingList<RecommendVmSkuOption>();
+            options ??= new ChangeTrackingList<AIInfraOptimizationRecommendVmSkuOptionConfig>();
 
-            return new RecommendVmSkuResult((options ?? new ChangeTrackingList<RecommendVmSkuOption>()).ToList(), sizing, default);
+            return new RecommendVmSkuResult((options ?? new ChangeTrackingList<AIInfraOptimizationRecommendVmSkuOptionConfig>()).ToList(), sizing, default);
         }
 
         /// <summary> One ranked virtual machine size recommendation. </summary>
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="cost"> The deployment cost for this option. </param>
         /// <param name="quota"> The subscription quota evidence for this option. Returned only when `subscriptionOptions.includeQuota` is set. </param>
         /// <param name="placement"> The capacity placement evidence for this option. Returned only when `subscriptionOptions.includePlacement` is set. </param>
-        /// <param name="azureMlRecommended"> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </param>
+        /// <param name="isAzureMlRecommended"> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </param>
         /// <param name="benchmark"> The external benchmark evidence selected for this option. </param>
         /// <param name="documentationUri"> A URL to the Azure documentation page for this virtual machine size. </param>
         /// <param name="performanceEstimate"> The advisory deployment throughput and per-request latency estimate for this option. </param>
-        /// <returns> A new <see cref="Models.RecommendVmSkuOption"/> instance for mocking. </returns>
-        public static RecommendVmSkuOption RecommendVmSkuOption(string vmSize = default, int recommendationRank = default, RecommendVmSkuReadiness readiness = default, RecommendVmSkuTopology topology = default, RecommendVmSkuCost cost = default, RecommendVmSkuQuota quota = default, RecommendVmSkuPlacement placement = default, bool? azureMlRecommended = default, RecommendVmSkuBenchmark benchmark = default, Uri documentationUri = default, RecommendVmSkuPerformanceEstimate performanceEstimate = default)
+        /// <returns> A new <see cref="Models.AIInfraOptimizationRecommendVmSkuOptionConfig"/> instance for mocking. </returns>
+        public static AIInfraOptimizationRecommendVmSkuOptionConfig AIInfraOptimizationRecommendVmSkuOptionConfig(string vmSize = default, int recommendationRank = default, RecommendVmSkuReadiness readiness = default, RecommendVmSkuTopology topology = default, RecommendVmSkuCost cost = default, RecommendVmSkuQuota quota = default, RecommendVmSkuPlacement placement = default, bool? isAzureMlRecommended = default, RecommendVmSkuBenchmark benchmark = default, Uri documentationUri = default, RecommendVmSkuPerformanceEstimate performanceEstimate = default)
         {
-            return new RecommendVmSkuOption(
+            return new AIInfraOptimizationRecommendVmSkuOptionConfig(
                 vmSize,
                 recommendationRank,
                 readiness,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
                 cost,
                 quota,
                 placement,
-                azureMlRecommended,
+                isAzureMlRecommended,
                 benchmark,
                 documentationUri,
                 performanceEstimate,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="status"> The current actionability of the recommendation. </param>
         /// <param name="reason"> A human-readable explanation of the readiness status. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuReadiness"/> instance for mocking. </returns>
-        public static RecommendVmSkuReadiness RecommendVmSkuReadiness(ReadinessStatus status = default, string reason = default)
+        public static RecommendVmSkuReadiness RecommendVmSkuReadiness(RecommendVmSkuReadinessStatus status = default, string reason = default)
         {
             return new RecommendVmSkuReadiness(status, reason, default);
         }
@@ -190,17 +190,17 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="vmHourly"> The price per hour for a single virtual machine, in the stated currency. </param>
         /// <param name="deploymentHourly"> The price per hour for the whole deployment, in the stated currency. </param>
         /// <param name="source"> The source the price was resolved from. </param>
-        /// <param name="priceAsOf"> The date and time the price was observed. </param>
+        /// <param name="priceObservedOn"> The date and time the price was observed. </param>
         /// <param name="error"> The error that prevented subscription-scoped pricing from being resolved, if any. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuCost"/> instance for mocking. </returns>
-        public static RecommendVmSkuCost RecommendVmSkuCost(string currencyCode = default, double vmHourly = default, double deploymentHourly = default, CostSource source = default, DateTimeOffset? priceAsOf = default, RecommendVmSkuStageError error = default)
+        public static RecommendVmSkuCost RecommendVmSkuCost(string currencyCode = default, double vmHourly = default, double deploymentHourly = default, RecommendVmSkuCostSource source = default, DateTimeOffset? priceObservedOn = default, RecommendVmSkuStageError error = default)
         {
             return new RecommendVmSkuCost(
                 currencyCode,
                 vmHourly,
                 deploymentHourly,
                 source,
-                priceAsOf,
+                priceObservedOn,
                 error,
                 default);
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="code"> The reason the stage did not complete. </param>
         /// <param name="message"> A human-readable description of the error. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuStageError"/> instance for mocking. </returns>
-        public static RecommendVmSkuStageError RecommendVmSkuStageError(StageErrorCode code = default, string message = default)
+        public static RecommendVmSkuStageError RecommendVmSkuStageError(RecommendVmSkuStageErrorCode code = default, string message = default)
         {
             return new RecommendVmSkuStageError(code, message, default);
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="maxAvailableReplicaCount"> The maximum number of replicas that can be deployed with the available quota. </param>
         /// <param name="increase"> The quota increase required before this option can be deployed. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuQuota"/> instance for mocking. </returns>
-        public static RecommendVmSkuQuota RecommendVmSkuQuota(QuotaStatus status = default, string reason = default, RecommendVmSkuStageError error = default, int? maxAvailableReplicaCount = default, RecommendVmSkuQuotaIncrease increase = default)
+        public static RecommendVmSkuQuota RecommendVmSkuQuota(RecommendVmSkuQuotaStatus status = default, string reason = default, RecommendVmSkuStageError error = default, int? maxAvailableReplicaCount = default, RecommendVmSkuQuotaIncrease increase = default)
         {
             return new RecommendVmSkuQuota(
                 status,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="error"> The error that prevented placement from being evaluated, if any. </param>
         /// <param name="recommendedAvailabilityZones"> The availability zones recommended for the deployment, in preference order. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuPlacement"/> instance for mocking. </returns>
-        public static RecommendVmSkuPlacement RecommendVmSkuPlacement(PlacementStatus status = default, string reason = default, RecommendVmSkuStageError error = default, IEnumerable<string> recommendedAvailabilityZones = default)
+        public static RecommendVmSkuPlacement RecommendVmSkuPlacement(RecommendVmSkuPlacementStatus status = default, string reason = default, RecommendVmSkuStageError error = default, IEnumerable<string> recommendedAvailabilityZones = default)
         {
             recommendedAvailabilityZones ??= new ChangeTrackingList<string>();
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="p99TtftMs"> The 99th-percentile time to first token observed in the benchmark, in milliseconds. </param>
         /// <param name="p99TpotMs"> The 99th-percentile time per output token observed in the benchmark, in milliseconds. </param>
         /// <returns> A new <see cref="Models.RecommendVmSkuBenchmark"/> instance for mocking. </returns>
-        public static RecommendVmSkuBenchmark RecommendVmSkuBenchmark(BenchmarkLevel level = default, string modelClass = default, string scenario = default, int submitterCount = default, string submissionId = default, string benchmarkModel = default, string submitter = default, string system = default, double? throughput = default, string throughputUnit = default, string software = default, string operatingSystem = default, string weightDataTypes = default, double? p99TtftMs = default, double? p99TpotMs = default)
+        public static RecommendVmSkuBenchmark RecommendVmSkuBenchmark(RecommendVmSkuBenchmarkLevel level = default, string modelClass = default, string scenario = default, int submitterCount = default, string submissionId = default, string benchmarkModel = default, string submitter = default, string system = default, double? throughput = default, string throughputUnit = default, string software = default, string operatingSystem = default, string weightDataTypes = default, double? p99TtftMs = default, double? p99TpotMs = default)
         {
             return new RecommendVmSkuBenchmark(
                 level,

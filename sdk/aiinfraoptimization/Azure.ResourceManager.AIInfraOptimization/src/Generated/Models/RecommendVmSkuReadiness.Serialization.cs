@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            ReadinessStatus status = default;
+            RecommendVmSkuReadinessStatus status = default;
             string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ReadinessStatus(prop.Value.GetString());
+                    status = new RecommendVmSkuReadinessStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))

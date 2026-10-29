@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> One ranked virtual machine size recommendation. </summary>
-    public partial class RecommendVmSkuOption
+    public partial class AIInfraOptimizationRecommendVmSkuOptionConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIInfraOptimizationRecommendVmSkuOptionConfig"/>. </summary>
         /// <param name="vmSize"> The Azure virtual machine size name, for example `Standard_NC24ads_A100_v4`. </param>
         /// <param name="recommendationRank"> The rank of this option within the response, where 1 is the best match. </param>
         /// <param name="readiness"> How ready this option is to deploy. </param>
         /// <param name="topology"> The deployment topology for this option. </param>
         /// <param name="cost"> The deployment cost for this option. </param>
-        internal RecommendVmSkuOption(string vmSize, int recommendationRank, RecommendVmSkuReadiness readiness, RecommendVmSkuTopology topology, RecommendVmSkuCost cost)
+        internal AIInfraOptimizationRecommendVmSkuOptionConfig(string vmSize, int recommendationRank, RecommendVmSkuReadiness readiness, RecommendVmSkuTopology topology, RecommendVmSkuCost cost)
         {
             VmSize = vmSize;
             RecommendationRank = recommendationRank;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             Cost = cost;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuOption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIInfraOptimizationRecommendVmSkuOptionConfig"/>. </summary>
         /// <param name="vmSize"> The Azure virtual machine size name, for example `Standard_NC24ads_A100_v4`. </param>
         /// <param name="recommendationRank"> The rank of this option within the response, where 1 is the best match. </param>
         /// <param name="readiness"> How ready this option is to deploy. </param>
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="cost"> The deployment cost for this option. </param>
         /// <param name="quota"> The subscription quota evidence for this option. Returned only when `subscriptionOptions.includeQuota` is set. </param>
         /// <param name="placement"> The capacity placement evidence for this option. Returned only when `subscriptionOptions.includePlacement` is set. </param>
-        /// <param name="azureMlRecommended"> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </param>
+        /// <param name="isAzureMlRecommended"> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </param>
         /// <param name="benchmark"> The external benchmark evidence selected for this option. </param>
         /// <param name="documentationUri"> A URL to the Azure documentation page for this virtual machine size. </param>
         /// <param name="performanceEstimate"> The advisory deployment throughput and per-request latency estimate for this option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuOption(string vmSize, int recommendationRank, RecommendVmSkuReadiness readiness, RecommendVmSkuTopology topology, RecommendVmSkuCost cost, RecommendVmSkuQuota quota, RecommendVmSkuPlacement placement, bool? azureMlRecommended, RecommendVmSkuBenchmark benchmark, Uri documentationUri, RecommendVmSkuPerformanceEstimate performanceEstimate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIInfraOptimizationRecommendVmSkuOptionConfig(string vmSize, int recommendationRank, RecommendVmSkuReadiness readiness, RecommendVmSkuTopology topology, RecommendVmSkuCost cost, RecommendVmSkuQuota quota, RecommendVmSkuPlacement placement, bool? isAzureMlRecommended, RecommendVmSkuBenchmark benchmark, Uri documentationUri, RecommendVmSkuPerformanceEstimate performanceEstimate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             RecommendationRank = recommendationRank;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             Cost = cost;
             Quota = quota;
             Placement = placement;
-            AzureMlRecommended = azureMlRecommended;
+            IsAzureMlRecommended = isAzureMlRecommended;
             Benchmark = benchmark;
             DocumentationUri = documentationUri;
             PerformanceEstimate = performanceEstimate;
@@ -80,9 +80,6 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> The capacity placement evidence for this option. Returned only when `subscriptionOptions.includePlacement` is set. </summary>
         public RecommendVmSkuPlacement Placement { get; }
-
-        /// <summary> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </summary>
-        public bool? AzureMlRecommended { get; }
 
         /// <summary> The external benchmark evidence selected for this option. </summary>
         public RecommendVmSkuBenchmark Benchmark { get; }

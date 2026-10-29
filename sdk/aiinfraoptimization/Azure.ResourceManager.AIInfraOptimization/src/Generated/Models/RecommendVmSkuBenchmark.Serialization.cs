@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 return null;
             }
-            BenchmarkLevel level = default;
+            RecommendVmSkuBenchmarkLevel level = default;
             string modelClass = default;
             string scenario = default;
             int submitterCount = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             {
                 if (prop.NameEquals("level"u8))
                 {
-                    level = new BenchmarkLevel(prop.Value.GetString());
+                    level = new RecommendVmSkuBenchmarkLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("modelClass"u8))

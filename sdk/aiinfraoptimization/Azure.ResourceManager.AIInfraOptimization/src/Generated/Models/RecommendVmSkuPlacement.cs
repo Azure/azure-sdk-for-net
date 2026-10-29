@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
 
         /// <summary> Initializes a new instance of <see cref="RecommendVmSkuPlacement"/>. </summary>
         /// <param name="status"> The outcome of the placement query. </param>
-        internal RecommendVmSkuPlacement(PlacementStatus status)
+        internal RecommendVmSkuPlacement(RecommendVmSkuPlacementStatus status)
         {
             Status = status;
             RecommendedAvailabilityZones = new ChangeTrackingList<string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <param name="error"> The error that prevented placement from being evaluated, if any. </param>
         /// <param name="recommendedAvailabilityZones"> The availability zones recommended for the deployment, in preference order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendVmSkuPlacement(PlacementStatus status, string reason, RecommendVmSkuStageError error, IList<string> recommendedAvailabilityZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendVmSkuPlacement(RecommendVmSkuPlacementStatus status, string reason, RecommendVmSkuStageError error, IList<string> recommendedAvailabilityZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Reason = reason;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> The outcome of the placement query. </summary>
-        public PlacementStatus Status { get; }
+        public RecommendVmSkuPlacementStatus Status { get; }
 
         /// <summary> A human-readable explanation of the placement status. </summary>
         public string Reason { get; }

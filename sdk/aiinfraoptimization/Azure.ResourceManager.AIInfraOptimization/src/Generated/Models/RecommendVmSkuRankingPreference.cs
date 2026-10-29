@@ -12,7 +12,7 @@ using Azure.ResourceManager.AIInfraOptimization;
 namespace Azure.ResourceManager.AIInfraOptimization.Models
 {
     /// <summary> The preference used to rank the recommended options. </summary>
-    public readonly partial struct RankingPreference : IEquatable<RankingPreference>
+    public readonly partial struct RecommendVmSkuRankingPreference : IEquatable<RecommendVmSkuRankingPreference>
     {
         private readonly string _value;
         /// <summary> Rank the options by deployment cost. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> Rank the options by inference latency. </summary>
         private const string LatencyValue = "Latency";
 
-        /// <summary> Initializes a new instance of <see cref="RankingPreference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendVmSkuRankingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RankingPreference(string value)
+        public RecommendVmSkuRankingPreference(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         }
 
         /// <summary> Rank the options by deployment cost. </summary>
-        public static RankingPreference Cost { get; } = new RankingPreference(CostValue);
+        public static RecommendVmSkuRankingPreference Cost { get; } = new RecommendVmSkuRankingPreference(CostValue);
 
         /// <summary> Rank the options by inference latency. </summary>
-        public static RankingPreference Latency { get; } = new RankingPreference(LatencyValue);
+        public static RecommendVmSkuRankingPreference Latency { get; } = new RecommendVmSkuRankingPreference(LatencyValue);
 
-        /// <summary> Determines if two <see cref="RankingPreference"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuRankingPreference"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RankingPreference left, RankingPreference right) => left.Equals(right);
+        public static bool operator ==(RecommendVmSkuRankingPreference left, RecommendVmSkuRankingPreference right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RankingPreference"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RecommendVmSkuRankingPreference"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RankingPreference left, RankingPreference right) => !left.Equals(right);
+        public static bool operator !=(RecommendVmSkuRankingPreference left, RecommendVmSkuRankingPreference right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RankingPreference"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuRankingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankingPreference(string value) => new RankingPreference(value);
+        public static implicit operator RecommendVmSkuRankingPreference(string value) => new RecommendVmSkuRankingPreference(value);
 
-        /// <summary> Converts a string to a <see cref="RankingPreference"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecommendVmSkuRankingPreference"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RankingPreference?(string value) => value == null ? null : new RankingPreference(value);
+        public static implicit operator RecommendVmSkuRankingPreference?(string value) => value == null ? null : new RecommendVmSkuRankingPreference(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RankingPreference other && Equals(other);
+        public override bool Equals(object obj) => obj is RecommendVmSkuRankingPreference other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RankingPreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RecommendVmSkuRankingPreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

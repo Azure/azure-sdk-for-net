@@ -1,4 +1,4 @@
-# Azure.ResourceManager.AIInfraOptimization management client library for .NET
+# Azure AI Infrastructure Optimization management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
