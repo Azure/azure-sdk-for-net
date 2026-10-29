@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -54,7 +55,8 @@ namespace Microsoft.Extensions.Azure
             collection.TryAddSingleton<AzureEventSourceLogForwarder>(provider =>
             {
                 var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-                var forwarder = new AzureEventSourceLogForwarder(loggerFactory);
+                var filterOptions = provider.GetService<IOptionsMonitor<LoggerFilterOptions>>();
+                var forwarder = new AzureEventSourceLogForwarder(loggerFactory, filterOptions);
                 if (enableLogForwarding)
                 {
                     forwarder.Start();
