@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> StaticMember Item. </summary>
     public partial class NetworkGroupStaticMemberData : ResourceData, IJsonModel<NetworkGroupStaticMemberData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkGroupStaticMemberData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkGroupStaticMemberData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkGroupStaticMemberData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkGroupStaticMemberData IPersistableModel<NetworkGroupStaticMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkGroupStaticMemberData IPersistableModel<NetworkGroupStaticMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkGroupStaticMemberData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkGroupStaticMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -108,7 +125,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkGroupStaticMemberData IJsonModel<NetworkGroupStaticMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkGroupStaticMemberData IJsonModel<NetworkGroupStaticMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkGroupStaticMemberData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkGroupStaticMemberData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkGroupStaticMemberData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkGroupStaticMemberData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

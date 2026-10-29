@@ -375,7 +375,7 @@ async function main(argv) {
         jobAttempts = JSON.parse(fs.readFileSync(options.attemptsFile, "utf8"));
       }
       catch {
-        console.warn("##vso[task.logissue type=warning]Latest shard attempts could not be verified; Summary will retain diagnostics but refuse publication.");
+        console.warn("##vso[task.logissue type=warning]Latest shard attempts could not be verified; Summary will remain incomplete and refuse publication.");
       }
     }
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,

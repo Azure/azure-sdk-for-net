@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ExpressRouteConnection list. </summary>
-    public partial class ExpressRouteConnectionList : IJsonModel<ExpressRouteConnectionList>
+    internal partial class ExpressRouteConnectionList : IJsonModel<ExpressRouteConnectionList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

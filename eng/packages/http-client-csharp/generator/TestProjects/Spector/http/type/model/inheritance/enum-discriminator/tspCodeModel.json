@@ -492,7 +492,6 @@
             "$id": "37",
             "name": "getExtensibleModel",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Receive model with extensible enum discriminator type.",
             "accessibility": "public",
             "parameters": [
@@ -591,7 +590,6 @@
             "$id": "41",
             "name": "putExtensibleModel",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Send model with extensible enum discriminator type.",
             "accessibility": "public",
             "parameters": [
@@ -731,7 +729,6 @@
             "$id": "47",
             "name": "getExtensibleModelMissingDiscriminator",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
             "parameters": [
@@ -830,7 +827,6 @@
             "$id": "51",
             "name": "getExtensibleModelWrongDiscriminator",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
             "parameters": [
@@ -929,7 +925,6 @@
             "$id": "55",
             "name": "getFixedModel",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Receive model with fixed enum discriminator type.",
             "accessibility": "public",
             "parameters": [
@@ -1028,7 +1023,6 @@
             "$id": "59",
             "name": "putFixedModel",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Send model with fixed enum discriminator type.",
             "accessibility": "public",
             "parameters": [
@@ -1168,7 +1162,6 @@
             "$id": "65",
             "name": "getFixedModelMissingDiscriminator",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
             "parameters": [
@@ -1267,7 +1260,6 @@
             "$id": "69",
             "name": "getFixedModelWrongDiscriminator",
             "isExactName": false,
-            "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
             "parameters": [

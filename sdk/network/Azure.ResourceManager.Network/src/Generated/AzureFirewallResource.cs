@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_azureFirewallsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_azureFirewallsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<AzureFirewallPacketCaptureResult> operation = new NetworkArmOperation<AzureFirewallPacketCaptureResult>(
                     new AzureFirewallPacketCaptureResultOperationSource(),
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to run packet capture on azure firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AzureFirewallPacketCaptureResult> PacketCaptureOperation(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AzureFirewallPacketCaptureResult> PacketCaptureOperation(WaitUntil waitUntil, FirewallPacketCaptureRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _azureFirewallsRestClient.CreatePacketCaptureOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FirewallPacketCaptureRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<AzureFirewallPacketCaptureResult> operation = new NetworkArmOperation<AzureFirewallPacketCaptureResult>(
                     new AzureFirewallPacketCaptureResultOperationSource(),

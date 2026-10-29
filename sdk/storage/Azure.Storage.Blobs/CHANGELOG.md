@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed client-side encryption v1 decryption of ranged downloads so the 16-byte IV is fully read even when the ciphertext stream returns short reads, and a truncated IV now fails instead of silently corrupting plaintext.
 - Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
   - `BlobBaseClient.GenerateSasUri(...)`
   - `BlobBaseClient.GenerateUserDelegationSasUri(...)`

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsProperties"/>. </summary>
-        /// <param name="networkWatcherFlowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NetworkWatcherFlowAnalyticsConfiguration = networkWatcherFlowAnalyticsConfiguration;
+            TrafficAnalyticsConfiguration = trafficAnalyticsConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get; set; }
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration { get; set; }
     }
 }

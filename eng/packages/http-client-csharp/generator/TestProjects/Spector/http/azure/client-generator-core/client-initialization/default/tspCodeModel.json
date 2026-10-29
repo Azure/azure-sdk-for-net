@@ -336,7 +336,6 @@
             "$id": "29",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "HeaderParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -473,7 +472,6 @@
             "$id": "39",
             "name": "withBody",
             "isExactName": false,
-            "resourceName": "HeaderParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -686,7 +684,6 @@
             "$id": "51",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "MultipleParams",
             "accessibility": "public",
             "parameters": [
               {
@@ -869,7 +866,6 @@
             "$id": "65",
             "name": "withBody",
             "isExactName": false,
-            "resourceName": "MultipleParams",
             "accessibility": "public",
             "parameters": [
               {
@@ -1111,7 +1107,6 @@
             "$id": "79",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "MixedParams",
             "accessibility": "public",
             "parameters": [
               {
@@ -1296,7 +1291,6 @@
             "$id": "93",
             "name": "withBody",
             "isExactName": false,
-            "resourceName": "MixedParams",
             "accessibility": "public",
             "parameters": [
               {
@@ -1557,7 +1551,6 @@
             "$id": "109",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -1697,7 +1690,6 @@
             "$id": "119",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -1823,7 +1815,6 @@
             "$id": "125",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -1945,7 +1936,6 @@
             "$id": "133",
             "name": "withAliasedName",
             "isExactName": false,
-            "resourceName": "ParamAlias",
             "accessibility": "public",
             "parameters": [
               {
@@ -2037,7 +2027,6 @@
             "$id": "139",
             "name": "withOriginalName",
             "isExactName": false,
-            "resourceName": "ParamAlias",
             "accessibility": "public",
             "parameters": [
               {
@@ -2159,7 +2148,6 @@
             "$id": "147",
             "name": "withQuery",
             "isExactName": false,
-            "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -2296,7 +2284,6 @@
             "$id": "157",
             "name": "getStandalone",
             "isExactName": false,
-            "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
               {
@@ -2419,7 +2406,6 @@
             "$id": "163",
             "name": "deleteStandalone",
             "isExactName": false,
-            "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
               {
