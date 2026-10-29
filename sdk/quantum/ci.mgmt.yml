@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/quantum/Azure.Provisioning.Quantum
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -18,3 +19,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Quantum
       safeName: AzureResourceManagerQuantum
+    - name: Azure.Provisioning.Quantum
+      safeName: AzureProvisioningQuantum
