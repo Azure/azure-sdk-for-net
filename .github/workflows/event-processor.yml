@@ -268,7 +268,9 @@ jobs:
                 const filename = `${packagePath}/CHANGELOG.md`;
                 if (seen.has(filename)) throw new Error('Duplicate changelog entry.');
                 seen.add(filename);
-                const { stdout: content } = await execFile('unzip', ['-p', zip, entry], { maxBuffer: 1024 * 1024 });
+                const { stdout: generatedContent } = await execFile('unzip', ['-p', zip, entry], { maxBuffer: 1024 * 1024 });
+                // GitHub's Git API bypasses .gitattributes; normalize Windows tool output before comparing or committing.
+                const content = generatedContent.replace(/\r\n/g, '\n');
                 const { data: current } = await github.rest.repos.getContent({ ...repo, path: filename, ref: sourceSha });
                 if (current.type !== 'file' || current.encoding !== 'base64') throw new Error('Expected existing changelog file.');
                 if (Buffer.from(current.content, 'base64').toString('utf8') === content) continue;

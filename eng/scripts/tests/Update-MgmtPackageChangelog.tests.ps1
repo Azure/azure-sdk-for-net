@@ -11,6 +11,10 @@ Describe 'Trusted AutoPR changelog writeback' {
 const assert = require('node:assert/strict');
 const { script, scenario } = JSON.parse(require('node:fs').readFileSync(0, 'utf8'));
 const filename = 'sdk/netapp/Azure.ResourceManager.NetApp/CHANGELOG.md';
+const normalizedContent = 'generated changelog\n\nHistorical entry\n';
+const lineEndingScenario = ['crlf', 'mixed-eol-noop', 'repair-crlf'].includes(scenario);
+const generatedContent = lineEndingScenario ? 'generated changelog\r\n\r\nHistorical entry\n' : 'generated changelog';
+const currentContent = scenario === 'mixed-eol-noop' ? normalizedContent : scenario === 'repair-crlf' ? normalizedContent.replace(/\n/g, '\r\n') : scenario === 'noop' ? 'generated changelog' : 'old changelog';
 const sourceSha = 'a'.repeat(40);
 const pr = { state: 'open', head: { sha: sourceSha, ref: 'sdkauto/test', repo: { full_name: 'Azure/azure-sdk-for-net' } } };
 const check = { app: { id: 9426 }, conclusion: 'success', name: 'net - pullrequest (Build Generate AutoPR management changelogs)',
@@ -37,7 +41,7 @@ let reads = 0;
 const github = { paginate: async () => [{ filename: 'sdk/netapp/Azure.ResourceManager.NetApp/api/test.cs', status: 'modified' }], rest: {
     pulls: { get: async () => { reads++; return { data: scenario === 'race' && reads > 1 ? { ...pr, head: { ...pr.head, sha: 'b'.repeat(40) } } : pr }; }, listFiles: {} },
     repos: { getContent: async p => { assert.equal(p.path, filename); assert.equal(p.ref, sourceSha);
-        return { data: { type: 'file', encoding: 'base64', content: Buffer.from(scenario === 'noop' ? 'generated changelog' : 'old changelog').toString('base64') } }; } },
+        return { data: { type: 'file', encoding: 'base64', content: Buffer.from(currentContent).toString('base64') } }; } },
     git: { getCommit: async () => ({ data: { tree: { sha: 'oldtree' } } }),
         createTree: async p => { trees.push(p); return { data: { sha: 'newtree' } }; },
         createCommit: async p => { assert.deepEqual(p.parents, [sourceSha]); return { data: { sha: 'newcommit' } }; },
@@ -53,7 +57,7 @@ function safeRequire(name) {
     if (name === 'node:child_process') {
         const execFile = () => { throw new Error('Expected promisified execFile'); };
         execFile[require('node:util').promisify.custom] = async (cmd, args) => {
-            assert.equal(cmd, 'unzip'); return { stdout: args[0] === '-Z1' ? entries : 'generated changelog', stderr: '' };
+            assert.equal(cmd, 'unzip'); return { stdout: args[0] === '-Z1' ? entries : generatedContent, stderr: '' };
         };
         return { execFile };
     }
@@ -70,10 +74,11 @@ function safeRequire(name) {
     const rejects = ['publisher', 'definition', 'failed-tool', 'artifact-source', 'download-host', 'unrelated-package', 'duplicate'];
     if (rejects.includes(scenario)) assert.ok(error, 'unsafe input must be rejected');
     else if (error) throw error;
-    assert.equal(updates.length, ['success', 'workflow-run', 'dispatch'].includes(scenario) ? 1 : 0);
-    if (['success', 'workflow-run', 'dispatch'].includes(scenario)) {
+    const shouldUpdate = ['success', 'workflow-run', 'dispatch', 'crlf', 'repair-crlf'].includes(scenario);
+    assert.equal(updates.length, shouldUpdate ? 1 : 0);
+    if (shouldUpdate) {
         assert.equal(updates[0].force, false); assert.equal(updates[0].ref, 'heads/sdkauto/test');
-        assert.deepEqual(trees[0].tree, [{ path: filename, mode: '100644', type: 'blob', content: 'generated changelog' }]);
+        assert.deepEqual(trees[0].tree, [{ path: filename, mode: '100644', type: 'blob', content: lineEndingScenario ? normalizedContent : generatedContent }]);
     }
     console.log('passed: ' + scenario);
 })().catch(e => { console.error(e); process.exitCode = 1; });
@@ -85,7 +90,8 @@ function safeRequire(name) {
                 @{ Scenario = 'non-autopr' }, @{ Scenario = 'publisher' }, @{ Scenario = 'definition' },
                 @{ Scenario = 'failed-tool' }, @{ Scenario = 'artifact-source' }, @{ Scenario = 'download-host' },
                 @{ Scenario = 'unrelated-package' }, @{ Scenario = 'duplicate' }, @{ Scenario = 'patch-only' },
-                @{ Scenario = 'noop' }, @{ Scenario = 'race' }
+                @{ Scenario = 'noop' }, @{ Scenario = 'race' },
+                @{ Scenario = 'crlf' }, @{ Scenario = 'mixed-eol-noop' }, @{ Scenario = 'repair-crlf' }
         ) {
                 param($Scenario)
                 $writebackScript | Should -Not -BeNullOrEmpty
