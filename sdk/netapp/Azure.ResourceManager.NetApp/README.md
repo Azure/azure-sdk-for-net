@@ -1,6 +1,6 @@
 # Microsoft Azure NetApp management client library for .NET
 
-<!-- CI test fixture (update 2): verify another push triggers management changelog generation without canceling the first run. Not intended for merge. -->
+<!-- CI test fixture (update 3): rerun changelog generation with unchanged APIs to verify obsolete entries are not duplicated. Not intended for merge. -->
 
 Microsoft Azure NetApp Files makes it easy for enterprise line-of-business (LOB) and storage professionals to migrate and run complex, file-based applications with no code change. Microsoft Azure NetApp Files is widely used as the underlying shared file-storage service in various scenarios. These include migration (lift and shift) of POSIX-compliant Linux and Windows applications, SAP HANA, databases, high-performance compute (HPC) infrastructure and apps, and enterprise web applications.
 
