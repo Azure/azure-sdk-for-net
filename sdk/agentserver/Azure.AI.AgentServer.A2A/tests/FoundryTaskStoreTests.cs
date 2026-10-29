@@ -82,6 +82,176 @@ public class FoundryTaskStoreTests
         }
     }
 
+        [Test]
+        public async Task SmallPagesReadOnlySelectedSnapshotsAndPreserveNativeProjection()
+        {
+            var backing = await FoundryStateStore.GetOrCreateAsync("paging");
+            var tracking = new TrackingStateStore(backing);
+            using var store = new FoundryTaskStore(tracking);
+            var native = new InMemoryTaskStore();
+            for (int index = 0; index < 105; index++)
+            {
+                var task = CreateTask($"t{index:D3}");
+                task.ContextId = index % 2 == 0 ? "even" : "odd";
+                task.Status.Timestamp = DateTimeOffset.UnixEpoch.AddSeconds(index);
+                task.Status.State = index % 3 == 0 ? TaskState.Working : TaskState.Completed;
+                task.Artifacts = [new Artifact { ArtifactId = $"a{index}", Parts = [Part.FromText(new string('x', 10000))] }];
+                task.History =
+                [
+                    new Message { MessageId = $"m{index}-1", Role = Role.User, Parts = [Part.FromText("first")] },
+                    new Message { MessageId = $"m{index}-2", Role = Role.Agent, Parts = [Part.FromText("second")] },
+                ];
+                await store.SaveTaskAsync(task.Id, task);
+                await native.SaveTaskAsync(task.Id, task);
+            }
+
+            foreach (var projection in new[]
+            {
+                new ListTasksRequest { ContextId = "even", Status = TaskState.Completed, PageSize = 1, IncludeArtifacts = true, HistoryLength = 1 },
+                new ListTasksRequest { PageSize = 1, IncludeArtifacts = false, HistoryLength = 0 },
+                new ListTasksRequest { PageSize = 1, IncludeArtifacts = true },
+            })
+            {
+                var request = projection;
+                request.StatusTimestampAfter = DateTimeOffset.UnixEpoch.AddSeconds(10);
+                for (int page = 0; page < 2; page++)
+                {
+                    tracking.Reads = 0;
+                    var actual = await store.ListTasksAsync(request);
+                    var expected = await native.ListTasksAsync(request);
+                    Assert.That(JsonSerializer.Serialize(actual, A2AJsonUtilities.DefaultOptions),
+                        Is.EqualTo(JsonSerializer.Serialize(expected, A2AJsonUtilities.DefaultOptions)));
+                    Assert.That(tracking.Reads, Is.EqualTo(1));
+                    request.PageToken = actual.NextPageToken;
+                }
+            }
+
+            tracking.Reads = 0;
+            var empty = await store.ListTasksAsync(new() { ContextId = "absent" });
+            Assert.That(empty.Tasks, Is.Empty);
+            Assert.That(tracking.Reads, Is.Zero);
+        }
+
+        [Test]
+        public async Task ListingFallsBackForLegacySnapshotsWithoutSummaryTags()
+        {
+            var backing = await FoundryStateStore.GetOrCreateAsync("legacy");
+            var tracking = new TrackingStateStore(backing);
+            using var store = new FoundryTaskStore(tracking);
+            await store.SaveTaskAsync("t1", CreateTask("t1"));
+            string key = tracking.LastKey!;
+            var item = await backing.GetItemAsync(key);
+            await backing.SetItemAsync(key, item!.Value,
+                tags: new Dictionary<string, string> { ["a2a-owner"] = item.Tags["a2a-owner"] });
+            tracking.Reads = 0;
+            var page = await store.ListTasksAsync(new() { PageSize = 1 });
+            Assert.That(page.Tasks.Single().Id, Is.EqualTo("t1"));
+            Assert.That(tracking.Reads, Is.EqualTo(1));
+        }
+
+    [Test]
+    public async Task ListingSummariesTrackUpdatesAndValidateTaskIdentity()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("updated-summary");
+        var tracking = new TrackingStateStore(backing);
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask("t1");
+        await store.SaveTaskAsync(task.Id, task);
+        task.ContextId = "changed";
+        task.Status.State = TaskState.Working;
+        task.Status.Timestamp = null;
+        await store.SaveTaskAsync(task.Id, task);
+        tracking.Reads = 0;
+        Assert.That((await store.ListTasksAsync(new() { Status = TaskState.Completed })).Tasks, Is.Empty);
+        Assert.That(tracking.Reads, Is.Zero);
+        Assert.That((await store.ListTasksAsync(new() { ContextId = "changed", Status = TaskState.Working })).Tasks.Single().Id, Is.EqualTo("t1"));
+        Assert.That((await store.ListTasksAsync(new() { StatusTimestampAfter = DateTimeOffset.UnixEpoch })).Tasks, Is.Empty);
+
+        var item = await backing.GetItemAsync(tracking.LastKey!);
+        var tags = new Dictionary<string, string>(item!.Tags)
+        {
+            ["a2a-list"] = Convert.ToBase64String(JsonSerializer.SerializeToUtf8Bytes(CreateTask("wrong-id"), A2AJsonUtilities.DefaultOptions)),
+        };
+        await backing.SetItemAsync(item.Key, item.Value, tags);
+        tracking.Reads = 0;
+        Assert.ThrowsAsync<InvalidDataException>(async () => await store.ListTasksAsync(new()));
+        Assert.That(tracking.Reads, Is.Zero);
+    }
+
+    [Test]
+    public async Task SnapshotDisappearingDuringHydrationIsSkippedWithoutRefillingThePage()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("disappearing");
+        var tracking = new TrackingStateStore(backing);
+        using var store = new FoundryTaskStore(tracking);
+        await store.SaveTaskAsync("t1", CreateTask("t1"));
+        tracking.MissingKey = tracking.LastKey;
+        var result = await store.ListTasksAsync(new() { PageSize = 1 });
+        Assert.That(result.Tasks, Is.Empty);
+        Assert.That(result.PageSize, Is.Zero);
+        Assert.That(result.TotalSize, Is.EqualTo(1));
+        Assert.That(tracking.Reads, Is.EqualTo(1));
+    }
+
+        private sealed class TrackingStateStore(FoundryStateStore inner) : FoundryStateStore
+        {
+            public int Reads { get; set; }
+            public string? LastKey { get; private set; }
+            public string? MissingKey { get; set; }
+            public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
+            {
+                Reads++;
+                return key == MissingKey ? Task.FromResult<StateStoreItem?>(null) : inner.GetItemAsync(key, cancellationToken);
+            }
+
+            public override Task<StateStoreItemRef> SetItemAsync(
+                string key, IDictionary<string, BinaryData> value, IReadOnlyDictionary<string, string>? tags = null,
+                ETag ifMatch = default, bool requireExists = false, CancellationToken cancellationToken = default)
+            {
+                LastKey = key;
+                return inner.SetItemAsync(key, value, tags, ifMatch, requireExists, cancellationToken);
+            }
+
+            public bool RejectTagQueries { get; set; }
+
+            public override Task<StateStoreItemKeyPage> ListKeysAsync(
+                IReadOnlyDictionary<string, string>? tags = null, int? limit = null, string? after = null,
+                string? before = null, ListRequestOrder order = ListRequestOrder.Desc, CancellationToken cancellationToken = default)
+            {
+                if (RejectTagQueries && tags is not null) { throw new InvalidOperationException("Tag queries are not supported."); }
+                return inner.ListKeysAsync(tags, limit, after, before, order, cancellationToken);
+            }
+        }
+
+    [Test]
+    public async Task ListingFiltersCallerSummariesBeforeHydratingWithoutTagQueries()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("owner-listing");
+        var tracking = new TrackingStateStore(backing) { RejectTagQueries = true };
+        using var store = new FoundryTaskStore(tracking);
+        var previous = A2ATaskScope.Current;
+        try
+        {
+            A2ATaskScope.Current = new("tenant", "alice");
+            await store.SaveTaskAsync("alice-task", CreateTask("alice-task"));
+            A2ATaskScope.Current = new("tenant", "bob");
+            await store.SaveTaskAsync("bob-task", CreateTask("bob-task"));
+            var other = await backing.GetItemAsync(tracking.LastKey!);
+            await backing.SetItemAsync(other!.Key, other.Value,
+                new Dictionary<string, string>(other.Tags) { ["a2a-list"] = "not-base64" });
+            A2ATaskScope.Current = new("tenant", "alice");
+            tracking.Reads = 0;
+            var listed = await store.ListTasksAsync(new() { PageSize = 1 });
+            Assert.That(listed.Tasks.Single().Id, Is.EqualTo("alice-task"));
+            Assert.That(tracking.Reads, Is.EqualTo(1));
+        }
+        finally
+        {
+            A2ATaskScope.Current = previous;
+            await backing.DeleteAsync();
+        }
+    }
+
     internal static AgentTask CreateTask(string id) => new()
     {
         Id = id,

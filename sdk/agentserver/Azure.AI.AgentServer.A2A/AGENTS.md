@@ -8,7 +8,7 @@ are documented in the [README](README.md).
 
 This library hosts native A2A applications in Foundry. The application owns the
 Agent Card and agent execution logic. The native A2A library owns protocol
-models, JSON-RPC validation, serialization, task lifecycle, and SSE transport.
+models, JSON-RPC validation, serialization, task lifecycle, and transport.
 This package owns the Foundry hosting integration, request context, task-store
 selection, and semantic tracing.
 
@@ -32,7 +32,7 @@ Canonical routes are `POST /a2a` and
 `GET /a2a/.well-known/agent-card.json`. Do not add alternate protocol routes,
 silently enable another binding, or advertise unsupported features.
 Preserve native JSON-RPC results and errors, including errors returned with HTTP
-200. Do not buffer a complete SSE response.
+200.
 
 ## Source layout and public API
 
@@ -72,7 +72,7 @@ imply executor recovery or durable subscriptions.
 Native operation spans describe the Agent Card; hosted invocation spans describe
 the deployment. Keep spans open through complete response transmission and
 propagate cancellation. Response observation must remain bounded, handle split
-SSE framing, and forward the original response bytes unchanged.
+transport frames, and forward the original response bytes unchanged.
 
 Do not record prompts, artifacts, application metadata, credentials, or tokens in
 semantic spans. Use structured `ILogger` diagnostics for failures.
@@ -80,9 +80,9 @@ semantic spans. Use structured `ILogger` diagnostics for failures.
 ## Tests and examples
 
 - Public argument contracts need unit tests. Endpoint, response-header, error,
-  and streaming changes require tests through the real ASP.NET Core pipeline.
+  and response-transmission changes require tests through the real ASP.NET Core pipeline.
 - Test the canonical route surface, explicit handler/store preservation,
-  caller isolation, task serialization, streaming completion, and trace lifetime.
+  caller isolation, task serialization, response completion, and trace lifetime.
 - Every sample handler requires a compiled snippet and a corresponding HTTP
   test in `tests/SampleEndToEndTests.cs`. Edit snippet source, then regenerate
   Markdown with the repository snippet script.

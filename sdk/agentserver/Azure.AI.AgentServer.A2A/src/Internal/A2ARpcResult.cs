@@ -20,8 +20,24 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
 
     public async Task ExecuteAsync(HttpContext httpContext)
     {
+        Stream originalBody = httpContext.Request.Body;
+        using var body = new MemoryStream();
+        await originalBody.CopyToAsync(body, httpContext.RequestAborted).ConfigureAwait(false);
+        body.Position = 0;
+        httpContext.Request.Body = body;
+        try
+        {
+            await ExecuteRequestAsync(httpContext).ConfigureAwait(false);
+        }
+        finally
+        {
+            httpContext.Request.Body = originalBody;
+        }
+    }
+
+    private async Task ExecuteRequestAsync(HttpContext httpContext)
+    {
         var request = httpContext.Request;
-        request.EnableBuffering();
         Dictionary<string, object?> tags = await ReadTagsAsync(request).ConfigureAwait(false);
         string? method = tags.GetValueOrDefault("a2a.method.name") as string;
         bool invocation = FoundryEnvironment.IsHosted && method is "SendMessage" or "SendStreamingMessage";

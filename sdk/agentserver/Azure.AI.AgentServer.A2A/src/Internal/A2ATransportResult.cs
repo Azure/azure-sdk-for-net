@@ -14,14 +14,7 @@ internal sealed class A2ATransportResult(Func<ValueTask<object?>> next) : IResul
     {
         httpContext.Response.OnStarting(() =>
         {
-            var response = httpContext.Response;
-            if (response.StatusCode >= 400 && !response.Headers.ContainsKey(PlatformHeaders.ErrorSource))
-            {
-                response.Headers[PlatformHeaders.ErrorSource] = response.StatusCode < 500
-                    ? PlatformHeaders.ErrorSourceUser
-                    : PlatformHeaders.ErrorSourceUpstream;
-            }
-
+            ClassifyHttpError(httpContext.Response);
             return Task.CompletedTask;
         });
 
@@ -66,6 +59,17 @@ internal sealed class A2ATransportResult(Func<ValueTask<object?>> next) : IResul
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await httpContext.Response.WriteAsJsonAsync(
                 new { detail = "Internal server error" }, httpContext.RequestAborted).ConfigureAwait(false);
+        }
+    }
+
+    internal static void ClassifyHttpError(HttpResponse response)
+    {
+        if (response.StatusCode >= StatusCodes.Status400BadRequest
+            && !response.Headers.ContainsKey(PlatformHeaders.ErrorSource))
+        {
+            response.Headers[PlatformHeaders.ErrorSource] = response.StatusCode < StatusCodes.Status500InternalServerError
+                ? PlatformHeaders.ErrorSourceUser
+                : PlatformHeaders.ErrorSourceUpstream;
         }
     }
 }

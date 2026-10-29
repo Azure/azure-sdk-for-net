@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.AI.AgentServer.A2A.Tests;
 
@@ -23,7 +25,11 @@ public class HostedBehaviorTests
     [SetUp]
     public void SetUp()
     {
-        foreach (var key in new[] { "FOUNDRY_HOSTING_ENVIRONMENT", "FOUNDRY_AGENT_NAME", "FOUNDRY_AGENT_VERSION", "FOUNDRY_AGENT_ID" })
+        foreach (var key in new[]
+        {
+            "FOUNDRY_HOSTING_ENVIRONMENT", "FOUNDRY_AGENT_NAME", "FOUNDRY_AGENT_VERSION", "FOUNDRY_AGENT_ID",
+            "AZURE_TOKEN_CREDENTIALS", "AZURE_TENANT_ID", "AZURE_CLIENT_ID", "AZURE_CLIENT_SECRET", "AZURE_FEDERATED_TOKEN_FILE",
+        })
         {
             _saved[key] = Environment.GetEnvironmentVariable(key);
         }
@@ -48,6 +54,79 @@ public class HostedBehaviorTests
 
     private static void ReloadEnvironment() =>
         typeof(FoundryEnvironment).GetMethod("Reload", BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, null);
+
+    [TestCase("EnvironmentCredential")]
+    [TestCase("WorkloadIdentityCredential")]
+    public void HostedCredentialHonorsOperatorSelectionWithoutNetworkAccess(string selection)
+    {
+        Environment.SetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS", selection);
+        foreach (string key in new[] { "AZURE_TENANT_ID", "AZURE_CLIENT_ID", "AZURE_CLIENT_SECRET", "AZURE_FEDERATED_TOKEN_FILE" })
+        {
+            Environment.SetEnvironmentVariable(key, null);
+        }
+
+        using var store = new FoundryTaskStore("credential-test");
+        var credential = store.ResolveCredential();
+        Assert.That(credential, Is.TypeOf<DefaultAzureCredential>());
+        Assert.That(store.ResolveCredential(), Is.SameAs(credential));
+        var exception = Assert.CatchAsync<CredentialUnavailableException>(async () =>
+            await credential!.GetTokenAsync(new TokenRequestContext(["https://ai.azure.com/.default"]), CancellationToken.None));
+        Assert.That(exception!.Message, Does.Contain(selection));
+    }
+
+    [Test]
+    public void ExplicitCredentialWinsOverDefaultSelection()
+    {
+        Environment.SetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS", "invalid-selection");
+        var supplied = new TestCredential();
+        using var store = new FoundryTaskStore("credential-test", credential: supplied);
+        Assert.That(store.ResolveCredential(), Is.SameAs(supplied));
+    }
+
+    [TestCase(null)]
+    [TestCase("")]
+    public void DefaultHostedFallbackExcludesDeveloperCredentials(string? selection)
+    {
+        Environment.SetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS", selection);
+        var options = FoundryTaskStore.CreateDefaultCredentialOptions();
+        Assert.That(options.ExcludeEnvironmentCredential, Is.False);
+        Assert.That(options.ExcludeWorkloadIdentityCredential, Is.False);
+        Assert.That(options.ExcludeManagedIdentityCredential, Is.False);
+        Assert.That(options.ExcludeVisualStudioCredential, Is.True);
+        Assert.That(options.ExcludeVisualStudioCodeCredential, Is.True);
+        Assert.That(options.ExcludeAzureCliCredential, Is.True);
+        Assert.That(options.ExcludeAzurePowerShellCredential, Is.True);
+        Assert.That(options.ExcludeAzureDeveloperCliCredential, Is.True);
+        Assert.That(options.ExcludeBrokerCredential, Is.True);
+    }
+
+    [Test]
+    public void ExplicitOperatorSelectionCanEnableDeveloperCredentials()
+    {
+        Environment.SetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS", "AzureCliCredential");
+        var options = FoundryTaskStore.CreateDefaultCredentialOptions();
+        Assert.That(options.ExcludeAzureCliCredential, Is.False);
+        using var store = new FoundryTaskStore("credential-test");
+        Assert.That(store.ResolveCredential(), Is.TypeOf<DefaultAzureCredential>());
+    }
+
+    [Test]
+    public void InvalidOperatorSelectionIsNotReplacedByFallback()
+    {
+        Environment.SetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS", "invalid-selection");
+        using var store = new FoundryTaskStore("credential-test");
+        var exception = Assert.Throws<InvalidOperationException>(() => store.ResolveCredential());
+        Assert.That(exception!.Message, Does.Contain("AZURE_TOKEN_CREDENTIALS"));
+    }
+
+    private sealed class TestCredential : TokenCredential
+    {
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            throw new AssertionException("Credential resolution must not acquire a token.");
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            throw new AssertionException("Credential resolution must not acquire a token.");
+    }
 
     [Test]
     public void HostedDefaultUsesFoundryStoreButExplicitNativeStoreWins()

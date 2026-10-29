@@ -24,6 +24,9 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     private readonly SemaphoreSlim _initialization = new(1, 1);
     private readonly string? _name;
     private readonly TokenCredential? _credential;
+    private readonly Lazy<TokenCredential> _defaultCredential = new(
+        static () => new DefaultAzureCredential(CreateDefaultCredentialOptions()));
+    private const string ListSummaryTag = "a2a-list";
     private readonly Uri? _endpoint;
     private readonly int _itemTtlSeconds;
     private FoundryStateStore? _store;
@@ -36,7 +39,10 @@ public class FoundryTaskStore : ITaskStore, IDisposable
 
     /// <summary>Initializes a named task store that resolves its backing state store on first use.</summary>
     /// <param name="name">A stable store name scoped to the owning agent.</param>
-    /// <param name="credential">The storage credential. Defaults to system-assigned managed identity when hosted.</param>
+    /// <param name="credential">
+    /// The storage credential. When omitted in hosted execution, uses <see cref="DefaultAzureCredential"/>
+    /// restricted to production credentials unless <c>AZURE_TOKEN_CREDENTIALS</c> explicitly selects a source.
+    /// </param>
     /// <param name="endpoint">
     /// An optional Foundry project or storage endpoint. Defaults to the platform project endpoint when hosted.
     /// </param>
@@ -111,9 +117,19 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         var key = Key(taskId, owner);
         var store = await GetStoreAsync(cancellationToken).ConfigureAwait(false);
         var payload = JsonSerializer.SerializeToUtf8Bytes(task, A2AJsonUtilities.DefaultOptions);
+        var summary = new AgentTask
+        {
+            Id = task.Id,
+            ContextId = task.ContextId,
+            Status = new global::A2A.TaskStatus { State = task.Status.State, Timestamp = task.Status.Timestamp },
+        };
         await store.SetItemAsync(key,
             new Dictionary<string, BinaryData> { ["task"] = BinaryData.FromBytes(payload) },
-            tags: new Dictionary<string, string> { ["a2a-owner"] = owner },
+            tags: new Dictionary<string, string>
+            {
+                ["a2a-owner"] = owner,
+                [ListSummaryTag] = Convert.ToBase64String(JsonSerializer.SerializeToUtf8Bytes(summary, A2AJsonUtilities.DefaultOptions)),
+            },
             cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
@@ -140,8 +156,8 @@ public class FoundryTaskStore : ITaskStore, IDisposable
     /// <param name="cancellationToken">A token to cancel the storage operation.</param>
     /// <returns>A native response containing the selected task snapshots and pagination information.</returns>
     /// <remarks>
-    /// Reads the caller's persisted records before applying native filtering and pagination.
-    /// The requested page size does not limit the number of storage reads.
+    /// Scans listing summaries before applying native filtering and pagination, then reads the
+    /// selected full snapshots. Records without summary metadata require a full read during the scan.
     /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="request"/> is <see langword="null"/>.</exception>
     public virtual async Task<ListTasksResponse> ListTasksAsync(
@@ -151,20 +167,38 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         var owner = Owner();
         var store = await GetStoreAsync(cancellationToken).ConfigureAwait(false);
         var view = new InMemoryTaskStore();
+        var legacyTasks = new Dictionary<string, AgentTask>(StringComparer.Ordinal);
         string? cursor = null;
         do
         {
             var page = await store.ListKeysAsync(
-                tags: new Dictionary<string, string> { ["a2a-owner"] = owner },
                 limit: 100, after: cursor, cancellationToken: cancellationToken).ConfigureAwait(false);
             foreach (var key in page.Keys)
             {
-                var item = await store.GetItemAsync(key.Key, cancellationToken).ConfigureAwait(false);
-                if (item is not null)
+                // Existing owner tags contain a hyphen, which hosted tag queries do not support.
+                if (!key.Tags.TryGetValue("a2a-owner", out string? storedOwner) || storedOwner != owner)
                 {
-                    var task = Deserialize(item, owner);
-                    await view.SaveTaskAsync(task.Id, task, cancellationToken).ConfigureAwait(false);
+                    continue;
                 }
+
+                AgentTask summary;
+                if (key.Tags.TryGetValue(ListSummaryTag, out string? encoded))
+                {
+                    summary = Deserialize(BinaryData.FromBytes(Convert.FromBase64String(encoded)), key.Key, owner);
+                }
+                else
+                {
+                    var item = await store.GetItemAsync(key.Key, cancellationToken).ConfigureAwait(false);
+                    if (item is null)
+                    {
+                        continue;
+                    }
+
+                    summary = Deserialize(item, owner);
+                    legacyTasks[summary.Id] = summary;
+                }
+
+                await view.SaveTaskAsync(summary.Id, summary, cancellationToken).ConfigureAwait(false);
             }
 
             if (!page.HasMore)
@@ -181,7 +215,34 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         }
         while (true);
 
-        return await view.ListTasksAsync(request, cancellationToken).ConfigureAwait(false);
+        var result = await view.ListTasksAsync(request, cancellationToken).ConfigureAwait(false);
+        var selected = new InMemoryTaskStore();
+        foreach (var summary in result.Tasks)
+        {
+            if (!legacyTasks.TryGetValue(summary.Id, out var task))
+            {
+                var item = await store.GetItemAsync(Key(summary.Id, owner), cancellationToken).ConfigureAwait(false);
+                if (item is null)
+                {
+                    continue;
+                }
+
+                task = Deserialize(item, owner);
+            }
+
+            await selected.SaveTaskAsync(task.Id, task, cancellationToken).ConfigureAwait(false);
+        }
+
+        var projected = await selected.ListTasksAsync(new ListTasksRequest
+        {
+            PageSize = result.Tasks.Count,
+            HistoryLength = request.HistoryLength,
+            IncludeArtifacts = request.IncludeArtifacts,
+        }, cancellationToken).ConfigureAwait(false);
+        var snapshots = projected.Tasks.ToDictionary(task => task.Id, StringComparer.Ordinal);
+        result.Tasks = result.Tasks.Where(summary => snapshots.ContainsKey(summary.Id)).Select(summary => snapshots[summary.Id]).ToList();
+        result.PageSize = result.Tasks.Count;
+        return result;
     }
 
     private async Task<FoundryStateStore> GetStoreAsync(CancellationToken cancellationToken)
@@ -192,10 +253,11 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         {
             _store ??= await FoundryStateStore.GetOrCreateAsync(
                 _name!,
-                _credential ?? (FoundryEnvironment.IsHosted ? new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned) : null),
+                ResolveCredential(),
                 _endpoint, userIsolation: FoundryEnvironment.IsHosted,
                 itemTtlSeconds: _itemTtlSeconds, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
+
         finally
         {
             _initialization.Release();
@@ -211,6 +273,23 @@ public class FoundryTaskStore : ITaskStore, IDisposable
         }
 
         return _store;
+    }
+
+    internal TokenCredential? ResolveCredential() =>
+        _credential ?? (FoundryEnvironment.IsHosted ? _defaultCredential.Value : null);
+
+    internal static DefaultAzureCredentialOptions CreateDefaultCredentialOptions()
+    {
+        bool excludeDeveloperCredentials = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"));
+        return new DefaultAzureCredentialOptions
+        {
+            ExcludeVisualStudioCredential = excludeDeveloperCredentials,
+            ExcludeVisualStudioCodeCredential = excludeDeveloperCredentials,
+            ExcludeAzureCliCredential = excludeDeveloperCredentials,
+            ExcludeAzurePowerShellCredential = excludeDeveloperCredentials,
+            ExcludeAzureDeveloperCliCredential = excludeDeveloperCredentials,
+            ExcludeBrokerCredential = excludeDeveloperCredentials,
+        };
     }
 
     private static string Owner()
@@ -245,9 +324,14 @@ public class FoundryTaskStore : ITaskStore, IDisposable
             throw new InvalidDataException("The stored A2A task snapshot is missing.");
         }
 
+        return Deserialize(payload, item.Key, owner);
+    }
+
+    private static AgentTask Deserialize(BinaryData payload, string key, string owner)
+    {
         var task = JsonSerializer.Deserialize<AgentTask>(payload.ToMemory().Span, A2AJsonUtilities.DefaultOptions)
             ?? throw new InvalidDataException("The stored A2A task snapshot is null.");
-        if (item.Key != Key(task.Id, owner))
+        if (key != Key(task.Id, owner))
         {
             throw new InvalidDataException("The stored A2A task identity does not match its storage key.");
         }

@@ -32,7 +32,7 @@ public static AgentCard CreateCard() => new()
             ProtocolVersion = "1.0",
         },
     ],
-    Capabilities = new AgentCapabilities { Streaming = true },
+    Capabilities = new AgentCapabilities(),
     DefaultInputModes = ["text/plain"],
     DefaultOutputModes = ["text/plain"],
     Skills = [new AgentSkill { Id = "echo", Name = "Echo", Description = "Echoes input", Tags = ["echo"] }],

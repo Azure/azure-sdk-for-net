@@ -57,13 +57,6 @@ $stored.result.artifacts[0].parts[0].text
 Expected output is `TASK_STATE_COMPLETED` and the original Echo text. Send
 `GetTask` through the same caller scope used to create the Task.
 
-## Streaming
-
-Change the JSON-RPC method to `SendStreamingMessage` and use an SSE-capable
-client to read incremental native events. The transport emits the Task,
-artifact updates, and status updates rather than a single buffered result.
-Incremental output depends on when the handler emits events.
-
 ## Storage lifetime
 
 `TaskUpdater` emits task events; the configured native `ITaskStore` owns their

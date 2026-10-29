@@ -2,29 +2,33 @@
 // Licensed under the MIT License.
 
 using global::A2A;
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.A2A.Internal;
 
 // Constrain the exposed transport without changing the consumer's native handler or storage.
-internal sealed class FoundryA2ARequestHandler(IA2ARequestHandler inner) : IA2ARequestHandler
+internal sealed class FoundryA2ARequestHandler(
+    IA2ARequestHandler inner,
+    ILogger<FoundryA2ARequestHandler> logger) : IA2ARequestHandler
 {
     public Task<SendMessageResponse> SendMessageAsync(SendMessageRequest request, CancellationToken cancellationToken = default) =>
-        inner.SendMessageAsync(request, cancellationToken);
+        InvokeAsync("SendMessage", () => inner.SendMessageAsync(request, cancellationToken), cancellationToken);
 
     public IAsyncEnumerable<StreamResponse> SendStreamingMessageAsync(SendMessageRequest request, CancellationToken cancellationToken = default) =>
-        inner.SendStreamingMessageAsync(request, cancellationToken);
+        ObserveStreamAsync("SendStreamingMessage", () => inner.SendStreamingMessageAsync(request, cancellationToken), cancellationToken);
 
     public Task<AgentTask> GetTaskAsync(GetTaskRequest request, CancellationToken cancellationToken = default) =>
-        inner.GetTaskAsync(request, cancellationToken);
+        InvokeAsync("GetTask", () => inner.GetTaskAsync(request, cancellationToken), cancellationToken);
 
     public Task<ListTasksResponse> ListTasksAsync(ListTasksRequest request, CancellationToken cancellationToken = default) =>
-        inner.ListTasksAsync(request, cancellationToken);
+        InvokeAsync("ListTasks", () => inner.ListTasksAsync(request, cancellationToken), cancellationToken);
 
     public Task<AgentTask> CancelTaskAsync(CancelTaskRequest request, CancellationToken cancellationToken = default) =>
-        inner.CancelTaskAsync(request, cancellationToken);
+        InvokeAsync("CancelTask", () => inner.CancelTaskAsync(request, cancellationToken), cancellationToken);
 
     public IAsyncEnumerable<StreamResponse> SubscribeToTaskAsync(SubscribeToTaskRequest request, CancellationToken cancellationToken = default) =>
-        inner.SubscribeToTaskAsync(request, cancellationToken);
+        ObserveStreamAsync("SubscribeToTask", () => inner.SubscribeToTaskAsync(request, cancellationToken), cancellationToken);
 
     public Task<TaskPushNotificationConfig> CreateTaskPushNotificationConfigAsync(TaskPushNotificationConfig config, CancellationToken cancellationToken = default) =>
         Task.FromException<TaskPushNotificationConfig>(PushUnsupported());
@@ -43,4 +47,41 @@ internal sealed class FoundryA2ARequestHandler(IA2ARequestHandler inner) : IA2AR
 
     private static A2AException PushUnsupported() =>
         new("Push notifications are not exposed by Foundry hosting.", A2AErrorCode.PushNotificationNotSupported);
+
+    private async Task<T> InvokeAsync<T>(string operation, Func<Task<T>> action, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await action().ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (A2AException exception) when (exception.ErrorCode != A2AErrorCode.InternalError)
+        {
+            throw;
+        }
+        catch (Exception exception)
+        {
+            // The native processor converts failures to JSON-RPC errors after this boundary.
+            logger.LogError(exception, "A2A operation {Operation} failed", operation);
+            throw;
+        }
+    }
+
+    private async IAsyncEnumerable<StreamResponse> ObserveStreamAsync(
+        string operation,
+        Func<IAsyncEnumerable<StreamResponse>> createStream,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var stream = await InvokeAsync(operation, () => Task.FromResult(createStream()), cancellationToken).ConfigureAwait(false);
+        var enumerator = await InvokeAsync(
+            operation, () => Task.FromResult(stream.GetAsyncEnumerator(cancellationToken)), cancellationToken).ConfigureAwait(false);
+        await using var disposal = enumerator.ConfigureAwait(false);
+        while (await InvokeAsync(operation, () => enumerator.MoveNextAsync().AsTask(), cancellationToken).ConfigureAwait(false))
+        {
+            yield return enumerator.Current;
+        }
+    }
 }

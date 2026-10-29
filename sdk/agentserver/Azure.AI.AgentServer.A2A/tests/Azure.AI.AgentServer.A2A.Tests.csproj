@@ -22,6 +22,7 @@
     <Using Include="Azure.AI.AgentServer.Core" />
     <ProjectReference Include="..\src\Azure.AI.AgentServer.A2A.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj" />
   </ItemGroup>
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Compile Remove="**\*.cs" />

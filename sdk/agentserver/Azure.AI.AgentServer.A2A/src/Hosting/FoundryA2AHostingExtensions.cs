@@ -8,6 +8,8 @@ using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenTelemetry.Trace;
+using Microsoft.AspNetCore.Hosting;
+using Azure.AI.AgentServer.A2A.Internal;
 
 namespace Azure.AI.AgentServer.A2A;
 
@@ -97,6 +99,7 @@ public static class FoundryA2AHostingExtensions
     {
         services.AddAgentServerCore();
         services.AddHealthChecks();
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IStartupFilter, A2ATransportErrorStartupFilter>());
         services.AddOpenTelemetry().WithTracing(tracing => tracing.AddSource(Internal.A2ARpcResult.SourceName));
     }
 }

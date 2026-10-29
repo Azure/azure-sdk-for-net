@@ -324,7 +324,7 @@ public class HostingTests
             }
         }
 
-        throw new AssertionException("The native SSE response did not contain a data event.");
+        throw new AssertionException("The native response did not contain a data event.");
     }
 
     internal sealed class GatedTaskHandler : IAgentHandler
