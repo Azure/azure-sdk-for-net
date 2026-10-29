@@ -9,14 +9,18 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 {
     public class PlatformValidationRecordingTests
     {
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(2)]
-        public void SanitizeVhdInEmbeddedDocuments(int depth)
+        [Test]
+        public void SanitizeVhdInEmbeddedDocuments(
+            [Values(0, 1, 2)] int depth,
+            [Values("https://example.invalid/private.vhd?sp=r&sig=fake-secret",
+                "https://example.invalid/private-image?sig=fake-secret",
+                "https://example.invalid/archive.vhd/private.vhd?sig=fake-secret")] string sourceVhdUri)
         {
+            const string testStoreUri = "https://example.invalid/artifact.vhd?download=1";
             string body = JsonSerializer.Serialize(new
             {
-                sourceVhdUri = "https://example.invalid/private.vhd?sp=r&sig=fake-secret"
+                sourceVhdUri,
+                testStoreUri
             });
             for (int i = 0; i < depth; i++)
             {
@@ -35,6 +39,8 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             using JsonDocument configuration = JsonDocument.Parse(body);
             Assert.That(configuration.RootElement.GetProperty("sourceVhdUri").GetString(),
                 Is.EqualTo(PlatformValidationManagementTestEnvironment.SanitizedSourceVhdUri));
+            Assert.That(configuration.RootElement.GetProperty("testStoreUri").GetString(),
+                Is.EqualTo(testStoreUri));
         }
     }
 }

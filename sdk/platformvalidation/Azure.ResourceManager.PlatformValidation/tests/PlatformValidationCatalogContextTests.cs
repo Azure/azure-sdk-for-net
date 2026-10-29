@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
         }
 
         [Test]
-        public async Task CatalogHandlesRetainRequestedSubscription()
+        public async Task CatalogHandlesPreserveSubscriptionScopedIds()
         {
             const string defaultSubscription = "11111111-1111-1111-1111-111111111111";
             const string requestedSubscription = "22222222-2222-2222-2222-222222222222";
@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 
             foreach (ValidationTestResource test in returnedTests)
             {
-                Assert.That(test.Id.SubscriptionId, Is.Null);
+                Assert.That(test.Id.SubscriptionId, Is.EqualTo(requestedSubscription));
                 Assert.That(test.Data.Id, Is.EqualTo(test.Id));
+                ValidationTestResource reconstructed = client.GetValidationTestResource(test.Id);
+                Assert.That((await reconstructed.GetAsync()).Value.Id, Is.EqualTo(test.Id));
                 ValidationTestResource refreshed = (await test.GetAsync()).Value;
                 refreshed = (await refreshed.GetAsync()).Value;
                 Assert.That(refreshed.Id, Is.EqualTo(test.Id));
@@ -62,8 +64,11 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 
                 foreach (ValidationTestVersionResource version in returnedVersions)
                 {
-                    Assert.That(version.Id.SubscriptionId, Is.Null);
+                    Assert.That(version.Id.SubscriptionId, Is.EqualTo(requestedSubscription));
+                    Assert.That(version.Id.Parent, Is.EqualTo(test.Id));
                     Assert.That(version.Data.Id, Is.EqualTo(version.Id));
+                    ValidationTestVersionResource reconstructedVersion = client.GetValidationTestVersionResource(version.Id);
+                    Assert.That((await reconstructedVersion.GetAsync()).Value.Id, Is.EqualTo(version.Id));
                     ValidationTestVersionResource refreshedVersion = (await version.GetAsync()).Value;
                     refreshedVersion = (await refreshedVersion.GetAsync()).Value;
                     Assert.That(refreshedVersion.Id, Is.EqualTo(version.Id));
@@ -83,8 +88,10 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 
             foreach (ValidationTestCategoryResource category in returnedCategories)
             {
-                Assert.That(category.Id.SubscriptionId, Is.Null);
+                Assert.That(category.Id.SubscriptionId, Is.EqualTo(requestedSubscription));
                 Assert.That(category.Data.Id, Is.EqualTo(category.Id));
+                ValidationTestCategoryResource reconstructedCategory = client.GetValidationTestCategoryResource(category.Id);
+                Assert.That((await reconstructedCategory.GetAsync()).Value.Id, Is.EqualTo(category.Id));
                 ValidationTestCategoryResource refreshed = (await category.GetAsync()).Value;
                 refreshed = (await refreshed.GetAsync()).Value;
                 Assert.That(refreshed.Id, Is.EqualTo(category.Id));
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
         private static MockResponse CreateCatalogResponse(MockRequest request)
         {
             string path = request.Uri.ToUri().AbsolutePath;
-            string id = path.Substring(path.IndexOf("/providers/", StringComparison.Ordinal));
+            string id = path;
             bool isList = id.EndsWith("/validationTests", StringComparison.Ordinal)
                 || id.EndsWith("/validationTestCategories", StringComparison.Ordinal)
                 || id.EndsWith("/versions", StringComparison.Ordinal);
@@ -111,9 +118,9 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
                     : id.EndsWith("/versions", StringComparison.Ordinal) ? "/v1" : "/images";
             }
 
-            string type = id.Contains("/validationTestCategories/", StringComparison.Ordinal)
+            string type = id.IndexOf("/validationTestCategories/", StringComparison.Ordinal) >= 0
                 ? "Microsoft.PlatformValidation/validationTestCategories"
-                : id.Contains("/versions/", StringComparison.Ordinal)
+                : id.IndexOf("/versions/", StringComparison.Ordinal) >= 0
                     ? "Microsoft.PlatformValidation/validationTests/versions"
                     : "Microsoft.PlatformValidation/validationTests";
             var data = new

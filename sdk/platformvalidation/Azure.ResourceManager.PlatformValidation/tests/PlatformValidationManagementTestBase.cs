@@ -13,7 +13,8 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 {
     public class PlatformValidationManagementTestBase : ManagementRecordedTestBase<PlatformValidationManagementTestEnvironment>
     {
-        internal const string SourceVhdUriPattern = @"(?i)https://(?:[^""\\\s]|\\+(?:u(?!0022|005c)[0-9a-f]{4}|/))+?\.vhd(?:\?(?:[^""\\\s]|\\+(?:u(?!0022|005c)[0-9a-f]{4}|/))*)?";
+        // Match only sourceVhdUri values, including escaped property delimiters in embedded JSON.
+        internal const string SourceVhdUriPattern = @"(?i)(?<=sourceVhdUri(?:\\*""|\\+u0022)\s*:\s*(?:\\*""|\\+u0022))https://(?:[^""\\\s]|\\+(?:u(?!0022|005c)[0-9a-f]{4}|/))+";
         private const string SubscriptionIdPattern = @"(?i)(?<=/subscriptions/)[0-9a-f-]{36}";
         private const string SanitizedSubscriptionId = "00000000-0000-0000-0000-000000000000";
 
