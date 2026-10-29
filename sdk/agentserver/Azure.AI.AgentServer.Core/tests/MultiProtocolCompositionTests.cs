@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Verify experimental protocol task scopes end to end.
+
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -459,6 +461,129 @@ public class MultiProtocolCompositionTests
         finally
         {
             Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task LegacyInvocationsChain_ContinuesAfterComposedHostRestart(bool interrupted)
+    {
+        string directory = Path.Combine(
+            Path.GetTempPath(), "agentserver-legacy-invocations-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(directory);
+        try
+        {
+            using var previous = TaskTestHost.Create(
+                directory,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            TaskDefinition<string, string> firstTask = previous.Builder.AddMultiTurnTask<string, string>(
+                "legacy-chain",
+                async (ctx, ct) =>
+                {
+                    if (interrupted)
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                    }
+
+                    return ctx.Input;
+                });
+            if (interrupted)
+            {
+                previous.SignalShutdown();
+            }
+
+            TaskRun<string> first = await firstTask.StartAsync(
+                "first", new RunOptions { TaskId = "legacy-chain-1" });
+            if (interrupted)
+            {
+                await previous.WaitUntilInactiveAsync(first.TaskId, TimeSpan.FromSeconds(5));
+            }
+            else
+            {
+                Assert.That(await first.Completion, Is.EqualTo("first"));
+                await WaitForSuspendedChainAsync(previous.Store, first.TaskId);
+            }
+
+            var store = new LocalTaskStore(directory);
+            Assert.That(
+                (await store.GetAsync(first.TaskId))?.Payload[TaskWireKeys.PayloadProtocolScope],
+                Is.Null,
+                "a pre-upgrade chain has no persisted protocol owner");
+            var recoverySignal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var builder = AgentHost.CreateBuilder();
+            builder.WebApplicationBuilder.WebHost.UseTestServer();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddResilientMultiTurnTask<string, string>(
+                "legacy-chain",
+                (ctx, ct) =>
+                {
+                    if (ctx.EntryMode == EntryMode.Recovered)
+                    {
+                        recoverySignal.TrySetResult();
+                    }
+
+                    return Task.FromResult(ctx.Input);
+                });
+            builder.AddInvocations<LegacyChainInvocationHandler>();
+            builder.AddResponses<TestResponseHandler>(
+                options => options.SteerableConversations = true);
+
+            var app = builder.Build();
+            await app.App.StartAsync();
+            try
+            {
+                if (interrupted)
+                {
+                    await recoverySignal.Task.WaitAsync(TimeSpan.FromSeconds(5));
+                    await WaitForSuspendedChainAsync(store, first.TaskId);
+                }
+
+                using var response = await app.App.GetTestClient().PostAsync(
+                    "/invocations", new StringContent("second"));
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("second"));
+            }
+            finally
+            {
+                await app.App.StopAsync();
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(directory))
+            {
+                Directory.Delete(directory, recursive: true);
+            }
+        }
+    }
+
+    private static async Task WaitForSuspendedChainAsync(LocalTaskStore store, string taskId)
+    {
+        for (int attempt = 0; attempt < 200; attempt++)
+        {
+            if ((await store.GetAsync(taskId))?.Status == TaskWireKeys.StatusSuspended)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.Fail($"Task '{taskId}' did not become suspended before the next turn.");
+    }
+
+    private sealed class LegacyChainInvocationHandler(IServiceProvider services) : InvocationHandler
+    {
+        public override async Task HandleAsync(
+            HttpRequest request, HttpResponse response,
+            InvocationContext context, CancellationToken cancellationToken)
+        {
+            TaskDefinition<string, string> task = services.GetResilientTask<string, string>("legacy-chain");
+            string result = await task.RunAsync(
+                "second", new RunOptions { TaskId = "legacy-chain-1" }, cancellationToken);
+            await response.WriteAsync(result, cancellationToken);
         }
     }
 

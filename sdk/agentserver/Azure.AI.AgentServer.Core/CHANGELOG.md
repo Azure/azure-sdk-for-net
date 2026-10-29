@@ -8,7 +8,9 @@
   checks, stamping the owning protocol on new task records so a disabled
   protocol cannot start or recover its tasks merely because another protocol
   enabled the shared runtime. Legacy unmarked application tasks require the
-  explicit Core switch for recovery.
+  explicit Core switch for recovery; existing Invocations chains continue under
+  that opt-in. The new public protocol-scoping helpers and per-task activation
+  option are experimental (`AAAS003`).
 
 ### Breaking Changes
 

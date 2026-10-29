@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Exercise experimental per-task protocol activation.
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;

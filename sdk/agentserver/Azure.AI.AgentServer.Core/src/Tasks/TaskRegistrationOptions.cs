@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
 
@@ -39,6 +40,7 @@ public sealed class TaskRegistrationOptions
     /// cannot start or recover even when another protocol enables the shared task runtime.
     /// Tasks without a check use their creating protocol's scope for fresh starts and recovery.
     /// </summary>
+    [Experimental("AAAS003")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public Func<bool>? IsEnabled { get; set; }
 }

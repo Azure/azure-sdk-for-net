@@ -154,7 +154,9 @@ within a Responses handler inherit its protocol scope and recover only when
 that protocol remains enabled after restart; unscoped Core tasks and Invocations
 tasks still require the explicit Core switch. Older task records without an
 owner marker are recovered as Core-owned unless the registration supplies its
-own activation check.
+own activation check. Existing Invocations chains continue under the explicit
+Core opt-in. Protocol-scoping helpers and the per-task activation option are
+experimental (`AAAS003`); applications do not need them for ordinary task opt-in.
 
 ### One-shot
 

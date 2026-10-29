@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal recovery and admission for protocol-scoped tasks.
+
 using System;
 using System.Collections.Concurrent;
 using System.Linq;

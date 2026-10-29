@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,6 +77,7 @@ public static class ResilientTaskEnablementExtensions
     /// <param name="enabled">Whether the protocol has enabled task execution, or
     /// <see langword="null"/> to use the explicit Core opt-in.</param>
     /// <returns>A scope that restores the prior protocol's task access when disposed.</returns>
+    [Experimental("AAAS003")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public static IDisposable EnterResilientTaskScope(
         this IServiceProvider provider, string protocol, bool? enabled = null)
@@ -92,6 +94,7 @@ public static class ResilientTaskEnablementExtensions
     /// <param name="protocol">The same stable identity used for the protocol's task scopes.</param>
     /// <param name="enabled">Resolve whether this host has enabled the protocol's task execution.</param>
     /// <returns>The same service collection for chaining.</returns>
+    [Experimental("AAAS003")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public static IServiceCollection RegisterResilientTaskProtocol(
         this IServiceCollection services, string protocol, Func<bool> enabled)

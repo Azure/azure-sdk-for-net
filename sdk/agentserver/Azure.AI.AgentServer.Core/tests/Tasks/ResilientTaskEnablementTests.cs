@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -16,6 +18,21 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 [TestFixture]
 public sealed class ResilientTaskEnablementTests
 {
+    [Test]
+    public void ProtocolScopeApis_DeclareExperimentalDiagnostic()
+    {
+        const string DiagnosticId = "AAAS003";
+        var scopeApis = typeof(ResilientTaskEnablementExtensions)
+            .GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Where(method => method.Name is "EnterResilientTaskScope" or "RegisterResilientTaskProtocol");
+        Assert.That(scopeApis.Select(method => method.GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId).ToArray(),
+            Is.EqualTo(new[] { DiagnosticId, DiagnosticId }));
+        Assert.That(
+            typeof(TaskRegistrationOptions).GetProperty("IsEnabled")!
+                .GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId,
+            Is.EqualTo(DiagnosticId));
+    }
+
     [Test]
     public void ProtocolScope_DoesNotGrantTaskAccessToAnotherHost()
     {
