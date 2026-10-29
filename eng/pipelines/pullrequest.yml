@@ -1,4 +1,6 @@
 pr:
+  # Finish changelog generation for each pushed revision instead of canceling older runs.
+  autoCancel: false
   branches:
     include:
     - main
@@ -33,6 +35,7 @@ extends:
   parameters:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     SkipPrValidation: ${{ parameters.SkipPrValidation }}
+    EnableAutoPrManagementChangelog: true
     # Short term hack to get 1es canary validation working until we can fix manual runs with 'auto'
     ${{ if and(eq(parameters.oneESTemplateTag, 'canary'), eq(parameters.Service, 'auto')) }}:
       ServiceDirectory: template
