@@ -226,10 +226,10 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 
 #### __Verify the App Service managed identity endpoint is available__
 
-If you have access to SSH into the App Service, you can verify managed identity is available in the environment. First ensure the environment variables `MSI_ENDPOINT` and `MSI_SECRET` have been set in the environment. Then you can verify the managed identity endpoint is available using curl.
+If you have access to SSH into the App Service, you can verify managed identity is available in the environment. First ensure the environment variables `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` have been set in the environment. The legacy variables `MSI_ENDPOINT` and `MSI_SECRET` may still appear on older hosts. Then you can verify the managed identity endpoint is available using curl.
 
 ```bash
-curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://management.core.windows.net&api-version=2018-02-01' -H "Metadata: true"
+curl "$IDENTITY_ENDPOINT?resource=https://management.core.windows.net&api-version=2019-08-01" -H "X-IDENTITY-HEADER: $IDENTITY_HEADER"
 ```
 
 > Note that the output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
