@@ -1,12 +1,12 @@
 # Release History
 
-## 1.4.0 (2026-10-12)
+## 1.4.0 (2026-10-30)
 
 ### Features Added
 
 - Updated the default service API version to stable `2026-09-01`.
 - Added migration workflows for validation, start, retrieval, undo, and migrated-endpoint unlink.
-- Added migration rollback metadata through `RollbackEligibleUntil`.
+- Added migration rollback metadata through `RollbackEligibilityExpiresOn`.
 - Added `Undo` and `UndoAsync` migration operations with optional rollback reasons.
 - Added migrated-endpoint unlink operations for Azure Cache for Redis and Azure Cache for Redis Enterprise migration workflows.
 - Added `Unlinking`, `Unlinked`, and `UnlinkFailed` migration provisioning states.

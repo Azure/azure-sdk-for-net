@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         public OssToAmrMigrationFunctionalTests(bool isAsync)
             : base(isAsync)
         {
+            // Package and project references differ on Accept for bodyless Redis DELETE requests.
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [TestCase(true)]

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         // Preserve the recording name while making the method's coverage explicit.
         [TestCase(TestName = "CreateUpdateDeleteTest2")]
-        public async Task CreateUpdateDeleteWithMaintenanceWindows()
+        public async Task CreateUpdateDeleteWithMaintenanceWindowsAndKeyspaceNotifications()
         {
             await SetCollectionsAsync(KeyspaceNotificationsLocation);
 
