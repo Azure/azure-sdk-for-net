@@ -79,6 +79,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The list of DDoS mitigation rules associated with the custom policy. </summary>
+        [WirePath("properties.mitigationRules")]
+        public IList<DdosMitigationRule> MitigationRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.MitigationRules;
+            }
+        }
+
         /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
         [WirePath("properties.frontEndIpConfiguration")]
         public IList<WritableSubResource> FrontEndIPConfiguration
