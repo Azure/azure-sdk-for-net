@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _kind = DefineProperty<AdminRuleKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<AdminRuleGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AdminRuleGroup>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

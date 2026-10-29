@@ -1049,7 +1049,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _properties = DefineModelProperty<ServiceFabricManagedNodeTypeProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _sku = DefineModelProperty<NodeTypeSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<ServiceFabricManagedCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceFabricManagedCluster>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

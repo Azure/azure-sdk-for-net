@@ -363,7 +363,7 @@ namespace Azure.Provisioning.ApplicationInsights
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<WorkbookSharedTypeKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<ApplicationInsightsWorkbook>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApplicationInsightsWorkbook>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

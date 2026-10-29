@@ -101,7 +101,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<FirewallPolicyKubeSelectorGroupProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

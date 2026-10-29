@@ -273,7 +273,7 @@ namespace Azure.Provisioning.AppContainers
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<JobProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ContainerAppJob>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerAppJob>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
