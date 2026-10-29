@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -117,6 +118,86 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             await receiver.CloseAsync(CancellationToken.None);
             Assert.That(receiver.IsClosed, Is.True, "The receiver should be marked as closed after closing");
+        }
+
+        [TestCase(true, true, true, false)]
+        [TestCase(true, true, true, true)]
+        [TestCase(false, true, true, false)]
+        [TestCase(true, false, true, false)]
+        [TestCase(true, true, false, false)]
+        public async Task EagerLossChannelIsScopedToInvoluntaryExclusiveProcessorLinkLoss(
+            bool sessionReceiver, bool exclusive, bool processor, bool normalClose)
+        {
+            var scope = AmqpConnectionScopeTests.CreateMockReceiverScope(
+                exclusive ? null : Guid.NewGuid(), sessionLockedUntil: DateTime.UtcNow.AddMinutes(1));
+            var receiver = new AmqpReceiver(
+                "queue", ServiceBusReceiveMode.PeekLock, 0, scope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "receiver", "session",
+                sessionReceiver, processor, Mock.Of<AmqpMessageConverter>(), isSessionExclusive: exclusive);
+            await receiver.OpenLinkAsync(CancellationToken.None);
+            var link = (ReceivingAmqpLink)scope.Invocations.First(call => call.Method.Name == "OpenAmqpLinkAsync").Arguments[0];
+            if (normalClose)
+            {
+                await receiver.CloseAsync(CancellationToken.None);
+            }
+            else
+            {
+                link.Abort();
+            }
+
+            if (sessionReceiver && exclusive && processor)
+            {
+                if (normalClose)
+                {
+                    Assert.That(receiver.SessionLockLostTask.IsCanceled, Is.True);
+                }
+                else
+                {
+                    Assert.That(receiver.SessionLockLostTask.IsCompleted, Is.True);
+                    var exception = await receiver.SessionLockLostTask;
+                    Assert.That(exception, Is.InstanceOf<ServiceBusException>());
+                    Assert.That(((ServiceBusException)exception).Reason, Is.EqualTo(ServiceBusFailureReason.SessionLockLost));
+                }
+            }
+            else
+            {
+                Assert.That(receiver.SessionLockLostTask, Is.Null);
+            }
+            await receiver.CloseAsync(CancellationToken.None);
+        }
+
+        [Test]
+        public async Task FailedSessionAttachDoesNotSignalEagerLoss()
+        {
+            var scope = AmqpConnectionScopeTests.CreateMockReceiverScope(
+                attachFailure: new ServiceBusException(false, "Attach failed", reason: ServiceBusFailureReason.GeneralError));
+            var receiver = new AmqpReceiver(
+                "queue", ServiceBusReceiveMode.PeekLock, 0, scope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "receiver", "session",
+                true, true, Mock.Of<AmqpMessageConverter>());
+            Assert.ThrowsAsync<ServiceBusException>(() => receiver.OpenLinkAsync(CancellationToken.None));
+            Assert.That(receiver.SessionLockLostTask.IsCompleted, Is.False);
+            await receiver.CloseAsync(CancellationToken.None);
+            Assert.That(receiver.SessionLockLostTask.IsCanceled, Is.True);
+        }
+
+        [Test]
+        public async Task CanceledSessionCloseDoesNotSuppressSubsequentLinkLoss()
+        {
+            var scope = AmqpConnectionScopeTests.CreateMockReceiverScope(sessionLockedUntil: DateTime.UtcNow.AddMinutes(1));
+            var receiver = new AmqpReceiver(
+                "queue", ServiceBusReceiveMode.PeekLock, 0, scope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "receiver", "session",
+                true, true, Mock.Of<AmqpMessageConverter>());
+            await receiver.OpenLinkAsync(CancellationToken.None);
+            Assert.ThrowsAsync<TaskCanceledException>(() => receiver.CloseAsync(new CancellationToken(true)));
+            Assert.That(receiver.IsClosed, Is.False);
+            Assert.That(receiver.SessionLockLostTask.IsCompleted, Is.False);
+            var link = (ReceivingAmqpLink)scope.Invocations.First(call => call.Method.Name == "OpenAmqpLinkAsync").Arguments[0];
+            link.Abort();
+            Assert.That(receiver.SessionLockLostTask.Status, Is.EqualTo(TaskStatus.RanToCompletion));
+            Assert.That(((ServiceBusException)await receiver.SessionLockLostTask).Reason, Is.EqualTo(ServiceBusFailureReason.SessionLockLost));
+            await receiver.CloseAsync(CancellationToken.None);
         }
 
         /// <summary>

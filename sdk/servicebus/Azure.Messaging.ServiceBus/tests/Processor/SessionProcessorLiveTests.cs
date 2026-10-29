@@ -2624,97 +2624,128 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task SessionLockLostEventRaisedAfterExpiration()
+        [NonParallelizable]
+        public Task SessionLockLostEventRaisedAfterExpiration()
         {
-            var lockDuration = ShortLockDuration;
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
-            {
-                await using var client = CreateClient();
-                var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 1;
-
-                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
-
-                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
-                {
-                    MaxConcurrentCallsPerSession = 1,
-                    MaxConcurrentSessions = 1,
-                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
-                    AutoCompleteMessages = false
-                });
-
-                var tcs = new TaskCompletionSource<bool>();
-                bool sessionLockLostEventRaised = false;
-                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
-                {
-                    args.SessionLockLostAsync += (lockLostArgs) =>
-                    {
-                        sessionLockLostEventRaised = true;
-                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
-                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
-                        return Task.CompletedTask;
-                    };
-                    await args.CompleteMessageAsync(args.Message);
-                    await Task.Delay(lockDuration.Add(lockDuration));
-                    Assert.IsTrue(sessionLockLostEventRaised);
-                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
-                    tcs.SetResult(true);
-                }
-                processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += SessionErrorHandler;
-
-                await processor.StartProcessingAsync();
-                await tcs.Task;
-                await processor.CloseAsync();
-            }
+            // Isolate the expiry timer from cancellation caused by a service-side link closure.
+            return AssertSessionLockLostNotification(connectionDropped: false, disableEagerNotification: true);
         }
 
-        [Test]
-        public async Task SessionLockLostEventRaisedAfterConnectionDropped()
+        [TestCase(false)]
+        [TestCase(true)]
+        [NonParallelizable]
+        public Task SessionLockLostEventRaisedAfterConnectionDropped(bool disableEagerNotification)
         {
-            var lockDuration = ShortLockDuration;
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            return AssertSessionLockLostNotification(connectionDropped: true, disableEagerNotification);
+        }
+
+        private async Task AssertSessionLockLostNotification(bool connectionDropped, bool disableEagerNotification)
+        {
+            bool? previousSwitch = AppContext.TryGetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, out bool value)
+                ? value
+                : null;
+            var compatibilitySwitch = new TestAppContextSwitch(
+                SessionReceiverManager.DisableEagerSessionLockLostSwitch, disableEagerNotification.ToString());
+            try
             {
-                await using var client = CreateClient();
-                var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 1;
-
-                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
-
-                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                var lockDuration = ShortLockDuration;
+                await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
                 {
-                    MaxConcurrentCallsPerSession = 1,
-                    MaxConcurrentSessions = 1,
-                    AutoCompleteMessages = false
-                });
+                    await using var client = CreateClient();
+                    await using var sender = client.CreateSender(scope.QueueName);
+                    int messageCount = 1;
 
-                var tcs = new TaskCompletionSource<bool>();
-                bool sessionLockLostEventRaised = false;
-                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
-                {
-                    args.SessionLockLostAsync += (lockLostArgs) =>
+                    await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
+
+                    var options = new ServiceBusSessionProcessorOptions
                     {
-                        sessionLockLostEventRaised = true;
-                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
-                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
-                        var lockLostException = lockLostArgs.Exception as ServiceBusException;
-                        Assert.IsNotNull(lockLostException);
-                        Assert.AreEqual(ServiceBusFailureReason.SessionLockLost, lockLostException.Reason);
-                        return Task.CompletedTask;
+                        MaxConcurrentCallsPerSession = 1,
+                        MaxConcurrentSessions = 1,
+                        AutoCompleteMessages = false
                     };
-                    await args.CompleteMessageAsync(args.Message);
-                    SimulateNetworkFailure(client);
-                    await Task.Delay(lockDuration.Add(lockDuration));
-                    Assert.IsTrue(sessionLockLostEventRaised);
-                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
-                    tcs.SetResult(true);
-                }
-                processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += SessionErrorHandler;
+                    if (!connectionDropped)
+                    {
+                        options.MaxAutoLockRenewalDuration = TimeSpan.Zero;
+                    }
+                    await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
 
-                await processor.StartProcessingAsync();
-                await tcs.Task;
-                await processor.CloseAsync();
+                    var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    int notificationCount = 0;
+                    async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                    {
+                        Task OnSessionLockLost(SessionLockLostEventArgs lockLostArgs)
+                        {
+                            Interlocked.Increment(ref notificationCount);
+                            try
+                            {
+                                Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                                Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
+                                if (connectionDropped && !disableEagerNotification)
+                                {
+                                    var lockLostException = lockLostArgs.Exception as ServiceBusException;
+                                    Assert.IsNotNull(lockLostException);
+                                    Assert.AreEqual(ServiceBusFailureReason.SessionLockLost, lockLostException.Reason);
+                                }
+                                return Task.CompletedTask;
+                            }
+                            catch (Exception exception)
+                            {
+                                tcs.TrySetException(exception);
+                                return Task.CompletedTask;
+                            }
+                        }
+                        args.SessionLockLostAsync += OnSessionLockLost;
+                        try
+                        {
+                            await args.CompleteMessageAsync(args.Message);
+                            if (connectionDropped)
+                            {
+                                SimulateNetworkFailure(client);
+                            }
+                            await Task.Delay(lockDuration.Add(lockDuration));
+                            Assert.That(Volatile.Read(ref notificationCount), Is.EqualTo(1));
+                            Assert.AreEqual(!disableEagerNotification, args.CancellationToken.IsCancellationRequested);
+                            tcs.TrySetResult(true);
+                        }
+                        catch (Exception exception)
+                        {
+                            tcs.TrySetException(exception);
+                        }
+                        finally
+                        {
+                            args.SessionLockLostAsync -= OnSessionLockLost;
+                        }
+                    }
+                    processor.ProcessMessageAsync += ProcessMessage;
+                    processor.ProcessErrorAsync += SessionErrorHandler;
+
+                    try
+                    {
+                        await processor.StartProcessingAsync();
+                        Assert.That(await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromMinutes(1))), Is.SameAs(tcs.Task));
+                        await tcs.Task;
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            await processor.StopProcessingAsync();
+                        }
+                        finally
+                        {
+                            processor.ProcessMessageAsync -= ProcessMessage;
+                            processor.ProcessErrorAsync -= SessionErrorHandler;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                compatibilitySwitch.Dispose();
+                if (previousSwitch.HasValue)
+                {
+                    AppContext.SetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, previousSwitch.Value);
+                }
             }
         }
 
