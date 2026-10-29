@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="properties"> The properties of the Traffic Manager health policy. </param>
         /// <param name="kind"> The kind of the Traffic Manager health policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProbeHealthPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateTrafficManagerHealthPolicyProperties properties, HealthPolicyKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
+        internal ProbeHealthPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthPolicyProperties properties, HealthPolicyKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, properties, kind, additionalBinaryDataProperties)
         {
         }
     }

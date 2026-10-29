@@ -13,52 +13,52 @@ using Azure.ResourceManager.PrivateTrafficManager;
 
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
-    /// <summary> Min and max value of a status code range. </summary>
-    public partial class PrivateTrafficManagerExpectedStatusCodeRange : IJsonModel<PrivateTrafficManagerExpectedStatusCodeRange>
+    /// <summary> Custom header name and value. </summary>
+    public partial class ProbeCustomHeader : IJsonModel<ProbeCustomHeader>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerExpectedStatusCodeRange PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProbeCustomHeader PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeCustomHeader>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateTrafficManagerExpectedStatusCodeRange(document.RootElement, options);
+                        return DeserializeProbeCustomHeader(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerExpectedStatusCodeRange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProbeCustomHeader)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeCustomHeader>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerExpectedStatusCodeRange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProbeCustomHeader)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProbeCustomHeader>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerExpectedStatusCodeRange IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProbeCustomHeader IPersistableModel<ProbeCustomHeader>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProbeCustomHeader>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateTrafficManagerExpectedStatusCodeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProbeCustomHeader>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeCustomHeader>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerExpectedStatusCodeRange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProbeCustomHeader)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Min))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("min"u8);
-                writer.WriteNumberValue(Min.Value);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Max))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("max"u8);
-                writer.WriteNumberValue(Max.Value);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,42 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerExpectedStatusCodeRange IJsonModel<PrivateTrafficManagerExpectedStatusCodeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProbeCustomHeader IJsonModel<ProbeCustomHeader>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerExpectedStatusCodeRange JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProbeCustomHeader JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerExpectedStatusCodeRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeCustomHeader>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerExpectedStatusCodeRange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProbeCustomHeader)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateTrafficManagerExpectedStatusCodeRange(document.RootElement, options);
+            return DeserializeProbeCustomHeader(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateTrafficManagerExpectedStatusCodeRange DeserializePrivateTrafficManagerExpectedStatusCodeRange(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProbeCustomHeader DeserializeProbeCustomHeader(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? min = default;
-            int? max = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("min"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    min = prop.Value.GetInt32();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("max"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    max = prop.Value.GetInt32();
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +146,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateTrafficManagerExpectedStatusCodeRange(min, max, additionalBinaryDataProperties);
+            return new ProbeCustomHeader(name, value, additionalBinaryDataProperties);
         }
     }
 }

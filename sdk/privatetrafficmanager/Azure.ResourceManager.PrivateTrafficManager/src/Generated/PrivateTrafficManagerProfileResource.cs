@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateTrafficManagerProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateTrafficManagerProfileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateTrafficManager", ResourceType.Namespace, Diagnostics);
-            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateTrafficManagerProfileApiVersion ?? "2026-10-01-preview");
+            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateTrafficManagerProfiles", out string profilesApiVersionOverride) ? profilesApiVersionOverride : "2026-10-01-preview");
             ValidateResourceId(id);
         }
 

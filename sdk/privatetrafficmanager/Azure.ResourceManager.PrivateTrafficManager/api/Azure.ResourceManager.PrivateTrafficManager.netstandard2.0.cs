@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     public abstract partial class HealthPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.HealthPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.HealthPolicyData>
     {
         internal HealthPolicyData() { }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -385,22 +385,22 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     public static partial class ArmPrivateTrafficManagerModelFactory
     {
-        public static Azure.ResourceManager.PrivateTrafficManager.HealthPolicyData HealthPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties properties = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange ExpectedStatusCodeRange(int? min = default(int?), int? max = default(int?)) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.HealthPolicyData HealthPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties properties = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties HealthPolicyProperties(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig probeConfig = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig PrivateTrafficManagerDnsConfig(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsRecordType? recordType = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsRecordType?), long? timeToLiveInSeconds = default(long?)) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.PrivateTrafficManagerEndpointData PrivateTrafficManagerEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointPatch PrivateTrafficManagerEndpointPatch(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointPatchProperties PrivateTrafficManagerEndpointPatchProperties(string target = null, string monitoringTarget = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus? endpointStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus?), long? weight = default(long?), long? priority = default(long?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus?), Azure.Core.ResourceIdentifier healthPolicyId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualNetworkIds = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointProperties PrivateTrafficManagerEndpointProperties(string target = null, string monitoringTarget = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus? endpointStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointKind? kind = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointKind?), long? weight = default(long?), long? priority = default(long?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus?), Azure.Core.ResourceIdentifier healthPolicyId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualNetworkIds = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange PrivateTrafficManagerExpectedStatusCodeRange(int? min = default(int?), int? max = default(int?)) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties PrivateTrafficManagerHealthPolicyProperties(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig probeConfig = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig PrivateTrafficManagerProbeConfig(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol? protocol = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol?), long? port = default(long?), string path = null, long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader> customHeaders = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange> expectedStatusCodeRanges = null) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader PrivateTrafficManagerProbeCustomHeader(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.PrivateTrafficManagerProfileData PrivateTrafficManagerProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint PrivateTrafficManagerProfileEndpoint(string name = null, string target = null, string monitoringTarget = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus? endpointStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointKind? kind = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointKind?), long? weight = default(long?), long? priority = default(long?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus? alwaysServe = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointAlwaysServeStatus?), Azure.Core.ResourceIdentifier healthPolicyId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualNetworkIds = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatch PrivateTrafficManagerProfilePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode? customTopologyMapMode = default(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig dnsConfig = null, Azure.Core.ResourceIdentifier topologyMapId = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? profileStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod? trafficRoutingMethod = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint> endpoints = null) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode? customTopologyMapMode = default(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig dnsConfig = null, Azure.Core.ResourceIdentifier topologyMapId = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? profileStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod? trafficRoutingMethod = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint> endpoints = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy ProbeHealthPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode? customTopologyMapMode = default(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig dnsConfig = null, Azure.Core.ResourceIdentifier topologyMapId = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? profileStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod? trafficRoutingMethod = default(Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint> endpoints = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode? customTopologyMapMode = default(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode?), Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig dnsConfig = null, Azure.Core.ResourceIdentifier topologyMapId = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? profileStatus = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus?), Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod? trafficRoutingMethod = default(Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint> endpoints = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig ProbeConfig(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol? protocol = default(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol?), long? port = default(long?), string path = null, long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader> customHeaders = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange> expectedStatusCodeRanges = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader ProbeCustomHeader(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy ProbeHealthPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.ProfileProbingGatewayData ProfileProbingGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PrivateTrafficManager.Models.ProfileProbingGatewayProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.ProfileProbingGatewayPatch ProfileProbingGatewayPatch(Azure.Core.ResourceIdentifier probingGatewayId = null) { throw null; }
         public static Azure.ResourceManager.PrivateTrafficManager.Models.ProfileProbingGatewayProperties ProfileProbingGatewayProperties(Azure.Core.ResourceIdentifier probingGatewayId = null, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? provisioningState = default(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState?)) { throw null; }
@@ -429,6 +429,36 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode left, Azure.ResourceManager.PrivateTrafficManager.Models.CustomTopologyMapMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ExpectedStatusCodeRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>
+    {
+        public ExpectedStatusCodeRange() { }
+        public int? Max { get { throw null; } set { } }
+        public int? Min { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>
+    {
+        public HealthPolicyProperties() { }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig ProbeConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.HealthPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PrivateTrafficManagerDnsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerDnsConfig>
     {
@@ -571,90 +601,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerEndpointStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateTrafficManagerExpectedStatusCodeRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>
-    {
-        public PrivateTrafficManagerExpectedStatusCodeRange() { }
-        public int? Max { get { throw null; } set { } }
-        public int? Min { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateTrafficManagerHealthPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>
-    {
-        public PrivateTrafficManagerHealthPolicyProperties() { }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig ProbeConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerHealthPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateTrafficManagerProbeConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>
-    {
-        public PrivateTrafficManagerProbeConfig() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader> CustomHeaders { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerExpectedStatusCodeRange> ExpectedStatusCodeRanges { get { throw null; } }
-        public long? IntervalInSeconds { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public long? Port { get { throw null; } set { } }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol? Protocol { get { throw null; } set { } }
-        public long? TimeoutInSeconds { get { throw null; } set { } }
-        public long? ToleratedNumberOfFailures { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateTrafficManagerProbeCustomHeader : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>
-    {
-        public PrivateTrafficManagerProbeCustomHeader() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeCustomHeader>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateTrafficManagerProbeProtocol : System.IEquatable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateTrafficManagerProbeProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol Http { get { throw null; } }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol Https { get { throw null; } }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol Tcp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProbeProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PrivateTrafficManagerProfileEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint>
     {
         public PrivateTrafficManagerProfileEndpoint(string name, string target) { }
@@ -702,7 +648,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileEndpoint> Endpoints { get { throw null; } }
         public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TopologyMapId { get { throw null; } set { } }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfilePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -722,7 +668,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
         public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TopologyMapId { get { throw null; } set { } }
-        public Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProfileProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -772,23 +718,41 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateTrafficManagerRoutingMethod : System.IEquatable<Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod>
+    public partial class ProbeConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateTrafficManagerRoutingMethod(string value) { throw null; }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod Priority { get { throw null; } }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod VNet { get { throw null; } }
-        public static Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod Weighted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod left, Azure.ResourceManager.PrivateTrafficManager.Models.PrivateTrafficManagerRoutingMethod right) { throw null; }
-        public override string ToString() { throw null; }
+        public ProbeConfig() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader> CustomHeaders { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.PrivateTrafficManager.Models.ExpectedStatusCodeRange> ExpectedStatusCodeRanges { get { throw null; } }
+        public long? IntervalInSeconds { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public long? Port { get { throw null; } set { } }
+        public Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol? Protocol { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public long? ToleratedNumberOfFailures { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProbeCustomHeader : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>
+    {
+        public ProbeCustomHeader() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeCustomHeader>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProbeHealthPolicy : Azure.ResourceManager.PrivateTrafficManager.HealthPolicyData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy>
     {
@@ -802,6 +766,24 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProbeProtocol : System.IEquatable<Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProbeProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol Https { get { throw null; } }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol Tcp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol left, Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol left, Azure.ResourceManager.PrivateTrafficManager.Models.ProbeProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ProfileProbingGatewayPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProfileProbingGatewayPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.ProfileProbingGatewayPatch>
     {
@@ -922,5 +904,23 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         Azure.ResourceManager.PrivateTrafficManager.Models.TopologyMapSiteProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.TopologyMapSiteProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.TopologyMapSiteProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateTrafficManager.Models.TopologyMapSiteProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficRoutingMethod : System.IEquatable<Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficRoutingMethod(string value) { throw null; }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod Priority { get { throw null; } }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod VNet { get { throw null; } }
+        public static Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod Weighted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod left, Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod left, Azure.ResourceManager.PrivateTrafficManager.Models.TrafficRoutingMethod right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

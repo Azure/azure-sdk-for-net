@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="properties"> The properties of the Traffic Manager health policy. </param>
         /// <param name="kind"> The kind of the Traffic Manager health policy. </param>
         /// <returns> A new <see cref="PrivateTrafficManager.HealthPolicyData"/> instance for mocking. </returns>
-        public static HealthPolicyData HealthPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateTrafficManagerHealthPolicyProperties properties = default, string kind = default)
+        public static HealthPolicyData HealthPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthPolicyProperties properties = default, string kind = default)
         {
             return new UnknownHealthPolicy(
                 id,
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Class representing the health policy for Traffic Manager profile properties. </summary>
         /// <param name="probeConfig"> Probe monitoring settings of the Traffic Manager profile. Only applicable when the parent health policy `kind` is `Probe`. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.PrivateTrafficManagerHealthPolicyProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerHealthPolicyProperties PrivateTrafficManagerHealthPolicyProperties(PrivateTrafficManagerProbeConfig probeConfig = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.HealthPolicyProperties"/> instance for mocking. </returns>
+        public static HealthPolicyProperties HealthPolicyProperties(ProbeConfig probeConfig = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
-            return new PrivateTrafficManagerHealthPolicyProperties(probeConfig, provisioningState, default);
+            return new HealthPolicyProperties(probeConfig, provisioningState, default);
         }
 
         /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
@@ -141,40 +141,40 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="toleratedNumberOfFailures"> The number of consecutive failed health check that Traffic Manager tolerates before declaring an endpoint in this profile Degraded after the next failed health check. </param>
         /// <param name="customHeaders"> List of custom headers. </param>
         /// <param name="expectedStatusCodeRanges"> List of expected status code ranges. </param>
-        /// <returns> A new <see cref="Models.PrivateTrafficManagerProbeConfig"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProbeConfig PrivateTrafficManagerProbeConfig(PrivateTrafficManagerProbeProtocol? protocol = default, long? port = default, string path = default, long? intervalInSeconds = default, long? timeoutInSeconds = default, long? toleratedNumberOfFailures = default, IEnumerable<PrivateTrafficManagerProbeCustomHeader> customHeaders = default, IEnumerable<PrivateTrafficManagerExpectedStatusCodeRange> expectedStatusCodeRanges = default)
+        /// <returns> A new <see cref="Models.ProbeConfig"/> instance for mocking. </returns>
+        public static ProbeConfig ProbeConfig(ProbeProtocol? protocol = default, long? port = default, string path = default, long? intervalInSeconds = default, long? timeoutInSeconds = default, long? toleratedNumberOfFailures = default, IEnumerable<ProbeCustomHeader> customHeaders = default, IEnumerable<ExpectedStatusCodeRange> expectedStatusCodeRanges = default)
         {
-            customHeaders ??= new ChangeTrackingList<PrivateTrafficManagerProbeCustomHeader>();
-            expectedStatusCodeRanges ??= new ChangeTrackingList<PrivateTrafficManagerExpectedStatusCodeRange>();
+            customHeaders ??= new ChangeTrackingList<ProbeCustomHeader>();
+            expectedStatusCodeRanges ??= new ChangeTrackingList<ExpectedStatusCodeRange>();
 
-            return new PrivateTrafficManagerProbeConfig(
+            return new ProbeConfig(
                 protocol,
                 port,
                 path,
                 intervalInSeconds,
                 timeoutInSeconds,
                 toleratedNumberOfFailures,
-                (customHeaders ?? new ChangeTrackingList<PrivateTrafficManagerProbeCustomHeader>()).ToList(),
-                (expectedStatusCodeRanges ?? new ChangeTrackingList<PrivateTrafficManagerExpectedStatusCodeRange>()).ToList(),
+                (customHeaders ?? new ChangeTrackingList<ProbeCustomHeader>()).ToList(),
+                (expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRange>()).ToList(),
                 default);
         }
 
         /// <summary> Custom header name and value. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
-        /// <returns> A new <see cref="Models.PrivateTrafficManagerProbeCustomHeader"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProbeCustomHeader PrivateTrafficManagerProbeCustomHeader(string name = default, string value = default)
+        /// <returns> A new <see cref="Models.ProbeCustomHeader"/> instance for mocking. </returns>
+        public static ProbeCustomHeader ProbeCustomHeader(string name = default, string value = default)
         {
-            return new PrivateTrafficManagerProbeCustomHeader(name, value, default);
+            return new ProbeCustomHeader(name, value, default);
         }
 
         /// <summary> Min and max value of a status code range. </summary>
         /// <param name="min"> Min status code. </param>
         /// <param name="max"> Max status code. </param>
-        /// <returns> A new <see cref="Models.PrivateTrafficManagerExpectedStatusCodeRange"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerExpectedStatusCodeRange PrivateTrafficManagerExpectedStatusCodeRange(int? min = default, int? max = default)
+        /// <returns> A new <see cref="Models.ExpectedStatusCodeRange"/> instance for mocking. </returns>
+        public static ExpectedStatusCodeRange ExpectedStatusCodeRange(int? min = default, int? max = default)
         {
-            return new PrivateTrafficManagerExpectedStatusCodeRange(min, max, default);
+            return new ExpectedStatusCodeRange(min, max, default);
         }
 
         /// <summary> Class representing a Traffic Manager health policy of kind Probe. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the Traffic Manager health policy. </param>
         /// <returns> A new <see cref="Models.ProbeHealthPolicy"/> instance for mocking. </returns>
-        public static ProbeHealthPolicy ProbeHealthPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateTrafficManagerHealthPolicyProperties properties = default)
+        public static ProbeHealthPolicy ProbeHealthPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthPolicyProperties properties = default)
         {
             return new ProbeHealthPolicy(
                 id,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerProfileProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, PrivateTrafficManagerRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
+        public static PrivateTrafficManagerProfileProperties PrivateTrafficManagerProfileProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default, PrivateTrafficManagerProvisioningState? provisioningState = default)
         {
             endpoints ??= new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <returns> A new <see cref="Models.PrivateTrafficManagerProfilePatchProperties"/> instance for mocking. </returns>
-        public static PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, PrivateTrafficManagerRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default)
+        public static PrivateTrafficManagerProfilePatchProperties PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode = default, PrivateTrafficManagerDnsConfig dnsConfig = default, ResourceIdentifier topologyMapId = default, PrivateTrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, IEnumerable<PrivateTrafficManagerProfileEndpoint> endpoints = default)
         {
             endpoints ??= new ChangeTrackingList<PrivateTrafficManagerProfileEndpoint>();
 

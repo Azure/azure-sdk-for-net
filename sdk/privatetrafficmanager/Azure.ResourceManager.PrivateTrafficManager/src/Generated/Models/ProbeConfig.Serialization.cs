@@ -14,51 +14,51 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
-    public partial class PrivateTrafficManagerProbeConfig : IJsonModel<PrivateTrafficManagerProbeConfig>
+    public partial class ProbeConfig : IJsonModel<ProbeConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerProbeConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProbeConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateTrafficManagerProbeConfig(document.RootElement, options);
+                        return DeserializeProbeConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProbeConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProbeConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateTrafficManagerProbeConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProbeConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateTrafficManagerProbeConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProbeConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerProbeConfig IPersistableModel<PrivateTrafficManagerProbeConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProbeConfig IPersistableModel<ProbeConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateTrafficManagerProbeConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProbeConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateTrafficManagerProbeConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProbeConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerProbeConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProbeConfig)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
-                foreach (PrivateTrafficManagerProbeCustomHeader item in CustomHeaders)
+                foreach (ProbeCustomHeader item in CustomHeaders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();
-                foreach (PrivateTrafficManagerExpectedStatusCodeRange item in ExpectedStatusCodeRanges)
+                foreach (ExpectedStatusCodeRange item in ExpectedStatusCodeRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,37 +143,37 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateTrafficManagerProbeConfig IJsonModel<PrivateTrafficManagerProbeConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProbeConfig IJsonModel<ProbeConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateTrafficManagerProbeConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProbeConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateTrafficManagerProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProbeConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateTrafficManagerProbeConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProbeConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateTrafficManagerProbeConfig(document.RootElement, options);
+            return DeserializeProbeConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateTrafficManagerProbeConfig DeserializePrivateTrafficManagerProbeConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProbeConfig DeserializeProbeConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PrivateTrafficManagerProbeProtocol? protocol = default;
+            ProbeProtocol? protocol = default;
             long? port = default;
             string path = default;
             long? intervalInSeconds = default;
             long? timeoutInSeconds = default;
             long? toleratedNumberOfFailures = default;
-            IList<PrivateTrafficManagerProbeCustomHeader> customHeaders = default;
-            IList<PrivateTrafficManagerExpectedStatusCodeRange> expectedStatusCodeRanges = default;
+            IList<ProbeCustomHeader> customHeaders = default;
+            IList<ExpectedStatusCodeRange> expectedStatusCodeRanges = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    protocol = new PrivateTrafficManagerProbeProtocol(prop.Value.GetString());
+                    protocol = new ProbeProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    List<PrivateTrafficManagerProbeCustomHeader> array = new List<PrivateTrafficManagerProbeCustomHeader>();
+                    List<ProbeCustomHeader> array = new List<ProbeCustomHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateTrafficManagerProbeCustomHeader.DeserializePrivateTrafficManagerProbeCustomHeader(item, options));
+                        array.Add(ProbeCustomHeader.DeserializeProbeCustomHeader(item, options));
                     }
                     customHeaders = array;
                     continue;
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    List<PrivateTrafficManagerExpectedStatusCodeRange> array = new List<PrivateTrafficManagerExpectedStatusCodeRange>();
+                    List<ExpectedStatusCodeRange> array = new List<ExpectedStatusCodeRange>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateTrafficManagerExpectedStatusCodeRange.DeserializePrivateTrafficManagerExpectedStatusCodeRange(item, options));
+                        array.Add(ExpectedStatusCodeRange.DeserializeExpectedStatusCodeRange(item, options));
                     }
                     expectedStatusCodeRanges = array;
                     continue;
@@ -260,15 +260,15 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateTrafficManagerProbeConfig(
+            return new ProbeConfig(
                 protocol,
                 port,
                 path,
                 intervalInSeconds,
                 timeoutInSeconds,
                 toleratedNumberOfFailures,
-                customHeaders ?? new ChangeTrackingList<PrivateTrafficManagerProbeCustomHeader>(),
-                expectedStatusCodeRanges ?? new ChangeTrackingList<PrivateTrafficManagerExpectedStatusCodeRange>(),
+                customHeaders ?? new ChangeTrackingList<ProbeCustomHeader>(),
+                expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRange>(),
                 additionalBinaryDataProperties);
         }
     }

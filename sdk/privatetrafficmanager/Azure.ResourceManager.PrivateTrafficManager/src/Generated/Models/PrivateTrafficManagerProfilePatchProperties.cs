@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="trafficRoutingMethod"> The traffic routing method of the Private Traffic Manager profile. </param>
         /// <param name="endpoints"> The list of endpoints in the Private Traffic Manager profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, PrivateTrafficManagerRoutingMethod? trafficRoutingMethod, IList<PrivateTrafficManagerProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProfilePatchProperties(CustomTopologyMapMode? customTopologyMapMode, PrivateTrafficManagerDnsConfig dnsConfig, ResourceIdentifier topologyMapId, PrivateTrafficManagerProfileStatus? profileStatus, TrafficRoutingMethod? trafficRoutingMethod, IList<PrivateTrafficManagerProfileEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomTopologyMapMode = customTopologyMapMode;
             DnsConfig = dnsConfig;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public PrivateTrafficManagerProfileStatus? ProfileStatus { get; set; }
 
         /// <summary> The traffic routing method of the Private Traffic Manager profile. </summary>
-        public PrivateTrafficManagerRoutingMethod? TrafficRoutingMethod { get; set; }
+        public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
 
         /// <summary> The list of endpoints in the Private Traffic Manager profile. </summary>
         public IList<PrivateTrafficManagerProfileEndpoint> Endpoints { get; }

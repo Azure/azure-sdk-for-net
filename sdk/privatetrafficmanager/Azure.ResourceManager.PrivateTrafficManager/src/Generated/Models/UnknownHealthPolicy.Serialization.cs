@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            PrivateTrafficManagerHealthPolicyProperties properties = default;
+            HealthPolicyProperties properties = default;
             HealthPolicyKind? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    properties = PrivateTrafficManagerHealthPolicyProperties.DeserializePrivateTrafficManagerHealthPolicyProperties(prop.Value, options);
+                    properties = HealthPolicyProperties.DeserializeHealthPolicyProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

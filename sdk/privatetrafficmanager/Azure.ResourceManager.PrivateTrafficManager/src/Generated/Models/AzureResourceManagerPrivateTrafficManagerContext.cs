@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ExpectedStatusCodeRange))]
     [ModelReaderWriterBuildable(typeof(HealthPolicyData))]
+    [ModelReaderWriterBuildable(typeof(HealthPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(HealthPolicyResource))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerDnsConfig))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointData))]
@@ -23,16 +25,14 @@ namespace Azure.ResourceManager.PrivateTrafficManager
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointPatchProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerEndpointResource))]
-    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerExpectedStatusCodeRange))]
-    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerHealthPolicyProperties))]
-    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProbeConfig))]
-    [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProbeCustomHeader))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileData))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfilePatch))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfilePatchProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateTrafficManagerProfileResource))]
+    [ModelReaderWriterBuildable(typeof(ProbeConfig))]
+    [ModelReaderWriterBuildable(typeof(ProbeCustomHeader))]
     [ModelReaderWriterBuildable(typeof(ProbeHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ProfileProbingGatewayData))]
     [ModelReaderWriterBuildable(typeof(ProfileProbingGatewayPatch))]

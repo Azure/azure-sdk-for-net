@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             PrivateTrafficManagerDnsConfig dnsConfig = default;
             ResourceIdentifier topologyMapId = default;
             PrivateTrafficManagerProfileStatus? profileStatus = default;
-            PrivateTrafficManagerRoutingMethod? trafficRoutingMethod = default;
+            TrafficRoutingMethod? trafficRoutingMethod = default;
             IList<PrivateTrafficManagerProfileEndpoint> endpoints = default;
             PrivateTrafficManagerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    trafficRoutingMethod = new PrivateTrafficManagerRoutingMethod(prop.Value.GetString());
+                    trafficRoutingMethod = new TrafficRoutingMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpoints"u8))
