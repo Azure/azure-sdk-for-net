@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(BatchMode))
+            if (Optional.IsDefined(IsBatchMode))
             {
                 writer.WritePropertyName("batchMode"u8);
-                writer.WriteBooleanValue(BatchMode.Value);
+                writer.WriteBooleanValue(IsBatchMode.Value);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string profileName = default;
-            bool? batchMode = default;
+            bool? isBatchMode = default;
             IList<BatchRuleProperties> rules = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    batchMode = prop.Value.GetBoolean();
+                    isBatchMode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("rules"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 deploymentStatus,
                 additionalBinaryDataProperties,
                 profileName,
-                batchMode,
+                isBatchMode,
                 rules ?? new ChangeTrackingList<BatchRuleProperties>());
         }
     }

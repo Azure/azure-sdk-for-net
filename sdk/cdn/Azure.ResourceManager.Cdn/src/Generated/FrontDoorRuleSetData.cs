@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Cdn
         /// For switching modes, a new rule set needs to be created with the desired mode and rules need to be migrated to the new rule set.
         /// </summary>
         [WirePath("properties.batchMode")]
-        public bool? BatchMode
+        public bool? IsBatchMode
         {
             get
             {
-                return Properties is null ? default : Properties.BatchMode;
+                return Properties is null ? default : Properties.IsBatchMode;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new CdnRuleSetProperties();
                 }
-                Properties.BatchMode = value;
+                Properties.IsBatchMode = value;
             }
         }
 

@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        /// <param name="batchMode">
+        /// <param name="isBatchMode">
         /// Indicates whether rule set is in batch mode. When batch mode is enabled, rules will be processed in a batch along with the rule set.
         /// When batch mode is disabled, rules would need to be processed independently.
         /// This property can only be set during rule set creation and cannot be updated later.
@@ -688,19 +688,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// This property will be ignored if the rule set is not in batch mode.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorRuleSetData"/> instance for mocking. </returns>
-        public static FrontDoorRuleSetData FrontDoorRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, bool? batchMode = default, IEnumerable<BatchRuleProperties> rules = default)
+        public static FrontDoorRuleSetData FrontDoorRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, bool? isBatchMode = default, IEnumerable<BatchRuleProperties> rules = default)
         {
             return new FrontDoorRuleSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && deploymentStatus is null && profileName is null && batchMode is null && rules is null ? default : new CdnRuleSetProperties(
+                provisioningState is null && deploymentStatus is null && profileName is null && isBatchMode is null && rules is null ? default : new CdnRuleSetProperties(
                     provisioningState,
                     deploymentStatus,
                     default,
                     profileName,
-                    batchMode,
+                    isBatchMode,
                     (rules ?? new ChangeTrackingList<BatchRuleProperties>()).ToList()),
                 default);
         }

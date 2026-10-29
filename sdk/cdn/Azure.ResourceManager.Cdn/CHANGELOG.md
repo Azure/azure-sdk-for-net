@@ -5,7 +5,7 @@
 ### Features Added
 
 - Upgraded api-version to 2026-10-01.
-- Added support for creating a rule set together with its rules in batch mode via `FrontDoorRuleSetData.BatchMode` and `FrontDoorRuleSetData.Rules`.
+- Added support for creating a rule set together with its rules in batch mode via `FrontDoorRuleSetData.IsBatchMode` and `FrontDoorRuleSetData.Rules`.
 - Added server TLS group configuration via `AfdServerTlsGroupPolicy` and `AfdServerTlsGroup`.
 - Added `CertificateNameCheckValidationMode` and `CustomCertificateSubjects` to Front Door origins.
 - Added `TokenDestinationHeader` to `OriginAuthenticationProperties`.
