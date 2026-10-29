@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Upgraded the API version to `2026-07-01`.
+- Added vault and recovery point immutability configuration support.
+- Added PostgreSQL Flexible Server backup solution settings.
+
 ### Breaking Changes
 
 ### Bugs Fixed
