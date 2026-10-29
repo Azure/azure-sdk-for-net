@@ -28,6 +28,8 @@ Install the Microsoft Azure Attestation client library for .NET with [NuGet][nug
 dotnet add package Azure.Security.Attestation --prerelease
 ```
 
+If you're upgrading from version 1.0.0, see the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/attestation/Azure.Security.Attestation/MigrationGuide.md): version 2.0.0 changes how attestation tokens are validated.
+
 ### Authenticate the client
 
 In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][attestation_client] or [Attestation Administration Client][attestation_admin_client] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
@@ -118,6 +120,8 @@ the certificate issued by the server can be verified using the [oe_verify_attest
 
 The [`AttestationResponse`][attestation_response] object contains two main properties: [`Token`][attestation_response_token] and [`Value`][attestation_response_value]. The `Token` property contains the complete token returned by the attestation service, the `Value` property contains the body of the JSON Web Token response.
 
+By default, the clients validate every token the service returns, including that it was issued by the client's endpoint. The exception is `AttestAzureGuest`: the service encrypts its token to the virtual machine's TPM, so the client can't decrypt or validate it, and you must validate the token yourself after decrypting it inside the virtual machine. When you validate a token yourself, for example in a relying party, with `AttestationToken.ValidateToken`, pass the signing certificates retrieved with `GetSigningCertificates` from the attestation provider the token must come from, and set `AttestationTokenValidationOptions.ExpectedIssuer` to that provider's base URI. A token is never trusted because of certificates it carries itself. See [Validate an attestation token in a relying party](#validate-an-attestation-token-in-a-relying-party).
+
 ### Policy Management
 
 Each attestation service instance has a policy applied to it which defines additional criteria which the customer has defined.
@@ -145,7 +149,7 @@ Currently, MAA supports the following Trusted Execution environments:
 * Tpm - A Virtualization Based Security environment where the Trusted Platform Module of the processor is used to provide the attestation evidence.
 * SevSnpVm - A confidential virtual machine protected by AMD SEV-SNP. Attested with `AttestSevSnpVm`.
 * TdxVm - A confidential virtual machine protected by Intel(tm) TDX. Attested with `AttestTdxVm`, which requires service version `V2025_06_01` (the default) or later.
-* AzureGuest - An Azure confidential or Trusted Launch virtual machine. Attested with `AttestAzureGuest`, which sends the attestation information collected inside the virtual machine, for example by the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation), and returns the token sealed to the virtual machine's TPM. Only that virtual machine can decrypt the token; the decrypted token can then be validated and read with `AttestationToken`.
+* AzureGuest - An Azure confidential or Trusted Launch virtual machine. Attested with `AttestAzureGuest`, which sends the attestation information collected inside the virtual machine, for example by the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation), and returns the token sealed to the virtual machine's TPM. Only that virtual machine can decrypt the token; the decrypted token must then be validated with `AttestationToken.ValidateToken`, and can be read with `AttestationToken`.
 
 ### Runtime Data and Inittime Data
 
@@ -178,6 +182,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 * [Get attestation policy](#get-attestation-policy)
 * [Set an attestation policy](#set-an-attestation-policy-for-a-specified-attestation-type)
 * [Attest an SGX enclave](#attest-sgx-enclave)
+* [Validate an attestation token in a relying party](#validate-an-attestation-token-in-a-relying-party)
 * [Attest a TDX confidential VM](#attest-a-tdx-confidential-vm)
 * [Attest an SEV-SNP confidential VM](#attest-an-sev-snp-confidential-vm)
 * [Retrieve token validation certificates](#retrieve-token-certificates)
@@ -290,6 +295,30 @@ AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEncla
 var encryptedData = SendTokenToRelyingParty(attestationResult.Token);
 
 // Now the encrypted data can be passed into the enclave which can decrypt that data.
+```
+
+### Validate an attestation token in a relying party
+
+A relying party that receives an attestation token, for example in the "Secure Key Release" pattern above, must validate it before trusting its claims. Validate the token against the signing certificates of the attestation provider you trust, and require that provider as the token's issuer:
+
+```C# Snippet:ValidateAttestationTokenInRelyingParty
+// The attestation provider the relying party trusts to have issued the token.
+string attestationEndpoint = "https://myprovider.attest.azure.net";
+
+// Retrieve the provider's signing certificates. Only these certificates are trusted to have signed the
+// token; certificates carried in the token itself are not.
+var certificateClient = new AttestationClient(new Uri(attestationEndpoint), new DefaultAzureCredential());
+IReadOnlyList<AttestationSigner> signers = (await certificateClient.GetSigningCertificatesAsync()).Value;
+
+AttestationToken token = AttestationToken.Deserialize(serializedToken);
+var validationOptions = new AttestationTokenValidationOptions { ExpectedIssuer = attestationEndpoint };
+if (!await token.ValidateTokenAsync(validationOptions, signers))
+{
+    throw new InvalidOperationException("The attestation token is not valid.");
+}
+
+// The token's claims can now be trusted, for example the EnclaveHeldData with the enclave's key.
+AttestationResult attestedResult = token.GetBody<AttestationResult>();
 ```
 
 Additional information on how to perform attestation token validation can be found in the [MAA Service Attestation Sample](https://github.com/gkostal/attestation/tree/d6a216cd6af5a509e20ac0a752197fdb242fabc3/sgx.attest.sample).

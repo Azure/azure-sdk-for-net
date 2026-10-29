@@ -1959,6 +1959,59 @@ namespace Azure.Core.Tests.Identity
             Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
         }
 
+        [TestCase(1)]
+        [TestCase(4095)]
+        [TestCase(4096)]
+        [TestCase(4097)]
+        [TestCase(5000)]
+        [TestCase(16384)]
+        public async Task TokenExchangePreservesEntireAssertion(int assertionLength)
+        {
+            string assertion = new string(Enumerable.Range(0, assertionLength).Select(i => (char)('a' + i % 26)).ToArray());
+            string tokenFilePath = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllText(tokenFilePath, assertion);
+                using var environment = new TestEnvVar(new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null },
+                    { "AZURE_CLIENT_ID", "mock-client-id" },
+                    { "AZURE_TENANT_ID", "mock-tenant-id" },
+                    { "AZURE_AUTHORITY_HOST", "https://mock.authority.com/" },
+                    { "AZURE_FEDERATED_TOKEN_FILE", tokenFilePath }
+                });
+
+                int requestCount = 0;
+                var transport = new MockTransport(request =>
+                {
+                    using var stream = new MemoryStream();
+                    request.Content.WriteTo(stream, default);
+                    string content = new BinaryData(stream.ToArray()).ToString();
+                    string assertionField = content.Split('&').Single(field => field.StartsWith("client_assertion=", StringComparison.Ordinal));
+                    Assert.AreEqual(assertion, Uri.UnescapeDataString(assertionField.Substring("client_assertion=".Length)));
+                    requestCount++;
+                    return CreateMockResponseWithTokeType(200, ExpectedToken);
+                });
+
+                var credential = CreateBareCredentialWithOptions(new TokenCredentialOptions { Transport = transport });
+                AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+                Assert.AreEqual(ExpectedToken, token.Token);
+
+                File.Delete(tokenFilePath);
+                token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+                Assert.AreEqual(ExpectedToken, token.Token);
+                Assert.AreEqual(2, requestCount);
+            }
+            finally
+            {
+                File.Delete(tokenFilePath);
+            }
+        }
+
         [NonParallelizable]
         [Test]
         public async Task VerifyTokenExchangeMsiRequestMockUsesCache()

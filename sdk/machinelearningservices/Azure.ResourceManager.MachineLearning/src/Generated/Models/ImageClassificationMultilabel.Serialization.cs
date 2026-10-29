@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(ImageClassificationMultilabel)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_modelSettingsIsDefined || Optional.IsDefined(ModelSettings))
+            if (Optional.IsDefined(ModelSettings, _modelSettingsIsDefined))
             {
                 if (ModelSettings != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings, options);
-            if (_sweepSettingsIsDefined || Optional.IsDefined(SweepSettings))
+            if (Optional.IsDefined(SweepSettings, _sweepSettingsIsDefined))
             {
                 if (SweepSettings != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings"u8);
                 }
             }
-            if (_validationDataIsDefined || Optional.IsDefined(ValidationData))
+            if (Optional.IsDefined(ValidationData, _validationDataIsDefined))
             {
                 if (ValidationData != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData"u8);
                 }
             }
-            if (_validationDataSizeIsDefined || Optional.IsDefined(ValidationDataSize))
+            if (Optional.IsDefined(ValidationDataSize, _validationDataSizeIsDefined))
             {
                 if (ValidationDataSize != null)
                 {

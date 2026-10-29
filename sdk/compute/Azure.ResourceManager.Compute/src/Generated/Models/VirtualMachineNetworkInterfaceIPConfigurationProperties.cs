@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SubnetId
+        public virtual ResourceIdentifier SubnetId
         {
             get
             {

@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private VirtualMachineImage _virtualMachineImage;
-        internal bool _virtualMachineImageIsDefined;
+        private bool _virtualMachineImageIsDefined;
         private MachineLearningUserAccountCredentials _userAccountCredentials;
-        internal bool _userAccountCredentialsIsDefined;
+        private bool _userAccountCredentialsIsDefined;
         private ResourceId _subnet;
-        internal bool _subnetIsDefined;
+        private bool _subnetIsDefined;
         private int? _currentNodeCount;
-        internal bool _currentNodeCountIsDefined;
+        private bool _currentNodeCountIsDefined;
         private int? _targetNodeCount;
-        internal bool _targetNodeCountIsDefined;
+        private bool _targetNodeCountIsDefined;
         private MachineLearningNodeStateCounts _nodeStateCounts;
-        internal bool _nodeStateCountsIsDefined;
+        private bool _nodeStateCountsIsDefined;
         private bool? _enableNodePublicIP;
-        internal bool _enableNodePublicIPIsDefined;
+        private bool _enableNodePublicIPIsDefined;
         private BinaryData _propertyBag;
-        internal bool _propertyBagIsDefined;
+        private bool _propertyBagIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         public AmlComputeProperties()

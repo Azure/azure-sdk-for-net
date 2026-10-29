@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class TensorFlowDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         private int? _workerCount;
-        internal bool _workerCountIsDefined;
+        private bool _workerCountIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TensorFlowDistributionConfiguration"/>. </summary>
         public TensorFlowDistributionConfiguration() : base(DistributionType.TensorFlow)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(GetBlobReferenceForConsumptionDto)} does not support writing '{format}' format.");
             }
-            if (_blobUriIsDefined || Optional.IsDefined(BlobUri))
+            if (Optional.IsDefined(BlobUri, _blobUriIsDefined))
             {
                 if (BlobUri != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri"u8);
                 }
             }
-            if (_credentialIsDefined || Optional.IsDefined(Credential))
+            if (Optional.IsDefined(Credential, _credentialIsDefined))
             {
                 if (Credential != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("credential"u8);
                 }
             }
-            if (_storageAccountArmIdIsDefined || Optional.IsDefined(StorageAccountArmId))
+            if (Optional.IsDefined(StorageAccountArmId, _storageAccountArmIdIsDefined))
             {
                 if (StorageAccountArmId != null)
                 {

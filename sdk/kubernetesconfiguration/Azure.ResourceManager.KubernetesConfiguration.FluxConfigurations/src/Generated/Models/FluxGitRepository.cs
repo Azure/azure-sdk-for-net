@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _uri;
-        internal bool _uriIsDefined;
+        private bool _uriIsDefined;
         private long? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private long? _syncIntervalInSeconds;
-        internal bool _syncIntervalInSecondsIsDefined;
+        private bool _syncIntervalInSecondsIsDefined;
         private string _sshKnownHosts;
-        internal bool _sshKnownHostsIsDefined;
+        private bool _sshKnownHostsIsDefined;
         private string _httpsUser;
-        internal bool _httpsUserIsDefined;
+        private bool _httpsUserIsDefined;
         private string _httpsCACert;
-        internal bool _httpsCACertIsDefined;
+        private bool _httpsCACertIsDefined;
         private string _localAuthRef;
-        internal bool _localAuthRefIsDefined;
+        private bool _localAuthRefIsDefined;
         private FluxConfigurationProviderType? _provider;
-        internal bool _providerIsDefined;
+        private bool _providerIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxGitRepository"/>. </summary>
         public FluxGitRepository()

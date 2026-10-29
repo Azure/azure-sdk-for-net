@@ -7,7 +7,6 @@
 
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Batch
 {
@@ -16,7 +15,7 @@ namespace Azure.Provisioning.Batch
     {
         private BicepValue<BatchAccessRuleDirection> _direction;
         private BicepList<string> _addressPrefixes;
-        private BicepList<SubResource> _subscriptions;
+        private BicepList<AccessRulePropertiesSubscription> _subscriptions;
         private BicepList<NetworkSecurityPerimeter> _networkSecurityPerimeters;
         private BicepList<string> _fullyQualifiedDomainNames;
         private BicepList<string> _emailAddresses;
@@ -48,7 +47,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the Subscriptions. </summary>
-        public BicepList<SubResource> Subscriptions
+        public BicepList<AccessRulePropertiesSubscription> Subscriptions
         {
             get
             {
@@ -103,7 +102,7 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _direction = DefineProperty<BatchAccessRuleDirection>(nameof(Direction), new string[] { "direction" });
             _addressPrefixes = DefineListProperty<string>(nameof(AddressPrefixes), new string[] { "addressPrefixes" });
-            _subscriptions = DefineListProperty<SubResource>(nameof(Subscriptions), new string[] { "subscriptions" });
+            _subscriptions = DefineListProperty<AccessRulePropertiesSubscription>(nameof(Subscriptions), new string[] { "subscriptions" });
             _networkSecurityPerimeters = DefineListProperty<NetworkSecurityPerimeter>(nameof(NetworkSecurityPerimeters), new string[] { "networkSecurityPerimeters" });
             _fullyQualifiedDomainNames = DefineListProperty<string>(nameof(FullyQualifiedDomainNames), new string[] { "fullyQualifiedDomainNames" });
             _emailAddresses = DefineListProperty<string>(nameof(EmailAddresses), new string[] { "emailAddresses" });

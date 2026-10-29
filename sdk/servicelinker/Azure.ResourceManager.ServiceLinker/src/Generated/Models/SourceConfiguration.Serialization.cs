@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (_valueIsDefined || Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value, _valueIsDefined))
             {
                 if (Value != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("configType"u8);
                 writer.WriteStringValue(ConfigType.Value.ToString());
             }
-            if (_keyVaultReferenceIdentityIsDefined || Optional.IsDefined(KeyVaultReferenceIdentity))
+            if (Optional.IsDefined(KeyVaultReferenceIdentity, _keyVaultReferenceIdentityIsDefined))
             {
                 if (KeyVaultReferenceIdentity != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("keyVaultReferenceIdentity"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {

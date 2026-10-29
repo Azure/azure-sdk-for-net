@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string skipToken, int? skip, int? maxCount, string sortKey, string sortValue, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string skipToken, int? skip, int? top, string sortKey, string sortValue, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Network
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
             }
             if (sortKey != null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string skipToken, int? skip, int? maxCount, string sortKey, string sortValue, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkManagerName, string poolName, string skipToken, int? skip, int? top, string sortKey, string sortValue, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

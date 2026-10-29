@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {

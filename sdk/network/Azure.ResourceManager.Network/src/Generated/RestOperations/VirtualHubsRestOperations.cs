@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetEffectiveVirtualHubRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubEffectiveRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetInboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubInboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetOutboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubOutboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

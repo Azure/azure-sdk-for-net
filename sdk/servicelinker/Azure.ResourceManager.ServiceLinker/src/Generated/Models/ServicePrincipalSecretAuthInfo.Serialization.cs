@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_userNameIsDefined || Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName, _userNameIsDefined))
             {
                 if (UserName != null)
                 {

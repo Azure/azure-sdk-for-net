@@ -8,6 +8,14 @@ namespace Azure.Provisioning.Generator.Model;
 
 public abstract partial class Specification : ModelBase
 {
+    internal string LibraryNamespace => Namespace switch
+    {
+        "Azure.Provisioning.Authorization" => "Azure.Provisioning",
+        "Azure.Provisioning.Resources" => "Azure.Provisioning",
+        "Azure.Provisioning.Roles" => "Azure.Provisioning",
+        _ => Namespace!
+    };
+
     private string? _namespacePath = null;
     private string GetNamespacePath()
     {
@@ -34,13 +42,7 @@ public abstract partial class Specification : ModelBase
         }
 
         // Special case namespaces we're collapsing into the main Azure.Provisioning
-        string? ns = Namespace switch
-        {
-            "Azure.Provisioning.Authorization" => "Azure.Provisioning",
-            "Azure.Provisioning.Resources" => "Azure.Provisioning",
-            "Azure.Provisioning.Roles" => "Azure.Provisioning",
-            _ => Namespace
-        };
+        string ns = LibraryNamespace;
 
         // Add on our namespace
         if (ns is not null)

@@ -40,13 +40,21 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the URI used to communicate with the service.
         /// </summary>
-        public Uri Endpoint { get; }
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets whether this client can call <see cref="GetTcbBaselines(AttestationType, CancellationToken)"/> and
+        /// <see cref="GetTcbBaselinesAsync(AttestationType, CancellationToken)"/>: <c>true</c> when it targets
+        /// <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later. When <c>false</c>, those methods throw <see cref="NotSupportedException"/>.
+        /// </summary>
+        public virtual bool CanGetTcbBaselines { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationAdministrationClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new AttestationClientOptions())
         {
@@ -55,14 +63,16 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
-        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
+        /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use. It must use https.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> does not use https.</exception>
         public AttestationAdministrationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
+            AttestationClient.AssertHttps(endpoint);
 
             _options = options;
 
@@ -73,13 +83,14 @@ namespace Azure.Security.Attestation
             _clientDiagnostics = new ClientDiagnostics(options);
 
             Endpoint = endpoint;
+            CanGetTcbBaselines = AttestationClient.IsVersion2025_06_01OrLater(options.Version);
 
-            // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            // Initialize the Policy Rest Client. The constructor uses the endpoint parameter rather than the virtual Endpoint property.
+            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
-            _tcbBaselinesClient = new TcbBaselinesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            _tcbBaselinesClient = new TcbBaselinesRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
@@ -156,7 +167,7 @@ namespace Azure.Security.Attestation
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -243,11 +254,11 @@ namespace Azure.Security.Attestation
                     BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = policyToSet, }),
                     signingKey);
                 var result = _policyClient.Set(attestationType, tokenToSet.Serialize(), cancellationToken);
-                var token = AttestationToken.Deserialize(result.Value.Token);
+                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateToken(_options.TokenOptions, signers, cancellationToken))
+                    if (!token.ValidateToken(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -333,7 +344,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -378,7 +389,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -422,7 +433,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -479,11 +490,11 @@ namespace Azure.Security.Attestation
                 {
                     result = _policyManagementClient.Get(cancellationToken);
                 }
-                var token = AttestationToken.Deserialize(result.Value.Token);
+                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -557,7 +568,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -599,7 +610,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, true, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, true, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -642,7 +653,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -685,7 +696,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -710,7 +721,7 @@ namespace Azure.Security.Attestation
         /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
         /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines; see <see cref="CanGetTcbBaselines"/>.</exception>
         public virtual Response<TcbBaselineResult> GetTcbBaselines(AttestationType attestationType, CancellationToken cancellationToken = default)
             => GetTcbBaselinesInternalAsync(attestationType, false, cancellationToken).EnsureCompleted();
 
@@ -725,13 +736,13 @@ namespace Azure.Security.Attestation
         /// A policy selects a baseline by setting the <c>x-ms-sgx-tcbidentifier</c> claim to its <see cref="TcbBaseline.TcbIdentifier"/>.
         /// Requires <see cref="AttestationClientOptions.ServiceVersion.V2025_06_01"/> or later.
         /// </remarks>
-        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines.</exception>
+        /// <exception cref="NotSupportedException">The client targets a service version that does not support TCB baselines; see <see cref="CanGetTcbBaselines"/>.</exception>
         public virtual async Task<Response<TcbBaselineResult>> GetTcbBaselinesAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
             => await GetTcbBaselinesInternalAsync(attestationType, true, cancellationToken).ConfigureAwait(false);
 
         private async Task<Response<TcbBaselineResult>> GetTcbBaselinesInternalAsync(AttestationType attestationType, bool async, CancellationToken cancellationToken)
         {
-            if (string.CompareOrdinal(_options.Version, "2025-06-01") < 0)
+            if (!AttestationClient.IsVersion2025_06_01OrLater(_options.Version))
             {
                 throw new NotSupportedException($"TCB baselines require service version {AttestationClientOptions.ServiceVersion.V2025_06_01} or later.");
             }

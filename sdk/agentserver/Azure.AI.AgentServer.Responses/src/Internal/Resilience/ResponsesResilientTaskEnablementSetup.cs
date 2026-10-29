@@ -20,7 +20,7 @@ internal sealed class ResponsesResilientTaskEnablementSetup :
 
     public void PostConfigure(string? name, ResilientTaskOptions options)
     {
-        if (_responsesOptions.Value.ResilientBackground)
+        if (_responsesOptions.Value.ResilientBackground || _responsesOptions.Value.SteerableConversations)
         {
             options.Enabled = true;
         }

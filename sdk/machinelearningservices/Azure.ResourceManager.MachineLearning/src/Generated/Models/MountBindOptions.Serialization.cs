@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MountBindOptions)} does not support writing '{format}' format.");
             }
-            if (_propagationIsDefined || Optional.IsDefined(Propagation))
+            if (Optional.IsDefined(Propagation, _propagationIsDefined))
             {
                 if (Propagation != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("propagation"u8);
                 }
             }
-            if (_shouldCreateHostPathIsDefined || Optional.IsDefined(ShouldCreateHostPath))
+            if (Optional.IsDefined(ShouldCreateHostPath, _shouldCreateHostPathIsDefined))
             {
                 if (ShouldCreateHostPath != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createHostPath"u8);
                 }
             }
-            if (_selinuxIsDefined || Optional.IsDefined(Selinux))
+            if (Optional.IsDefined(Selinux, _selinuxIsDefined))
             {
                 if (Selinux != null)
                 {

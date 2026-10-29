@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && (_insightCreatedOnIsDefined || Optional.IsDefined(InsightCreatedOn)))
+            if (options.Format != "W" && Optional.IsDefined(InsightCreatedOn, _insightCreatedOnIsDefined))
             {
                 if (InsightCreatedOn != null)
                 {

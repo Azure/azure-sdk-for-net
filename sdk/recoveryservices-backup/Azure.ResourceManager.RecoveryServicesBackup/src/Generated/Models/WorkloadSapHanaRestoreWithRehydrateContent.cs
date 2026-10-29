@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSapHanaRestoreWithRehydrateContent : WorkloadSapHanaRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>. </summary>
-        public WorkloadSapHanaRestoreWithRehydrateContent()
+        public WorkloadSapHanaRestoreWithRehydrateContent() : base("AzureWorkloadSAPHanaRestoreWithRehydrateRequest")
         {
         }
 

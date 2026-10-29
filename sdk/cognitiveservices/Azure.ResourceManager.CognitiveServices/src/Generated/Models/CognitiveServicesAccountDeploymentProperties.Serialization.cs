@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -84,6 +85,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model, options);
             }
+            if (Optional.IsDefined(ContextCacheContainerId))
+            {
+                writer.WritePropertyName("contextCacheContainerId"u8);
+                writer.WriteStringValue(ContextCacheContainerId);
+            }
+            if (Optional.IsDefined(SpeculativeDecoding))
+            {
+                writer.WritePropertyName("speculativeDecoding"u8);
+                writer.WriteObjectValue(SpeculativeDecoding, options);
+            }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
@@ -155,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("spilloverDeploymentName"u8);
                 writer.WriteStringValue(SpilloverDeploymentName);
             }
-            if (_serviceTierIsDefined || Optional.IsDefined(ServiceTier))
+            if (Optional.IsDefined(ServiceTier, _serviceTierIsDefined))
             {
                 if (ServiceTier != null)
                 {
@@ -167,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     writer.WriteNull("serviceTier"u8);
                 }
             }
-            if (_deploymentStateIsDefined || Optional.IsDefined(DeploymentState))
+            if (Optional.IsDefined(DeploymentState, _deploymentStateIsDefined))
             {
                 if (DeploymentState != null)
                 {
@@ -183,6 +194,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("routing"u8);
                 writer.WriteObjectValue(Routing, options);
+            }
+            if (Optional.IsCollectionDefined(CostControlIds))
+            {
+                writer.WritePropertyName("costControlIds"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in CostControlIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -228,6 +254,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
             CognitiveServicesAccountDeploymentModel model = default;
+            string contextCacheContainerId = default;
+            DeploymentSpeculativeDecoding speculativeDecoding = default;
             CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
             IReadOnlyDictionary<string, string> capabilities = default;
             string raiPolicyName = default;
@@ -244,6 +272,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool deploymentStateIsDefined = false;
             CognitiveServicesDeploymentState? deploymentState = default;
             CognitiveServicesDeploymentRouting routing = default;
+            IList<ResourceIdentifier> costControlIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -263,6 +292,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("contextCacheContainerId"u8))
+                {
+                    contextCacheContainerId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("speculativeDecoding"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speculativeDecoding = DeploymentSpeculativeDecoding.DeserializeDeploymentSpeculativeDecoding(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleSettings"u8))
@@ -400,6 +443,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     routing = CognitiveServicesDeploymentRouting.DeserializeCognitiveServicesDeploymentRouting(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("costControlIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    costControlIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -408,6 +472,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
+                contextCacheContainerId,
+                speculativeDecoding,
                 scaleSettings,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 raiPolicyName,
@@ -422,6 +488,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serviceTier,
                 deploymentState,
                 routing,
+                costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 additionalBinaryDataProperties)
             {
                 _serviceTierIsDefined = serviceTierIsDefined,
