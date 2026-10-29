@@ -8,7 +8,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Xml.Linq;
+using Microsoft.Identity.Client;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -70,5 +74,30 @@ internal static class AgentAttributionExtensions
             writer.WriteStringValue(value);
         }
         return BinaryData.FromBytes(stream.ToArray());
+    }
+
+    [Experimental("OPENAI001")]
+    internal static void ApplyPatch(this ResponseItem item, in JsonPatch patch)
+    {
+        BinaryData patchBin = null;
+        // Write JsonPatch to Memory stream as a regular JSON.
+        using (MemoryStream stream = new())
+        {
+            Utf8JsonWriter writer = new(stream);
+            patch.WriteTo(writer);
+            writer.Flush();
+            patchBin = new BinaryData(stream.ToArray());
+        }
+        if (patchBin == null || patchBin.IsEmpty)
+        {
+            return;
+        }
+        // Deserializae JSON to the correct JsonPatrch object.
+        Utf8JsonReader reader = new(patchBin);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
+        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        {
+            item.Patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
+        }
     }
 }
