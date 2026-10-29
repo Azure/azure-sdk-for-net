@@ -57,11 +57,17 @@ namespace Azure.ResourceManager.Peering.Mocking
 
         private ClientDiagnostics PeeringsClientDiagnostics => _peeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Peerings PeeringsRestClient => _peeringsRestClient ??= new Peerings(PeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
+        private Peerings PeeringsRestClient => _peeringsRestClient ??= new Peerings(PeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Peering/peerings", out string apiVersion) ? apiVersion : "2025-05-01");
 
         private ClientDiagnostics PeeringServicesClientDiagnostics => _peeringServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServices PeeringServicesRestClient => _peeringServicesRestClient ??= new PeeringServices(PeeringServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
+        private PeeringServices PeeringServicesRestClient => _peeringServicesRestClient ??= new PeeringServices(
+            PeeringServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-05-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         private ClientDiagnostics PeeringClientClientDiagnostics => _peeringClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
             _expressRouteCrossConnectionPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _expressRouteCrossConnectionPeeringsRestClient = new ExpressRouteCrossConnectionPeerings(_expressRouteCrossConnectionPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionPeeringApiVersion ?? "2026-03-01");
             _expressRouteCrossConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionPeeringApiVersion ?? "2026-03-01");
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTable");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -376,11 +376,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTable(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTableExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTable");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -436,11 +436,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTable");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTable(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTableExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTable");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -556,11 +556,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>> GetRoutesTableSummaryAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummary");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(
                     new ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource(),
@@ -616,11 +616,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> GetRoutesTableSummary(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummary");
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
             try
             {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(
                     new ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource(),

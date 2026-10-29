@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ElasticSanPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

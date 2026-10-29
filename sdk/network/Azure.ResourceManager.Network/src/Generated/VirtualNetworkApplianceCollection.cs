@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualNetworkApplianceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualNetworkApplianceResource.ResourceType, out string virtualNetworkApplianceApiVersion);
             _virtualNetworkAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkApplianceResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkAppliancesRestClient = new VirtualNetworkAppliances(_virtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkApplianceApiVersion ?? "2026-03-01");
+            _virtualNetworkAppliancesRestClient = new VirtualNetworkAppliances(_virtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

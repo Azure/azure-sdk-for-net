@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Maps
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MapsAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string mapsAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mapsAccountApiVersion ?? "2025-10-01-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Maps/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

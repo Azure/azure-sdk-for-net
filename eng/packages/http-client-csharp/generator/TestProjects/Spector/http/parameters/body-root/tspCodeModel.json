@@ -174,7 +174,6 @@
             "$id": "14",
             "name": "nested",
             "isExactName": false,
-            "resourceName": "BodyRoot",
             "accessibility": "public",
             "parameters": [
               {

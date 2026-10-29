@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The language used for scheduled action notifications. </summary>
+    /// <summary> The language used for recurring bulk action notifications. </summary>
     public readonly partial struct ScheduledActionLanguage : IEquatable<ScheduledActionLanguage>
     {
         private readonly string _value;

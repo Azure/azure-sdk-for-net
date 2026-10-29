@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.1 (2026-10-27)
+
+### Features Added
+
+- Added JSON serialization and deserialization for `Infrastructure` and Bicep syntax nodes through `ModelReaderWriter`, including schema-compatible decorators, 64-bit integers, type annotations, and reverse indexing.
+- Added `OfResourceType<T>` to upgrade deserialized resources to generated resource types while preserving properties, metadata, conditions, and resource dependencies.
+- Added validation that rejects Bicep constructs without a JSON schema representation, including nested resource access, null suppression, and standalone decorators.
 
 ## 1.6.0 (2026-08-20)
 

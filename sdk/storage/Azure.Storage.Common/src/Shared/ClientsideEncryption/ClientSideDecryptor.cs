@@ -252,21 +252,18 @@ namespace Azure.Storage.Cryptography
                 else
                 {
                     IV = new byte[Constants.ClientSideEncryption.EncryptionBlockSize];
-                    if (async)
+                    int totalRead = 0;
+                    while (totalRead < IV.Length)
                     {
-                        await ciphertext.ReadAsync(IV, 0, IV.Length, cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        int totalRead = 0;
-                        while (totalRead < IV.Length)
+                        // Stream.Read/ReadAsync may return fewer bytes than requested.
+                        int bytesRead = async
+                            ? await ciphertext.ReadAsync(IV, totalRead, IV.Length - totalRead, cancellationToken).ConfigureAwait(false)
+                            : ciphertext.Read(IV, totalRead, IV.Length - totalRead);
+                        if (bytesRead == 0)
                         {
-                            //  Stream.Read may return fewer bytes than requested, resulting in unreliable code.
-                            var bytesRead = ciphertext.Read(IV, totalRead, IV.Length - totalRead);
-                            totalRead += bytesRead;
-                            if (bytesRead == 0)
-                                break;
+                            throw Errors.ClientSideEncryption.IncompleteContentEncryptionIv(IV.Length, totalRead);
                         }
+                        totalRead += bytesRead;
                     }
                     //read = IV.Length;
                 }

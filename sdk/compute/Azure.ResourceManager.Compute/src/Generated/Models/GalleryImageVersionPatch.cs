@@ -115,6 +115,23 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
+        /// <summary> The security profile of a gallery image version. </summary>
+        public ImageVersionSecurityProfile SecurityProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.SecurityProfile = value;
+            }
+        }
+
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
         public bool? IsRestoreEnabled
         {
@@ -141,20 +158,16 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Contains UEFI settings for the image version. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        /// <summary> The image metadata profiles associated with the gallery image version. </summary>
+        public IReadOnlyList<ImageMetadataProfile> ImageMetadataProfiles
         {
             get
-            {
-                return Properties is null ? default : Properties.SecurityUefiSettings;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new GalleryImageVersionProperties();
                 }
-                Properties.SecurityUefiSettings = value;
+                return Properties.ImageMetadataProfiles;
             }
         }
     }

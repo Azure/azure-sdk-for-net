@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the BGP service community. </param>
-        internal BgpServiceCommunity(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BgpServiceCommunityPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal BgpServiceCommunity(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BgpServiceCommunityPropertiesFormat properties) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -36,6 +36,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Properties of the BGP service community. </summary>
         [WirePath("properties")]
         internal BgpServiceCommunityPropertiesFormat Properties { get; set; }
+
+        /// <summary> The name of the bgp community. e.g. Skype. </summary>
+        [WirePath("properties.serviceName")]
+        public string ServiceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BgpServiceCommunityPropertiesFormat();
+                }
+                Properties.ServiceName = value;
+            }
+        }
 
         /// <summary> A list of bgp communities. </summary>
         [WirePath("properties.bgpCommunities")]

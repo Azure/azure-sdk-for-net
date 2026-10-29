@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
             _expressRouteCircuitPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeerings(_expressRouteCircuitPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2026-03-01");
             _expressRouteCircuitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2026-03-01");
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteCircuitStats>> GetPeeringStatsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCircuitStats>> GetPeeringStatsExpressRouteCircuitAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetPeeringStats");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetPeeringStatsExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetPeeringStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetPeeringStatsExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCircuitStats> response = Response.FromValue(ExpressRouteCircuitStats.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitStats> GetPeeringStats(CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitStats> GetPeeringStatsExpressRouteCircuit(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetPeeringStats");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetPeeringStatsExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetPeeringStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetPeeringStatsExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCircuitStats> response = Response.FromValue(ExpressRouteCircuitStats.FromResponse(result), result);
                 if (response.Value == null)
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableExpressRouteCircuitAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetArpTable");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetArpTableExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetArpTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetArpTableExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -472,11 +472,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTable(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTableExpressRouteCircuit(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetArpTable");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetArpTableExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetArpTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetArpTableExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCircuitAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTable");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTable(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTableExpressRouteCircuit(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTable");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult>> GetRoutesTableSummaryAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCircuitAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableSummary");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableSummaryExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableSummaryExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult>(
                     new ExpressRouteCircuitsRoutesTableSummaryListResultOperationSource(),
@@ -712,11 +712,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devicePath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> GetRoutesTableSummary(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCircuit(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
-            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableSummary");
+            using DiagnosticScope scope = _expressRouteCircuitsClientDiagnostics.CreateScope("ExpressRouteCircuitPeeringResource.GetRoutesTableSummaryExpressRouteCircuit");
             scope.Start();
             try
             {
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableSummaryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRoutesTableSummaryExpressRouteCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult>(
                     new ExpressRouteCircuitsRoutesTableSummaryListResultOperationSource(),

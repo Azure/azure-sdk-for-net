@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -20,19 +21,24 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
-        public ExpressRouteProviderPortData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ExpressRouteProviderPortData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the express route Service Provider Port. </param>
-        /// <param name="name"> The name of the provider port. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteProviderPortData(ExpressRouteProviderPortProperties properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteProviderPortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpressRouteProviderPortProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,6 +78,96 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.SecondaryAzurePort;
+            }
+        }
+
+        /// <summary> The peering location of the port pair. </summary>
+        [WirePath("properties.peeringLocation")]
+        public string PeeringLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteProviderPortProperties();
+                }
+                Properties.PeeringLocation = value;
+            }
+        }
+
+        /// <summary> Overprovisioning factor for the port pair. </summary>
+        [WirePath("properties.overprovisionFactor")]
+        public int? OverprovisionFactor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OverprovisionFactor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteProviderPortProperties();
+                }
+                Properties.OverprovisionFactor = value;
+            }
+        }
+
+        /// <summary> Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.portBandwidthInMbps")]
+        public int? PortBandwidthInMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PortBandwidthInMbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteProviderPortProperties();
+                }
+                Properties.PortBandwidthInMbps = value;
+            }
+        }
+
+        /// <summary> Used Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.usedBandwidthInMbps")]
+        public int? UsedBandwidthInMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsedBandwidthInMbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteProviderPortProperties();
+                }
+                Properties.UsedBandwidthInMbps = value;
+            }
+        }
+
+        /// <summary> Remaining Bandwidth of the port in Mbps. </summary>
+        [WirePath("properties.remainingBandwidthInMbps")]
+        public int? RemainingBandwidthInMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemainingBandwidthInMbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteProviderPortProperties();
+                }
+                Properties.RemainingBandwidthInMbps = value;
             }
         }
     }

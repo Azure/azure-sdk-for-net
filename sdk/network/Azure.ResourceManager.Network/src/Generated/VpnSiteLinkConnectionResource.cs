@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<string>> GetIkeSasAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> GetIkeSasVpnLinkConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.GetIkeSas");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetIkeSasVpnLinkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<string> GetIkeSas(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GetIkeSasVpnLinkConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.GetIkeSas");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.GetIkeSasVpnLinkConnection");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetIkeSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetIkeSasVpnLinkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ResetConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ResetConnectionVpnLinkConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.ResetConnection");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.ResetConnectionVpnLinkConnection");
             scope.Start();
             try
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateResetConnectionVpnLinkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_vpnLinkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -374,9 +374,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ResetConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ResetConnectionVpnLinkConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.ResetConnection");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionResource.ResetConnectionVpnLinkConnection");
             scope.Start();
             try
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateResetConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateResetConnectionVpnLinkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_vpnLinkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

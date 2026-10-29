@@ -48,5 +48,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Protocol of gateway load balancer tunnel interface. </summary>
         [WirePath("protocol")]
         public GatewayLoadBalancerTunnelProtocol? Protocol { get; set; }
+
+        /// <summary> Traffic type of gateway load balancer tunnel interface. </summary>
+        [WirePath("type")]
+        public GatewayLoadBalancerTunnelInterfaceType? InterfaceType { get; set; }
     }
 }

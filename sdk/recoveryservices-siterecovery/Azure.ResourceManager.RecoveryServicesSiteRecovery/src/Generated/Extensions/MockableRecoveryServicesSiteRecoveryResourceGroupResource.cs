@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of ReplicationProtectionIntents and their operations over a ReplicationProtectionIntentResource. </returns>
         public virtual ReplicationProtectionIntentCollection GetReplicationProtectionIntents(string resourceName)
         {
-            return GetCachedClient(client => new ReplicationProtectionIntentCollection(client, Id, resourceName));
+            return new ReplicationProtectionIntentCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryAlerts and their operations over a SiteRecoveryAlertResource. </returns>
         public virtual SiteRecoveryAlertCollection GetSiteRecoveryAlerts(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryAlertCollection(client, Id, resourceName));
+            return new SiteRecoveryAlertCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryEvents and their operations over a SiteRecoveryEventResource. </returns>
         public virtual SiteRecoveryEventCollection GetSiteRecoveryEvents(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryEventCollection(client, Id, resourceName));
+            return new SiteRecoveryEventCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryFabrics and their operations over a SiteRecoveryFabricResource. </returns>
         public virtual SiteRecoveryFabricCollection GetSiteRecoveryFabrics(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryFabricCollection(client, Id, resourceName));
+            return new SiteRecoveryFabricCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryJobs and their operations over a SiteRecoveryJobResource. </returns>
         public virtual SiteRecoveryJobCollection GetSiteRecoveryJobs(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryJobCollection(client, Id, resourceName));
+            return new SiteRecoveryJobCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryPolicies and their operations over a SiteRecoveryPolicyResource. </returns>
         public virtual SiteRecoveryPolicyCollection GetSiteRecoveryPolicies(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryPolicyCollection(client, Id, resourceName));
+            return new SiteRecoveryPolicyCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryRecoveryPlans and their operations over a SiteRecoveryRecoveryPlanResource. </returns>
         public virtual SiteRecoveryRecoveryPlanCollection GetSiteRecoveryRecoveryPlans(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryRecoveryPlanCollection(client, Id, resourceName));
+            return new SiteRecoveryRecoveryPlanCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An object representing collection of SiteRecoveryVaultSettings and their operations over a SiteRecoveryVaultSettingResource. </returns>
         public virtual SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryVaultSettingCollection(client, Id, resourceName));
+            return new SiteRecoveryVaultSettingCollection(Client, Id, resourceName);
         }
 
         /// <summary>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterDataAsync0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new ReplicationProtectionClustersListBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryReplicationProtectionClusterData, SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterData0CollectionResultOfT(
                 ReplicationProtectionClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingDataAsync0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingDataCollectionResultOfT(
+            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ProtectionContainerMappingData0CollectionResultOfT(
                 ReplicationProtectionContainerMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryServicesProviderData, SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderDataAsync0CollectionResultOfT(
                 ReplicationRecoveryServicesProvidersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new ReplicationStorageClassificationMappingsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataAsync0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingDataCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationMappingData, StorageClassificationMappingResource>(new StorageClassificationMappingData0CollectionResultOfT(
                 ReplicationStorageClassificationMappingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

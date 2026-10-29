@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -31,5 +32,13 @@ namespace Azure.ResourceManager.Network.Models
             ValueInMbps = valueInMbps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The OfferName. </summary>
+        [WirePath("offerName")]
+        public string OfferName { get; set; }
+
+        /// <summary> The ValueInMbps. </summary>
+        [WirePath("valueInMbps")]
+        public int? ValueInMbps { get; set; }
     }
 }

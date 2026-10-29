@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("name")]
         public string Name { get; set; }
 
+        /// <summary> The endpoint type. </summary>
+        [WirePath("type")]
+        public ConnectionMonitorEndpointType? EndpointType { get; set; }
+
         /// <summary> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }

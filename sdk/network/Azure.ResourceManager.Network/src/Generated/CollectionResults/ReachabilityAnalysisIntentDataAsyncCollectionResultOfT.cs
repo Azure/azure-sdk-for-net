@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network
         private readonly string _workspaceName;
         private readonly string _skipToken;
         private readonly int? _skip;
-        private readonly int? _maxCount;
+        private readonly int? _top;
         private readonly string _sortKey;
         private readonly string _sortValue;
         private readonly RequestContext _context;
@@ -38,12 +40,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="workspaceName"> The name of the resource. </param>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReachabilityAnalysisIntentDataAsyncCollectionResultOfT(ReachabilityAnalysisIntents client, Guid subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string skipToken, int? skip, int? maxCount, string sortKey, string sortValue, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReachabilityAnalysisIntentDataAsyncCollectionResultOfT(ReachabilityAnalysisIntents client, Guid subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string skipToken, int? skip, int? top, string sortKey, string sortValue, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.Network
             _workspaceName = workspaceName;
             _skipToken = skipToken;
             _skip = skip;
-            _maxCount = maxCount;
+            _top = top;
             _sortKey = sortKey;
             _sortValue = sortValue;
             _context = context;
@@ -63,12 +65,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ReachabilityAnalysisIntentDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ReachabilityAnalysisIntentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<ReachabilityAnalysisIntentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<ReachabilityAnalysisIntentData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -86,14 +96,23 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _maxCount, _sortKey, _sortValue, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _maxCount, _sortKey, _sortValue, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _top, _sortKey, _sortValue, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _top, _sortKey, _sortValue, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

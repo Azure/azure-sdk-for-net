@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteConnectionResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteGatewayResource"/>.
     /// To get a <see cref="ExpressRouteConnectionCollection"/> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource"/>.
     /// </summary>
-    public partial class ExpressRouteConnectionCollection : ArmCollection
+    public partial class ExpressRouteConnectionCollection : ArmCollection, IEnumerable<ExpressRouteConnectionResource>, IAsyncEnumerable<ExpressRouteConnectionResource>
     {
         private readonly ClientDiagnostics _expressRouteConnectionsClientDiagnostics;
         private readonly ExpressRouteConnections _expressRouteConnectionsRestClient;
@@ -267,6 +269,74 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Lists ExpressRouteConnections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRouteConnectionData, ExpressRouteConnectionResource>(new ExpressRouteConnectionDataAsyncCollectionResultOfT(
+                _expressRouteConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteConnectionCollection.GetAll"), data => new ExpressRouteConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists ExpressRouteConnections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRouteConnectionData, ExpressRouteConnectionResource>(new ExpressRouteConnectionDataCollectionResultOfT(
+                _expressRouteConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteConnectionCollection.GetAll"), data => new ExpressRouteConnectionResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -500,6 +570,22 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ExpressRouteConnectionResource> IEnumerable<ExpressRouteConnectionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ExpressRouteConnectionResource> IAsyncEnumerable<ExpressRouteConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

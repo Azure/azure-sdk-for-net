@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> The pages of ElasticSanDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ElasticSanData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

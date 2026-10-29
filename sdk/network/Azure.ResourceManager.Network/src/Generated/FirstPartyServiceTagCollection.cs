@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirstPartyServiceTagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FirstPartyServiceTagResource.ResourceType, out string firstPartyServiceTagApiVersion);
             _firstPartyServiceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirstPartyServiceTagResource.ResourceType.Namespace, Diagnostics);
-            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(_firstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firstPartyServiceTagApiVersion ?? "2026-03-01");
+            _firstPartyServiceTagsRestClient = new FirstPartyServiceTags(_firstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.Network.Models
         private const string Tls1_2Value = "TLSv1_2";
         /// <summary> TLSv1_3. </summary>
         private const string Tls1_3Value = "TLSv1_3";
-        private const string TLSv10Value = "TLSv1_0";
-        private const string TLSv11Value = "TLSv1_1";
-        private const string TLSv12Value = "TLSv1_2";
-        private const string TLSv13Value = "TLSv1_3";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,20 +34,17 @@ namespace Azure.ResourceManager.Network.Models
             _value = value;
         }
 
+        /// <summary> TLSv1_0. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_0 { get; } = new ApplicationGatewaySslProtocol(Tls1_0Value);
+
+        /// <summary> TLSv1_1. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_1 { get; } = new ApplicationGatewaySslProtocol(Tls1_1Value);
+
+        /// <summary> TLSv1_2. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_2 { get; } = new ApplicationGatewaySslProtocol(Tls1_2Value);
+
         /// <summary> TLSv1_3. </summary>
         public static ApplicationGatewaySslProtocol Tls1_3 { get; } = new ApplicationGatewaySslProtocol(Tls1_3Value);
-
-        /// <summary> Gets the TLSv10. </summary>
-        public static ApplicationGatewaySslProtocol TLSv10 { get; } = new ApplicationGatewaySslProtocol(TLSv10Value);
-
-        /// <summary> Gets the TLSv11. </summary>
-        public static ApplicationGatewaySslProtocol TLSv11 { get; } = new ApplicationGatewaySslProtocol(TLSv11Value);
-
-        /// <summary> Gets the TLSv12. </summary>
-        public static ApplicationGatewaySslProtocol TLSv12 { get; } = new ApplicationGatewaySslProtocol(TLSv12Value);
-
-        /// <summary> Gets the TLSv13. </summary>
-        public static ApplicationGatewaySslProtocol TLSv13 { get; } = new ApplicationGatewaySslProtocol(TLSv13Value);
 
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

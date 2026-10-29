@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
-    public partial class RoutingConfiguration : RoutingConfigurationNfv, IJsonModel<RoutingConfiguration>
+    public partial class RoutingConfiguration : IJsonModel<RoutingConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -44,6 +44,25 @@ namespace Azure.ResourceManager.Network.Models
                 default:
                     throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{options.Format}' format.");
             }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoutingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoutingConfiguration IPersistableModel<RoutingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoutingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<RoutingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -96,6 +115,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
         }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoutingConfiguration IJsonModel<RoutingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

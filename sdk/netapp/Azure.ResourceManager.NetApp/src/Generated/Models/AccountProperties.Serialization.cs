@@ -89,25 +89,34 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EntraIdConfig))
-            {
-                writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
+            if (options.Format != "W" && Optional.IsDefined(DisableShowmount, _disableShowmountIsDefined))
             {
-                writer.WritePropertyName("disableShowmount"u8);
-                writer.WriteBooleanValue(DisableShowmount.Value);
+                if (DisableShowmount != null)
+                {
+                    writer.WritePropertyName("disableShowmount"u8);
+                    writer.WriteBooleanValue(DisableShowmount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disableShowmount"u8);
+                }
             }
-            if (Optional.IsDefined(NfsV4IdDomain))
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
             {
-                writer.WritePropertyName("nfsV4IDDomain"u8);
-                writer.WriteStringValue(NfsV4IdDomain);
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(MultiAdStatus))
             {
@@ -163,9 +172,10 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
+            bool disableShowmountIsDefined = false;
             bool? disableShowmount = default;
+            bool nfsV4IdDomainIsDefined = false;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfiguration ldapConfiguration = default;
@@ -191,15 +201,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     activeDirectories = array;
                     continue;
                 }
-                if (prop.NameEquals("entraIdConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("encryption"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -211,6 +212,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("disableShowmount"u8))
                 {
+                    disableShowmountIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         disableShowmount = null;
@@ -221,6 +223,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("nfsV4IDDomain"u8))
                 {
+                    nfsV4IdDomainIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nfsV4IdDomain = null;
@@ -255,13 +258,16 @@ namespace Azure.ResourceManager.NetApp.Models
             return new AccountProperties(
                 provisioningState,
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                entraIdConfig,
                 encryption,
                 disableShowmount,
                 nfsV4IdDomain,
                 multiAdStatus,
                 ldapConfiguration,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _disableShowmountIsDefined = disableShowmountIsDefined,
+                _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
+            };
         }
     }
 }

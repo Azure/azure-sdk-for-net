@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="entityName"> Name of the entity. </param>
         /// <param name="signalName"> Name of the signal. </param>
         /// <param name="history"> Signal history data points. </param>
-        internal EntitySignalHistoryResult(string entityName, string signalName, IEnumerable<SignalHistoryDataPoint> history)
+        internal EntitySignalHistoryResult(string entityName, string signalName, IEnumerable<HealthModelSignalHistoryDataPoint> history)
         {
             EntityName = entityName;
             SignalName = signalName;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="history"> Signal history data points. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalHistoryResult(string entityName, string signalName, IList<SignalHistoryDataPoint> history, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySignalHistoryResult(string entityName, string signalName, IList<HealthModelSignalHistoryDataPoint> history, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityName = entityName;
             SignalName = signalName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string SignalName { get; }
 
         /// <summary> Signal history data points. </summary>
-        public IList<SignalHistoryDataPoint> History { get; }
+        public IList<HealthModelSignalHistoryDataPoint> History { get; }
 
         /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. </summary>
         public string NextMarker { get; }

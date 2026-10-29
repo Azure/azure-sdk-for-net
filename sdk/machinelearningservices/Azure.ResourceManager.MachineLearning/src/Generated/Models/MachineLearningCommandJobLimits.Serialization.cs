@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             JobLimitsType jobLimitsType = default;
+            bool timeoutIsDefined = false;
             TimeSpan? timeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -114,6 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("timeout"u8))
                 {
+                    timeoutIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
@@ -127,7 +129,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningCommandJobLimits(jobLimitsType, timeout, additionalBinaryDataProperties);
+            return new MachineLearningCommandJobLimits(jobLimitsType, timeout, additionalBinaryDataProperties)
+            {
+                _timeoutIsDefined = timeoutIsDefined
+            };
         }
     }
 }

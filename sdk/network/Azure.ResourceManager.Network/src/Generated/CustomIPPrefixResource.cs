@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CustomIPPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string customIPPrefixApiVersion);
             _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customIPPrefixApiVersion ?? "2026-03-01");
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -77,10 +76,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="customIpPrefixName"> The customIpPrefixName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customIpPrefixName)
+        /// <param name="customIPPrefixName"> The customIpPrefixName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customIPPrefixName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIPPrefixName}";
             return new ResourceIdentifier(resourceId);
         }
 

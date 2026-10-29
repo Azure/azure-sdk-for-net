@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorContent content, string migrate = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
             Argument.AssertNotNull(content, nameof(content));
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorContent.ToRequestContent(content), migrate, context);
+                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ConnectionMonitorResource> operation = new NetworkArmOperation<ConnectionMonitorResource>(
                     new ConnectionMonitorResourceOperationSource(Client),
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectionMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorContent content, string migrate = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectionMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
             Argument.AssertNotNull(content, nameof(content));
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorContent.ToRequestContent(content), migrate, context);
+                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ConnectionMonitorResource> operation = new NetworkArmOperation<ConnectionMonitorResource>(
                     new ConnectionMonitorResourceOperationSource(Client),

@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerService
     {
         private BicepValue<ResourceIdentifier> _logAnalyticsWorkspaceResourceId;
         private ManagedClusterSecurityProfileDefenderSecurityMonitoring _securityMonitoring;
+        private ManagedClusterSecurityProfileDefenderSecurityGating _securityGating;
 
         /// <summary> Creates a new ManagedClusterSecurityProfileDefender. </summary>
         public ManagedClusterSecurityProfileDefender()
@@ -52,6 +53,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the SecurityGating. </summary>
+        public ManagedClusterSecurityProfileDefenderSecurityGating SecurityGating
+        {
+            get
+            {
+                Initialize();
+                return _securityGating;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _securityGating, value);
+            }
+        }
+
         /// <summary> Gets or sets the IsSecurityMonitoringEnabled. </summary>
         public BicepValue<bool> IsSecurityMonitoringEnabled
         {
@@ -75,6 +91,7 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _logAnalyticsWorkspaceResourceId = DefineProperty<ResourceIdentifier>(nameof(LogAnalyticsWorkspaceResourceId), new string[] { "logAnalyticsWorkspaceResourceId" });
             _securityMonitoring = DefineModelProperty<ManagedClusterSecurityProfileDefenderSecurityMonitoring>(nameof(SecurityMonitoring), new string[] { "securityMonitoring" });
+            _securityGating = DefineModelProperty<ManagedClusterSecurityProfileDefenderSecurityGating>(nameof(SecurityGating), new string[] { "securityGating" });
             DefineAdditionalProperties();
         }
 

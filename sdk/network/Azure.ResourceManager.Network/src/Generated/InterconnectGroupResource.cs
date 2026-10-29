@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InterconnectGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string interconnectGroupApiVersion);
             _interconnectGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectGroupApiVersion ?? "2026-03-01");
+            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

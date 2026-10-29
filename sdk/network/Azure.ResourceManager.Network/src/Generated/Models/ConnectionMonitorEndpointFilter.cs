@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>
+        [WirePath("type")]
+        public ConnectionMonitorEndpointFilterType? FilterType { get; set; }
+
         /// <summary> List of items in the filter. </summary>
         [WirePath("items")]
         public IList<ConnectionMonitorEndpointFilterItem> Items { get; }

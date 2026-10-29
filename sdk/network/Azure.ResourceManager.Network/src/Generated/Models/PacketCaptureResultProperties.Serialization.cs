@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The properties of a packet capture session. </summary>
-    public partial class PacketCaptureResultProperties : PacketCaptureCreateOrUpdateContent, IJsonModel<PacketCaptureResultProperties>
+    internal partial class PacketCaptureResultProperties : PacketCaptureParameters, IJsonModel<PacketCaptureResultProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PacketCaptureResultProperties"/> for deserialization. </summary>
         internal PacketCaptureResultProperties()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PacketCaptureCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PacketCaptureParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PacketCaptureCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PacketCaptureParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PacketCaptureResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

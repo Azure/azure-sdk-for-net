@@ -33,8 +33,6 @@ namespace Azure.ResourceManager.Network.Models
         private const string AzureVmssValue = "AzureVMSS";
         /// <summary> AzureArcNetwork. </summary>
         private const string AzureArcNetworkValue = "AzureArcNetwork";
-        private const string MultiEndpointValue = "MultiEndpoint";
-        private const string SingleSourceDestinationValue = "SingleSourceDestination";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,11 +44,32 @@ namespace Azure.ResourceManager.Network.Models
             _value = value;
         }
 
-        /// <summary> Gets the MultiEndpoint. </summary>
-        public static ConnectionMonitorEndpointType MultiEndpoint { get; } = new ConnectionMonitorEndpointType(MultiEndpointValue);
+        /// <summary> AzureVM. </summary>
+        public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType(AzureVmValue);
 
-        /// <summary> Gets the SingleSourceDestination. </summary>
-        public static ConnectionMonitorEndpointType SingleSourceDestination { get; } = new ConnectionMonitorEndpointType(SingleSourceDestinationValue);
+        /// <summary> AzureVNet. </summary>
+        public static ConnectionMonitorEndpointType AzureVNet { get; } = new ConnectionMonitorEndpointType(AzureVNetValue);
+
+        /// <summary> AzureSubnet. </summary>
+        public static ConnectionMonitorEndpointType AzureSubnet { get; } = new ConnectionMonitorEndpointType(AzureSubnetValue);
+
+        /// <summary> ExternalAddress. </summary>
+        public static ConnectionMonitorEndpointType ExternalAddress { get; } = new ConnectionMonitorEndpointType(ExternalAddressValue);
+
+        /// <summary> MMAWorkspaceMachine. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceMachineValue);
+
+        /// <summary> MMAWorkspaceNetwork. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceNetworkValue);
+
+        /// <summary> AzureArcVM. </summary>
+        public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType(AzureArcVmValue);
+
+        /// <summary> AzureVMSS. </summary>
+        public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType(AzureVmssValue);
+
+        /// <summary> AzureArcNetwork. </summary>
+        public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType(AzureArcNetworkValue);
 
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

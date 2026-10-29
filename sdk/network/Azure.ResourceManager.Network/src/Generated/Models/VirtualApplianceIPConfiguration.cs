@@ -40,5 +40,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Represents a single IP configuration properties. </summary>
         [WirePath("properties")]
         internal VirtualApplianceIPConfigurationProperties Properties { get; set; }
+
+        /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
+        [WirePath("properties.primary")]
+        public bool? IsPrimary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPrimary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualApplianceIPConfigurationProperties();
+                }
+                Properties.IsPrimary = value;
+            }
+        }
     }
 }

@@ -1,15 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.18.0</Version>
+    <Version>1.18.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.17.0</ApiCompatVersion>
+    <ApiCompatVersion>1.15.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Network.</Description>
     <PackageTags>azure;management;network</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed. -->
-    <Compile Remove="Generated\LongRunningOperation\IDictionaryOfStringIListOfPeerRouteListOperationSource.cs" />
-  </ItemGroup>
 </Project>

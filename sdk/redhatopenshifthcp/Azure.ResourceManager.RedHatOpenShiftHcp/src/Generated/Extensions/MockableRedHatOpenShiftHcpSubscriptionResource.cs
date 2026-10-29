@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
 
         private ClientDiagnostics HcpOpenShiftClustersClientDiagnostics => _hcpOpenShiftClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HcpOpenShiftClusters HcpOpenShiftClustersRestClient => _hcpOpenShiftClustersRestClient ??= new HcpOpenShiftClusters(HcpOpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+        private HcpOpenShiftClusters HcpOpenShiftClustersRestClient => _hcpOpenShiftClustersRestClient ??= new HcpOpenShiftClusters(HcpOpenShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RedHatOpenShift/hcpOpenShiftClusters", out string apiVersion) ? apiVersion : "2026-09-01-preview");
 
         /// <summary> Gets a collection of HcpOpenShiftVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of HcpOpenShiftVersions and their operations over a HcpOpenShiftVersionResource. </returns>
         public virtual HcpOpenShiftVersionCollection GetHcpOpenShiftVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new HcpOpenShiftVersionCollection(client, Id, location));
+            return new HcpOpenShiftVersionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
         /// <returns> An object representing collection of HcpOperatorIdentityRoleSets and their operations over a HcpOperatorIdentityRoleSetResource. </returns>
         public virtual HcpOperatorIdentityRoleSetCollection GetHcpOperatorIdentityRoleSets(AzureLocation location)
         {
-            return GetCachedClient(client => new HcpOperatorIdentityRoleSetCollection(client, Id, location));
+            return new HcpOperatorIdentityRoleSetCollection(Client, Id, location);
         }
 
         /// <summary>

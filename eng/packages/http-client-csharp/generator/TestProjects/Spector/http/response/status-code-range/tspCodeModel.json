@@ -259,7 +259,6 @@
             "$id": "19",
             "name": "errorResponseStatusCodeInRange",
             "isExactName": false,
-            "resourceName": "StatusCodeRange",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -300,7 +299,6 @@
             "$id": "21",
             "name": "errorResponseStatusCode404",
             "isExactName": false,
-            "resourceName": "StatusCodeRange",
             "accessibility": "public",
             "parameters": [],
             "responses": [

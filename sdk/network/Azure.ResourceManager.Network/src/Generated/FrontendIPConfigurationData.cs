@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -26,11 +27,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the load balancer probe. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        internal FrontendIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, FrontendIPConfigurationPropertiesFormat properties, ETag? eTag, IList<string> zones) : base(id, additionalBinaryDataProperties, name, @type)
+        internal FrontendIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, FrontendIPConfigurationPropertiesFormat properties, ETag? eTag, IList<string> zones) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -48,6 +49,62 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
+        /// <summary> An array of references to inbound rules that use this frontend IP. </summary>
+        [WirePath("properties.inboundNatRules")]
+        public IReadOnlyList<WritableSubResource> InboundNatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                return Properties.InboundNatRules;
+            }
+        }
+
+        /// <summary> An array of references to inbound pools that use this frontend IP. </summary>
+        [WirePath("properties.inboundNatPools")]
+        public IReadOnlyList<WritableSubResource> InboundNatPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                return Properties.InboundNatPools;
+            }
+        }
+
+        /// <summary> An array of references to outbound rules that use this frontend IP. </summary>
+        [WirePath("properties.outboundRules")]
+        public IReadOnlyList<WritableSubResource> OutboundRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                return Properties.OutboundRules;
+            }
+        }
+
+        /// <summary> An array of references to load balancing rules that use this frontend IP. </summary>
+        [WirePath("properties.loadBalancingRules")]
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                return Properties.LoadBalancingRules;
+            }
+        }
 
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("properties.privateIPAddress")]

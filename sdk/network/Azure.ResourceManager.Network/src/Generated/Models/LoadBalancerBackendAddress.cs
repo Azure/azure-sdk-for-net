@@ -137,5 +137,23 @@ namespace Azure.ResourceManager.Network.Models
                 return Properties is null ? default : Properties.NetworkInterfaceIPConfigurationId;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadBalancerFrontendIPConfiguration.id")]
+        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.LoadBalancerFrontendIPConfigurationId = value;
+            }
+        }
     }
 }

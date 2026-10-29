@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (NvaNicType item in PropertiesType)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NvaNicType> array = new List<NvaNicType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToNvaNicType());
+                        array.Add(new NvaNicType(item.GetString()));
                     }
                     propertiesType = array;
                     continue;

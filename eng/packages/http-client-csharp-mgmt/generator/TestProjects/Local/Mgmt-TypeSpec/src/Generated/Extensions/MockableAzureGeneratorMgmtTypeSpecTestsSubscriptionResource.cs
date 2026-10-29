@@ -51,23 +51,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/foos", out string apiVersion) ? apiVersion : "2024-05-01");
 
         private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/bazs", out string apiVersion0) ? apiVersion0 : "2024-05-01");
 
         private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/zoos", out string apiVersion1) ? apiVersion1 : "2024-05-01");
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("MgmtTypeSpec/clusters", out string apiVersion2) ? apiVersion2 : "2024-05-01");
 
         private ClientDiagnostics PublicSharedConfigsClientDiagnostics => _publicSharedConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicSharedConfigs PublicSharedConfigsRestClient => _publicSharedConfigsRestClient ??= new PublicSharedConfigs(PublicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
+        private PublicSharedConfigs PublicSharedConfigsRestClient => _publicSharedConfigsRestClient ??= new PublicSharedConfigs(PublicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion3) ? apiVersion3 : null);
 
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -82,7 +82,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
-            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
+            return new PlaywrightQuotaCollection(Client, Id, location);
         }
 
         /// <summary>

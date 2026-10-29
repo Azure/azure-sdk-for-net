@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         public HyperVGeneration? HyperVGeneration { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SourceVirtualMachineId
+        public virtual ResourceIdentifier SourceVirtualMachineId
         {
             get
             {

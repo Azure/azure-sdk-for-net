@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(RelayClusterResource.ResourceType, out string relayClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayClusterApiVersion ?? "2026-07-01-preview");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                relayClusterApiVersion ?? "2026-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

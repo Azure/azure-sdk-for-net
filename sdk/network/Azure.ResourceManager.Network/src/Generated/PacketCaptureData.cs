@@ -118,6 +118,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
+        [WirePath("properties.continuousCapture")]
+        public bool? IsContinuousCapture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsContinuousCapture;
+            }
+        }
+
         /// <summary> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </summary>
         [WirePath("properties.captureSettings")]
         public PacketCaptureSettings CaptureSettings

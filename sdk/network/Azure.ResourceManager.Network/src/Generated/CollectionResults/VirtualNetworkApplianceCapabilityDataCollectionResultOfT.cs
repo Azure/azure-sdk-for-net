@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of VirtualNetworkApplianceCapabilityDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualNetworkApplianceCapabilityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

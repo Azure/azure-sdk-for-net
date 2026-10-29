@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskHubApiVersion);
             _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -401,6 +401,39 @@ namespace Azure.ResourceManager.DurableTask
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of TaskQueues in the <see cref="DurableTaskHubResource"/>. </summary>
+        /// <returns> An object representing collection of TaskQueues and their operations over a TaskQueueResource. </returns>
+        public virtual TaskQueueCollection GetTaskQueues()
+        {
+            return GetCachedClient(client => new TaskQueueCollection(client, Id));
+        }
+
+        /// <summary> Get a Task Queue. </summary>
+        /// <param name="taskQueueName"> The name of the TaskQueue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskQueueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskQueueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TaskQueueResource>> GetTaskQueueAsync(string taskQueueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskQueueName, nameof(taskQueueName));
+
+            return await GetTaskQueues().GetAsync(taskQueueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Task Queue. </summary>
+        /// <param name="taskQueueName"> The name of the TaskQueue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskQueueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskQueueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TaskQueueResource> GetTaskQueue(string taskQueueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskQueueName, nameof(taskQueueName));
+
+            return GetTaskQueues().Get(taskQueueName, cancellationToken);
         }
     }
 }

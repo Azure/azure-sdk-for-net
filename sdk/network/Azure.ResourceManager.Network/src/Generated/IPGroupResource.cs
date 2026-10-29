@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
     public partial class IPGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _ipGroupsClientDiagnostics;
-        private readonly IpGroups _ipGroupsRestClient;
+        private readonly IPGroups _ipGroupsRestClient;
         private readonly IPGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/ipGroups";
@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IPGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string ipGroupApiVersion);
             _ipGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ipGroupsRestClient = new IpGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipGroupApiVersion ?? "2026-03-01");
+            _ipGroupsRestClient = new IPGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

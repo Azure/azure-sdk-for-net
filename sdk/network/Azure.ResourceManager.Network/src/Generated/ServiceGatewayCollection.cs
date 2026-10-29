@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceGatewayResource.ResourceType, out string serviceGatewayApiVersion);
             _serviceGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceGatewayResource.ResourceType.Namespace, Diagnostics);
-            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGatewayApiVersion ?? "2026-03-01");
+            _serviceGatewaysRestClient = new ServiceGateways(_serviceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

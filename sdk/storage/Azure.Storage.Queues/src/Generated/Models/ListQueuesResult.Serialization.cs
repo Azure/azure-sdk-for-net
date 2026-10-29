@@ -134,7 +134,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteStartElement("MaxResults");
             writer.WriteValue(MaxResults);
             writer.WriteEndElement();
-            if (Optional.IsCollectionDefined(QueueItems))
+            if (QueueItems != null && Optional.IsCollectionDefined(QueueItems))
             {
                 writer.WriteStartElement("Queues");
                 foreach (QueueItem item in QueueItems)

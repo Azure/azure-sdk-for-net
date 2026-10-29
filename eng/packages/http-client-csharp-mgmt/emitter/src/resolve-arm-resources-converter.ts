@@ -501,6 +501,7 @@ function convertResolvedResourceToMetadata(
       resolvedResource.resourceInstancePath
     ).singletonName,
     resourceName: resourceName,
+    resourceNameIsExplicit: explicitName ? true : undefined,
     nameConstraints: finalNameConstraints,
     apiVersions,
     rbacRoles
