@@ -9,7 +9,6 @@
 
 ### Bugs Fixed
 
-- Fixed `ComputeResourceSkuZoneDetails.Name` deserialization to read the `Name` property returned by the service. JSON written by previous versions using `name` is still accepted.
 - Fixed `CapacityReservationGroupResource` delete operations to poll the long-running operation until completion.
 
 ## 1.18.0 (2026-10-12)
