@@ -14,6 +14,9 @@ parameters:
   - name: ServiceDirectory
     type: string
     default: not-specified
+  - name: ReleasePlanId
+    type: string
+    default: '0'
   - name: SkipPrValidation
     type: boolean
     default: false
@@ -122,6 +125,7 @@ extends:
           parameters:
             SDKType: ${{ parameters.SDKType }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            ReleasePlanId: ${{ parameters.ReleasePlanId }}
             DependsOn:
               - Build
             Artifacts:
