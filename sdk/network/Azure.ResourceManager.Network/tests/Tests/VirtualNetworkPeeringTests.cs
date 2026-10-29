@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24", } }
             };
 
@@ -93,10 +90,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var peering = new VirtualNetworkPeeringData
             {
-                RemoteVirtualNetwork = new WritableSubResource
-                {
-                    Id = remoteVirtualNetwork.Value.Id
-                },
+                RemoteVirtualNetworkId = remoteVirtualNetwork.Value.Id,
                 AllowForwardedTraffic = true,
                 AllowVirtualNetworkAccess = false
             };
@@ -107,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
             ;
             Assert.NotNull(putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, putPeering.Value.Data.Name);
-            Assert.AreEqual(remoteVirtualNetwork.Value.Id, putPeering.Value.Data.RemoteVirtualNetwork.Id);
+            Assert.AreEqual(remoteVirtualNetwork.Value.Id, putPeering.Value.Data.RemoteVirtualNetworkId);
             Assert.AreEqual(peering.AllowForwardedTraffic, putPeering.Value.Data.AllowForwardedTraffic);
             Assert.AreEqual(peering.AllowVirtualNetworkAccess, putPeering.Value.Data.AllowVirtualNetworkAccess);
             Assert.False(putPeering.Value.Data.UseRemoteGateways);
@@ -118,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<VirtualNetworkPeeringResource> getPeering = await virtualNetworkPeeringCollection.GetAsync(vnetPeeringName);
             Assert.AreEqual(getPeering.Value.Data.ETag, putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, getPeering.Value.Data.Name);
-            Assert.AreEqual(remoteVirtualNetwork.Value.Id, getPeering.Value.Data.RemoteVirtualNetwork.Id);
+            Assert.AreEqual(remoteVirtualNetwork.Value.Id, getPeering.Value.Data.RemoteVirtualNetworkId);
             Assert.AreEqual(peering.AllowForwardedTraffic, getPeering.Value.Data.AllowForwardedTraffic);
             Assert.AreEqual(peering.AllowVirtualNetworkAccess, getPeering.Value.Data.AllowVirtualNetworkAccess);
             Assert.False(getPeering.Value.Data.UseRemoteGateways);
@@ -131,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests
             Has.One.EqualTo(listPeering);
             Assert.AreEqual(listPeering.ElementAt(0).Data.ETag, putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, listPeering.ElementAt(0).Data.Name);
-            Assert.AreEqual(remoteVirtualNetwork.Value.Id, listPeering.ElementAt(0).Data.RemoteVirtualNetwork.Id);
+            Assert.AreEqual(remoteVirtualNetwork.Value.Id, listPeering.ElementAt(0).Data.RemoteVirtualNetworkId);
             Assert.AreEqual(peering.AllowForwardedTraffic, listPeering.ElementAt(0).Data.AllowForwardedTraffic);
             Assert.AreEqual(peering.AllowVirtualNetworkAccess, listPeering.ElementAt(0).Data.AllowVirtualNetworkAccess);
             Assert.False(listPeering.ElementAt(0).Data.UseRemoteGateways);

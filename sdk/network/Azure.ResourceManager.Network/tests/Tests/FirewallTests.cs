@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.Location = AzureLocation.WestUS2;
             firewallData.IPConfigurations.Add(new AzureFirewallIPConfiguration()
             {
-                PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                Subnet = new WritableSubResource() { Id = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet") },
+                PublicIPAddressId = _publicIPAddressIdentifier,
+                SubnetId = _networkIdentifier.AppendChildResource("subnets", "AzureFirewallSubnet"),
             });
             var firewallLro = await (await _resourceGroup.GetAzureFirewalls().CreateOrUpdateAsync(WaitUntil.Completed, _firewallName, firewallData, System.Threading.CancellationToken.None)).WaitForCompletionAsync();
             return firewallLro.Value;

@@ -35,7 +35,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public SecretClient GetSecretClient()
         {
-            return InstrumentClient(new SecretClient(Uri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions())));
+            // Keep setup requests on the version used by the existing resolver compatibility recordings.
+            return InstrumentClient(new SecretClient(Uri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V2025_07_01))));
         }
 
         [RecordedTest]

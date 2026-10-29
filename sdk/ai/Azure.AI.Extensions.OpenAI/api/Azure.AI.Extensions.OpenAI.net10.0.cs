@@ -548,6 +548,7 @@ namespace Azure.AI.Extensions.OpenAI
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.ObsoleteAttribute("This legacy Browser Automation tool is deprecated and is no longer available. Please use the latest Browser Automation tool instead. See https://aka.ms/bat/docs.")]
     public partial class BrowserAutomationPreviewTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool>
     {
         public BrowserAutomationPreviewTool(Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions browserAutomationPreview) : base (default(OpenAI.Responses.ResponseToolKind)) { }
@@ -660,7 +661,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ChatSummaryMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>
     {
-        public ChatSummaryMemoryItem(string memoryId, System.DateTimeOffset updatedOn, string scope, string content) { }
+        public ChatSummaryMemoryItem(string memoryId, System.DateTimeOffset updatedAt, string scope, string content) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -760,7 +761,7 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public static Azure.AI.Extensions.OpenAI.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.StructuredOutputDefinition outputDefinition = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall FabricDataAgentToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -778,7 +779,7 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.MemoryCommandToolCallOutput MemoryCommandToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Extensions.OpenAI.MemoryOutputItem MemoryOutputItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.MemoryOutputItem MemoryOutputItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Extensions.OpenAI.MemorySearchResultOptions searchOptions = null, int? updateDelayInSeconds = default(int?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -810,7 +811,7 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public static Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput OpenApiToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Extensions.OpenAI.ProceduralMemoryItem ProceduralMemoryItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ProceduralMemoryItem ProceduralMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.SharePointGroundingToolCall SharePointGroundingToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -823,7 +824,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.ToolConfig ToolConfig(bool? pin = default(bool?), string additionalSearchText = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static Azure.AI.Extensions.OpenAI.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = null, string serverLabel = null, Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice requireApproval = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
@@ -924,7 +925,7 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class GitHubCopilotToolsetConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig>
     {
-        internal GitHubCopilotToolsetConfig() { }
+        public GitHubCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool name, bool? enabled = default(bool?)) { }
         public bool? Enabled { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.GitHubCopilotBuiltInTool Name { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -939,7 +940,7 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class GitHubCopilotToolsetDefaultConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig>
     {
-        internal GitHubCopilotToolsetDefaultConfig() { }
+        public GitHubCopilotToolsetDefaultConfig(bool? enabled) { }
         public bool? Enabled { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -954,7 +955,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class GitHubCopilotToolsetPreview : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetPreview>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetPreview>
     {
-        internal GitHubCopilotToolsetPreview() : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        public GitHubCopilotToolsetPreview(Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig defaultConfig, System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig> configs) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetConfig> Configs { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetDefaultConfig DefaultConfig { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1007,7 +1008,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Content { get { throw null; } set { } }
         public string MemoryId { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
-        public System.DateTimeOffset UpdatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset UpdatedAt { get { throw null; } set { } }
         protected virtual Azure.AI.Extensions.OpenAI.MemoryOutputItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Extensions.OpenAI.MemoryOutputItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1079,7 +1080,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class MicrosoftCopilotToolsetConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig>
     {
-        internal MicrosoftCopilotToolsetConfig() { }
+        public MicrosoftCopilotToolsetConfig(Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool name, bool? enabled = default(bool?)) { }
         public bool? Enabled { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.MicrosoftCopilotBuiltInTool Name { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1095,7 +1096,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class MicrosoftCopilotToolsetDefaultConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig>
     {
-        internal MicrosoftCopilotToolsetDefaultConfig() { }
+        public MicrosoftCopilotToolsetDefaultConfig(bool? enabled) { }
         public bool? Enabled { get { throw null; } }
         protected virtual Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1110,7 +1111,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class MicrosoftCopilotToolsetPreview : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetPreview>
     {
-        internal MicrosoftCopilotToolsetPreview() : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        public MicrosoftCopilotToolsetPreview(Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig defaultConfig, System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig> configs) : base (default(OpenAI.Responses.ResponseToolKind)) { }
         public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetConfig> Configs { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.MicrosoftCopilotToolsetDefaultConfig DefaultConfig { get { throw null; } }
         protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1144,7 +1145,6 @@ namespace Azure.AI.Extensions.OpenAI
         public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public OAuthConsentRequestResponseItem(System.Uri consentLink, string serverLabel) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public System.Uri ConsentLink { get { throw null; } set { } }
-        public new string Id { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1347,7 +1347,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ProceduralMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>
     {
-        public ProceduralMemoryItem(string memoryId, System.DateTimeOffset updatedOn, string scope, string content) { }
+        public ProceduralMemoryItem(string memoryId, System.DateTimeOffset updatedAt, string scope, string content) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1800,7 +1800,7 @@ namespace Azure.AI.Extensions.OpenAI
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class UserProfileMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>
     {
-        public UserProfileMemoryItem(string memoryId, System.DateTimeOffset updatedOn, string scope, string content) { }
+        public UserProfileMemoryItem(string memoryId, System.DateTimeOffset updatedAt, string scope, string content) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.MemoryOutputItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectionMonitorData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionMonitorData IPersistableModel<ConnectionMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectionMonitorData IPersistableModel<ConnectionMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectionMonitorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectionMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectionMonitorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectionMonitorData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

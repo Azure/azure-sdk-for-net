@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VmmVmDetails : HyperVVmDetails
     {
         /// <summary> Initializes a new instance of <see cref="VmmVmDetails"/>. </summary>
-        internal VmmVmDetails()
+        internal VmmVmDetails() : base("VmmVirtualMachine")
         {
         }
 
