@@ -51,6 +51,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual string Hub => _hub;
 
         /// <summary> Query messages in a conversation from latest to earliest. </summary>
+        /// <remarks>
+        /// Message IDs are pagination cursors. The returned pageable follows the response nextLink.
+        /// Resume from a saved continuation token with <c>AsPages(continuationToken)</c>.
+        /// </remarks>
         /// <param name="conversationId"> Conversation identifier. </param>
         /// <param name="options"> Options for querying messages. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -68,6 +72,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         }
 
         /// <summary> Query messages in a conversation from latest to earliest. </summary>
+        /// <remarks>
+        /// Message IDs are pagination cursors. The returned pageable follows the response nextLink.
+        /// Resume from a saved continuation token with <c>AsPages(continuationToken)</c>.
+        /// </remarks>
         /// <param name="conversationId"> Conversation identifier. </param>
         /// <param name="options"> Options for querying messages. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

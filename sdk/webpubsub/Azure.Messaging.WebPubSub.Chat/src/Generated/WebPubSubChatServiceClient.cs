@@ -135,7 +135,8 @@ namespace Azure.Messaging.WebPubSub.Chat
         }
 
         /// <summary>
-        /// [Protocol Method] Query messages in a conversation from latest to earliest.
+        /// [Protocol Method] Message IDs are used as pagination cursors. Follow the response nextLink,
+        /// which contains the message ID cursor, to retrieve the next page.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -166,7 +167,8 @@ namespace Azure.Messaging.WebPubSub.Chat
         }
 
         /// <summary>
-        /// [Protocol Method] Query messages in a conversation from latest to earliest.
+        /// [Protocol Method] Message IDs are used as pagination cursors. Follow the response nextLink,
+        /// which contains the message ID cursor, to retrieve the next page.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -592,35 +594,35 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Create or replace a role. </summary>
         /// <param name="roleName"> Role name. Must start with 'user.' or 'room.' prefix. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="role"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="role"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WebPubSubChatRole> CreateOrReplaceRole(string roleName, WebPubSubChatRole resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubChatRole> CreateOrReplaceRole(string roleName, WebPubSubChatRole role, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(role, nameof(role));
 
-            Response result = CreateOrReplaceRole(roleName, resource, matchConditions, cancellationToken.ToRequestContext());
+            Response result = CreateOrReplaceRole(roleName, role, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((WebPubSubChatRole)result, result);
         }
 
         /// <summary> Create or replace a role. </summary>
         /// <param name="roleName"> Role name. Must start with 'user.' or 'room.' prefix. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="role"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="role"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WebPubSubChatRole>> CreateOrReplaceRoleAsync(string roleName, WebPubSubChatRole resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubChatRole>> CreateOrReplaceRoleAsync(string roleName, WebPubSubChatRole role, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(role, nameof(role));
 
-            Response result = await CreateOrReplaceRoleAsync(roleName, resource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrReplaceRoleAsync(roleName, role, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WebPubSubChatRole)result, result);
         }
 
@@ -846,35 +848,35 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Create or replace a room with a client-specified ID. </summary>
         /// <param name="roomId"> Room identifier. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="room"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="room"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WebPubSubChatRoom> CreateOrReplaceRoom(string roomId, WebPubSubChatRoom resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubChatRoom> CreateOrReplaceRoom(string roomId, WebPubSubChatRoom room, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(room, nameof(room));
 
-            Response result = CreateOrReplaceRoom(roomId, resource, matchConditions, cancellationToken.ToRequestContext());
+            Response result = CreateOrReplaceRoom(roomId, room, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((WebPubSubChatRoom)result, result);
         }
 
         /// <summary> Create or replace a room with a client-specified ID. </summary>
         /// <param name="roomId"> Room identifier. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="room"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="room"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WebPubSubChatRoom>> CreateOrReplaceRoomAsync(string roomId, WebPubSubChatRoom resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubChatRoom>> CreateOrReplaceRoomAsync(string roomId, WebPubSubChatRoom room, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(room, nameof(room));
 
-            Response result = await CreateOrReplaceRoomAsync(roomId, resource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrReplaceRoomAsync(roomId, room, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WebPubSubChatRoom)result, result);
         }
 
@@ -1241,38 +1243,38 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Create or replace a topic with a client-specified ID. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="topicId"> Topic identifier unique within the room. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="topic"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="topic"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="topicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ChatTopic> CreateOrReplaceTopic(string roomId, string topicId, ChatTopic resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ChatTopic> CreateOrReplaceTopic(string roomId, string topicId, ChatTopic topic, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
             Argument.AssertNotNullOrEmpty(topicId, nameof(topicId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(topic, nameof(topic));
 
-            Response result = CreateOrReplaceTopic(roomId, topicId, resource, matchConditions, cancellationToken.ToRequestContext());
+            Response result = CreateOrReplaceTopic(roomId, topicId, topic, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((ChatTopic)result, result);
         }
 
         /// <summary> Create or replace a topic with a client-specified ID. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="topicId"> Topic identifier unique within the room. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="topic"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="topicId"/> or <paramref name="topic"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="topicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ChatTopic>> CreateOrReplaceTopicAsync(string roomId, string topicId, ChatTopic resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChatTopic>> CreateOrReplaceTopicAsync(string roomId, string topicId, ChatTopic topic, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
             Argument.AssertNotNullOrEmpty(topicId, nameof(topicId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(topic, nameof(topic));
 
-            Response result = await CreateOrReplaceTopicAsync(roomId, topicId, resource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrReplaceTopicAsync(roomId, topicId, topic, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ChatTopic)result, result);
         }
 
@@ -1729,38 +1731,38 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Create or replace a room member. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="userId"> User ID of the member. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="member"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="userId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="userId"/> or <paramref name="member"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WebPubSubChatRoomMember> CreateOrReplaceRoomMember(string roomId, string userId, WebPubSubChatRoomMember resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubChatRoomMember> CreateOrReplaceRoomMember(string roomId, string userId, WebPubSubChatRoomMember member, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(member, nameof(member));
 
-            Response result = CreateOrReplaceRoomMember(roomId, userId, resource, matchConditions, cancellationToken.ToRequestContext());
+            Response result = CreateOrReplaceRoomMember(roomId, userId, member, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((WebPubSubChatRoomMember)result, result);
         }
 
         /// <summary> Create or replace a room member. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="userId"> User ID of the member. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="member"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="userId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/>, <paramref name="userId"/> or <paramref name="member"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WebPubSubChatRoomMember>> CreateOrReplaceRoomMemberAsync(string roomId, string userId, WebPubSubChatRoomMember resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubChatRoomMember>> CreateOrReplaceRoomMemberAsync(string roomId, string userId, WebPubSubChatRoomMember member, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(member, nameof(member));
 
-            Response result = await CreateOrReplaceRoomMemberAsync(roomId, userId, resource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrReplaceRoomMemberAsync(roomId, userId, member, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WebPubSubChatRoomMember)result, result);
         }
 
@@ -2086,35 +2088,35 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <summary> Create or replace a user. The request body is a polymorphic `ChatUser` (e.g. `HumanChatUser`) selected by the `kind` discriminator. </summary>
         /// <param name="userId"> User identifier. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="user"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="user"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WebPubSubChatUser> CreateOrReplaceUser(string userId, WebPubSubChatUser resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubChatUser> CreateOrReplaceUser(string userId, WebPubSubChatUser user, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(user, nameof(user));
 
-            Response result = CreateOrReplaceUser(userId, resource, matchConditions, cancellationToken.ToRequestContext());
+            Response result = CreateOrReplaceUser(userId, user, matchConditions, cancellationToken.ToRequestContext());
             return Response.FromValue((WebPubSubChatUser)result, result);
         }
 
         /// <summary> Create or replace a user. The request body is a polymorphic `ChatUser` (e.g. `HumanChatUser`) selected by the `kind` discriminator. </summary>
         /// <param name="userId"> User identifier. </param>
-        /// <param name="resource"> The resource instance. </param>
+        /// <param name="user"> The resource instance. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="user"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WebPubSubChatUser>> CreateOrReplaceUserAsync(string userId, WebPubSubChatUser resource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubChatUser>> CreateOrReplaceUserAsync(string userId, WebPubSubChatUser user, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(user, nameof(user));
 
-            Response result = await CreateOrReplaceUserAsync(userId, resource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateOrReplaceUserAsync(userId, user, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WebPubSubChatUser)result, result);
         }
 

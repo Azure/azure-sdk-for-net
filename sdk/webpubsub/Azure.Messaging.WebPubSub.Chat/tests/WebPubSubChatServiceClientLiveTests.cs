@@ -165,7 +165,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
                 WebPubSubChatConversation conversation = await _client.GetConversationAsync(room.DefaultConversation);
                 Assert.That(conversation.Id, Is.EqualTo(room.DefaultConversation));
-                Assert.That(conversation.ParentRoom, Is.EqualTo(roomId));
+                Assert.That(conversation.RoomId, Is.EqualTo(roomId));
 
                 var messages = new List<WebPubSubChatMessage>();
                 await foreach (WebPubSubChatMessage message in _client.GetMessagesAsync(room.DefaultConversation))

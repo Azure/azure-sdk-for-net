@@ -18,21 +18,21 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatConversation"/>. </summary>
-        /// <param name="parentRoom"> Parent room identifier. </param>
-        internal WebPubSubChatConversation(string parentRoom)
+        /// <param name="roomId"> Parent room identifier. </param>
+        internal WebPubSubChatConversation(string roomId)
         {
-            ParentRoom = parentRoom;
+            RoomId = roomId;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatConversation"/>. </summary>
         /// <param name="id"> Conversation identifier. </param>
-        /// <param name="parentRoom"> Parent room identifier. </param>
+        /// <param name="roomId"> Parent room identifier. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubChatConversation(string id, string parentRoom, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubChatConversation(string id, string roomId, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            ParentRoom = parentRoom;
+            RoomId = roomId;
             Etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public string Id { get; }
 
         /// <summary> Parent room identifier. </summary>
-        public string ParentRoom { get; }
+        public string RoomId { get; }
 
         /// <summary> The entity tag for this resource. </summary>
         public ETag Etag { get; }

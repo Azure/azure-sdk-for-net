@@ -376,7 +376,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatGetConversation
             WebPubSubChatConversation conversation = client.GetConversation(room.DefaultConversation).Value;
 
-            Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.ParentRoom}");
+            Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.RoomId}");
             #endregion
         }
 

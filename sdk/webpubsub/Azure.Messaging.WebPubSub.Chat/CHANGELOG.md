@@ -12,6 +12,8 @@
 
 ### Breaking Changes
 
+- Renamed `WebPubSubChatConversation.ParentRoom` to `RoomId`, including the model factory parameter; the wire property remains `parentRoom`.
+- Renamed typed create-or-replace request parameters from `resource` to `role`, `room`, `member`, `user`, and `topic`.
 - The typed `UpdateMessage` and `UpdateMessageAsync` overloads now accept `UpdateMessageOptions` instead of `WebPubSubChatMessage`. The `RequestContent` overloads are unchanged.
 - Create message content with `WebPubSubChatMessageContent.FromText` or `FromBinary` instead of a parameterless constructor and writable properties.
 
@@ -19,6 +21,8 @@
 
 
 ### Other Changes
+
+- Clarified message ID cursor pagination and continuation-token resumption for message listings.
 
 ## 1.0.0-beta.1 (2026-09-21)
 

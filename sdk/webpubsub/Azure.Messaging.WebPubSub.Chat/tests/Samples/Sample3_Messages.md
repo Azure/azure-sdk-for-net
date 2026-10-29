@@ -17,7 +17,11 @@ foreach (WebPubSubChatMessage message in client.GetMessages(room.DefaultConversa
 
 ## Page through message history
 
-Messages are returned from latest to earliest. You can constrain a query with pagination parameters:
+Messages are returned from latest to earliest. Message IDs are pagination cursors:
+the pageable follows each response's `nextLink`, which contains the cursor for the
+next page. Save a page's `ContinuationToken` and pass it to
+`messages.AsPages(continuationToken)` to resume later. You can constrain a query
+with pagination parameters:
 
 ```C# Snippet:WebPubSubChatPageMessageHistory
 Pageable<WebPubSubChatMessage> messages = client.GetMessages(
@@ -35,7 +39,7 @@ foreach (WebPubSubChatMessage message in messages)
 ```C# Snippet:WebPubSubChatGetConversation
 WebPubSubChatConversation conversation = client.GetConversation(room.DefaultConversation).Value;
 
-Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.ParentRoom}");
+Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.RoomId}");
 ```
 
 ## Update a message

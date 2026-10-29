@@ -29,6 +29,87 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         }
 
         [Test]
+        public async Task ConversationRoomIdPreservesParentRoomWireProperty()
+        {
+            const string json = """{"id":"c.room1.default","parentRoom":"room1","etag":"conversation-etag","futureProperty":42}""";
+            var transport = new MockTransport(JsonResponse(200, json));
+
+            WebPubSubChatConversation conversation = await CreateClient(transport).GetConversationAsync("c.room1.default");
+
+            Assert.That(conversation.RoomId, Is.EqualTo("room1"));
+            Assert.That(conversation.Id, Is.EqualTo("c.room1.default"));
+            Assert.That(conversation.Etag, Is.EqualTo(new ETag("conversation-etag")));
+            using JsonDocument body = JsonDocument.Parse(ModelReaderWriter.Write(conversation));
+            Assert.That(body.RootElement.GetProperty("parentRoom").GetString(), Is.EqualTo("room1"));
+            Assert.That(body.RootElement.TryGetProperty("roomId", out _), Is.False);
+            WebPubSubChatConversation persisted = ModelReaderWriter.Read<WebPubSubChatConversation>(BinaryData.FromString(json));
+            using JsonDocument persistedBody = JsonDocument.Parse(ModelReaderWriter.Write(persisted));
+            Assert.That(persistedBody.RootElement.GetProperty("parentRoom").GetString(), Is.EqualTo("room1"));
+            Assert.That(persistedBody.RootElement.TryGetProperty("roomId", out _), Is.False);
+            Assert.That(persistedBody.RootElement.GetProperty("futureProperty").GetInt32(), Is.EqualTo(42));
+            Assert.That(WebPubSubChatModelFactory.WebPubSubChatConversation(roomId: "room2").RoomId, Is.EqualTo("room2"));
+            Assert.That(typeof(WebPubSubChatConversation).GetProperty("ParentRoom"), Is.Null);
+        }
+
+        [TestCase("CreateOrReplaceRole", typeof(WebPubSubChatRole), "role")]
+        [TestCase("CreateOrReplaceRoom", typeof(WebPubSubChatRoom), "room")]
+        [TestCase("CreateOrReplaceRoomMember", typeof(WebPubSubChatRoomMember), "member")]
+        [TestCase("CreateOrReplaceUser", typeof(WebPubSubChatUser), "user")]
+        [TestCase("CreateOrReplaceTopic", typeof(ChatTopic), "topic")]
+        [TestCase("UpdateMessage", typeof(UpdateMessageOptions), "options")]
+        [TestCase("UpdateTopic", typeof(UpdateTopicOptions), "options")]
+        public void TypedRequestParametersPreserveDotNetModels(string methodName, Type requestType, string parameterName)
+        {
+            foreach (string name in new[] { methodName, methodName + "Async" })
+            {
+                var method = typeof(WebPubSubChatServiceClient).GetMethods().Single(
+                    m => m.Name == name && m.GetParameters().Any(p => p.ParameterType == requestType));
+                Assert.That(method.GetParameters().Single(p => p.ParameterType == requestType).Name, Is.EqualTo(parameterName));
+                var protocolMethod = typeof(WebPubSubChatServiceClient).GetMethods().Single(
+                    m => m.Name == name && m.GetParameters().Any(p => p.ParameterType == typeof(RequestContent)));
+                Assert.That(protocolMethod.GetParameters().Single(p => p.ParameterType == typeof(RequestContent)).Name, Is.EqualTo("content"));
+            }
+        }
+
+        [Test]
+        public async Task MessagesFollowMessageIdNextLinkAndResumeFromSavedToken()
+        {
+            const string messageJson = """{"id":"123","createdBy":"alice","content":{"text":"Hello"}}""";
+            string nextLink = $"{Endpoint}/api/hubs/hub/chat/conversations/c.room1.default/messages?api-version={ApiVersion}&latestMessageId=123%2Bcursor&maxpagesize=1";
+            var transport = new MockTransport(
+                JsonResponse(200, $"{{\"value\":[{messageJson}],\"nextLink\":\"{nextLink}\"}}"),
+                JsonResponse(200, """{"value":[]}"""));
+            var pages = new List<Page<WebPubSubChatMessage>>();
+            await foreach (Page<WebPubSubChatMessage> page in CreateClient(transport).GetMessagesAsync(
+                "c.room1.default", new MessageQueryOptions { LatestMessageId = "200", EarliestMessageId = "100", MaxPageSize = 1 }).AsPages())
+            {
+                pages.Add(page);
+            }
+
+            Assert.That(pages, Has.Count.EqualTo(2));
+            Assert.That(pages[0].Values.Single().Id, Is.EqualTo("123"));
+            Assert.That(pages[0].Values.Single().Content.Text, Is.EqualTo("Hello"));
+            Assert.That(pages[0].ContinuationToken, Is.EqualTo(nextLink));
+            Assert.That(pages[1].ContinuationToken, Is.Null);
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+            Assert.That(transport.Requests[0].Uri.Query, Does.Contain("latestMessageId=200"));
+            Assert.That(transport.Requests[0].Uri.Query, Does.Contain("earliestMessageId=100"));
+            Assert.That(transport.Requests[0].Uri.Query, Does.Contain("maxpagesize=1"));
+            Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
+
+            var resumeTransport = new MockTransport(JsonResponse(200, $"{{\"value\":[{messageJson}]}}"));
+            var resumedPages = new List<Page<WebPubSubChatMessage>>();
+            await foreach (Page<WebPubSubChatMessage> page in CreateClient(resumeTransport)
+                .GetMessagesAsync("c.room1.default").AsPages(pages[0].ContinuationToken))
+            {
+                resumedPages.Add(page);
+            }
+            Assert.That(resumedPages, Has.Count.EqualTo(1));
+            Assert.That(resumedPages[0].Values.Single().Id, Is.EqualTo("123"));
+            Assert.That(resumeTransport.SingleRequest.Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
+        }
+
+        [Test]
         public async Task GetRoomsDeserializesRooms()
         {
             var transport = CreatePagedTransport("rooms", RoomJson);
@@ -105,6 +186,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         [TestCase("users")]
         [TestCase("rooms/room1/topics")]
         [TestCase("users/alice/rooms")]
+        [TestCase("conversations/c.room1.default/messages")]
         public async Task ProtocolListsResumeFromContinuationLink(string path)
         {
             var transport = new MockTransport(JsonResponse(200, """{"value":[]}"""));
@@ -115,9 +197,11 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 "users" => client.GetUsersAsync(null, null, new RequestContext()),
                 "rooms/room1/topics" => client.GetTopicsAsync("room1", null, null, new RequestContext()),
                 "users/alice/rooms" => client.GetRoomsForUserAsync("alice", null, null, new RequestContext()),
+                "conversations/c.room1.default/messages" => client.GetMessagesAsync("c.room1.default", null, null, null, new RequestContext()),
                 _ => throw new ArgumentOutOfRangeException(nameof(path))
             };
-            string nextLink = $"{Endpoint}/api/hubs/hub/chat/{path}?api-version={ApiVersion}&continuationToken=next%2Bpage";
+            string cursor = path.EndsWith("/messages", StringComparison.Ordinal) ? "latestMessageId=123%2Bcursor" : "continuationToken=next%2Bpage";
+            string nextLink = $"{Endpoint}/api/hubs/hub/chat/{path}?api-version={ApiVersion}&{cursor}";
             var pages = new List<Page<BinaryData>>();
             await foreach (Page<BinaryData> page in results.AsPages(nextLink))
             {
