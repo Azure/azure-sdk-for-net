@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.NetApp
     {
         private EntraIdConfig _entraIdConfig;
 
+        /// <summary> Gets or sets a test-only marker for validating AutoPR changelog generation. Not intended for release. </summary>
+        public string ChangelogTestMarker { get; set; }
+
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfig EntraIdConfig
         {

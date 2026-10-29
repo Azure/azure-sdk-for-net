@@ -27,6 +27,15 @@ if($apiFilePathArray.Count -ne 1)
 }
 else {
     dotnet tool update Azure.SDK.Management.ChangelogGen -g --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json  --prerelease --interactive
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Failed to install Azure.SDK.Management.ChangelogGen.'
+    }
 
-    changelog-gen-mgmt $apiFilePathArray[0] $ReleaseVersion $ReleaseDate    
+    # The tool can log a caught exception yet return zero; do not report false success.
+    $output = @(changelog-gen-mgmt $apiFilePathArray[0] $ReleaseVersion $ReleaseDate 2>&1)
+    $exitCode = $LASTEXITCODE
+    $output | ForEach-Object { Write-Host $_ }
+    if ($exitCode -ne 0 -or ($output -join "`n") -match '(?im)^\s*(Error occurs when generating changelog:|Detail exception:)') {
+        throw 'Management changelog generation failed. See the tool output above.'
+    }
 }
