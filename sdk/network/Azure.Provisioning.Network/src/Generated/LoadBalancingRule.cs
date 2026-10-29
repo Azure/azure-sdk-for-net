@@ -321,7 +321,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

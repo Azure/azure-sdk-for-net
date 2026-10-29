@@ -414,7 +414,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualNetworkPeeringPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VirtualNetwork>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualNetwork>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

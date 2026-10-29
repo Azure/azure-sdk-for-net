@@ -213,7 +213,7 @@ namespace Azure.Provisioning.PrivateDns
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<VirtualNetworkLinkProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<PrivateDnsZone>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<PrivateDnsZone>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
