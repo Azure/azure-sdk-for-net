@@ -1,0 +1,6 @@
+directory: specification/edgeoperator/resource-manager/Microsoft.EdgeOperator/SystemReadiness
+commit: c765bfa05a2bce47b705d262d5afcdd1ab4cc06e
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
