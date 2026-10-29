@@ -38,10 +38,10 @@ steps:
 
   # Pipeline-owned account configuration is a runtime value, not a template parameter.
   # Missing configuration skips the task; PRs/foreign repos/non-main never get this task.
-  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
+  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), in(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools', 'Azure/azure-rest-api-specs'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
     - task: AzureCLI@2
       displayName: 'Publish saved build bundle directly to Blob'
-      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'))
+      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), in(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools', 'Azure/azure-rest-api-specs'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'))
       timeoutInMinutes: 20
       env:
         EVAL_STORAGE_ACCOUNT_NAME: $(EvalStorageAccountName)
