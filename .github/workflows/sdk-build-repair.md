@@ -30,6 +30,7 @@ description: "Auto-repair custom-code build failures on release-planner Auto SDK
 
 imports:
   - shared/copilot-cli-version-probe-guard.md
+  - shared/sdk-build-repair-checkout-guard.md
   - shared/agent-output-validation.md
 
 on:

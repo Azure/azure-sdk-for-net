@@ -7932,6 +7932,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
                 "resourceName": "ProfileRevision",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8381,6 +8382,7 @@
                 },
                 "singletonResourceName": "default",
                 "resourceName": "LegacySingleton",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -8429,6 +8431,7 @@
                 },
                 "singletonResourceName": "default",
                 "resourceName": "OrphanedSingleton",
+                "resourceNameIsExplicit": true,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -9507,7 +9510,6 @@
                 "$id": "627",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
@@ -10268,7 +10270,6 @@
                 "$id": "669",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "Create a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -10872,7 +10873,6 @@
                 "$id": "700",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "Get a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -11253,7 +11253,6 @@
                 "$id": "719",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "Update a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -11773,7 +11772,6 @@
                 "$id": "744",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "Delete a ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -12141,7 +12139,6 @@
                 "$id": "763",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -12558,7 +12555,6 @@
                 "$id": "784",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -12851,7 +12847,6 @@
                 "$id": "799",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "KeyValue",
                 "doc": "Create a KeyValue",
                 "accessibility": "public",
                 "parameters": [
@@ -13486,7 +13481,6 @@
                 "$id": "832",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "KeyValue",
                 "doc": "Get a KeyValue",
                 "accessibility": "public",
                 "parameters": [
@@ -13934,7 +13928,6 @@
                 "$id": "855",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "KeyValue",
                 "doc": "Delete a KeyValue",
                 "accessibility": "public",
                 "parameters": [
@@ -14336,7 +14329,6 @@
                 "$id": "876",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "KeyValue",
                 "doc": "List KeyValue resources by ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -14882,7 +14874,6 @@
                 "$id": "905",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Item",
                 "doc": "Get a Item",
                 "accessibility": "public",
                 "parameters": [
@@ -15404,7 +15395,6 @@
                 "$id": "934",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Item",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -16046,7 +16036,6 @@
                 "$id": "964",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Item",
                 "doc": "List Item resources by ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -16592,7 +16581,6 @@
                 "$id": "993",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Profile",
                 "doc": "Get a Profile",
                 "accessibility": "public",
                 "parameters": [
@@ -17114,7 +17102,6 @@
                 "$id": "1022",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "Profile",
                 "doc": "Create a Profile",
                 "accessibility": "public",
                 "parameters": [
@@ -17711,7 +17698,6 @@
                 "$id": "1051",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "Profile",
                 "doc": "Delete a Profile",
                 "accessibility": "public",
                 "parameters": [
@@ -18146,7 +18132,6 @@
                 "$id": "1074",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "Profile",
                 "doc": "List Profile resources by ConfigurationStore",
                 "accessibility": "public",
                 "parameters": [
@@ -18692,7 +18677,6 @@
                 "$id": "1103",
                 "name": "getByRevisionNumber",
                 "isExactName": false,
-                "resourceName": "Profile",
                 "doc": "Get a specific revision of a profile.",
                 "accessibility": "public",
                 "parameters": [
@@ -19300,7 +19284,6 @@
                 "$id": "1140",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ResourceProfile",
                 "doc": "Get a ResourceProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -19822,7 +19805,6 @@
                 "$id": "1169",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ResourceProfile",
                 "doc": "Create a ResourceProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -20481,7 +20463,6 @@
                 "$id": "1202",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "DiscriminatedResourceProfile",
                 "doc": "Get a DiscriminatedResourceProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -21003,7 +20984,6 @@
                 "$id": "1231",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "DiscriminatedResourceProfile",
                 "doc": "Create a DiscriminatedResourceProfile",
                 "accessibility": "public",
                 "parameters": [
@@ -21662,7 +21642,6 @@
                 "$id": "1264",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ResourceProfileRevision",
                 "doc": "Get a ResourceProfileRevision",
                 "accessibility": "public",
                 "parameters": [
@@ -22313,7 +22292,6 @@
                 "$id": "1301",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ExtensionAssignment",
                 "doc": "Get a ExtensionAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -22700,7 +22678,6 @@
                 "$id": "1323",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ExtensionAssignment",
                 "doc": "Create a ExtensionAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -23260,7 +23237,6 @@
                 "$id": "1352",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ReadOnlyExtension",
                 "doc": "Get a ReadOnlyExtension",
                 "accessibility": "public",
                 "parameters": [
@@ -23642,7 +23618,6 @@
                 "$id": "1374",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ExtensionChild",
                 "doc": "Get a ExtensionChild",
                 "accessibility": "public",
                 "parameters": [
@@ -24096,7 +24071,6 @@
                 "$id": "1400",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ExtensionChild",
                 "doc": "Create a ExtensionChild",
                 "accessibility": "public",
                 "parameters": [
@@ -24723,7 +24697,6 @@
                 "$id": "1433",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "MultiScopeAssignment",
                 "doc": "Get a MultiScopeAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -25029,7 +25002,6 @@
                 "$id": "1451",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "MultiScopeAssignment",
                 "doc": "Create a MultiScopeAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -25508,7 +25480,6 @@
                 "$id": "1476",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "MultiScopeAssignment",
                 "doc": "Get a MultiScopeAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -25958,7 +25929,6 @@
                 "$id": "1501",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "MultiScopeAssignment",
                 "doc": "Create a MultiScopeAssignment",
                 "accessibility": "public",
                 "parameters": [
@@ -26545,7 +26515,6 @@
                 "$id": "1530",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SingletonSetting",
                 "doc": "Get a SingletonSetting",
                 "accessibility": "public",
                 "parameters": [
@@ -27000,7 +26969,6 @@
                 "$id": "1555",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "SingletonSetting",
                 "doc": "Create a SingletonSetting",
                 "accessibility": "public",
                 "parameters": [
@@ -27556,7 +27524,6 @@
                 "$id": "1582",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "LegacySingleton",
                 "doc": "Get a LegacySingleton",
                 "accessibility": "public",
                 "parameters": [
@@ -27939,7 +27906,6 @@
                 "$id": "1603",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "LegacySingleton",
                 "doc": "Create a LegacySingleton",
                 "accessibility": "public",
                 "parameters": [
@@ -28427,7 +28393,6 @@
                 "$id": "1626",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "OrphanedSingleton",
                 "doc": "Get a OrphanedSingleton",
                 "accessibility": "public",
                 "parameters": [
@@ -28863,7 +28828,6 @@
                 "$id": "1651",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "OrphanedSingleton",
                 "doc": "Create a OrphanedSingleton",
                 "accessibility": "public",
                 "parameters": [
@@ -29404,7 +29368,6 @@
                 "$id": "1678",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ConfigurationStorePrivateLinkResource",
                 "doc": "Get a ConfigurationStore PrivateLink",
                 "accessibility": "public",
                 "parameters": [
@@ -29907,7 +29870,6 @@
                 "$id": "1707",
                 "name": "list",
                 "isExactName": false,
-                "resourceName": "ConfigurationStorePrivateLinkResource",
                 "doc": "List ConfigurationStore PrivateLinks",
                 "accessibility": "public",
                 "parameters": [
@@ -30448,7 +30410,6 @@
                 "$id": "1736",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "VersionedResource",
                 "doc": "Create a VersionedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -31052,7 +31013,6 @@
                 "$id": "1767",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "VersionedResource",
                 "doc": "Get a VersionedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -31433,7 +31393,6 @@
                 "$id": "1786",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "VersionedResource",
                 "doc": "Update a VersionedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -31953,7 +31912,6 @@
                 "$id": "1811",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "VersionedResource",
                 "doc": "Delete a VersionedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -32382,7 +32340,6 @@
                 "$id": "1834",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "PreviewRetainedResource",
                 "doc": "Create a PreviewRetainedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -32985,7 +32942,6 @@
                 "$id": "1865",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "PreviewRetainedResource",
                 "doc": "Get a PreviewRetainedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -33365,7 +33321,6 @@
                 "$id": "1884",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "PreviewRetainedResource",
                 "doc": "Update a PreviewRetainedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -33884,7 +33839,6 @@
                 "$id": "1909",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "PreviewRetainedResource",
                 "doc": "Delete a PreviewRetainedResource",
                 "accessibility": "public",
                 "parameters": [
@@ -34311,7 +34265,6 @@
                 "$id": "1932",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "LatestStableResource",
                 "doc": "Create a LatestStableResource",
                 "accessibility": "public",
                 "parameters": [
@@ -34913,7 +34866,6 @@
                 "$id": "1963",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "LatestStableResource",
                 "doc": "Get a LatestStableResource",
                 "accessibility": "public",
                 "parameters": [
@@ -35292,7 +35244,6 @@
                 "$id": "1982",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "LatestStableResource",
                 "doc": "Update a LatestStableResource",
                 "accessibility": "public",
                 "parameters": [
@@ -35810,7 +35761,6 @@
                 "$id": "2007",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "LatestStableResource",
                 "doc": "Delete a LatestStableResource",
                 "accessibility": "public",
                 "parameters": [

@@ -34,11 +34,13 @@ namespace Azure.ResourceManager.Storage.Tests
         protected StorageManagementTestBase(bool isAsync) : base(isAsync)
         {
             IgnoreNetworkDependencyVersions();
+            JsonPathSanitizers.Add("$..secretAccessKey");
         }
 
         public StorageManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             IgnoreNetworkDependencyVersions();
+            JsonPathSanitizers.Add("$..secretAccessKey");
         }
 
         public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)

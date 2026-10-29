@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [ClientTestFixture(
+        SecretClientOptions.ServiceVersion.V2026_04_01,
         SecretClientOptions.ServiceVersion.V2025_07_01,
         SecretClientOptions.ServiceVersion.V7_6,
         SecretClientOptions.ServiceVersion.V7_5,
@@ -214,7 +215,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         return await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
@@ -236,7 +238,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => {
+                return TestRetryHelper.RetryAsync(async () =>
+                {
                     try
                     {
                         await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);

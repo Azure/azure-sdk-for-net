@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2026-10-28)
 
 ### Bugs Fixed
 
-### Other Changes
+- WebSocket connections no longer follow redirects, preventing API keys and other handshake headers from being forwarded to redirect destinations.
 
 ## 1.2.0 (2026-08-06)
 

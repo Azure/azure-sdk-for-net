@@ -13,7 +13,7 @@ using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
-    /// <summary> The SKU type for update operations. </summary>
+    /// <summary> The SKU fields in the update model. Do not include sku in PATCH requests; any supplied sku, including null or the existing value, is rejected. </summary>
     public partial class EdgeActionSkuTypeUpdate : IJsonModel<EdgeActionSkuTypeUpdate>
     {
         /// <param name="data"> The data to parse. </param>

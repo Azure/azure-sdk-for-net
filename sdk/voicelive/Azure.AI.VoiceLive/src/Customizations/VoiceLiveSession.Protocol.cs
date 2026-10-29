@@ -27,18 +27,19 @@ namespace Azure.AI.VoiceLive
 
             WebSocket?.Dispose();
 
-            var clientWebSocket = new ClientWebSocket();
+            WebSocket webSocket = null;
 
             // Start the root connect span before the WebSocket handshake begins
             Activity connectActivity = _tracer?.StartConnectActivity();
             try
             {
+                var requestHeaders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 foreach (var kvp in headers)
                 {
                     var value = kvp.Value;
                     if (value != null)
                     {
-                        clientWebSocket.Options.SetRequestHeader(kvp.Key, value);
+                        requestHeaders[kvp.Key] = value;
                     }
                 }
 
@@ -46,30 +47,23 @@ namespace Azure.AI.VoiceLive
                 {
                     // Add authorization header
                     string credentialValue = _credential.Key;
-                    clientWebSocket.Options.SetRequestHeader("api-key", $"{credentialValue}");
+                    requestHeaders["api-key"] = credentialValue;
                 }
                 else if (_tokenCredential != null)
                 {
                     var tokenOptions = new TokenRequestContext(new string[] { "https://ai.azure.com/.default" });
 
                     var token = await _tokenCredential.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
-                    clientWebSocket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.Token}");
+                    requestHeaders["Authorization"] = $"{token.TokenType} {token.Token}";
                 }
 
-                try
-                {
-                    clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");
-                }
-                catch (System.ArgumentException)
-                {
-                    // On Net4.x you can't set the UserAgent for a websocket connection
-                }
+                requestHeaders["User-Agent"] = "Azure-VoiceLive-SDK/.NET";
 
                 _contentLogger.LogConnectionOpening(_connectionId, $"{_endpoint}");
 
-                await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
+                webSocket = await VoiceLiveWebSocketConnector.ConnectAsync(_endpoint, requestHeaders, cancellationToken).ConfigureAwait(false);
 
-                WebSocket = clientWebSocket;
+                WebSocket = webSocket;
 
                 // Log successful connection
                 _contentLogger.LogConnectionOpened(_connectionId);
@@ -80,7 +74,7 @@ namespace Azure.AI.VoiceLive
                 // Record the connect error on the span and end it — the session is unusable
                 _tracer?.EndConnectActivity(ex);
                 connectActivity = null; // prevent double-stop in finally
-                clientWebSocket?.Dispose();
+                webSocket?.Dispose();
                 throw;
             }
         }

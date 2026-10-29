@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotSkuName? skuName = default, ManagedServiceIdentity identity = default, HealthBotProperties properties = default)
+        public static HealthBotData HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotSkuName? skuName, ManagedServiceIdentity identity, HealthBotProperties properties)
         {
             return new HealthBotData(
                 id,

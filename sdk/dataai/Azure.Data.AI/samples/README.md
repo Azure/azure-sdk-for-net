@@ -1,7 +1,6 @@
 # Azure.Data.AI samples
 
-> [!IMPORTANT]
-> The package and namespace names in these samples are provisional.
+These samples use Azure.Data.AI 1.0.0 and service API version `2026-10-30`.
 
 | Sample | Description |
 |--------|-------------|

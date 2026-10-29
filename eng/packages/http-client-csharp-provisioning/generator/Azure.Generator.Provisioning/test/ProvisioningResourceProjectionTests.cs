@@ -1182,7 +1182,6 @@ namespace Azure.Generator.Provisioning.Tests
             var methodName = $"{kind}Widget";
             var operation = new InputOperation(
                 methodName,
-                null,
                 string.Empty,
                 $"{methodName} description",
                 null,

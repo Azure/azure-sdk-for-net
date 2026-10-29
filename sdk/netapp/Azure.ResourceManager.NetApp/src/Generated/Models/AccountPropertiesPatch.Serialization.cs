@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("nfsV4IDDomain"u8);
                 }
             }
-            if (Optional.IsDefined(EntraIdConfig))
-            {
-                writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
-            }
             if (Optional.IsDefined(LdapConfiguration))
             {
                 writer.WritePropertyName("ldapConfiguration"u8);
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAccountEncryption encryption = default;
             bool nfsV4IdDomainIsDefined = false;
             string nfsV4IdDomain = default;
-            EntraIdConfigPatch entraIdConfig = default;
             LdapConfigurationPatch ldapConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,15 +190,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     nfsV4IdDomain = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("entraIdConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfigPatch.DeserializeEntraIdConfigPatch(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("ldapConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -219,13 +204,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccountPropertiesPatch(
-                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                encryption,
-                nfsV4IdDomain,
-                entraIdConfig,
-                ldapConfiguration,
-                additionalBinaryDataProperties)
+            return new AccountPropertiesPatch(activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption, nfsV4IdDomain, ldapConfiguration, additionalBinaryDataProperties)
             {
                 _nfsV4IdDomainIsDefined = nfsV4IdDomainIsDefined
             };

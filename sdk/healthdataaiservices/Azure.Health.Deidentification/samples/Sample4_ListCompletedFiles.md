@@ -6,7 +6,7 @@ This sample demonstrates how to list files that were completed by a job.
 ## List Completed Files and iterate over in a for loop
 
 ```C# Snippet:AzHealthDeidSample4_ListCompletedFiles
-Pageable<DeidentificationDocumentDetails> files = client.GetJobDocuments("job-name-1");
+Pageable<DeidentificationDocumentDetails> files = client.GetJobDocuments(jobName);
 
 foreach (DeidentificationDocumentDetails file in files)
 {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
-        internal IdentityIntegrationAuthenticationPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthenticationPolicyPropertiesFormat properties, string eTag, ManagedServiceIdentity identity, SystemData systemData) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal IdentityIntegrationAuthenticationPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthenticationPolicyPropertiesFormat properties, string eTag, ManagedServiceIdentity identity, SystemData systemData) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

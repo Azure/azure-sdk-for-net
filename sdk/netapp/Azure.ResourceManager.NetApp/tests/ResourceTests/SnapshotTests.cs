@@ -175,6 +175,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name.Split('/').Last());
+            // Provisioning can succeed before cloning releases the source snapshot.
+            for (int attempt = 0; attempt < 20 && newVolumeResource2.Data.CloneProgress is < 100; attempt++)
+            {
+                await LiveDelay(60000);
+                newVolumeResource2 = await newVolumeResource2.GetAsync();
+            }
+            Assert.That(newVolumeResource2.Data.CloneProgress, Is.Null.Or.EqualTo(100),
+                "Cloning must complete before the source snapshot can be deleted during cleanup.");
             //check if exists
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _snapshotCollection.GetAsync(snapshotName + "1"); });
             Assert.AreEqual(404, exception.Status);

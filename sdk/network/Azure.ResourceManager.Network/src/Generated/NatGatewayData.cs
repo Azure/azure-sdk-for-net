@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="NatGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The nat gateway SKU. </param>
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NatGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NatGatewayPropertiesFormat properties, NatGatewaySku sku, IList<string> zones, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NatGatewayPropertiesFormat properties, NatGatewaySku sku, IList<string> zones, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
@@ -75,6 +76,76 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddresses")]
+        public IList<WritableSubResource> PublicIPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPAddresses;
+            }
+        }
+
+        /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpAddressesV6")]
+        public IList<WritableSubResource> PublicIPAddressesV6
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPAddressesV6;
+            }
+        }
+
+        /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixes")]
+        public IList<WritableSubResource> PublicIPPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPPrefixes;
+            }
+        }
+
+        /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
+        [WirePath("properties.publicIpPrefixesV6")]
+        public IList<WritableSubResource> PublicIPPrefixesV6
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.PublicIPPrefixesV6;
+            }
+        }
+
+        /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
+        [WirePath("properties.subnets")]
+        public IReadOnlyList<WritableSubResource> Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                return Properties.Subnets;
+            }
+        }
+
         /// <summary> Whether Nat64 is enabled for the NAT gateway resource. </summary>
         [WirePath("properties.nat64")]
         public Nat64State? Nat64
@@ -90,6 +161,16 @@ namespace Azure.ResourceManager.Network
                     Properties = new NatGatewayPropertiesFormat();
                 }
                 Properties.Nat64 = value;
+            }
+        }
+
+        /// <summary> The resource GUID property of the NAT gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
             }
         }
 

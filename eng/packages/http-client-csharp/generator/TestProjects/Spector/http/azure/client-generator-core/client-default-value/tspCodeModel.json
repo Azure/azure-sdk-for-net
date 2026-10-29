@@ -191,7 +191,6 @@
             "$id": "16",
             "name": "putModelProperty",
             "isExactName": false,
-            "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
               {
@@ -381,7 +380,6 @@
             "$id": "24",
             "name": "getOperationParameter",
             "isExactName": false,
-            "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
               {
@@ -604,7 +602,6 @@
             "$id": "42",
             "name": "getPathParameter",
             "isExactName": false,
-            "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
               {
@@ -767,7 +764,6 @@
             "$id": "54",
             "name": "getHeaderParameter",
             "isExactName": false,
-            "resourceName": "ClientDefaultValue",
             "accessibility": "public",
             "parameters": [
               {

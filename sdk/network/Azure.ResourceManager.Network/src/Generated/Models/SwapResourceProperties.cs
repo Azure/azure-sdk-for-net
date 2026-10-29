@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SwapResourceProperties"/>. </summary>
-        /// <param name="slotType"> Specifies slot info on a cloud service. </param>
+        /// <param name="cloudServiceSwapSlotType"> Specifies slot info on a cloud service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SwapResourceProperties(SwapSlotType? slotType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SwapResourceProperties(SwapSlotType? cloudServiceSwapSlotType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SlotType = slotType;
+            CloudServiceSwapSlotType = cloudServiceSwapSlotType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies slot info on a cloud service. </summary>
         [WirePath("slotType")]
-        public SwapSlotType? SlotType { get; set; }
+        public SwapSlotType? CloudServiceSwapSlotType { get; set; }
     }
 }
