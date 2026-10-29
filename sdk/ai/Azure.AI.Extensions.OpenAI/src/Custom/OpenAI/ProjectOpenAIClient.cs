@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
+using OpenAI.Embeddings;
 using OpenAI.Files;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -112,6 +113,35 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <returns> The project files client. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override OpenAIFileClient GetOpenAIFileClient() => GetProjectFilesClient();
+
+    /// <summary> Gets a client for embedding operations. </summary>
+    /// <remarks>
+    /// The project endpoint does not serve embeddings, so the client sends its requests to the OpenAI endpoint of the
+    /// Foundry resource that hosts the project, <c>https://{resource}.services.ai.azure.com/openai/v1</c>, with the same pipeline.
+    /// </remarks>
+    /// <param name="model"> The name of the embedding model deployment. </param>
+    /// <returns> The embedding client. </returns>
+    public override EmbeddingClient GetEmbeddingClient(string model)
+    {
+        Uri resourceEndpoint = string.IsNullOrEmpty(_options?.AgentName) ? GetResourceOpenAIEndpoint(_options?.Endpoint) : null;
+        if (resourceEndpoint is null)
+        {
+            return base.GetEmbeddingClient(model);
+        }
+        return new ProjectEmbeddingClient(Pipeline, model, new OpenAIClientOptions { Endpoint = resourceEndpoint });
+    }
+
+    /// <summary> Gets the OpenAI endpoint of the Foundry resource that hosts the project of a project endpoint. </summary>
+    /// <param name="endpoint"> The OpenAI endpoint of the project, <c>https://{resource}.services.ai.azure.com/api/projects/{project}/openai/v1</c>. </param>
+    /// <returns> The OpenAI endpoint of the resource, or <c>null</c> if <paramref name="endpoint"/> is not a project endpoint. </returns>
+    internal static Uri GetResourceOpenAIEndpoint(Uri endpoint)
+    {
+        if (endpoint is null || !endpoint.AbsolutePath.StartsWith("/api/projects/", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+        return new Uri($"{endpoint.Scheme}://{endpoint.Authority}/openai/v1");
+    }
 
     /// <summary> Gets a client for project vector store operations. </summary>
     /// <returns> The project vector stores client. </returns>

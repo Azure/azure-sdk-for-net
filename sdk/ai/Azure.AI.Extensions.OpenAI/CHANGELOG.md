@@ -10,6 +10,7 @@
 - Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
 
 ### Bugs Fixed
+- `ProjectOpenAIClient.GetEmbeddingClient` now sends requests to the OpenAI endpoint of the Foundry resource that hosts the project. The project endpoint returns 404 for embeddings. ([#64336](https://github.com/Azure/azure-sdk-for-net/issues/64336))
 
 ### Other Changes
 

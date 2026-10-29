@@ -1274,6 +1274,7 @@ namespace Azure.AI.Extensions.OpenAI
         protected internal ProjectOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options) { }
         public ProjectOpenAIClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { }
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
+        public override OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string model) { throw null; }
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
