@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.Pipeline;
@@ -14,6 +15,38 @@ namespace Azure.Core.Tests
     [NonParallelizable]
     public class ClientOptionsTests
     {
+        [Test]
+        public void AddProxy_RegistersDirectAndConditionalModels()
+        {
+            var directOptions = new TestClientOptions();
+            directOptions.AddProxy<TestJsonModel>(new TestJsonModel { Name = "direct" });
+            var directResult = ModelReaderWriter.Write(new TestJsonModel { Name = "original" }, directOptions.ModelReaderWriterOptions);
+
+            var conditionalOptions = new TestClientOptions();
+            conditionalOptions.AddProxy<TestJsonModel>(new AcceptingProxy());
+            var conditionalResult = ModelReaderWriter.Write(new TestJsonModel { Name = "original" }, conditionalOptions.ModelReaderWriterOptions);
+
+            StringAssert.Contains("\"name\":\"direct\"", directResult.ToString());
+            StringAssert.Contains("\"name\":\"conditional\"", conditionalResult.ToString());
+        }
+
+        [Test]
+        public void AddProxy_RejectsNull()
+        {
+            var options = new TestClientOptions();
+            Assert.Throws<ArgumentNullException>(
+                () => options.AddProxy<TestJsonModel>((IPersistableModel<TestJsonModel>)null!));
+            Assert.Throws<ArgumentNullException>(
+                () => options.AddProxy<TestJsonModel>((ConditionalModelProxy<TestJsonModel>)null!));
+        }
+
+        [Test]
+        public void ModelReaderWriterOptions_CannotBeSetDirectly()
+        {
+            Assert.IsNull(typeof(ClientOptions)
+                .GetProperty(nameof(ClientOptions.ModelReaderWriterOptions))!.GetSetMethod());
+        }
+
         [TearDown]
         public void TearDown()
         {
@@ -272,6 +305,14 @@ namespace Azure.Core.Tests
 
         private class TestClientOptions : ClientOptions
         {
+        }
+
+        private sealed class AcceptingProxy : ConditionalModelProxy<TestJsonModel>
+        {
+            public AcceptingProxy() : base(new TestJsonModel { Name = "conditional" }) { }
+
+            public override bool CanHandle(TestJsonModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => true;
         }
 
         private class TestClientOptionsWithCustomMaxApplicationIdLength : ClientOptions
