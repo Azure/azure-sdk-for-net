@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Contains all specific policy signatures overrides for the IDPS. </summary>
-    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResource, IJsonModel<PolicySignaturesOverridesForIdpsData>
+    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResourceData, IJsonModel<PolicySignaturesOverridesForIdpsData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkWritableResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkWritableResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkWritableResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SignaturesOverridesProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +149,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolicySignaturesOverridesForIdpsData(id, name, @type, additionalBinaryDataProperties, properties);
+            return new PolicySignaturesOverridesForIdpsData(id, name, resourceType, additionalBinaryDataProperties, properties);
         }
     }
 }

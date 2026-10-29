@@ -22,10 +22,22 @@ namespace Azure.ResourceManager.Storage.Models
     // Suppress: generated method uses string groupId; prior GA used ResourceIdentifier groupId.
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>))]
     [CodeGenSuppress("StorageTableAccessPolicy", typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string))]
+    [CodeGenSuppress("StorageDataCollaborationPolicyProperties", typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?))]
     [CodeGenSuppress("StorageAccountCreateOrUpdateContent", typeof(StorageSku), typeof(StorageKind), typeof(AzureLocation), typeof(ExtendedLocation), typeof(IEnumerable<string>), typeof(StorageAccountZonePlacementPolicy?), typeof(IDictionary<string, string>), typeof(ManagedServiceIdentity), typeof(AllowedCopyScope?), typeof(StoragePublicNetworkAccess?), typeof(StorageAccountSasPolicy), typeof(StorageCustomDomain), typeof(StorageAccountEncryption), typeof(StorageAccountNetworkRuleSet), typeof(StorageAccountAccessTier?), typeof(TurboTier), typeof(FilesIdentityBasedAuthentication), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(LargeFileSharesState?), typeof(StorageRoutingPreference), typeof(bool?), typeof(StorageMinimumTlsVersion?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ImmutableStorageAccount), typeof(StorageDnsEndpointType?), typeof(StorageAccountSharedKeyAccessProperties), typeof(StorageDataCollaborationPolicyProperties), typeof(bool?), typeof(int?), typeof(bool?), typeof(bool?))]
     [CodeGenSuppress("StorageAccountPatch", typeof(StorageSku), typeof(IDictionary<string, string>), typeof(ManagedServiceIdentity), typeof(StorageCustomDomain), typeof(StorageAccountEncryption), typeof(StorageAccountSasPolicy), typeof(StorageAccountAccessTier?), typeof(TurboTier), typeof(FilesIdentityBasedAuthentication), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(StorageAccountNetworkRuleSet), typeof(LargeFileSharesState?), typeof(StorageRoutingPreference), typeof(bool?), typeof(StorageMinimumTlsVersion?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(StoragePublicNetworkAccess?), typeof(ImmutableStorageAccount), typeof(AllowedCopyScope?), typeof(StorageDnsEndpointType?), typeof(StorageAccountSharedKeyAccessProperties), typeof(StorageDataCollaborationPolicyProperties), typeof(bool?), typeof(int?), typeof(bool?), typeof(bool?), typeof(StorageKind?), typeof(IEnumerable<string>), typeof(StorageAccountZonePlacementPolicy?))]
     public static partial class ArmStorageModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.StorageDataCollaborationPolicyProperties"/> for mocking. </summary>
+        /// <param name="allowStorageConnectors"> Whether storage connectors are allowed on the account. </param>
+        /// <param name="allowStorageDataShares"> Whether data shares are allowed on the account. </param>
+        /// <param name="allowCrossTenantDataSharing"> Whether cross-tenant data sharing is allowed. </param>
+        /// <param name="allowBlobAccessPoints"> Whether Blob Access Points are allowed on the account. </param>
+        /// <returns> A new <see cref="Models.StorageDataCollaborationPolicyProperties"/> instance for mocking. </returns>
+        public static StorageDataCollaborationPolicyProperties StorageDataCollaborationPolicyProperties(bool? allowStorageConnectors = default, bool? allowStorageDataShares = default, bool? allowCrossTenantDataSharing = default, bool? allowBlobAccessPoints = default)
+        {
+            return new StorageDataCollaborationPolicyProperties(allowStorageConnectors, allowBlobAccessPoints, allowStorageDataShares, allowCrossTenantDataSharing, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Storage.FileServiceData"/> for mocking. </summary>
         /// <param name="id"> The resource identifier. </param>
         /// <param name="name"> The resource name. </param>

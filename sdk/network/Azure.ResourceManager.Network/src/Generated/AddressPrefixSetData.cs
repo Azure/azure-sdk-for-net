@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Address prefix set child resource of an application security group. </summary>
-    public partial class AddressPrefixSetData : NetworkProxyResource
+    public partial class AddressPrefixSetData : NetworkProxyResourceData
     {
         /// <summary> Initializes a new instance of <see cref="AddressPrefixSetData"/>. </summary>
         public AddressPrefixSetData()

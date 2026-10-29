@@ -15,7 +15,7 @@ namespace Azure.Data.AI
     /// <summary> Client options for <see cref="InferenceClient"/>. </summary>
     public partial class InferenceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_09_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_10_30;
 
         /// <summary> Initializes a new instance of InferenceClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -23,7 +23,7 @@ namespace Azure.Data.AI
         {
             Version = version switch
             {
-                ServiceVersion.V2026_09_01_Preview => "2026-09-01-preview",
+                ServiceVersion.V2026_10_30 => "2026-10-30",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -34,7 +34,7 @@ namespace Azure.Data.AI
         [Experimental("SCME0002")]
         internal InferenceClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-09-01-preview";
+            Version = "2026-10-30";
             if (section is null || !section.Exists())
             {
                 return;
@@ -55,8 +55,8 @@ namespace Azure.Data.AI
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> 2026-09-01-preview version. </summary>
-            V2026_09_01_Preview = 1
+            /// <summary> 2026-10-30 generally available version. </summary>
+            V2026_10_30 = 1
         }
     }
 }

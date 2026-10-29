@@ -215,7 +215,7 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("n3", body.RootElement.GetProperty("nonce").GetString());
         }
 
-        // The service never signs the token for a draft-policy attestation; 1.0.0 returned it, and so must 1.1.0.
+        // The service never signs the token for a draft-policy attestation; 1.0.0 returned it, and so must 2.0.0.
         [Test]
         public async System.Threading.Tasks.Task DraftPolicyAttestationReturnsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm")] string type, [Values] bool async)
         {

@@ -28,6 +28,8 @@ Install the Microsoft Azure Attestation client library for .NET with [NuGet][nug
 dotnet add package Azure.Security.Attestation --prerelease
 ```
 
+If you're upgrading from version 1.0.0, see the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/attestation/Azure.Security.Attestation/MigrationGuide.md): version 2.0.0 changes how attestation tokens are validated.
+
 ### Authenticate the client
 
 In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][attestation_client] or [Attestation Administration Client][attestation_admin_client] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,

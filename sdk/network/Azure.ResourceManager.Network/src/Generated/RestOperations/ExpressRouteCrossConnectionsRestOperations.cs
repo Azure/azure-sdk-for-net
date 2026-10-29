@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetArpTableRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetArpTableExpressRouteCrossConnectionRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRoutesTableSummaryRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRoutesTableRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
