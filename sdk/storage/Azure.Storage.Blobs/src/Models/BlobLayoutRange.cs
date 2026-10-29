@@ -7,7 +7,7 @@ namespace Azure.Storage.Blobs.Models
     /// A byte range of a blob and the index of the endpoint in
     /// <see cref="BlobLayoutInfo.Endpoints"/> that serves it.
     /// </summary>
-    public class BlobLayoutRange
+    internal class BlobLayoutRange
     {
         /// <summary>
         /// The start byte offset of the range.

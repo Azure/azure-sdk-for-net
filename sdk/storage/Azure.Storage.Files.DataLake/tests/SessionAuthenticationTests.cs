@@ -1175,6 +1175,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication or data locality routing")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
@@ -1239,6 +1241,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, countingPolicy.BearerGetCount,
                 "Expected no GET requests to fall back to Bearer authorization");
         }
+        */
 
         #endregion
 

@@ -29,6 +29,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public DownloadTransferValidationOptions TransferValidation { get; set; }
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         /// <summary>
         /// Optional. The layout endpoint for this download, optimized for locality.
         /// When set, rewrites the outgoing request URI's host/port to
@@ -45,5 +47,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </para>
         /// </summary>
         public Uri LayoutEndpoint { get; set; }
+        */
     }
 }

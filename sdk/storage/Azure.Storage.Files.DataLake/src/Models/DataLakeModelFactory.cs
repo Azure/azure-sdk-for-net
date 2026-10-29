@@ -1106,6 +1106,8 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion GetPathTagResult
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         #region DataLakeFileLayoutEndpoint
         /// <summary>
         /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
@@ -1221,6 +1223,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 FileCreatedOn = fileCreatedOn
             };
         #endregion DataLakeFileLayoutInfo
+        */
 
         #region FileSystemAccessPolicy
         /// <summary>

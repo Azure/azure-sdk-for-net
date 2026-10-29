@@ -2903,7 +2903,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new <see cref="Models.BlobLayoutRange"/> instance for mocking.
         /// </summary>
-        public static BlobLayoutRange BlobLayoutRange(
+        internal static BlobLayoutRange BlobLayoutRange(
             long start = default,
             long end = default,
             int endpointIndex = default)
@@ -2919,7 +2919,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new <see cref="Models.BlobLayoutEndpoint"/> instance for mocking.
         /// </summary>
-        public static BlobLayoutEndpoint BlobLayoutEndpoint(
+        internal static BlobLayoutEndpoint BlobLayoutEndpoint(
             int index = default,
             Uri value = default)
             => new BlobLayoutEndpoint
@@ -2933,7 +2933,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobLayoutInfo instance for mocking.
         /// </summary>
-        public static BlobLayoutInfo BlobLayoutInfo(
+        internal static BlobLayoutInfo BlobLayoutInfo(
             IEnumerable<BlobLayoutRange> ranges = default,
             IEnumerable<BlobLayoutEndpoint> endpoints = default,
             DateTimeOffset lastModifiedOn = default,

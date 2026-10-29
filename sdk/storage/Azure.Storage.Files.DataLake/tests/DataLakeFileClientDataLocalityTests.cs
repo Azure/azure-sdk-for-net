@@ -281,6 +281,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 "First buffer-fill request should start exactly at the caller's Position.");
         }
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
@@ -717,6 +719,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 rewritten.RangeStartOffset,
                 $"Rewritten ReadContent request should carry x-ms-range starting at offset {downloadOffset}.");
         }
+        */
 
         /// <summary>
         /// Pipeline policy that records the host/port and Host header of each

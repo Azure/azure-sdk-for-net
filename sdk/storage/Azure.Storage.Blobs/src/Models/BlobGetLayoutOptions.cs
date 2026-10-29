@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <see cref="BlobBaseClient.GetLayout(BlobGetLayoutOptions, System.Threading.CancellationToken)"/> and
     /// <see cref="BlobBaseClient.GetLayoutAsync(BlobGetLayoutOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class BlobGetLayoutOptions
+    internal class BlobGetLayoutOptions
     {
         /// <summary>
         /// If provided, returns layout only for the specified range.
