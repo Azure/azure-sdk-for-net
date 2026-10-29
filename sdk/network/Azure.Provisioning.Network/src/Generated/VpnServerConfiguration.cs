@@ -109,23 +109,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the NamePropertiesName. </summary>
-        public BicepValue<string> NamePropertiesName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NamePropertiesName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VpnServerConfigurationProperties();
-                }
-                Properties.NamePropertiesName = value;
-            }
-        }
-
         /// <summary> Gets or sets the VpnProtocols. </summary>
         public BicepList<VpnGatewayTunnelingProtocol> VpnProtocols
         {
@@ -353,19 +336,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VpnServerConfigurationProperties();
                 }
                 Properties.ConfigurationPolicyGroups = value;
-            }
-        }
-
-        /// <summary> Gets the PropertiesETag. </summary>
-        public BicepValue<string> PropertiesETag
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new VpnServerConfigurationProperties();
-                }
-                return Properties.PropertiesETag;
             }
         }
 

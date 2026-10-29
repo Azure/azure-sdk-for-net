@@ -16,6 +16,7 @@
 - Migrated code generation to TypeSpec.
 - Regenerated from Azure REST API specifications commit `e9f47c7976fdbeed1a378652b56b0766dae858a2`.
 - Removed stale customization aliases so restored TypeSpec property names and resource types are generated directly.
+- Suppressed the new `VpnServerConfiguration.NamePropertiesName` and `PropertiesETag` projections to match the management library, retaining the top-level `Name` and `ETag` properties.
 - Preserved `VirtualHub.Routes` through a `CodeGenMember` customization and retained `VirtualNetworkGateway.Active` as a hidden, obsolete alias for `IsActive`.
 
 ## 1.1.0 (2026-04-16)

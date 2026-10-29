@@ -9937,9 +9937,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NamePropertiesName { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.P2SVpnGateway> P2SVpnGateways { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> PropertiesETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RadiusServerAddress { get { throw null; } set { } }

@@ -13,6 +13,19 @@ namespace Azure.Provisioning.Network.Tests;
 public class GeneratedPropertyTests
 {
     [Test]
+    public void VpnServerConfigurationSuppressesNestedMetadataProjections()
+    {
+        Assert.That(typeof(VpnServerConfiguration).GetProperty("NamePropertiesName"), Is.Null);
+        Assert.That(typeof(VpnServerConfiguration).GetProperty("PropertiesETag"), Is.Null);
+
+        VpnServerConfiguration configuration = new("vpn") { Name = "vpn-config" };
+        Assert.That(configuration.Name, Is.SameAs(configuration.ProvisionableProperties["Name"]));
+        Assert.That(configuration.ETag, Is.SameAs(configuration.ProvisionableProperties["ETag"]));
+        Assert.That(((IBicepValue)configuration.ETag).Self!.BicepPath, Is.EqualTo(new[] { "etag" }));
+        Assert.That(((IBicepValue)configuration).Compile().ToString(), Does.Contain("name: 'vpn-config'"));
+    }
+
+    [Test]
     public void VirtualHubRoutesUsesRegisteredRouteTable()
     {
         VirtualHub hub = new("hub");
