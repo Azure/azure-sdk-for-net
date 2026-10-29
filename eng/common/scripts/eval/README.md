@@ -27,13 +27,15 @@ Repo-local adapters can customize it without copying that infrastructure:
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
 | `azureSubscription` | Existing invoke service-connection setting, also forwarded by the stage/job when using the common invoke template. |
-| `vallyArguments` | Optional string array of supplementary Vally option/value pairs. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
+| `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
 
 Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
 For example, `['--tag', 'mode=forced', '--runs', '3']` selects a local benchmark
 configuration without replacing the common runner. Trial/worker counts must be
-positive integer strings; use `${{ format('{0}', parameters.Runs) }}` for numeric
-pipeline parameters. Both authentication branches forward the array as JSON in
+positive integer strings or safe integer numbers. Azure template expansion can
+serialize numeric parameters as JSON numbers even when using `format`; the runner
+validates and converts only `--runs` / `--workers` numeric values to strings.
+All other options and values must be strings. Both authentication branches forward the array as JSON in
 `VALLY_ARGUMENTS_JSON`; the runner passes literal arguments to the pinned CLI using
 Node directly, without a shell or whitespace splitting of supplementary values.
 Unsupported flags (including aliases and `--flag=value`) are rejected. Eval

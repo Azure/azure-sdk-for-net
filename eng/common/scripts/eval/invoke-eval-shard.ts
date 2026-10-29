@@ -11,26 +11,38 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const VALLY_CLI = path.join(SCRIPT_DIR, "node_modules", "@microsoft", "vally-cli", "dist", "index.js");
 
 export function validateVallyArguments(value) {
-  if (!Array.isArray(value) || value.some((arg) => typeof arg !== "string" || arg.includes("\0"))) {
-    throw new Error("Vally arguments must be an array of strings without null characters.");
+  if (!Array.isArray(value) || value.some((arg) =>
+    (typeof arg !== "string" && typeof arg !== "number") ||
+    (typeof arg === "string" && arg.includes("\0")))) {
+    throw new Error("Vally arguments must be an array of strings or numeric count values without null characters.");
   }
   // Deliberately exclude eval selection, plugins, output, JUnit and verdict overrides.
   const allowed = new Set(["--tag", "--runs", "--workers", "--timeout"]);
+  const args = [];
   for (let index = 0; index < value.length; index += 2) {
     const option = value[index];
     if (!allowed.has(option)) {
       throw new Error(`Unsupported supplementary Vally option: ${option}`);
     }
-    const argument = value[index + 1];
+    let argument = value[index + 1];
+    const isCount = option === "--runs" || option === "--workers";
+    // Azure template expansion can serialize even format('{0}', number) as a JSON number.
+    if (typeof argument === "number") {
+      if (!isCount || !Number.isSafeInteger(argument) || argument < 1) {
+        throw new Error("Numeric values are supported only for positive integer --runs and --workers counts.");
+      }
+      argument = String(argument);
+    }
     if (!argument || argument.startsWith("-")) {
       throw new Error(`Missing value for ${option}`);
     }
-    if (["--runs", "--workers"].includes(option) &&
+    if (isCount &&
       (!/^[1-9]\d*$/.test(argument) || !Number.isSafeInteger(Number(argument)))) {
       throw new Error(`${option} must be a positive integer.`);
     }
+    args.push(option, argument);
   }
-  return [...value];
+  return args;
 }
 
 /**
@@ -42,7 +54,7 @@ export function validateVallyArguments(value) {
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
- * @param {string[]} [options.vallyArguments] Supplementary, allowlisted Vally arguments.
+ * @param {(string | number)[]} [options.vallyArguments] Allowlisted arguments; numeric trial/worker counts are normalized.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */
 export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8, vallyArguments = [] },
