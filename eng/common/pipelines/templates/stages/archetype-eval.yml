@@ -76,7 +76,7 @@ extends:
   parameters:
     # The checkbox controls compile-time egress; the account variable gates upload at runtime.
     # Keep trust policy in YAML, without hardcoding DevOps definition IDs in shared code.
-    ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
+    ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), in(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools', 'Azure/azure-rest-api-specs'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
       AllowAzureStorage: true
     stages:
       - stage: Prepare
