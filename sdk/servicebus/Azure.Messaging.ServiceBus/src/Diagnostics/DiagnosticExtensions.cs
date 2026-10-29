@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core.Amqp;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
 using Microsoft.Azure.Amqp;
@@ -12,7 +11,7 @@ using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
-    internal static class DiagnosticExtensions
+    internal static partial class DiagnosticExtensions
     {
         public static string GetAsciiString(this ArraySegment<byte> arraySegment)
         {
@@ -111,25 +110,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         /// <summary>
-        ///   Extracts the trace context from a received message's application properties without allocating
-        ///   a read-only wrapper over them, or creating the underlying dictionary if the message has none.
+        ///   Extracts the trace context from a received message's application properties. This is implemented separately
+        ///   by each project that links this file, as the most efficient way to read the properties of a received message
+        ///   depends on the members of <see cref="ServiceBusReceivedMessage" /> that are accessible to that project.
         /// </summary>
-        private static bool TryExtractTraceContext(ServiceBusReceivedMessage message, out string traceparent, out string tracestate)
-        {
-            AmqpAnnotatedMessage amqpMessage = message.AmqpMessage;
-
-            if (!amqpMessage.HasSection(AmqpMessageSection.ApplicationProperties))
-            {
-                traceparent = null;
-                tracestate = null;
-                return false;
-            }
-
-            return MessagingClientDiagnostics.TryExtractTraceContext(
-                amqpMessage.ApplicationProperties,
-                out traceparent,
-                out tracestate);
-        }
+        private static partial bool TryExtractTraceContext(ServiceBusReceivedMessage message, out string traceparent, out string tracestate);
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusMessage> messages)
         {
