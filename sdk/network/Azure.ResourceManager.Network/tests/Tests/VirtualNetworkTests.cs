@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24", } }
             };
 
@@ -70,8 +67,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(vnetName, getVnetResponse.Value.Data.Name);
             Assert.NotNull(getVnetResponse.Value.Data.ResourceGuid);
             Assert.AreEqual("Succeeded", getVnetResponse.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual("10.1.1.1", getVnetResponse.Value.Data.DhcpOptions.DnsServers[0]);
-            Assert.AreEqual("10.1.2.4", getVnetResponse.Value.Data.DhcpOptions.DnsServers[1]);
+            Assert.AreEqual("10.1.1.1", getVnetResponse.Value.Data.DhcpOptionsDnsServers[0]);
+            Assert.AreEqual("10.1.2.4", getVnetResponse.Value.Data.DhcpOptionsDnsServers[1]);
             Assert.AreEqual("10.0.0.0/16", getVnetResponse.Value.Data.AddressSpace.AddressPrefixes[0]);
             Assert.AreEqual(subnet1Name, getVnetResponse.Value.Data.Subnets[0].Name);
             Assert.AreEqual(subnet2Name, getVnetResponse.Value.Data.Subnets[1].Name);
@@ -120,10 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24" } }
             };
 
@@ -196,10 +190,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24" } }
             };
 
@@ -237,7 +228,7 @@ namespace Azure.ResourceManager.Network.Tests
             var peering = new VirtualNetworkPeeringData()
             {
                 AllowForwardedTraffic = true,
-                RemoteVirtualNetwork = new WritableSubResource { Id = putVnet2.Value.Id }
+                RemoteVirtualNetworkId = putVnet2.Value.Id
             };
 
             // Create Peering
@@ -250,8 +241,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(getPeer.Data.AllowForwardedTraffic);
             Assert.True(getPeer.Data.AllowVirtualNetworkAccess);
             Assert.False(getPeer.Data.AllowGatewayTransit);
-            Assert.NotNull(getPeer.Data.RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, getPeer.Data.RemoteVirtualNetwork.Id);
+            Assert.NotNull(getPeer.Data.RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, getPeer.Data.RemoteVirtualNetworkId);
 
             // List Peering
             AsyncPageable<VirtualNetworkPeeringResource> listPeerAP = virtualNetworkPeeringCollection.GetAllAsync();
@@ -261,8 +252,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(listPeer[0].Data.AllowForwardedTraffic);
             Assert.True(listPeer[0].Data.AllowVirtualNetworkAccess);
             Assert.False(listPeer[0].Data.AllowGatewayTransit);
-            Assert.NotNull(listPeer[0].Data.RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, listPeer[0].Data.RemoteVirtualNetwork.Id);
+            Assert.NotNull(listPeer[0].Data.RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, listPeer[0].Data.RemoteVirtualNetworkId);
 
             // Get peering from GET vnet
             VirtualNetworkResource peeringVnet = await virtualNetworkCollection.GetAsync(vnet1Name);
@@ -272,8 +263,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(peeringVnet.Data.VirtualNetworkPeerings[0].AllowForwardedTraffic);
             Assert.True(peeringVnet.Data.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess);
             Assert.False(peeringVnet.Data.VirtualNetworkPeerings[0].AllowGatewayTransit);
-            Assert.NotNull(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork);
-            Assert.AreEqual(putVnet2.Value.Id, peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id);
+            Assert.NotNull(peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetworkId);
+            Assert.AreEqual(putVnet2.Value.Id, peeringVnet.Data.VirtualNetworkPeerings[0].RemoteVirtualNetworkId);
 
             // Delete Peering
             var deleteOperation = await getPeer.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
@@ -311,10 +302,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24" } }
             };
 

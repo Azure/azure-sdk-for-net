@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the application gateway request routing rule. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayRequestRoutingRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ApplicationGatewayRequestRoutingRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -75,24 +75,6 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.Priority = value;
-            }
-        }
-
-        /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
-        [WirePath("properties.entraJWTValidationConfig")]
-        public ResourceIdentifier EntraJWTValidationConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraJWTValidationConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
-                }
-                Properties.EntraJWTValidationConfig = value;
             }
         }
 
@@ -261,6 +243,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.LoadDistributionPolicyId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.entraJWTValidationConfig.id")]
+        public ResourceIdentifier EntraJwtValidationConfigId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.EntraJwtValidationConfigId = value;
             }
         }
     }

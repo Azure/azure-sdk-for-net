@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationGatewayResource.GetAll");
+                "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationGatewayResource.GetAll");
+                "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
         }
 
         /// <summary>
