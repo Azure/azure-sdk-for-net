@@ -107,8 +107,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Indicates whether or not the user has called CloseAsync or DisposeAsync on the receiver.
         /// </summary>
-        // Reads the transport directly rather than the virtual property, which a derived receiver defines in terms of this one.
-        internal bool IsDisposed => InnerReceiver?.IsClosed ?? false;
+        // Lost-session cleanup must not mask the transport's stored SessionLockLost exception.
+        internal bool IsDisposed => InnerReceiver?.IsClosed == true && !InnerReceiver.IsClosedBySessionLockLoss;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
