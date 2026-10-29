@@ -5,7 +5,7 @@ A2A server options.
 
 ## Define an application dependency
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md).
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md).
 This handler receives immutable greeting configuration through dependency
 injection:
 

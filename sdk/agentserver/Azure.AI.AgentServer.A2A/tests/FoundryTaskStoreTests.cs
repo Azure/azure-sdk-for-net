@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using System.Text;
 using global::A2A;
 using Azure.AI.AgentServer.A2A.Internal;
 using Azure.AI.AgentServer.A2A.Tests.Snippets;
@@ -179,6 +180,107 @@ public class FoundryTaskStoreTests
     }
 
     [Test]
+    public async Task OversizedListingSummaryFallsBackWithoutLosingOpaqueIdentifiers()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("summary-limits");
+        var tracking = new TrackingStateStore(backing) { EnforceHostedLimits = true };
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask("task-1");
+        task.ContextId = new string('c', 1024);
+        await store.SaveTaskAsync(task.Id, task);
+        var item = await backing.GetItemAsync(tracking.LastKey!);
+        Assert.That(item!.Tags.ContainsKey("a2a-list"), Is.False);
+        var page = await store.ListTasksAsync(new() { ContextId = task.ContextId });
+        Assert.That(page.Tasks.Single().ContextId, Is.EqualTo(task.ContextId));
+        Assert.That((await store.GetTaskAsync(task.Id))!.ContextId, Is.EqualTo(task.ContextId));
+    }
+
+    [TestCase(47)]
+    [TestCase(48)]
+    [TestCase(128)]
+    [TestCase(1024)]
+    public async Task OpaqueTaskIdsUseBoundedKeysWithoutColliding(int length)
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("key-limits");
+        var tracking = new TrackingStateStore(backing) { EnforceHostedLimits = true };
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask(new string('t', length));
+        await store.SaveTaskAsync(task.Id, task);
+        string firstKey = tracking.LastKey!;
+        Assert.That(firstKey.Length, Is.LessThanOrEqualTo(128));
+        Assert.That((await store.GetTaskAsync(task.Id))!.Id, Is.EqualTo(task.Id));
+        var other = CreateTask(task.Id[..^1] + "u");
+        await store.SaveTaskAsync(other.Id, other);
+        Assert.That(tracking.LastKey, Is.Not.EqualTo(firstKey));
+        Assert.That((await store.ListTasksAsync(new() { PageSize = 10 })).Tasks.Select(t => t.Id),
+            Is.EquivalentTo(new[] { task.Id, other.Id }));
+        await store.DeleteTaskAsync(task.Id);
+        Assert.That(await backing.GetItemAsync(firstKey), Is.Null);
+        Assert.That((await store.GetTaskAsync(other.Id))!.Id, Is.EqualTo(other.Id));
+    }
+
+    [TestCase(256, true)]
+    [TestCase(260, false)]
+    public async Task ListingSummaryUsesTheExactEncodedTagLimit(int encodedLength, bool included)
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("summary-boundary");
+        var tracking = new TrackingStateStore(backing) { EnforceHostedLimits = true };
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask("task-1");
+        string? contextId = Enumerable.Range(0, 512).Select(length => new string('c', length))
+            .FirstOrDefault(candidate => Convert.ToBase64String(JsonSerializer.SerializeToUtf8Bytes(
+                new AgentTask { Id = task.Id, ContextId = candidate, Status = task.Status },
+                A2AJsonUtilities.DefaultOptions)).Length == encodedLength);
+        Assert.That(contextId, Is.Not.Null);
+        task.ContextId = contextId!;
+        await store.SaveTaskAsync(task.Id, task);
+        var item = await backing.GetItemAsync(tracking.LastKey!);
+        Assert.That(item!.Tags.ContainsKey("a2a-list"), Is.EqualTo(included));
+        if (included)
+        {
+            Assert.That(item.Tags["a2a-list"].Length, Is.EqualTo(encodedLength));
+        }
+        Assert.That((await store.ListTasksAsync(new() { ContextId = contextId })).Tasks.Single().Id, Is.EqualTo(task.Id));
+    }
+
+    [Test]
+    public async Task MultibyteTaskIdentifiersArePreservedInBoundedKeys()
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("unicode-key");
+        var tracking = new TrackingStateStore(backing) { EnforceHostedLimits = true };
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask(new string('\u00e9', 64));
+        await store.SaveTaskAsync(task.Id, task);
+        Assert.That(tracking.LastKey!.Length, Is.LessThanOrEqualTo(128));
+        Assert.That((await store.GetTaskAsync(task.Id))!.Id, Is.EqualTo(task.Id));
+        Assert.That((await store.ListTasksAsync(new())).Tasks.Single().Id, Is.EqualTo(task.Id));
+    }
+
+    [TestCase(32)]
+    [TestCase(128)]
+    public async Task ExistingTaskKeysRemainReadableAndCanBeUpdatedAndDeleted(int length)
+    {
+        var backing = await FoundryStateStore.GetOrCreateAsync("legacy-keys");
+        var tracking = new TrackingStateStore(backing);
+        using var store = new FoundryTaskStore(tracking);
+        var task = CreateTask(new string('t', length));
+        await store.SaveTaskAsync(task.Id, task);
+        var item = await backing.GetItemAsync(tracking.LastKey!);
+        string legacyKey = item!.Tags["a2a-owner"] + ":" +
+            Convert.ToBase64String(Encoding.UTF8.GetBytes(task.Id)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+        await backing.DeleteItemAsync(item.Key);
+        await backing.SetItemAsync(legacyKey, item.Value, new Dictionary<string, string>(item.Tags));
+        Assert.That((await store.GetTaskAsync(task.Id))!.Id, Is.EqualTo(task.Id));
+        Assert.That((await store.ListTasksAsync(new() { PageSize = 1 })).Tasks.Single().Id, Is.EqualTo(task.Id));
+        task.ContextId = "updated";
+        await store.SaveTaskAsync(task.Id, task);
+        Assert.That((await store.ListTasksAsync(new() { ContextId = "updated" })).Tasks.Single().Id, Is.EqualTo(task.Id));
+        await store.DeleteTaskAsync(task.Id);
+        Assert.That(await store.GetTaskAsync(task.Id), Is.Null);
+        Assert.That(await backing.GetItemAsync(legacyKey), Is.Null);
+    }
+
+    [Test]
     public async Task SnapshotDisappearingDuringHydrationIsSkippedWithoutRefillingThePage()
     {
         var backing = await FoundryStateStore.GetOrCreateAsync("disappearing");
@@ -198,6 +300,7 @@ public class FoundryTaskStoreTests
             public int Reads { get; set; }
             public string? LastKey { get; private set; }
             public string? MissingKey { get; set; }
+            public bool EnforceHostedLimits { get; set; }
             public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default)
             {
                 Reads++;
@@ -209,10 +312,19 @@ public class FoundryTaskStoreTests
                 ETag ifMatch = default, bool requireExists = false, CancellationToken cancellationToken = default)
             {
                 LastKey = key;
+                if (EnforceHostedLimits)
+                {
+                    Assert.That(key.Length, Is.LessThanOrEqualTo(128), "Hosted item key limit");
+                    Assert.That(tags?.Values.All(value => value.Length <= 256), Is.True, "Hosted tag-value limit");
+                }
                 return inner.SetItemAsync(key, value, tags, ifMatch, requireExists, cancellationToken);
             }
 
             public bool RejectTagQueries { get; set; }
+
+            public override Task<DeletedStateStoreItem> DeleteItemAsync(
+                string key, ETag ifMatch = default, CancellationToken cancellationToken = default) =>
+                inner.DeleteItemAsync(key, ifMatch, cancellationToken);
 
             public override Task<StateStoreItemKeyPage> ListKeysAsync(
                 IReadOnlyDictionary<string, string>? tags = null, int? limit = null, string? after = null,

@@ -4,7 +4,7 @@ Use the native `TaskUpdater` to submit a Task, add an artifact, and complete it.
 
 ## Implement the handler
 
-Use the Agent Card from [getting started](Sample1_GettingStarted.md) and
+Use the Agent Card from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and
 implement a task-producing handler:
 
 ```C# Snippet:A2A_TaskAgent
@@ -65,5 +65,5 @@ stops. Hosted handler registration selects `FoundryTaskStore` unless an explicit
 native store is registered. An existing request handler keeps its own storage.
 
 Persisting snapshots does not restart interrupted execution or restore live
-subscriptions. See [task storage](../README.md#task-storage) for configuration
+subscriptions. See [task storage](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/README.md#task-storage) for configuration
 and caller-isolation requirements.

@@ -5,7 +5,7 @@ Ask for missing input, then continue the same native Task with the user's answer
 ## Implement the handler
 
 Use the package setup and `CreateCard` function from
-[getting started](Sample1_GettingStarted.md).
+[getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md).
 The first request submits a Task and moves it to `TASK_STATE_INPUT_REQUIRED`.
 The next request addresses that Task and supplies the name to greet.
 

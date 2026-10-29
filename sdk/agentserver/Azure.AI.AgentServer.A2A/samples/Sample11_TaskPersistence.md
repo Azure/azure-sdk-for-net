@@ -6,8 +6,8 @@ agent execution.
 
 ## Prerequisites
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md) and `TaskAgent`
-from [tasks and artifacts](Sample2_TasksAndArtifacts.md).
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and `TaskAgent`
+from [tasks and artifacts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample2_TasksAndArtifacts.md).
 Import `A2A`, `Azure.AI.AgentServer.Core.Storage`, and
 `Microsoft.Extensions.DependencyInjection`.
 
@@ -87,5 +87,8 @@ uses the local backend and does not claim a live hosted-storage round trip.
 - A snapshot does not recover an interrupted executor or restore subscriptions.
 - Task listing scans lightweight summaries before applying native filtering and
   pagination, then reads full snapshots for the selected page. Older records
-  without summaries require full reads during the scan. A page size bounds the
-  new-format snapshot reads, not the number of listing-summary pages scanned.
+  and records whose summary exceeds the storage tag limit require full reads
+  during the scan. A page size bounds snapshot reads for records with summaries,
+  not the number of listing-summary pages scanned.
+- Long task IDs use bounded digest keys. The full original ID remains in the
+  snapshot, and existing keys remain readable.

@@ -152,4 +152,15 @@ internal sealed class A2AResponseObserver(
         invocation?.SetTag("error.type", errorType);
         invocation?.SetStatus(ActivityStatusCode.Error);
     }
+
+    public void RecordTransmissionFailure(Exception exception, CancellationToken cancellationToken = default)
+    {
+        if (exception is OperationCanceledException
+            && (context.RequestAborted.IsCancellationRequested || cancellationToken.IsCancellationRequested))
+        {
+            return;
+        }
+
+        RecordError(exception.GetType().FullName!);
+    }
 }

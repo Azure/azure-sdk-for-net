@@ -98,5 +98,5 @@ $response.result.message.parts[0].text
 Expected output: `Echo: Hello, agent!`.
 
 This handler returns a message, not a stored Task. Use
-[tasks and artifacts](Sample2_TasksAndArtifacts.md) when clients need task status
+[tasks and artifacts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample2_TasksAndArtifacts.md) when clients need task status
 or artifact retrieval.

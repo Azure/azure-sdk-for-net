@@ -16,6 +16,8 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <!-- Invocations references released Core; exercise A2A with its source-built Core dependency. -->
+    <PackageReference Include="Azure.AI.AgentServer.Core" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">

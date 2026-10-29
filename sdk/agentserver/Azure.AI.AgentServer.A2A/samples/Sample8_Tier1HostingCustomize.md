@@ -5,9 +5,9 @@ point.
 
 ## Define the host configuration
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md) and
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and
 `GreetingSettings` and `GreetingAgent` from
-[customize the build](Sample5_CustomizeTheBuild.md).
+[customize the build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample5_CustomizeTheBuild.md).
 The health-check callback uses `Microsoft.Extensions.Diagnostics.HealthChecks`;
 the tracing extension uses `OpenTelemetry.Trace`.
 
@@ -50,5 +50,5 @@ Expected readiness status: `200`. The application check participates in the
 readiness result. Registering a tracing source does not configure a new exporter
 or create spans by itself.
 
-Use [Tier 2](Sample9_Tier2HostingBuilder.md) when your application needs explicit
+Use [Tier 2](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample9_Tier2HostingBuilder.md) when your application needs explicit
 builder composition or more than one protocol.

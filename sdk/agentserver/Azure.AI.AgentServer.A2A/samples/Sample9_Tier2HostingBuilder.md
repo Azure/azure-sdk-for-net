@@ -11,9 +11,9 @@ Install the additional protocol library:
 dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ```
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md) and
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and
 `GreetingSettings` and `GreetingAgent` from
-[customize the build](Sample5_CustomizeTheBuild.md).
+[customize the build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample5_CustomizeTheBuild.md).
 Import `Azure.AI.AgentServer.Invocations` for the additional handler and hosting
 extensions, and `Microsoft.AspNetCore.Http` for HTTP response extensions.
 

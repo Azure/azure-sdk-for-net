@@ -5,7 +5,7 @@ Add A2A endpoints to an application-owned ASP.NET Core host.
 ## Register and map the application
 
 Use `CreateCard` and `EchoAgent` from
-[getting started](Sample1_GettingStarted.md). Import
+[getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md). Import
 `Microsoft.AspNetCore.Builder` and `Microsoft.Extensions.DependencyInjection`.
 
 ```C# Snippet:A2A_Sample10_Start

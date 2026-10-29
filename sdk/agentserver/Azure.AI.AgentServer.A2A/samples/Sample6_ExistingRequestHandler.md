@@ -5,8 +5,8 @@ configuration or storage.
 
 ## Construct and host the native handler
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md) and `TaskAgent`
-from [tasks and artifacts](Sample2_TasksAndArtifacts.md).
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) and `TaskAgent`
+from [tasks and artifacts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample2_TasksAndArtifacts.md).
 The native `AddA2AAgent` extension is in `A2A.AspNetCore`; service registration
 extensions are in `Microsoft.Extensions.DependencyInjection`.
 

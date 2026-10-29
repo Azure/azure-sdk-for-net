@@ -5,7 +5,7 @@ Add Foundry hosting to an existing native ASP.NET Core A2A application.
 ## Keep native service registration
 
 Use `CreateCard` and `EchoAgent` from
-[getting started](Sample1_GettingStarted.md), with `A2A.AspNetCore` and
+[getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md), with `A2A.AspNetCore` and
 `Microsoft.Extensions.DependencyInjection`:
 
 ```C# Snippet:A2A_Sample7_Registration
@@ -47,4 +47,4 @@ identity, skills, media types, and interface configuration.
 
 The application still owns its listening address, telemetry exporters, and
 shutdown configuration. For a complete application-owned pipeline, see
-[Tier 3 self-hosting](Sample10_Tier3SelfHosting.md).
+[Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample10_Tier3SelfHosting.md).

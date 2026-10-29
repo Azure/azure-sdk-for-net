@@ -4,7 +4,7 @@ Return a Task before application work finishes, then poll for its result.
 
 ## Define the application work
 
-Use `CreateCard` from [getting started](Sample1_GettingStarted.md).
+Use `CreateCard` from [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md).
 This service simulates a slow report generator without requiring an external
 service or a model deployment:
 

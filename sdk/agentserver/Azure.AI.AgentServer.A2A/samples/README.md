@@ -16,26 +16,26 @@ your application needs.
 
 ## Protocol scenarios
 
-1. [Getting started](Sample1_GettingStarted.md) - Native Agent Card, Echo handler, and JSON-RPC requests.
-2. [Tasks and artifacts](Sample2_TasksAndArtifacts.md) - Task lifecycle, artifact output, and `GetTask`.
-3. [Multi-turn](Sample3_MultiTurn.md) - Request clarification and continue the same Task.
-4. [Long-running tasks](Sample4_LongRunningTasks.md) - Return immediately, process work, and poll for completion.
+1. [Getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample1_GettingStarted.md) - Native Agent Card, Echo handler, and JSON-RPC requests.
+2. [Tasks and artifacts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample2_TasksAndArtifacts.md) - Task lifecycle, artifact output, and `GetTask`.
+3. [Multi-turn](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample3_MultiTurn.md) - Request clarification and continue the same Task.
+4. [Long-running tasks](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample4_LongRunningTasks.md) - Return immediately, process work, and poll for completion.
 
 ## Customization
 
-5. [Customize the build](Sample5_CustomizeTheBuild.md) - Inject application dependencies, select storage, and configure native options.
-6. [Existing request handler](Sample6_ExistingRequestHandler.md) - Preserve a preconstructed native handler and its storage.
-7. [Native A2A hosting](Sample7_NativeA2AHosting.md) - Add Foundry hosting to an existing native ASP.NET Core application.
+5. [Customize the build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample5_CustomizeTheBuild.md) - Inject application dependencies, select storage, and configure native options.
+6. [Existing request handler](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample6_ExistingRequestHandler.md) - Preserve a preconstructed native handler and its storage.
+7. [Native A2A hosting](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample7_NativeA2AHosting.md) - Add Foundry hosting to an existing native ASP.NET Core application.
 
 ## Hosting tiers
 
-8. [Tier 1 hosting customization](Sample8_Tier1HostingCustomize.md) - Configure the one-call server.
-9. [Tier 2 host builder](Sample9_Tier2HostingBuilder.md) - Configure the Core builder and compose protocols.
-10. [Tier 3 self-hosting](Sample10_Tier3SelfHosting.md) - Own the ASP.NET Core host and middleware pipeline.
+8. [Tier 1 hosting customization](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample8_Tier1HostingCustomize.md) - Configure the one-call server.
+9. [Tier 2 host builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample9_Tier2HostingBuilder.md) - Configure the Core builder and compose protocols.
+10. [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample10_Tier3SelfHosting.md) - Own the ASP.NET Core host and middleware pipeline.
 
 ## Storage
 
-11. [Task persistence](Sample11_TaskPersistence.md) - Configure retention and retrieve stored snapshots after host reconstruction.
+11. [Task persistence](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/samples/Sample11_TaskPersistence.md) - Configure retention and retrieve stored snapshots after host reconstruction.
 
 ## Running the samples
 
