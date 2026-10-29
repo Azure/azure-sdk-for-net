@@ -55,5 +55,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource Id of the attached workspace. </summary>
         [WirePath("workspaceResourceId")]
         public ResourceIdentifier WorkspaceResourceId { get; set; }
+
+        /// <summary> The interval in minutes which would decide how frequently TA service should do flow analytics. </summary>
+        [WirePath("trafficAnalyticsInterval")]
+        public int? TrafficAnalyticsIntervalInMinutes { get; set; }
     }
 }
