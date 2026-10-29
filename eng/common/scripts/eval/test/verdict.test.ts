@@ -20,6 +20,20 @@ describe("supplementary Vally arguments", () => {
     assert.deepEqual(options.vallyArguments, args);
   });
 
+  it("normalizes numeric trial and worker counts produced by Azure template expansion", () => {
+    for (const mode of ["forced", "trigger", "no-skill"]) {
+      for (const runs of [1, 3]) {
+        const args = ["--tag", `mode=${mode}`, "--runs", runs, "--workers", 2];
+        const expected = ["--tag", `mode=${mode}`, "--runs", String(runs), "--workers", "2"];
+        assert.deepEqual(validateVallyArguments(args), expected);
+        assert.equal(args[3], runs);
+        const options = parseArgs(["--eval-args", "-e example.eval.yaml", "--shard-name", "example", "--output-dir", "out"],
+          { VALLY_ARGUMENTS_JSON: JSON.stringify(args) });
+        assert.deepEqual(options.vallyArguments, expected);
+      }
+    }
+  });
+
   it("rejects output, verdict, discovery and plugin overrides, including aliases and equals syntax", () => {
     for (const option of ["--output-dir", "--output-dir=elsewhere", "--junit", "--no-junit", "--threshold",
       "--require-pass", "--skip-grade", "--skip-validate", "-e", "--eval-spec", "--suite", "--work-dir",
@@ -27,7 +41,11 @@ describe("supplementary Vally arguments", () => {
       assert.throws(() => validateVallyArguments([option, "value"]), /Unsupported/);
     }
     for (const args of [null, {}, " --runs 3", [3], ["--runs"], ["--runs", "0"], ["--runs", "-1"],
-      ["--workers", "1.5"], ["--tag", "--threshold"], ["--tag", "value\0"]]) {
+      ["--workers", "1.5"], ["--tag", "--threshold"], ["--tag", "value\0"],
+      ["--runs", null], ["--runs", true], ["--runs", {}], ["--runs", []],
+      ["--runs", 0], ["--runs", -1], ["--runs", 1.5], ["--runs", NaN],
+      ["--workers", Infinity], ["--workers", Number.MAX_SAFE_INTEGER + 1],
+      ["--tag", 1], ["--timeout", 5], [1, "value"]]) {
       assert.throws(() => validateVallyArguments(args));
     }
     assert.throws(() => parseArgs([], { VALLY_ARGUMENTS_JSON: "not JSON" }));
@@ -51,7 +69,7 @@ describe("supplementary Vally arguments", () => {
         type: "run-summary", evals: [{ name: "test", passed: true, stimuliRun: 1 }]
       }));
     `);
-    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--runs", "3"];
+    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--runs", 3];
     const exit = runShard({ evalArgs: "-e test.eval.yaml", shardName: "test", outputDir, vallyArguments: args }, {
       spawn(command, commandArgs, options) {
         assert.equal(command, process.execPath);
@@ -62,7 +80,7 @@ describe("supplementary Vally arguments", () => {
     });
     assert.equal(exit, 0);
     const actual = JSON.parse(fs.readFileSync(capture, "utf8"));
-    assert.deepEqual(actual, ["eval", "-e", "test.eval.yaml", ...args,
+    assert.deepEqual(actual, ["eval", "-e", "test.eval.yaml", ...validateVallyArguments(args),
       "--junit", "--threshold", "0.8", "--output-dir", outputDir]);
   });
 
