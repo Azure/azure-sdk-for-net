@@ -649,19 +649,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="applicationGatewayBackendAddressPoolResources"> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </param>
         /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="loadBalancerInboundNatPoolResources"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
         /// <param name="subnetId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetIPConfiguration VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
+        public static VirtualMachineScaleSetIPConfiguration VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, int? privateIPAddressPrefixLength = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
         {
-            return new VirtualMachineScaleSetIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetIPConfigurationProperties(
+            return new VirtualMachineScaleSetIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && privateIPAddressPrefixLength is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetIPConfigurationProperties(
                 subnetId is null ? default : new ComputeApiEntityReference(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
+                privateIPAddressPrefixLength,
                 (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
@@ -1344,19 +1346,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="applicationGatewayBackendAddressPoolResources"> The application gateway backend address pools. </param>
         /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPoolResources"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPoolResources"> The load balancer inbound nat pools. </param>
         /// <param name="subnetId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateIPConfiguration VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
+        public static VirtualMachineScaleSetUpdateIPConfiguration VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id = default, string name = default, bool? primary = default, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, int? privateIPAddressPrefixLength = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources = default, ResourceIdentifier subnetId = default)
         {
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetUpdateIPConfigurationProperties(
+            return new VirtualMachineScaleSetUpdateIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && privateIPAddressPrefixLength is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetUpdateIPConfigurationProperties(
                 subnetId is null ? default : new ComputeApiEntityReference(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
+                privateIPAddressPrefixLength,
                 (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
@@ -2260,18 +2264,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
         /// <param name="applicationGatewayBackendAddressPoolResources"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <param name="subnetId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, ResourceIdentifier subnetId = default)
+        public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, int? privateIPAddressPrefixLength = default, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default, ResourceIdentifier subnetId = default)
         {
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationSecurityGroupResources is null && applicationGatewayBackendAddressPoolResources is null && loadBalancerBackendAddressPoolResources is null ? default : new VirtualMachineNetworkInterfaceIPConfigurationProperties(
+            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && privateIPAddressPrefixLength is null && applicationSecurityGroupResources is null && applicationGatewayBackendAddressPoolResources is null && loadBalancerBackendAddressPoolResources is null ? default : new VirtualMachineNetworkInterfaceIPConfigurationProperties(
                 subnetId is null ? default : new ComputeWriteableSubResourceData(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
+                privateIPAddressPrefixLength,
                 (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
                 (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
@@ -2561,6 +2567,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="flexPreferredVMSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="availabilitySetId"> Resource Id. </param>
         /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
@@ -2580,7 +2587,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
-        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, DateTimeOffset? timeCreated, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, ResourceIdentifier interconnectBlockId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, bool? isEnabled, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, VirtualMachinePlacement placement)
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, DateTimeOffset? timeCreated = default, string flexPreferredVMSize = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier interconnectBlockId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, bool? isEnabled = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string eTag = default, VirtualMachinePlacement placement = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
@@ -2593,8 +2600,9 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                hardwareProfile is null && flexPreferredVMSize is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    flexPreferredVMSize is null ? default : new FlexProfile(flexPreferredVMSize, default),
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -2771,6 +2779,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="flexPreferredVMSize"> Specifies the preferred VM size, for example Standard_D4s_v5. Azure may deploy a compatible alternative size based on capacity and placement considerations. Supported VM families for FlexProfile may vary by region. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in a region](https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). </param>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="availabilitySetId"> Resource Id. </param>
         /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
@@ -2784,7 +2793,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="zones"> The virtual machine zones. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, DateTimeOffset? timeCreated, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, ResourceIdentifier interconnectBlockId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, bool? isEnabled, ManagedServiceIdentity identity, IEnumerable<string> zones)
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, CapacityReservationProfile capacityReservation = default, DateTimeOffset? timeCreated = default, string flexPreferredVMSize = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier interconnectBlockId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, bool? isEnabled = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -2793,8 +2802,9 @@ namespace Azure.ResourceManager.Compute.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 plan,
-                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                hardwareProfile is null && flexPreferredVMSize is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    flexPreferredVMSize is null ? default : new FlexProfile(flexPreferredVMSize, default),
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -3724,7 +3734,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The instance view of a restore point. </summary>
         /// <param name="diskRestorePoints"> The disk restore points information. </param>
-        /// <param name="statuses"> The resource status information. </param>
+        /// <param name="statuses"> The aggregate status information for the restore point. The list may include separate aggregate entries for replication and, in supported API versions, Instant Access, as applicable. For more information about Instant Access, see [Use virtual machine restore points](https://learn.microsoft.com/azure/virtual-machines/virtual-machines-create-restore-points#instant-access). </param>
         /// <returns> A new <see cref="Models.RestorePointInstanceView"/> instance for mocking. </returns>
         public static RestorePointInstanceView RestorePointInstanceView(IEnumerable<DiskRestorePointInstanceView> diskRestorePoints = default, IEnumerable<InstanceViewStatus> statuses = default)
         {
@@ -7113,6 +7123,263 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The IP configuration name. </param>
+        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
+        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="applicationGatewayBackendAddressPoolResources"> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </param>
+        /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
+        /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
+        /// <param name="loadBalancerInboundNatPoolResources"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
+        /// <param name="subnetId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetIPConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetIPConfiguration VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id, string name, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, ResourceIdentifier subnetId)
+        {
+            return new VirtualMachineScaleSetIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetIPConfigurationProperties(
+                subnetId is null ? default : new ComputeApiEntityReference(subnetId, default),
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                default,
+                (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (loadBalancerInboundNatPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                default));
+        }
+
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The IP configuration name. </param>
+        /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
+        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
+        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="applicationGatewayBackendAddressPoolResources"> The application gateway backend address pools. </param>
+        /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
+        /// <param name="loadBalancerBackendAddressPoolResources"> The load balancer backend address pools. </param>
+        /// <param name="loadBalancerInboundNatPoolResources"> The load balancer inbound nat pools. </param>
+        /// <param name="subnetId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateIPConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetUpdateIPConfiguration VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id, string name, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IEnumerable<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, ResourceIdentifier subnetId)
+        {
+            return new VirtualMachineScaleSetUpdateIPConfiguration(id, default, name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationGatewayBackendAddressPoolResources is null && applicationSecurityGroupResources is null && loadBalancerBackendAddressPoolResources is null && loadBalancerInboundNatPoolResources is null ? default : new VirtualMachineScaleSetUpdateIPConfigurationProperties(
+                subnetId is null ? default : new ComputeApiEntityReference(subnetId, default),
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                default,
+                (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (loadBalancerInboundNatPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                default));
+        }
+
+        /// <summary> Describes a virtual machine network profile's IP configuration. </summary>
+        /// <param name="name"> The IP configuration name. </param>
+        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
+        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
+        /// <param name="applicationGatewayBackendAddressPoolResources"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
+        /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
+        /// <param name="subnetId"> Resource Id. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IEnumerable<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IEnumerable<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IEnumerable<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, ResourceIdentifier subnetId)
+        {
+            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnetId is null && primary is null && publicIPAddressConfiguration is null && privateIPAddressVersion is null && applicationSecurityGroupResources is null && applicationGatewayBackendAddressPoolResources is null && loadBalancerBackendAddressPoolResources is null ? default : new VirtualMachineNetworkInterfaceIPConfigurationProperties(
+                subnetId is null ? default : new ComputeWriteableSubResourceData(subnetId, default),
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                default,
+                (applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                default), default);
+        }
+
+        /// <summary> Describes a Virtual Machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="availabilitySetId"> Resource Id. </param>
+        /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
+        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Resource Id. </param>
+        /// <param name="hostGroupId"> Resource Id. </param>
+        /// <param name="interconnectBlockId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="isEnabled"> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
+        /// <param name="resources"> The virtual machine child extension resources. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
+        /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
+        /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
+        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
+        /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, DateTimeOffset? timeCreated, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, ResourceIdentifier interconnectBlockId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, bool? isEnabled, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, VirtualMachinePlacement placement)
+        {
+            return new VirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                    hardwareProfile,
+                    default,
+                    scheduledEventsPolicy,
+                    storageProfile,
+                    additionalCapabilities,
+                    osProfile,
+                    networkProfile,
+                    securityProfile,
+                    bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                    availabilitySetId is null ? default : new ComputeWriteableSubResourceData(availabilitySetId, default),
+                    virtualMachineScaleSetId is null ? default : new ComputeWriteableSubResourceData(virtualMachineScaleSetId, default),
+                    proximityPlacementGroupId is null ? default : new ComputeWriteableSubResourceData(proximityPlacementGroupId, default),
+                    priority,
+                    evictionPolicy,
+                    billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, default),
+                    hostId is null ? default : new ComputeWriteableSubResourceData(hostId, default),
+                    hostGroupId is null ? default : new ComputeWriteableSubResourceData(hostGroupId, default),
+                    provisioningState,
+                    instanceView,
+                    licenseType,
+                    vmId,
+                    extensionsTimeBudget,
+                    platformFaultDomain,
+                    scheduledEventsProfile,
+                    userData,
+                    capacityReservation,
+                    interconnectBlockId is null ? default : new InterconnectBlockProfile(interconnectBlockId is null ? default : new ComputeApiEntityReference(interconnectBlockId, default), default),
+                    galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
+                    timeCreated,
+                    isEnabled is null ? default : new ResiliencyProfile(isEnabled is null ? default : new ZoneMovement(isEnabled, default), default),
+                    default),
+                plan,
+                (resources ?? new ChangeTrackingList<VirtualMachineExtensionData>()).ToList(),
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                extendedLocation,
+                managedBy,
+                eTag,
+                placement,
+                default);
+        }
+
+        /// <summary> Describes a Virtual Machine Update. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="availabilitySetId"> Resource Id. </param>
+        /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
+        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
+        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Resource Id. </param>
+        /// <param name="hostGroupId"> Resource Id. </param>
+        /// <param name="interconnectBlockId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="isEnabled"> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The virtual machine zones. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, DateTimeOffset? timeCreated, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, ResourceIdentifier interconnectBlockId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, bool? isEnabled, ManagedServiceIdentity identity, IEnumerable<string> zones)
+        {
+            return new VirtualMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                plan,
+                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservation is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
+                    hardwareProfile,
+                    default,
+                    scheduledEventsPolicy,
+                    storageProfile,
+                    additionalCapabilities,
+                    osProfile,
+                    networkProfile,
+                    securityProfile,
+                    bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                    availabilitySetId is null ? default : new ComputeWriteableSubResourceData(availabilitySetId, default),
+                    virtualMachineScaleSetId is null ? default : new ComputeWriteableSubResourceData(virtualMachineScaleSetId, default),
+                    proximityPlacementGroupId is null ? default : new ComputeWriteableSubResourceData(proximityPlacementGroupId, default),
+                    priority,
+                    evictionPolicy,
+                    billingMaxPrice is null ? default : new BillingProfile(billingMaxPrice, default),
+                    hostId is null ? default : new ComputeWriteableSubResourceData(hostId, default),
+                    hostGroupId is null ? default : new ComputeWriteableSubResourceData(hostGroupId, default),
+                    provisioningState,
+                    instanceView,
+                    licenseType,
+                    vmId,
+                    extensionsTimeBudget,
+                    platformFaultDomain,
+                    scheduledEventsProfile,
+                    userData,
+                    capacityReservation,
+                    interconnectBlockId is null ? default : new InterconnectBlockProfile(interconnectBlockId is null ? default : new ComputeApiEntityReference(interconnectBlockId, default), default),
+                    galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), default),
+                    timeCreated,
+                    isEnabled is null ? default : new ResiliencyProfile(isEnabled is null ? default : new ZoneMovement(isEnabled, default), default),
+                    default),
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList());
+        }
+
         /// <summary> Specifies information about the Shared Image Gallery that you want to create or update. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -7693,6 +7960,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -7823,6 +8091,7 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && interconnectBlockId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -8209,6 +8478,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -8337,6 +8607,7 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null && isEnabled is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -9497,6 +9768,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -10002,6 +10274,7 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -11621,6 +11894,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     scheduledEventsPolicy,
                     storageProfile,
                     additionalCapabilities,
@@ -11774,6 +12048,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     default,
                     storageProfile,
                     additionalCapabilities,
@@ -12507,6 +12782,7 @@ namespace Azure.ResourceManager.Compute.Models
                 hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
                     default,
+                    default,
                     storageProfile,
                     additionalCapabilities,
                     osProfile,
@@ -12587,6 +12863,7 @@ namespace Azure.ResourceManager.Compute.Models
                 plan,
                 hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
                     hardwareProfile,
+                    default,
                     default,
                     storageProfile,
                     additionalCapabilities,
