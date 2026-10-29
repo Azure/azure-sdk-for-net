@@ -11,7 +11,7 @@ using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
-    internal static class DiagnosticExtensions
+    internal static partial class DiagnosticExtensions
     {
         public static string GetAsciiString(this ArraySegment<byte> arraySegment)
         {
@@ -25,8 +25,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public static void SetMessageAsParent(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (MessagingClientDiagnostics.TryExtractTraceContext(
-                    message.ApplicationProperties,
+            if (scope.IsEnabled &&
+                TryExtractTraceContext(
+                    message,
                     out string traceparent,
                     out string tracestate))
             {
@@ -70,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
-                    AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                    AddLinkedDiagnostics(scope, message);
                 }
 
                 if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource)
@@ -98,11 +99,22 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, ServiceBusReceivedMessage message)
         {
-            if (scope.IsEnabled)
+            if (scope.IsEnabled &&
+                TryExtractTraceContext(
+                    message,
+                    out string traceparent,
+                    out string tracestate))
             {
-                AddLinkedDiagnostics(scope, message.ApplicationProperties);
+                scope.AddLink(traceparent, tracestate);
             }
         }
+
+        /// <summary>
+        ///   Extracts the trace context from a received message's application properties. This is implemented separately
+        ///   by each project that links this file, as the most efficient way to read the properties of a received message
+        ///   depends on the members of <see cref="ServiceBusReceivedMessage" /> that are accessible to that project.
+        /// </summary>
+        private static partial bool TryExtractTraceContext(ServiceBusReceivedMessage message, out string traceparent, out string tracestate);
 
         private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyCollection<ServiceBusMessage> messages)
         {
@@ -117,17 +129,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
-            }
-        }
-
-        private static void AddLinkedDiagnostics(this DiagnosticScope scope, IReadOnlyDictionary<string, object> properties)
-        {
-            if (MessagingClientDiagnostics.TryExtractTraceContext(
-                    properties,
-                    out string traceparent,
-                    out string tracestate))
-            {
-                scope.AddLink(traceparent, tracestate);
             }
         }
 

@@ -14,6 +14,10 @@
 
 ### Other Changes
 
+- Reduced allocations for each message processed by `ServiceBusProcessor` and `ServiceBusSessionProcessor`.
+- Reduced allocations when extracting trace context from received messages, and skipped extracting it when tracing is disabled.
+- Reduced allocations when logging the lock tokens of received messages.
+
 ## 7.21.0 (2026-10-06)
 
 ### Features Added
