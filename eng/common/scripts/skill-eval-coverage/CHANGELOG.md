@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Use the verified `aka.ms/azsdk/eval-dashboard` short link in coverage comments.
 - Add a deterministic warning-only check for changed skills and associated
   skill-local Evals, including nested benchmark suites without pipeline configuration.
 - Keep existing Vally lint failures independent and blocking.
