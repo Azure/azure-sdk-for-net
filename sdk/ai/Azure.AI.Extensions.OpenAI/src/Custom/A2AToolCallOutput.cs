@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class A2AToolCallOutput
 {
     /// <summary> Initializes a new instance of <see cref="A2AToolCallOutput"/>. </summary>
@@ -43,7 +44,7 @@ public partial class A2AToolCallOutput
     /// <param name="patch"></param>
     internal A2AToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

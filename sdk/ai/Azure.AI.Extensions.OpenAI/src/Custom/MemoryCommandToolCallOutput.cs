@@ -9,6 +9,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class MemoryCommandToolCallOutput
 {
     /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCallOutput"/> for deserialization. </summary>
@@ -29,7 +30,7 @@ public partial class MemoryCommandToolCallOutput
     /// <param name="patch"></param>
     internal MemoryCommandToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

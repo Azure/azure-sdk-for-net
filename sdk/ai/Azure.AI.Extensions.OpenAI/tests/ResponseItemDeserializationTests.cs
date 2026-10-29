@@ -92,7 +92,8 @@ public class ResponseItemDeserializationTests
               "id": "item_1",
               "call_id": "call_1",
               "arguments": "{}",
-              "status": "completed"{{additionalFields}}
+              "status": "completed"{{additionalFields}},
+              "unknown_field": "some_value"
             }
             """);
 
@@ -103,6 +104,7 @@ public class ResponseItemDeserializationTests
 
         Assert.That(item, Is.TypeOf(itemType));
         Assert.That(item.Id, Is.EqualTo("item_1"));
+        Assert.That(item.Patch.GetString("$.unknown_field"u8), Is.EqualTo("some_value"));
 
         BinaryData serialized = ModelReaderWriter.Write(
             item,
@@ -116,6 +118,7 @@ public class ResponseItemDeserializationTests
 
         Assert.That(roundTripped, Is.TypeOf(itemType));
         Assert.That(roundTripped.Id, Is.EqualTo("item_1"));
+        Assert.That(roundTripped.Patch.GetString("$.unknown_field"u8), Is.EqualTo("some_value"));
     }
 
     [Test]
