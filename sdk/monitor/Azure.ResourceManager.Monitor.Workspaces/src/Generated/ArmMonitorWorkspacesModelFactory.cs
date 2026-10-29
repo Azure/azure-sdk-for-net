@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <param name="actionsDefaultActionGroups"> The default action groups associated with the Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, Uri queryEndpoint, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, Uri queryEndpoint = default, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
 
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="limits"> Metrics limits. </param>
         /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
         /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>
-        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState, MetricsLimits limits, string version)
+        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, MetricsLimits limits = default, string version = default)
         {
             return new MonitorMetricsContainerProperties(provisioningState, limits, version, default);
         }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default)
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess)
         {
             return new MonitorWorkspaceProperties(
                 accountId,
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
         /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string version = default)
+        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState, string version)
         {
             return new MonitorMetricsContainerProperties(provisioningState, default, version, default);
         }
