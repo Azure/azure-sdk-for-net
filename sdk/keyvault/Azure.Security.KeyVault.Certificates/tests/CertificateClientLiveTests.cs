@@ -1174,6 +1174,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         };
 
         [RecordedTest]
+        [ServiceVersion(Min = CertificateClientOptions.ServiceVersion.V7_6)]
         public async Task StartCreateCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
         {
             string certName = Recording.GenerateId();
@@ -1193,6 +1194,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 tags: tags,
                 preserveCertificateOrder: preserveOrder);
 
+            RegisterForCleanup(certName);
+
             Assert.That(operation, Is.Not.Null);
             Assert.That(operation.Properties.Name, Is.EqualTo(certName));
 
@@ -1206,6 +1209,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = CertificateClientOptions.ServiceVersion.V7_6)]
         public async Task ImportCertificateWithPreserveCertificateOrder([Values(true, false)] bool preserveOrder)
         {
             string certName = $"cert-{Recording.GenerateId()}";
@@ -1223,6 +1227,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             };
 
             KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
+
+            RegisterForCleanup(certName);
 
             Assert.NotNull(cert.Cer, "Certificate should have a cer");
             Assert.AreEqual(certName, cert.Name, "Certificate name should match the expected name");
