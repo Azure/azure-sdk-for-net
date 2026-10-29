@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class LiveInitialMessageStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this LiveInitialMessageStatus value) => value switch
         {
             LiveInitialMessageStatus.Incomplete => "incomplete",
@@ -17,6 +19,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static LiveInitialMessageStatus ToLiveInitialMessageStatus(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))

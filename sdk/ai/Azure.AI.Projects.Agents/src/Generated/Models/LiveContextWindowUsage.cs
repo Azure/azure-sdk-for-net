@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The latest measured context-window usage of the Live model. This is separate from billing usage and delegated Responses token usage. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveContextWindowUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

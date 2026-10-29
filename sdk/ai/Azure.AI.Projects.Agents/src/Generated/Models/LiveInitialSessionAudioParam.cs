@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveInitialSessionAudioParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

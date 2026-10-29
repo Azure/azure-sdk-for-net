@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Returned when a session.input_audio.unmute command is accepted. Input audio is sent to the model again. </summary>
+    /// <summary> Acknowledges a session.input_audio.unmute command, removing the independent input mute. An active audio fixture still pauses inference until playback finishes. Fixture playback does not emit this event. </summary>
     public partial class LiveServerEventLiveInputAudioUnmuted : LiveServerEvent, IJsonModel<LiveServerEventLiveInputAudioUnmuted>
     {
         /// <summary> Initializes a new instance of <see cref="LiveServerEventLiveInputAudioUnmuted"/> for deserialization. </summary>

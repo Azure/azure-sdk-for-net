@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. </summary>
+    /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. Rejected while an audio fixture is active. </summary>
     public partial class LiveClientEventLiveThinkingAppendParam : LiveClientEvent, IJsonModel<LiveClientEventLiveThinkingAppendParam>
     {
         /// <summary> Initializes a new instance of <see cref="LiveClientEventLiveThinkingAppendParam"/> for deserialization. </summary>

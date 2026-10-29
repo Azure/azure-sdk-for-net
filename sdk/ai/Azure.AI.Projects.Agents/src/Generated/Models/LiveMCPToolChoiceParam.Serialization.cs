@@ -79,8 +79,18 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Type);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name, _nameIsDefined))
+            {
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,6 +135,7 @@ namespace Azure.AI.Projects.Agents
             }
             string @type = default;
             string serverLabel = default;
+            bool nameIsDefined = false;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -141,6 +152,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = prop.Value.GetString();
                     continue;
                 }
@@ -149,7 +166,10 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveMCPToolChoiceParam(@type, serverLabel, name, additionalBinaryDataProperties);
+            return new LiveMCPToolChoiceParam(@type, serverLabel, name, additionalBinaryDataProperties)
+            {
+                _nameIsDefined = nameIsDefined
+            };
         }
     }
 }

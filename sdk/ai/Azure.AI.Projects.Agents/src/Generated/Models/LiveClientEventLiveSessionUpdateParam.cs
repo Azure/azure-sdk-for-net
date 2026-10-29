@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Update the delegation settings of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
+    /// <summary> Update the delegation settings or transcript triggers of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
     [Experimental("AAIP001")]
     public partial class LiveClientEventLiveSessionUpdateParam : LiveClientEvent
     {
@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private bool _eventIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LiveClientEventLiveSessionUpdateParam"/>. </summary>
-        /// <param name="session"> Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable. </param>
+        /// <param name="session"> Sparse delegation and trigger updates. Omitted settings retain their values. The delegation type cannot change. Model, frontend instructions, audio, and startup input are immutable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
         public LiveClientEventLiveSessionUpdateParam(LiveSessionUpdateParams session) : base(LiveClientEventType.SessionUpdate)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventId"></param>
-        /// <param name="session"> Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable. </param>
+        /// <param name="session"> Sparse delegation and trigger updates. Omitted settings retain their values. The delegation type cannot change. Model, frontend instructions, audio, and startup input are immutable. </param>
         internal LiveClientEventLiveSessionUpdateParam(LiveClientEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, LiveSessionUpdateParams session) : base(@type, additionalBinaryDataProperties)
         {
             _eventId = eventId;
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable. </summary>
+        /// <summary> Sparse delegation and trigger updates. Omitted settings retain their values. The delegation type cannot change. Model, frontend instructions, audio, and startup input are immutable. </summary>
         public LiveSessionUpdateParams Session { get; }
     }
 }

@@ -9,7 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Input audio noise reduction configuration. </summary>
+    /// <summary>
+    /// Input audio noise reduction configuration. `azure_deep_noise_suppression_headset` and
+    /// `azure_personal_noise_suppression` are modes for local voice activity detection that
+    /// enhance detection audio without changing the audio used for recognition.
+    /// </summary>
     public partial class VoiceAgentNoiseReduction : IJsonModel<VoiceAgentNoiseReduction>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentNoiseReduction"/> for deserialization. </summary>

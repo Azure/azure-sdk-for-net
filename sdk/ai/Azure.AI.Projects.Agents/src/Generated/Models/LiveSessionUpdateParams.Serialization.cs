@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Changes to an active Live session. Only delegation backend settings can be updated after startup. </summary>
+    /// <summary> Changes to an active Live session's delegation settings and transcript triggers. </summary>
     public partial class LiveSessionUpdateParams : IJsonModel<LiveSessionUpdateParams>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,6 +89,16 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("delegation"u8);
                 }
             }
+            if (Optional.IsCollectionDefined(Triggers))
+            {
+                writer.WritePropertyName("triggers"u8);
+                writer.WriteStartArray();
+                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +143,7 @@ namespace Azure.AI.Projects.Agents
             }
             bool delegationIsDefined = false;
             BinaryData delegation = default;
+            IList<LiveDecisionTriggerInputParam2> triggers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,12 +158,26 @@ namespace Azure.AI.Projects.Agents
                     delegation = prop.Value.GetUtf8Bytes();
                     continue;
                 }
+                if (prop.NameEquals("triggers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                    }
+                    triggers = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveSessionUpdateParams(delegation, additionalBinaryDataProperties)
+            return new LiveSessionUpdateParams(delegation, triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(), additionalBinaryDataProperties)
             {
                 _delegationIsDefined = delegationIsDefined
             };

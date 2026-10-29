@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Cumulative audio duration for a Live session. Values are totals for the session, not increments to sum across usage events. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveSessionUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

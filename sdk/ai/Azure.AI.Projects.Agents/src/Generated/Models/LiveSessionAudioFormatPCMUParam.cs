@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Raw, mono G.711 μ-law audio for a Live WebSocket connection. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveSessionAudioFormatPCMUParam : LiveAudioFormat
     {
         /// <summary> Initializes a new instance of <see cref="LiveSessionAudioFormatPCMUParam"/>. </summary>

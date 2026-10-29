@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// A developer, user, or assistant message supplied as text history before the Live session starts.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveInitialAssistantMessageItemParam"/>, <see cref="LiveInitialDeveloperMessageItemParam"/>, and <see cref="LiveInitialUserMessageItemParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class LiveInitialItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

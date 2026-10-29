@@ -28,6 +28,7 @@ namespace Azure.AI.Projects.Agents
         {
             Model = model;
             Input = new ChangeTrackingList<LiveInitialItem>();
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
             Id = id;
             ExpiresAt = expiresAt;
         }
@@ -35,8 +36,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveSessionResource"/>. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
-        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
+        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="id"> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </param>
@@ -44,12 +46,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </param>
         /// <param name="delegation"> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, BinaryData delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, IList<LiveDecisionTriggerInputParam2> triggers, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, BinaryData delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
             Input = input;
             Audio = audio;
+            Triggers = triggers;
             Store = store;
             Client = client;
             Id = id;
@@ -71,11 +74,14 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </summary>
+        /// <summary> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </summary>
         public IList<LiveInitialItem> Input { get; }
 
         /// <summary> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </summary>
         public LiveInitialSessionAudioParam Audio { get; }
+
+        /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
+        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
 
         /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
         public bool? Store { get; }

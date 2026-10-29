@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A SIP DTMF keypress successfully sent by the hosted tool. Delivered only to sideband observers; this is not a client command. </summary>
+    /// <summary> A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command. </summary>
     [Experimental("AAIP001")]
     public partial class LiveTransportDTMFSend : LiveServerEvent
     {
@@ -26,10 +26,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventId"></param>
         /// <param name="event"></param>
-        internal LiveTransportDTMFSend(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string @event) : base(@type, additionalBinaryDataProperties)
+        /// <param name="clientEventId"> The event_id of the client command, when supplied. </param>
+        internal LiveTransportDTMFSend(LiveServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string @event, string clientEventId) : base(@type, additionalBinaryDataProperties)
         {
             EventId = eventId;
             Event = @event;
+            ClientEventId = clientEventId;
         }
 
         /// <summary> Gets the EventId. </summary>
@@ -37,5 +39,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Event. </summary>
         public string Event { get; }
+
+        /// <summary> The event_id of the client command, when supplied. </summary>
+        public string ClientEventId { get; }
     }
 }

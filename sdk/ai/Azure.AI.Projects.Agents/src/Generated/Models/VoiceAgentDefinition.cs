@@ -40,6 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </param>
+        /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
         /// <param name="outputModalities">
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
         /// when an avatar is configured.
@@ -60,7 +61,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceAgentDefinitionSubProtocol? subProtocol, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceAgentDefinitionSubProtocol? subProtocol, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
         {
             SubProtocol = subProtocol;
             ModelType = modelType;
@@ -68,6 +69,7 @@ namespace Azure.AI.Projects.Agents
             ConversationEngine = conversationEngine;
             Greeting = greeting;
             Audio = audio;
+            Soundscape = soundscape;
             OutputModalities = outputModalities;
             InternalMaxOutputTokens = internalMaxOutputTokens;
             Include = include;
@@ -99,6 +101,9 @@ namespace Azure.AI.Projects.Agents
         /// transcription. These values are session defaults; a client may override supported fields when connecting.
         /// </summary>
         public VoiceAgentAudioConfig Audio { get; set; }
+
+        /// <summary> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </summary>
+        public VoiceAgentSoundscapeConfig Soundscape { get; set; }
 
         /// <summary>
         /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available

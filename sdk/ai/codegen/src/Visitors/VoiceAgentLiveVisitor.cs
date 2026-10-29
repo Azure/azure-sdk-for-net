@@ -259,8 +259,13 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
             return;
         }
         string name = method.Signature.ReturnType.Name;
+        // Keep the existing parameter order and append fields added by newer schemas.
         ParameterProvider[] parameters = name == "VoiceAgentDefinition"
-            ? RealtimeFactoryParameters.Select(parameterName => method.Signature.Parameters.Single(parameter => parameter.Name == parameterName)).ToArray()
+            ? [
+                .. RealtimeFactoryParameters.Select(parameterName => method.Signature.Parameters.Single(parameter => parameter.Name == parameterName)),
+                .. method.Signature.Parameters.Where(parameter => parameter.Name is not ("kind" or "subProtocol") &&
+                    !RealtimeFactoryParameters.Contains(parameter.Name))
+            ]
             : method.Signature.Parameters.Where(parameter => parameter.Name != "kind").ToArray();
         IReadOnlyList<ParameterProvider> constructor = _models[name].FullConstructor.Signature.Parameters;
         List<MethodBodyStatement> body = [];

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveClientConfigParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

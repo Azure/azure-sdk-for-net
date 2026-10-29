@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct ModelIdsLive : IEquatable<ModelIdsLive>
     {
         private readonly string _value;

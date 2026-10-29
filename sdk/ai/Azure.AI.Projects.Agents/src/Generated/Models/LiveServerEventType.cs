@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct LiveServerEventType : IEquatable<LiveServerEventType>
     {
         private readonly string _value;
@@ -15,6 +17,8 @@ namespace Azure.AI.Projects.Agents
         private const string SessionUpdatedValue = "session.updated";
         private const string SessionInputAudioMutedValue = "session.input_audio.muted";
         private const string SessionInputAudioUnmutedValue = "session.input_audio.unmuted";
+        private const string SessionOutputAudioFixturePlayingValue = "session.output_audio.fixture.playing";
+        private const string SessionOutputAudioFixturePlayedValue = "session.output_audio.fixture.played";
         private const string SessionInstructionsAppendedValue = "session.instructions.appended";
         private const string SessionThinkingAppendedValue = "session.thinking.appended";
         private const string SessionCommentaryAppendedValue = "session.commentary.appended";
@@ -23,6 +27,9 @@ namespace Azure.AI.Projects.Agents
         private const string SessionInputTranscriptDeltaValue = "session.input_transcript.delta";
         private const string SessionOutputTranscriptDeltaValue = "session.output_transcript.delta";
         private const string SessionDelegationCreatedValue = "session.delegation.created";
+        private const string DecisionEventValue = "decision.event";
+        private const string DecisionItemCreatedValue = "decision.item.created";
+        private const string DecisionItemDeletedValue = "decision.item.deleted";
         private const string ResponseEventValue = "response.event";
         private const string SessionUsageUpdatedValue = "session.usage.updated";
         private const string SessionClosedValue = "session.closed";
@@ -56,6 +63,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the SessionInputAudioUnmuted. </summary>
         public static LiveServerEventType SessionInputAudioUnmuted { get; } = new LiveServerEventType(SessionInputAudioUnmutedValue);
 
+        /// <summary> Gets the SessionOutputAudioFixturePlaying. </summary>
+        public static LiveServerEventType SessionOutputAudioFixturePlaying { get; } = new LiveServerEventType(SessionOutputAudioFixturePlayingValue);
+
+        /// <summary> Gets the SessionOutputAudioFixturePlayed. </summary>
+        public static LiveServerEventType SessionOutputAudioFixturePlayed { get; } = new LiveServerEventType(SessionOutputAudioFixturePlayedValue);
+
         /// <summary> Gets the SessionInstructionsAppended. </summary>
         public static LiveServerEventType SessionInstructionsAppended { get; } = new LiveServerEventType(SessionInstructionsAppendedValue);
 
@@ -79,6 +92,15 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the SessionDelegationCreated. </summary>
         public static LiveServerEventType SessionDelegationCreated { get; } = new LiveServerEventType(SessionDelegationCreatedValue);
+
+        /// <summary> Gets the DecisionEvent. </summary>
+        public static LiveServerEventType DecisionEvent { get; } = new LiveServerEventType(DecisionEventValue);
+
+        /// <summary> Gets the DecisionItemCreated. </summary>
+        public static LiveServerEventType DecisionItemCreated { get; } = new LiveServerEventType(DecisionItemCreatedValue);
+
+        /// <summary> Gets the DecisionItemDeleted. </summary>
+        public static LiveServerEventType DecisionItemDeleted { get; } = new LiveServerEventType(DecisionItemDeletedValue);
 
         /// <summary> Gets the ResponseEvent. </summary>
         public static LiveServerEventType ResponseEvent { get; } = new LiveServerEventType(ResponseEventValue);

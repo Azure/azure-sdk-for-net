@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A function tool available to the Responses backend when the Live model delegates a task. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveFunctionToolInputParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

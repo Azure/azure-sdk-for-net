@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Live server event selector for the WebRTC frontend data channel. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveAllowedServerEventParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -104,6 +104,16 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("audio"u8);
                 writer.WriteObjectValue(Audio, options);
             }
+            if (Optional.IsCollectionDefined(Triggers))
+            {
+                writer.WritePropertyName("triggers"u8);
+                writer.WriteStartArray();
+                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Store))
             {
                 writer.WritePropertyName("store"u8);
@@ -186,6 +196,7 @@ namespace Azure.AI.Projects.Agents
             string instructions = default;
             IList<LiveInitialItem> input = default;
             LiveInitialSessionAudioParam audio = default;
+            IList<LiveDecisionTriggerInputParam2> triggers = default;
             bool? store = default;
             LiveClientConfigParam client = default;
             string id = default;
@@ -233,6 +244,20 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     audio = LiveInitialSessionAudioParam.DeserializeLiveInitialSessionAudioParam(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("triggers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                    }
+                    triggers = array;
                     continue;
                 }
                 if (prop.NameEquals("store"u8))
@@ -289,6 +314,7 @@ namespace Azure.AI.Projects.Agents
                 instructions,
                 input ?? new ChangeTrackingList<LiveInitialItem>(),
                 audio,
+                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(),
                 store,
                 client,
                 id,

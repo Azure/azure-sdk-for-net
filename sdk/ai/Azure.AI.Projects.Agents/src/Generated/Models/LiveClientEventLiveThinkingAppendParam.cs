@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. </summary>
+    /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. Rejected while an audio fixture is active. </summary>
     [Experimental("AAIP001")]
     public partial class LiveClientEventLiveThinkingAppendParam : LiveClientEvent
     {

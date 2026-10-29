@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Update the delegation settings of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
+    /// <summary> Update the delegation settings or transcript triggers of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
     public partial class LiveClientEventLiveSessionUpdateParam : LiveClientEvent, IJsonModel<LiveClientEventLiveSessionUpdateParam>
     {
         /// <summary> Initializes a new instance of <see cref="LiveClientEventLiveSessionUpdateParam"/> for deserialization. </summary>

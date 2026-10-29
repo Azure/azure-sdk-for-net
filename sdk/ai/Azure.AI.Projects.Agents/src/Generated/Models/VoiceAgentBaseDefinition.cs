@@ -15,9 +15,6 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentBaseDefinition : ProjectsAgentDefinition
     {
-        private string _instructions;
-        private protected bool _instructionsIsDefined;
-
         /// <summary> Initializes a new instance of <see cref="VoiceAgentBaseDefinition"/>. </summary>
         public VoiceAgentBaseDefinition() : base(ProjectsAgentKind.Voice)
         {
@@ -33,24 +30,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
         internal VoiceAgentBaseDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
-            _instructions = instructions;
+            Instructions = instructions;
             StructuredInputs = structuredInputs;
             Store = store;
         }
 
         /// <summary> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </summary>
-        public string Instructions
-        {
-            get
-            {
-                return _instructions;
-            }
-            set
-            {
-                _instructions = value;
-                _instructionsIsDefined = true;
-            }
-        }
+        public string Instructions { get; set; }
 
         /// <summary> Template inputs for session instructions and supported greetings. </summary>
         public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }

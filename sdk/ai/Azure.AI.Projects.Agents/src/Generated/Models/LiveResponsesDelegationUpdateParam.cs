@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Update the Responses backend for an existing Live session without changing delegation ownership. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveResponsesDelegationUpdateParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

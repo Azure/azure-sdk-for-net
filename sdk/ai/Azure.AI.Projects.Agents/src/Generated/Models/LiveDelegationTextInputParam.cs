@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Text generation options for the Live session’s Responses backend. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveDelegationTextInputParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

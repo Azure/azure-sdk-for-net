@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Assistant output text supplied as conversation history when starting a Live session. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveInitialOutputTextContentPartParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

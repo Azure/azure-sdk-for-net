@@ -4,48 +4,60 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The LiveMCPToolChoiceParam. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveMCPToolChoiceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _name;
+        private bool _nameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LiveMCPToolChoiceParam"/>. </summary>
-        /// <param name="serverLabel"></param>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="name"/> is null. </exception>
-        public LiveMCPToolChoiceParam(string serverLabel, string name)
+        /// <param name="serverLabel"> The label of the MCP server to call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
+        public LiveMCPToolChoiceParam(string serverLabel)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(name, nameof(name));
 
             ServerLabel = serverLabel;
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveMCPToolChoiceParam"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="serverLabel"></param>
+        /// <param name="type"> The tool to call. Always `mcp`. </param>
+        /// <param name="serverLabel"> The label of the MCP server to call. </param>
         /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LiveMCPToolChoiceParam(string @type, string serverLabel, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ServerLabel = serverLabel;
-            Name = name;
+            _name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Type. </summary>
+        /// <summary> The tool to call. Always `mcp`. </summary>
         public string Type { get; } = "mcp";
 
-        /// <summary> Gets or sets the ServerLabel. </summary>
+        /// <summary> The label of the MCP server to call. </summary>
         public string ServerLabel { get; set; }
 
         /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _nameIsDefined = true;
+            }
+        }
     }
 }

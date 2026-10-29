@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </summary>
+    /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must declare `voice_conversation_engine` version `1.0.0`. Voice Live connects through the dedicated voice-conversation-engine endpoint using the existing Bridge Protocol 1.0 wire semantics; the Bridge message version is independent of the container protocol version and the Hosted Agents API version `v1`. Declaring `invocations_ws` is optional and does not substitute for `voice_conversation_engine`. </summary>
     public partial class VoiceHostedAgentConversationEngine : VoiceConversationEngine, IJsonModel<VoiceHostedAgentConversationEngine>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceHostedAgentConversationEngine"/> for deserialization. </summary>

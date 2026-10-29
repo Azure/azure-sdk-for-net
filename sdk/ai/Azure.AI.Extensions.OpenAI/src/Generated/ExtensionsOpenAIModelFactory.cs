@@ -14,6 +14,30 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="OpenAI.WebSearchConfiguration"/> instance for mocking. </returns>
+        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
+        {
+            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -32,21 +56,6 @@ namespace Azure.AI.Extensions.OpenAI
                 toolConfigs,
                 bingGrounding,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-        /// <param name="pin">
-        /// When true, the tool is always included in agent context and visible in `tools/list`.
-        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
-        /// </param>
-        /// <param name="additionalSearchText">
-        /// Additional text indexed for tool_search. Supplements the native tool description
-        /// to improve discoverability. Does not alter `tools/list` output.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
-        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
-        {
-            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -328,7 +337,12 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <summary>
+        /// The input definition information for a Browser Automation Tool, as used to configure an Agent.
+        /// BrowserAutomationPreviewTool is deprecated.
+        /// Please use BrowserAutomationTool instead.
+        /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+        /// </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
@@ -599,15 +613,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static GitHubCopilotToolsetConfig GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name = default, bool? enabled = default)
         {
             return new GitHubCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A web search configuration for bing custom search. </summary>
-        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
-        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <returns> A new <see cref="OpenAI.WebSearchConfiguration"/> instance for mocking. </returns>
-        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
-        {
-            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>

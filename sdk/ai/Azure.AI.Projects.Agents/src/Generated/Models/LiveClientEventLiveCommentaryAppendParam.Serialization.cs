@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Provide context the Live model can communicate to the user, optionally for an existing client delegation. </summary>
+    /// <summary> Provide context the Live model can communicate to the user, optionally for an existing client delegation. Rejected while an audio fixture is active. </summary>
     public partial class LiveClientEventLiveCommentaryAppendParam : LiveClientEvent, IJsonModel<LiveClientEventLiveCommentaryAppendParam>
     {
         /// <summary> Initializes a new instance of <see cref="LiveClientEventLiveCommentaryAppendParam"/> for deserialization. </summary>

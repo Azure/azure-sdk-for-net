@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Model, prompt, and tool settings for tasks delegated by the Live session to a Responses backend. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveResponsesDelegationSettingsInputParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -149,6 +151,39 @@ namespace Azure.AI.Projects.Agents
         /// <item>
         /// <description> <see cref="LiveWebSearchToolInputParam"/>. </description>
         /// </item>
+        /// <item>
+        /// <description> <see cref="LiveFileSearchToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveCodeInterpreterToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveHostedShellToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveImageGenerationToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveMCPToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveCustomToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveNamespaceToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveToolSearchToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveProgrammaticToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveComputerToolInputParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveApplyPatchToolInputParam"/>. </description>
+        /// </item>
         /// </list>
         /// </remarks>
         /// </para>
@@ -192,6 +227,39 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// <item>
         /// <description> <see cref="LiveMCPToolChoiceParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificFileSearchParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificWebSearchParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificWebSearchPreviewParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificImageGenParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificComputerParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificCodeInterpreterParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificProgrammaticToolCallingParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificFunctionShellParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificCustomToolParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveSpecificApplyPatchParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveAllowedToolsChoiceParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

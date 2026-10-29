@@ -5,11 +5,13 @@
 ### Features Added
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added Foundry-aware Live session snapshots and delegation trigger metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
-- Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory signatures. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
+- Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory parameter order. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
 - Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
+- Added experimental soundscape configuration for voice-agent telephony calls. Soundscapes are not rendered over direct WebSocket or browser WebRTC connections.
 
 ### Breaking Changes
 - Live lifecycle events now expose `VoiceAgentLiveSessionResource`, and delegation-created events expose `VoiceAgentLiveDelegationItem` with `VoiceAgentLiveDelegationTarget`, replacing the corresponding native-only snapshot and trigger types.
+- Renamed the experimental `LiveTransportRinging`, `LiveTransportAnswered`, and `LiveTransportFailed` models to `LiveServerEventLiveTransportRinging`, `LiveServerEventLiveTransportAnswered`, and `LiveServerEventLiveTransportFailed`. Their wire event names are unchanged.
 - `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
 - `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
 - `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
@@ -20,8 +22,11 @@
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 
 ### Bugs Fixed
+- Fixed the Realtime model factory to preserve newly added fields, including `Soundscape`, without changing the order of its existing parameters.
+- Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
 
 ### Other Changes
+- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

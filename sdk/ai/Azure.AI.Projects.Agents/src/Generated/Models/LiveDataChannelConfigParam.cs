@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Control which Live events an untrusted WebRTC frontend can send and receive over its data channel. These restrictions do not apply to trusted sideband connections. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveDataChannelConfigParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

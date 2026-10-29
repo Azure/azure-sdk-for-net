@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public enum LiveInitialMessageStatus
     {
         /// <summary> Incomplete. </summary>

@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Returned when a session.input_audio.mute command is accepted. Input audio is no longer sent to the model; sideband audio reflection continues. </summary>
+    /// <summary> Acknowledges a session.input_audio.mute command. An independent input mute sends silence to the model and preserves sideband audio reflection. Fixture playback does not emit this event. </summary>
     public partial class LiveServerEventLiveInputAudioMuted : LiveServerEvent, IJsonModel<LiveServerEventLiveInputAudioMuted>
     {
         /// <summary> Initializes a new instance of <see cref="LiveServerEventLiveInputAudioMuted"/> for deserialization. </summary>

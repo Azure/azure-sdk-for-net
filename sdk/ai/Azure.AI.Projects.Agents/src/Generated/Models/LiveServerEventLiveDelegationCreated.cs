@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Returned when the Live model delegates work to your application or a Responses backend. Contains delegation metadata and the position on the session timeline where the work was delegated. </summary>
+    /// <summary> Returned when the Live model delegates work to your application, Responses, or Decisions. Contains delegation metadata and the position on the session timeline where the work was delegated. </summary>
     [Experimental("AAIP001")]
     public partial class LiveServerEventLiveDelegationCreated : LiveServerEvent
     {

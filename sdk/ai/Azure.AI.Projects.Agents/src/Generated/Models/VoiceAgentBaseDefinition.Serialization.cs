@@ -73,17 +73,10 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentBaseDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Instructions, _instructionsIsDefined))
+            if (Optional.IsDefined(Instructions))
             {
-                if (Instructions != null)
-                {
-                    writer.WritePropertyName("instructions"u8);
-                    writer.WriteStringValue(Instructions);
-                }
-                else
-                {
-                    writer.WriteNull("instructions"u8);
-                }
+                writer.WritePropertyName("instructions"u8);
+                writer.WriteStringValue(Instructions);
             }
             if (Optional.IsCollectionDefined(StructuredInputs))
             {

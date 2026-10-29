@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` to let the API manage a Responses backend.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveClientDelegationParam"/> and <see cref="LiveResponsesDelegationParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class LiveDelegation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
