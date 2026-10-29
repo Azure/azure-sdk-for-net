@@ -48,31 +48,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
-        /// <param name="accountId"> The immutable Id of the Azure Monitor Workspace. This property is read-only. </param>
-        /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
-        /// <param name="provisioningState"> The provisioning state of the Azure Monitor Workspace. Set to Succeeded if everything is healthy. </param>
-        /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
-        /// <param name="queryEndpoint"> The query endpoint for the Azure Monitor Workspace. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
-        /// <param name="actionsDefaultActionGroups"> The default action groups associated with the Azure Monitor Workspace. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, Uri queryEndpoint = default, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
-
-            return new MonitorWorkspaceProperties(
-                accountId,
-                metrics,
-                provisioningState,
-                defaultIngestionSettings,
-                queryEndpoint is null ? default : new AzureMonitorWorkspaceEndpoints(queryEndpoint, default),
-                (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>()).ToList(),
-                publicNetworkAccess,
-                actionsDefaultActionGroups is null ? default : new AzureMonitorWorkspaceActions((actionsDefaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupReference>()).ToList(), default),
-                default);
-        }
-
         /// <summary> Properties related to the metrics container in the Azure Monitor Workspace. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the Azure Monitor Workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
