@@ -220,12 +220,9 @@ if ($wellKnownSubscriptions.ContainsKey($subscriptionName)) {
 Log "Selected subscription '$subscriptionName'"
 
 if ($ServiceDirectory) {
-    $root = "$PSScriptRoot/../../.."
-    if($ServiceDirectory) {
-      $root = "$root/sdk/$ServiceDirectory"
-    }
-    $root = $root | Resolve-Path
-    
+    $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
+    $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+
     $preRemovalScript = Join-Path -Path $root -ChildPath "remove-$ResourceType-resources-pre.ps1"
     if (Test-Path $preRemovalScript) {
         Log "Invoking pre resource removal script '$preRemovalScript'"
