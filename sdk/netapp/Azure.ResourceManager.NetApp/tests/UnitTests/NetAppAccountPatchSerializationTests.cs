@@ -14,6 +14,32 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
 
+        [TestCase("GetLatestStatusBackup")]
+        [TestCase("GetLatestStatusBackupAsync")]
+        public void ChangelogTestDeprecationIsWarningOnly(string methodName)
+        {
+            var method = typeof(NetAppVolumeResource).GetMethod(methodName);
+            var attribute = (ObsoleteAttribute)Attribute.GetCustomAttribute(method, typeof(ObsoleteAttribute));
+
+            Assert.That(attribute, Is.Not.Null);
+            Assert.That(attribute.IsError, Is.False);
+            Assert.That(attribute.Message, Does.Contain("Test-only AutoPR changelog validation"));
+        }
+
+        [Test]
+        public void ChangelogTestMarkerIsClientSideOnly()
+        {
+            var account = new NetAppAccountData("westus2");
+            Assert.That(account.ChangelogTestMarker, Is.Null);
+
+            account.ChangelogTestMarker = "autopr-api-change";
+
+            Assert.That(account.ChangelogTestMarker, Is.EqualTo("autopr-api-change"));
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
+                account, WireOptions, AzureResourceManagerNetAppContext.Default));
+            Assert.That(document.RootElement.GetRawText(), Does.Not.Contain("autopr-api-change"));
+        }
+
         [Test]
         public void SerializePreservesMutationsToAssignedEncryption()
         {

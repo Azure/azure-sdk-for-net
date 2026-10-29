@@ -1,14 +1,11 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.20.0 (2026-10-29)
 
 ### Other Changes
+
+- Obsoleted method 'Response<NetAppVolumeBackupStatus> GetLatestStatusBackup(CancellationToken cancellationToken)' in type Azure.ResourceManager.NetApp.NetAppVolumeResource
+- Obsoleted method 'Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusBackupAsync(CancellationToken cancellationToken)' in type Azure.ResourceManager.NetApp.NetAppVolumeResource
 
 ## 1.19.0 (2026-10-20)
 
@@ -139,6 +136,7 @@ EnableWriteBackState, LdapServerType, LdapState, OnCertificateConflictAction, Sn
 - Added enums `ActualRansomwareProtectionState`, `DesiredRansomwareProtectionState`, `RansomwareReportSeverity`, `RansomwareReportState`, `RansomwareSuspectResolution`, and `NetAppVolumeQuotaType`.
 
 ### Bugs Fixed
+
 - Fixed debug-time quota resource validation to accept both account-scoped and location-scoped quota resource IDs.
 
 ## 1.15.0-beta.1 (2025-12-01)

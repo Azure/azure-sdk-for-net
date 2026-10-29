@@ -17,6 +17,9 @@ parameters:
   - name: SkipPrValidation
     type: boolean
     default: false
+  - name: EnableAutoPrManagementChangelog
+    type: boolean
+    default: false
   - name: BuildSnippets
     type: boolean
     default: true
@@ -90,6 +93,42 @@ extends:
           - template: /eng/pipelines/templates/variables/globals.yml
           - template: /eng/pipelines/templates/variables/image.yml
         jobs:
+          - ${{ if eq(parameters.EnableAutoPrManagementChangelog, true) }}:
+            - job: AutoPrManagementChangelog
+              displayName: Generate AutoPR management changelogs
+              # PR branch filters match TARGET branches. Gate the SOURCE branch here.
+              condition: >-
+                and(eq(variables['Build.Reason'], 'PullRequest'),
+                    or(startsWith(variables['System.PullRequest.SourceBranch'], 'sdkauto/'),
+                       startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/sdkauto/')))
+              dependsOn: []
+              timeoutInMinutes: 30
+              pool:
+                name: $(WINDOWSPOOL)
+                image: $(WINDOWSVMIMAGE)
+                os: windows
+              steps:
+                - checkout: self
+                  fetchDepth: 0
+                  # ChangelogGen resolves the previous release by its Git tag.
+                  fetchTags: true
+                - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+                  parameters:
+                    ServiceDirectory: auto
+                    PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/ChangelogPackageInfo
+                - pwsh: |
+                    ./eng/scripts/Update-MgmtChangelog.ps1 `
+                      -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/ChangelogPackageInfo" `
+                      -SdkRepoPath "$(Build.SourcesDirectory)" `
+                      -OutputDirectory "$(Build.ArtifactStagingDirectory)/ManagementChangelogs"
+                  displayName: Run management changelog tool
+                - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+                  parameters:
+                    ArtifactName: ManagementChangelogs
+                    ArtifactPath: $(Build.ArtifactStagingDirectory)/ManagementChangelogs
+                    CustomCondition: succeededOrFailed()
+
           - template: /eng/pipelines/templates/jobs/ci.yml
             parameters:
               SDKType: ${{ parameters.SDKType }}
