@@ -21,6 +21,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         private BicepValue<string> _name;
         private SystemData _systemData;
         private KubernetesConfigurationExtensionTypeProperties _properties;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new ClusterExtensionType. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -74,6 +75,21 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ClusterExtensionType. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -82,6 +98,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<KubernetesConfigurationExtensionTypeProperties>(nameof(Properties), new string[] { "properties" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
