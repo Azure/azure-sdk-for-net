@@ -120,7 +120,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ExtensionAssignmentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExtensionAssignment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ExtensionAssignment>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

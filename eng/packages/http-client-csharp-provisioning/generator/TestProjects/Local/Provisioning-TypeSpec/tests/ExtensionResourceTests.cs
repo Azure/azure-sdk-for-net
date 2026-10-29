@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
@@ -19,7 +18,7 @@ public class ExtensionResourceTests
         Assert.That(typeof(ReadOnlyExtension).GetConstructors(), Is.Empty,
             "An existing-only resource must not become publicly deployable.");
         Assert.That(ReadOnlyExtension.FromExisting("existing").IsExistingResource, Is.True);
-        Assert.That(ReadOnlyExtension.FromExisting("existing").ProvisionableProperties["Scope"].IsRequired, Is.True);
+        Assert.That(ReadOnlyExtension.FromExisting("existing").ProvisionableProperties["Scope"].IsRequired, Is.False);
     }
 
     [Test]
@@ -29,18 +28,20 @@ public class ExtensionResourceTests
             Is.EqualTo(typeof(ExtensionAssignment)));
         Assert.That(typeof(ExtensionChild).GetProperty("Scope"), Is.Null,
             "A child inherits scope through its parent, not a second scope property.");
+        ExtensionChild child = new("child");
+        _ = child.Name;
+        Assert.That(child.ProvisionableProperties["Parent"].IsRequired, Is.False);
     }
 
     [Test]
-    public void ExtensionOnlyScopeIsRequired()
+    public void ExtensionOnlyScopeRemainsOptional()
     {
         ExtensionAssignment assignment = new("assignment");
         _ = assignment.Name;
-        Assert.That(assignment.ProvisionableProperties["Scope"].IsRequired, Is.True);
+        Assert.That(assignment.ProvisionableProperties["Scope"].IsRequired, Is.False);
         Infrastructure infra = new();
         infra.Add(assignment);
-        var exception = Assert.Throws<InvalidOperationException>(() => infra.Build());
-        Assert.That(exception!.Message, Does.Contain("Scope"));
+        Assert.DoesNotThrow(() => infra.Build());
     }
 
     [Test]
@@ -66,11 +67,16 @@ public class ExtensionResourceTests
                 ExtensionChild existing = ExtensionChild.FromExisting("existing");
                 existing.Name = "existing";
                 existing.Parent = lab;
+                ExtensionChild composite = new("composite") { Name = "lab/composite" };
+                ExtensionChild compositeExisting = ExtensionChild.FromExisting("compositeExisting");
+                compositeExisting.Name = "lab/compositeExisting";
                 infra.Add(billing);
                 infra.Add(grant);
                 infra.Add(lab);
                 infra.Add(student);
                 infra.Add(existing);
+                infra.Add(composite);
+                infra.Add(compositeExisting);
                 return infra;
             });
 
@@ -98,6 +104,14 @@ public class ExtensionResourceTests
             resource existing 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' existing = {
               name: 'existing'
               parent: lab
+            }
+
+            resource composite 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' = {
+              name: 'lab/composite'
+            }
+
+            resource compositeExisting 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' existing = {
+              name: 'lab/compositeExisting'
             }
             """);
     }

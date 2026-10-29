@@ -700,7 +700,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndFixedName()
+        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndSettableDefaultName()
         {
             var parentModel = CreateModel("Parent");
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -729,7 +729,7 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(parentProperty.Type.FullyQualifiedName, Is.EqualTo(providers[0].Type.FullyQualifiedName));
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
-            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
             Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
         }
 

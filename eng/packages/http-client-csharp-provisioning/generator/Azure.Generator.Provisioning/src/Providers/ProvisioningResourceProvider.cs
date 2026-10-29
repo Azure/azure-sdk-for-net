@@ -528,15 +528,15 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // Keep the singleton name fixed only when it is one resource-type level below
-                // its generated parent, or when it is a top-level resource without a parent.
+                // Child singletons retain their relative default but allow composite names
+                // when callers omit Parent. Top-level singleton names remain fixed.
                 string? defaultValue = null;
                 if (isResourceName
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName
                     && CanUseSingletonDefaultName())
                 {
                     defaultValue = singletonResourceName;
-                    isSettable = false;
+                    isSettable = ImmediateParentResource is not null;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -613,8 +613,7 @@ namespace Azure.Generator.Provisioning.Providers
                         "DefineResource",
                         [
                             Nameof(Identifier("Parent")),
-                            New.Array(typeof(string), [Literal("parent")]),
-                            new PositionalParameterReferenceExpression("isRequired", Literal(true))
+                            New.Array(typeof(string), [Literal("parent")])
                         ],
                         [_parentType],
                         false)
@@ -629,10 +628,7 @@ namespace Azure.Generator.Provisioning.Providers
                         "DefineResource",
                         [
                             Nameof(Identifier("Scope")),
-                            New.Array(typeof(string), [Literal("scope")]),
-                            new PositionalParameterReferenceExpression("isRequired", Literal(
-                                _resourceProjection!.ReadableScopes.Concat(_resourceProjection.WritableScopes)
-                                    .All(scope => scope == ResourceScope.Extension)))
+                            New.Array(typeof(string), [Literal("scope")])
                         ],
                         [typeof(ProvisionableResource)],
                         false)

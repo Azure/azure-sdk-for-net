@@ -49,11 +49,11 @@ input because they cannot be assigned when defining infrastructure.
 | `ResourceProfile` | Resource models exposed as model properties |
 | `DiscriminatedResourceProfile` and `SpecializedResourceProfile` | Resource inheritance with a discriminator |
 | `ResourceProfileRevision` | Read-only child resource used as a model property |
-| `ExtensionAssignment` | Billing-profile extension resource with a required generic scope |
+| `ExtensionAssignment` | Billing-profile extension resource with an optional generic scope |
 | `ReadOnlyExtension` | Existing-only billing-profile singleton preserving scope without a public constructor |
-| `ExtensionChild` | Child of an extension resource with a typed parent and no duplicate scope |
+| `ExtensionChild` | Child of an extension resource with an optional typed parent or composite name and no duplicate scope |
 | `MultiScopeAssignment` | Extension or resource-group identity with optional scope |
-| `SingletonSetting` | `@singleton` resource with an immediate generated parent |
+| `SingletonSetting` | `@singleton` resource with an optional typed parent and an overridable relative default name |
 | `LegacySingleton` | Top-level singleton inferred from a legacy fixed route |
 | `OrphanedSingleton` | Two-layer singleton resource type without a generated parent |
 | `ConfigurationStorePrivateLinkResource` | Resource with no writable operations |
