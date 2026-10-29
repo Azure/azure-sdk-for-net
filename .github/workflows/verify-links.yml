@@ -4,8 +4,10 @@ on:
   pull_request:
     branches:
       - main
+      - feature/*
       - release/*
       - hotfix/*
+      - sdkauto/*
 
 permissions:
   contents: read

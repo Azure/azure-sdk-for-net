@@ -39,11 +39,13 @@ namespace Azure.ResourceManager.NetApp
             => GetLatestStatusAsync(cancellationToken);
 
         /// <summary> Get the status of the latest backup for a volume. </summary>
+        [Obsolete("Test-only AutoPR changelog validation. Use GetLatestStatus instead. Do not release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppVolumeBackupStatus> GetLatestStatusBackup(CancellationToken cancellationToken = default)
             => GetLatestStatus(cancellationToken);
 
         /// <summary> Get the status of the latest backup for a volume. </summary>
+        [Obsolete("Test-only AutoPR changelog validation. Use GetLatestStatusAsync instead. Do not release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusBackupAsync(CancellationToken cancellationToken = default)
             => GetLatestStatusAsync(cancellationToken);

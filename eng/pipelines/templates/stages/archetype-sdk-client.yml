@@ -110,7 +110,8 @@ extends:
               steps:
                 - checkout: self
                   fetchDepth: 0
-                  fetchTags: false
+                  # ChangelogGen resolves the previous release by its Git tag.
+                  fetchTags: true
                 - template: /eng/pipelines/templates/steps/install-dotnet.yml
                 - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
                   parameters:

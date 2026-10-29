@@ -3,6 +3,132 @@
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
+Describe 'Trusted AutoPR changelog writeback' {
+        BeforeAll {
+                $workflow = Get-Content (Join-Path $PSScriptRoot '../../../.github/workflows/event-processor.yml') -Raw
+                $writebackScript = [regex]::Match($workflow, '(?s)          script: \|\r?\n(.*)$').Groups[1].Value -replace '(?m)^            ', ''
+                $harness = @'
+const assert = require('node:assert/strict');
+const { script, scenario } = JSON.parse(require('node:fs').readFileSync(0, 'utf8'));
+const filename = 'sdk/netapp/Azure.ResourceManager.NetApp/CHANGELOG.md';
+const sourceSha = 'a'.repeat(40);
+const pr = { state: 'open', head: { sha: sourceSha, ref: 'sdkauto/test', repo: { full_name: 'Azure/azure-sdk-for-net' } } };
+const check = { app: { id: 9426 }, conclusion: 'success', name: 'net - pullrequest (Build Generate AutoPR management changelogs)',
+    details_url: 'https://dev.azure.com/azure-sdk/public/_build/results?buildId=123' };
+const build = { definition: { id: 7327 }, reason: 'pullRequest', repository: { type: 'GitHub', id: 'Azure/azure-sdk-for-net' },
+    id: 123, sourceBranch: 'refs/pull/42/merge', triggerInfo: { 'pr.sourceSha': sourceSha, 'pr.sourceBranch': 'sdkauto/test' } };
+const timeline = { records: [ { id: 'job', type: 'Job', state: 'completed', identifier: 'Build.AutoPrManagementChangelog.__default', result: 'succeeded' },
+    { parentId: 'job', name: 'Run management changelog tool', result: 'succeeded' } ] };
+const artifacts = { value: [ { name: 'ManagementChangelogs', source: 'job', resource: { downloadUrl: 'https://example.artifacts.visualstudio.com/changelogs.zip' } } ] };
+let entries = `ManagementChangelogs/${filename}\n`;
+if (scenario === 'stale') pr.head.sha = 'b'.repeat(40);
+if (scenario === 'fork') pr.head.repo.full_name = 'someone/fork';
+if (scenario === 'non-autopr') pr.head.ref = 'users/test';
+if (scenario === 'publisher') check.app.id = 1;
+if (scenario === 'definition') build.definition.id = 1;
+if (scenario === 'failed-tool') timeline.records[1].result = 'failed';
+if (scenario === 'artifact-source') artifacts.value[0].source = 'other-job';
+if (scenario === 'download-host') artifacts.value[0].resource.downloadUrl = 'https://evil.example/zip';
+if (scenario === 'unrelated-package') entries = 'sdk/other/Azure.ResourceManager.Other/CHANGELOG.md\n';
+if (scenario === 'duplicate') entries += entries;
+if (scenario === 'patch-only') entries = 'ManagementChangelogs/changelog.patch\n';
+const updates = [], trees = [];
+let reads = 0;
+const github = { paginate: async () => [{ filename: 'sdk/netapp/Azure.ResourceManager.NetApp/api/test.cs', status: 'modified' }], rest: {
+    pulls: { get: async () => { reads++; return { data: scenario === 'race' && reads > 1 ? { ...pr, head: { ...pr.head, sha: 'b'.repeat(40) } } : pr }; }, listFiles: {} },
+    repos: { getContent: async p => { assert.equal(p.path, filename); assert.equal(p.ref, sourceSha);
+        return { data: { type: 'file', encoding: 'base64', content: Buffer.from(scenario === 'noop' ? 'generated changelog' : 'old changelog').toString('base64') } }; } },
+    git: { getCommit: async () => ({ data: { tree: { sha: 'oldtree' } } }),
+        createTree: async p => { trees.push(p); return { data: { sha: 'newtree' } }; },
+        createCommit: async p => { assert.deepEqual(p.parents, [sourceSha]); return { data: { sha: 'newcommit' } }; },
+        updateRef: async p => updates.push(p) }
+} };
+async function fetch(url) {
+    url = String(url);
+    const data = url.includes('definitions=7327') ? { value: [build] } : url.includes('/timeline?') ? timeline : url.includes('/artifacts?') ? artifacts : build;
+    return { ok: true, json: async () => data, body: (async function* () { yield Buffer.from('zip'); })() };
+}
+function safeRequire(name) {
+    if (name === 'node:fs/promises') return { mkdtemp: async () => '/temp/changelog', writeFile: async () => {}, rm: async () => {} };
+    if (name === 'node:child_process') {
+        const execFile = () => { throw new Error('Expected promisified execFile'); };
+        execFile[require('node:util').promisify.custom] = async (cmd, args) => {
+            assert.equal(cmd, 'unzip'); return { stdout: args[0] === '-Z1' ? entries : 'generated changelog', stderr: '' };
+        };
+        return { execFile };
+    }
+    return require(name);
+}
+(async () => {
+    let error;
+    try { await new (Object.getPrototypeOf(async function(){}).constructor)('require', 'context', 'github', 'core', 'fetch', script)(
+        safeRequire, { repo: { owner: 'Azure', repo: 'azure-sdk-for-net' }, payload: scenario === 'workflow-run' ?
+            { workflow_run: { head_repository: { full_name: 'Azure/azure-sdk-for-net' }, event: 'pull_request', head_branch: 'sdkauto/test', head_sha: sourceSha } } :
+            { check_run: check } }, github, { info: () => {} }, fetch); }
+    catch (e) { error = e; }
+    const rejects = ['publisher', 'definition', 'failed-tool', 'artifact-source', 'download-host', 'unrelated-package', 'duplicate'];
+    if (rejects.includes(scenario)) assert.ok(error, 'unsafe input must be rejected');
+    else if (error) throw error;
+    assert.equal(updates.length, ['success', 'workflow-run'].includes(scenario) ? 1 : 0);
+    if (['success', 'workflow-run'].includes(scenario)) {
+        assert.equal(updates[0].force, false); assert.equal(updates[0].ref, 'heads/sdkauto/test');
+        assert.deepEqual(trees[0].tree, [{ path: filename, mode: '100644', type: 'blob', content: 'generated changelog' }]);
+    }
+    console.log('passed: ' + scenario);
+})().catch(e => { console.error(e); process.exitCode = 1; });
+'@
+        }
+
+        It 'validates writeback scenario: <Scenario>' -TestCases @(
+                @{ Scenario = 'success' }, @{ Scenario = 'workflow-run' }, @{ Scenario = 'stale' }, @{ Scenario = 'fork' },
+                @{ Scenario = 'non-autopr' }, @{ Scenario = 'publisher' }, @{ Scenario = 'definition' },
+                @{ Scenario = 'failed-tool' }, @{ Scenario = 'artifact-source' }, @{ Scenario = 'download-host' },
+                @{ Scenario = 'unrelated-package' }, @{ Scenario = 'duplicate' }, @{ Scenario = 'patch-only' },
+                @{ Scenario = 'noop' }, @{ Scenario = 'race' }
+        ) {
+                param($Scenario)
+                $writebackScript | Should -Not -BeNullOrEmpty
+                @{ script = $writebackScript; scenario = $Scenario } | ConvertTo-Json -Compress | node -e $harness
+                $LASTEXITCODE | Should -Be 0
+        }
+}
+
+Describe 'Changelog generator failure detection' {
+    BeforeAll {
+        $generator = Join-Path $PSScriptRoot '../Gen-Mgmt-Changelog.ps1'
+        function dotnet { $global:LASTEXITCODE = 0 }
+        function changelog-gen-mgmt { $global:LASTEXITCODE = 0 }
+    }
+
+    BeforeEach {
+        $listing = Join-Path $TestDrive 'api.cs'
+        'API' | Set-Content $listing
+    }
+
+    It 'rejects a swallowed generator exception even when the tool returns zero' {
+        Mock changelog-gen-mgmt { $global:LASTEXITCODE = 0; 'Error occurs when generating changelog:'; "Can't find Tag" }
+        { & $generator -ServiceName test -ReleaseVersion 1.0.0 -ReleaseDate 2026-10-29 -ApiFilePath $listing } |
+            Should -Throw '*Management changelog generation failed*'
+    }
+
+    It 'rejects a failed installation' {
+        Mock dotnet { $global:LASTEXITCODE = 1 }
+        { & $generator -ServiceName test -ReleaseVersion 1.0.0 -ReleaseDate 2026-10-29 -ApiFilePath $listing } |
+            Should -Throw '*Failed to install*'
+    }
+
+    It 'accepts successful generator output' {
+        Mock changelog-gen-mgmt { $global:LASTEXITCODE = 0; 'Changelog generated.' }
+        { & $generator -ServiceName test -ReleaseVersion 1.0.0 -ReleaseDate 2026-10-29 -ApiFilePath $listing } |
+            Should -Not -Throw
+    }
+
+    It 'fetches release tags in the changelog CI job' {
+        Get-Content (Join-Path $PSScriptRoot '../../pipelines/templates/stages/archetype-sdk-client.yml') -Raw |
+            Should -Match 'fetchTags: true'
+    }
+}
+
 Describe 'Legacy automation changelog integration is removed' {
     BeforeAll {
         $scriptContent = Get-Content (Join-Path $PSScriptRoot "../Invoke-GenerateAndBuildV2.ps1") -Raw
