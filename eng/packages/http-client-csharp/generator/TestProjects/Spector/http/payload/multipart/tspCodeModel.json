@@ -2855,7 +2855,6 @@
                 "$id": "209",
                 "name": "basic",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
                 "parameters": [
@@ -2987,7 +2986,6 @@
                 "$id": "215",
                 "name": "withWireName",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data with wire names",
                 "accessibility": "public",
                 "parameters": [
@@ -3119,7 +3117,6 @@
                 "$id": "221",
                 "name": "optionalParts",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data with optional parts",
                 "accessibility": "public",
                 "parameters": [
@@ -3251,7 +3248,6 @@
                 "$id": "227",
                 "name": "fileArrayAndBasic",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for mixed scenarios",
                 "accessibility": "public",
                 "parameters": [
@@ -3383,7 +3379,6 @@
                 "$id": "233",
                 "name": "jsonPart",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains json part and binary part ",
                 "accessibility": "public",
                 "parameters": [
@@ -3515,7 +3510,6 @@
                 "$id": "239",
                 "name": "binaryArrayParts",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
                 "accessibility": "public",
                 "parameters": [
@@ -3647,7 +3641,6 @@
                 "$id": "245",
                 "name": "multiBinaryParts",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
                 "accessibility": "public",
                 "parameters": [
@@ -3779,7 +3772,6 @@
                 "$id": "251",
                 "name": "checkFileNameAndContentType",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
                 "parameters": [
@@ -3911,7 +3903,6 @@
                 "$id": "257",
                 "name": "anonymousModel",
                 "isExactName": false,
-                "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
                 "parameters": [
@@ -4092,7 +4083,6 @@
                     "$id": "267",
                     "name": "jsonArrayAndFileArray",
                     "isExactName": false,
-                    "resourceName": "HttpParts",
                     "doc": "Test content-type: multipart/form-data for mixed scenarios",
                     "accessibility": "public",
                     "parameters": [
@@ -4273,7 +4263,6 @@
                         "$id": "277",
                         "name": "imageJpegContentType",
                         "isExactName": false,
-                        "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data",
                         "accessibility": "public",
                         "parameters": [
@@ -4405,7 +4394,6 @@
                         "$id": "283",
                         "name": "requiredContentType",
                         "isExactName": false,
-                        "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data",
                         "accessibility": "public",
                         "parameters": [
@@ -4537,7 +4525,6 @@
                         "$id": "289",
                         "name": "optionalContentType",
                         "isExactName": false,
-                        "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data for optional content type",
                         "accessibility": "public",
                         "parameters": [
@@ -4719,7 +4706,6 @@
                         "$id": "299",
                         "name": "float",
                         "isExactName": false,
-                        "resourceName": "NonString",
                         "doc": "Test content-type: multipart/form-data for non string",
                         "accessibility": "public",
                         "parameters": [
@@ -4903,7 +4889,6 @@
                     "$id": "309",
                     "name": "uploadFileSpecificContentType",
                     "isExactName": false,
-                    "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -5033,7 +5018,6 @@
                     "$id": "315",
                     "name": "uploadFileRequiredFilename",
                     "isExactName": false,
-                    "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -5163,7 +5147,6 @@
                     "$id": "321",
                     "name": "uploadFileArray",
                     "isExactName": false,
-                    "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
                       {

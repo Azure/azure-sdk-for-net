@@ -24,9 +24,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> GCMAES128. </summary>
         private const string GcmAes128Value = "GCMAES128";
         /// <summary> GCMAES192. </summary>
-        private const string GCMAES192Value = "GCMAES192";
+        private const string GcmAes192Value = "GCMAES192";
         /// <summary> GCMAES256. </summary>
         private const string GcmAes256Value = "GCMAES256";
+        private const string Sha384Value = "SHA384";
 
         /// <summary> Initializes a new instance of <see cref="IPsecIntegrity"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -51,10 +52,13 @@ namespace Azure.ResourceManager.Network.Models
         public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
 
         /// <summary> GCMAES192. </summary>
-        public static IPsecIntegrity GCMAES192 { get; } = new IPsecIntegrity(GCMAES192Value);
+        public static IPsecIntegrity GcmAes192 { get; } = new IPsecIntegrity(GcmAes192Value);
 
         /// <summary> GCMAES256. </summary>
         public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
+
+        /// <summary> Gets the Sha384. </summary>
+        public static IPsecIntegrity Sha384 { get; } = new IPsecIntegrity(Sha384Value);
 
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -273,6 +273,8 @@ test("attempt selection is numeric and includes the newest directory even when i
     const root = setup(t);
     artifact(root, "area_a", 9);
     fs.mkdirSync(path.join(root, "download", "eval-result-area_a-10"));
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({ schemaVersion: 1, valid: true,
+        attempts: { area_a: { attempt: 10, complete: true } } }));
     const { child, result, index } = runSummary(root, ["area_a"]);
     assert.equal(child.status, 1);
     assert.equal(result.shards[0].attempt, 10);
@@ -308,7 +310,8 @@ test("bad completion metadata cannot hide available diagnostic JUnit", (t) => {
         const directory = path.join(root, `case-${index}`);
         const output = artifact(directory, "area_a", 1);
         fs.writeFileSync(path.join(output, "shard.json"), marker);
-        const selection = selectSummaryResults({ resultsRoot: path.join(directory, "download"), selectedRoot: path.join(directory, "selected"), expectedShards: ["area_a"] });
+        const selection = selectSummaryResults({ resultsRoot: path.join(directory, "download"), selectedRoot: path.join(directory, "selected"),
+            expectedShards: ["area_a"], jobAttempts: readJson(path.join(directory, "job-attempts.json")) });
         assert.equal(selection.complete, false);
         assert.deepEqual(fs.readdirSync(path.join(directory, "selected", "eval-result-area_a-1", "junit")), ["0.junit.xml"]);
     }
@@ -337,6 +340,8 @@ test("legacy-layout JUnit is diagnostic only, and never causes fallback to an ol
     const latest = path.join(root, "download", "eval-result-area_a-2");
     fs.mkdirSync(latest);
     fs.writeFileSync(path.join(latest, "eval-results.junit.xml"), '<testsuite><testcase name="latest"><failure /></testcase></testsuite>');
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({ schemaVersion: 1, valid: true,
+        attempts: { area_a: { attempt: 2, complete: true } } }));
     const { child, result, index, markdown } = runSummary(root, ["area_a"]);
     assert.equal(child.status, 1);
     assert.equal(result.complete, false);
@@ -389,7 +394,9 @@ test("summary cannot publish when timeline evidence is unavailable, invalid or c
         });
         assert.equal(child.status, 1); assert.match(child.stdout, /EvalSummaryComplete\]false/);
         assert.equal(readJson(path.join(directory, "download", "shard-index.json")).complete, false);
-        assert.equal(readJson(path.join(directory, "summary", "eval-summary.json")).totals.scenarios, 1);
+        assert.equal(readJson(path.join(directory, "summary", "eval-summary.json")).totals.scenarios, 0);
+        assert.deepEqual(fs.readdirSync(path.join(directory, "selected")), []);
+        assert.deepEqual(readJson(path.join(directory, "download", "shard-index.json")).attempts, []);
         assert.match(fs.readFileSync(output, "utf8"), /timeline/);
         assert.equal(fs.existsSync(path.join(directory, "summary", "job-attempts.json")), false, "Rendering never fabricates timeline evidence");
     }
@@ -494,7 +501,41 @@ test("newer failed attempt with no artifact cannot adopt an older complete artif
         { schemaVersion: 1, valid: false, attempts: {} }].entries()) {
         const selected = selectSummaryResults({ resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, `selection-${index}`), expectedShards: ["a"], jobAttempts });
         assert.equal(selected.complete, false); assert.match(selected.status[0].reason, /timeline/);
+        const matchingAttempt = jobAttempts?.valid === true && jobAttempts.attempts.a?.attempt === 1;
+        assert.equal(selected.shardInput.attempts.length, matchingAttempt ? 1 : 0);
+        assert.equal(fs.existsSync(path.join(root, `selection-${index}`, "eval-result-a-1", "junit", "0.junit.xml")), matchingAttempt);
     }
+});
+
+test("missing latest results contribute no older JUnit to Markdown, counts or selected test files", t => {
+    const root = setup(t); artifact(root, "a", 1);
+    const evidence = { schemaVersion: 1, valid: true, attempts: { a: { attempt: 2, complete: true } } };
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify(evidence));
+    const { child, markdown, result, index } = runSummary(root, ["a"]);
+    assert.equal(child.status, 1);
+    assert.match(child.stdout, /EvalSummaryComplete\]false/);
+    assert.equal(result.complete, false); assert.equal(index.complete, false);
+    assert.equal(result.shards[0].attempt, 2); assert.match(result.shards[0].reason, /no matching artifact/);
+    assert.deepEqual(result.totals, { scenarios: 0, failed: 0, skipped: 0 });
+    assert.deepEqual(index.attempts, []);
+    assert.deepEqual(fs.readdirSync(path.join(root, "selected")), []);
+    assert.doesNotMatch(markdown, /source-a-1|results — PASSED/);
+    assert.match(markdown, /results — INCOMPLETE/);
+});
+
+test("only the timeline-matching attempt is selected, even when newer unverified artifacts exist", t => {
+    const root = setup(t); artifact(root, "a", 1); artifact(root, "a", 2, { failed: true }); artifact(root, "a", 3);
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({ schemaVersion: 1, valid: true,
+        attempts: { a: { attempt: 2, complete: true } } }));
+    const { child, markdown, result, index } = runSummary(root, ["a"]);
+    assert.equal(child.status, 0, child.stderr);
+    assert.equal(result.complete, true); assert.equal(index.complete, true);
+    assert.equal(result.shards[0].attempt, 2);
+    assert.deepEqual(result.totals, { scenarios: 1, failed: 1, skipped: 0 });
+    assert.deepEqual(fs.readdirSync(path.join(root, "selected")), ["eval-result-a-2"]);
+    assert.deepEqual(index.attempts, [{ shard: "a", attempt: 2, directory: "eval-result-a-2" }]);
+    assert.match(markdown, /results — FAILED/);
+    assert.doesNotMatch(markdown, /source-a-1|source-a-3/);
 });
 
 test("timeline reads retry transient failures only, with a fixed three-attempt budget", async () => {

@@ -128,7 +128,6 @@
                 "$id": "12",
                 "name": "reorder",
                 "isExactName": false,
-                "resourceName": "ReorderParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -323,7 +322,6 @@
                 "$id": "26",
                 "name": "group",
                 "isExactName": false,
-                "resourceName": "GroupParameters",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -522,7 +520,6 @@
                 "$id": "39",
                 "name": "requireOptional",
                 "isExactName": false,
-                "resourceName": "RequireOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -717,7 +714,6 @@
                 "$id": "53",
                 "name": "removeOptional",
                 "isExactName": false,
-                "resourceName": "RemoveOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
                   {

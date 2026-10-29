@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> The NSP access rule resource. </summary>
     public partial class NetworkSecurityPerimeterAccessRuleData : ResourceData, IJsonModel<NetworkSecurityPerimeterAccessRuleData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkSecurityPerimeterAccessRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterAccessRuleData IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkSecurityPerimeterAccessRuleData IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterAccessRuleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -103,7 +120,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkSecurityPerimeterAccessRuleData IJsonModel<NetworkSecurityPerimeterAccessRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkSecurityPerimeterAccessRuleData IJsonModel<NetworkSecurityPerimeterAccessRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkSecurityPerimeterAccessRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityPerimeterAccessRuleData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to container resource in remote resource provider. </summary>
-    public partial class Container : NetworkSubResource, IJsonModel<Container>
+    internal partial class Container : NetworkSubResource, IJsonModel<Container>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

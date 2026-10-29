@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.ClientGenerator.Core.ResponseReplacement
 {
-    [ModelReaderWriterBuildable(typeof(Widget))]
     public partial class SpecsAzureClientGeneratorCoreResponseReplacementContext : ModelReaderWriterContext
     {
     }

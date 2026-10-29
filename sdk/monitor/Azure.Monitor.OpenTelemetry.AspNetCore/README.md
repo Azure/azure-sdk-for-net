@@ -346,6 +346,33 @@ builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
 
 Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
 
+#### Larger GenAI input and output messages (experimental)
+
+By default, the `gen_ai.input.messages` and `gen_ai.output.messages` attributes are truncated at 256 KiB (characters). Multimodal content, such as base64-encoded images or audio, can exceed that limit. To keep these two attributes up to 4 MiB, enable the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` `AppContext` switch. Other GenAI attributes stay at 256 KiB and all other attributes stay at 8 KiB.
+
+The switch is read once, when the first telemetry item is exported. Set it at the top of `Program.cs`, before the app is built:
+
+```C#
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", true);
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .WithTracing(tracing => tracing.AddSource("MyCompany.MyGenAIApp"));
+
+var app = builder.Build();
+```
+
+Alternatively, enable it without code changes in the project file. The setting is written to the application's `runtimeconfig.json`:
+
+```xml
+<ItemGroup>
+  <RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase" Value="true" />
+</ItemGroup>
+```
+
+Large multimodal messages produce large telemetry items. See [Custom property truncation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter#custom-property-truncation) in the exporter README for the limits and storage considerations.
+
 ## Key concepts
 
 The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.

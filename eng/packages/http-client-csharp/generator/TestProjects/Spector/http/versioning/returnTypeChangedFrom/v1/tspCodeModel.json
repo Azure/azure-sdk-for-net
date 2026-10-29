@@ -138,7 +138,6 @@
             "$id": "14",
             "name": "test",
             "isExactName": false,
-            "resourceName": "ReturnTypeChangedFrom",
             "accessibility": "public",
             "parameters": [
               {

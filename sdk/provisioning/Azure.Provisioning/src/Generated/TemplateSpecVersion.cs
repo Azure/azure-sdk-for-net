@@ -163,7 +163,7 @@ public partial class TemplateSpecVersion : ProvisionableResource
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<TemplateSpec>? _parent;
+    private ProvisioningResourceReference<TemplateSpec>? _parent;
 
     /// <summary>
     /// Creates a new TemplateSpecVersion.
@@ -196,7 +196,7 @@ public partial class TemplateSpecVersion : ProvisionableResource
         _uiFormDefinition = DefineProperty<BinaryData>("UiFormDefinition", ["properties", "uiFormDefinition"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<TemplateSpec>("Parent", ["parent"], isRequired: true);
+        _parent = new(DefineProperty<string>(nameof(Parent), ["parent"], isRequired: true));
     }
 
     /// <summary>
