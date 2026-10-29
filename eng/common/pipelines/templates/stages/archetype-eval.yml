@@ -44,8 +44,9 @@ parameters:
     type: boolean
     default: false
   - name: azureSubscription
+    # Caller-owned service connection; unused when authentication is disabled.
     type: string
-    default: opensource-api-connection
+    default: ''
   - name: vallyArguments
     type: object
     default: []
