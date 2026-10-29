@@ -82,7 +82,9 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
             ? httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? httpContext.User.FindFirst("sub")?.Value ?? httpContext.User.Identity.Name
             : null;
-        A2ATaskScope.Current = new A2ATaskScope(tags.GetValueOrDefault("a2a.tenant") as string, authenticatedUser);
+        A2ATaskScope.Current = new A2ATaskScope(
+            tags.GetValueOrDefault("a2a.tenant") as string,
+            authenticatedUser);
         try
         {
             var result = await A2AJsonRpcProcessor.ProcessRequestAsync(

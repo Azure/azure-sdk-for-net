@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.A2A;
 
@@ -58,9 +57,7 @@ public static class FoundryA2AEndpointRouteBuilderExtensions
             throw new ArgumentException("Foundry A2A hosting does not expose push notifications or extended agent cards.");
         }
 
-        var handler = new FoundryA2ARequestHandler(
-            endpoints.ServiceProvider.GetRequiredService<IA2ARequestHandler>(),
-            endpoints.ServiceProvider.GetRequiredService<ILogger<FoundryA2ARequestHandler>>());
+        var handler = endpoints.ServiceProvider.GetRequiredService<IA2ARequestHandler>();
         var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
         registry?.Register(ServerVersionRegistry.BuildIdentityString(
             "azure-ai-agentserver-a2a", typeof(FoundryA2AEndpointRouteBuilderExtensions).Assembly));

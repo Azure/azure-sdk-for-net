@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using A2ARequestContext = global::A2A.RequestContext;
 
@@ -240,6 +241,37 @@ public class HostingTests
         using var client = app.GetTestClient();
         using var response = await client.PostAsync("/a2a", Rpc("SendMessage", MessageParams));
         Assert.That(await response.Content.ReadAsStringAsync(), Does.Contain("hello"));
+    }
+
+    [Test]
+    public async Task NativeHandlerOverridesReachNativeDispatchUnchanged()
+    {
+        await using var app = await CreateAppAsync(services =>
+            services.AddSingleton<IA2ARequestHandler, NativeCardHandler>());
+        using var client = app.GetTestClient();
+        using var response = await client.PostAsync("/a2a", Rpc("GetExtendedAgentCard"));
+        string body = await response.Content.ReadAsStringAsync();
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), body);
+        using var json = JsonDocument.Parse(body);
+        Assert.That(json.RootElement.TryGetProperty("error", out _), Is.False, body);
+        Assert.That(json.RootElement.GetProperty("result").GetProperty("name").GetString(), Is.EqualTo("native-custom-card"));
+        Assert.That(app.Services.GetRequiredService<IA2ARequestHandler>(), Is.TypeOf<NativeCardHandler>());
+    }
+
+    private sealed class NativeCardHandler(
+        IAgentHandler handler,
+        ITaskStore store,
+        ChannelEventNotifier notifier,
+        ILogger<A2AServer> logger,
+        A2AServerOptions options) : A2AServer(handler, store, notifier, logger, options)
+    {
+        public override Task<AgentCard> GetExtendedAgentCardAsync(
+            GetExtendedAgentCardRequest request, CancellationToken cancellationToken = default)
+        {
+            var card = CreateCard();
+            card.Name = "native-custom-card";
+            return Task.FromResult(card);
+        }
     }
 
     [Test]

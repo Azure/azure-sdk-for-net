@@ -21,15 +21,3 @@
   semantic tracing for A2A operations and hosted agent invocations.
 
 ### Bugs Fixed
-
-- Hosted task storage now uses `DefaultAzureCredential` when no credential is
-  supplied, restricted by default to environment, workload identity, and managed
-  identity. Explicit credentials take precedence, and `AZURE_TOKEN_CREDENTIALS`
-  can select a credential source.
-- Unexpected native dispatch failures retain their original exception in logs.
-- Method-not-allowed responses on A2A routes include error-source classification.
-- Request observation uses memory buffering without requiring temporary files.
-- Task listing reads lightweight summaries and hydrates only the selected page
-  of full snapshots, retaining support for records without listing summaries.
-- Task listing filters caller metadata before reading snapshots without sending
-  unsupported hyphenated tag filters to hosted storage.

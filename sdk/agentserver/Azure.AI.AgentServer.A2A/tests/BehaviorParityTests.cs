@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
 using System.Net;
 using System.Text;
 using System.Text.Json;
 using global::A2A;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.A2A.Tests;
@@ -94,14 +93,12 @@ public class BehaviorParityTests
     [TestCase("ListTasks", "{}")]
     [TestCase("CancelTask", """{"id":"task-1"}""")]
     [TestCase("SubscribeToTask", """{"id":"task-1"}""")]
-    public async Task NativeDispatchLogsOriginalStorageException(string method, string parameters)
+    public async Task BackingStoreFailuresAreConvertedByNativeTransport(string method, string parameters)
     {
-        using var logger = new ExceptionLoggerProvider();
-        var failure = new IOException("Storage unavailable for parity test");
+        var failure = new IOException("Storage unavailable for transport test");
         await using var app = await CreateAppAsync(false, services =>
         {
-            services.AddLogging(logging => logging.AddProvider(logger));
-            services.AddSingleton<ITaskStore>(new FailingTaskStore(failure));
+            services.AddSingleton<ITaskStore>(new FoundryTaskStore(new FailingStateStore(failure)));
         });
         using var client = app.GetTestClient();
         using var response = await client.PostAsync("/a2a", HostingTests.Rpc(method, parameters));
@@ -109,20 +106,59 @@ public class BehaviorParityTests
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), body);
         Assert.That(body, Does.Contain("\"error\""));
         Assert.That(body, Does.Not.Contain(failure.Message));
-        Assert.That(logger.Exceptions, Does.Contain(failure));
         Assert.That(response.Headers.Contains(PlatformHeaders.ErrorSource), Is.False);
     }
 
-    [Test]
-    public async Task ExpectedMissingTaskDoesNotLogAnInfrastructureFailure()
+    [TestCase("read", false)]
+    [TestCase("save", false)]
+    [TestCase("delete", false)]
+    [TestCase("list", false)]
+    [TestCase("read", true)]
+    [TestCase("save", true)]
+    [TestCase("delete", true)]
+    [TestCase("list", true)]
+    public void StorageFailuresAndCancellationPropagateToTheCaller(string operation, bool cancelled)
     {
-        using var logger = new ExceptionLoggerProvider();
-        await using var app = await CreateAppAsync(false, services =>
-            services.AddLogging(logging => logging.AddProvider(logger)));
+        using var cancellation = new CancellationTokenSource();
+        if (cancelled)
+        {
+            cancellation.Cancel();
+        }
+
+        Exception failure = cancelled
+            ? new OperationCanceledException(cancellation.Token)
+            : new IOException("Backing store unavailable");
+        using var store = new FoundryTaskStore(new FailingStateStore(failure));
+        Func<Task> action = operation switch
+        {
+            "read" => () => store.GetTaskAsync("task-1", cancellation.Token),
+            "save" => () => store.SaveTaskAsync("task-1", FoundryTaskStoreTests.CreateTask("task-1"), cancellation.Token),
+            "delete" => () => store.DeleteTaskAsync("task-1", cancellation.Token),
+            "list" => () => store.ListTasksAsync(new(), cancellation.Token),
+            _ => throw new ArgumentOutOfRangeException(nameof(operation)),
+        };
+        var actual = Assert.CatchAsync(async () => await action());
+        if (cancelled)
+        {
+            Assert.That(actual, Is.InstanceOf<OperationCanceledException>());
+            Assert.That(((OperationCanceledException)actual!).CancellationToken, Is.EqualTo(cancellation.Token));
+        }
+        else
+        {
+            Assert.That(actual, Is.SameAs(failure));
+        }
+    }
+
+    [Test]
+    public async Task MissingTaskReturnsNativeTaskNotFoundError()
+    {
+        await using var app = await CreateAppAsync(false);
         using var client = app.GetTestClient();
         using var response = await client.PostAsync("/a2a", HostingTests.Rpc("GetTask", """{"id":"missing"}"""));
-        Assert.That(await response.Content.ReadAsStringAsync(), Does.Contain("\"error\""));
-        Assert.That(logger.Exceptions, Is.Empty);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var body = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.That(body.RootElement.GetProperty("error").GetProperty("code").GetInt32(),
+            Is.EqualTo((int)A2AErrorCode.TaskNotFound));
     }
 
     [Test]
@@ -189,35 +225,20 @@ public class BehaviorParityTests
         }
     }
 
-    private sealed class FailingTaskStore(Exception failure) : ITaskStore
+    private sealed class FailingStateStore(Exception failure) : FoundryStateStore
     {
-        public Task<AgentTask?> GetTaskAsync(string taskId, CancellationToken cancellationToken = default) =>
-            Task.FromException<AgentTask?>(failure);
-        public Task SaveTaskAsync(string taskId, AgentTask task, CancellationToken cancellationToken = default) =>
-            Task.FromException(failure);
-        public Task DeleteTaskAsync(string taskId, CancellationToken cancellationToken = default) =>
-            Task.FromException(failure);
-        public Task<ListTasksResponse> ListTasksAsync(ListTasksRequest request, CancellationToken cancellationToken = default) =>
-            Task.FromException<ListTasksResponse>(failure);
-    }
-
-    internal sealed class ExceptionLoggerProvider : ILoggerProvider
-    {
-        public ConcurrentQueue<Exception> Exceptions { get; } = new();
-        public ILogger CreateLogger(string categoryName) => new ExceptionLogger(Exceptions);
-        public void Dispose() { }
-
-        private sealed class ExceptionLogger(ConcurrentQueue<Exception> exceptions) : ILogger
-        {
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
-            public bool IsEnabled(LogLevel logLevel) => true;
-            public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-            {
-                if (exception is not null)
-                {
-                    exceptions.Enqueue(exception);
-                }
-            }
-        }
+        public override Task<StateStoreItem?> GetItemAsync(string key, CancellationToken cancellationToken = default) =>
+            Task.FromException<StateStoreItem?>(failure);
+        public override Task<StateStoreItemRef> SetItemAsync(
+            string key, IDictionary<string, BinaryData> value, IReadOnlyDictionary<string, string>? tags = null,
+            ETag ifMatch = default, bool requireExists = false, CancellationToken cancellationToken = default) =>
+            Task.FromException<StateStoreItemRef>(failure);
+        public override Task<DeletedStateStoreItem> DeleteItemAsync(
+            string key, ETag ifMatch = default, CancellationToken cancellationToken = default) =>
+            Task.FromException<DeletedStateStoreItem>(failure);
+        public override Task<StateStoreItemKeyPage> ListKeysAsync(
+            IReadOnlyDictionary<string, string>? tags = null, int? limit = null, string? after = null,
+            string? before = null, ListRequestOrder order = ListRequestOrder.Desc, CancellationToken cancellationToken = default) =>
+            Task.FromException<StateStoreItemKeyPage>(failure);
     }
 }
