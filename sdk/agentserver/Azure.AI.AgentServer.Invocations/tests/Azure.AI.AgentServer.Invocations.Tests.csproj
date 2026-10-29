@@ -29,7 +29,7 @@
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Invocations.csproj" />
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <PackageReference Include="Azure.AI.AgentServer.Core" />
   </ItemGroup>
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Compile Remove="**\*.cs" />
