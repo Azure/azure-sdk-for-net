@@ -105,6 +105,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("audio"u8);
                 writer.WriteObjectValue(Audio, options);
             }
+            if (Optional.IsDefined(Soundscape))
+            {
+                writer.WritePropertyName("soundscape"u8);
+                writer.WriteObjectValue(Soundscape, options);
+            }
             if (Optional.IsCollectionDefined(OutputModalities))
             {
                 writer.WritePropertyName("output_modalities"u8);
@@ -209,7 +214,6 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            bool instructionsIsDefined = false;
             string instructions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             bool? store = default;
@@ -219,6 +223,7 @@ namespace Azure.AI.Projects.Agents
             VoiceConversationEngine conversationEngine = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
+            VoiceAgentSoundscapeConfig soundscape = default;
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
@@ -246,12 +251,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
-                    instructionsIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        instructions = null;
-                        continue;
-                    }
                     instructions = prop.Value.GetString();
                     continue;
                 }
@@ -326,6 +325,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     audio = VoiceAgentAudioConfig.DeserializeVoiceAgentAudioConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("soundscape"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    soundscape = VoiceAgentSoundscapeConfig.DeserializeVoiceAgentSoundscapeConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -442,6 +450,7 @@ namespace Azure.AI.Projects.Agents
                 conversationEngine,
                 greeting,
                 audio,
+                soundscape,
                 outputModalities ?? new ChangeTrackingList<VoiceOutputModality>(),
                 internalMaxOutputTokens,
                 include ?? new ChangeTrackingList<VoiceAgentSessionIncludeOption>(),
@@ -450,10 +459,7 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
                 internalToolChoice,
                 parallelToolCalls,
-                subagentConfig)
-            {
-                _instructionsIsDefined = instructionsIsDefined
-            };
+                subagentConfig);
         }
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveSessionCreateParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,24 +26,27 @@ namespace Azure.AI.Projects.Agents
         {
             Model = model;
             Input = new ChangeTrackingList<LiveInitialItem>();
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParams"/>. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
-        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
+        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
         /// <param name="delegation"></param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, IList<LiveDecisionTriggerInputParam2> triggers, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
             Input = input;
             Audio = audio;
             _delegation = delegation;
+            Triggers = triggers;
             Store = store;
             Client = client;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -64,7 +69,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </summary>
+        /// <summary> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </summary>
         public IList<LiveInitialItem> Input { get; }
 
         /// <summary> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </summary>
@@ -83,6 +88,9 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// <item>
         /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveDecisionsDelegationParam2"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -121,6 +129,9 @@ namespace Azure.AI.Projects.Agents
                 _delegationIsDefined = true;
             }
         }
+
+        /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
+        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
 
         /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
         public bool? Store { get; set; }

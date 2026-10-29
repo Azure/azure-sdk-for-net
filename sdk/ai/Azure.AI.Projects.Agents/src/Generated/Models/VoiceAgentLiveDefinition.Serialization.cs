@@ -138,7 +138,6 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            bool instructionsIsDefined = false;
             string instructions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             bool? store = default;
@@ -166,12 +165,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
-                    instructionsIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        instructions = null;
-                        continue;
-                    }
                     instructions = prop.Value.GetString();
                     continue;
                 }
@@ -257,10 +250,7 @@ namespace Azure.AI.Projects.Agents
                 model,
                 greeting,
                 audio,
-                delegation)
-            {
-                _instructionsIsDefined = instructionsIsDefined
-            };
+                delegation);
         }
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Audio encoding and sample rate for audio sent and received over a Live WebSocket connection. WebRTC and SIP negotiate their media format separately.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveSessionAudioFormatPCMAParam"/>, <see cref="LiveSessionAudioFormatPCMParam"/>, and <see cref="LiveSessionAudioFormatPCMUParam"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class LiveAudioFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Raw, mono 16-bit little-endian PCM audio for a Live WebSocket connection. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveSessionAudioFormatPCMParam : LiveAudioFormat
     {
         /// <summary> Initializes a new instance of <see cref="LiveSessionAudioFormatPCMParam"/>. </summary>

@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class LiveReasoningSummaryExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this LiveReasoningSummary value) => value switch
         {
             LiveReasoningSummary.Concise => "concise",
@@ -18,6 +20,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static LiveReasoningSummary ToLiveReasoningSummary(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "concise"))

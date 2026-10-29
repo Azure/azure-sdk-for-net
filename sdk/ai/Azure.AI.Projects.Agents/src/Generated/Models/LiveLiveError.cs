@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Details of an error encountered by the Live session, including the affected parameter or client command when available. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveLiveError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

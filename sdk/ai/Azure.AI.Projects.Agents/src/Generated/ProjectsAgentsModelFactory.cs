@@ -1157,6 +1157,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Cumulative audio duration for a Live session. Values are totals for the session, not increments to sum across usage events. </summary>
         /// <param name="seconds"> The cumulative Live audio duration in seconds. Do not sum this value across usage events. </param>
         /// <returns> A new <see cref="Agents.LiveSessionUsage"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveSessionUsage LiveSessionUsage(double seconds = default)
         {
             return new LiveSessionUsage(seconds, additionalBinaryDataProperties: null);
@@ -1953,7 +1954,11 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="externalWebAccess"> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </param>
         /// <param name="filters"></param>
-        /// <param name="userLocation"></param>
+        /// <param name="userLocation">
+        /// The approximate location of the user. If omitted or null, defaults to the
+        ///   United States. To avoid this fallback, pass `{"type": "approximate"}` without
+        ///   location fields. To localize results, provide the relevant location fields.
+        /// </param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
@@ -2256,7 +2261,12 @@ namespace Azure.AI.Projects.Agents
                 sendCredentialsForAgentCard);
         }
 
-        /// <summary> A browser automation tool stored in a toolbox. </summary>
+        /// <summary>
+        /// A browser automation tool stored in a toolbox.
+        /// BrowserAutomationPreviewToolboxTool is deprecated.
+        /// Please use BrowserAutomationToolboxTool instead.
+        /// See https://aka.ms/bat/docs for more information on Browser automation tool.
+        /// </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -3302,9 +3312,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
+        /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default, VoiceAgentSoundscapeConfig soundscape = default)
         {
             structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
@@ -3324,6 +3335,7 @@ namespace Azure.AI.Projects.Agents
                 conversationEngine,
                 greeting,
                 audio,
+                soundscape,
                 outputModalities.ToList(),
                 internalMaxOutputTokens,
                 include.ToList(),
@@ -3347,7 +3359,7 @@ namespace Azure.AI.Projects.Agents
             return new UnknownVoiceConversationEngine(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must support the `invocations_ws` protocol, Voice Live compatibility, and Bridge Protocol 1.0. </summary>
+        /// <summary> A closed reference to the hosted text agent that owns conversation handling for a voice agent. The hosted agent is resolved within the same project and must declare `voice_conversation_engine` version `1.0.0`. Voice Live connects through the dedicated voice-conversation-engine endpoint using the existing Bridge Protocol 1.0 wire semantics; the Bridge message version is independent of the container protocol version and the Hosted Agents API version `v1`. Declaring `invocations_ws` is optional and does not substitute for `voice_conversation_engine`. </summary>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <param name="version"> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </param>
         /// <returns> A new <see cref="Agents.VoiceHostedAgentConversationEngine"/> instance for mocking. </returns>
@@ -3417,8 +3429,20 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input audio noise reduction configuration. </summary>
-        /// <param name="type"> The noise reduction mode. </param>
+        /// <summary>
+        /// Input audio noise reduction configuration. `azure_deep_noise_suppression_headset` and
+        /// `azure_personal_noise_suppression` are modes for local voice activity detection that
+        /// enhance detection audio without changing the audio used for recognition.
+        /// </summary>
+        /// <param name="type">
+        /// The noise reduction mode. `azure_deep_noise_suppression_headset` provides
+        /// headset-optimized noise suppression for local voice activity detection, optimized for
+        /// low-sample-rate audio including 8 kHz telephony audio without changing recognition audio (not
+        /// restricted to headset devices). `azure_personal_noise_suppression` starts with headset
+        /// suppression for local voice activity detection and personalizes detection after automatic speaker
+        /// enrollment while keeping recognition audio unchanged and keeping headset suppression active when
+        /// personalization is unavailable.
+        /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentNoiseReduction"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static VoiceAgentNoiseReduction VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType @type = default)
@@ -3605,13 +3629,19 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-        /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+        /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+        /// and phrase hints.
+        /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+        /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+        /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+        /// `profanity_filter`.
         /// </summary>
         /// <param name="language">
         /// The language of the input audio. Supplying the input language in
-        ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
-        ///   will improve accuracy and latency.
+        /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
+        /// will improve accuracy and latency. Optional for other transcription models; required and must be
+        /// nonempty when `model` is `azure-speech-streaming` (such as `en-US`; comma-separated locales are
+        /// supported).
         /// </param>
         /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
@@ -3627,12 +3657,21 @@ namespace Azure.AI.Projects.Agents
         ///   Higher values can improve transcription accuracy at the cost of latency.
         ///   Only supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
-        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
+        /// <param name="profanityFilter">
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech` and `azure-speech-streaming`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default, VoiceAgentProfanityFilterMode? profanityFilter = default)
         {
             languages ??= new ChangeTrackingList<string>();
             keywords ??= new ChangeTrackingList<string>();
@@ -3648,6 +3687,7 @@ namespace Azure.AI.Projects.Agents
                 model,
                 customSpeech,
                 phraseList.ToList(),
+                profanityFilter,
                 additionalBinaryDataProperties: null);
         }
 
@@ -3698,6 +3738,55 @@ namespace Azure.AI.Projects.Agents
                 personalVoiceModel,
                 outputAudioTimestampTypes.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Agent-owned background ambience and event cues. Each omitted track is disabled. The service rejects unknown fields; custom uploads, URLs, and inline audio are not supported. </summary>
+        /// <param name="background"> Continuous background ambience that continues during caller and agent speech. </param>
+        /// <param name="working"> A loop played while a non-call-control tool is pending and the agent is silent, after the configured delay. </param>
+        /// <param name="opening"> An interruptible cue played before the first agent speech. </param>
+        /// <param name="transfer"> A one-shot cue played after queued agent speech drains and before a committed call transfer. </param>
+        /// <param name="closing"> A one-shot cue played after queued agent speech drains and before a committed session end. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSoundscapeConfig VoiceAgentSoundscapeConfig(VoiceAgentSoundscapeTrackConfig background = default, VoiceAgentSoundscapeWorkingTrackConfig working = default, VoiceAgentSoundscapeTrackConfig opening = default, VoiceAgentSoundscapeTrackConfig transfer = default, VoiceAgentSoundscapeTrackConfig closing = default)
+        {
+            return new VoiceAgentSoundscapeConfig(
+                background,
+                working,
+                opening,
+                transfer,
+                closing,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A soundscape track with its own audio source and playback volume. </summary>
+        /// <param name="source"> The required audio source for this track. </param>
+        /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeTrackConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSoundscapeTrackConfig VoiceAgentSoundscapeTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default)
+        {
+            return new VoiceAgentSoundscapeTrackConfig(source, gain, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A packaged sound selected from the service-managed catalogue. The service rejects unknown source fields and discriminator values. </summary>
+        /// <param name="name"> The name of the packaged sound. Only the listed built-in sounds are accepted. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeSourceConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSoundscapeSourceConfig VoiceAgentSoundscapeSourceConfig(VoiceAgentSoundscapeSound name = default)
+        {
+            return new VoiceAgentSoundscapeSourceConfig("built_in", name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A working-loop track with a delay measured from the first pending non-call-control tool. </summary>
+        /// <param name="source"> The required audio source for this track. </param>
+        /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
+        /// <param name="delayMs"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeWorkingTrackConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSoundscapeWorkingTrackConfig VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default, TimeSpan? delayMs = default)
+        {
+            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delayMs, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -3945,6 +4034,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="format"> Audio encoding and sample rate for audio sent and received over a Live WebSocket connection. WebRTC and SIP negotiate their media format separately. </param>
         /// <param name="output"> The voice used for speech generated by the Live model. </param>
         /// <returns> A new <see cref="Agents.LiveInitialSessionAudioParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialSessionAudioParam LiveInitialSessionAudioParam(LiveAudioFormat format = default, LiveInitialSessionAudioOutputParam output = default)
         {
             return new LiveInitialSessionAudioParam(format, output, additionalBinaryDataProperties: null);
@@ -3956,6 +4046,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveAudioFormat"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveAudioFormat LiveAudioFormat(string @type = default)
         {
             return new UnknownLiveAudioFormat(new LiveAudioFormatType(@type), additionalBinaryDataProperties: null);
@@ -3964,6 +4055,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Raw, mono 16-bit little-endian PCM audio for a Live WebSocket connection. </summary>
         /// <param name="rate"> Audio sample rate in hertz. Live WebSocket PCM audio supports 16000 or 24000 Hz. </param>
         /// <returns> A new <see cref="Agents.LiveSessionAudioFormatPCMParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveSessionAudioFormatPCMParam LiveSessionAudioFormatPCMParam(LiveSessionAudioFormatPCMParamRate rate = default)
         {
             return new LiveSessionAudioFormatPCMParam(LiveAudioFormatType.AudioPcm, additionalBinaryDataProperties: null, rate);
@@ -3972,6 +4064,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Raw, mono G.711 μ-law audio for a Live WebSocket connection. </summary>
         /// <param name="rate"> Audio sample rate in hertz. G.711 audio uses 8000 Hz. </param>
         /// <returns> A new <see cref="Agents.LiveSessionAudioFormatPCMUParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveSessionAudioFormatPCMUParam LiveSessionAudioFormatPCMUParam(long rate = default)
         {
             return new LiveSessionAudioFormatPCMUParam(LiveAudioFormatType.AudioPcmu, additionalBinaryDataProperties: null, rate);
@@ -3980,6 +4073,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Raw, mono G.711 A-law audio for a Live WebSocket connection. </summary>
         /// <param name="rate"> Audio sample rate in hertz. G.711 audio uses 8000 Hz. </param>
         /// <returns> A new <see cref="Agents.LiveSessionAudioFormatPCMAParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveSessionAudioFormatPCMAParam LiveSessionAudioFormatPCMAParam(long rate = default)
         {
             return new LiveSessionAudioFormatPCMAParam(LiveAudioFormatType.AudioPcma, additionalBinaryDataProperties: null, rate);
@@ -3988,6 +4082,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Settings for speech generated by the Live model. Choose the voice before starting the session. </summary>
         /// <param name="voice"> The voice used for Live speech, as a built-in voice name or a custom voice object containing its ID. Defaults to `marin` and cannot change after startup. </param>
         /// <returns> A new <see cref="Agents.LiveInitialSessionAudioOutputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialSessionAudioOutputParam LiveInitialSessionAudioOutputParam(BinaryData voice = default)
         {
             return new LiveInitialSessionAudioOutputParam(voice, additionalBinaryDataProperties: null);
@@ -3996,6 +4091,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The LiveCustomVoiceParam. </summary>
         /// <param name="id"></param>
         /// <returns> A new <see cref="Agents.LiveCustomVoiceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveCustomVoiceParam LiveCustomVoiceParam(string id = default)
         {
             return new LiveCustomVoiceParam(id, additionalBinaryDataProperties: null);
@@ -4003,6 +4099,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
         /// <returns> A new <see cref="Agents.LiveClientDelegationParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveClientDelegationParam LiveClientDelegationParam()
         {
             return new LiveClientDelegationParam(DelegationType.Client, additionalBinaryDataProperties: null);
@@ -4014,6 +4111,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveDelegation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDelegation LiveDelegation(string @type = default)
         {
             return new UnknownLiveDelegation(new DelegationType(@type), additionalBinaryDataProperties: null);
@@ -4022,6 +4120,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Delegate tasks to a Responses model managed by the Live session. </summary>
         /// <param name="responses"> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </param>
         /// <returns> A new <see cref="Agents.LiveResponsesDelegationParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveResponsesDelegationParam LiveResponsesDelegationParam(LiveResponsesDelegationSettingsInputParam responses = default)
         {
             return new LiveResponsesDelegationParam(DelegationType.Responses, additionalBinaryDataProperties: null, responses);
@@ -4038,6 +4137,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="toolChoice"> Controls which tool the Responses backend uses when handling a task delegated by the Live model. </param>
         /// <param name="parallelToolCalls"></param>
         /// <returns> A new <see cref="Agents.LiveResponsesDelegationSettingsInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveResponsesDelegationSettingsInputParam LiveResponsesDelegationSettingsInputParam(string model = default, string instructions = default, long? maxOutputTokens = default, LiveResponsesServiceTier? serviceTier = default, LiveDelegationReasoningInputParam reasoning = default, LiveDelegationTextInputParam text = default, IEnumerable<BinaryData> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default)
         {
             tools ??= new ChangeTrackingList<BinaryData>();
@@ -4059,6 +4159,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="effort"></param>
         /// <param name="summary"></param>
         /// <returns> A new <see cref="Agents.LiveDelegationReasoningInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDelegationReasoningInputParam LiveDelegationReasoningInputParam(LiveReasoningEffort? effort = default, LiveReasoningSummary? summary = default)
         {
             return new LiveDelegationReasoningInputParam(effort, summary, additionalBinaryDataProperties: null);
@@ -4067,6 +4168,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Text generation options for the Live session’s Responses backend. </summary>
         /// <param name="verbosity"></param>
         /// <returns> A new <see cref="Agents.LiveDelegationTextInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDelegationTextInputParam LiveDelegationTextInputParam(LiveTextVerbosity? verbosity = default)
         {
             return new LiveDelegationTextInputParam(verbosity, additionalBinaryDataProperties: null);
@@ -4078,6 +4180,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
         /// <returns> A new <see cref="Agents.LiveFunctionToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveFunctionToolInputParam LiveFunctionToolInputParam(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default, bool? strict = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -4093,26 +4196,312 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A web search tool available to the Live session’s Responses backend. </summary>
         /// <returns> A new <see cref="Agents.LiveWebSearchToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveWebSearchToolInputParam LiveWebSearchToolInputParam()
         {
             return new LiveWebSearchToolInputParam("web_search", additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The LiveFileSearchToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveFileSearchToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveFileSearchToolInputParam LiveFileSearchToolInputParam()
+        {
+            return new LiveFileSearchToolInputParam("file_search", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveCodeInterpreterToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveCodeInterpreterToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveCodeInterpreterToolInputParam LiveCodeInterpreterToolInputParam()
+        {
+            return new LiveCodeInterpreterToolInputParam("code_interpreter", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Responses shell tool. Use a hosted container or return local shell results with response.item.create. Domain secrets are not supported. </summary>
+        /// <param name="environment"></param>
+        /// <returns> A new <see cref="Agents.LiveHostedShellToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveHostedShellToolInputParam LiveHostedShellToolInputParam(BinaryData environment = default)
+        {
+            return new LiveHostedShellToolInputParam("shell", environment, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveHostedShellContainerAutoParam. </summary>
+        /// <param name="fileIds"></param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="networkPolicy"></param>
+        /// <param name="skills"></param>
+        /// <returns> A new <see cref="Agents.LiveHostedShellContainerAutoParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveHostedShellContainerAutoParam LiveHostedShellContainerAutoParam(IEnumerable<string> fileIds = default, LiveContainerMemoryLimit? memoryLimit = default, BinaryData networkPolicy = default, IEnumerable<BinaryData> skills = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<BinaryData>();
+
+            return new LiveHostedShellContainerAutoParam(
+                "container_auto",
+                fileIds.ToList(),
+                memoryLimit,
+                networkPolicy,
+                skills.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveContainerNetworkPolicyDisabledParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveContainerNetworkPolicyDisabledParam LiveContainerNetworkPolicyDisabledParam()
+        {
+            return new LiveContainerNetworkPolicyDisabledParam("disabled", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveHostedShellNetworkPolicyAllowlistParam. </summary>
+        /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
+        /// <returns> A new <see cref="Agents.LiveHostedShellNetworkPolicyAllowlistParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveHostedShellNetworkPolicyAllowlistParam LiveHostedShellNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+
+            return new LiveHostedShellNetworkPolicyAllowlistParam("allowlist", allowedDomains.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"></param>
+        /// <returns> A new <see cref="Agents.LiveSkillReferenceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSkillReferenceParam LiveSkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new LiveSkillReferenceParam("skill_reference", skillId, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveInlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="Agents.LiveInlineSkillParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveInlineSkillParam LiveInlineSkillParam(string name = default, string description = default, LiveInlineSkillSourceParam source = default)
+        {
+            return new LiveInlineSkillParam("inline", name, description, source, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="Agents.LiveInlineSkillSourceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveInlineSkillSourceParam LiveInlineSkillSourceParam(string data = default)
+        {
+            return new LiveInlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveContainerReferenceParam. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Agents.LiveContainerReferenceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveContainerReferenceParam LiveContainerReferenceParam(string containerId = default)
+        {
+            return new LiveContainerReferenceParam("container_reference", containerId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveLocalEnvironmentParam. </summary>
+        /// <param name="skills"></param>
+        /// <returns> A new <see cref="Agents.LiveLocalEnvironmentParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveLocalEnvironmentParam LiveLocalEnvironmentParam(IEnumerable<LiveLocalSkillParam> skills = default)
+        {
+            skills ??= new ChangeTrackingList<LiveLocalSkillParam>();
+
+            return new LiveLocalEnvironmentParam("local", skills.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveLocalSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="path"> The path to the directory containing the skill. </param>
+        /// <returns> A new <see cref="Agents.LiveLocalSkillParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveLocalSkillParam LiveLocalSkillParam(string name = default, string description = default, string path = default)
+        {
+            return new LiveLocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveImageGenerationToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveImageGenerationToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveImageGenerationToolInputParam LiveImageGenerationToolInputParam()
+        {
+            return new LiveImageGenerationToolInputParam("image_generation", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveMCPToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveMCPToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveMCPToolInputParam LiveMCPToolInputParam()
+        {
+            return new LiveMCPToolInputParam("mcp", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveCustomToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveCustomToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveCustomToolInputParam LiveCustomToolInputParam()
+        {
+            return new LiveCustomToolInputParam("custom", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveNamespaceToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveNamespaceToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveNamespaceToolInputParam LiveNamespaceToolInputParam()
+        {
+            return new LiveNamespaceToolInputParam("namespace", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveToolSearchToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveToolSearchToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveToolSearchToolInputParam LiveToolSearchToolInputParam()
+        {
+            return new LiveToolSearchToolInputParam("tool_search", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveProgrammaticToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveProgrammaticToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveProgrammaticToolInputParam LiveProgrammaticToolInputParam()
+        {
+            return new LiveProgrammaticToolInputParam("programmatic_tool_calling", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveComputerToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveComputerToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveComputerToolInputParam LiveComputerToolInputParam()
+        {
+            return new LiveComputerToolInputParam("computer", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveApplyPatchToolInputParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveApplyPatchToolInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveApplyPatchToolInputParam LiveApplyPatchToolInputParam()
+        {
+            return new LiveApplyPatchToolInputParam("apply_patch", additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The LiveFunctionToolChoiceParam. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the function tool to call. </param>
         /// <returns> A new <see cref="Agents.LiveFunctionToolChoiceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveFunctionToolChoiceParam LiveFunctionToolChoiceParam(string name = default)
         {
             return new LiveFunctionToolChoiceParam("function", name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The LiveMCPToolChoiceParam. </summary>
-        /// <param name="serverLabel"></param>
+        /// <param name="serverLabel"> The label of the MCP server to call. </param>
         /// <param name="name"></param>
         /// <returns> A new <see cref="Agents.LiveMCPToolChoiceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveMCPToolChoiceParam LiveMCPToolChoiceParam(string serverLabel = default, string name = default)
         {
             return new LiveMCPToolChoiceParam("mcp", serverLabel, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificFileSearchParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificFileSearchParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificFileSearchParam LiveSpecificFileSearchParam()
+        {
+            return new LiveSpecificFileSearchParam("file_search", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificWebSearchParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificWebSearchParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificWebSearchParam LiveSpecificWebSearchParam()
+        {
+            return new LiveSpecificWebSearchParam("web_search", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificWebSearchPreviewParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificWebSearchPreviewParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificWebSearchPreviewParam LiveSpecificWebSearchPreviewParam()
+        {
+            return new LiveSpecificWebSearchPreviewParam("web_search_preview", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificImageGenParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificImageGenParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificImageGenParam LiveSpecificImageGenParam()
+        {
+            return new LiveSpecificImageGenParam("image_generation", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificComputerParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificComputerParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificComputerParam LiveSpecificComputerParam()
+        {
+            return new LiveSpecificComputerParam("computer", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificCodeInterpreterParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificCodeInterpreterParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificCodeInterpreterParam LiveSpecificCodeInterpreterParam()
+        {
+            return new LiveSpecificCodeInterpreterParam("code_interpreter", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificProgrammaticToolCallingParam. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificProgrammaticToolCallingParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificProgrammaticToolCallingParam LiveSpecificProgrammaticToolCallingParam()
+        {
+            return new LiveSpecificProgrammaticToolCallingParam("programmatic_tool_calling", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific shell tool choice. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificFunctionShellParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificFunctionShellParam LiveSpecificFunctionShellParam()
+        {
+            return new LiveSpecificFunctionShellParam("shell", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveSpecificCustomToolParam. </summary>
+        /// <param name="name"> The name of the custom tool to call. </param>
+        /// <returns> A new <see cref="Agents.LiveSpecificCustomToolParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificCustomToolParam LiveSpecificCustomToolParam(string name = default)
+        {
+            return new LiveSpecificCustomToolParam("custom", name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific apply patch tool choice. </summary>
+        /// <returns> A new <see cref="Agents.LiveSpecificApplyPatchParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSpecificApplyPatchParam LiveSpecificApplyPatchParam()
+        {
+            return new LiveSpecificApplyPatchParam("apply_patch", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveAllowedToolsChoiceParam. </summary>
+        /// <param name="tools"> The tools that the delegated Responses model may call. </param>
+        /// <param name="mode"></param>
+        /// <returns> A new <see cref="Agents.LiveAllowedToolsChoiceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveAllowedToolsChoiceParam LiveAllowedToolsChoiceParam(IEnumerable<BinaryData> tools = default, LiveToolChoiceValueEnum? mode = default)
+        {
+            tools ??= new ChangeTrackingList<BinaryData>();
+
+            return new LiveAllowedToolsChoiceParam("allowed_tools", tools.ToList(), mode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Delegates to a same-project prompt agent using native client delegation. Requires [thinking] and/or [commentary] output sections. </summary>
@@ -4193,7 +4582,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Client events for Live. Initialize a primary WebSocket with session.start and wait for session.started. WebRTC creation already starts the session. Audio append is primary WebSocket-only. See the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) before writing frontend instructions and delegation policies.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveClientEventLiveCommentaryAppendParam"/>, <see cref="Agents.LiveClientEventLiveInputAudioAppendEvent"/>, <see cref="Agents.LiveClientEventLiveInputAudioMuteParam"/>, <see cref="Agents.LiveClientEventLiveInputAudioUnmuteParam"/>, <see cref="Agents.LiveClientEventLiveInstructionsAppendParam"/>, <see cref="Agents.LiveClientEventLiveResponseCreateParam"/>, <see cref="Agents.LiveClientEventLiveResponseItemCreateParam"/>, <see cref="Agents.LiveClientEventLiveSessionCloseParam"/>, <see cref="Agents.LiveClientEventLiveSessionUpdateParam"/>, <see cref="Agents.LiveClientEventLiveThinkingAppendParam"/>, and <see cref="Agents.LiveSessionStartEvent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveClientEventLiveCommentaryAppendParam"/>, <see cref="Agents.LiveClientEventLiveDecisionCreateParam"/>, <see cref="Agents.LiveClientEventLiveDecisionItemCreateParam"/>, <see cref="Agents.LiveClientEventLiveDecisionItemDeleteParam"/>, <see cref="Agents.LiveClientEventLiveInputAudioAppendEvent"/>, <see cref="Agents.LiveClientEventLiveInputAudioMuteParam"/>, <see cref="Agents.LiveClientEventLiveInputAudioUnmuteParam"/>, <see cref="Agents.LiveClientEventLiveInstructionsAppendParam"/>, <see cref="Agents.LiveClientEventLiveOutputAudioFixturePlayParam"/>, <see cref="Agents.LiveClientEventLiveResponseCreateParam"/>, <see cref="Agents.LiveClientEventLiveResponseItemCreateParam"/>, <see cref="Agents.LiveClientEventLiveSessionCloseParam"/>, <see cref="Agents.LiveClientEventLiveSessionUpdateParam"/>, <see cref="Agents.LiveClientEventLiveThinkingAppendParam"/>, and <see cref="Agents.LiveSessionStartEvent"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveClientEvent"/> instance for mocking. </returns>
@@ -4216,15 +4605,18 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
-        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
+        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
         /// <param name="delegation"></param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <returns> A new <see cref="Agents.LiveSessionCreateParams"/> instance for mocking. </returns>
-        public static LiveSessionCreateParams LiveSessionCreateParams(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, BinaryData delegation = default, bool? store = default, LiveClientConfigParam client = default)
+        [Experimental("AAIP001")]
+        public static LiveSessionCreateParams LiveSessionCreateParams(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, BinaryData delegation = default, IEnumerable<LiveDecisionTriggerInputParam2> triggers = default, bool? store = default, LiveClientConfigParam client = default)
         {
             input ??= new ChangeTrackingList<LiveInitialItem>();
+            triggers ??= new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
 
             return new LiveSessionCreateParams(
                 model,
@@ -4232,6 +4624,7 @@ namespace Azure.AI.Projects.Agents
                 input.ToList(),
                 audio,
                 delegation,
+                triggers.ToList(),
                 store,
                 client,
                 additionalBinaryDataProperties: null);
@@ -4243,6 +4636,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="role"></param>
         /// <returns> A new <see cref="Agents.LiveInitialItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialItem LiveInitialItem(string role = default)
         {
             return new UnknownLiveInitialItem(new LiveInitialItemType(role), additionalBinaryDataProperties: null);
@@ -4254,6 +4648,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"></param>
         /// <param name="content"> The message content. Supply exactly one text part for the initial Live conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialDeveloperMessageItemParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialDeveloperMessageItemParam LiveInitialDeveloperMessageItemParam(string id = default, LiveInitialDeveloperMessageItemParamType? @type = default, LiveInitialMessageStatus? status = default, IEnumerable<LiveInitialInputTextContentPartParam> content = default)
         {
             content ??= new ChangeTrackingList<LiveInitialInputTextContentPartParam>();
@@ -4271,6 +4666,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The text content type. Always `input_text`. </param>
         /// <param name="text"> The message text to include in the Live session’s initial conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialInputTextContentPartParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialInputTextContentPartParam LiveInitialInputTextContentPartParam(LiveInitialInputTextContentPartParamType? @type = default, string text = default)
         {
             return new LiveInitialInputTextContentPartParam(@type, text, additionalBinaryDataProperties: null);
@@ -4282,6 +4678,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"></param>
         /// <param name="content"> The message content. Supply exactly one text part for the initial Live conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialUserMessageItemParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialUserMessageItemParam LiveInitialUserMessageItemParam(string id = default, LiveInitialUserMessageItemParamType? @type = default, LiveInitialMessageStatus? status = default, IEnumerable<LiveInitialInputTextContentPartParam> content = default)
         {
             content ??= new ChangeTrackingList<LiveInitialInputTextContentPartParam>();
@@ -4301,6 +4698,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"></param>
         /// <param name="content"> The message content. Supply exactly one text part for the initial Live conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialAssistantMessageItemParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialAssistantMessageItemParam LiveInitialAssistantMessageItemParam(string id = default, LiveInitialAssistantMessageItemParamType? @type = default, LiveInitialMessageStatus? status = default, IEnumerable<BinaryData> content = default)
         {
             content ??= new ChangeTrackingList<BinaryData>();
@@ -4318,6 +4716,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The text content type. Always `text`. </param>
         /// <param name="text"> The message text to include in the Live session’s initial conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialTextContentPartParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialTextContentPartParam LiveInitialTextContentPartParam(LiveInitialTextContentPartParamType? @type = default, string text = default)
         {
             return new LiveInitialTextContentPartParam(@type, text, additionalBinaryDataProperties: null);
@@ -4326,14 +4725,126 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Assistant output text supplied as conversation history when starting a Live session. </summary>
         /// <param name="text"> The message text to include in the Live session’s initial conversation history. </param>
         /// <returns> A new <see cref="Agents.LiveInitialOutputTextContentPartParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveInitialOutputTextContentPartParam LiveInitialOutputTextContentPartParam(string text = default)
         {
             return new LiveInitialOutputTextContentPartParam("output_text", text, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The LiveDecisionsDelegationParam2. </summary>
+        /// <param name="decisions"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionsDelegationParam2"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionsDelegationParam2 LiveDecisionsDelegationParam2(LiveDecisionsSettingsInputParam2 decisions = default)
+        {
+            return new LiveDecisionsDelegationParam2("decisions", decisions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionsSettingsInputParam2. </summary>
+        /// <param name="questions"> Native Decision API questions evaluated together, in order. </param>
+        /// <param name="model"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionsSettingsInputParam2"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionsSettingsInputParam2 LiveDecisionsSettingsInputParam2(IEnumerable<QuestionParam> questions = default, string model = default)
+        {
+            questions ??= new ChangeTrackingList<QuestionParam>();
+
+            return new LiveDecisionsSettingsInputParam2(questions.ToList(), model, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A question about the request's input, with an optional correlation name.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.QuestionParamChoice"/>, <see cref="Agents.QuestionParamPredicate"/>, and <see cref="Agents.QuestionParamScore"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Agents.QuestionParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static QuestionParam QuestionParam(string @type = default)
+        {
+            return new UnknownQuestionParam(new QuestionParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Estimate how likely it is that a statement about the input is true. </summary>
+        /// <param name="name"></param>
+        /// <param name="instructions"></param>
+        /// <returns> A new <see cref="Agents.QuestionParamPredicate"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static QuestionParamPredicate QuestionParamPredicate(string name = default, string instructions = default)
+        {
+            return new QuestionParamPredicate(QuestionParamType.Predicate, additionalBinaryDataProperties: null, name, instructions);
+        }
+
+        /// <summary> Choose from the supplied options based on the input. </summary>
+        /// <param name="name"></param>
+        /// <param name="instructions"></param>
+        /// <param name="choices"> Provide between 2 and 255 choices. Each choice must be unique. </param>
+        /// <returns> A new <see cref="Agents.QuestionParamChoice"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static QuestionParamChoice QuestionParamChoice(string name = default, string instructions = default, IEnumerable<ChoiceOptionParam> choices = default)
+        {
+            choices ??= new ChangeTrackingList<ChoiceOptionParam>();
+
+            return new QuestionParamChoice(QuestionParamType.Choice, additionalBinaryDataProperties: null, name, instructions, choices.ToList());
+        }
+
+        /// <summary> The ChoiceOptionParam. </summary>
+        /// <param name="value"></param>
+        /// <param name="description"></param>
+        /// <returns> A new <see cref="Agents.ChoiceOptionParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ChoiceOptionParam ChoiceOptionParam(BinaryData value = default, string description = default)
+        {
+            return new ChoiceOptionParam(value, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Rate the input against the supplied ordered levels. </summary>
+        /// <param name="name"></param>
+        /// <param name="instructions"></param>
+        /// <param name="levels"></param>
+        /// <returns> A new <see cref="Agents.QuestionParamScore"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static QuestionParamScore QuestionParamScore(string name = default, string instructions = default, IEnumerable<ScoreLevelParam> levels = default)
+        {
+            levels ??= new ChangeTrackingList<ScoreLevelParam>();
+
+            return new QuestionParamScore(QuestionParamType.Score, additionalBinaryDataProperties: null, name, instructions, levels.ToList());
+        }
+
+        /// <summary> The ScoreLevelParam. </summary>
+        /// <param name="label"></param>
+        /// <param name="description"></param>
+        /// <returns> A new <see cref="Agents.ScoreLevelParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ScoreLevelParam ScoreLevelParam(string label = default, string description = default)
+        {
+            return new ScoreLevelParam(label, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionTriggerInputParam2. </summary>
+        /// <param name="eventType"></param>
+        /// <param name="decisions"> Questions evaluated using the current transcript and the session's shared Decision items. </param>
+        /// <returns> A new <see cref="Agents.LiveDecisionTriggerInputParam2"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionTriggerInputParam2 LiveDecisionTriggerInputParam2(LiveDecisionTriggerInputParam2EventType eventType = default, LiveDecisionQuestionsInputParam2 decisions = default)
+        {
+            return new LiveDecisionTriggerInputParam2("decisions", eventType, decisions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Questions evaluated using the current transcript and the session's shared Decision items. </summary>
+        /// <param name="questions"> Native Decision API questions evaluated together, in order. </param>
+        /// <returns> A new <see cref="Agents.LiveDecisionQuestionsInputParam2"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionQuestionsInputParam2 LiveDecisionQuestionsInputParam2(IEnumerable<QuestionParam> questions = default)
+        {
+            questions ??= new ChangeTrackingList<QuestionParam>();
+
+            return new LiveDecisionQuestionsInputParam2(questions.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </summary>
         /// <param name="dataChannel"> Client and server event permissions for the WebRTC frontend data channel. </param>
         /// <returns> A new <see cref="Agents.LiveClientConfigParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveClientConfigParam LiveClientConfigParam(LiveDataChannelConfigParam dataChannel = default)
         {
             return new LiveClientConfigParam(dataChannel, additionalBinaryDataProperties: null);
@@ -4343,6 +4854,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="allowedClientEvents"> Client event types that the frontend data channel may send. Use 'all' to allow every client event; an empty array allows none. Omission preserves the existing allow-all behavior. </param>
         /// <param name="allowedServerEvents"> Server events that may be sent to the frontend data channel. Use 'all' to allow every server event; an empty array allows none. Omission preserves the existing allow-all behavior. Responses events use an object with type 'response.event' and a response_event selector. </param>
         /// <returns> A new <see cref="Agents.LiveDataChannelConfigParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDataChannelConfigParam LiveDataChannelConfigParam(BinaryData allowedClientEvents = default, BinaryData allowedServerEvents = default)
         {
             return new LiveDataChannelConfigParam(allowedClientEvents, allowedServerEvents, additionalBinaryDataProperties: null);
@@ -4352,14 +4864,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The outer Live server event type. Use 'response.event' for Responses events. </param>
         /// <param name="responseEvent"> The nested Responses event type. Required when type is 'response.event'; forbidden for other event types. </param>
         /// <returns> A new <see cref="Agents.LiveAllowedServerEventParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveAllowedServerEventParam LiveAllowedServerEventParam(string @type = default, string responseEvent = default)
         {
             return new LiveAllowedServerEventParam(@type, responseEvent, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Update the delegation settings of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
+        /// <summary> Update the delegation settings or transcript triggers of an active Live session. The server acknowledges accepted changes with `session.updated`. </summary>
         /// <param name="eventId"></param>
-        /// <param name="session"> Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable. </param>
+        /// <param name="session"> Sparse delegation and trigger updates. Omitted settings retain their values. The delegation type cannot change. Model, frontend instructions, audio, and startup input are immutable. </param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveSessionUpdateParam"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static LiveClientEventLiveSessionUpdateParam LiveClientEventLiveSessionUpdateParam(string eventId = default, LiveSessionUpdateParams session = default)
@@ -4367,17 +4880,22 @@ namespace Azure.AI.Projects.Agents
             return new LiveClientEventLiveSessionUpdateParam(LiveClientEventType.SessionUpdate, additionalBinaryDataProperties: null, eventId, session);
         }
 
-        /// <summary> Changes to an active Live session. Only delegation backend settings can be updated after startup. </summary>
+        /// <summary> Changes to an active Live session's delegation settings and transcript triggers. </summary>
         /// <param name="delegation"></param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <returns> A new <see cref="Agents.LiveSessionUpdateParams"/> instance for mocking. </returns>
-        public static LiveSessionUpdateParams LiveSessionUpdateParams(BinaryData delegation = default)
+        [Experimental("AAIP001")]
+        public static LiveSessionUpdateParams LiveSessionUpdateParams(BinaryData delegation = default, IEnumerable<LiveDecisionTriggerInputParam2> triggers = default)
         {
-            return new LiveSessionUpdateParams(delegation, additionalBinaryDataProperties: null);
+            triggers ??= new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
+
+            return new LiveSessionUpdateParams(delegation, triggers.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update the Responses backend for an existing Live session without changing delegation ownership. </summary>
         /// <param name="responses"> Responses backend settings to update. Omitted settings keep their existing values. </param>
         /// <returns> A new <see cref="Agents.LiveResponsesDelegationUpdateParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveResponsesDelegationUpdateParam LiveResponsesDelegationUpdateParam(LiveResponsesDelegationSettingsUpdateInputParam responses = default)
         {
             return new LiveResponsesDelegationUpdateParam("responses", responses, additionalBinaryDataProperties: null);
@@ -4394,6 +4912,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="toolChoice"> Controls which tool the Responses backend uses when handling a task delegated by the Live model. </param>
         /// <param name="parallelToolCalls"></param>
         /// <returns> A new <see cref="Agents.LiveResponsesDelegationSettingsUpdateInputParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveResponsesDelegationSettingsUpdateInputParam LiveResponsesDelegationSettingsUpdateInputParam(string model = default, string instructions = default, long? maxOutputTokens = default, LiveResponsesServiceTier? serviceTier = default, LiveDelegationReasoningInputParam reasoning = default, LiveDelegationTextInputParam text = default, IEnumerable<BinaryData> tools = default, BinaryData toolChoice = default, bool? parallelToolCalls = default)
         {
             tools ??= new ChangeTrackingList<BinaryData>();
@@ -4409,6 +4928,27 @@ namespace Azure.AI.Projects.Agents
                 toolChoice,
                 parallelToolCalls,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionsDelegationUpdateParam. </summary>
+        /// <param name="decisions"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionsDelegationUpdateParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionsDelegationUpdateParam LiveDecisionsDelegationUpdateParam(LiveDecisionsSettingsUpdateParam decisions = default)
+        {
+            return new LiveDecisionsDelegationUpdateParam("decisions", decisions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionsSettingsUpdateParam. </summary>
+        /// <param name="model"></param>
+        /// <param name="questions"> Native Decision API questions evaluated together, in order. </param>
+        /// <returns> A new <see cref="Agents.LiveDecisionsSettingsUpdateParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionsSettingsUpdateParam LiveDecisionsSettingsUpdateParam(string model = default, IEnumerable<QuestionParam> questions = default)
+        {
+            questions ??= new ChangeTrackingList<QuestionParam>();
+
+            return new LiveDecisionsSettingsUpdateParam(model, questions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Send audio to a Live session over its primary WebSocket. WebRTC and SIP sessions send audio over their media transport. </summary>
@@ -4430,7 +4970,7 @@ namespace Azure.AI.Projects.Agents
             return new LiveClientEventLiveInputAudioMuteParam(LiveClientEventType.SessionInputAudioMute, additionalBinaryDataProperties: null, eventId);
         }
 
-        /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. </summary>
+        /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. An active audio fixture still pauses inference until playback finishes. </summary>
         /// <param name="eventId"></param>
         /// <returns> A new <see cref="Agents.LiveClientEventLiveInputAudioUnmuteParam"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
@@ -4439,7 +4979,17 @@ namespace Azure.AI.Projects.Agents
             return new LiveClientEventLiveInputAudioUnmuteParam(LiveClientEventType.SessionInputAudioUnmute, additionalBinaryDataProperties: null, eventId);
         }
 
-        /// <summary> Append instructions to the Live conversation while it is running, optionally associating them with an existing client delegation. </summary>
+        /// <summary> Play one complete audio fixture through the session output. Send this event over the primary WebSocket or a server sideband. Audio must be raw mono PCM16 little-endian at 24 kHz, regardless of the session audio format, and at most 30 seconds. The entire payload is validated before model speech is interrupted and input is muted. Only one fixture can be active. fixture.playing acknowledges acceptance and fixture.played reports server mixer drain. These notifications are not exact transport-media boundaries. Input arriving during playback is dropped and not replayed. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="audio"> Base64-encoded raw mono PCM16 audio, little-endian, at 24 kHz. Do not include a WAV or other container header. </param>
+        /// <returns> A new <see cref="Agents.LiveClientEventLiveOutputAudioFixturePlayParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveClientEventLiveOutputAudioFixturePlayParam LiveClientEventLiveOutputAudioFixturePlayParam(string eventId = default, string audio = default)
+        {
+            return new LiveClientEventLiveOutputAudioFixturePlayParam(LiveClientEventType.SessionOutputAudioFixturePlay, additionalBinaryDataProperties: null, eventId, audio);
+        }
+
+        /// <summary> Append developer instructions to the Live conversation while it is running, optionally associating them with an existing client delegation. Rejected while an audio fixture is active. These instructions remain in conversation history through compaction and are included in future backend delegations. For external audio, describe content already delivered so the assistant does not repeat it. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Instruction text to append, limited to 500 tokens. This is a plain string, not an array of content parts. </param>
@@ -4450,7 +5000,7 @@ namespace Azure.AI.Projects.Agents
             return new LiveClientEventLiveInstructionsAppendParam(LiveClientEventType.SessionInstructionsAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
         }
 
-        /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. </summary>
+        /// <summary> Provide silent reasoning or progress context to the Live model, optionally for an existing client delegation. Rejected while an audio fixture is active. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Silent reasoning or progress context, limited to 500 tokens. It does not directly request speech, but can influence later speech and is not a secrecy boundary. </param>
@@ -4461,7 +5011,7 @@ namespace Azure.AI.Projects.Agents
             return new LiveClientEventLiveThinkingAppendParam(LiveClientEventType.SessionThinkingAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
         }
 
-        /// <summary> Provide context the Live model can communicate to the user, optionally for an existing client delegation. </summary>
+        /// <summary> Provide context the Live model can communicate to the user, optionally for an existing client delegation. Rejected while an audio fixture is active. </summary>
         /// <param name="eventId"></param>
         /// <param name="delegationId"></param>
         /// <param name="content"> Speakable context for the Live model, limited to 500 tokens. Use this for a result the model should communicate; use session.thinking.append for silent context. </param>
@@ -4470,6 +5020,65 @@ namespace Azure.AI.Projects.Agents
         public static LiveClientEventLiveCommentaryAppendParam LiveClientEventLiveCommentaryAppendParam(string eventId = default, string delegationId = default, string content = default)
         {
             return new LiveClientEventLiveCommentaryAppendParam(LiveClientEventType.SessionCommentaryAppend, additionalBinaryDataProperties: null, eventId, delegationId, content);
+        }
+
+        /// <summary> Evaluate the configured questions using the current conversation and Decision inputs. Reusing an event_id is rejected for the lifetime of the session. </summary>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="Agents.LiveClientEventLiveDecisionCreateParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveClientEventLiveDecisionCreateParam LiveClientEventLiveDecisionCreateParam(string eventId = default)
+        {
+            return new LiveClientEventLiveDecisionCreateParam(LiveClientEventType.DecisionCreate, additionalBinaryDataProperties: null, eventId);
+        }
+
+        /// <summary> Append an input item for future decisions without starting an evaluation or changing Live voice context. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="item"></param>
+        /// <returns> A new <see cref="Agents.LiveClientEventLiveDecisionItemCreateParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveClientEventLiveDecisionItemCreateParam LiveClientEventLiveDecisionItemCreateParam(string eventId = default, LiveDecisionInputItemParam item = default)
+        {
+            return new LiveClientEventLiveDecisionItemCreateParam(LiveClientEventType.DecisionItemCreate, additionalBinaryDataProperties: null, eventId, item);
+        }
+
+        /// <summary> The LiveDecisionInputItemParam. </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="content"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionInputItemParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionInputItemParam LiveDecisionInputItemParam(string id = default, LiveDecisionInputItemParamType? @type = default, BinaryData content = default)
+        {
+            return new LiveDecisionInputItemParam(id, @type, "user", content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionInputTextParam. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Agents.LiveDecisionInputTextParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionInputTextParam LiveDecisionInputTextParam(string text = default)
+        {
+            return new LiveDecisionInputTextParam("input_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The LiveDecisionInputImageParam. </summary>
+        /// <param name="imageUrl"> An inline image encoded as a data URL. </param>
+        /// <param name="detail"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionInputImageParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionInputImageParam LiveDecisionInputImageParam(Uri imageUrl = default, LiveDetailEnum? detail = default)
+        {
+            return new LiveDecisionInputImageParam("input_image", imageUrl, detail, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Delete an input item from future decisions without starting an evaluation or changing Live voice context. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"></param>
+        /// <returns> A new <see cref="Agents.LiveClientEventLiveDecisionItemDeleteParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveClientEventLiveDecisionItemDeleteParam LiveClientEventLiveDecisionItemDeleteParam(string eventId = default, string itemId = default)
+        {
+            return new LiveClientEventLiveDecisionItemDeleteParam(LiveClientEventType.DecisionItemDelete, additionalBinaryDataProperties: null, eventId, itemId);
         }
 
         /// <summary> Add an input item to the Live session’s Responses backend. Requires Responses delegation; use `response.create` to request a response. </summary>
@@ -4502,7 +5111,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An event sent by the Live API on a primary WebSocket or sideband connection.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveInputAudioAppend"/>, <see cref="Agents.LiveOutputAudioDelta"/>, <see cref="Agents.LiveServerEventLiveCommentaryAppended"/>, <see cref="Agents.LiveServerEventLiveDelegationCreated"/>, <see cref="Agents.LiveServerEventLiveErrorEvent"/>, <see cref="Agents.LiveServerEventLiveInfoEvent"/>, <see cref="Agents.LiveServerEventLiveInputAudioMuted"/>, <see cref="Agents.LiveServerEventLiveInputAudioUnmuted"/>, <see cref="Agents.LiveServerEventLiveInputTranscriptDelta"/>, <see cref="Agents.LiveServerEventLiveInstructionsAppended"/>, <see cref="Agents.LiveServerEventLiveOutputTranscriptDelta"/>, <see cref="Agents.LiveServerEventLiveResponseEvent"/>, <see cref="Agents.LiveServerEventLiveSessionClosed"/>, <see cref="Agents.LiveServerEventLiveSessionStarted"/>, <see cref="Agents.LiveServerEventLiveSessionUpdated"/>, <see cref="Agents.LiveServerEventLiveSessionUsageUpdated"/>, <see cref="Agents.LiveServerEventLiveThinkingAppended"/>, <see cref="Agents.LiveTransportAnswered"/>, <see cref="Agents.LiveTransportDTMFReceived"/>, <see cref="Agents.LiveTransportDTMFSend"/>, <see cref="Agents.LiveTransportFailed"/>, and <see cref="Agents.LiveTransportRinging"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveInputAudioAppend"/>, <see cref="Agents.LiveOutputAudioDelta"/>, <see cref="Agents.LiveServerEventLiveCommentaryAppended"/>, <see cref="Agents.LiveServerEventLiveDecisionEvent"/>, <see cref="Agents.LiveServerEventLiveDecisionItemCreated"/>, <see cref="Agents.LiveServerEventLiveDecisionItemDeleted"/>, <see cref="Agents.LiveServerEventLiveDelegationCreated"/>, <see cref="Agents.LiveServerEventLiveErrorEvent"/>, <see cref="Agents.LiveServerEventLiveInfoEvent"/>, <see cref="Agents.LiveServerEventLiveInputAudioMuted"/>, <see cref="Agents.LiveServerEventLiveInputAudioUnmuted"/>, <see cref="Agents.LiveServerEventLiveInputTranscriptDelta"/>, <see cref="Agents.LiveServerEventLiveInstructionsAppended"/>, <see cref="Agents.LiveServerEventLiveOutputAudioFixturePlayed"/>, <see cref="Agents.LiveServerEventLiveOutputAudioFixturePlaying"/>, <see cref="Agents.LiveServerEventLiveOutputTranscriptDelta"/>, <see cref="Agents.LiveServerEventLiveResponseEvent"/>, <see cref="Agents.LiveServerEventLiveSessionClosed"/>, <see cref="Agents.LiveServerEventLiveSessionStarted"/>, <see cref="Agents.LiveServerEventLiveSessionUpdated"/>, <see cref="Agents.LiveServerEventLiveSessionUsageUpdated"/>, <see cref="Agents.LiveServerEventLiveThinkingAppended"/>, <see cref="Agents.LiveServerEventLiveTransportAnswered"/>, <see cref="Agents.LiveServerEventLiveTransportFailed"/>, <see cref="Agents.LiveServerEventLiveTransportRinging"/>, <see cref="Agents.LiveTransportDTMFReceived"/>, and <see cref="Agents.LiveTransportDTMFSend"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.LiveServerEvent"/> instance for mocking. </returns>
@@ -4542,55 +5151,15 @@ namespace Azure.AI.Projects.Agents
             return new LiveTransportDTMFReceived(LiveServerEventType.TransportDtmfReceived, additionalBinaryDataProperties: null, eventId, @event);
         }
 
-        /// <summary> A SIP DTMF keypress successfully sent by the hosted tool. Delivered only to sideband observers; this is not a client command. </summary>
+        /// <summary> A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command. </summary>
         /// <param name="eventId"></param>
         /// <param name="event"></param>
+        /// <param name="clientEventId"> The event_id of the client command, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveTransportDTMFSend"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LiveTransportDTMFSend LiveTransportDTMFSend(string eventId = default, string @event = default)
+        public static LiveTransportDTMFSend LiveTransportDTMFSend(string eventId = default, string @event = default, string clientEventId = default)
         {
-            return new LiveTransportDTMFSend(LiveServerEventType.TransportDtmfSend, additionalBinaryDataProperties: null, eventId, @event);
-        }
-
-        /// <summary> The outbound SIP provider leg is ringing or providing early media. Delivered only to sideband observers. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="sessionId"> The canonical Live session ID. </param>
-        /// <returns> A new <see cref="Agents.LiveTransportRinging"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static LiveTransportRinging LiveTransportRinging(string eventId = default, string sessionId = default)
-        {
-            return new LiveTransportRinging(LiveServerEventType.TransportRinging, additionalBinaryDataProperties: null, eventId, sessionId);
-        }
-
-        /// <summary> The outbound SIP provider leg answered and media is established. Delivered only to sideband observers. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="sessionId"> The canonical Live session ID. </param>
-        /// <returns> A new <see cref="Agents.LiveTransportAnswered"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static LiveTransportAnswered LiveTransportAnswered(string eventId = default, string sessionId = default)
-        {
-            return new LiveTransportAnswered(LiveServerEventType.TransportAnswered, additionalBinaryDataProperties: null, eventId, sessionId);
-        }
-
-        /// <summary> An asynchronous outbound SIP setup failure. Delivered only to sideband observers. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="sessionId"> The canonical Live session ID. </param>
-        /// <param name="error"></param>
-        /// <returns> A new <see cref="Agents.LiveTransportFailed"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static LiveTransportFailed LiveTransportFailed(string eventId = default, string sessionId = default, LiveTransportCallError error = default)
-        {
-            return new LiveTransportFailed(LiveServerEventType.TransportFailed, additionalBinaryDataProperties: null, eventId, sessionId, error);
-        }
-
-        /// <summary> The LiveTransportCallError. </summary>
-        /// <param name="code"> The call setup failure code. </param>
-        /// <param name="message"></param>
-        /// <param name="param"> The parameter related to the error, if any. Empty when no parameter applies. </param>
-        /// <returns> A new <see cref="Agents.LiveTransportCallError"/> instance for mocking. </returns>
-        public static LiveTransportCallError LiveTransportCallError(string code = default, string message = default, string @param = default)
-        {
-            return new LiveTransportCallError("call_error", code, message, @param, additionalBinaryDataProperties: null);
+            return new LiveTransportDTMFSend(LiveServerEventType.TransportDtmfSend, additionalBinaryDataProperties: null, eventId, @event, clientEventId);
         }
 
         /// <summary> Returned when a Live session has started. Contains the resolved session configuration, including server defaults. </summary>
@@ -4614,8 +5183,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Live session resource reported to Foundry clients. GPT Live runs native client delegation for foundry_managed_agent sessions; Foundry reports the effective owner. </summary>
         /// <param name="model"></param>
         /// <param name="instructions"></param>
-        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and 8,192 rendered tokens in total. </param>
+        /// <param name="input"> Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default). </param>
         /// <param name="audio"> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="id"> The unique ID of the Live session. Use this ID for sideband connections, forking, and recording download. </param>
@@ -4623,15 +5193,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="delegation"> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentLiveSessionResource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentLiveSessionResource VoiceAgentLiveSessionResource(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, bool? store = default, LiveClientConfigParam client = default, string id = default, long expiresAt = default, BinaryData delegation = default)
+        public static VoiceAgentLiveSessionResource VoiceAgentLiveSessionResource(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, IEnumerable<LiveDecisionTriggerInputParam2> triggers = default, bool? store = default, LiveClientConfigParam client = default, string id = default, long expiresAt = default, BinaryData delegation = default)
         {
             input ??= new ChangeTrackingList<LiveInitialItem>();
+            triggers ??= new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
 
             return new VoiceAgentLiveSessionResource(
                 model,
                 instructions,
                 input.ToList(),
                 audio,
+                triggers.ToList(),
                 store,
                 client,
                 id,
@@ -4652,7 +5224,7 @@ namespace Azure.AI.Projects.Agents
             return new LiveServerEventLiveSessionUpdated(LiveServerEventType.SessionUpdated, additionalBinaryDataProperties: null, eventId, clientEventId, session);
         }
 
-        /// <summary> Returned when a session.input_audio.mute command is accepted. Input audio is no longer sent to the model; sideband audio reflection continues. </summary>
+        /// <summary> Acknowledges a session.input_audio.mute command. An independent input mute sends silence to the model and preserves sideband audio reflection. Fixture playback does not emit this event. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInputAudioMuted"/> instance for mocking. </returns>
@@ -4662,7 +5234,7 @@ namespace Azure.AI.Projects.Agents
             return new LiveServerEventLiveInputAudioMuted(LiveServerEventType.SessionInputAudioMuted, additionalBinaryDataProperties: null, eventId, clientEventId);
         }
 
-        /// <summary> Returned when a session.input_audio.unmute command is accepted. Input audio is sent to the model again. </summary>
+        /// <summary> Acknowledges a session.input_audio.unmute command, removing the independent input mute. An active audio fixture still pauses inference until playback finishes. Fixture playback does not emit this event. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveServerEventLiveInputAudioUnmuted"/> instance for mocking. </returns>
@@ -4670,6 +5242,26 @@ namespace Azure.AI.Projects.Agents
         public static LiveServerEventLiveInputAudioUnmuted LiveServerEventLiveInputAudioUnmuted(string eventId = default, string clientEventId = default)
         {
             return new LiveServerEventLiveInputAudioUnmuted(LiveServerEventType.SessionInputAudioUnmuted, additionalBinaryDataProperties: null, eventId, clientEventId);
+        }
+
+        /// <summary> The existing playback path has accepted the validated audio fixture. This acknowledgment does not identify when the listener receives the first sample. The optional client_event_id echoes the play command. </summary>
+        /// <param name="eventId"> The unique ID of the Live server event. </param>
+        /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveOutputAudioFixturePlaying"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveOutputAudioFixturePlaying LiveServerEventLiveOutputAudioFixturePlaying(string eventId = default, string clientEventId = default)
+        {
+            return new LiveServerEventLiveOutputAudioFixturePlaying(LiveServerEventType.SessionOutputAudioFixturePlaying, additionalBinaryDataProperties: null, eventId, clientEventId);
+        }
+
+        /// <summary> The complete audio fixture has drained from the server mixer and normal inference has resumed. Transport buffers may still contain audio; this event does not prove listener-side completion. The optional client_event_id echoes the play command. This event is not emitted for canceled or failed playback. </summary>
+        /// <param name="eventId"> The unique ID of the Live server event. </param>
+        /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveOutputAudioFixturePlayed"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveOutputAudioFixturePlayed LiveServerEventLiveOutputAudioFixturePlayed(string eventId = default, string clientEventId = default)
+        {
+            return new LiveServerEventLiveOutputAudioFixturePlayed(LiveServerEventType.SessionOutputAudioFixturePlayed, additionalBinaryDataProperties: null, eventId, clientEventId);
         }
 
         /// <summary> Returned when a session.instructions.append command is accepted into the Live session timeline. Acknowledges the appended instructions without guaranteeing that the model has acted on them. </summary>
@@ -4766,7 +5358,7 @@ namespace Azure.AI.Projects.Agents
                 delta);
         }
 
-        /// <summary> Returned when the Live model delegates work to your application or a Responses backend. Contains delegation metadata and the position on the session timeline where the work was delegated. </summary>
+        /// <summary> Returned when the Live model delegates work to your application, Responses, or Decisions. Contains delegation metadata and the position on the session timeline where the work was delegated. </summary>
         /// <param name="eventId"> The unique ID of the Live server event. </param>
         /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
         /// <param name="offsetMs"> The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session. </param>
@@ -4785,7 +5377,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Live delegation trigger metadata reported to Foundry clients. This object contains metadata, not the task text. </summary>
-        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
+        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events. </param>
         /// <param name="responseId"> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </param>
         /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentLiveDelegationItem"/> instance for mocking. </returns>
@@ -4793,6 +5385,213 @@ namespace Azure.AI.Projects.Agents
         public static VoiceAgentLiveDelegationItem VoiceAgentLiveDelegationItem(string id = default, string responseId = default, VoiceAgentLiveDelegationTarget target = default)
         {
             return new VoiceAgentLiveDelegationItem(id, "delegation", responseId, target, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Decision API event for a Live delegation or transcript trigger. For a trigger, source_event_id identifies the transcript delta that caused this evaluation. </summary>
+        /// <param name="eventId"> The unique ID of this Live server event. </param>
+        /// <param name="delegationId"></param>
+        /// <param name="triggerId"></param>
+        /// <param name="sourceEventType"></param>
+        /// <param name="sourceEventId"></param>
+        /// <param name="event"></param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveDecisionEvent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveDecisionEvent LiveServerEventLiveDecisionEvent(string eventId = default, string delegationId = default, string triggerId = default, LiveServerEventLiveDecisionEventSourceEventType? sourceEventType = default, string sourceEventId = default, LiveDecisionCompleted @event = default)
+        {
+            return new LiveServerEventLiveDecisionEvent(
+                LiveServerEventType.DecisionEvent,
+                additionalBinaryDataProperties: null,
+                eventId,
+                delegationId,
+                triggerId,
+                sourceEventType,
+                sourceEventId,
+                @event);
+        }
+
+        /// <summary> The LiveDecisionCompleted. </summary>
+        /// <param name="decision"> The native Decision API response, including its model, ordered answers, and token usage. </param>
+        /// <returns> A new <see cref="Agents.LiveDecisionCompleted"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionCompleted LiveDecisionCompleted(DecisionResult decision = default)
+        {
+            return new LiveDecisionCompleted("decision.completed", decision, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DecisionResult. </summary>
+        /// <param name="model"> The model used. </param>
+        /// <param name="answers"> Answers in question order. Any question can return a refusal instead of an answer; other questions can still receive answers. A refusal has `type: "refusal"` and the question's `name`, or `null` if it was unnamed. </param>
+        /// <param name="usage"> Token usage for the request. </param>
+        /// <returns> A new <see cref="Agents.DecisionResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DecisionResult DecisionResult(string model = default, IEnumerable<AnswerResource> answers = default, ResponseUsageResource usage = default)
+        {
+            answers ??= new ChangeTrackingList<AnswerResource>();
+
+            return new DecisionResult(model, answers.ToList(), usage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A completed question always includes its name, including null when unnamed.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AnswerResourceChoice"/>, <see cref="Agents.AnswerResourcePredicate"/>, <see cref="Agents.AnswerResourceRefusal"/>, and <see cref="Agents.AnswerResourceScore"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Agents.AnswerResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AnswerResource AnswerResource(string @type = default)
+        {
+            return new UnknownAnswerResource(new AnswerResourceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AnswerResourcePredicate. </summary>
+        /// <param name="name"></param>
+        /// <param name="probability"></param>
+        /// <returns> A new <see cref="Agents.AnswerResourcePredicate"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AnswerResourcePredicate AnswerResourcePredicate(string name = default, double probability = default)
+        {
+            return new AnswerResourcePredicate(AnswerResourceType.Predicate, additionalBinaryDataProperties: null, name, probability);
+        }
+
+        /// <summary> The AnswerResourceChoice. </summary>
+        /// <param name="name"></param>
+        /// <param name="choice"></param>
+        /// <param name="probabilities"></param>
+        /// <param name="confidence"></param>
+        /// <returns> A new <see cref="Agents.AnswerResourceChoice"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AnswerResourceChoice AnswerResourceChoice(string name = default, BinaryData choice = default, IEnumerable<ChoiceProbabilityResource> probabilities = default, double confidence = default)
+        {
+            probabilities ??= new ChangeTrackingList<ChoiceProbabilityResource>();
+
+            return new AnswerResourceChoice(
+                AnswerResourceType.Choice,
+                additionalBinaryDataProperties: null,
+                name,
+                choice,
+                probabilities.ToList(),
+                confidence);
+        }
+
+        /// <summary> The ChoiceProbabilityResource. </summary>
+        /// <param name="value"></param>
+        /// <param name="probability"></param>
+        /// <returns> A new <see cref="Agents.ChoiceProbabilityResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ChoiceProbabilityResource ChoiceProbabilityResource(BinaryData value = default, double probability = default)
+        {
+            return new ChoiceProbabilityResource(value, probability, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AnswerResourceScore. </summary>
+        /// <param name="name"></param>
+        /// <param name="score"></param>
+        /// <param name="probabilities"></param>
+        /// <param name="confidence"></param>
+        /// <returns> A new <see cref="Agents.AnswerResourceScore"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AnswerResourceScore AnswerResourceScore(string name = default, double score = default, IEnumerable<ScoreProbabilityResource> probabilities = default, double confidence = default)
+        {
+            probabilities ??= new ChangeTrackingList<ScoreProbabilityResource>();
+
+            return new AnswerResourceScore(
+                AnswerResourceType.Score,
+                additionalBinaryDataProperties: null,
+                name,
+                score,
+                probabilities.ToList(),
+                confidence);
+        }
+
+        /// <summary> The ScoreProbabilityResource. </summary>
+        /// <param name="value"></param>
+        /// <param name="label"></param>
+        /// <param name="probability"></param>
+        /// <returns> A new <see cref="Agents.ScoreProbabilityResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ScoreProbabilityResource ScoreProbabilityResource(long value = default, string label = default, double probability = default)
+        {
+            return new ScoreProbabilityResource(value, label, probability, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The model declined to answer this question. Other questions in the same request can still receive answers. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Agents.AnswerResourceRefusal"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AnswerResourceRefusal AnswerResourceRefusal(string name = default)
+        {
+            return new AnswerResourceRefusal(AnswerResourceType.Refusal, additionalBinaryDataProperties: null, name);
+        }
+
+        /// <summary> The ResponseUsageResource. </summary>
+        /// <param name="inputTokens"></param>
+        /// <param name="inputTokensDetails"></param>
+        /// <param name="outputTokens"></param>
+        /// <param name="outputTokensDetails"></param>
+        /// <param name="totalTokens"></param>
+        /// <returns> A new <see cref="Agents.ResponseUsageResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ResponseUsageResource ResponseUsageResource(long inputTokens = default, InputTokensDetailsResource inputTokensDetails = default, long outputTokens = default, OutputTokensDetailsResource outputTokensDetails = default, long totalTokens = default)
+        {
+            return new ResponseUsageResource(
+                inputTokens,
+                inputTokensDetails,
+                outputTokens,
+                outputTokensDetails,
+                totalTokens,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The InputTokensDetailsResource. </summary>
+        /// <param name="cachedTokens"></param>
+        /// <param name="cacheWriteTokens"></param>
+        /// <returns> A new <see cref="Agents.InputTokensDetailsResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static InputTokensDetailsResource InputTokensDetailsResource(long cachedTokens = default, long cacheWriteTokens = default)
+        {
+            return new InputTokensDetailsResource(cachedTokens, cacheWriteTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The OutputTokensDetailsResource. </summary>
+        /// <param name="reasoningTokens"></param>
+        /// <returns> A new <see cref="Agents.OutputTokensDetailsResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static OutputTokensDetailsResource OutputTokensDetailsResource(long reasoningTokens = default)
+        {
+            return new OutputTokensDetailsResource(reasoningTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An input item was appended for future decisions. </summary>
+        /// <param name="eventId"> The unique ID of the Live server event. </param>
+        /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
+        /// <param name="item"></param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveDecisionItemCreated"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveDecisionItemCreated LiveServerEventLiveDecisionItemCreated(string eventId = default, string clientEventId = default, LiveDecisionStoredInputItemParam item = default)
+        {
+            return new LiveServerEventLiveDecisionItemCreated(LiveServerEventType.DecisionItemCreated, additionalBinaryDataProperties: null, eventId, clientEventId, item);
+        }
+
+        /// <summary> The LiveDecisionStoredInputItemParam. </summary>
+        /// <param name="id"> The ID of the stored Decision input item. </param>
+        /// <param name="type"></param>
+        /// <param name="content"></param>
+        /// <returns> A new <see cref="Agents.LiveDecisionStoredInputItemParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveDecisionStoredInputItemParam LiveDecisionStoredInputItemParam(string id = default, LiveDecisionStoredInputItemParamType? @type = default, BinaryData content = default)
+        {
+            return new LiveDecisionStoredInputItemParam(id, @type, "user", content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An input item was removed from future decisions. </summary>
+        /// <param name="eventId"> The unique ID of the Live server event. </param>
+        /// <param name="clientEventId"> The event_id of the client command associated with this server event, when supplied. </param>
+        /// <param name="itemId"></param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveDecisionItemDeleted"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveDecisionItemDeleted LiveServerEventLiveDecisionItemDeleted(string eventId = default, string clientEventId = default, string itemId = default)
+        {
+            return new LiveServerEventLiveDecisionItemDeleted(LiveServerEventType.DecisionItemDeleted, additionalBinaryDataProperties: null, eventId, clientEventId, itemId);
         }
 
         /// <summary> A streaming Responses API event from a backend delegated to by the Live session. Use the outer delegation_id to associate the nested stream with its Live delegation. </summary>
@@ -4836,6 +5635,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The latest measured context-window usage of the Live model. This is separate from billing usage and delegated Responses token usage. </summary>
         /// <param name="usageRatio"> The latest active context token count divided by the Live model context limit. Can decrease after compaction and may lag between measured audio frames. </param>
         /// <returns> A new <see cref="Agents.LiveContextWindowUsage"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveContextWindowUsage LiveContextWindowUsage(double usageRatio = default)
         {
             return new LiveContextWindowUsage(usageRatio, additionalBinaryDataProperties: null);
@@ -4879,6 +5679,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="param"> The parameter that caused the error, when applicable, such as `session.voice`. </param>
         /// <param name="clientEventId"> The event_id of the client command that caused the error, when supplied. </param>
         /// <returns> A new <see cref="Agents.LiveLiveError"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveLiveError LiveLiveError(string @type = default, string code = default, string message = default, string @param = default, string clientEventId = default)
         {
             return new LiveLiveError(
@@ -4906,6 +5707,48 @@ namespace Azure.AI.Projects.Agents
                 clientEventId,
                 code,
                 message);
+        }
+
+        /// <summary> The outbound SIP provider leg is ringing or providing early media. Delivered only to sideband observers. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="sessionId"> The canonical Live session ID. </param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveTransportRinging"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveTransportRinging LiveServerEventLiveTransportRinging(string eventId = default, string sessionId = default)
+        {
+            return new LiveServerEventLiveTransportRinging(LiveServerEventType.TransportRinging, additionalBinaryDataProperties: null, eventId, sessionId);
+        }
+
+        /// <summary> The outbound SIP provider leg answered and media is established. Delivered only to sideband observers. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="sessionId"> The canonical Live session ID. </param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveTransportAnswered"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveTransportAnswered LiveServerEventLiveTransportAnswered(string eventId = default, string sessionId = default)
+        {
+            return new LiveServerEventLiveTransportAnswered(LiveServerEventType.TransportAnswered, additionalBinaryDataProperties: null, eventId, sessionId);
+        }
+
+        /// <summary> An asynchronous outbound SIP setup failure. Delivered only to sideband observers. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="sessionId"> The canonical Live session ID. </param>
+        /// <param name="error"></param>
+        /// <returns> A new <see cref="Agents.LiveServerEventLiveTransportFailed"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveServerEventLiveTransportFailed LiveServerEventLiveTransportFailed(string eventId = default, string sessionId = default, LiveTransportCallError error = default)
+        {
+            return new LiveServerEventLiveTransportFailed(LiveServerEventType.TransportFailed, additionalBinaryDataProperties: null, eventId, sessionId, error);
+        }
+
+        /// <summary> The LiveTransportCallError. </summary>
+        /// <param name="code"> The call setup failure code. </param>
+        /// <param name="message"></param>
+        /// <param name="param"> The parameter related to the error, if any. Empty when no parameter applies. </param>
+        /// <returns> A new <see cref="Agents.LiveTransportCallError"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveTransportCallError LiveTransportCallError(string code = default, string message = default, string @param = default)
+        {
+            return new LiveTransportCallError("call_error", code, message, @param, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>

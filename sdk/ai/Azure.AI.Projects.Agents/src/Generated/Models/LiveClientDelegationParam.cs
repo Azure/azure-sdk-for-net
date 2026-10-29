@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveClientDelegationParam : LiveDelegation
     {
         /// <summary> Initializes a new instance of <see cref="LiveClientDelegationParam"/>. </summary>

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An event sent by the Live API on a primary WebSocket or sideband connection.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveInputAudioAppend"/>, <see cref="LiveOutputAudioDelta"/>, <see cref="LiveServerEventLiveCommentaryAppended"/>, <see cref="LiveServerEventLiveDelegationCreated"/>, <see cref="LiveServerEventLiveErrorEvent"/>, <see cref="LiveServerEventLiveInfoEvent"/>, <see cref="LiveServerEventLiveInputAudioMuted"/>, <see cref="LiveServerEventLiveInputAudioUnmuted"/>, <see cref="LiveServerEventLiveInputTranscriptDelta"/>, <see cref="LiveServerEventLiveInstructionsAppended"/>, <see cref="LiveServerEventLiveOutputTranscriptDelta"/>, <see cref="LiveServerEventLiveResponseEvent"/>, <see cref="LiveServerEventLiveSessionClosed"/>, <see cref="LiveServerEventLiveSessionStarted"/>, <see cref="LiveServerEventLiveSessionUpdated"/>, <see cref="LiveServerEventLiveSessionUsageUpdated"/>, <see cref="LiveServerEventLiveThinkingAppended"/>, <see cref="LiveTransportAnswered"/>, <see cref="LiveTransportDTMFReceived"/>, <see cref="LiveTransportDTMFSend"/>, <see cref="LiveTransportFailed"/>, and <see cref="LiveTransportRinging"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveInputAudioAppend"/>, <see cref="LiveOutputAudioDelta"/>, <see cref="LiveServerEventLiveCommentaryAppended"/>, <see cref="LiveServerEventLiveDecisionEvent"/>, <see cref="LiveServerEventLiveDecisionItemCreated"/>, <see cref="LiveServerEventLiveDecisionItemDeleted"/>, <see cref="LiveServerEventLiveDelegationCreated"/>, <see cref="LiveServerEventLiveErrorEvent"/>, <see cref="LiveServerEventLiveInfoEvent"/>, <see cref="LiveServerEventLiveInputAudioMuted"/>, <see cref="LiveServerEventLiveInputAudioUnmuted"/>, <see cref="LiveServerEventLiveInputTranscriptDelta"/>, <see cref="LiveServerEventLiveInstructionsAppended"/>, <see cref="LiveServerEventLiveOutputAudioFixturePlayed"/>, <see cref="LiveServerEventLiveOutputAudioFixturePlaying"/>, <see cref="LiveServerEventLiveOutputTranscriptDelta"/>, <see cref="LiveServerEventLiveResponseEvent"/>, <see cref="LiveServerEventLiveSessionClosed"/>, <see cref="LiveServerEventLiveSessionStarted"/>, <see cref="LiveServerEventLiveSessionUpdated"/>, <see cref="LiveServerEventLiveSessionUsageUpdated"/>, <see cref="LiveServerEventLiveThinkingAppended"/>, <see cref="LiveServerEventLiveTransportAnswered"/>, <see cref="LiveServerEventLiveTransportFailed"/>, <see cref="LiveServerEventLiveTransportRinging"/>, <see cref="LiveTransportDTMFReceived"/>, and <see cref="LiveTransportDTMFSend"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownLiveServerEvent))]
     public abstract partial class LiveServerEvent : IJsonModel<LiveServerEvent>
@@ -132,6 +132,12 @@ namespace Azure.AI.Projects.Agents
                         return LiveOutputAudioDelta.DeserializeLiveOutputAudioDelta(element, options);
                     case "session.commentary.appended":
                         return LiveServerEventLiveCommentaryAppended.DeserializeLiveServerEventLiveCommentaryAppended(element, options);
+                    case "decision.event":
+                        return LiveServerEventLiveDecisionEvent.DeserializeLiveServerEventLiveDecisionEvent(element, options);
+                    case "decision.item.created":
+                        return LiveServerEventLiveDecisionItemCreated.DeserializeLiveServerEventLiveDecisionItemCreated(element, options);
+                    case "decision.item.deleted":
+                        return LiveServerEventLiveDecisionItemDeleted.DeserializeLiveServerEventLiveDecisionItemDeleted(element, options);
                     case "session.delegation.created":
                         return LiveServerEventLiveDelegationCreated.DeserializeLiveServerEventLiveDelegationCreated(element, options);
                     case "error":
@@ -146,6 +152,10 @@ namespace Azure.AI.Projects.Agents
                         return LiveServerEventLiveInputTranscriptDelta.DeserializeLiveServerEventLiveInputTranscriptDelta(element, options);
                     case "session.instructions.appended":
                         return LiveServerEventLiveInstructionsAppended.DeserializeLiveServerEventLiveInstructionsAppended(element, options);
+                    case "session.output_audio.fixture.played":
+                        return LiveServerEventLiveOutputAudioFixturePlayed.DeserializeLiveServerEventLiveOutputAudioFixturePlayed(element, options);
+                    case "session.output_audio.fixture.playing":
+                        return LiveServerEventLiveOutputAudioFixturePlaying.DeserializeLiveServerEventLiveOutputAudioFixturePlaying(element, options);
                     case "session.output_transcript.delta":
                         return LiveServerEventLiveOutputTranscriptDelta.DeserializeLiveServerEventLiveOutputTranscriptDelta(element, options);
                     case "response.event":
@@ -161,15 +171,15 @@ namespace Azure.AI.Projects.Agents
                     case "session.thinking.appended":
                         return LiveServerEventLiveThinkingAppended.DeserializeLiveServerEventLiveThinkingAppended(element, options);
                     case "transport.answered":
-                        return LiveTransportAnswered.DeserializeLiveTransportAnswered(element, options);
+                        return LiveServerEventLiveTransportAnswered.DeserializeLiveServerEventLiveTransportAnswered(element, options);
+                    case "transport.failed":
+                        return LiveServerEventLiveTransportFailed.DeserializeLiveServerEventLiveTransportFailed(element, options);
+                    case "transport.ringing":
+                        return LiveServerEventLiveTransportRinging.DeserializeLiveServerEventLiveTransportRinging(element, options);
                     case "transport.dtmf.received":
                         return LiveTransportDTMFReceived.DeserializeLiveTransportDTMFReceived(element, options);
                     case "transport.dtmf.send":
                         return LiveTransportDTMFSend.DeserializeLiveTransportDTMFSend(element, options);
-                    case "transport.failed":
-                        return LiveTransportFailed.DeserializeLiveTransportFailed(element, options);
-                    case "transport.ringing":
-                        return LiveTransportRinging.DeserializeLiveTransportRinging(element, options);
                 }
             }
             return UnknownLiveServerEvent.DeserializeUnknownLiveServerEvent(element, options);

@@ -17,6 +17,8 @@
 
 ### Other Changes
 
+- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196).
+
 ### Sample Updates
 
 - Added Realtime function-calling and recorded-speech audio samples.

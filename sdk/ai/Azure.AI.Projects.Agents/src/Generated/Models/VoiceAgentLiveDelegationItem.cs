@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveDelegationItem"/>. </summary>
-        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
+        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events. </param>
         /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
         internal VoiceAgentLiveDelegationItem(string id, VoiceAgentLiveDelegationTarget target)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveDelegationItem"/>. </summary>
-        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </param>
+        /// <param name="id"> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events. </param>
         /// <param name="type"> The object type, always `delegation`. </param>
         /// <param name="responseId"> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </param>
         /// <param name="target"> Where the work is handled. foundry_managed_agent sessions report foundry_managed_agent; GPT Live itself uses client. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events. </summary>
+        /// <summary> The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events. </summary>
         public string Id { get; }
 
         /// <summary> The object type, always `delegation`. </summary>

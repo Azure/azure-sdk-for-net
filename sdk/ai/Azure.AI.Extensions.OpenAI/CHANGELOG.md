@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
+
 ## 3.0.0-beta.5 (2026-10-16)
 
 ### Breaking Changes

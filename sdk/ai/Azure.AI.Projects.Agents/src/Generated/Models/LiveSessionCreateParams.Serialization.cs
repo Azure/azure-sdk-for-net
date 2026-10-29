@@ -123,6 +123,16 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("delegation"u8);
                 }
             }
+            if (Optional.IsCollectionDefined(Triggers))
+            {
+                writer.WritePropertyName("triggers"u8);
+                writer.WriteStartArray();
+                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Store))
             {
                 writer.WritePropertyName("store"u8);
@@ -182,6 +192,7 @@ namespace Azure.AI.Projects.Agents
             LiveInitialSessionAudioParam audio = default;
             bool delegationIsDefined = false;
             BinaryData delegation = default;
+            IList<LiveDecisionTriggerInputParam2> triggers = default;
             bool? store = default;
             LiveClientConfigParam client = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -237,6 +248,20 @@ namespace Azure.AI.Projects.Agents
                     delegation = prop.Value.GetUtf8Bytes();
                     continue;
                 }
+                if (prop.NameEquals("triggers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                    }
+                    triggers = array;
+                    continue;
+                }
                 if (prop.NameEquals("store"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -266,6 +291,7 @@ namespace Azure.AI.Projects.Agents
                 input ?? new ChangeTrackingList<LiveInitialItem>(),
                 audio,
                 delegation,
+                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(),
                 store,
                 client,
                 additionalBinaryDataProperties)

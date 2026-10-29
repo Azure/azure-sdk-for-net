@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct LiveClientEventType : IEquatable<LiveClientEventType>
     {
         private readonly string _value;
@@ -16,9 +18,13 @@ namespace Azure.AI.Projects.Agents
         private const string SessionInputAudioAppendValue = "session.input_audio.append";
         private const string SessionInputAudioMuteValue = "session.input_audio.mute";
         private const string SessionInputAudioUnmuteValue = "session.input_audio.unmute";
+        private const string SessionOutputAudioFixturePlayValue = "session.output_audio.fixture.play";
         private const string SessionInstructionsAppendValue = "session.instructions.append";
         private const string SessionThinkingAppendValue = "session.thinking.append";
         private const string SessionCommentaryAppendValue = "session.commentary.append";
+        private const string DecisionCreateValue = "decision.create";
+        private const string DecisionItemCreateValue = "decision.item.create";
+        private const string DecisionItemDeleteValue = "decision.item.delete";
         private const string ResponseItemCreateValue = "response.item.create";
         private const string ResponseCreateValue = "response.create";
         private const string SessionCloseValue = "session.close";
@@ -48,6 +54,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the SessionInputAudioUnmute. </summary>
         public static LiveClientEventType SessionInputAudioUnmute { get; } = new LiveClientEventType(SessionInputAudioUnmuteValue);
 
+        /// <summary> Gets the SessionOutputAudioFixturePlay. </summary>
+        public static LiveClientEventType SessionOutputAudioFixturePlay { get; } = new LiveClientEventType(SessionOutputAudioFixturePlayValue);
+
         /// <summary> Gets the SessionInstructionsAppend. </summary>
         public static LiveClientEventType SessionInstructionsAppend { get; } = new LiveClientEventType(SessionInstructionsAppendValue);
 
@@ -56,6 +65,15 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the SessionCommentaryAppend. </summary>
         public static LiveClientEventType SessionCommentaryAppend { get; } = new LiveClientEventType(SessionCommentaryAppendValue);
+
+        /// <summary> Gets the DecisionCreate. </summary>
+        public static LiveClientEventType DecisionCreate { get; } = new LiveClientEventType(DecisionCreateValue);
+
+        /// <summary> Gets the DecisionItemCreate. </summary>
+        public static LiveClientEventType DecisionItemCreate { get; } = new LiveClientEventType(DecisionItemCreateValue);
+
+        /// <summary> Gets the DecisionItemDelete. </summary>
+        public static LiveClientEventType DecisionItemDelete { get; } = new LiveClientEventType(DecisionItemDeleteValue);
 
         /// <summary> Gets the ResponseItemCreate. </summary>
         public static LiveClientEventType ResponseItemCreate { get; } = new LiveClientEventType(ResponseItemCreateValue);

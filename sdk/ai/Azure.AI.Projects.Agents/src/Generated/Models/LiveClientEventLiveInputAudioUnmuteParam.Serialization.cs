@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. </summary>
+    /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. An active audio fixture still pauses inference until playback finishes. </summary>
     public partial class LiveClientEventLiveInputAudioUnmuteParam : LiveClientEvent, IJsonModel<LiveClientEventLiveInputAudioUnmuteParam>
     {
         /// <param name="data"> The data to parse. </param>

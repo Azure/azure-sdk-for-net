@@ -4,17 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The LiveFunctionToolChoiceParam. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveFunctionToolChoiceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LiveFunctionToolChoiceParam"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the function tool to call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LiveFunctionToolChoiceParam(string name)
         {
@@ -24,8 +26,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveFunctionToolChoiceParam"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
+        /// <param name="type"> The tool to call. Always `function`. </param>
+        /// <param name="name"> The name of the function tool to call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LiveFunctionToolChoiceParam(string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,10 +36,10 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Type. </summary>
+        /// <summary> The tool to call. Always `function`. </summary>
         public string Type { get; } = "function";
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> The name of the function tool to call. </summary>
         public string Name { get; set; }
     }
 }

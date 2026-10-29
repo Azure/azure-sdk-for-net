@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A SIP DTMF keypress successfully sent by the hosted tool. Delivered only to sideband observers; this is not a client command. </summary>
+    /// <summary> A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command. </summary>
     public partial class LiveTransportDTMFSend : LiveServerEvent, IJsonModel<LiveTransportDTMFSend>
     {
         /// <summary> Initializes a new instance of <see cref="LiveTransportDTMFSend"/> for deserialization. </summary>
@@ -80,6 +80,11 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(EventId);
             writer.WritePropertyName("event"u8);
             writer.WriteStringValue(Event);
+            if (Optional.IsDefined(ClientEventId))
+            {
+                writer.WritePropertyName("client_event_id"u8);
+                writer.WriteStringValue(ClientEventId);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,6 +116,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string eventId = default;
             string @event = default;
+            string clientEventId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -128,12 +134,17 @@ namespace Azure.AI.Projects.Agents
                     @event = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("client_event_id"u8))
+                {
+                    clientEventId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveTransportDTMFSend(@type, additionalBinaryDataProperties, eventId, @event);
+            return new LiveTransportDTMFSend(@type, additionalBinaryDataProperties, eventId, @event, clientEventId);
         }
     }
 }

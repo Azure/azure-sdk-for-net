@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Returned when a session.input_audio.unmute command is accepted. Input audio is sent to the model again. </summary>
+    /// <summary> Acknowledges a session.input_audio.unmute command, removing the independent input mute. An active audio fixture still pauses inference until playback finishes. Fixture playback does not emit this event. </summary>
     [Experimental("AAIP001")]
     public partial class LiveServerEventLiveInputAudioUnmuted : LiveServerEvent
     {

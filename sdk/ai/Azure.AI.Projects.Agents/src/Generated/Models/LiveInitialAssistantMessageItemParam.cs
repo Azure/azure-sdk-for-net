@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An assistant message included in the initial text history of a Live session. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveInitialAssistantMessageItemParam : LiveInitialItem
     {
         private string _id;

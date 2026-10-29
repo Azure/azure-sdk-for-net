@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The LiveCustomVoiceParam. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveCustomVoiceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

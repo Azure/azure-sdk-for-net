@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Changes to an active Live session. Only delegation backend settings can be updated after startup. </summary>
+    /// <summary> Changes to an active Live session's delegation settings and transcript triggers. </summary>
+    [Experimental("AAIP001")]
     public partial class LiveSessionUpdateParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,14 +21,17 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveSessionUpdateParams"/>. </summary>
         public LiveSessionUpdateParams()
         {
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionUpdateParams"/>. </summary>
         /// <param name="delegation"></param>
+        /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionUpdateParams(BinaryData delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionUpdateParams(BinaryData delegation, IList<LiveDecisionTriggerInputParam2> triggers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _delegation = delegation;
+            Triggers = triggers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +48,9 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// <item>
         /// <description> <see cref="LiveResponsesDelegationUpdateParam"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LiveDecisionsDelegationUpdateParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -81,5 +89,8 @@ namespace Azure.AI.Projects.Agents
                 _delegationIsDefined = true;
             }
         }
+
+        /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
+        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
     }
 }

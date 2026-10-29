@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 using OpenAI.Realtime;
@@ -107,6 +108,39 @@ public class VoiceAgentUnitTests
 
         Assert.That(response.Status, Is.Null);
         Assert.That(response.OutputModalities, Is.Empty);
+    }
+
+    [Test]
+    public void RealtimeModelFactoryPreservesSoundscape()
+    {
+        VoiceAgentSoundscapeConfig soundscape = new();
+        VoiceAgentDefinition definition = ProjectsAgentsModelFactory.VoiceAgentDefinition(
+            model: "realtime-model", soundscape: soundscape);
+
+        Assert.That(definition.Soundscape, Is.SameAs(soundscape));
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
+        Assert.That(document.RootElement.GetProperty("soundscape").ValueKind, Is.EqualTo(JsonValueKind.Object));
+    }
+
+    [Test]
+    public void RealtimeModelFactoryKeepsExistingParameterOrderWhenAddingFields()
+    {
+        string[] originalParameters =
+        [
+            "contentFilterConfiguration", "modelType", "model", "conversationEngine", "instructions", "greeting", "audio",
+            "outputModalities", "internalMaxOutputTokens", "include", "interimResponse", "avatar", "tools", "internalToolChoice",
+            "parallelToolCalls", "structuredInputs", "subagentConfig", "store"
+        ];
+        string[] parameters = typeof(ProjectsAgentsModelFactory)
+            .GetMethod(nameof(ProjectsAgentsModelFactory.VoiceAgentDefinition))
+            .GetParameters().Select(parameter => parameter.Name).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(parameters.Take(originalParameters.Length), Is.EqualTo(originalParameters));
+            Assert.That(parameters.Skip(originalParameters.Length), Does.Contain("soundscape"));
+            Assert.That(parameters, Does.Not.Contain("kind").And.Not.Contain("subProtocol"));
+        });
     }
 
     [Test]

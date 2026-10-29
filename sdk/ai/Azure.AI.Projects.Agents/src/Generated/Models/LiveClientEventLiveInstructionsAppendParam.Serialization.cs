@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Append instructions to the Live conversation while it is running, optionally associating them with an existing client delegation. </summary>
+    /// <summary> Append developer instructions to the Live conversation while it is running, optionally associating them with an existing client delegation. Rejected while an audio fixture is active. These instructions remain in conversation history through compaction and are included in future backend delegations. For external audio, describe content already delivered so the assistant does not repeat it. </summary>
     public partial class LiveClientEventLiveInstructionsAppendParam : LiveClientEvent, IJsonModel<LiveClientEventLiveInstructionsAppendParam>
     {
         /// <summary> Initializes a new instance of <see cref="LiveClientEventLiveInstructionsAppendParam"/> for deserialization. </summary>

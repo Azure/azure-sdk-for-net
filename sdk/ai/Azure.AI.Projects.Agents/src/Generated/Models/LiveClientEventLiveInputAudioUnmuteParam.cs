@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. </summary>
+    /// <summary> Resume audio input to a Live model after muting it. The server acknowledges with `session.input_audio.unmuted`. An active audio fixture still pauses inference until playback finishes. </summary>
     [Experimental("AAIP001")]
     public partial class LiveClientEventLiveInputAudioUnmuteParam : LiveClientEvent
     {

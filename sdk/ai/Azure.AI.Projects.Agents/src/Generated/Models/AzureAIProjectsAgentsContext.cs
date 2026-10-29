@@ -78,6 +78,21 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentVersionFromCodeMetadata))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AnswerResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AnswerResource is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceChoice is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AnswerResourceChoice))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceChoice is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourcePredicate is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AnswerResourcePredicate))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourcePredicate is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceRefusal is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AnswerResourceRefusal))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceRefusal is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceScore is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AnswerResourceScore))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AnswerResourceScore is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolboxTool))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolIndex))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolOptions))]
@@ -92,6 +107,12 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionOptions))]
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
     [ModelReaderWriterBuildable(typeof(ChatTool))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ChoiceOptionParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ChoiceOptionParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ChoiceOptionParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ChoiceProbabilityResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ChoiceProbabilityResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ChoiceProbabilityResource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CodeConfiguration))]
     [ModelReaderWriterBuildable(typeof(CodeInterpreterToolboxTool))]
     [ModelReaderWriterBuildable(typeof(ContainerConfiguration))]
@@ -110,6 +131,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateTwilioTelephonyBindingContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.DecisionResult is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DecisionResult))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.DecisionResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DeclarativeAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(EvaluationAzureStandardVoiceModelConfiguration))]
@@ -134,20 +158,46 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.InputTokensDetailsResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InputTokensDetailsResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.InputTokensDetailsResource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InvocationsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveAllowedServerEventParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveAllowedServerEventParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveAllowedServerEventParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveAllowedToolsChoiceParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveAllowedToolsChoiceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveAllowedToolsChoiceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveApplyPatchToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveApplyPatchToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveApplyPatchToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveAudioFormat is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveAudioFormat))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveAudioFormat is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientConfigParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientConfigParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientConfigParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientDelegationParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientDelegationParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientDelegationParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEvent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEvent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEvent is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveCommentaryAppendParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEventLiveCommentaryAppendParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveCommentaryAppendParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionCreateParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveClientEventLiveDecisionCreateParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionCreateParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionItemCreateParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveClientEventLiveDecisionItemCreateParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionItemCreateParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionItemDeleteParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveClientEventLiveDecisionItemDeleteParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveDecisionItemDeleteParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveInputAudioAppendEvent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEventLiveInputAudioAppendEvent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveInputAudioAppendEvent is experimental and may change in future versions.
@@ -160,6 +210,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveInstructionsAppendParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEventLiveInstructionsAppendParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveInstructionsAppendParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveOutputAudioFixturePlayParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveClientEventLiveOutputAudioFixturePlayParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveOutputAudioFixturePlayParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveResponseCreateParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEventLiveResponseCreateParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveResponseCreateParam is experimental and may change in future versions.
@@ -175,41 +228,180 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveThinkingAppendParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveClientEventLiveThinkingAppendParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveClientEventLiveThinkingAppendParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveCodeInterpreterToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveCodeInterpreterToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveCodeInterpreterToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveComputerToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveComputerToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveComputerToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveContainerNetworkPolicyDisabledParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveContainerNetworkPolicyDisabledParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveContainerNetworkPolicyDisabledParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveContainerReferenceParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveContainerReferenceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveContainerReferenceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveContextWindowUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveContextWindowUsage))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveContextWindowUsage is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveCustomToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveCustomToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveCustomToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveCustomVoiceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveCustomVoiceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveCustomVoiceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDataChannelConfigParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDataChannelConfigParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDataChannelConfigParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionCompleted is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionCompleted))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionCompleted is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputImageParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionInputImageParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputImageParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputItemParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionInputItemParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputItemParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputTextParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionInputTextParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputTextParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionQuestionsInputParam2 is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionQuestionsInputParam2))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionQuestionsInputParam2 is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsDelegationParam2 is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionsDelegationParam2))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsDelegationParam2 is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsDelegationUpdateParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionsDelegationUpdateParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsDelegationUpdateParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsSettingsInputParam2 is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionsSettingsInputParam2))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsSettingsInputParam2 is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsSettingsUpdateParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionsSettingsUpdateParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionsSettingsUpdateParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionStoredInputItemParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionTriggerInputParam2 is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveDecisionTriggerInputParam2))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionTriggerInputParam2 is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegation is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDelegation))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegation is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDelegationReasoningInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegationReasoningInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegationTextInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDelegationTextInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDelegationTextInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveFileSearchToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveFileSearchToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveFileSearchToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveFunctionToolChoiceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveFunctionToolChoiceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveFunctionToolChoiceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveFunctionToolInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveFunctionToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveFunctionToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellContainerAutoParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveHostedShellContainerAutoParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellContainerAutoParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellNetworkPolicyAllowlistParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveHostedShellNetworkPolicyAllowlistParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellNetworkPolicyAllowlistParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveHostedShellToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveHostedShellToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveImageGenerationToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveImageGenerationToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveImageGenerationToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialAssistantMessageItemParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialAssistantMessageItemParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialAssistantMessageItemParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialDeveloperMessageItemParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialDeveloperMessageItemParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialDeveloperMessageItemParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialInputTextContentPartParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialOutputTextContentPartParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialOutputTextContentPartParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialOutputTextContentPartParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialSessionAudioOutputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialSessionAudioOutputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialSessionAudioOutputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialSessionAudioParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialSessionAudioParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialSessionAudioParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialTextContentPartParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialTextContentPartParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialTextContentPartParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialUserMessageItemParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInitialUserMessageItemParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInitialUserMessageItemParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInlineSkillParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveInlineSkillParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInlineSkillParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInlineSkillSourceParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveInlineSkillSourceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInlineSkillSourceParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveInputAudioAppend is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveInputAudioAppend))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveInputAudioAppend is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveLiveError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveLiveError))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveLiveError is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveLocalEnvironmentParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveLocalEnvironmentParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveLocalEnvironmentParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveLocalSkillParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveLocalSkillParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveLocalSkillParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveMCPToolChoiceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveMCPToolChoiceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveMCPToolChoiceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveMCPToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveMCPToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveMCPToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveNamespaceToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveNamespaceToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveNamespaceToolInputParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveOutputAudioDelta is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveOutputAudioDelta))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveOutputAudioDelta is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveProgrammaticToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveProgrammaticToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveProgrammaticToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveResponsesDelegationParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveResponsesDelegationSettingsInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsUpdateInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveResponsesDelegationSettingsUpdateInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationSettingsUpdateInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationUpdateParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveResponsesDelegationUpdateParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveResponsesDelegationUpdateParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEvent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEvent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEvent is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveCommentaryAppended is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEventLiveCommentaryAppended))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveCommentaryAppended is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionEvent is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveDecisionEvent))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionEvent is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionItemCreated is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveDecisionItemCreated))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionItemCreated is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionItemDeleted is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveDecisionItemDeleted))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDecisionItemDeleted is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDelegationCreated is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEventLiveDelegationCreated))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveDelegationCreated is experimental and may change in future versions.
@@ -231,6 +423,12 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveInstructionsAppended is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEventLiveInstructionsAppended))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveInstructionsAppended is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputAudioFixturePlayed is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveOutputAudioFixturePlayed))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputAudioFixturePlayed is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputAudioFixturePlaying is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveOutputAudioFixturePlaying))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputAudioFixturePlaying is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputTranscriptDelta is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEventLiveOutputTranscriptDelta))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveOutputTranscriptDelta is experimental and may change in future versions.
@@ -252,32 +450,84 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveThinkingAppended is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveServerEventLiveThinkingAppended))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveThinkingAppended is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportAnswered is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveTransportAnswered))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportAnswered is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportFailed is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveTransportFailed))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportFailed is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportRinging is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveServerEventLiveTransportRinging))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveServerEventLiveTransportRinging is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMAParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionAudioFormatPCMAParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMAParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionAudioFormatPCMParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMUParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionAudioFormatPCMUParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMUParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionCreateParams is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionCreateParams))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionCreateParams is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionStartEvent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionStartEvent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionStartEvent is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionUpdateParams is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionUpdateParams))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionUpdateParams is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveSessionUsage))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportAnswered is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(LiveTransportAnswered))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportAnswered is experimental and may change in future versions.
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSessionUsage is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSkillReferenceParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSkillReferenceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSkillReferenceParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificApplyPatchParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificApplyPatchParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificApplyPatchParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificCodeInterpreterParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificCodeInterpreterParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificCodeInterpreterParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificComputerParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificComputerParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificComputerParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificCustomToolParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificCustomToolParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificCustomToolParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificFileSearchParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificFileSearchParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificFileSearchParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificFunctionShellParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificFunctionShellParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificFunctionShellParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificImageGenParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificImageGenParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificImageGenParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificProgrammaticToolCallingParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificProgrammaticToolCallingParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificProgrammaticToolCallingParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificWebSearchParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificWebSearchParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificWebSearchParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificWebSearchPreviewParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveSpecificWebSearchPreviewParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveSpecificWebSearchPreviewParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveToolSearchToolInputParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(LiveToolSearchToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveToolSearchToolInputParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportCallError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveTransportCallError))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportCallError is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportDTMFReceived is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveTransportDTMFReceived))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportDTMFReceived is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportDTMFSend is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveTransportDTMFSend))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportDTMFSend is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportFailed is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(LiveTransportFailed))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportFailed is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportRinging is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(LiveTransportRinging))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveTransportRinging is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveWebSearchToolInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveWebSearchToolInputParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveWebSearchToolInputParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
@@ -294,6 +544,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OpenApiToolboxTool))]
     [ModelReaderWriterBuildable(typeof(OptimizationContext))]
     [ModelReaderWriterBuildable(typeof(OtlpTelemetryEndpoint))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OutputTokensDetailsResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(OutputTokensDetailsResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OutputTokensDetailsResource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PatchAgentOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectAgentSession))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentDefinition))]
@@ -306,6 +559,18 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PSTNTelephonyTransferDestination))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PSTNTelephonyTransferDestination is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.QuestionParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(QuestionParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.QuestionParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamChoice is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(QuestionParamChoice))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamChoice is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamPredicate is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(QuestionParamPredicate))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamPredicate is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamScore is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(QuestionParamScore))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.QuestionParamScore is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RaiInvocationModeration))]
     [ModelReaderWriterBuildable(typeof(RaiSseTextSelector))]
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeAudioFormat is experimental and may change in future versions.
@@ -340,6 +605,15 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ResponseItem))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponsesProtocolConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ResponseUsageResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ResponseUsageResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ResponseUsageResource is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ScoreLevelParam is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ScoreLevelParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ScoreLevelParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ScoreProbabilityResource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ScoreProbabilityResource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ScoreProbabilityResource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SessionConfiguration))]
     [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
     [ModelReaderWriterBuildable(typeof(SessionFileWriteResult))]
@@ -580,6 +854,18 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentServerVadTurnDetection))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentSoundscapeConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeSourceConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentSoundscapeSourceConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeSourceConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeTrackConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentSoundscapeTrackConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeTrackConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeWorkingTrackConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentSoundscapeWorkingTrackConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSoundscapeWorkingTrackConfig is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentStaticInterimResponseConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig is experimental and may change in future versions.
