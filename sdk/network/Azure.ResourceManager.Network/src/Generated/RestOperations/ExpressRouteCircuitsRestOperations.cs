@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetArpTableRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetArpTableExpressRouteCircuitRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRoutesTableRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetRoutesTableExpressRouteCircuitRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRoutesTableSummaryRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
+        internal HttpMessage CreateGetRoutesTableSummaryExpressRouteCircuitRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, string devicePath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetPeeringStatsRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, RequestContext context)
+        internal HttpMessage CreateGetPeeringStatsExpressRouteCircuitRequest(Guid subscriptionId, string resourceGroupName, string circuitName, string peeringName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

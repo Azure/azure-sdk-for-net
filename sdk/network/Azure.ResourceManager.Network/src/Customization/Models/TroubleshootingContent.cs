@@ -1,0 +1,32 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using Azure.Core;
+
+namespace Azure.ResourceManager.Network.Models
+{
+    public partial class TroubleshootingContent
+    {
+        // Preserve the released Uri constructor after StorageUri became the string-valued StoragePath.
+        // Forward to the generated constructor while hiding this compatibility overload from IntelliSense.
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
+        /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
+        /// <param name="storageId"> The storage account for troubleshooting output. </param>
+        /// <param name="storageUri"> The absolute storage URI. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
+            : this(targetResourceId, storageId, storageUri?.AbsoluteUri)
+        {
+        }
+
+        // Keep the native string path, including relative paths, behind the released URI facade.
+        /// <summary> Gets the storage path as an absolute or relative URI. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and might be removed in a future version, use StoragePath instead", false)]
+        public Uri StorageUri => StoragePath is null ? null : new Uri(StoragePath, UriKind.RelativeOrAbsolute);
+    }
+}

@@ -403,15 +403,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Post to List of Network Manager Deployment Status.
+        /// Lists active connectivity configurations in a network manager.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkManagers_NetworkManagerDeploymentStatusList. </description>
+        /// <description> NetworkManagers_ListActiveConnectivityConfigurations. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -423,36 +423,163 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NetworkManagerDeploymentStatusListResult>> GetAllAsync(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
+                CancellationToken = cancellationToken
+            };
+            return new ActiveConnectivityConfigurationAsyncCollectionResultOfT(
+                _networkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ActiveConfigurationContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetActiveConnectivityConfigurations");
+        }
+
+        /// <summary>
+        /// Lists active connectivity configurations in a network manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_ListActiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Active Configuration Parameter. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurations(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
             {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ActiveConnectivityConfigurationCollectionResultOfT(
+                _networkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ActiveConfigurationContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetActiveConnectivityConfigurations");
+        }
+
+        /// <summary>
+        /// Lists active security admin rules in a network manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_ListActiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Active Configuration Parameter. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRulesAsync(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActiveBaseSecurityAdminRuleAsyncCollectionResultOfT(
+                _networkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ActiveConfigurationContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetActiveSecurityAdminRules");
+        }
+
+        /// <summary>
+        /// Lists active security admin rules in a network manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_ListActiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Active Configuration Parameter. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRules(ActiveConfigurationContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActiveBaseSecurityAdminRuleCollectionResultOfT(
+                _networkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ActiveConfigurationContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetActiveSecurityAdminRules");
         }
 
         /// <summary>
@@ -480,32 +607,69 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NetworkManagerDeploymentStatusListResult> GetAll(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
+                CancellationToken = cancellationToken
+            };
+            return new NetworkManagerDeploymentStatusAsyncCollectionResultOfT(
+                _networkManagerDeploymentStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagerDeploymentStatusContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetNetworkManagerDeploymentStatus");
+        }
+
+        /// <summary>
+        /// Post to List of Network Manager Deployment Status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_NetworkManagerDeploymentStatusList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="Models.NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
             {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new NetworkManagerDeploymentStatusCollectionResultOfT(
+                _networkManagerDeploymentStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagerDeploymentStatusContent.ToRequestContent(content),
+                top,
+                context,
+                "NetworkManagerResource.GetNetworkManagerDeploymentStatus");
         }
 
         /// <summary>
@@ -533,11 +697,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerCommit"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkManagerCommit>> PostAsync(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkManagerCommit>> PostNetworkManagerCommitAsync(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
-            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.Post");
+            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.PostNetworkManagerCommit");
             scope.Start();
             try
             {
@@ -545,7 +709,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagerCommitsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
+                HttpMessage message = _networkManagerCommitsRestClient.CreatePostNetworkManagerCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NetworkManagerCommit> operation = new NetworkArmOperation<NetworkManagerCommit>(
                     new NetworkManagerCommitOperationSource(),
@@ -592,11 +756,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerCommit"/> is null. </exception>
-        public virtual ArmOperation<NetworkManagerCommit> Post(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkManagerCommit> PostNetworkManagerCommit(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
-            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.Post");
+            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.PostNetworkManagerCommit");
             scope.Start();
             try
             {
@@ -604,7 +768,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkManagerCommitsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
+                HttpMessage message = _networkManagerCommitsRestClient.CreatePostNetworkManagerCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NetworkManagerCommit> operation = new NetworkArmOperation<NetworkManagerCommit>(
                     new NetworkManagerCommitOperationSource(),

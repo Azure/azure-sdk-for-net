@@ -5,24 +5,18 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableNetworkArmClient : ArmResource
     {
-        private ClientDiagnostics _vipSwapClientDiagnostics;
-        private VipSwap _vipSwapRestClient;
-
         /// <summary> Initializes a new instance of MockableNetworkArmClient for mocking. </summary>
         protected MockableNetworkArmClient()
         {
@@ -34,10 +28,6 @@ namespace Azure.ResourceManager.Network.Mocking
         internal MockableNetworkArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics VipSwapClientDiagnostics => _vipSwapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -109,6 +99,24 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             ExpressRouteProviderPortResource.ValidateResourceId(id);
             return new ExpressRouteProviderPortResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="NetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
+        public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
+        {
+            NetworkInterfaceResource.ValidateResourceId(id);
+            return new NetworkInterfaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PublicIPAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublicIPAddressResource"/> object. </returns>
+        public virtual PublicIPAddressResource GetPublicIPAddressResource(ResourceIdentifier id)
+        {
+            PublicIPAddressResource.ValidateResourceId(id);
+            return new PublicIPAddressResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DdosCustomPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1341,102 +1349,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VirtualMachineScaleSetNetworkInterfaceResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetNetworkInterfaceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets the list of SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SwapResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SwapResourceListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = VipSwapClientDiagnostics.CreateScope("MockableNetworkArmClient.GetAll");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SwapResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SwapResourceListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = VipSwapClientDiagnostics.CreateScope("MockableNetworkArmClient.GetAll");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
     }
 }

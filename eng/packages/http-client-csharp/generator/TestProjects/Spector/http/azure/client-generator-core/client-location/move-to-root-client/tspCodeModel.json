@@ -24,7 +24,6 @@
             "$id": "3",
             "name": "getHealthStatus",
             "isExactName": false,
-            "resourceName": "ResourceOperations",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -111,7 +110,6 @@
                 "$id": "9",
                 "name": "getResource",
                 "isExactName": false,
-                "resourceName": "ResourceOperations",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

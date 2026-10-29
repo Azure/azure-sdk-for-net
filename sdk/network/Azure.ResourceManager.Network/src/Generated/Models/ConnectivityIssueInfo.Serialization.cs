@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityIssueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ConnectivityIssueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Contexts))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();
-                foreach (IDictionary<string, string> item in Context)
+                foreach (IDictionary<string, string> item in Contexts)
                 {
                     if (item == null)
                     {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             IssueOrigin? origin = default;
             IssueSeverity? severity = default;
-            ConnectivityIssueType? @type = default;
-            IReadOnlyList<IDictionary<string, string>> context = default;
+            ConnectivityIssueType? connectivityIssueType = default;
+            IReadOnlyList<IDictionary<string, string>> contexts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = new ConnectivityIssueType(prop.Value.GetString());
+                    connectivityIssueType = new ConnectivityIssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("context"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(dictionary);
                         }
                     }
-                    context = array;
+                    contexts = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectivityIssueInfo(origin, severity, @type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), additionalBinaryDataProperties);
+            return new ConnectivityIssueInfo(origin, severity, connectivityIssueType, contexts ?? new ChangeTrackingList<IDictionary<string, string>>(), additionalBinaryDataProperties);
         }
     }
 }

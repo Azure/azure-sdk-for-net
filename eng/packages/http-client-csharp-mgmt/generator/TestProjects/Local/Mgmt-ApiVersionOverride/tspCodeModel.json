@@ -2269,7 +2269,6 @@
                 "$id": "160",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "EscapedWireVersionTest",
                 "doc": "Get a EscapedWireVersionTest",
                 "accessibility": "public",
                 "parameters": [
@@ -2689,7 +2688,6 @@
                 "$id": "182",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "EscapedWireVersionTest",
                 "doc": "List EscapedWireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -2923,7 +2921,6 @@
                 "$id": "193",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "EscapedWireVersionTest",
                 "doc": "List EscapedWireVersionTest resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -3312,7 +3309,6 @@
                 "$id": "212",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "WireVersionTest",
                 "doc": "Get a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
@@ -3770,7 +3766,6 @@
                 "$id": "237",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "WireVersionTest",
                 "doc": "List WireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -4004,7 +3999,6 @@
                 "$id": "248",
                 "name": "listByResourceGroup",
                 "isExactName": false,
-                "resourceName": "WireVersionTest",
                 "doc": "List WireVersionTest resources by resource group",
                 "accessibility": "public",
                 "parameters": [
@@ -4337,7 +4331,6 @@
                 "$id": "263",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "WireVersionTest",
                 "doc": "Create a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
@@ -4834,7 +4827,6 @@
                 "$id": "286",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "WireVersionTest",
                 "doc": "Update a WireVersionTest",
                 "accessibility": "public",
                 "parameters": [
@@ -5313,7 +5305,6 @@
                 "$id": "309",
                 "name": "ping",
                 "isExactName": false,
-                "resourceName": "WireVersionActions",
                 "doc": "A synchronous resource action.",
                 "accessibility": "public",
                 "parameters": [
@@ -5693,7 +5684,6 @@
                 "$id": "328",
                 "name": "checkWireVersion",
                 "isExactName": false,
-                "resourceName": "WireVersionProviderActions",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
@@ -5963,7 +5953,6 @@
                 "$id": "344",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "OrdinaryWireVersionTest",
                 "doc": "Get a OrdinaryWireVersionTest",
                 "accessibility": "public",
                 "parameters": [
@@ -6417,7 +6406,6 @@
                 "$id": "369",
                 "name": "listBySubscription",
                 "isExactName": false,
-                "resourceName": "OrdinaryWireVersionTest",
                 "doc": "List OrdinaryWireVersionTest resources by subscription ID",
                 "accessibility": "public",
                 "parameters": [
@@ -6703,7 +6691,6 @@
                 "$id": "384",
                 "name": "checkOrdinaryWireVersion",
                 "isExactName": false,
-                "resourceName": "OrdinaryWireVersionProviderActions",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [

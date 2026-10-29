@@ -1,0 +1,3 @@
+# Obsolete experimental types no longer implicitly suppress experimental dependencies.
+[Generated/Models/BrowserAutomationPreviewTool{,.Serialization}.cs]
+dotnet_diagnostic.OPENAI001.severity = none
