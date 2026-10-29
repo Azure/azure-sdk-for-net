@@ -4,7 +4,18 @@
 
 ### Features Added
 
+- Upgraded the Compute API version to `2026-04-01` and the ComputeGallery API version to `2026-03-03`, aligning with `Azure.ResourceManager.Compute`.
+- Added `VirtualMachineDiagnosticRunCommand` and `VirtualMachineScaleSetVMDiagnosticRunCommand` resources.
+- Added `VirtualMachine.FlexPreferredVmSize` for configuring FlexProfile preferred VM sizes.
+- Added `PrivateIPAddressPrefixLength` to `VirtualMachineNetworkInterfaceIPConfiguration` and `VirtualMachineScaleSetIPConfiguration`.
+- Added support for gallery image metadata and data disk security profiles, capacity reservation state and utilization details, and secrets provisioning settings.
+
 ### Breaking Changes
+
+- Replaced `VirtualMachine.CapacityReservationGroupId` and `VirtualMachineScaleSetVmProfile.CapacityReservationGroupId` with `CapacityReservation.CapacityReservationGroupId`.
+- Replaced `VirtualMachineScaleSetVmProfile.HardwareVmSizeProperties` with `HardwareProfile.VmSizeProperties`.
+- Replaced `GalleryImageVersion.SecurityUefiSettings` with `SecurityProfile.UefiSettings`.
+- Replaced `GalleryResource.IsSoftDeleteEnabled` with `SoftDeletePolicy.IsSoftDeleteEnabled`.
 
 ### Bugs Fixed
 

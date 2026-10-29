@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Compute
     internal partial class VirtualMachineProperties : ProvisionableConstruct
     {
         private VirtualMachineHardwareProfile _hardwareProfile;
+        private FlexProfile _flexProfile;
         private ScheduledEventsPolicy _scheduledEventsPolicy;
         private VirtualMachineStorageProfile _storageProfile;
         private AdditionalCapabilities _additionalCapabilities;
@@ -62,6 +63,21 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 AssignOrReplace(ref _hardwareProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the FlexProfile. </summary>
+        internal FlexProfile FlexProfile
+        {
+            get
+            {
+                Initialize();
+                return _flexProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _flexProfile, value);
             }
         }
 
@@ -396,7 +412,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the CapacityReservation. </summary>
-        internal CapacityReservationProfile CapacityReservation
+        public CapacityReservationProfile CapacityReservation
         {
             get
             {
@@ -462,6 +478,23 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 AssignOrReplace(ref _resiliencyProfile, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreferredVmSize. </summary>
+        public BicepValue<string> FlexPreferredVmSize
+        {
+            get
+            {
+                return FlexProfile is null ? default : FlexProfile.PreferredVmSize;
+            }
+            set
+            {
+                if (FlexProfile is null)
+                {
+                    FlexProfile = new FlexProfile();
+                }
+                FlexProfile.PreferredVmSize = value;
             }
         }
 
@@ -585,23 +618,6 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> CapacityReservationGroupId
-        {
-            get
-            {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (CapacityReservation is null)
-                {
-                    CapacityReservation = new CapacityReservationProfile();
-                }
-                CapacityReservation.CapacityReservationGroupId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> InterconnectBlockId
         {
             get
@@ -657,6 +673,7 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _hardwareProfile = DefineModelProperty<VirtualMachineHardwareProfile>(nameof(HardwareProfile), new string[] { "hardwareProfile" });
+            _flexProfile = DefineModelProperty<FlexProfile>(nameof(FlexProfile), new string[] { "flexProfile" });
             _scheduledEventsPolicy = DefineModelProperty<ScheduledEventsPolicy>(nameof(ScheduledEventsPolicy), new string[] { "scheduledEventsPolicy" });
             _storageProfile = DefineModelProperty<VirtualMachineStorageProfile>(nameof(StorageProfile), new string[] { "storageProfile" });
             _additionalCapabilities = DefineModelProperty<AdditionalCapabilities>(nameof(AdditionalCapabilities), new string[] { "additionalCapabilities" });
