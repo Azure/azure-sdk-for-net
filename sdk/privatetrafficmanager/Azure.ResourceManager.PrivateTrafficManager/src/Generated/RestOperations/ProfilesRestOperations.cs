@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles/", false);
             uri.AppendPath(privateTrafficManagerProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles/", false);
             uri.AppendPath(privateTrafficManagerProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +102,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles/", false);
             uri.AppendPath(privateTrafficManagerProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -115,7 +124,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles/", false);
             uri.AppendPath(privateTrafficManagerProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +148,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +172,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-01-preview");
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +192,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/privateTrafficManagerProfiles", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +216,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-01-preview");
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

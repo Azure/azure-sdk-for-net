@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Custom header name and value. </summary>
-    public partial class ProbeCustomHeader
+    public partial class PrivateTrafficManagerProbeCustomHeader
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProbeCustomHeader"/>. </summary>
-        public ProbeCustomHeader()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProbeCustomHeader"/>. </summary>
+        public PrivateTrafficManagerProbeCustomHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProbeCustomHeader"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProbeCustomHeader"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProbeCustomHeader(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerProbeCustomHeader(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> Class representing the health policy for Traffic Manager profile properties. </summary>
-    public partial class HealthPolicyProperties
+    public partial class PrivateTrafficManagerHealthPolicyProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthPolicyProperties"/>. </summary>
-        public HealthPolicyProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerHealthPolicyProperties"/>. </summary>
+        public PrivateTrafficManagerHealthPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthPolicyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerHealthPolicyProperties"/>. </summary>
         /// <param name="probeConfig"> Probe monitoring settings of the Traffic Manager profile. Only applicable when the parent health policy `kind` is `Probe`. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthPolicyProperties(ProbeConfig probeConfig, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateTrafficManagerHealthPolicyProperties(PrivateTrafficManagerProbeConfig probeConfig, PrivateTrafficManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProbeConfig = probeConfig;
             ProvisioningState = provisioningState;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> Probe monitoring settings of the Traffic Manager profile. Only applicable when the parent health policy `kind` is `Probe`. </summary>
-        public ProbeConfig ProbeConfig { get; set; }
+        public PrivateTrafficManagerProbeConfig ProbeConfig { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public PrivateTrafficManagerProvisioningState? ProvisioningState { get; }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.PrivateTrafficManager;
 namespace Azure.ResourceManager.PrivateTrafficManager.Models
 {
     /// <summary> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </summary>
-    public readonly partial struct ProbeProtocol : IEquatable<ProbeProtocol>
+    public readonly partial struct PrivateTrafficManagerProbeProtocol : IEquatable<PrivateTrafficManagerProbeProtocol>
     {
         private readonly string _value;
         /// <summary> Hypertext Transfer Protocol for health probing. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Transmission Control Protocol for health probing. </summary>
         private const string TcpValue = "TCP";
 
-        /// <summary> Initializes a new instance of <see cref="ProbeProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateTrafficManagerProbeProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProbeProtocol(string value)
+        public PrivateTrafficManagerProbeProtocol(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> Hypertext Transfer Protocol for health probing. </summary>
-        public static ProbeProtocol Http { get; } = new ProbeProtocol(HttpValue);
+        public static PrivateTrafficManagerProbeProtocol Http { get; } = new PrivateTrafficManagerProbeProtocol(HttpValue);
 
         /// <summary> Hypertext Transfer Protocol Secure for health probing. </summary>
-        public static ProbeProtocol Https { get; } = new ProbeProtocol(HttpsValue);
+        public static PrivateTrafficManagerProbeProtocol Https { get; } = new PrivateTrafficManagerProbeProtocol(HttpsValue);
 
         /// <summary> Transmission Control Protocol for health probing. </summary>
-        public static ProbeProtocol Tcp { get; } = new ProbeProtocol(TcpValue);
+        public static PrivateTrafficManagerProbeProtocol Tcp { get; } = new PrivateTrafficManagerProbeProtocol(TcpValue);
 
-        /// <summary> Determines if two <see cref="ProbeProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerProbeProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProbeProtocol left, ProbeProtocol right) => left.Equals(right);
+        public static bool operator ==(PrivateTrafficManagerProbeProtocol left, PrivateTrafficManagerProbeProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProbeProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PrivateTrafficManagerProbeProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProbeProtocol left, ProbeProtocol right) => !left.Equals(right);
+        public static bool operator !=(PrivateTrafficManagerProbeProtocol left, PrivateTrafficManagerProbeProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerProbeProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProbeProtocol(string value) => new ProbeProtocol(value);
+        public static implicit operator PrivateTrafficManagerProbeProtocol(string value) => new PrivateTrafficManagerProbeProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PrivateTrafficManagerProbeProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProbeProtocol?(string value) => value == null ? null : new ProbeProtocol(value);
+        public static implicit operator PrivateTrafficManagerProbeProtocol?(string value) => value == null ? null : new PrivateTrafficManagerProbeProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProbeProtocol other && Equals(other);
+        public override bool Equals(object obj) => obj is PrivateTrafficManagerProbeProtocol other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProbeProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PrivateTrafficManagerProbeProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
