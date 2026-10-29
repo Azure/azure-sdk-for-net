@@ -26,7 +26,7 @@ Repo-local adapters can customize it without copying that infrastructure:
 | `artifactNamespace` | Optional track namespace, e.g. `forced`. Common adds the separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>`. Empty preserves existing names. Configure the matching summary with the same namespace. |
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
-| `azureSubscription` | Existing invoke service-connection setting, also forwarded by the stage/job when using the common invoke template. |
+| `azureSubscription` | Caller-owned Azure service connection, forwarded by the stage/job to the common invoke template. Defaults to empty. Required when `UseAzSdkAuthentication: true`; unauthenticated runs need no connection. |
 | `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
 
 Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
@@ -45,6 +45,9 @@ array is empty. A custom template opting into a non-empty array must declare its
 own `vallyArguments` parameter; otherwise template compilation rejects it.
 
 Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
+Authenticated callers must explicitly configure `azureSubscription`; common has
+no deployment-specific connection fallback. An empty or whitespace-only value
+fails with a configuration error without creating an `AzureCLI@2` task.
 Do not replace authentication, result collection or retry/completeness checks.
 Supplementary reports must not rewrite JUnit thresholds or raw results.
 

@@ -10,6 +10,58 @@ import { after, before, describe, it } from "node:test";
 import { getVallyShardVerdict } from "../lib/verdict.ts";
 import { parseArgs, runShard, validateVallyArguments } from "../invoke-eval-shard.ts";
 import { spawnSync } from "node:child_process";
+import { parse as parseYaml } from "yaml";
+
+describe("eval template authentication contract", () => {
+  const load = (relative: string) => parseYaml(fs.readFileSync(new URL(relative, import.meta.url), "utf8"));
+  const invoke = load("../../../pipelines/templates/steps/eval-invoke.yml");
+
+  it("keeps the service connection optional and empty in every common template layer", () => {
+    for (const template of [invoke,
+      load("../../../pipelines/templates/jobs/eval-shard.yml"),
+      load("../../../pipelines/templates/stages/archetype-eval.yml")]) {
+      assert.equal(template.parameters.find((parameter: { name: string }) => parameter.name === "azureSubscription").default, "");
+      assert.equal(template.parameters.find((parameter: { name: string }) => parameter.name === "UseAzSdkAuthentication").default, false);
+    }
+  });
+
+  it("rejects empty authenticated configuration without emitting an AzureCLI task", () => {
+    const steps = invoke.steps[0]["${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}"];
+    assert.equal(steps.length, 1);
+    assert.equal(steps[0].task, undefined);
+    assert.match(steps[0].script, /##vso\[task\.logissue type=error\].*azureSubscription.*UseAzSdkAuthentication/);
+    assert.match(steps[0].script, /exit 1/);
+  });
+
+  it("uses only the caller's connection for authentication and none for unauthenticated runs", () => {
+    const authenticated = invoke.steps[1]["${{ elseif parameters.UseAzSdkAuthentication }}"];
+    assert.equal(authenticated.length, 1);
+    assert.equal(authenticated[0].task, "AzureCLI@2");
+    assert.equal(authenticated[0].inputs.azureSubscription, "${{ parameters.azureSubscription }}");
+    const unauthenticated = invoke.steps[2]["${{ else }}"];
+    assert.equal(unauthenticated.length, 1);
+    assert.equal(unauthenticated[0].task, undefined);
+    assert.match(unauthenticated[0].script, /invoke-eval-shard\.ts/);
+    assert.equal(unauthenticated[0].inputs?.azureSubscription, undefined);
+    for (const step of [authenticated[0], unauthenticated[0]]) {
+      assert.equal(step.env.VALLY_ARGUMENTS_JSON, "${{ convertToJson(parameters.vallyArguments) }}");
+      assert.equal(step.env.COPILOT_GITHUB_TOKEN, "$(COPILOT_GITHUB_TOKEN)");
+    }
+  });
+
+  it("keeps the existing live entrypoint's connection explicit and forwards caller configuration", () => {
+    const live = load("../../../pipelines/live-eval.yml").extends.parameters;
+    assert.equal(live.UseAzSdkAuthentication, true);
+    assert.equal(live.azureSubscription, "opensource-api-connection");
+    const stage = load("../../../pipelines/templates/stages/archetype-eval.yml");
+    const job = stage.extends.parameters.stages.find((entry: { stage: string }) => entry.stage === "Eval").jobs[0];
+    assert.equal(job.parameters.azureSubscription, "${{ parameters.azureSubscription }}");
+    const shard = load("../../../pipelines/templates/jobs/eval-shard.yml");
+    const invokeStep = shard.jobs[0].steps.find((step: { template?: string }) => step.template === "${{ parameters.evalInvokeTemplate }}");
+    const commonParameters = invokeStep.parameters["${{ if eq(parameters.evalInvokeTemplate, '/eng/common/pipelines/templates/steps/eval-invoke.yml') }}"];
+    assert.equal(commonParameters.azureSubscription, "${{ parameters.azureSubscription }}");
+  });
+});
 
 describe("supplementary Vally arguments", () => {
   it("accepts only supported option/value pairs without splitting values", () => {

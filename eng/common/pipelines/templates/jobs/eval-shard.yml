@@ -22,8 +22,9 @@ parameters:
     type: object
     default: []
   - name: azureSubscription
+    # Caller-owned service connection; required by the common authenticated invoke template.
     type: string
-    default: opensource-api-connection
+    default: ''
   - name: UseAzSdkAuthentication
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
