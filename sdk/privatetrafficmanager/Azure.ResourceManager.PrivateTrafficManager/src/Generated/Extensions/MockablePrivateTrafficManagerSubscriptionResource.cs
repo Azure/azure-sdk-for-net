@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateTrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateTrafficManagerProfiles", out string apiVersion) ? apiVersion : "2026-10-01-preview");
 
         private ClientDiagnostics TopologyMapsClientDiagnostics => _topologyMapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateTrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TopologyMaps TopologyMapsRestClient => _topologyMapsRestClient ??= new TopologyMaps(TopologyMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01-preview");
+        private TopologyMaps TopologyMapsRestClient => _topologyMapsRestClient ??= new TopologyMaps(TopologyMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/topologyMaps", out string apiVersion0) ? apiVersion0 : "2026-10-01-preview");
 
         /// <summary>
         /// Lists all Private Traffic Manager profiles within a subscription.
