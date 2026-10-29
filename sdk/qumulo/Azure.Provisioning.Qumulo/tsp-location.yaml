@@ -1,0 +1,4 @@
+directory: specification/liftrqumulo/resource-manager/Qumulo.Storage/QumuloStorage
+commit: 9d1b04b26b4a26ce35b7f2f06598babfbc9f2e3d
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
