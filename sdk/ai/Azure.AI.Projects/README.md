@@ -68,6 +68,9 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 
 To use Azure AI Projects capabilities, you must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). This will allow you to create an Azure AI resource and get a connection URL.
 
+* A [project in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/how-to/create-projects).
+* An [Application Insights resource connected to your Foundry project](https://learn.microsoft.com/azure/foundry/observability/how-to/trace-agent-setup) for agent tracing.
+
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
@@ -131,6 +134,8 @@ demonstrates streaming PCM input and output while logging actual byte counts.
 ### Performing Agent operations
 
 Azure.AI.Projects can be used to create, update and delete Agents.
+
+For setup, see [Quickstart: Set up Microsoft Foundry resources](https://learn.microsoft.com/azure/foundry/tutorials/quickstart-create-foundry-resources).
 
 Create Agent
 
