@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added support for managing metric namespaces and metric configurations in Azure Monitor Workspaces.
+- Added support for managing trace containers in Azure Monitor Workspaces and trace associations at resource, resource group, and subscription scopes.
+
 ### Breaking Changes
 
 ### Bugs Fixed
