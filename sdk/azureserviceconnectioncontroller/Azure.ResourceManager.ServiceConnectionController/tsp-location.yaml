@@ -1,0 +1,6 @@
+directory: specification/azureserviceconnectioncontroller/resource-manager/Microsoft.Network/AzureServiceConnectionController
+commit: a02a63421f5b22d1bda64ea831dbf7e362834450
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

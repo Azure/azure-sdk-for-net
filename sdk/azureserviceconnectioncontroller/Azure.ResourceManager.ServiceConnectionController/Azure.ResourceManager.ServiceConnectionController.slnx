@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ServiceConnectionController.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ServiceConnectionController.Tests.csproj" />
+</Solution>
