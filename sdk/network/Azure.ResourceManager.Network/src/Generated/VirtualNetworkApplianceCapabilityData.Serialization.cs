@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Nat64Capability"/>, <see cref="PLGatewayCapability"/>, <see cref="PLGatewayFastpathCapability"/>, and <see cref="PLIPForwardersCapability"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVirtualNetworkApplianceCapability))]
-    public abstract partial class VirtualNetworkApplianceCapabilityData : ProxyResourceVirtualNetworkApplianceCapabilityProperties, IJsonModel<VirtualNetworkApplianceCapabilityData>
+    public abstract partial class VirtualNetworkApplianceCapabilityData : VirtualNetworkApplianceCapabilityBaseData, IJsonModel<VirtualNetworkApplianceCapabilityData>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceCapabilityData"/> for deserialization. </summary>
         internal VirtualNetworkApplianceCapabilityData()

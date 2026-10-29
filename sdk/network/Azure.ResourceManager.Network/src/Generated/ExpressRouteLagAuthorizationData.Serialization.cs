@@ -8,19 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> ExpressRoute Lag Authorization. </summary>
-    public partial class ExpressRouteLagAuthorizationData : ProxyResourceWithReadOnlyID, IJsonModel<ExpressRouteLagAuthorizationData>
+    public partial class ExpressRouteLagAuthorizationData : ResourceData, IJsonModel<ExpressRouteLagAuthorizationData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResourceWithReadOnlyID PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLagAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLagAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,6 +106,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -112,7 +129,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResourceWithReadOnlyID JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLagAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -133,10 +150,11 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             ExpressRouteLagAuthorizationPropertiesFormat properties = default;
             string eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -155,7 +173,20 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -180,10 +211,11 @@ namespace Azure.ResourceManager.Network
             return new ExpressRouteLagAuthorizationData(
                 id,
                 name,
-                @type,
-                additionalBinaryDataProperties,
+                resourceType,
+                systemData,
                 properties,
-                eTag);
+                eTag,
+                additionalBinaryDataProperties);
         }
     }
 }

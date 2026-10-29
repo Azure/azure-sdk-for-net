@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Tests
             data.Status = null;
             Assert.That(data.Status, Is.EqualTo(status));
             Assert.That(typeof(NetworkSecurityPerimeterLinkReferenceData).GetProperty("Status")
-                .GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never));
+                .GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
         }
 
         [Test]

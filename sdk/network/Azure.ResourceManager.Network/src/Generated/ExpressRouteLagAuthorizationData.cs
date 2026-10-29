@@ -8,29 +8,35 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> ExpressRoute Lag Authorization. </summary>
-    public partial class ExpressRouteLagAuthorizationData : ProxyResourceWithReadOnlyID
+    public partial class ExpressRouteLagAuthorizationData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLagAuthorizationData"/>. </summary>
         public ExpressRouteLagAuthorizationData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLagAuthorizationData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> ExpressRouteLag authorization properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ExpressRouteLagAuthorizationData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagAuthorizationPropertiesFormat properties, string eTag) : base(id, name, @type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteLagAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteLagAuthorizationPropertiesFormat properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ExpressRouteLag authorization properties. </summary>

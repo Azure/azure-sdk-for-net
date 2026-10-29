@@ -17,51 +17,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class ProxyResourceVirtualNetworkApplianceCapabilityProperties : ResourceData, IJsonModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>
+    public partial class VirtualNetworkApplianceCapabilityBaseData : ResourceData, IJsonModel<VirtualNetworkApplianceCapabilityBaseData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProxyResourceVirtualNetworkApplianceCapabilityProperties(document.RootElement, options);
+                        return DeserializeVirtualNetworkApplianceCapabilityBaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxyResourceVirtualNetworkApplianceCapabilityProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkApplianceCapabilityBaseData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProxyResourceVirtualNetworkApplianceCapabilityProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkApplianceCapabilityBaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyResourceVirtualNetworkApplianceCapabilityProperties IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProxyResourceVirtualNetworkApplianceCapabilityProperties)PersistableModelCreateCore(data, options);
+        VirtualNetworkApplianceCapabilityBaseData IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualNetworkApplianceCapabilityBaseData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualNetworkApplianceCapabilityBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyResourceVirtualNetworkApplianceCapabilityProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkApplianceCapabilityBaseData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyResourceVirtualNetworkApplianceCapabilityProperties IJsonModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProxyResourceVirtualNetworkApplianceCapabilityProperties)JsonModelCreateCore(ref reader, options);
+        VirtualNetworkApplianceCapabilityBaseData IJsonModel<VirtualNetworkApplianceCapabilityBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualNetworkApplianceCapabilityBaseData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyResourceVirtualNetworkApplianceCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyResourceVirtualNetworkApplianceCapabilityProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkApplianceCapabilityBaseData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyResourceVirtualNetworkApplianceCapabilityProperties(document.RootElement, options);
+            return DeserializeVirtualNetworkApplianceCapabilityBaseData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProxyResourceVirtualNetworkApplianceCapabilityProperties DeserializeProxyResourceVirtualNetworkApplianceCapabilityProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualNetworkApplianceCapabilityBaseData DeserializeVirtualNetworkApplianceCapabilityBaseData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProxyResourceVirtualNetworkApplianceCapabilityProperties(
+            return new VirtualNetworkApplianceCapabilityBaseData(
                 id,
                 name,
                 resourceType,

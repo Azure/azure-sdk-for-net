@@ -4741,21 +4741,23 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ExpressRoute Lag Authorization. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> ExpressRouteLag authorization properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLagAuthorizationData"/> instance for mocking. </returns>
-        public static ExpressRouteLagAuthorizationData ExpressRouteLagAuthorizationData(ResourceIdentifier id = default, string name = default, string @type = default, ExpressRouteLagAuthorizationPropertiesFormat properties = default, string eTag = default)
+        public static ExpressRouteLagAuthorizationData ExpressRouteLagAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExpressRouteLagAuthorizationPropertiesFormat properties = default, string eTag = default)
         {
             return new ExpressRouteLagAuthorizationData(
                 id,
                 name,
-                @type,
-                default,
+                resourceType,
+                systemData,
                 properties,
-                eTag);
+                eTag,
+                default);
         }
 
         /// <summary> ExpressRoute Lag Authorization Properties. </summary>
@@ -4766,16 +4768,6 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteLagAuthorizationPropertiesFormat ExpressRouteLagAuthorizationPropertiesFormat(ExpressRouteLagAuthorizationUseStatus? authorizationUseStatus = default, string circuitResourceUri = default, NetworkProvisioningState? provisioningState = default)
         {
             return new ExpressRouteLagAuthorizationPropertiesFormat(authorizationUseStatus, circuitResourceUri, provisioningState, default);
-        }
-
-        /// <summary> Proxy resource representation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <returns> A new <see cref="Models.ProxyResourceWithReadOnlyID"/> instance for mocking. </returns>
-        public static ProxyResourceWithReadOnlyID ProxyResourceWithReadOnlyID(ResourceIdentifier id = default, string name = default, string @type = default)
-        {
-            return new ProxyResourceWithReadOnlyID(id, name, @type, default);
         }
 
         /// <summary> ExpressRouteLag Update Tags or Identity Request. </summary>
@@ -6458,17 +6450,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The commit resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> The Commit properties. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.NetworkManagerConfigurationCommitData"/> instance for mocking. </returns>
-        public static NetworkManagerConfigurationCommitData NetworkManagerConfigurationCommitData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, CommitProperties properties = default, SystemData systemData = default)
+        public static NetworkManagerConfigurationCommitData NetworkManagerConfigurationCommitData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, CommitProperties properties = default, SystemData systemData = default)
         {
             return new NetworkManagerConfigurationCommitData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties,
@@ -6506,12 +6498,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Proxy resource representation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.NetworkChildResourceData"/> instance for mocking. </returns>
-        public static NetworkChildResourceData NetworkChildResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        public static NetworkChildResourceData NetworkChildResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default)
         {
-            return new NetworkChildResourceData(id, name, @type, eTag, default);
+            return new NetworkChildResourceData(id, name, resourceType, eTag, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -10709,16 +10701,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ConnectionPolicy resource defined for VirtualHub. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the ConnectionPolicy resource. </param>
         /// <returns> A new <see cref="Network.ConnectionPolicyData"/> instance for mocking. </returns>
-        public static ConnectionPolicyData ConnectionPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, ConnectionPolicyProperties properties = default)
+        public static ConnectionPolicyData ConnectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, ConnectionPolicyProperties properties = default)
         {
             return new ConnectionPolicyData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties);
@@ -10740,12 +10732,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Proxy resource representation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.NetworkProxyResourceData"/> instance for mocking. </returns>
-        public static NetworkProxyResourceData NetworkProxyResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        public static NetworkProxyResourceData NetworkProxyResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default)
         {
-            return new NetworkProxyResourceData(id, name, @type, eTag, default);
+            return new NetworkProxyResourceData(id, name, resourceType, eTag, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -11146,10 +11138,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ProxyResourceVirtualNetworkApplianceCapabilityProperties"/> instance for mocking. </returns>
-        public static ProxyResourceVirtualNetworkApplianceCapabilityProperties ProxyResourceVirtualNetworkApplianceCapabilityProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        /// <returns> A new <see cref="Models.VirtualNetworkApplianceCapabilityBaseData"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceCapabilityBaseData VirtualNetworkApplianceCapabilityBaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
         {
-            return new ProxyResourceVirtualNetworkApplianceCapabilityProperties(
+            return new VirtualNetworkApplianceCapabilityBaseData(
                 id,
                 name,
                 resourceType,
@@ -11564,16 +11556,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Address prefix set child resource of an application security group. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the address prefix set. </param>
         /// <returns> A new <see cref="Network.AddressPrefixSetData"/> instance for mocking. </returns>
-        public static AddressPrefixSetData AddressPrefixSetData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, AddressPrefixSetPropertiesFormat properties = default)
+        public static AddressPrefixSetData AddressPrefixSetData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, AddressPrefixSetPropertiesFormat properties = default)
         {
             return new AddressPrefixSetData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties);
