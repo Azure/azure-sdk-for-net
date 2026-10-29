@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-- Restored IntelliSense visibility for `NetworkSecurityPerimeterLinkReferenceData.Status`.
-
 ### Other Changes
 
 ## 1.18.0-beta.2 (2026-10-28)

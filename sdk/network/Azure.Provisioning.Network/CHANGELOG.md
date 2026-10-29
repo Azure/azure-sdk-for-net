@@ -1,23 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-10-29)
 
 ### Features Added
 
 - Updated the default Network API version to `2026-03-01`, adding support for new resources and properties.
 
-### Breaking Changes
-
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Migrated code generation to TypeSpec.
-- Regenerated from Azure REST API specifications commit `90cbafe3bf42de43888a74bf9f4d9af72a4e4ab5`.
-- Removed stale customization aliases so restored TypeSpec property names and resource types are generated directly.
-- Suppressed the new `VpnServerConfiguration.NamePropertiesName` and `PropertiesETag` projections to match the management library, retaining the top-level `Name` and `ETag` properties.
-- Preserved `VirtualHub.Routes` through a `CodeGenMember` customization and retained `VirtualNetworkGateway.Active` as a hidden, obsolete alias for `IsActive`.
 
 ## 1.1.0 (2026-04-16)
 
