@@ -11,13 +11,13 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The supported threshold value interpretations. </summary>
+    /// <summary> The interpretation of a notification or blocking-action threshold. </summary>
     public readonly partial struct CostControlThresholdType : IEquatable<CostControlThresholdType>
     {
         private readonly string _value;
-        /// <summary> The value is a percentage of the configured rule amount. </summary>
+        /// <summary> The threshold is a percentage of the configured budget amount. </summary>
         private const string PercentageValue = "Percentage";
-        /// <summary> The value is expressed in the rule's unit. </summary>
+        /// <summary> The threshold is expressed in United States dollars or tokens, according to the budget category. </summary>
         private const string AbsoluteValue = "Absolute";
 
         /// <summary> Initializes a new instance of <see cref="CostControlThresholdType"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _value = value;
         }
 
-        /// <summary> The value is a percentage of the configured rule amount. </summary>
+        /// <summary> The threshold is a percentage of the configured budget amount. </summary>
         public static CostControlThresholdType Percentage { get; } = new CostControlThresholdType(PercentageValue);
 
-        /// <summary> The value is expressed in the rule's unit. </summary>
+        /// <summary> The threshold is expressed in United States dollars or tokens, according to the budget category. </summary>
         public static CostControlThresholdType Absolute { get; } = new CostControlThresholdType(AbsoluteValue);
 
         /// <summary> Determines if two <see cref="CostControlThresholdType"/> values are the same. </summary>

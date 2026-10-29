@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
             RateLimits = new ChangeTrackingList<ServiceAccountThrottlingRule>();
-            CostControlIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentProperties"/>. </summary>
@@ -49,12 +47,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="serviceTier"> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </param>
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
         /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
-        /// <param name="costControlIds">
-        /// The full resource IDs of cost controls directly attached to this deployment.
-        /// At the moment the service only supports a single cost control. This will be expanded in future API versions.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, string contextCacheContainerId, DeploymentSpeculativeDecoding speculativeDecoding, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing, IList<ResourceIdentifier> costControlIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, string contextCacheContainerId, DeploymentSpeculativeDecoding speculativeDecoding, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, CognitiveServicesDeploymentServiceTier? serviceTier, CognitiveServicesDeploymentState? deploymentState, CognitiveServicesDeploymentRouting routing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Model = model;
@@ -74,7 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _serviceTier = serviceTier;
             _deploymentState = deploymentState;
             Routing = routing;
-            CostControlIds = costControlIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -171,12 +164,5 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </summary>
         [WirePath("routing")]
         public CognitiveServicesDeploymentRouting Routing { get; set; }
-
-        /// <summary>
-        /// The full resource IDs of cost controls directly attached to this deployment.
-        /// At the moment the service only supports a single cost control. This will be expanded in future API versions.
-        /// </summary>
-        [WirePath("costControlIds")]
-        public IList<ResourceIdentifier> CostControlIds { get; }
     }
 }

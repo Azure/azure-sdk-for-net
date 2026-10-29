@@ -74,10 +74,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(RaiAcsInterventionPoints)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(AgentStartup))
+            {
+                writer.WritePropertyName("agent_startup"u8);
+                writer.WriteObjectValue(AgentStartup, options);
+            }
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input, options);
+            }
+            if (Optional.IsDefined(PreModelCall))
+            {
+                writer.WritePropertyName("pre_model_call"u8);
+                writer.WriteObjectValue(PreModelCall, options);
+            }
+            if (Optional.IsDefined(PostModelCall))
+            {
+                writer.WritePropertyName("post_model_call"u8);
+                writer.WriteObjectValue(PostModelCall, options);
             }
             if (Optional.IsDefined(PreToolCall))
             {
@@ -93,6 +108,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output, options);
+            }
+            if (Optional.IsDefined(AgentShutdown))
+            {
+                writer.WritePropertyName("agent_shutdown"u8);
+                writer.WriteObjectValue(AgentShutdown, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,13 +156,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            RaiAcsAgentStartupInterventionPoint agentStartup = default;
             RaiAcsInterventionPoint input = default;
+            RaiAcsPreModelCallInterventionPoint preModelCall = default;
+            RaiAcsPostModelCallInterventionPoint postModelCall = default;
             RaiAcsToolInterventionPoint preToolCall = default;
             RaiAcsToolInterventionPoint postToolCall = default;
             RaiAcsInterventionPoint output = default;
+            RaiAcsAgentShutdownInterventionPoint agentShutdown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("agent_startup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentStartup = RaiAcsAgentStartupInterventionPoint.DeserializeRaiAcsAgentStartupInterventionPoint(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("input"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -150,6 +183,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     input = RaiAcsInterventionPoint.DeserializeRaiAcsInterventionPoint(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("pre_model_call"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preModelCall = RaiAcsPreModelCallInterventionPoint.DeserializeRaiAcsPreModelCallInterventionPoint(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("post_model_call"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postModelCall = RaiAcsPostModelCallInterventionPoint.DeserializeRaiAcsPostModelCallInterventionPoint(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pre_tool_call"u8))
@@ -179,12 +230,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     output = RaiAcsInterventionPoint.DeserializeRaiAcsInterventionPoint(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_shutdown"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentShutdown = RaiAcsAgentShutdownInterventionPoint.DeserializeRaiAcsAgentShutdownInterventionPoint(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiAcsInterventionPoints(input, preToolCall, postToolCall, output, additionalBinaryDataProperties);
+            return new RaiAcsInterventionPoints(
+                agentStartup,
+                input,
+                preModelCall,
+                postModelCall,
+                preToolCall,
+                postToolCall,
+                output,
+                agentShutdown,
+                additionalBinaryDataProperties);
         }
     }
 }

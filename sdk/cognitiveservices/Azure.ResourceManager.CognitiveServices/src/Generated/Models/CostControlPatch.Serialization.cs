@@ -9,61 +9,67 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> An action evaluated when cost control consumption reaches a threshold. </summary>
-    public partial class CostControlThreshold : IJsonModel<CostControlThreshold>
+    /// <summary> A partial budget update. An empty properties object is a no-op and retains the entity tag. </summary>
+    public partial class CostControlPatch : IJsonModel<CostControlPatch>
     {
-        /// <summary> Initializes a new instance of <see cref="CostControlThreshold"/> for deserialization. </summary>
-        internal CostControlThreshold()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostControlThreshold PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CostControlPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCostControlThreshold(document.RootElement, options);
+                        return DeserializeCostControlPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostControlThreshold)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CostControlThreshold)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CostControlThreshold>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostControlPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostControlThreshold IPersistableModel<CostControlThreshold>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CostControlPatch IPersistableModel<CostControlPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CostControlThreshold>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CostControlPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="costControlPatch"> The <see cref="CostControlPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CostControlPatch costControlPatch)
+        {
+            if (costControlPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(costControlPatch, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CostControlThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostControlPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +80,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostControlThreshold)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlPatch)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("value"u8);
-            writer.WriteNumberValue(Value);
-            writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -104,48 +109,40 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostControlThreshold IJsonModel<CostControlThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CostControlPatch IJsonModel<CostControlPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostControlThreshold JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CostControlPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlThreshold>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostControlThreshold)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCostControlThreshold(document.RootElement, options);
+            return DeserializeCostControlPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CostControlThreshold DeserializeCostControlThreshold(JsonElement element, ModelReaderWriterOptions options)
+        internal static CostControlPatch DeserializeCostControlPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CostControlThresholdType @type = default;
-            double value = default;
-            CostControlThresholdAction action = default;
+            CostControlPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    @type = new CostControlThresholdType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("value"u8))
-                {
-                    value = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("action"u8))
-                {
-                    action = new CostControlThresholdAction(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = CostControlPatchProperties.DeserializeCostControlPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlThreshold(@type, value, action, additionalBinaryDataProperties);
+            return new CostControlPatch(properties, additionalBinaryDataProperties);
         }
     }
 }

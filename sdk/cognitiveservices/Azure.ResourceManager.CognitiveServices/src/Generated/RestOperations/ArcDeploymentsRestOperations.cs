@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string deploymentName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string deploymentName, bool? force, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -138,6 +138,10 @@ namespace Azure.ResourceManager.CognitiveServices
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
