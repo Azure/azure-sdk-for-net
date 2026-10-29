@@ -15,6 +15,20 @@ namespace Azure.ResourceManager.NetApp.Tests
         private static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
 
         [Test]
+        public void ChangelogTestMarkerIsClientSideOnly()
+        {
+            var account = new NetAppAccountData("westus2");
+            Assert.That(account.ChangelogTestMarker, Is.Null);
+
+            account.ChangelogTestMarker = "autopr-api-change";
+
+            Assert.That(account.ChangelogTestMarker, Is.EqualTo("autopr-api-change"));
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
+                account, WireOptions, AzureResourceManagerNetAppContext.Default));
+            Assert.That(document.RootElement.GetRawText(), Does.Not.Contain("autopr-api-change"));
+        }
+
+        [Test]
         public void SerializePreservesMutationsToAssignedEncryption()
         {
             var encryption = new NetAppAccountEncryption();
