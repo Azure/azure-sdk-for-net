@@ -14,51 +14,51 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Cost option value for the different cost factors selected. </summary>
-    public partial class SqlSkuRecommendationCostOptions : IJsonModel<SqlSkuRecommendationCostOptions>
+    public partial class SqlSkuRecommendationCostConfig : IJsonModel<SqlSkuRecommendationCostConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlSkuRecommendationCostOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlSkuRecommendationCostConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSqlSkuRecommendationCostOptions(document.RootElement, options);
+                        return DeserializeSqlSkuRecommendationCostConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlSkuRecommendationCostOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSkuRecommendationCostConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerArcDataContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SqlSkuRecommendationCostOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSkuRecommendationCostConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlSkuRecommendationCostOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlSkuRecommendationCostConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlSkuRecommendationCostOptions IPersistableModel<SqlSkuRecommendationCostOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlSkuRecommendationCostConfig IPersistableModel<SqlSkuRecommendationCostConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlSkuRecommendationCostOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlSkuRecommendationCostConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SqlSkuRecommendationCostOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlSkuRecommendationCostConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlSkuRecommendationCostOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSkuRecommendationCostConfig)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ComputeAndStorageCostOption))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlSkuRecommendationCostOptions IJsonModel<SqlSkuRecommendationCostOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlSkuRecommendationCostConfig IJsonModel<SqlSkuRecommendationCostConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlSkuRecommendationCostOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlSkuRecommendationCostConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSkuRecommendationCostConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlSkuRecommendationCostOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSkuRecommendationCostConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlSkuRecommendationCostOptions(document.RootElement, options);
+            return DeserializeSqlSkuRecommendationCostConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SqlSkuRecommendationCostOptions DeserializeSqlSkuRecommendationCostOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlSkuRecommendationCostConfig DeserializeSqlSkuRecommendationCostConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlSkuRecommendationCostOptions(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, additionalBinaryDataProperties);
+            return new SqlSkuRecommendationCostConfig(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, additionalBinaryDataProperties);
         }
     }
 }

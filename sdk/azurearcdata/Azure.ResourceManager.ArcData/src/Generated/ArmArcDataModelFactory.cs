@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="discountPercentage"> flat discount percentage to apply for the price - Default is 0. </param>
         /// <param name="costOptions"> Selected cost option value. </param>
         /// <returns> A new <see cref="Models.MigrationAssessmentSettings"/> instance for mocking. </returns>
-        public static MigrationAssessmentSettings MigrationAssessmentSettings(string targetLocation = default, float? percentile = default, int? lookbackPeriodInDays = default, int? comfortFactor = default, string strategy = default, string currency = default, float? discountPercentage = default, SqlSkuRecommendationCostOptions costOptions = default)
+        public static MigrationAssessmentSettings MigrationAssessmentSettings(string targetLocation = default, float? percentile = default, int? lookbackPeriodInDays = default, int? comfortFactor = default, string strategy = default, string currency = default, float? discountPercentage = default, SqlSkuRecommendationCostConfig costOptions = default)
         {
             return new MigrationAssessmentSettings(
                 targetLocation,
@@ -492,10 +492,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="computeAndStorageCostOption"> selected cost saving option e.g. With1YearASPAndDevTest. </param>
         /// <param name="sqlLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for SQL. </param>
         /// <param name="windowsLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for Windows. </param>
-        /// <returns> A new <see cref="Models.SqlSkuRecommendationCostOptions"/> instance for mocking. </returns>
-        public static SqlSkuRecommendationCostOptions SqlSkuRecommendationCostOptions(string computeAndStorageCostOption = default, string sqlLicenseCostOption = default, string windowsLicenseCostOption = default)
+        /// <returns> A new <see cref="Models.SqlSkuRecommendationCostConfig"/> instance for mocking. </returns>
+        public static SqlSkuRecommendationCostConfig SqlSkuRecommendationCostConfig(string computeAndStorageCostOption = default, string sqlLicenseCostOption = default, string windowsLicenseCostOption = default)
         {
-            return new SqlSkuRecommendationCostOptions(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, default);
+            return new SqlSkuRecommendationCostConfig(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, default);
         }
 
         /// <summary> The ServerAssessmentsItem. </summary>

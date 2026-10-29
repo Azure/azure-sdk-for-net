@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ArcData
     [ModelReaderWriterBuildable(typeof(SqlServerLicenseResource))]
     [ModelReaderWriterBuildable(typeof(SqlServerLicenseUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SqlSkuRecommendationCostBreakdown))]
-    [ModelReaderWriterBuildable(typeof(SqlSkuRecommendationCostOptions))]
+    [ModelReaderWriterBuildable(typeof(SqlSkuRecommendationCostConfig))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UploadServicePrincipal))]
     public partial class AzureResourceManagerArcDataContext : ModelReaderWriterContext

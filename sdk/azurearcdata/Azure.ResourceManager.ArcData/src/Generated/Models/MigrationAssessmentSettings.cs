@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="discountPercentage"> flat discount percentage to apply for the price - Default is 0. </param>
         /// <param name="costOptions"> Selected cost option value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationAssessmentSettings(string targetLocation, float? percentile, int? lookbackPeriodInDays, int? comfortFactor, string strategy, string currency, float? discountPercentage, SqlSkuRecommendationCostOptions costOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationAssessmentSettings(string targetLocation, float? percentile, int? lookbackPeriodInDays, int? comfortFactor, string strategy, string currency, float? discountPercentage, SqlSkuRecommendationCostConfig costOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetLocation = targetLocation;
             Percentile = percentile;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public float? DiscountPercentage { get; set; }
 
         /// <summary> Selected cost option value. </summary>
-        public SqlSkuRecommendationCostOptions CostOptions { get; set; }
+        public SqlSkuRecommendationCostConfig CostOptions { get; set; }
     }
 }

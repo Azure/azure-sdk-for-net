@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> Cost option value for the different cost factors selected. </summary>
-    public partial class SqlSkuRecommendationCostOptions
+    public partial class SqlSkuRecommendationCostConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SqlSkuRecommendationCostOptions"/>. </summary>
-        public SqlSkuRecommendationCostOptions()
+        /// <summary> Initializes a new instance of <see cref="SqlSkuRecommendationCostConfig"/>. </summary>
+        public SqlSkuRecommendationCostConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlSkuRecommendationCostOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSkuRecommendationCostConfig"/>. </summary>
         /// <param name="computeAndStorageCostOption"> selected cost saving option e.g. With1YearASPAndDevTest. </param>
         /// <param name="sqlLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for SQL. </param>
         /// <param name="windowsLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for Windows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlSkuRecommendationCostOptions(string computeAndStorageCostOption, string sqlLicenseCostOption, string windowsLicenseCostOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlSkuRecommendationCostConfig(string computeAndStorageCostOption, string sqlLicenseCostOption, string windowsLicenseCostOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeAndStorageCostOption = computeAndStorageCostOption;
             SqlLicenseCostOption = sqlLicenseCostOption;
