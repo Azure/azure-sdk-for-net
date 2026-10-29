@@ -300,6 +300,8 @@ await session.StartResponseAsync().ConfigureAwait(false);
 - Firewall rules permit connections to `*.cognitiveservices.azure.com`
 - The service is available in your selected region
 
+Authenticated WebSocket connections do not follow HTTP redirects. Use the final VoiceLive service endpoint directly; a redirect response causes the connection to fail with a `WebSocketException`.
+
 **Audio Processing Errors**: For audio-related issues:
 - Verify audio input format is supported (16kHz or 24kHz PCM)
 - Check that audio devices are accessible and functioning

@@ -178,5 +178,15 @@ namespace Azure.ResourceManager.Network
                 Properties.DeleteExistingPeering = value;
             }
         }
+
+        /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

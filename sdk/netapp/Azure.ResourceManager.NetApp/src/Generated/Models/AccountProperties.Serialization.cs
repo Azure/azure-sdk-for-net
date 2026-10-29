@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EntraIdConfig))
-            {
-                writer.WritePropertyName("entraIdConfig"u8);
-                writer.WriteObjectValue(EntraIdConfig, options);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
@@ -177,7 +172,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
-            EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool disableShowmountIsDefined = false;
             bool? disableShowmount = default;
@@ -205,15 +199,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                     }
                     activeDirectories = array;
-                    continue;
-                }
-                if (prop.NameEquals("entraIdConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -273,7 +258,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new AccountProperties(
                 provisioningState,
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
-                entraIdConfig,
                 encryption,
                 disableShowmount,
                 nfsV4IdDomain,

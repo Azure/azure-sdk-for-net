@@ -32,12 +32,30 @@ public class ResponseItemAgentAttributionTests
     // it for the whole hierarchy.
     private static IEnumerable<TestCaseData> AttributionItemKinds()
     {
-        yield return Case(ResponseItemKind.BingGroundingCall, typeof(BingGroundingToolCall));
-        yield return Case(ResponseItemKind.BingGroundingCallOutput, typeof(BingGroundingToolCallOutput));
-        yield return Case(ResponseItemKind.AzureAISearchCall, typeof(AzureAISearchToolCall));
         yield return Case(ResponseItemKind.A2APreviewCall, typeof(A2AToolCall));
         yield return Case(ResponseItemKind.A2APreviewCallOutput, typeof(A2AToolCallOutput));
         yield return Case(ResponseItemKind.StructuredOutputs, typeof(AgentStructuredOutputsResponseItem));
+        yield return Case(ResponseItemKind.WorkflowAction, typeof(AgentWorkflowPreviewActionResponseItem));
+        yield return Case(ResponseItemKind.AzureAISearchCall, typeof(AzureAISearchToolCall));
+        yield return Case(ResponseItemKind.AzureAISearchCallOutput, typeof(AzureAISearchToolCallOutput));
+        yield return Case(ResponseItemKind.AzureFunctionCall, typeof(AzureFunctionToolCall));
+        yield return Case(ResponseItemKind.AzureFunctionCallOutput, typeof(AzureFunctionToolCallOutput));
+        yield return Case(ResponseItemKind.BingCustomSearchPreviewCall, typeof(BingCustomSearchToolCall));
+        yield return Case(ResponseItemKind.BingCustomSearchPreviewCallOutput, typeof(BingCustomSearchToolCallOutput));
+        yield return Case(ResponseItemKind.BingGroundingCall, typeof(BingGroundingToolCall));
+        yield return Case(ResponseItemKind.BingGroundingCallOutput, typeof(BingGroundingToolCallOutput));
+        yield return Case(ResponseItemKind.BrowserAutomationPreviewCall, typeof(BrowserAutomationToolCall));
+        yield return Case(ResponseItemKind.BrowserAutomationPreviewCallOutput, typeof(BrowserAutomationToolCallOutput));
+        yield return Case(ResponseItemKind.FabricDataAgentPreviewCall, typeof(FabricDataAgentToolCall));
+        yield return Case(ResponseItemKind.FabricDataAgentPreviewCallOutput, typeof(FabricDataAgentToolCallOutput));
+        yield return Case(ResponseItemKind.MemoryCommandPreviewCall, typeof(MemoryCommandToolCall));
+        yield return Case(ResponseItemKind.MemoryCommandPreviewCallOutput, typeof(MemoryCommandToolCallOutput));
+        yield return Case(ResponseItemKind.MemorySearchCall, typeof(MemorySearchToolCall));
+        yield return Case(ResponseItemKind.OAuthConsentRequest, typeof(OAuthConsentRequestResponseItem));
+        yield return Case(ResponseItemKind.OpenApiCall, typeof(OpenApiToolCall));
+        yield return Case(ResponseItemKind.OpenApiCallOutput, typeof(OpenApiToolCallOutput));
+        yield return Case(ResponseItemKind.SharepointGroundingPreviewCall, typeof(SharePointGroundingToolCall));
+        yield return Case(ResponseItemKind.SharepointGroundingPreviewCallOutput, typeof(SharePointGroundingToolCallOutput));
 
         static TestCaseData Case(ResponseItemKind discriminator, Type expectedType)
             => new TestCaseData(discriminator, expectedType).SetName($"{{m}}({discriminator} => {expectedType.Name})");
@@ -47,16 +65,20 @@ public class ResponseItemAgentAttributionTests
     {
         // AgentStructuredOutputsResponseItem models a required `output` payload that its serializer
         // writes back verbatim; include it so the round-trip write has valid content to emit.
-        string extraFields = discriminator == ResponseItemKind.StructuredOutputs
-            ? """, "output": { "result": "ok" }"""
-            : string.Empty;
+        string extraFields = discriminator.ToString() switch
+        {
+            "oauth_consent_request" => ",\n\"consent_link\": \"http://www.microsoft.com\"\n",
+            "structured_outputs" => ",\n\"output\": {\"foo\": \"bar\"}\n",
+            _ => ""
+        };
 
         return $$"""
         {
           "type": "{{discriminator}}",
           "id": "item_1",
           "agent_reference": { "name": "{{ExpectedAgentName}}", "version": "{{ExpectedAgentVersion}}" },
-          "response_id": "{{ExpectedResponseId}}"{{extraFields}}
+          "response_id": "{{ExpectedResponseId}}",
+          "status": "completed"{{extraFields}}
         }
         """;
     }
@@ -87,7 +109,7 @@ public class ResponseItemAgentAttributionTests
         BinaryData rewritten = ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
 
         using JsonDocument document = JsonDocument.Parse(rewritten);
-        JsonProperty[] properties = document.RootElement.EnumerateObject().ToArray();
+        JsonProperty[] properties = [..document.RootElement.EnumerateObject()];
         Assert.Multiple(() =>
         {
             Assert.That(properties.Count(property => property.NameEquals("agent_reference")), Is.EqualTo(1),

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableWafRuleSets API service call. </summary>
-    public partial class ApplicationGatewayAvailableWafRuleSetsResult
+    internal partial class ApplicationGatewayAvailableWafRuleSetsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
