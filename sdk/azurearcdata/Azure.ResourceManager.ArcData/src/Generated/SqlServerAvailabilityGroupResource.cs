@@ -428,12 +428,12 @@ namespace Azure.ResourceManager.ArcData
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databases"> The database names to add to the SQL Server availability group resource. </param>
+        /// <param name="content"> The database names to add to the SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databases"/> is null. </exception>
-        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> AddDatabasesAsync(Databases databases, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> AddDatabasesAsync(SqlAvailabilityGroupDatabasesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.AddDatabases");
             scope.Start();
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlAvailabilityGroupDatabasesContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -480,12 +480,12 @@ namespace Azure.ResourceManager.ArcData
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databases"> The database names to add to the SQL Server availability group resource. </param>
+        /// <param name="content"> The database names to add to the SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databases"/> is null. </exception>
-        public virtual Response<SqlServerAvailabilityGroupResource> AddDatabases(Databases databases, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SqlServerAvailabilityGroupResource> AddDatabases(SqlAvailabilityGroupDatabasesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.AddDatabases");
             scope.Start();
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateAddDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlAvailabilityGroupDatabasesContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -823,12 +823,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedInstanceResourceId"> The azure resource identifier for the Sql Managed Instance. </param>
+        /// <param name="content"> The azure resource identifier for the Sql Managed Instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceResourceId"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> FailoverMiLinkAsync(WaitUntil waitUntil, FailoverMiLinkResourceId managedInstanceResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> FailoverMiLinkAsync(WaitUntil waitUntil, SqlManagedInstanceLinkFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedInstanceResourceId, nameof(managedInstanceResourceId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.FailoverMiLink");
             scope.Start();
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverMiLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverMiLinkResourceId.ToRequestContent(managedInstanceResourceId), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverMiLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlManagedInstanceLinkFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -882,12 +882,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedInstanceResourceId"> The azure resource identifier for the Sql Managed Instance. </param>
+        /// <param name="content"> The azure resource identifier for the Sql Managed Instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceResourceId"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAvailabilityGroupResource> FailoverMiLink(WaitUntil waitUntil, FailoverMiLinkResourceId managedInstanceResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SqlServerAvailabilityGroupResource> FailoverMiLink(WaitUntil waitUntil, SqlManagedInstanceLinkFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedInstanceResourceId, nameof(managedInstanceResourceId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.FailoverMiLink");
             scope.Start();
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverMiLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverMiLinkResourceId.ToRequestContent(managedInstanceResourceId), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateFailoverMiLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlManagedInstanceLinkFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -1036,12 +1036,12 @@ namespace Azure.ResourceManager.ArcData
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databases"> The database names to remove from the SQL Server availability group resource. </param>
+        /// <param name="content"> The database names to remove from the SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databases"/> is null. </exception>
-        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> RemoveDatabasesAsync(Databases databases, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SqlServerAvailabilityGroupResource>> RemoveDatabasesAsync(SqlAvailabilityGroupDatabasesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.RemoveDatabases");
             scope.Start();
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlAvailabilityGroupDatabasesContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1088,12 +1088,12 @@ namespace Azure.ResourceManager.ArcData
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databases"> The database names to remove from the SQL Server availability group resource. </param>
+        /// <param name="content"> The database names to remove from the SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databases"/> is null. </exception>
-        public virtual Response<SqlServerAvailabilityGroupResource> RemoveDatabases(Databases databases, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SqlServerAvailabilityGroupResource> RemoveDatabases(SqlAvailabilityGroupDatabasesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerAvailabilityGroupResource.RemoveDatabases");
             scope.Start();
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, Databases.ToRequestContent(databases), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateRemoveDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlAvailabilityGroupDatabasesContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlServerAvailabilityGroupData> response = Response.FromValue(SqlServerAvailabilityGroupData.FromResponse(result), result);
                 if (response.Value == null)

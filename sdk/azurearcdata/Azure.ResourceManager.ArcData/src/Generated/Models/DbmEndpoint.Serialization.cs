@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.ArcData.Models
             string endpointName = default;
             DatabaseMirroringRole? role = default;
             bool? isEncryptionEnabled = default;
-            EncryptionAlgorithm? encryptionAlgorithm = default;
-            ConnectionAuth? connectionAuth = default;
+            SqlMirroringEndpointEncryptionAlgorithm? encryptionAlgorithm = default;
+            SqlMirroringEndpointAuthenticationType? connectionAuth = default;
             int? port = default;
             bool? isDynamicPort = default;
             string ipAddress = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    encryptionAlgorithm = new EncryptionAlgorithm(prop.Value.GetString());
+                    encryptionAlgorithm = new SqlMirroringEndpointEncryptionAlgorithm(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionAuth"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    connectionAuth = new ConnectionAuth(prop.Value.GetString());
+                    connectionAuth = new SqlMirroringEndpointAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))

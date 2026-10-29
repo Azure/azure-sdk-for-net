@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuRecommendationResultsAzureSqlDatabase(RecommendationStatus? recommendationStatus, int? numberOfServerBlockerIssues, SkuRecommendationResultsMonthlyCost monthlyCost, IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions, SkuRecommendationResultsAzureSqlDatabaseTargetSku targetSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuRecommendationResultsAzureSqlDatabase(SqlSkuRecommendationStatus? recommendationStatus, int? numberOfServerBlockerIssues, SkuRecommendationResultsMonthlyCost monthlyCost, IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions, SkuRecommendationResultsAzureSqlDatabaseTargetSku targetSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationStatus = recommendationStatus;
             NumberOfServerBlockerIssues = numberOfServerBlockerIssues;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The target recommendation Status for this database. </summary>
-        public RecommendationStatus? RecommendationStatus { get; }
+        public SqlSkuRecommendationStatus? RecommendationStatus { get; }
 
         /// <summary> Number of blocker issues to fix before migrating to the target platform. </summary>
         public int? NumberOfServerBlockerIssues { get; }

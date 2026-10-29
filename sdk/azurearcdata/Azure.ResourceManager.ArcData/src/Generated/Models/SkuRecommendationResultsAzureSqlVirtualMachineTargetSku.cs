@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcData.Models
         {
             DataDiskSizes = new ChangeTrackingList<DiskSizes>();
             LogDiskSizes = new ChangeTrackingList<DiskSizes>();
-            TempDBDiskSizes = new ChangeTrackingList<DiskSizes>();
+            TempDbDiskSizes = new ChangeTrackingList<DiskSizes>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SkuRecommendationResultsAzureSqlVirtualMachineTargetSku"/>. </summary>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="virtualMachineSize"> size parameters for VM size. </param>
         /// <param name="dataDiskSizes"> Data disk sizes. </param>
         /// <param name="logDiskSizes"> Log disk sizes. </param>
-        /// <param name="tempDBDiskSizes"> temp db disk sizes. </param>
+        /// <param name="tempDbDiskSizes"> temp db disk sizes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuRecommendationResultsAzureSqlVirtualMachineTargetSku(SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuCategory category, int? computeSize, float? predictedDataSizeInMb, float? predictedLogSizeInMb, SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuVirtualMachineSize virtualMachineSize, IList<DiskSizes> dataDiskSizes, IList<DiskSizes> logDiskSizes, IList<DiskSizes> tempDBDiskSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuRecommendationResultsAzureSqlVirtualMachineTargetSku(SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuCategory category, int? computeSize, float? predictedDataSizeInMb, float? predictedLogSizeInMb, SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuVirtualMachineSize virtualMachineSize, IList<DiskSizes> dataDiskSizes, IList<DiskSizes> logDiskSizes, IList<DiskSizes> tempDbDiskSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             ComputeSize = computeSize;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcData.Models
             VirtualMachineSize = virtualMachineSize;
             DataDiskSizes = dataDiskSizes;
             LogDiskSizes = logDiskSizes;
-            TempDBDiskSizes = tempDBDiskSizes;
+            TempDbDiskSizes = tempDbDiskSizes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public IList<DiskSizes> LogDiskSizes { get; }
 
         /// <summary> temp db disk sizes. </summary>
-        public IList<DiskSizes> TempDBDiskSizes { get; }
+        public IList<DiskSizes> TempDbDiskSizes { get; }
     }
 }

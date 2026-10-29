@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="percentile"> The percentile of performance data points used for aggregation (Range: 1-100). </param>
         /// <param name="lookbackPeriodInDays"> The lookback period in days for performance data used in the target recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(ResourceUpdateMode? resourceUpdateMode, bool? shouldIncludeFileLevelRequirements, string targetLocation, int? percentile, int? lookbackPeriodInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(SqlServerRecommendationResourceUpdateMode? resourceUpdateMode, bool? shouldIncludeFileLevelRequirements, string targetLocation, int? percentile, int? lookbackPeriodInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceUpdateMode = resourceUpdateMode;
             ShouldIncludeFileLevelRequirements = shouldIncludeFileLevelRequirements;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Controls whether the SQL Server instance resource is updated with the target recommendation details after the job completes. </summary>
-        public ResourceUpdateMode? ResourceUpdateMode { get; set; }
+        public SqlServerRecommendationResourceUpdateMode? ResourceUpdateMode { get; set; }
 
         /// <summary> Specifies whether to include file-level requirements in the target recommendation report. </summary>
         public bool? ShouldIncludeFileLevelRequirements { get; set; }

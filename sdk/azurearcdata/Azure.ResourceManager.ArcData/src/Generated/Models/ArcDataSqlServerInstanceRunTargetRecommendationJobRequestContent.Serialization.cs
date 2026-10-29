@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            ResourceUpdateMode? resourceUpdateMode = default;
+            SqlServerRecommendationResourceUpdateMode? resourceUpdateMode = default;
             bool? shouldIncludeFileLevelRequirements = default;
             string targetLocation = default;
             int? percentile = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    resourceUpdateMode = new ResourceUpdateMode(prop.Value.GetString());
+                    resourceUpdateMode = new SqlServerRecommendationResourceUpdateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeFileLevelRequirements"u8))

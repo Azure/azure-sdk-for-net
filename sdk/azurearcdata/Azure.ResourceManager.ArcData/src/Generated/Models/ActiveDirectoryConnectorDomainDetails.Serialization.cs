@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string realm = default;
             string netbiosDomainName = default;
-            AccountProvisioningMode? serviceAccountProvisioning = default;
+            ActiveDirectoryServiceAccountProvisioningMode? serviceAccountProvisioning = default;
             string ouDistinguishedName = default;
             ActiveDirectoryDomainControllers domainControllers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    serviceAccountProvisioning = new AccountProvisioningMode(prop.Value.GetString());
+                    serviceAccountProvisioning = new ActiveDirectoryServiceAccountProvisioningMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ouDistinguishedName"u8))

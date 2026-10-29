@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="endsOn"> Time when migration job reached terminal state. </param>
         /// <param name="additionalAttributes"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationJobsItem(string migrationTrackingId, MigrationMode? migrationMode, InitiatedFrom? initiatedFrom, MigrationStatus? status, string lastError, TargetType? targetType, string targetResourceId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<AdditionalMigrationJobAttributes> additionalAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseMigrationJobsItem(string migrationTrackingId, MigrationMode? migrationMode, SqlMigrationInitiationSource? initiatedFrom, MigrationStatus? status, string lastError, SqlMigrationTargetType? targetType, string targetResourceId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<AdditionalMigrationJobAttributes> additionalAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationTrackingId = migrationTrackingId;
             MigrationMode = migrationMode;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public MigrationMode? MigrationMode { get; set; }
 
         /// <summary> To indicate the client from which the migration is initiated from e.g. Azure Arc, DMS-Azure Portal/PS/CLI for additional tracking. </summary>
-        public InitiatedFrom? InitiatedFrom { get; set; }
+        public SqlMigrationInitiationSource? InitiatedFrom { get; set; }
 
         /// <summary> Status of the migration job. </summary>
         public MigrationStatus? Status { get; set; }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string LastError { get; set; }
 
         /// <summary> Type of target in Azure this database is being migrated to. </summary>
-        public TargetType? TargetType { get; set; }
+        public SqlMigrationTargetType? TargetType { get; set; }
 
         /// <summary> Resource Id of the target SQL resource for this migration job. </summary>
         public string TargetResourceId { get; set; }

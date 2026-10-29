@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.ArcData.Models
     public enum PrimaryAllowConnections
     {
         /// <summary> ALL. </summary>
-        ALL,
+        All,
         /// <summary> READ_WRITE. </summary>
         ReadWrite
     }

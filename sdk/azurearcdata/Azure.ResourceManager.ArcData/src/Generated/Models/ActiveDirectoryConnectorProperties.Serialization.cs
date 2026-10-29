@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            BasicLoginInformation domainServiceAccountLoginInformation = default;
+            ArcDataBasicLoginInformation domainServiceAccountLoginInformation = default;
             string provisioningState = default;
             ActiveDirectoryConnectorSpec spec = default;
             ActiveDirectoryConnectorStatus status = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    domainServiceAccountLoginInformation = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    domainServiceAccountLoginInformation = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

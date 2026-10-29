@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             string keyName = default;
-            CostTypeValues keyValue = default;
+            SqlSkuRecommendationCostBreakdown keyValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    keyValue = CostTypeValues.DeserializeCostTypeValues(prop.Value, options);
+                    keyValue = SqlSkuRecommendationCostBreakdown.DeserializeSqlSkuRecommendationCostBreakdown(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

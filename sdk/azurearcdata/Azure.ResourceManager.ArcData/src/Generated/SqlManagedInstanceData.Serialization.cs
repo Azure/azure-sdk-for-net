@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ArcData.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcData
 {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.ArcData
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.ArcData
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerArcDataContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

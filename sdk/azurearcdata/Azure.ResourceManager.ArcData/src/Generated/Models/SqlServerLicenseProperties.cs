@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="licenseCategory"> This property represents the choice between SQL Server Core and ESU licenses. </param>
         /// <param name="activationState"> The activation state of the license. </param>
         /// <param name="scopeType"> The Azure scope to which the license will apply. </param>
-        public SqlServerLicenseProperties(BillingPlan billingPlan, int physicalCores, LicenseCategory licenseCategory, ActivationState activationState, ScopeType scopeType)
+        public SqlServerLicenseProperties(SqlServerLicenseBillingPlan billingPlan, int physicalCores, SqlServerLicenseCategory licenseCategory, SqlServerLicenseActivationState activationState, SqlServerLicenseScopeType scopeType)
         {
             BillingPlan = billingPlan;
             PhysicalCores = physicalCores;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastDeactivatedOn"> The timestamp of the most recent deactivation of the SqlServerLicense. </param>
         /// <param name="tenantId"> The tenantId the SQL Server license resource subscription resides in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerLicenseProperties(BillingPlan billingPlan, int physicalCores, LicenseCategory licenseCategory, ActivationState activationState, ScopeType scopeType, DateTimeOffset? lastActivatedOn, DateTimeOffset? lastDeactivatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerLicenseProperties(SqlServerLicenseBillingPlan billingPlan, int physicalCores, SqlServerLicenseCategory licenseCategory, SqlServerLicenseActivationState activationState, SqlServerLicenseScopeType scopeType, DateTimeOffset? lastActivatedOn, DateTimeOffset? lastDeactivatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPlan = billingPlan;
             PhysicalCores = physicalCores;
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> SQL Server license type. </summary>
-        public BillingPlan BillingPlan { get; set; }
+        public SqlServerLicenseBillingPlan BillingPlan { get; set; }
 
         /// <summary> The number of total cores of the license covers. </summary>
         public int PhysicalCores { get; set; }
 
         /// <summary> This property represents the choice between SQL Server Core and ESU licenses. </summary>
-        public LicenseCategory LicenseCategory { get; set; }
+        public SqlServerLicenseCategory LicenseCategory { get; set; }
 
         /// <summary> The activation state of the license. </summary>
-        public ActivationState ActivationState { get; set; }
+        public SqlServerLicenseActivationState ActivationState { get; set; }
 
         /// <summary> The Azure scope to which the license will apply. </summary>
-        public ScopeType ScopeType { get; set; }
+        public SqlServerLicenseScopeType ScopeType { get; set; }
 
         /// <summary> The timestamp of the most recent activation of the SqlServerLicense. </summary>
         public DateTimeOffset? LastActivatedOn { get; }

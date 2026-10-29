@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("failoverModeDescription"u8);
                 writer.WriteStringValue(FailoverModeDescription);
             }
-            if (Optional.IsDefined(SessionTimeout))
+            if (Optional.IsDefined(SessionTimeoutInSeconds))
             {
                 writer.WritePropertyName("sessionTimeout"u8);
-                writer.WriteNumberValue(SessionTimeout.Value);
+                writer.WriteNumberValue(SessionTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(PrimaryAllowConnections))
             {
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string endpointName = default;
             string endpointUri = default;
-            ConnectionAuth? endpointAuthenticationMode = default;
+            SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default;
             string certificateName = default;
             string endpointConnectLogin = default;
             ArcSqlServerAvailabilityMode? availabilityMode = default;
             string availabilityModeDescription = default;
             ArcSqlServerFailoverMode? failoverMode = default;
             string failoverModeDescription = default;
-            int? sessionTimeout = default;
+            int? sessionTimeoutInSeconds = default;
             PrimaryAllowConnections? primaryAllowConnections = default;
             string primaryRoleAllowConnectionsDescription = default;
             SecondaryAllowConnections? secondaryAllowConnections = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    endpointAuthenticationMode = new ConnectionAuth(prop.Value.GetString());
+                    endpointAuthenticationMode = new SqlMirroringEndpointAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateName"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    sessionTimeout = prop.Value.GetInt32();
+                    sessionTimeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("primaryAllowConnections"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 availabilityModeDescription,
                 failoverMode,
                 failoverModeDescription,
-                sessionTimeout,
+                sessionTimeoutInSeconds,
                 primaryAllowConnections,
                 primaryRoleAllowConnectionsDescription,
                 secondaryAllowConnections,

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ActiveDirectoryConnectorData item in Value)
+                foreach (ArcDataActiveDirectoryConnectorData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IReadOnlyList<ActiveDirectoryConnectorData> value = default;
+            IReadOnlyList<ArcDataActiveDirectoryConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<ActiveDirectoryConnectorData> array = new List<ActiveDirectoryConnectorData>();
+                    List<ArcDataActiveDirectoryConnectorData> array = new List<ArcDataActiveDirectoryConnectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActiveDirectoryConnectorData.DeserializeActiveDirectoryConnectorData(item, options));
+                        array.Add(ArcDataActiveDirectoryConnectorData.DeserializeArcDataActiveDirectoryConnectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActiveDirectoryConnectorListResult(value ?? new ChangeTrackingList<ActiveDirectoryConnectorData>(), nextLink, additionalBinaryDataProperties);
+            return new ActiveDirectoryConnectorListResult(value ?? new ChangeTrackingList<ArcDataActiveDirectoryConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

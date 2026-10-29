@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="secondaryRoleReadOnlyRoutingUri"> Connectivity endpoint (URL) of the read only availability replica. </param>
         /// <param name="primaryRoleAllowConnections"> Whether the primary replica should allow all connections or only READ_WRITE connections (disallowing ReadOnly connections). </param>
         /// <param name="primaryRoleReadOnlyRoutingList"> List of read only routing URLs. </param>
-        /// <param name="sessionTimeout"> The time-out period of availability group session replica, in seconds. </param>
+        /// <param name="sessionTimeoutInSeconds"> The time-out period of availability group session replica, in seconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupCreateUpdateReplicaConfiguration(string serverInstance, string endpointName, string endpointUri, ConnectionAuth? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, ArcSqlServerFailoverMode? failoverMode, SeedingMode? seedingMode, int? backupPriority, SecondaryAllowConnections? secondaryRoleAllowConnections, string secondaryRoleReadOnlyRoutingUri, PrimaryAllowConnections? primaryRoleAllowConnections, IList<string> primaryRoleReadOnlyRoutingList, int? sessionTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupCreateUpdateReplicaConfiguration(string serverInstance, string endpointName, string endpointUri, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, ArcSqlServerFailoverMode? failoverMode, SeedingMode? seedingMode, int? backupPriority, SecondaryAllowConnections? secondaryRoleAllowConnections, string secondaryRoleReadOnlyRoutingUri, PrimaryAllowConnections? primaryRoleAllowConnections, IList<string> primaryRoleReadOnlyRoutingList, int? sessionTimeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerInstance = serverInstance;
             EndpointName = endpointName;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcData.Models
             SecondaryRoleReadOnlyRoutingUri = secondaryRoleReadOnlyRoutingUri;
             PrimaryRoleAllowConnections = primaryRoleAllowConnections;
             PrimaryRoleReadOnlyRoutingList = primaryRoleReadOnlyRoutingList;
-            SessionTimeout = sessionTimeout;
+            SessionTimeoutInSeconds = sessionTimeoutInSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string EndpointUri { get; set; }
 
         /// <summary> Permitted authentication modes for the mirroring endpoint. </summary>
-        public ConnectionAuth? EndpointAuthenticationMode { get; set; }
+        public SqlMirroringEndpointAuthenticationType? EndpointAuthenticationMode { get; set; }
 
         /// <summary> Name of certificate to use for authentication. Required if any CERTIFICATE authentication modes are specified. </summary>
         public string CertificateName { get; set; }
@@ -103,6 +103,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public IList<string> PrimaryRoleReadOnlyRoutingList { get; }
 
         /// <summary> The time-out period of availability group session replica, in seconds. </summary>
-        public int? SessionTimeout { get; set; }
+        public int? SessionTimeoutInSeconds { get; set; }
     }
 }

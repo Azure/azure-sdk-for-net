@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="SqlServerInstanceRunTargetRecommendationJobResult"/>. </summary>
         /// <param name="jobStatus"> Represents the current status of the target recommendation job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceRunTargetRecommendationJobResult(JobStatus? jobStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceRunTargetRecommendationJobResult(SqlServerJobStatus? jobStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobStatus = jobStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the current status of the target recommendation job. </summary>
-        public JobStatus? JobStatus { get; }
+        public SqlServerJobStatus? JobStatus { get; }
     }
 }

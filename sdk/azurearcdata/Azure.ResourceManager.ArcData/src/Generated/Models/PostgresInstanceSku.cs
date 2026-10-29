@@ -12,7 +12,7 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The resource model definition representing SKU for Azure Database for PostgresSQL - Azure Arc. </summary>
-    public partial class PostgresInstanceSku : CommonSku
+    public partial class PostgresInstanceSku : ArcDataSku
     {
         /// <summary> Initializes a new instance of <see cref="PostgresInstanceSku"/>. </summary>
         /// <param name="name"> The name of the SKU.  It is typically a letter+number code. </param>

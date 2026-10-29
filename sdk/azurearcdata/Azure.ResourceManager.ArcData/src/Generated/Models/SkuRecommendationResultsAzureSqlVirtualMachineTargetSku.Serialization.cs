@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TempDBDiskSizes))
+            if (Optional.IsCollectionDefined(TempDbDiskSizes))
             {
                 writer.WritePropertyName("tempDbDiskSizes"u8);
                 writer.WriteStartArray();
-                foreach (DiskSizes item in TempDBDiskSizes)
+                foreach (DiskSizes item in TempDbDiskSizes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ArcData.Models
             SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuVirtualMachineSize virtualMachineSize = default;
             IList<DiskSizes> dataDiskSizes = default;
             IList<DiskSizes> logDiskSizes = default;
-            IList<DiskSizes> tempDBDiskSizes = default;
+            IList<DiskSizes> tempDbDiskSizes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         array.Add(DiskSizes.DeserializeDiskSizes(item, options));
                     }
-                    tempDBDiskSizes = array;
+                    tempDbDiskSizes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 virtualMachineSize,
                 dataDiskSizes ?? new ChangeTrackingList<DiskSizes>(),
                 logDiskSizes ?? new ChangeTrackingList<DiskSizes>(),
-                tempDBDiskSizes ?? new ChangeTrackingList<DiskSizes>(),
+                tempDbDiskSizes ?? new ChangeTrackingList<DiskSizes>(),
                 additionalBinaryDataProperties);
         }
     }

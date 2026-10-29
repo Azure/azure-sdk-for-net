@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Migration based on log-shipping technology like LRS (Log Replay Service). </summary>
         private const string LogShippingValue = "LogShipping";
         /// <summary> Migration using managed instance link (MILink) that utilizes Always On availability group technology. </summary>
-        private const string MILinkValue = "MILink";
+        private const string MiLinkValue = "MILink";
         /// <summary> Logical migration refers to moving data at the logical level (schema and rows) rather than transferring physical database files or backups. Examples include migrating to Azure SQL Database, which does not support physical restore. </summary>
         private const string LogicalValue = "Logical";
         /// <summary> Other mode of migration not listed currently. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static MigrationMode LogShipping { get; } = new MigrationMode(LogShippingValue);
 
         /// <summary> Migration using managed instance link (MILink) that utilizes Always On availability group technology. </summary>
-        public static MigrationMode MILink { get; } = new MigrationMode(MILinkValue);
+        public static MigrationMode MiLink { get; } = new MigrationMode(MiLinkValue);
 
         /// <summary> Logical migration refers to moving data at the logical level (schema and rows) rather than transferring physical database files or backups. Examples include migrating to Azure SQL Database, which does not support physical restore. </summary>
         public static MigrationMode Logical { get; } = new MigrationMode(LogicalValue);

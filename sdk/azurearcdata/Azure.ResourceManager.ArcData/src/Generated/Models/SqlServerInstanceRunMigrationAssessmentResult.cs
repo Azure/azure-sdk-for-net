@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceRunMigrationAssessmentResult(string id, string instanceName, JobStatus? jobStatus, string jobException, BackgroundJob backgroundJob, IList<SequencerAction> sequencerActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceRunMigrationAssessmentResult(string id, string instanceName, SqlServerJobStatus? jobStatus, string jobException, SqlServerBackgroundJob backgroundJob, IList<SequencerAction> sequencerActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             InstanceName = instanceName;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.ArcData.Models
         public string InstanceName { get; }
 
         /// <summary> The status of the job. </summary>
-        public JobStatus? JobStatus { get; }
+        public SqlServerJobStatus? JobStatus { get; }
 
         /// <summary> The exception message if the job failed. </summary>
         public string JobException { get; }
 
         /// <summary> The background job details. </summary>
-        public BackgroundJob BackgroundJob { get; }
+        public SqlServerBackgroundJob BackgroundJob { get; }
 
         /// <summary> The list of sequencer actions. </summary>
         public IList<SequencerAction> SequencerActions { get; }

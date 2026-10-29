@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterId"> If a CustomLocation is provided, this contains the ARM id of the connected cluster the custom location belongs to. </param>
         /// <param name="extensionId"> If a CustomLocation is provided, this contains the ARM id of the extension the custom location belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataControllerProperties(DataControllerInfrastructure? infrastructure, OnPremiseProperty onPremiseProperty, BinaryData k8sRaw, UploadWatermark uploadWatermark, DateTimeOffset? lastUploadedOn, BasicLoginInformation basicLoginInformation, BasicLoginInformation metricsDashboardCredential, BasicLoginInformation logsDashboardCredential, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig, UploadServicePrincipal uploadServicePrincipal, string provisioningState, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataControllerProperties(DataControllerInfrastructure? infrastructure, DataControllerOnPremisesConfig onPremiseProperty, BinaryData k8sRaw, DataControllerUploadWatermark uploadWatermark, DateTimeOffset? lastUploadedOn, ArcDataBasicLoginInformation basicLoginInformation, ArcDataBasicLoginInformation metricsDashboardCredential, ArcDataBasicLoginInformation logsDashboardCredential, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig, UploadServicePrincipal uploadServicePrincipal, string provisioningState, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Infrastructure = infrastructure;
             OnPremiseProperty = onPremiseProperty;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public DataControllerInfrastructure? Infrastructure { get; set; }
 
         /// <summary> Properties from the Kubernetes data controller. </summary>
-        public OnPremiseProperty OnPremiseProperty { get; set; }
+        public DataControllerOnPremisesConfig OnPremiseProperty { get; set; }
 
         /// <summary>
         /// The raw kubernetes information
@@ -90,19 +90,19 @@ namespace Azure.ResourceManager.ArcData.Models
         public BinaryData K8sRaw { get; set; }
 
         /// <summary> Properties on upload watermark.  Mostly timestamp for each upload data type. </summary>
-        public UploadWatermark UploadWatermark { get; set; }
+        public DataControllerUploadWatermark UploadWatermark { get; set; }
 
         /// <summary> Last uploaded date from Kubernetes cluster. Defaults to current date time. </summary>
         public DateTimeOffset? LastUploadedOn { get; set; }
 
         /// <summary> Deprecated. Azure Arc Data Services data controller no longer expose any endpoint. All traffic are exposed through Kubernetes native API. </summary>
-        public BasicLoginInformation BasicLoginInformation { get; set; }
+        public ArcDataBasicLoginInformation BasicLoginInformation { get; set; }
 
         /// <summary> Login credential for metrics dashboard on the Kubernetes cluster. </summary>
-        public BasicLoginInformation MetricsDashboardCredential { get; set; }
+        public ArcDataBasicLoginInformation MetricsDashboardCredential { get; set; }
 
         /// <summary> Login credential for logs dashboard on the Kubernetes cluster. </summary>
-        public BasicLoginInformation LogsDashboardCredential { get; set; }
+        public ArcDataBasicLoginInformation LogsDashboardCredential { get; set; }
 
         /// <summary> Log analytics workspace id and primary key. </summary>
         public LogAnalyticsWorkspaceConfig LogAnalyticsWorkspaceConfig { get; set; }

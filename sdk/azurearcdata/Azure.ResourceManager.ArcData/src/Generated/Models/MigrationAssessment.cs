@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="skuRecommendationResults"> SKU Recommendation results for Azure migration targets for SQL Server. </param>
         /// <param name="impactedObjectsSummary"> Represents a summary of migration readiness issues/warnings per feature type for Azure SQL DB and SQL MI targets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationAssessment(bool? enabled, DateTimeOffset? assessmentUploadOn, DateTimeOffset? assessmentViewedOn, DateTimeOffset? targetRecommendationGenerationOn, string version, MigrationAssessmentSettings settings, IReadOnlyList<ServerAssessmentsItem> serverAssessments, SkuRecommendationResults skuRecommendationResults, ImpactedObjectsSuitabilitySummary impactedObjectsSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationAssessment(bool? enabled, DateTimeOffset? assessmentUploadOn, DateTimeOffset? assessmentViewedOn, DateTimeOffset? targetRecommendationGenerationOn, string version, MigrationAssessmentSettings settings, IReadOnlyList<ServerAssessmentsItem> serverAssessments, SkuRecommendationResults skuRecommendationResults, SqlMigrationImpactedObjectsSuitabilitySummary impactedObjectsSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             AssessmentUploadOn = assessmentUploadOn;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public SkuRecommendationResults SkuRecommendationResults { get; }
 
         /// <summary> Represents a summary of migration readiness issues/warnings per feature type for Azure SQL DB and SQL MI targets. </summary>
-        public ImpactedObjectsSuitabilitySummary ImpactedObjectsSummary { get; set; }
+        public SqlMigrationImpactedObjectsSuitabilitySummary ImpactedObjectsSummary { get; set; }
     }
 }

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcData.Models
             DateTimeOffset? assessmentUploadOn = default;
             DateTimeOffset? targetRecommendationGenerationOn = default;
             IReadOnlyList<DatabaseAssessmentsItem> databaseAssessments = default;
-            TargetReadiness targetReadiness = default;
+            SqlMigrationTargetReadiness targetReadiness = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    targetReadiness = TargetReadiness.DeserializeTargetReadiness(prop.Value, options);
+                    targetReadiness = SqlMigrationTargetReadiness.DeserializeSqlMigrationTargetReadiness(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

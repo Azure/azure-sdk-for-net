@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="availabilityModeDescription"> The Availability Synchronization mode of the availability group replica. </param>
         /// <param name="failoverMode"> Property to set the failover mode of the availability group replica. </param>
         /// <param name="failoverModeDescription"> The failover mode of the availability group replica. </param>
-        /// <param name="sessionTimeout"> The time-out period of availability group session replica, in seconds. </param>
+        /// <param name="sessionTimeoutInSeconds"> The time-out period of availability group session replica, in seconds. </param>
         /// <param name="primaryAllowConnections"> Whether the primary replica should allow all connections or only READ_WRITE connections (disallowing ReadOnly connections). </param>
         /// <param name="primaryRoleAllowConnectionsDescription"> Whether the availability allows all connections or only read-write connections. </param>
         /// <param name="secondaryAllowConnections"> Whether the secondary replica should allow all connections, no connections, or only ReadOnly connections. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="seedingMode"> Specifies how the secondary replica will be initially seeded. AUTOMATIC enables direct seeding. This method will seed the secondary replica over the network. This method does not require you to backup and restore a copy of the primary database on the replica. MANUAL specifies manual seeding (default). This method requires you to create a backup of the database on the primary replica and manually restore that backup on the secondary replica. </param>
         /// <param name="seedingModeDescription"> Describes seeding mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupConfigure(string endpointName, string endpointUri, ConnectionAuth? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, string availabilityModeDescription, ArcSqlServerFailoverMode? failoverMode, string failoverModeDescription, int? sessionTimeout, PrimaryAllowConnections? primaryAllowConnections, string primaryRoleAllowConnectionsDescription, SecondaryAllowConnections? secondaryAllowConnections, string secondaryRoleAllowConnectionsDescription, DateTimeOffset? replicaCreateOn, DateTimeOffset? replicaModifyOn, int? backupPriority, string readOnlyRoutingUri, string readWriteRoutingUri, SeedingMode? seedingMode, string seedingModeDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupConfigure(string endpointName, string endpointUri, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode, string certificateName, string endpointConnectLogin, ArcSqlServerAvailabilityMode? availabilityMode, string availabilityModeDescription, ArcSqlServerFailoverMode? failoverMode, string failoverModeDescription, int? sessionTimeoutInSeconds, PrimaryAllowConnections? primaryAllowConnections, string primaryRoleAllowConnectionsDescription, SecondaryAllowConnections? secondaryAllowConnections, string secondaryRoleAllowConnectionsDescription, DateTimeOffset? replicaCreateOn, DateTimeOffset? replicaModifyOn, int? backupPriority, string readOnlyRoutingUri, string readWriteRoutingUri, SeedingMode? seedingMode, string seedingModeDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             EndpointUri = endpointUri;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcData.Models
             AvailabilityModeDescription = availabilityModeDescription;
             FailoverMode = failoverMode;
             FailoverModeDescription = failoverModeDescription;
-            SessionTimeout = sessionTimeout;
+            SessionTimeoutInSeconds = sessionTimeoutInSeconds;
             PrimaryAllowConnections = primaryAllowConnections;
             PrimaryRoleAllowConnectionsDescription = primaryRoleAllowConnectionsDescription;
             SecondaryAllowConnections = secondaryAllowConnections;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string EndpointUri { get; set; }
 
         /// <summary> Permitted authentication modes for the mirroring endpoint. </summary>
-        public ConnectionAuth? EndpointAuthenticationMode { get; set; }
+        public SqlMirroringEndpointAuthenticationType? EndpointAuthenticationMode { get; set; }
 
         /// <summary> Name of certificate to use for authentication. Required if any CERTIFICATE authentication modes are specified. </summary>
         public string CertificateName { get; set; }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string FailoverModeDescription { get; }
 
         /// <summary> The time-out period of availability group session replica, in seconds. </summary>
-        public int? SessionTimeout { get; set; }
+        public int? SessionTimeoutInSeconds { get; set; }
 
         /// <summary> Whether the primary replica should allow all connections or only READ_WRITE connections (disallowing ReadOnly connections). </summary>
         public PrimaryAllowConnections? PrimaryAllowConnections { get; set; }

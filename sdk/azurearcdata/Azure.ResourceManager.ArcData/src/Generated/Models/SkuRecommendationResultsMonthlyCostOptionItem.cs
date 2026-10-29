@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="keyName"> The unique combination of saving options for a price e.g. With1YearASPAndProd. </param>
         /// <param name="keyValue"> The Monthly cost of the particular SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuRecommendationResultsMonthlyCostOptionItem(string keyName, CostTypeValues keyValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuRecommendationResultsMonthlyCostOptionItem(string keyName, SqlSkuRecommendationCostBreakdown keyValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyValue = keyValue;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public string KeyName { get; }
 
         /// <summary> The Monthly cost of the particular SKU. </summary>
-        public CostTypeValues KeyValue { get; }
+        public SqlSkuRecommendationCostBreakdown KeyValue { get; }
     }
 }

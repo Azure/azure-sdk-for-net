@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string dataControllerId = default;
             string admin = default;
-            BasicLoginInformation basicLoginInformation = default;
+            ArcDataBasicLoginInformation basicLoginInformation = default;
             BinaryData k8sRaw = default;
             DateTimeOffset? lastUploadedOn = default;
             string provisioningState = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    basicLoginInformation = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    basicLoginInformation = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("k8sRaw"u8))

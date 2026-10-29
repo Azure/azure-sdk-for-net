@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Recommended Azure SQL Managed Instance SKU for the entire SQL Server instance, including service tier, compute, storage, and estimated monthly cost derived from the collected requirements. </summary>
         private const string SqlMiTargetRecommendationPerInstanceValue = "SqlMiTargetRecommendationPerInstance";
         /// <summary> Recommended Azure SQL Database SKU per database, including service tier, compute, storage, and estimated monthly cost derived from the collected requirements for each individual database. </summary>
-        private const string SqlDBTargetRecommendationPerDatabaseValue = "SqlDbTargetRecommendationPerDatabase";
+        private const string SqlDbTargetRecommendationPerDatabaseValue = "SqlDbTargetRecommendationPerDatabase";
 
         /// <summary> Initializes a new instance of <see cref="SqlServerInstanceTargetRecommendationReportSectionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static SqlServerInstanceTargetRecommendationReportSectionType SqlMiTargetRecommendationPerInstance { get; } = new SqlServerInstanceTargetRecommendationReportSectionType(SqlMiTargetRecommendationPerInstanceValue);
 
         /// <summary> Recommended Azure SQL Database SKU per database, including service tier, compute, storage, and estimated monthly cost derived from the collected requirements for each individual database. </summary>
-        public static SqlServerInstanceTargetRecommendationReportSectionType SqlDBTargetRecommendationPerDatabase { get; } = new SqlServerInstanceTargetRecommendationReportSectionType(SqlDBTargetRecommendationPerDatabaseValue);
+        public static SqlServerInstanceTargetRecommendationReportSectionType SqlDbTargetRecommendationPerDatabase { get; } = new SqlServerInstanceTargetRecommendationReportSectionType(SqlDbTargetRecommendationPerDatabaseValue);
 
         /// <summary> Determines if two <see cref="SqlServerInstanceTargetRecommendationReportSectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

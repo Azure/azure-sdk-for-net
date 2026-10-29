@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SessionTimeout))
+            if (Optional.IsDefined(SessionTimeoutInSeconds))
             {
                 writer.WritePropertyName("sessionTimeout"u8);
-                writer.WriteNumberValue(SessionTimeout.Value);
+                writer.WriteNumberValue(SessionTimeoutInSeconds.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string serverInstance = default;
             string endpointName = default;
             string endpointUri = default;
-            ConnectionAuth? endpointAuthenticationMode = default;
+            SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default;
             string certificateName = default;
             string endpointConnectLogin = default;
             ArcSqlServerAvailabilityMode? availabilityMode = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string secondaryRoleReadOnlyRoutingUri = default;
             PrimaryAllowConnections? primaryRoleAllowConnections = default;
             IList<string> primaryRoleReadOnlyRoutingList = default;
-            int? sessionTimeout = default;
+            int? sessionTimeoutInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    endpointAuthenticationMode = new ConnectionAuth(prop.Value.GetString());
+                    endpointAuthenticationMode = new SqlMirroringEndpointAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateName"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    sessionTimeout = prop.Value.GetInt32();
+                    sessionTimeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 secondaryRoleReadOnlyRoutingUri,
                 primaryRoleAllowConnections,
                 primaryRoleReadOnlyRoutingList ?? new ChangeTrackingList<string>(),
-                sessionTimeout,
+                sessionTimeoutInSeconds,
                 additionalBinaryDataProperties);
         }
     }

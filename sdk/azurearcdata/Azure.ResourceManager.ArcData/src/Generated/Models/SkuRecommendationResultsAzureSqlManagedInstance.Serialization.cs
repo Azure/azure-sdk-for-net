@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            RecommendationStatus? recommendationStatus = default;
+            SqlSkuRecommendationStatus? recommendationStatus = default;
             int? numberOfServerBlockerIssues = default;
             SkuRecommendationResultsMonthlyCost monthlyCost = default;
             IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    recommendationStatus = new RecommendationStatus(prop.Value.GetString());
+                    recommendationStatus = new SqlSkuRecommendationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numberOfServerBlockerIssues"u8))

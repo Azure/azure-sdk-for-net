@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string strategy = default;
             string currency = default;
             float? discountPercentage = default;
-            CostOptionSelectedValues costOptions = default;
+            SqlSkuRecommendationCostOptions costOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    costOptions = CostOptionSelectedValues.DeserializeCostOptionSelectedValues(prop.Value, options);
+                    costOptions = SqlSkuRecommendationCostOptions.DeserializeSqlSkuRecommendationCostOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

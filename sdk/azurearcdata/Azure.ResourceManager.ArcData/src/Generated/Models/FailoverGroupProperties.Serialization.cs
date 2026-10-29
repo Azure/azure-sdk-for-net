@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ArcData;
 
 namespace Azure.ResourceManager.ArcData.Models
@@ -139,8 +140,8 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            string partnerManagedInstanceId = default;
+            ArcDataProvisioningState? provisioningState = default;
+            ResourceIdentifier partnerManagedInstanceId = default;
             FailoverGroupSpec spec = default;
             BinaryData status = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -152,12 +153,12 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ArcDataProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("partnerManagedInstanceId"u8))
                 {
-                    partnerManagedInstanceId = prop.Value.GetString();
+                    partnerManagedInstanceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("spec"u8))

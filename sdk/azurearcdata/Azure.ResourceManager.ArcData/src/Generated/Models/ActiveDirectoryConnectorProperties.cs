@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="spec"> null. </param>
         /// <param name="status"> null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConnectorProperties(BasicLoginInformation domainServiceAccountLoginInformation, string provisioningState, ActiveDirectoryConnectorSpec spec, ActiveDirectoryConnectorStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConnectorProperties(ArcDataBasicLoginInformation domainServiceAccountLoginInformation, string provisioningState, ActiveDirectoryConnectorSpec spec, ActiveDirectoryConnectorStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainServiceAccountLoginInformation = domainServiceAccountLoginInformation;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Username and password for domain service account authentication. </summary>
-        public BasicLoginInformation DomainServiceAccountLoginInformation { get; set; }
+        public ArcDataBasicLoginInformation DomainServiceAccountLoginInformation { get; set; }
 
         /// <summary> The provisioning state of the Active Directory connector resource. </summary>
         public string ProvisioningState { get; }

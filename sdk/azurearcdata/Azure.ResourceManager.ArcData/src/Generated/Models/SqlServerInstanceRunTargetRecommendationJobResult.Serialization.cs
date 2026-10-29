@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            JobStatus? jobStatus = default;
+            SqlServerJobStatus? jobStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    jobStatus = new JobStatus(prop.Value.GetString());
+                    jobStatus = new SqlServerJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

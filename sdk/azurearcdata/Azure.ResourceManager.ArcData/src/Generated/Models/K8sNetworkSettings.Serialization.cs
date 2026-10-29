@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 throw new FormatException($"The model {nameof(K8sNetworkSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Forceencryption))
+            if (Optional.IsDefined(ForceEncryption))
             {
                 writer.WritePropertyName("forceencryption"u8);
-                writer.WriteNumberValue(Forceencryption.Value);
+                writer.WriteNumberValue(ForceEncryption.Value);
             }
-            if (Optional.IsDefined(Tlsciphers))
+            if (Optional.IsDefined(TlsCiphers))
             {
                 writer.WritePropertyName("tlsciphers"u8);
-                writer.WriteStringValue(Tlsciphers);
+                writer.WriteStringValue(TlsCiphers);
             }
-            if (Optional.IsDefined(Tlsprotocols))
+            if (Optional.IsDefined(TlsProtocols))
             {
                 writer.WritePropertyName("tlsprotocols"u8);
-                writer.WriteStringValue(Tlsprotocols);
+                writer.WriteStringValue(TlsProtocols);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            int? forceencryption = default;
-            string tlsciphers = default;
-            string tlsprotocols = default;
+            int? forceEncryption = default;
+            string tlsCiphers = default;
+            string tlsProtocols = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    forceencryption = prop.Value.GetInt32();
+                    forceEncryption = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("tlsciphers"u8))
                 {
-                    tlsciphers = prop.Value.GetString();
+                    tlsCiphers = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tlsprotocols"u8))
                 {
-                    tlsprotocols = prop.Value.GetString();
+                    tlsProtocols = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new K8sNetworkSettings(forceencryption, tlsciphers, tlsprotocols, additionalBinaryDataProperties);
+            return new K8sNetworkSettings(forceEncryption, tlsCiphers, tlsProtocols, additionalBinaryDataProperties);
         }
     }
 }

@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string id = default;
             string instanceName = default;
-            JobStatus? jobStatus = default;
+            SqlServerJobStatus? jobStatus = default;
             string jobException = default;
-            BackgroundJob backgroundJob = default;
+            SqlServerBackgroundJob backgroundJob = default;
             IList<SequencerAction> sequencerActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    jobStatus = new JobStatus(prop.Value.GetString());
+                    jobStatus = new SqlServerJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("jobException"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    backgroundJob = BackgroundJob.DeserializeBackgroundJob(prop.Value, options);
+                    backgroundJob = SqlServerBackgroundJob.DeserializeSqlServerBackgroundJob(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sequencerActions"u8))

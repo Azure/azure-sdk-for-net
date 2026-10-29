@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             SqlVersion? version = default;
-            EditionType? edition = default;
+            SqlServerEditionType? edition = default;
             string containerResourceId = default;
             string vmId = default;
             string createTime = default;
             string vCore = default;
             string cores = default;
-            ConnectionStatus? status = default;
+            SqlServerConnectionStatus? status = default;
             DiscoverySource? discoverySource = default;
             string patchLevel = default;
             string collation = default;
@@ -346,17 +346,17 @@ namespace Azure.ResourceManager.ArcData.Models
             string provisioningState = default;
             DateTimeOffset? lastInventoryUploadOn = default;
             DateTimeOffset? lastUsageUploadOn = default;
-            HostType? hostType = default;
+            ArcSqlServerHostType? hostType = default;
             AlwaysOnRole? alwaysOnRole = default;
             DbmEndpoint databaseMirroringEndpoint = default;
             FailoverCluster failoverCluster = default;
-            BackupPolicy backupPolicy = default;
+            SqlServerBackupPolicy backupPolicy = default;
             DateTimeOffset? upgradeLockedUntil = default;
             Monitoring isMonitoring = default;
             SqlServerInstanceMigration migration = default;
             BestPracticesAssessment bestPracticesAssessment = default;
             ClientConnection isClientConnection = default;
-            ServiceType? serviceType = default;
+            SqlServerServiceType? serviceType = default;
             long? maxServerMemoryMB = default;
             bool? isMicrosoftPkiCertTrustConfigured = default;
             bool? isDigiCertPkiCertTrustConfigured = default;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    edition = new EditionType(prop.Value.GetString());
+                    edition = new SqlServerEditionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("containerResourceId"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    status = new ConnectionStatus(prop.Value.GetString());
+                    status = new SqlServerConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("discoverySource"u8))
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    hostType = new HostType(prop.Value.GetString());
+                    hostType = new ArcSqlServerHostType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("alwaysOnRole"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    backupPolicy = BackupPolicy.DeserializeBackupPolicy(prop.Value, options);
+                    backupPolicy = SqlServerBackupPolicy.DeserializeSqlServerBackupPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("upgradeLockedUntil"u8))
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    serviceType = new ServiceType(prop.Value.GetString());
+                    serviceType = new SqlServerServiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxServerMemoryMB"u8))

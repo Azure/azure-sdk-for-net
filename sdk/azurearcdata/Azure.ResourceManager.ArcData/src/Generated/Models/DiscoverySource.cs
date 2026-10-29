@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Instance is discovered by Azure Migrate agent. </summary>
         private const string AzureMigrateValue = "Azure Migrate";
         /// <summary> Instance is discovered/registered from Azure Data Studio (ADS). </summary>
-        private const string ADSValue = "ADS";
+        private const string AdsValue = "ADS";
         /// <summary> Instance is discovered/registered from SQL Server Management Studio (SSMS). </summary>
         private const string SsmsValue = "SSMS";
         /// <summary> Instance is discovered/registered from SQL Server Migration Assistant (SSMA). </summary>
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Instance is registered via Import. </summary>
         private const string ImportValue = "Import";
         /// <summary> Instance is discovered/registered from Azure Database Migration Service(DMS) Azure Portal. </summary>
-        private const string DMSPortalValue = "DMS-Portal";
+        private const string DmsPortalValue = "DMS-Portal";
         /// <summary> Instance is discovered/registered from DMS using PowerShell - Azure DataMigration Service Module. </summary>
-        private const string DMSPSValue = "DMS-PS";
+        private const string DmsPsValue = "DMS-PS";
         /// <summary> Instance is discovered/registered from DMS using datamigration extension for the Azure CLI. </summary>
-        private const string DMSCLIValue = "DMS-CLI";
+        private const string DmsCliValue = "DMS-CLI";
         /// <summary> Instance is discovered/registered from Azure Database Migration Service SDK like Python or .NET SDKs. </summary>
-        private const string DMSSDKValue = "DMS-SDK";
+        private const string DmsSdkValue = "DMS-SDK";
         /// <summary> Instance is discovered/registered from any other source not listed above. </summary>
         private const string OtherValue = "Other";
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static DiscoverySource AzureMigrate { get; } = new DiscoverySource(AzureMigrateValue);
 
         /// <summary> Instance is discovered/registered from Azure Data Studio (ADS). </summary>
-        public static DiscoverySource ADS { get; } = new DiscoverySource(ADSValue);
+        public static DiscoverySource Ads { get; } = new DiscoverySource(AdsValue);
 
         /// <summary> Instance is discovered/registered from SQL Server Management Studio (SSMS). </summary>
         public static DiscoverySource Ssms { get; } = new DiscoverySource(SsmsValue);
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.ArcData.Models
         public static DiscoverySource Import { get; } = new DiscoverySource(ImportValue);
 
         /// <summary> Instance is discovered/registered from Azure Database Migration Service(DMS) Azure Portal. </summary>
-        public static DiscoverySource DMSPortal { get; } = new DiscoverySource(DMSPortalValue);
+        public static DiscoverySource DmsPortal { get; } = new DiscoverySource(DmsPortalValue);
 
         /// <summary> Instance is discovered/registered from DMS using PowerShell - Azure DataMigration Service Module. </summary>
-        public static DiscoverySource DMSPS { get; } = new DiscoverySource(DMSPSValue);
+        public static DiscoverySource DmsPs { get; } = new DiscoverySource(DmsPsValue);
 
         /// <summary> Instance is discovered/registered from DMS using datamigration extension for the Azure CLI. </summary>
-        public static DiscoverySource DMSCLI { get; } = new DiscoverySource(DMSCLIValue);
+        public static DiscoverySource DmsCli { get; } = new DiscoverySource(DmsCliValue);
 
         /// <summary> Instance is discovered/registered from Azure Database Migration Service SDK like Python or .NET SDKs. </summary>
-        public static DiscoverySource DMSSDK { get; } = new DiscoverySource(DMSSDKValue);
+        public static DiscoverySource DmsSdk { get; } = new DiscoverySource(DmsSdkValue);
 
         /// <summary> Instance is discovered/registered from any other source not listed above. </summary>
         public static DiscoverySource Other { get; } = new DiscoverySource(OtherValue);

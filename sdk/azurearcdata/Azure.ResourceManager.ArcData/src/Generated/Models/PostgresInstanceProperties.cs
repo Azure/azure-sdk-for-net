@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastUploadedOn"> Last uploaded date from Kubernetes cluster. Defaults to current date time. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Arc-enabled PostgreSQL instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgresInstanceProperties(string dataControllerId, string admin, BasicLoginInformation basicLoginInformation, BinaryData k8sRaw, DateTimeOffset? lastUploadedOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgresInstanceProperties(string dataControllerId, string admin, ArcDataBasicLoginInformation basicLoginInformation, BinaryData k8sRaw, DateTimeOffset? lastUploadedOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataControllerId = dataControllerId;
             Admin = admin;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string Admin { get; set; }
 
         /// <summary> Username and password for basic authentication. </summary>
-        public BasicLoginInformation BasicLoginInformation { get; set; }
+        public ArcDataBasicLoginInformation BasicLoginInformation { get; set; }
 
         /// <summary>
         /// The raw kubernetes information

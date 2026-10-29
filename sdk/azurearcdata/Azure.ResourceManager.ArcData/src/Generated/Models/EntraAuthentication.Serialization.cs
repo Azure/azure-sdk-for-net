@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            IdentityType? identityType = default;
+            SqlServerEntraIdentityType? identityType = default;
             string clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    identityType = new IdentityType(prop.Value.GetString());
+                    identityType = new SqlServerEntraIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))

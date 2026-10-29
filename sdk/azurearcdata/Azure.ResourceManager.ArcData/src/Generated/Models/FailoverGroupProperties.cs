@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ArcData;
 
 namespace Azure.ResourceManager.ArcData.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="partnerManagedInstanceId"> The resource ID of the partner SQL managed instance. </param>
         /// <param name="spec"> The specifications of the failover group resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerManagedInstanceId"/> or <paramref name="spec"/> is null. </exception>
-        public FailoverGroupProperties(string partnerManagedInstanceId, FailoverGroupSpec spec)
+        public FailoverGroupProperties(ResourceIdentifier partnerManagedInstanceId, FailoverGroupSpec spec)
         {
             Argument.AssertNotNull(partnerManagedInstanceId, nameof(partnerManagedInstanceId));
             Argument.AssertNotNull(spec, nameof(spec));
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="spec"> The specifications of the failover group resource. </param>
         /// <param name="status"> The status of the failover group custom resource. </param>
         /// <param name="additionalProperties"></param>
-        internal FailoverGroupProperties(ProvisioningState? provisioningState, string partnerManagedInstanceId, FailoverGroupSpec spec, BinaryData status, IDictionary<string, BinaryData> additionalProperties)
+        internal FailoverGroupProperties(ArcDataProvisioningState? provisioningState, ResourceIdentifier partnerManagedInstanceId, FailoverGroupSpec spec, BinaryData status, IDictionary<string, BinaryData> additionalProperties)
         {
             ProvisioningState = provisioningState;
             PartnerManagedInstanceId = partnerManagedInstanceId;
@@ -48,10 +49,10 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The provisioning state of the failover group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ArcDataProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource ID of the partner SQL managed instance. </summary>
-        public string PartnerManagedInstanceId { get; set; }
+        public ResourceIdentifier PartnerManagedInstanceId { get; set; }
 
         /// <summary> The specifications of the failover group resource. </summary>
         public FailoverGroupSpec Spec { get; set; }

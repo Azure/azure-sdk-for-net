@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="identityType"> The method used for Entra authentication. </param>
         /// <param name="clientId"> The client Id of the Managed Identity to query Microsoft Graph API. An empty string must be used for the system assigned Managed Identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntraAuthentication(IdentityType? identityType, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntraAuthentication(SqlServerEntraIdentityType? identityType, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             ClientId = clientId;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The method used for Entra authentication. </summary>
-        public IdentityType? IdentityType { get; set; }
+        public SqlServerEntraIdentityType? IdentityType { get; set; }
 
         /// <summary> The client Id of the Managed Identity to query Microsoft Graph API. An empty string must be used for the system assigned Managed Identity. </summary>
         public string ClientId { get; set; }

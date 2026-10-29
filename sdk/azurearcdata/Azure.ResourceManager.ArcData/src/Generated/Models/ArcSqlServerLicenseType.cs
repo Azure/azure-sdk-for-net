@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> HADR. </summary>
         private const string HadrValue = "HADR";
         /// <summary> ServerCAL. </summary>
-        private const string ServerCALValue = "ServerCAL";
+        private const string ServerCalValue = "ServerCAL";
         /// <summary> LicenseOnly. </summary>
         private const string LicenseOnlyValue = "LicenseOnly";
         /// <summary> PAYG. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public static ArcSqlServerLicenseType Hadr { get; } = new ArcSqlServerLicenseType(HadrValue);
 
         /// <summary> ServerCAL. </summary>
-        public static ArcSqlServerLicenseType ServerCAL { get; } = new ArcSqlServerLicenseType(ServerCALValue);
+        public static ArcSqlServerLicenseType ServerCal { get; } = new ArcSqlServerLicenseType(ServerCalValue);
 
         /// <summary> LicenseOnly. </summary>
         public static ArcSqlServerLicenseType LicenseOnly { get; } = new ArcSqlServerLicenseType(LicenseOnlyValue);

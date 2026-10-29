@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 writer.WritePropertyName("impactedObjectsSummary"u8);
                 writer.WriteStartArray();
-                foreach (ImpactedObjectsInfo item in ImpactedObjectsSummary)
+                foreach (SqlMigrationImpactedObjectInfo item in ImpactedObjectsSummary)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             int? numOfBlockerIssues = default;
-            RecommendationStatus? recommendationStatus = default;
-            IReadOnlyList<ImpactedObjectsInfo> impactedObjectsSummary = default;
+            SqlSkuRecommendationStatus? recommendationStatus = default;
+            IReadOnlyList<SqlMigrationImpactedObjectInfo> impactedObjectsSummary = default;
             SkuRecommendationResultsMonthlyCost monthlyCost = default;
             IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default;
             SkuRecommendationSummaryTargetSku targetSku = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    recommendationStatus = new RecommendationStatus(prop.Value.GetString());
+                    recommendationStatus = new SqlSkuRecommendationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("impactedObjectsSummary"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    List<ImpactedObjectsInfo> array = new List<ImpactedObjectsInfo>();
+                    List<SqlMigrationImpactedObjectInfo> array = new List<SqlMigrationImpactedObjectInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImpactedObjectsInfo.DeserializeImpactedObjectsInfo(item, options));
+                        array.Add(SqlMigrationImpactedObjectInfo.DeserializeSqlMigrationImpactedObjectInfo(item, options));
                     }
                     impactedObjectsSummary = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ArcData.Models
             return new SkuRecommendationSummary(
                 numOfBlockerIssues,
                 recommendationStatus,
-                impactedObjectsSummary ?? new ChangeTrackingList<ImpactedObjectsInfo>(),
+                impactedObjectsSummary ?? new ChangeTrackingList<SqlMigrationImpactedObjectInfo>(),
                 monthlyCost,
                 monthlyCostOptions ?? new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>(),
                 targetSku,

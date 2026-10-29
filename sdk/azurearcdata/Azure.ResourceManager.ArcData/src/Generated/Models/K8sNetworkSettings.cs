@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="K8sNetworkSettings"/>. </summary>
-        /// <param name="forceencryption"> If 1, then SQL Server forces all connections to be encrypted. By default, this option is 0. </param>
-        /// <param name="tlsciphers"> Specifies which ciphers are allowed by SQL Server for TLS. </param>
-        /// <param name="tlsprotocols"> A comma-separated list of which TLS protocols are allowed by SQL Server. </param>
+        /// <param name="forceEncryption"> If 1, then SQL Server forces all connections to be encrypted. By default, this option is 0. </param>
+        /// <param name="tlsCiphers"> Specifies which ciphers are allowed by SQL Server for TLS. </param>
+        /// <param name="tlsProtocols"> A comma-separated list of which TLS protocols are allowed by SQL Server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal K8sNetworkSettings(int? forceencryption, string tlsciphers, string tlsprotocols, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal K8sNetworkSettings(int? forceEncryption, string tlsCiphers, string tlsProtocols, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Forceencryption = forceencryption;
-            Tlsciphers = tlsciphers;
-            Tlsprotocols = tlsprotocols;
+            ForceEncryption = forceEncryption;
+            TlsCiphers = tlsCiphers;
+            TlsProtocols = tlsProtocols;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If 1, then SQL Server forces all connections to be encrypted. By default, this option is 0. </summary>
-        public int? Forceencryption { get; set; }
+        public int? ForceEncryption { get; set; }
 
         /// <summary> Specifies which ciphers are allowed by SQL Server for TLS. </summary>
-        public string Tlsciphers { get; set; }
+        public string TlsCiphers { get; set; }
 
         /// <summary> A comma-separated list of which TLS protocols are allowed by SQL Server. </summary>
-        public string Tlsprotocols { get; set; }
+        public string TlsProtocols { get; set; }
     }
 }

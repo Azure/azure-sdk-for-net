@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterId"> If a CustomLocation is provided, this contains the ARM id of the connected cluster the custom location belongs to. </param>
         /// <param name="extensionId"> If a CustomLocation is provided, this contains the ARM id of the extension the custom location belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlManagedInstanceProperties(string dataControllerId, string admin, string startTime, string endTime, SqlManagedInstanceK8sRaw k8sRaw, BasicLoginInformation basicLoginInformation, DateTimeOffset? lastUploadedOn, string provisioningState, ActiveDirectoryInformation activeDirectoryInformation, ArcSqlManagedInstanceLicenseType? licenseType, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlManagedInstanceProperties(string dataControllerId, string admin, string startTime, string endTime, SqlManagedInstanceK8sRaw k8sRaw, ArcDataBasicLoginInformation basicLoginInformation, DateTimeOffset? lastUploadedOn, string provisioningState, ActiveDirectoryInformation activeDirectoryInformation, ArcSqlManagedInstanceLicenseType? licenseType, string clusterId, string extensionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataControllerId = dataControllerId;
             Admin = admin;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public SqlManagedInstanceK8sRaw K8sRaw { get; set; }
 
         /// <summary> Username and password for basic authentication. </summary>
-        public BasicLoginInformation BasicLoginInformation { get; set; }
+        public ArcDataBasicLoginInformation BasicLoginInformation { get; set; }
 
         /// <summary> Last uploaded date from Kubernetes cluster. Defaults to current date time. </summary>
         public DateTimeOffset? LastUploadedOn { get; set; }

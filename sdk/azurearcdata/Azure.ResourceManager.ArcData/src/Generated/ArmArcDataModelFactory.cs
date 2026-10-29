@@ -11,6 +11,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ArcData;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcData.Models
 {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterId"> If a CustomLocation is provided, this contains the ARM id of the connected cluster the custom location belongs to. </param>
         /// <param name="extensionId"> If a CustomLocation is provided, this contains the ARM id of the extension the custom location belongs to. </param>
         /// <returns> A new <see cref="Models.SqlManagedInstanceProperties"/> instance for mocking. </returns>
-        public static SqlManagedInstanceProperties SqlManagedInstanceProperties(string dataControllerId = default, string admin = default, string startTime = default, string endTime = default, SqlManagedInstanceK8sRaw k8sRaw = default, BasicLoginInformation basicLoginInformation = default, DateTimeOffset? lastUploadedOn = default, string provisioningState = default, string activeDirectoryInformationKeytab = default, ArcSqlManagedInstanceLicenseType? licenseType = default, string clusterId = default, string extensionId = default)
+        public static SqlManagedInstanceProperties SqlManagedInstanceProperties(string dataControllerId = default, string admin = default, string startTime = default, string endTime = default, SqlManagedInstanceK8sRaw k8sRaw = default, ArcDataBasicLoginInformation basicLoginInformation = default, DateTimeOffset? lastUploadedOn = default, string provisioningState = default, string activeDirectoryInformationKeytab = default, ArcSqlManagedInstanceLicenseType? licenseType = default, string clusterId = default, string extensionId = default)
         {
             return new SqlManagedInstanceProperties(
                 dataControllerId,
@@ -195,31 +196,22 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> The kubernetes network settings information. </summary>
-        /// <param name="forceencryption"> If 1, then SQL Server forces all connections to be encrypted. By default, this option is 0. </param>
-        /// <param name="tlsciphers"> Specifies which ciphers are allowed by SQL Server for TLS. </param>
-        /// <param name="tlsprotocols"> A comma-separated list of which TLS protocols are allowed by SQL Server. </param>
+        /// <param name="forceEncryption"> If 1, then SQL Server forces all connections to be encrypted. By default, this option is 0. </param>
+        /// <param name="tlsCiphers"> Specifies which ciphers are allowed by SQL Server for TLS. </param>
+        /// <param name="tlsProtocols"> A comma-separated list of which TLS protocols are allowed by SQL Server. </param>
         /// <returns> A new <see cref="Models.K8sNetworkSettings"/> instance for mocking. </returns>
-        public static K8sNetworkSettings K8sNetworkSettings(int? forceencryption = default, string tlsciphers = default, string tlsprotocols = default)
+        public static K8sNetworkSettings K8sNetworkSettings(int? forceEncryption = default, string tlsCiphers = default, string tlsProtocols = default)
         {
-            return new K8sNetworkSettings(forceencryption, tlsciphers, tlsprotocols, default);
+            return new K8sNetworkSettings(forceEncryption, tlsCiphers, tlsProtocols, default);
         }
 
         /// <summary> Username and password for basic login authentication. </summary>
         /// <param name="username"> Login username. </param>
         /// <param name="password"> Login password. </param>
-        /// <returns> A new <see cref="Models.BasicLoginInformation"/> instance for mocking. </returns>
-        public static BasicLoginInformation BasicLoginInformation(string username = default, string password = default)
+        /// <returns> A new <see cref="Models.ArcDataBasicLoginInformation"/> instance for mocking. </returns>
+        public static ArcDataBasicLoginInformation ArcDataBasicLoginInformation(string username = default, string password = default)
         {
-            return new BasicLoginInformation(username, password, default);
-        }
-
-        /// <summary> The complex type of the extended location. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="type"> The type of the extended location. </param>
-        /// <returns> A new <see cref="Models.ExtendedLocation"/> instance for mocking. </returns>
-        public static ExtendedLocation ExtendedLocation(string name = default, ExtendedLocationTypes? @type = default)
-        {
-            return new ExtendedLocation(name, @type, default);
+            return new ArcDataBasicLoginInformation(username, password, default);
         }
 
         /// <summary> The resource model definition representing SKU for Azure Managed Instance - Azure Arc. </summary>
@@ -316,7 +308,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="isDigiCertPkiCertTrustConfigured"> Indicates whether DigiCert PKI root-authority certificate (trusted by Azure) exists in SQL Server and trusted for Azure database.windows.net domains. </param>
         /// <param name="authentication"> Authentication related configuration for the SQL Server Instance. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceProperties"/> instance for mocking. </returns>
-        public static SqlServerInstanceProperties SqlServerInstanceProperties(SqlVersion? version = default, EditionType? edition = default, string containerResourceId = default, string vmId = default, string createTime = default, string vCore = default, string cores = default, ConnectionStatus? status = default, DiscoverySource? discoverySource = default, string patchLevel = default, string collation = default, bool? hasDbMasterKey = default, bool? isHadrEnabled = default, IEnumerable<int> traceFlags = default, string currentVersion = default, string instanceName = default, string tcpDynamicPorts = default, string tcpStaticPorts = default, string productId = default, ArcSqlServerLicenseType? licenseType = default, DateTimeOffset? azureDefenderStatusLastUpdated = default, DefenderStatus? azureDefenderStatus = default, string provisioningState = default, DateTimeOffset? lastInventoryUploadOn = default, DateTimeOffset? lastUsageUploadOn = default, HostType? hostType = default, AlwaysOnRole? alwaysOnRole = default, DbmEndpoint databaseMirroringEndpoint = default, FailoverCluster failoverCluster = default, BackupPolicy backupPolicy = default, DateTimeOffset? upgradeLockedUntil = default, bool? isMonitoringEnabled = default, SqlServerInstanceMigration migration = default, BestPracticesAssessment bestPracticesAssessment = default, bool? isClientConnectionEnabled = default, ServiceType? serviceType = default, long? maxServerMemoryMB = default, bool? isMicrosoftPkiCertTrustConfigured = default, bool? isDigiCertPkiCertTrustConfigured = default, SqlServerAuthentication authentication = default)
+        public static SqlServerInstanceProperties SqlServerInstanceProperties(SqlVersion? version = default, SqlServerEditionType? edition = default, string containerResourceId = default, string vmId = default, string createTime = default, string vCore = default, string cores = default, SqlServerConnectionStatus? status = default, DiscoverySource? discoverySource = default, string patchLevel = default, string collation = default, bool? hasDbMasterKey = default, bool? isHadrEnabled = default, IEnumerable<int> traceFlags = default, string currentVersion = default, string instanceName = default, string tcpDynamicPorts = default, string tcpStaticPorts = default, string productId = default, ArcSqlServerLicenseType? licenseType = default, DateTimeOffset? azureDefenderStatusLastUpdated = default, DefenderStatus? azureDefenderStatus = default, string provisioningState = default, DateTimeOffset? lastInventoryUploadOn = default, DateTimeOffset? lastUsageUploadOn = default, ArcSqlServerHostType? hostType = default, AlwaysOnRole? alwaysOnRole = default, DbmEndpoint databaseMirroringEndpoint = default, FailoverCluster failoverCluster = default, SqlServerBackupPolicy backupPolicy = default, DateTimeOffset? upgradeLockedUntil = default, bool? isMonitoringEnabled = default, SqlServerInstanceMigration migration = default, BestPracticesAssessment bestPracticesAssessment = default, bool? isClientConnectionEnabled = default, SqlServerServiceType? serviceType = default, long? maxServerMemoryMB = default, bool? isMicrosoftPkiCertTrustConfigured = default, bool? isDigiCertPkiCertTrustConfigured = default, SqlServerAuthentication authentication = default)
         {
             traceFlags ??= new ChangeTrackingList<int>();
 
@@ -376,7 +368,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="certificateName"> Name of the certificate. </param>
         /// <param name="certificateExpiryOn"> The certificate expiry date. </param>
         /// <returns> A new <see cref="Models.DbmEndpoint"/> instance for mocking. </returns>
-        public static DbmEndpoint DbmEndpoint(string endpointName = default, DatabaseMirroringRole? role = default, bool? isEncryptionEnabled = default, EncryptionAlgorithm? encryptionAlgorithm = default, ConnectionAuth? connectionAuth = default, int? port = default, bool? isDynamicPort = default, string ipAddress = default, string certificateName = default, DateTimeOffset? certificateExpiryOn = default)
+        public static DbmEndpoint DbmEndpoint(string endpointName = default, DatabaseMirroringRole? role = default, bool? isEncryptionEnabled = default, SqlMirroringEndpointEncryptionAlgorithm? encryptionAlgorithm = default, SqlMirroringEndpointAuthenticationType? connectionAuth = default, int? port = default, bool? isDynamicPort = default, string ipAddress = default, string certificateName = default, DateTimeOffset? certificateExpiryOn = default)
         {
             return new DbmEndpoint(
                 endpointName,
@@ -428,10 +420,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="fullBackupDays"> The value indicating days between full backups. </param>
         /// <param name="differentialBackupHours"> The differential backup interval in hours. </param>
         /// <param name="transactionLogBackupMinutes"> The value indicating minutes between transaction log backups. </param>
-        /// <returns> A new <see cref="Models.BackupPolicy"/> instance for mocking. </returns>
-        public static BackupPolicy BackupPolicy(int? retentionPeriodDays = default, int? fullBackupDays = default, DifferentialBackupHours? differentialBackupHours = default, int? transactionLogBackupMinutes = default)
+        /// <returns> A new <see cref="Models.SqlServerBackupPolicy"/> instance for mocking. </returns>
+        public static SqlServerBackupPolicy SqlServerBackupPolicy(int? retentionPeriodDays = default, int? fullBackupDays = default, DifferentialBackupHours? differentialBackupHours = default, int? transactionLogBackupMinutes = default)
         {
-            return new BackupPolicy(retentionPeriodDays, fullBackupDays, differentialBackupHours, transactionLogBackupMinutes, default);
+            return new SqlServerBackupPolicy(retentionPeriodDays, fullBackupDays, differentialBackupHours, transactionLogBackupMinutes, default);
         }
 
         /// <summary> Migration related configuration. </summary>
@@ -455,7 +447,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="skuRecommendationResults"> SKU Recommendation results for Azure migration targets for SQL Server. </param>
         /// <param name="impactedObjectsSummary"> Represents a summary of migration readiness issues/warnings per feature type for Azure SQL DB and SQL MI targets. </param>
         /// <returns> A new <see cref="Models.MigrationAssessment"/> instance for mocking. </returns>
-        public static MigrationAssessment MigrationAssessment(bool? enabled = default, DateTimeOffset? assessmentUploadOn = default, DateTimeOffset? assessmentViewedOn = default, DateTimeOffset? targetRecommendationGenerationOn = default, string version = default, MigrationAssessmentSettings settings = default, IEnumerable<ServerAssessmentsItem> serverAssessments = default, SkuRecommendationResults skuRecommendationResults = default, ImpactedObjectsSuitabilitySummary impactedObjectsSummary = default)
+        public static MigrationAssessment MigrationAssessment(bool? enabled = default, DateTimeOffset? assessmentUploadOn = default, DateTimeOffset? assessmentViewedOn = default, DateTimeOffset? targetRecommendationGenerationOn = default, string version = default, MigrationAssessmentSettings settings = default, IEnumerable<ServerAssessmentsItem> serverAssessments = default, SkuRecommendationResults skuRecommendationResults = default, SqlMigrationImpactedObjectsSuitabilitySummary impactedObjectsSummary = default)
         {
             serverAssessments ??= new ChangeTrackingList<ServerAssessmentsItem>();
 
@@ -482,7 +474,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="discountPercentage"> flat discount percentage to apply for the price - Default is 0. </param>
         /// <param name="costOptions"> Selected cost option value. </param>
         /// <returns> A new <see cref="Models.MigrationAssessmentSettings"/> instance for mocking. </returns>
-        public static MigrationAssessmentSettings MigrationAssessmentSettings(string targetLocation = default, float? percentile = default, int? lookbackPeriodInDays = default, int? comfortFactor = default, string strategy = default, string currency = default, float? discountPercentage = default, CostOptionSelectedValues costOptions = default)
+        public static MigrationAssessmentSettings MigrationAssessmentSettings(string targetLocation = default, float? percentile = default, int? lookbackPeriodInDays = default, int? comfortFactor = default, string strategy = default, string currency = default, float? discountPercentage = default, SqlSkuRecommendationCostOptions costOptions = default)
         {
             return new MigrationAssessmentSettings(
                 targetLocation,
@@ -500,10 +492,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="computeAndStorageCostOption"> selected cost saving option e.g. With1YearASPAndDevTest. </param>
         /// <param name="sqlLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for SQL. </param>
         /// <param name="windowsLicenseCostOption"> With Azure Hybrid Benefit(AHB) or not for Windows. </param>
-        /// <returns> A new <see cref="Models.CostOptionSelectedValues"/> instance for mocking. </returns>
-        public static CostOptionSelectedValues CostOptionSelectedValues(string computeAndStorageCostOption = default, string sqlLicenseCostOption = default, string windowsLicenseCostOption = default)
+        /// <returns> A new <see cref="Models.SqlSkuRecommendationCostOptions"/> instance for mocking. </returns>
+        public static SqlSkuRecommendationCostOptions SqlSkuRecommendationCostOptions(string computeAndStorageCostOption = default, string sqlLicenseCostOption = default, string windowsLicenseCostOption = default)
         {
-            return new CostOptionSelectedValues(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, default);
+            return new SqlSkuRecommendationCostOptions(computeAndStorageCostOption, sqlLicenseCostOption, windowsLicenseCostOption, default);
         }
 
         /// <summary> The ServerAssessmentsItem. </summary>
@@ -553,7 +545,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <returns> A new <see cref="Models.SkuRecommendationResultsAzureSqlDatabase"/> instance for mocking. </returns>
-        public static SkuRecommendationResultsAzureSqlDatabase SkuRecommendationResultsAzureSqlDatabase(RecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlDatabaseTargetSku targetSku = default)
+        public static SkuRecommendationResultsAzureSqlDatabase SkuRecommendationResultsAzureSqlDatabase(SqlSkuRecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlDatabaseTargetSku targetSku = default)
         {
             monthlyCostOptions ??= new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>();
 
@@ -590,7 +582,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="keyName"> The unique combination of saving options for a price e.g. With1YearASPAndProd. </param>
         /// <param name="keyValue"> The Monthly cost of the particular SKU. </param>
         /// <returns> A new <see cref="Models.SkuRecommendationResultsMonthlyCostOptionItem"/> instance for mocking. </returns>
-        public static SkuRecommendationResultsMonthlyCostOptionItem SkuRecommendationResultsMonthlyCostOptionItem(string keyName = default, CostTypeValues keyValue = default)
+        public static SkuRecommendationResultsMonthlyCostOptionItem SkuRecommendationResultsMonthlyCostOptionItem(string keyName = default, SqlSkuRecommendationCostBreakdown keyValue = default)
         {
             return new SkuRecommendationResultsMonthlyCostOptionItem(keyName, keyValue, default);
         }
@@ -599,10 +591,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="computeCost"> Represents the Cost of Compute. </param>
         /// <param name="storageCost"> Represents the Cost of Storage. </param>
         /// <param name="iopsCost"> Represents the Cost of IOPS. </param>
-        /// <returns> A new <see cref="Models.CostTypeValues"/> instance for mocking. </returns>
-        public static CostTypeValues CostTypeValues(float? computeCost = default, float? storageCost = default, float? iopsCost = default)
+        /// <returns> A new <see cref="Models.SqlSkuRecommendationCostBreakdown"/> instance for mocking. </returns>
+        public static SqlSkuRecommendationCostBreakdown SqlSkuRecommendationCostBreakdown(float? computeCost = default, float? storageCost = default, float? iopsCost = default)
         {
-            return new CostTypeValues(computeCost, storageCost, iopsCost, default);
+            return new SqlSkuRecommendationCostBreakdown(computeCost, storageCost, iopsCost, default);
         }
 
         /// <summary> The SkuRecommendationResultsAzureSqlDatabaseTargetSku. </summary>
@@ -652,7 +644,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <returns> A new <see cref="Models.SkuRecommendationResultsAzureSqlManagedInstance"/> instance for mocking. </returns>
-        public static SkuRecommendationResultsAzureSqlManagedInstance SkuRecommendationResultsAzureSqlManagedInstance(RecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlManagedInstanceTargetSku targetSku = default)
+        public static SkuRecommendationResultsAzureSqlManagedInstance SkuRecommendationResultsAzureSqlManagedInstance(SqlSkuRecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlManagedInstanceTargetSku targetSku = default)
         {
             monthlyCostOptions ??= new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>();
 
@@ -712,7 +704,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <returns> A new <see cref="Models.SkuRecommendationResultsAzureSqlVirtualMachine"/> instance for mocking. </returns>
-        public static SkuRecommendationResultsAzureSqlVirtualMachine SkuRecommendationResultsAzureSqlVirtualMachine(RecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlVirtualMachineTargetSku targetSku = default)
+        public static SkuRecommendationResultsAzureSqlVirtualMachine SkuRecommendationResultsAzureSqlVirtualMachine(SqlSkuRecommendationStatus? recommendationStatus = default, int? numberOfServerBlockerIssues = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationResultsAzureSqlVirtualMachineTargetSku targetSku = default)
         {
             monthlyCostOptions ??= new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>();
 
@@ -733,13 +725,13 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="virtualMachineSize"> size parameters for VM size. </param>
         /// <param name="dataDiskSizes"> Data disk sizes. </param>
         /// <param name="logDiskSizes"> Log disk sizes. </param>
-        /// <param name="tempDBDiskSizes"> temp db disk sizes. </param>
+        /// <param name="tempDbDiskSizes"> temp db disk sizes. </param>
         /// <returns> A new <see cref="Models.SkuRecommendationResultsAzureSqlVirtualMachineTargetSku"/> instance for mocking. </returns>
-        public static SkuRecommendationResultsAzureSqlVirtualMachineTargetSku SkuRecommendationResultsAzureSqlVirtualMachineTargetSku(SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuCategory category = default, int? computeSize = default, float? predictedDataSizeInMb = default, float? predictedLogSizeInMb = default, SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuVirtualMachineSize virtualMachineSize = default, IEnumerable<DiskSizes> dataDiskSizes = default, IEnumerable<DiskSizes> logDiskSizes = default, IEnumerable<DiskSizes> tempDBDiskSizes = default)
+        public static SkuRecommendationResultsAzureSqlVirtualMachineTargetSku SkuRecommendationResultsAzureSqlVirtualMachineTargetSku(SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuCategory category = default, int? computeSize = default, float? predictedDataSizeInMb = default, float? predictedLogSizeInMb = default, SkuRecommendationResultsAzureSqlVirtualMachineTargetSkuVirtualMachineSize virtualMachineSize = default, IEnumerable<DiskSizes> dataDiskSizes = default, IEnumerable<DiskSizes> logDiskSizes = default, IEnumerable<DiskSizes> tempDbDiskSizes = default)
         {
             dataDiskSizes ??= new ChangeTrackingList<DiskSizes>();
             logDiskSizes ??= new ChangeTrackingList<DiskSizes>();
-            tempDBDiskSizes ??= new ChangeTrackingList<DiskSizes>();
+            tempDbDiskSizes ??= new ChangeTrackingList<DiskSizes>();
 
             return new SkuRecommendationResultsAzureSqlVirtualMachineTargetSku(
                 category,
@@ -749,7 +741,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 virtualMachineSize,
                 (dataDiskSizes ?? new ChangeTrackingList<DiskSizes>()).ToList(),
                 (logDiskSizes ?? new ChangeTrackingList<DiskSizes>()).ToList(),
-                (tempDBDiskSizes ?? new ChangeTrackingList<DiskSizes>()).ToList(),
+                (tempDbDiskSizes ?? new ChangeTrackingList<DiskSizes>()).ToList(),
                 default);
         }
 
@@ -809,23 +801,23 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Represents a summary of migration readiness issues/warnings per feature type for Azure SQL DB and SQL MI targets. </summary>
         /// <param name="azureSqlDatabase"></param>
         /// <param name="azureSqlManagedInstance"></param>
-        /// <returns> A new <see cref="Models.ImpactedObjectsSuitabilitySummary"/> instance for mocking. </returns>
-        public static ImpactedObjectsSuitabilitySummary ImpactedObjectsSuitabilitySummary(IEnumerable<ImpactedObjectsInfo> azureSqlDatabase = default, IEnumerable<ImpactedObjectsInfo> azureSqlManagedInstance = default)
+        /// <returns> A new <see cref="Models.SqlMigrationImpactedObjectsSuitabilitySummary"/> instance for mocking. </returns>
+        public static SqlMigrationImpactedObjectsSuitabilitySummary SqlMigrationImpactedObjectsSuitabilitySummary(IEnumerable<SqlMigrationImpactedObjectInfo> azureSqlDatabase = default, IEnumerable<SqlMigrationImpactedObjectInfo> azureSqlManagedInstance = default)
         {
-            azureSqlDatabase ??= new ChangeTrackingList<ImpactedObjectsInfo>();
-            azureSqlManagedInstance ??= new ChangeTrackingList<ImpactedObjectsInfo>();
+            azureSqlDatabase ??= new ChangeTrackingList<SqlMigrationImpactedObjectInfo>();
+            azureSqlManagedInstance ??= new ChangeTrackingList<SqlMigrationImpactedObjectInfo>();
 
-            return new ImpactedObjectsSuitabilitySummary((azureSqlDatabase ?? new ChangeTrackingList<ImpactedObjectsInfo>()).ToList(), (azureSqlManagedInstance ?? new ChangeTrackingList<ImpactedObjectsInfo>()).ToList(), default);
+            return new SqlMigrationImpactedObjectsSuitabilitySummary((azureSqlDatabase ?? new ChangeTrackingList<SqlMigrationImpactedObjectInfo>()).ToList(), (azureSqlManagedInstance ?? new ChangeTrackingList<SqlMigrationImpactedObjectInfo>()).ToList(), default);
         }
 
         /// <summary> summary information about the incompatible feature id, number of objects impacted  and category of issue (warning/error). </summary>
         /// <param name="featureId"> Represents the feature id from https://learn.microsoft.com/en-us/data-migration/sql-server/database/assessment-rules?view=azuresql. OR https://learn.microsoft.com/en-us/data-migration/sql-server/managed-instance/assessment-rules?view=azuresql. </param>
         /// <param name="numberImpacted"> Represents the number of issues/warnings. </param>
         /// <param name="issueCategory"> Issue or Warning. </param>
-        /// <returns> A new <see cref="Models.ImpactedObjectsInfo"/> instance for mocking. </returns>
-        public static ImpactedObjectsInfo ImpactedObjectsInfo(string featureId = default, int? numberImpacted = default, string issueCategory = default)
+        /// <returns> A new <see cref="Models.SqlMigrationImpactedObjectInfo"/> instance for mocking. </returns>
+        public static SqlMigrationImpactedObjectInfo SqlMigrationImpactedObjectInfo(string featureId = default, int? numberImpacted = default, string issueCategory = default)
         {
-            return new ImpactedObjectsInfo(featureId, numberImpacted, issueCategory, default);
+            return new SqlMigrationImpactedObjectInfo(featureId, numberImpacted, issueCategory, default);
         }
 
         /// <summary> The configuration related to SQL best practices assessment. </summary>
@@ -871,7 +863,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="identityType"> The method used for Entra authentication. </param>
         /// <param name="clientId"> The client Id of the Managed Identity to query Microsoft Graph API. An empty string must be used for the system assigned Managed Identity. </param>
         /// <returns> A new <see cref="Models.EntraAuthentication"/> instance for mocking. </returns>
-        public static EntraAuthentication EntraAuthentication(IdentityType? identityType = default, string clientId = default)
+        public static EntraAuthentication EntraAuthentication(SqlServerEntraIdentityType? identityType = default, string clientId = default)
         {
             return new EntraAuthentication(identityType, clientId, default);
         }
@@ -928,7 +920,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="isDigiCertPkiCertTrustConfigured"> Indicates whether DigiCert PKI root-authority certificate (trusted by Azure) exists in SQL Server and trusted for Azure database.windows.net domains. </param>
         /// <param name="maxServerMemoryMB"> maximum server memory (MB) value configured for this instance. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceUpdateProperties"/> instance for mocking. </returns>
-        public static SqlServerInstanceUpdateProperties SqlServerInstanceUpdateProperties(SqlVersion? version = default, EditionType? edition = default, string containerResourceId = default, string vmId = default, string createTime = default, string vCore = default, string cores = default, ConnectionStatus? status = default, DiscoverySource? discoverySource = default, string patchLevel = default, string collation = default, bool? hasDbMasterKey = default, bool? isHadrEnabled = default, IEnumerable<int> traceFlags = default, string currentVersion = default, string instanceName = default, string tcpDynamicPorts = default, string tcpStaticPorts = default, string productId = default, ArcSqlServerLicenseType? licenseType = default, DateTimeOffset? azureDefenderStatusLastUpdated = default, DefenderStatus? azureDefenderStatus = default, string provisioningState = default, DateTimeOffset? lastInventoryUploadOn = default, DateTimeOffset? lastUsageUploadOn = default, HostType? hostType = default, AlwaysOnRole? alwaysOnRole = default, FailoverCluster failoverCluster = default, BackupPolicy backupPolicy = default, DateTimeOffset? upgradeLockedUntil = default, bool? isMonitoringEnabled = default, SqlServerInstanceMigration migration = default, BestPracticesAssessment bestPracticesAssessment = default, bool? isClientConnectionEnabled = default, ServiceType? serviceType = default, SqlServerAuthentication authentication = default, DbmEndpoint databaseMirroringEndpoint = default, bool? isMicrosoftPkiCertTrustConfigured = default, bool? isDigiCertPkiCertTrustConfigured = default, long? maxServerMemoryMB = default)
+        public static SqlServerInstanceUpdateProperties SqlServerInstanceUpdateProperties(SqlVersion? version = default, SqlServerEditionType? edition = default, string containerResourceId = default, string vmId = default, string createTime = default, string vCore = default, string cores = default, SqlServerConnectionStatus? status = default, DiscoverySource? discoverySource = default, string patchLevel = default, string collation = default, bool? hasDbMasterKey = default, bool? isHadrEnabled = default, IEnumerable<int> traceFlags = default, string currentVersion = default, string instanceName = default, string tcpDynamicPorts = default, string tcpStaticPorts = default, string productId = default, ArcSqlServerLicenseType? licenseType = default, DateTimeOffset? azureDefenderStatusLastUpdated = default, DefenderStatus? azureDefenderStatus = default, string provisioningState = default, DateTimeOffset? lastInventoryUploadOn = default, DateTimeOffset? lastUsageUploadOn = default, ArcSqlServerHostType? hostType = default, AlwaysOnRole? alwaysOnRole = default, FailoverCluster failoverCluster = default, SqlServerBackupPolicy backupPolicy = default, DateTimeOffset? upgradeLockedUntil = default, bool? isMonitoringEnabled = default, SqlServerInstanceMigration migration = default, BestPracticesAssessment bestPracticesAssessment = default, bool? isClientConnectionEnabled = default, SqlServerServiceType? serviceType = default, SqlServerAuthentication authentication = default, DbmEndpoint databaseMirroringEndpoint = default, bool? isMicrosoftPkiCertTrustConfigured = default, bool? isDigiCertPkiCertTrustConfigured = default, long? maxServerMemoryMB = default)
         {
             traceFlags ??= new ChangeTrackingList<int>();
 
@@ -984,7 +976,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceRunMigrationAssessmentResult"/> instance for mocking. </returns>
-        public static SqlServerInstanceRunMigrationAssessmentResult SqlServerInstanceRunMigrationAssessmentResult(string id = default, string instanceName = default, JobStatus? jobStatus = default, string jobException = default, BackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
+        public static SqlServerInstanceRunMigrationAssessmentResult SqlServerInstanceRunMigrationAssessmentResult(string id = default, string instanceName = default, SqlServerJobStatus? jobStatus = default, string jobException = default, SqlServerBackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
         {
             sequencerActions ??= new ChangeTrackingList<SequencerAction>();
 
@@ -1006,10 +998,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastExecutionStatus"> The last execution status of the background job. </param>
         /// <param name="lastExecutionOn"> The last execution time of the background job in ISO 8601 date-time format. </param>
         /// <param name="nextExecutionOn"> The next execution time of the background job in ISO 8601 date-time format. </param>
-        /// <returns> A new <see cref="Models.BackgroundJob"/> instance for mocking. </returns>
-        public static BackgroundJob BackgroundJob(BackgroundJobState? state = default, ExecutionState? executionState = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, LastExecutionStatus? lastExecutionStatus = default, DateTimeOffset? lastExecutionOn = default, DateTimeOffset? nextExecutionOn = default)
+        /// <returns> A new <see cref="Models.SqlServerBackgroundJob"/> instance for mocking. </returns>
+        public static SqlServerBackgroundJob SqlServerBackgroundJob(SqlServerBackgroundJobState? state = default, SqlServerBackgroundJobExecutionState? executionState = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, SqlServerBackgroundJobLastExecutionStatus? lastExecutionStatus = default, DateTimeOffset? lastExecutionOn = default, DateTimeOffset? nextExecutionOn = default)
         {
-            return new BackgroundJob(
+            return new SqlServerBackgroundJob(
                 state,
                 executionState,
                 startsOn,
@@ -1037,7 +1029,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="percentile"> The percentile of performance data points used for aggregation (Range: 1-100). </param>
         /// <param name="lookbackPeriodInDays"> The lookback period in days for performance data used in the target recommendation. </param>
         /// <returns> A new <see cref="Models.ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent"/> instance for mocking. </returns>
-        public static ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(ResourceUpdateMode? resourceUpdateMode = default, bool? shouldIncludeFileLevelRequirements = default, string targetLocation = default, int? percentile = default, int? lookbackPeriodInDays = default)
+        public static ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(SqlServerRecommendationResourceUpdateMode? resourceUpdateMode = default, bool? shouldIncludeFileLevelRequirements = default, string targetLocation = default, int? percentile = default, int? lookbackPeriodInDays = default)
         {
             return new ArcDataSqlServerInstanceRunTargetRecommendationJobRequestContent(
                 resourceUpdateMode,
@@ -1051,7 +1043,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Represents the response of a SQL Server Instance target recommendation job execution. </summary>
         /// <param name="jobStatus"> Represents the current status of the target recommendation job. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceRunTargetRecommendationJobResult"/> instance for mocking. </returns>
-        public static SqlServerInstanceRunTargetRecommendationJobResult SqlServerInstanceRunTargetRecommendationJobResult(JobStatus? jobStatus = default)
+        public static SqlServerInstanceRunTargetRecommendationJobResult SqlServerInstanceRunTargetRecommendationJobResult(SqlServerJobStatus? jobStatus = default)
         {
             return new SqlServerInstanceRunTargetRecommendationJobResult(jobStatus, default);
         }
@@ -1076,7 +1068,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="nextReportOffset"> The report offset to use in the next request along with nextSectionOffset to continue retrieving data. This value remains the same until all sections of the current report have been retrieved. Present only when there is more data to retrieve. When both nextReportOffset and nextSectionOffset are absent, all data has been returned. </param>
         /// <param name="nextSectionOffset"> The section offset to use in the next request along with nextReportOffset to continue retrieving sections of the current report. Present only when there is more data to retrieve. When both nextReportOffset and nextSectionOffset are absent, all data has been returned. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceTargetRecommendationReportsResult"/> instance for mocking. </returns>
-        public static SqlServerInstanceTargetRecommendationReportsResult SqlServerInstanceTargetRecommendationReportsResult(JobStatus? jobStatus = default, IEnumerable<SqlServerInstanceTargetRecommendationReport> reports = default, int? totalReportCount = default, int? nextReportOffset = default, int? nextSectionOffset = default)
+        public static SqlServerInstanceTargetRecommendationReportsResult SqlServerInstanceTargetRecommendationReportsResult(SqlServerJobStatus? jobStatus = default, IEnumerable<SqlServerInstanceTargetRecommendationReport> reports = default, int? totalReportCount = default, int? nextReportOffset = default, int? nextSectionOffset = default)
         {
             reports ??= new ChangeTrackingList<SqlServerInstanceTargetRecommendationReport>();
 
@@ -1130,7 +1122,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceRunBestPracticesAssessmentResult"/> instance for mocking. </returns>
-        public static SqlServerInstanceRunBestPracticesAssessmentResult SqlServerInstanceRunBestPracticesAssessmentResult(string id = default, string instanceName = default, JobStatus? jobStatus = default, string jobException = default, BackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
+        public static SqlServerInstanceRunBestPracticesAssessmentResult SqlServerInstanceRunBestPracticesAssessmentResult(string id = default, string instanceName = default, SqlServerJobStatus? jobStatus = default, string jobException = default, SqlServerBackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
         {
             sequencerActions ??= new ChangeTrackingList<SequencerAction>();
 
@@ -1152,7 +1144,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceRunMigrationReadinessAssessmentResult"/> instance for mocking. </returns>
-        public static SqlServerInstanceRunMigrationReadinessAssessmentResult SqlServerInstanceRunMigrationReadinessAssessmentResult(string id = default, string instanceName = default, JobStatus? jobStatus = default, string jobException = default, BackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
+        public static SqlServerInstanceRunMigrationReadinessAssessmentResult SqlServerInstanceRunMigrationReadinessAssessmentResult(string id = default, string instanceName = default, SqlServerJobStatus? jobStatus = default, string jobException = default, SqlServerBackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
         {
             sequencerActions ??= new ChangeTrackingList<SequencerAction>();
 
@@ -1193,7 +1185,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceJobStatus"/> instance for mocking. </returns>
-        public static SqlServerInstanceJobStatus SqlServerInstanceJobStatus(string id = default, string instanceName = default, JobStatus? jobStatus = default, string jobException = default, BackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
+        public static SqlServerInstanceJobStatus SqlServerInstanceJobStatus(string id = default, string instanceName = default, SqlServerJobStatus? jobStatus = default, string jobException = default, SqlServerBackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
         {
             sequencerActions ??= new ChangeTrackingList<SequencerAction>();
 
@@ -1234,7 +1226,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="backgroundJob"> The background job details. </param>
         /// <param name="sequencerActions"> The list of sequencer actions. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceJob"/> instance for mocking. </returns>
-        public static SqlServerInstanceJob SqlServerInstanceJob(string id = default, string instanceName = default, JobStatus? jobStatus = default, string jobException = default, BackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
+        public static SqlServerInstanceJob SqlServerInstanceJob(string id = default, string instanceName = default, SqlServerJobStatus? jobStatus = default, string jobException = default, SqlServerBackgroundJob backgroundJob = default, IEnumerable<SequencerAction> sequencerActions = default)
         {
             sequencerActions ??= new ChangeTrackingList<SequencerAction>();
 
@@ -1291,7 +1283,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="additionalInformation"> Additional details about the check, including any recommended actions. </param>
         /// <param name="failingDbs"> List of names of databases that are failing the given assessment. </param>
         /// <returns> A new <see cref="Models.SqlServerInstanceManagedInstanceLinkAssessment"/> instance for mocking. </returns>
-        public static SqlServerInstanceManagedInstanceLinkAssessment SqlServerInstanceManagedInstanceLinkAssessment(string name = default, MiLinkAssessmentCategory? category = default, AssessmentStatus? status = default, string information = default, string additionalInformation = default, IEnumerable<string> failingDbs = default)
+        public static SqlServerInstanceManagedInstanceLinkAssessment SqlServerInstanceManagedInstanceLinkAssessment(string name = default, MiLinkAssessmentCategory? category = default, SqlManagedInstanceLinkAssessmentStatus? status = default, string information = default, string additionalInformation = default, IEnumerable<string> failingDbs = default)
         {
             failingDbs ??= new ChangeTrackingList<string>();
 
@@ -1366,11 +1358,11 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> The specifications of the availability group state. </summary>
         /// <param name="failureConditionLevel"> User-defined failure condition level under which an automatic failover must be triggered. </param>
-        /// <param name="healthCheckTimeout"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
+        /// <param name="healthCheckTimeoutInMilliseconds"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
         /// <param name="automatedBackupPreferenceDescription"> Preferred location for performing backups on the availability databases in this availability group. </param>
         /// <param name="version"> SQL Server availability group current version. </param>
         /// <param name="hasBasicFeatures"> Specifies whether this is a basic availability group. </param>
-        /// <param name="dtcSupport"> Specifies whether DTC support has been enabled for this availability group. </param>
+        /// <param name="isDtcSupportEnabled"> Specifies whether DTC support has been enabled for this availability group. </param>
         /// <param name="isDbFailoverSupported"> Specifies whether the availability group supports failover for database health conditions. </param>
         /// <param name="isDistributed"> Specifies whether this is a distributed availability group. </param>
         /// <param name="clusterTypeDescription"> SQL Server availability group cluster type description. </param>
@@ -1383,15 +1375,15 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="replicationPartnerType"></param>
         /// <param name="listener"> The listener for the sql server availability group. </param>
         /// <returns> A new <see cref="Models.AvailabilityGroupInfo"/> instance for mocking. </returns>
-        public static AvailabilityGroupInfo AvailabilityGroupInfo(int? failureConditionLevel = default, int? healthCheckTimeout = default, string automatedBackupPreferenceDescription = default, int? version = default, bool? hasBasicFeatures = default, bool? dtcSupport = default, bool? isDbFailoverSupported = default, bool? isDistributed = default, string clusterTypeDescription = default, int? requiredSynchronizedSecondariesToCommit = default, bool? isContained = default, string primaryReplica = default, string primaryRecoveryHealthDescription = default, string secondaryRecoveryHealthDescription = default, string synchronizationHealthDescription = default, ReplicationPartnerType? replicationPartnerType = default, SqlAvailabilityGroupStaticIPListenerProperties listener = default)
+        public static AvailabilityGroupInfo AvailabilityGroupInfo(int? failureConditionLevel = default, int? healthCheckTimeoutInMilliseconds = default, string automatedBackupPreferenceDescription = default, int? version = default, bool? hasBasicFeatures = default, bool? isDtcSupportEnabled = default, bool? isDbFailoverSupported = default, bool? isDistributed = default, string clusterTypeDescription = default, int? requiredSynchronizedSecondariesToCommit = default, bool? isContained = default, string primaryReplica = default, string primaryRecoveryHealthDescription = default, string secondaryRecoveryHealthDescription = default, string synchronizationHealthDescription = default, ReplicationPartnerType? replicationPartnerType = default, SqlAvailabilityGroupStaticIPListenerProperties listener = default)
         {
             return new AvailabilityGroupInfo(
                 failureConditionLevel,
-                healthCheckTimeout,
+                healthCheckTimeoutInMilliseconds,
                 automatedBackupPreferenceDescription,
                 version,
                 hasBasicFeatures,
-                dtcSupport,
+                isDtcSupportEnabled,
                 isDbFailoverSupported,
                 isDistributed,
                 clusterTypeDescription,
@@ -1468,7 +1460,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="availabilityModeDescription"> The Availability Synchronization mode of the availability group replica. </param>
         /// <param name="failoverMode"> Property to set the failover mode of the availability group replica. </param>
         /// <param name="failoverModeDescription"> The failover mode of the availability group replica. </param>
-        /// <param name="sessionTimeout"> The time-out period of availability group session replica, in seconds. </param>
+        /// <param name="sessionTimeoutInSeconds"> The time-out period of availability group session replica, in seconds. </param>
         /// <param name="primaryAllowConnections"> Whether the primary replica should allow all connections or only READ_WRITE connections (disallowing ReadOnly connections). </param>
         /// <param name="primaryRoleAllowConnectionsDescription"> Whether the availability allows all connections or only read-write connections. </param>
         /// <param name="secondaryAllowConnections"> Whether the secondary replica should allow all connections, no connections, or only ReadOnly connections. </param>
@@ -1481,7 +1473,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="seedingMode"> Specifies how the secondary replica will be initially seeded. AUTOMATIC enables direct seeding. This method will seed the secondary replica over the network. This method does not require you to backup and restore a copy of the primary database on the replica. MANUAL specifies manual seeding (default). This method requires you to create a backup of the database on the primary replica and manually restore that backup on the secondary replica. </param>
         /// <param name="seedingModeDescription"> Describes seeding mode. </param>
         /// <returns> A new <see cref="Models.AvailabilityGroupConfigure"/> instance for mocking. </returns>
-        public static AvailabilityGroupConfigure AvailabilityGroupConfigure(string endpointName = default, string endpointUri = default, ConnectionAuth? endpointAuthenticationMode = default, string certificateName = default, string endpointConnectLogin = default, ArcSqlServerAvailabilityMode? availabilityMode = default, string availabilityModeDescription = default, ArcSqlServerFailoverMode? failoverMode = default, string failoverModeDescription = default, int? sessionTimeout = default, PrimaryAllowConnections? primaryAllowConnections = default, string primaryRoleAllowConnectionsDescription = default, SecondaryAllowConnections? secondaryAllowConnections = default, string secondaryRoleAllowConnectionsDescription = default, DateTimeOffset? replicaCreateOn = default, DateTimeOffset? replicaModifyOn = default, int? backupPriority = default, string readOnlyRoutingUri = default, string readWriteRoutingUri = default, SeedingMode? seedingMode = default, string seedingModeDescription = default)
+        public static AvailabilityGroupConfigure AvailabilityGroupConfigure(string endpointName = default, string endpointUri = default, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default, string certificateName = default, string endpointConnectLogin = default, ArcSqlServerAvailabilityMode? availabilityMode = default, string availabilityModeDescription = default, ArcSqlServerFailoverMode? failoverMode = default, string failoverModeDescription = default, int? sessionTimeoutInSeconds = default, PrimaryAllowConnections? primaryAllowConnections = default, string primaryRoleAllowConnectionsDescription = default, SecondaryAllowConnections? secondaryAllowConnections = default, string secondaryRoleAllowConnectionsDescription = default, DateTimeOffset? replicaCreateOn = default, DateTimeOffset? replicaModifyOn = default, int? backupPriority = default, string readOnlyRoutingUri = default, string readWriteRoutingUri = default, SeedingMode? seedingMode = default, string seedingModeDescription = default)
         {
             return new AvailabilityGroupConfigure(
                 endpointName,
@@ -1493,7 +1485,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 availabilityModeDescription,
                 failoverMode,
                 failoverModeDescription,
-                sessionTimeout,
+                sessionTimeoutInSeconds,
                 primaryAllowConnections,
                 primaryRoleAllowConnectionsDescription,
                 secondaryAllowConnections,
@@ -1603,7 +1595,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastDeactivatedOn"> The timestamp of the most recent deactivation of the SqlServerLicense. </param>
         /// <param name="tenantId"> The tenantId the SQL Server license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerLicenseProperties"/> instance for mocking. </returns>
-        public static SqlServerLicenseProperties SqlServerLicenseProperties(BillingPlan billingPlan = default, int physicalCores = default, LicenseCategory licenseCategory = default, ActivationState activationState = default, ScopeType scopeType = default, DateTimeOffset? lastActivatedOn = default, DateTimeOffset? lastDeactivatedOn = default, string tenantId = default)
+        public static SqlServerLicenseProperties SqlServerLicenseProperties(SqlServerLicenseBillingPlan billingPlan = default, int physicalCores = default, SqlServerLicenseCategory licenseCategory = default, SqlServerLicenseActivationState activationState = default, SqlServerLicenseScopeType scopeType = default, DateTimeOffset? lastActivatedOn = default, DateTimeOffset? lastDeactivatedOn = default, string tenantId = default)
         {
             return new SqlServerLicenseProperties(
                 billingPlan,
@@ -1638,7 +1630,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastDeactivatedOn"> The timestamp of the most recent deactivation of the SqlServerLicense. </param>
         /// <param name="tenantId"> The tenantId the SQL Server license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerLicenseUpdateProperties"/> instance for mocking. </returns>
-        public static SqlServerLicenseUpdateProperties SqlServerLicenseUpdateProperties(BillingPlan? billingPlan = default, int? physicalCores = default, LicenseCategory? licenseCategory = default, ActivationState? activationState = default, ScopeType? scopeType = default, DateTimeOffset? lastActivatedOn = default, DateTimeOffset? lastDeactivatedOn = default, string tenantId = default)
+        public static SqlServerLicenseUpdateProperties SqlServerLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan = default, int? physicalCores = default, SqlServerLicenseCategory? licenseCategory = default, SqlServerLicenseActivationState? activationState = default, SqlServerLicenseScopeType? scopeType = default, DateTimeOffset? lastActivatedOn = default, DateTimeOffset? lastDeactivatedOn = default, string tenantId = default)
         {
             return new SqlServerLicenseUpdateProperties(
                 billingPlan,
@@ -1688,7 +1680,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastUploadedOn"> Last uploaded date from Kubernetes cluster. Defaults to current date time. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Arc-enabled PostgreSQL instance. </param>
         /// <returns> A new <see cref="Models.PostgresInstanceProperties"/> instance for mocking. </returns>
-        public static PostgresInstanceProperties PostgresInstanceProperties(string dataControllerId = default, string admin = default, BasicLoginInformation basicLoginInformation = default, BinaryData k8sRaw = default, DateTimeOffset? lastUploadedOn = default, string provisioningState = default)
+        public static PostgresInstanceProperties PostgresInstanceProperties(string dataControllerId = default, string admin = default, ArcDataBasicLoginInformation basicLoginInformation = default, BinaryData k8sRaw = default, DateTimeOffset? lastUploadedOn = default, string provisioningState = default)
         {
             return new PostgresInstanceProperties(
                 dataControllerId,
@@ -1726,10 +1718,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.CommonSku"/> instance for mocking. </returns>
-        public static CommonSku CommonSku(string name = default, bool? isDevTestEnabled = default, string size = default, string family = default, int? capacity = default)
+        /// <returns> A new <see cref="Models.ArcDataSku"/> instance for mocking. </returns>
+        public static ArcDataSku ArcDataSku(string name = default, bool? isDevTestEnabled = default, string size = default, string family = default, int? capacity = default)
         {
-            return new CommonSku(
+            return new ArcDataSku(
                 name,
                 isDevTestEnabled,
                 size,
@@ -1784,7 +1776,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerEsuLicenseProperties"/> instance for mocking. </returns>
-        public static SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(BillingPlan billingPlan = default, SqlServerEsuLicenseVersion version = default, string uniqueId = default, int physicalCores = default, SqlServerEsuLicenseActivationState activationState = default, ScopeType scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
+        public static SqlServerEsuLicenseProperties SqlServerEsuLicenseProperties(SqlServerLicenseBillingPlan billingPlan = default, SqlServerEsuLicenseVersion version = default, string uniqueId = default, int physicalCores = default, SqlServerEsuLicenseActivationState activationState = default, SqlServerLicenseScopeType scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
         {
             return new SqlServerEsuLicenseProperties(
                 billingPlan,
@@ -1821,7 +1813,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <returns> A new <see cref="Models.SqlServerEsuLicenseUpdateProperties"/> instance for mocking. </returns>
-        public static SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(BillingPlan? billingPlan = default, SqlServerEsuLicenseVersion? version = default, string uniqueId = default, int? physicalCores = default, SqlServerEsuLicenseActivationState? activationState = default, ScopeType? scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
+        public static SqlServerEsuLicenseUpdateProperties SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan = default, SqlServerEsuLicenseVersion? version = default, string uniqueId = default, int? physicalCores = default, SqlServerEsuLicenseActivationState? activationState = default, SqlServerLicenseScopeType? scopeType = default, DateTimeOffset? activatedOn = default, DateTimeOffset? terminatedOn = default, string tenantId = default)
         {
             return new SqlServerEsuLicenseUpdateProperties(
                 billingPlan,
@@ -1861,7 +1853,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="status"> The status of the failover group custom resource. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FailoverGroupProperties"/> instance for mocking. </returns>
-        public static FailoverGroupProperties FailoverGroupProperties(ProvisioningState? provisioningState = default, string partnerManagedInstanceId = default, FailoverGroupSpec spec = default, BinaryData status = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static FailoverGroupProperties FailoverGroupProperties(ArcDataProvisioningState? provisioningState = default, ResourceIdentifier partnerManagedInstanceId = default, FailoverGroupSpec spec = default, BinaryData status = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -1899,25 +1891,25 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="databases"> List of databases to include in the availability group. </param>
         /// <param name="automatedBackupPreference"> Preferred replica for running automated backups. </param>
         /// <param name="failureConditionLevel"> User-defined failure condition level under which an automatic failover must be triggered. </param>
-        /// <param name="healthCheckTimeout"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
+        /// <param name="healthCheckTimeoutInMilliseconds"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
         /// <param name="dbFailover"> Specifies whether the availability group supports failover for database health conditions. </param>
         /// <param name="dtcSupport"> Specifies whether DTC support has been enabled for this availability group. </param>
         /// <param name="requiredSynchronizedSecondariesToCommit"> The number of secondary replicas that must be in a synchronized state for a commit to complete. </param>
         /// <param name="clusterType"> Set to WSFC when availability group is on a failover cluster instance on a Windows Server failover cluster. Set to NONE when availability group not using WSFC for cluster coordination. </param>
         /// <param name="listener"> The listener for the sql server availability group. </param>
-        /// <returns> A new <see cref="Models.AvailabilityGroupCreateUpdateConfiguration"/> instance for mocking. </returns>
-        public static AvailabilityGroupCreateUpdateConfiguration AvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName = default, IEnumerable<AvailabilityGroupCreateUpdateReplicaConfiguration> replicas = default, IEnumerable<string> databases = default, AutomatedBackupPreference? automatedBackupPreference = default, FailureConditionLevel? failureConditionLevel = default, int? healthCheckTimeout = default, DbFailover? dbFailover = default, DtcSupport? dtcSupport = default, int? requiredSynchronizedSecondariesToCommit = default, ClusterType? clusterType = default, SqlAvailabilityGroupStaticIPListenerProperties listener = default)
+        /// <returns> A new <see cref="Models.SqlAvailabilityGroupContent"/> instance for mocking. </returns>
+        public static SqlAvailabilityGroupContent SqlAvailabilityGroupContent(string availabilityGroupName = default, IEnumerable<AvailabilityGroupCreateUpdateReplicaConfiguration> replicas = default, IEnumerable<string> databases = default, AutomatedBackupPreference? automatedBackupPreference = default, FailureConditionLevel? failureConditionLevel = default, int? healthCheckTimeoutInMilliseconds = default, DbFailover? dbFailover = default, DtcSupport? dtcSupport = default, int? requiredSynchronizedSecondariesToCommit = default, SqlAvailabilityGroupClusterType? clusterType = default, SqlAvailabilityGroupStaticIPListenerProperties listener = default)
         {
             replicas ??= new ChangeTrackingList<AvailabilityGroupCreateUpdateReplicaConfiguration>();
             databases ??= new ChangeTrackingList<string>();
 
-            return new AvailabilityGroupCreateUpdateConfiguration(
+            return new SqlAvailabilityGroupContent(
                 availabilityGroupName,
                 (replicas ?? new ChangeTrackingList<AvailabilityGroupCreateUpdateReplicaConfiguration>()).ToList(),
                 (databases ?? new ChangeTrackingList<string>()).ToList(),
                 automatedBackupPreference,
                 failureConditionLevel,
-                healthCheckTimeout,
+                healthCheckTimeoutInMilliseconds,
                 dbFailover,
                 dtcSupport,
                 requiredSynchronizedSecondariesToCommit,
@@ -1941,9 +1933,9 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="secondaryRoleReadOnlyRoutingUri"> Connectivity endpoint (URL) of the read only availability replica. </param>
         /// <param name="primaryRoleAllowConnections"> Whether the primary replica should allow all connections or only READ_WRITE connections (disallowing ReadOnly connections). </param>
         /// <param name="primaryRoleReadOnlyRoutingList"> List of read only routing URLs. </param>
-        /// <param name="sessionTimeout"> The time-out period of availability group session replica, in seconds. </param>
+        /// <param name="sessionTimeoutInSeconds"> The time-out period of availability group session replica, in seconds. </param>
         /// <returns> A new <see cref="Models.AvailabilityGroupCreateUpdateReplicaConfiguration"/> instance for mocking. </returns>
-        public static AvailabilityGroupCreateUpdateReplicaConfiguration AvailabilityGroupCreateUpdateReplicaConfiguration(string serverInstance = default, string endpointName = default, string endpointUri = default, ConnectionAuth? endpointAuthenticationMode = default, string certificateName = default, string endpointConnectLogin = default, ArcSqlServerAvailabilityMode? availabilityMode = default, ArcSqlServerFailoverMode? failoverMode = default, SeedingMode? seedingMode = default, int? backupPriority = default, SecondaryAllowConnections? secondaryRoleAllowConnections = default, string secondaryRoleReadOnlyRoutingUri = default, PrimaryAllowConnections? primaryRoleAllowConnections = default, IEnumerable<string> primaryRoleReadOnlyRoutingList = default, int? sessionTimeout = default)
+        public static AvailabilityGroupCreateUpdateReplicaConfiguration AvailabilityGroupCreateUpdateReplicaConfiguration(string serverInstance = default, string endpointName = default, string endpointUri = default, SqlMirroringEndpointAuthenticationType? endpointAuthenticationMode = default, string certificateName = default, string endpointConnectLogin = default, ArcSqlServerAvailabilityMode? availabilityMode = default, ArcSqlServerFailoverMode? failoverMode = default, SeedingMode? seedingMode = default, int? backupPriority = default, SecondaryAllowConnections? secondaryRoleAllowConnections = default, string secondaryRoleReadOnlyRoutingUri = default, PrimaryAllowConnections? primaryRoleAllowConnections = default, IEnumerable<string> primaryRoleReadOnlyRoutingList = default, int? sessionTimeoutInSeconds = default)
         {
             primaryRoleReadOnlyRoutingList ??= new ChangeTrackingList<string>();
 
@@ -1962,7 +1954,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 secondaryRoleReadOnlyRoutingUri,
                 primaryRoleAllowConnections,
                 (primaryRoleReadOnlyRoutingList ?? new ChangeTrackingList<string>()).ToList(),
-                sessionTimeout,
+                sessionTimeoutInSeconds,
                 default);
         }
 
@@ -1970,10 +1962,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="availabilityGroupName"> Name of the availability group. </param>
         /// <param name="primaryAvailabilityGroup"> The initial primary availability group for the distributed availability group. </param>
         /// <param name="secondaryAvailabilityGroup"> The initial secondary availability group for the distributed availability group. </param>
-        /// <returns> A new <see cref="Models.DistributedAvailabilityGroupCreateUpdateConfiguration"/> instance for mocking. </returns>
-        public static DistributedAvailabilityGroupCreateUpdateConfiguration DistributedAvailabilityGroupCreateUpdateConfiguration(string availabilityGroupName = default, DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration primaryAvailabilityGroup = default, DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration secondaryAvailabilityGroup = default)
+        /// <returns> A new <see cref="Models.SqlDistributedAvailabilityGroupContent"/> instance for mocking. </returns>
+        public static SqlDistributedAvailabilityGroupContent SqlDistributedAvailabilityGroupContent(string availabilityGroupName = default, DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration primaryAvailabilityGroup = default, DistributedAvailabilityGroupCreateUpdateAvailabilityGroupConfiguration secondaryAvailabilityGroup = default)
         {
-            return new DistributedAvailabilityGroupCreateUpdateConfiguration(availabilityGroupName, primaryAvailabilityGroup, secondaryAvailabilityGroup, default);
+            return new SqlDistributedAvailabilityGroupContent(availabilityGroupName, primaryAvailabilityGroup, secondaryAvailabilityGroup, default);
         }
 
         /// <param name="availabilityGroup"> The azure resource identifier for the availability group. </param>
@@ -1998,10 +1990,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="availabilityGroup"> The configuration for the SQL Server availability group resource. </param>
         /// <param name="distributedAvailabilityGroup"> The distributed availability group configuration for the MI link. </param>
         /// <param name="miLinkInstanceAvailabilityGroupName"> The name of the availability group to be created on the Managed Instance. </param>
-        /// <returns> A new <see cref="Models.ManagedInstanceLinkCreateUpdateConfiguration"/> instance for mocking. </returns>
-        public static ManagedInstanceLinkCreateUpdateConfiguration ManagedInstanceLinkCreateUpdateConfiguration(AvailabilityGroupCreateUpdateConfiguration availabilityGroup = default, DistributedAvailabilityGroupCreateUpdateConfiguration distributedAvailabilityGroup = default, string miLinkInstanceAvailabilityGroupName = default)
+        /// <returns> A new <see cref="Models.SqlManagedInstanceLinkContent"/> instance for mocking. </returns>
+        public static SqlManagedInstanceLinkContent SqlManagedInstanceLinkContent(SqlAvailabilityGroupContent availabilityGroup = default, SqlDistributedAvailabilityGroupContent distributedAvailabilityGroup = default, string miLinkInstanceAvailabilityGroupName = default)
         {
-            return new ManagedInstanceLinkCreateUpdateConfiguration(availabilityGroup, distributedAvailabilityGroup, miLinkInstanceAvailabilityGroupName is null ? default : new MiLinkCreateUpdateConfiguration(miLinkInstanceAvailabilityGroupName, default), default);
+            return new SqlManagedInstanceLinkContent(availabilityGroup, distributedAvailabilityGroup, miLinkInstanceAvailabilityGroupName is null ? default : new MiLinkCreateUpdateConfiguration(miLinkInstanceAvailabilityGroupName, default), default);
         }
 
         /// <summary> An update to availability group resource. </summary>
@@ -2017,21 +2009,21 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> List of database names. </summary>
         /// <param name="values"> List of database names. </param>
-        /// <returns> A new <see cref="Models.Databases"/> instance for mocking. </returns>
-        public static Databases Databases(IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.SqlAvailabilityGroupDatabasesContent"/> instance for mocking. </returns>
+        public static SqlAvailabilityGroupDatabasesContent SqlAvailabilityGroupDatabasesContent(IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new Databases((values ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new SqlAvailabilityGroupDatabasesContent((values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The azure resource identifier for the Sql Managed Instance. </summary>
         /// <param name="managedInstanceId"> Azure resource id for the sql managed instance. </param>
         /// <param name="shouldForce"> Whether to perform a Force Failover as opposed to just a regular Failover. </param>
-        /// <returns> A new <see cref="Models.FailoverMiLinkResourceId"/> instance for mocking. </returns>
-        public static FailoverMiLinkResourceId FailoverMiLinkResourceId(ResourceIdentifier managedInstanceId = default, bool? shouldForce = default)
+        /// <returns> A new <see cref="Models.SqlManagedInstanceLinkFailoverContent"/> instance for mocking. </returns>
+        public static SqlManagedInstanceLinkFailoverContent SqlManagedInstanceLinkFailoverContent(ResourceIdentifier managedInstanceId = default, bool? shouldForce = default)
         {
-            return new FailoverMiLinkResourceId(managedInstanceId, shouldForce, default);
+            return new SqlManagedInstanceLinkFailoverContent(managedInstanceId, shouldForce, default);
         }
 
         /// <summary> Data controller resource. </summary>
@@ -2075,7 +2067,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="clusterId"> If a CustomLocation is provided, this contains the ARM id of the connected cluster the custom location belongs to. </param>
         /// <param name="extensionId"> If a CustomLocation is provided, this contains the ARM id of the extension the custom location belongs to. </param>
         /// <returns> A new <see cref="Models.DataControllerProperties"/> instance for mocking. </returns>
-        public static DataControllerProperties DataControllerProperties(DataControllerInfrastructure? infrastructure = default, OnPremiseProperty onPremiseProperty = default, BinaryData k8sRaw = default, UploadWatermark uploadWatermark = default, DateTimeOffset? lastUploadedOn = default, BasicLoginInformation basicLoginInformation = default, BasicLoginInformation metricsDashboardCredential = default, BasicLoginInformation logsDashboardCredential = default, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig = default, UploadServicePrincipal uploadServicePrincipal = default, string provisioningState = default, string clusterId = default, string extensionId = default)
+        public static DataControllerProperties DataControllerProperties(DataControllerInfrastructure? infrastructure = default, DataControllerOnPremisesConfig onPremiseProperty = default, BinaryData k8sRaw = default, DataControllerUploadWatermark uploadWatermark = default, DateTimeOffset? lastUploadedOn = default, ArcDataBasicLoginInformation basicLoginInformation = default, ArcDataBasicLoginInformation metricsDashboardCredential = default, ArcDataBasicLoginInformation logsDashboardCredential = default, LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig = default, UploadServicePrincipal uploadServicePrincipal = default, string provisioningState = default, string clusterId = default, string extensionId = default)
         {
             return new DataControllerProperties(
                 infrastructure,
@@ -2098,20 +2090,20 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="id"> A globally unique ID identifying the associated Kubernetes cluster. </param>
         /// <param name="publicSigningKey"> Certificate that contains the Kubernetes cluster public key used to verify signing. </param>
         /// <param name="signingCertificateThumbprint"> Unique thumbprint returned to customer to verify the certificate being uploaded. </param>
-        /// <returns> A new <see cref="Models.OnPremiseProperty"/> instance for mocking. </returns>
-        public static OnPremiseProperty OnPremiseProperty(string id = default, string publicSigningKey = default, string signingCertificateThumbprint = default)
+        /// <returns> A new <see cref="Models.DataControllerOnPremisesConfig"/> instance for mocking. </returns>
+        public static DataControllerOnPremisesConfig DataControllerOnPremisesConfig(string id = default, string publicSigningKey = default, string signingCertificateThumbprint = default)
         {
-            return new OnPremiseProperty(id, publicSigningKey, signingCertificateThumbprint, default);
+            return new DataControllerOnPremisesConfig(id, publicSigningKey, signingCertificateThumbprint, default);
         }
 
         /// <summary> Properties on upload watermark.  Mostly timestamp for each upload data type. </summary>
         /// <param name="metrics"> Last uploaded date for metrics from kubernetes cluster. Defaults to current date time. </param>
         /// <param name="logs"> Last uploaded date for logs from kubernetes cluster. Defaults to current date time. </param>
         /// <param name="usages"> Last uploaded date for usages from kubernetes cluster. Defaults to current date time. </param>
-        /// <returns> A new <see cref="Models.UploadWatermark"/> instance for mocking. </returns>
-        public static UploadWatermark UploadWatermark(DateTimeOffset? metrics = default, DateTimeOffset? logs = default, DateTimeOffset? usages = default)
+        /// <returns> A new <see cref="Models.DataControllerUploadWatermark"/> instance for mocking. </returns>
+        public static DataControllerUploadWatermark DataControllerUploadWatermark(DateTimeOffset? metrics = default, DateTimeOffset? logs = default, DateTimeOffset? usages = default)
         {
-            return new UploadWatermark(metrics, logs, usages, default);
+            return new DataControllerUploadWatermark(metrics, logs, usages, default);
         }
 
         /// <summary> Log analytics workspace id and primary key. </summary>
@@ -2151,10 +2143,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> null. </param>
-        /// <returns> A new <see cref="ArcData.ActiveDirectoryConnectorData"/> instance for mocking. </returns>
-        public static ActiveDirectoryConnectorData ActiveDirectoryConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ActiveDirectoryConnectorProperties properties = default)
+        /// <returns> A new <see cref="ArcData.ArcDataActiveDirectoryConnectorData"/> instance for mocking. </returns>
+        public static ArcDataActiveDirectoryConnectorData ArcDataActiveDirectoryConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ActiveDirectoryConnectorProperties properties = default)
         {
-            return new ActiveDirectoryConnectorData(
+            return new ArcDataActiveDirectoryConnectorData(
                 id,
                 name,
                 resourceType,
@@ -2169,7 +2161,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="spec"> null. </param>
         /// <param name="status"> null. </param>
         /// <returns> A new <see cref="Models.ActiveDirectoryConnectorProperties"/> instance for mocking. </returns>
-        public static ActiveDirectoryConnectorProperties ActiveDirectoryConnectorProperties(BasicLoginInformation domainServiceAccountLoginInformation = default, string provisioningState = default, ActiveDirectoryConnectorSpec spec = default, ActiveDirectoryConnectorStatus status = default)
+        public static ActiveDirectoryConnectorProperties ActiveDirectoryConnectorProperties(ArcDataBasicLoginInformation domainServiceAccountLoginInformation = default, string provisioningState = default, ActiveDirectoryConnectorSpec spec = default, ActiveDirectoryConnectorStatus status = default)
         {
             return new ActiveDirectoryConnectorProperties(domainServiceAccountLoginInformation, provisioningState, spec, status, default);
         }
@@ -2190,7 +2182,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="ouDistinguishedName"> The distinguished name of the Active Directory Organizational Unit. </param>
         /// <param name="domainControllers"> null. </param>
         /// <returns> A new <see cref="Models.ActiveDirectoryConnectorDomainDetails"/> instance for mocking. </returns>
-        public static ActiveDirectoryConnectorDomainDetails ActiveDirectoryConnectorDomainDetails(string realm = default, string netbiosDomainName = default, AccountProvisioningMode? serviceAccountProvisioning = default, string ouDistinguishedName = default, ActiveDirectoryDomainControllers domainControllers = default)
+        public static ActiveDirectoryConnectorDomainDetails ActiveDirectoryConnectorDomainDetails(string realm = default, string netbiosDomainName = default, ActiveDirectoryServiceAccountProvisioningMode? serviceAccountProvisioning = default, string ouDistinguishedName = default, ActiveDirectoryDomainControllers domainControllers = default)
         {
             return new ActiveDirectoryConnectorDomainDetails(
                 realm,
@@ -2292,7 +2284,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="lastDatabaseUploadOn"> The time when last successful database upload was performed. </param>
         /// <param name="migration"> Migration related configuration. </param>
         /// <returns> A new <see cref="Models.SqlServerDatabaseResourceProperties"/> instance for mocking. </returns>
-        public static SqlServerDatabaseResourceProperties SqlServerDatabaseResourceProperties(string collationName = default, DateTimeOffset? databaseCreatedOn = default, int? compatibilityLevel = default, float? sizeMB = default, float? logFileSizeMB = default, float? dataFileSizeMB = default, float? spaceAvailableMB = default, DatabaseState? state = default, bool? isReadOnly = default, RecoveryMode? recoveryMode = default, SqlServerDatabaseConfig databaseOptions = default, SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = default, BackupPolicy backupPolicy = default, DateTimeOffset? earliestRestoreOn = default, DatabaseCreateMode? createMode = default, string sourceDatabaseId = default, string vmId = default, DateTimeOffset? restorePointInTime = default, string provisioningState = default, DateTimeOffset? lastDatabaseUploadOn = default, DatabaseMigration migration = default)
+        public static SqlServerDatabaseResourceProperties SqlServerDatabaseResourceProperties(string collationName = default, DateTimeOffset? databaseCreatedOn = default, int? compatibilityLevel = default, float? sizeMB = default, float? logFileSizeMB = default, float? dataFileSizeMB = default, float? spaceAvailableMB = default, DatabaseState? state = default, bool? isReadOnly = default, RecoveryMode? recoveryMode = default, SqlServerDatabaseConfig databaseOptions = default, SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = default, SqlServerBackupPolicy backupPolicy = default, DateTimeOffset? earliestRestoreOn = default, DatabaseCreateMode? createMode = default, string sourceDatabaseId = default, string vmId = default, DateTimeOffset? restorePointInTime = default, string provisioningState = default, DateTimeOffset? lastDatabaseUploadOn = default, DatabaseMigration migration = default)
         {
             return new SqlServerDatabaseResourceProperties(
                 collationName,
@@ -2373,7 +2365,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="databaseAssessments"> Issues and warnings impacting the migration of Database to particular Azure Migration Target. </param>
         /// <param name="targetReadiness"> The target readiness for migration for this database. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationAssessment"/> instance for mocking. </returns>
-        public static DatabaseMigrationAssessment DatabaseMigrationAssessment(DateTimeOffset? assessmentUploadOn = default, DateTimeOffset? targetRecommendationGenerationOn = default, IEnumerable<DatabaseAssessmentsItem> databaseAssessments = default, TargetReadiness targetReadiness = default)
+        public static DatabaseMigrationAssessment DatabaseMigrationAssessment(DateTimeOffset? assessmentUploadOn = default, DateTimeOffset? targetRecommendationGenerationOn = default, IEnumerable<DatabaseAssessmentsItem> databaseAssessments = default, SqlMigrationTargetReadiness targetReadiness = default)
         {
             databaseAssessments ??= new ChangeTrackingList<DatabaseAssessmentsItem>();
 
@@ -2395,10 +2387,10 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="azureSqlDatabase"> The SKU recommendation summary. </param>
         /// <param name="azureSqlManagedInstance"> The SKU recommendation summary. </param>
         /// <param name="azureSqlVirtualMachine"> The SKU recommendation summary. </param>
-        /// <returns> A new <see cref="Models.TargetReadiness"/> instance for mocking. </returns>
-        public static TargetReadiness TargetReadiness(SkuRecommendationSummary azureSqlDatabase = default, SkuRecommendationSummary azureSqlManagedInstance = default, SkuRecommendationSummary azureSqlVirtualMachine = default)
+        /// <returns> A new <see cref="Models.SqlMigrationTargetReadiness"/> instance for mocking. </returns>
+        public static SqlMigrationTargetReadiness SqlMigrationTargetReadiness(SkuRecommendationSummary azureSqlDatabase = default, SkuRecommendationSummary azureSqlManagedInstance = default, SkuRecommendationSummary azureSqlVirtualMachine = default)
         {
-            return new TargetReadiness(azureSqlDatabase, azureSqlManagedInstance, azureSqlVirtualMachine, default);
+            return new SqlMigrationTargetReadiness(azureSqlDatabase, azureSqlManagedInstance, azureSqlVirtualMachine, default);
         }
 
         /// <summary> The SKU recommendation summary. </summary>
@@ -2409,15 +2401,15 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <returns> A new <see cref="Models.SkuRecommendationSummary"/> instance for mocking. </returns>
-        public static SkuRecommendationSummary SkuRecommendationSummary(int? numOfBlockerIssues = default, RecommendationStatus? recommendationStatus = default, IEnumerable<ImpactedObjectsInfo> impactedObjectsSummary = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationSummaryTargetSku targetSku = default)
+        public static SkuRecommendationSummary SkuRecommendationSummary(int? numOfBlockerIssues = default, SqlSkuRecommendationStatus? recommendationStatus = default, IEnumerable<SqlMigrationImpactedObjectInfo> impactedObjectsSummary = default, SkuRecommendationResultsMonthlyCost monthlyCost = default, IEnumerable<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions = default, SkuRecommendationSummaryTargetSku targetSku = default)
         {
-            impactedObjectsSummary ??= new ChangeTrackingList<ImpactedObjectsInfo>();
+            impactedObjectsSummary ??= new ChangeTrackingList<SqlMigrationImpactedObjectInfo>();
             monthlyCostOptions ??= new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>();
 
             return new SkuRecommendationSummary(
                 numOfBlockerIssues,
                 recommendationStatus,
-                (impactedObjectsSummary ?? new ChangeTrackingList<ImpactedObjectsInfo>()).ToList(),
+                (impactedObjectsSummary ?? new ChangeTrackingList<SqlMigrationImpactedObjectInfo>()).ToList(),
                 monthlyCost,
                 (monthlyCostOptions ?? new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>()).ToList(),
                 targetSku,
@@ -2476,7 +2468,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="endsOn"> Time when migration job reached terminal state. </param>
         /// <param name="additionalAttributes"></param>
         /// <returns> A new <see cref="Models.DatabaseMigrationJobsItem"/> instance for mocking. </returns>
-        public static DatabaseMigrationJobsItem DatabaseMigrationJobsItem(string migrationTrackingId = default, MigrationMode? migrationMode = default, InitiatedFrom? initiatedFrom = default, MigrationStatus? status = default, string lastError = default, TargetType? targetType = default, string targetResourceId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AdditionalMigrationJobAttributes> additionalAttributes = default)
+        public static DatabaseMigrationJobsItem DatabaseMigrationJobsItem(string migrationTrackingId = default, MigrationMode? migrationMode = default, SqlMigrationInitiationSource? initiatedFrom = default, MigrationStatus? status = default, string lastError = default, SqlMigrationTargetType? targetType = default, string targetResourceId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AdditionalMigrationJobAttributes> additionalAttributes = default)
         {
             additionalAttributes ??= new ChangeTrackingList<AdditionalMigrationJobAttributes>();
 

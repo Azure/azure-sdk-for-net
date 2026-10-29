@@ -14,7 +14,7 @@ using Azure.ResourceManager.ArcData;
 namespace Azure.ResourceManager.ArcData.Models
 {
     /// <summary> The resource model definition representing SKU for Azure Database for PostgresSQL - Azure Arc. </summary>
-    public partial class PostgresInstanceSku : CommonSku, IJsonModel<PostgresInstanceSku>
+    public partial class PostgresInstanceSku : ArcDataSku, IJsonModel<PostgresInstanceSku>
     {
         /// <summary> Initializes a new instance of <see cref="PostgresInstanceSku"/> for deserialization. </summary>
         internal PostgresInstanceSku()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CommonSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ArcDataSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PostgresInstanceSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CommonSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ArcDataSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PostgresInstanceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

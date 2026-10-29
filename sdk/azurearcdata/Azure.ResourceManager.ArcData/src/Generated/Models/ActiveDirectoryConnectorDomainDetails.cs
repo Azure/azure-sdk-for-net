@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="ouDistinguishedName"> The distinguished name of the Active Directory Organizational Unit. </param>
         /// <param name="domainControllers"> null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConnectorDomainDetails(string realm, string netbiosDomainName, AccountProvisioningMode? serviceAccountProvisioning, string ouDistinguishedName, ActiveDirectoryDomainControllers domainControllers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConnectorDomainDetails(string realm, string netbiosDomainName, ActiveDirectoryServiceAccountProvisioningMode? serviceAccountProvisioning, string ouDistinguishedName, ActiveDirectoryDomainControllers domainControllers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Realm = realm;
             NetbiosDomainName = netbiosDomainName;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string NetbiosDomainName { get; set; }
 
         /// <summary> The service account provisioning mode for this Active Directory connector. </summary>
-        public AccountProvisioningMode? ServiceAccountProvisioning { get; set; }
+        public ActiveDirectoryServiceAccountProvisioningMode? ServiceAccountProvisioning { get; set; }
 
         /// <summary> The distinguished name of the Active Directory Organizational Unit. </summary>
         public string OuDistinguishedName { get; set; }

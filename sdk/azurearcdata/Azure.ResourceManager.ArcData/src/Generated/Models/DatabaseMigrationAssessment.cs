@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="databaseAssessments"> Issues and warnings impacting the migration of Database to particular Azure Migration Target. </param>
         /// <param name="targetReadiness"> The target readiness for migration for this database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationAssessment(DateTimeOffset? assessmentUploadOn, DateTimeOffset? targetRecommendationGenerationOn, IReadOnlyList<DatabaseAssessmentsItem> databaseAssessments, TargetReadiness targetReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseMigrationAssessment(DateTimeOffset? assessmentUploadOn, DateTimeOffset? targetRecommendationGenerationOn, IReadOnlyList<DatabaseAssessmentsItem> databaseAssessments, SqlMigrationTargetReadiness targetReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssessmentUploadOn = assessmentUploadOn;
             TargetRecommendationGenerationOn = targetRecommendationGenerationOn;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.ArcData.Models
         public IReadOnlyList<DatabaseAssessmentsItem> DatabaseAssessments { get; }
 
         /// <summary> The target readiness for migration for this database. </summary>
-        public TargetReadiness TargetReadiness { get; }
+        public SqlMigrationTargetReadiness TargetReadiness { get; }
     }
 }

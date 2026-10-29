@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="terminatedOn"> The timestamp of the termination of the SqlServerEsuLicense in ISO 8601 date-time format. </param>
         /// <param name="tenantId"> The tenantId the SQL Server ESU license resource subscription resides in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerEsuLicenseUpdateProperties(BillingPlan? billingPlan, SqlServerEsuLicenseVersion? version, string uniqueId, int? physicalCores, SqlServerEsuLicenseActivationState? activationState, ScopeType? scopeType, DateTimeOffset? activatedOn, DateTimeOffset? terminatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerEsuLicenseUpdateProperties(SqlServerLicenseBillingPlan? billingPlan, SqlServerEsuLicenseVersion? version, string uniqueId, int? physicalCores, SqlServerEsuLicenseActivationState? activationState, SqlServerLicenseScopeType? scopeType, DateTimeOffset? activatedOn, DateTimeOffset? terminatedOn, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPlan = billingPlan;
             Version = version;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> SQL Server ESU license type. </summary>
-        public BillingPlan? BillingPlan { get; set; }
+        public SqlServerLicenseBillingPlan? BillingPlan { get; set; }
 
         /// <summary> The SQL Server version the license covers. </summary>
         public SqlServerEsuLicenseVersion? Version { get; set; }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public SqlServerEsuLicenseActivationState? ActivationState { get; set; }
 
         /// <summary> The Azure scope to which the license will apply. </summary>
-        public ScopeType? ScopeType { get; set; }
+        public SqlServerLicenseScopeType? ScopeType { get; set; }
 
         /// <summary> The timestamp of the activation of the SqlServerEsuLicense in ISO 8601 date-time format. </summary>
         public DateTimeOffset? ActivatedOn { get; }

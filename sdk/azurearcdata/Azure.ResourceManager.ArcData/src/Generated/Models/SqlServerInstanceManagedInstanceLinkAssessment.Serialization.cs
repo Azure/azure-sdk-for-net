@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string name = default;
             MiLinkAssessmentCategory? category = default;
-            AssessmentStatus? status = default;
+            SqlManagedInstanceLinkAssessmentStatus? status = default;
             string information = default;
             string additionalInformation = default;
             IList<string> failingDbs = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    status = new AssessmentStatus(prop.Value.GetString());
+                    status = new SqlManagedInstanceLinkAssessmentStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("information"u8))

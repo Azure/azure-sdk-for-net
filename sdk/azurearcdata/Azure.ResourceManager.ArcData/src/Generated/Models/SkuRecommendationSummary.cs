@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="SkuRecommendationSummary"/>. </summary>
         internal SkuRecommendationSummary()
         {
-            ImpactedObjectsSummary = new ChangeTrackingList<ImpactedObjectsInfo>();
+            ImpactedObjectsSummary = new ChangeTrackingList<SqlMigrationImpactedObjectInfo>();
             MonthlyCostOptions = new ChangeTrackingList<SkuRecommendationResultsMonthlyCostOptionItem>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="monthlyCostOptions"> The monthly cost for all different savings options applicable for the particular SKU. </param>
         /// <param name="targetSku"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuRecommendationSummary(int? numOfBlockerIssues, RecommendationStatus? recommendationStatus, IReadOnlyList<ImpactedObjectsInfo> impactedObjectsSummary, SkuRecommendationResultsMonthlyCost monthlyCost, IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions, SkuRecommendationSummaryTargetSku targetSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuRecommendationSummary(int? numOfBlockerIssues, SqlSkuRecommendationStatus? recommendationStatus, IReadOnlyList<SqlMigrationImpactedObjectInfo> impactedObjectsSummary, SkuRecommendationResultsMonthlyCost monthlyCost, IReadOnlyList<SkuRecommendationResultsMonthlyCostOptionItem> monthlyCostOptions, SkuRecommendationSummaryTargetSku targetSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumOfBlockerIssues = numOfBlockerIssues;
             RecommendationStatus = recommendationStatus;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ArcData.Models
         public int? NumOfBlockerIssues { get; }
 
         /// <summary> The target recommendation Status for this database. </summary>
-        public RecommendationStatus? RecommendationStatus { get; }
+        public SqlSkuRecommendationStatus? RecommendationStatus { get; }
 
         /// <summary> Gets the ImpactedObjectsSummary. </summary>
-        public IReadOnlyList<ImpactedObjectsInfo> ImpactedObjectsSummary { get; }
+        public IReadOnlyList<SqlMigrationImpactedObjectInfo> ImpactedObjectsSummary { get; }
 
         /// <summary> The monthly cost of the particular SKU. </summary>
         public SkuRecommendationResultsMonthlyCost MonthlyCost { get; }

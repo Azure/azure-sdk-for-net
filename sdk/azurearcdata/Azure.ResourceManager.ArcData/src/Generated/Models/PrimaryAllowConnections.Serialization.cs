@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PrimaryAllowConnections value) => value switch
         {
-            PrimaryAllowConnections.ALL => "ALL",
+            PrimaryAllowConnections.All => "ALL",
             PrimaryAllowConnections.ReadWrite => "READ_WRITE",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PrimaryAllowConnections value.")
         };
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcData.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ALL"))
             {
-                return PrimaryAllowConnections.ALL;
+                return PrimaryAllowConnections.All;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "READ_WRITE"))
             {

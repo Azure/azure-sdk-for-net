@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ArcData.Models
             MigrationAssessmentSettings settings = default;
             IReadOnlyList<ServerAssessmentsItem> serverAssessments = default;
             SkuRecommendationResults skuRecommendationResults = default;
-            ImpactedObjectsSuitabilitySummary impactedObjectsSummary = default;
+            SqlMigrationImpactedObjectsSuitabilitySummary impactedObjectsSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    impactedObjectsSummary = ImpactedObjectsSuitabilitySummary.DeserializeImpactedObjectsSuitabilitySummary(prop.Value, options);
+                    impactedObjectsSummary = SqlMigrationImpactedObjectsSuitabilitySummary.DeserializeSqlMigrationImpactedObjectsSuitabilitySummary(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

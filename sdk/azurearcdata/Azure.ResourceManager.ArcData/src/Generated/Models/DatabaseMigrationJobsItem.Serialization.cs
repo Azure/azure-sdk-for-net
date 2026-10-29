@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             string migrationTrackingId = default;
             MigrationMode? migrationMode = default;
-            InitiatedFrom? initiatedFrom = default;
+            SqlMigrationInitiationSource? initiatedFrom = default;
             MigrationStatus? status = default;
             string lastError = default;
-            TargetType? targetType = default;
+            SqlMigrationTargetType? targetType = default;
             string targetResourceId = default;
             DateTimeOffset? startsOn = default;
             DateTimeOffset? endsOn = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    initiatedFrom = new InitiatedFrom(prop.Value.GetString());
+                    initiatedFrom = new SqlMigrationInitiationSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    targetType = new TargetType(prop.Value.GetString());
+                    targetType = new SqlMigrationTargetType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetResourceId"u8))

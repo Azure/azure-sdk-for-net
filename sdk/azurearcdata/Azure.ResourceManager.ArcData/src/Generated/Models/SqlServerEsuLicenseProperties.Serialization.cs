@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            BillingPlan billingPlan = default;
+            SqlServerLicenseBillingPlan billingPlan = default;
             SqlServerEsuLicenseVersion version = default;
             string uniqueId = default;
             int physicalCores = default;
             SqlServerEsuLicenseActivationState activationState = default;
-            ScopeType scopeType = default;
+            SqlServerLicenseScopeType scopeType = default;
             DateTimeOffset? activatedOn = default;
             DateTimeOffset? terminatedOn = default;
             string tenantId = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 if (prop.NameEquals("billingPlan"u8))
                 {
-                    billingPlan = new BillingPlan(prop.Value.GetString());
+                    billingPlan = new SqlServerLicenseBillingPlan(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("scopeType"u8))
                 {
-                    scopeType = new ScopeType(prop.Value.GetString());
+                    scopeType = new SqlServerLicenseScopeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activatedAt"u8))

@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.ArcData
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ActiveDirectoryConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ArcDataActiveDirectoryConnectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableArcDataArmClient.GetActiveDirectoryConnectorResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableArcDataArmClient.GetArcDataActiveDirectoryConnectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ActiveDirectoryConnectorResource"/> object. </returns>
-        public static ActiveDirectoryConnectorResource GetActiveDirectoryConnectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcDataActiveDirectoryConnectorResource"/> object. </returns>
+        public static ArcDataActiveDirectoryConnectorResource GetArcDataActiveDirectoryConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableArcDataArmClient(client).GetActiveDirectoryConnectorResource(id);
+            return GetMockableArcDataArmClient(client).GetArcDataActiveDirectoryConnectorResource(id);
         }
 
         /// <summary>

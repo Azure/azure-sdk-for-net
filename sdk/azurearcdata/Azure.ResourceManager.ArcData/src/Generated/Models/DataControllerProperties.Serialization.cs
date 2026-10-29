@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             DataControllerInfrastructure? infrastructure = default;
-            OnPremiseProperty onPremiseProperty = default;
+            DataControllerOnPremisesConfig onPremiseProperty = default;
             BinaryData k8sRaw = default;
-            UploadWatermark uploadWatermark = default;
+            DataControllerUploadWatermark uploadWatermark = default;
             DateTimeOffset? lastUploadedOn = default;
-            BasicLoginInformation basicLoginInformation = default;
-            BasicLoginInformation metricsDashboardCredential = default;
-            BasicLoginInformation logsDashboardCredential = default;
+            ArcDataBasicLoginInformation basicLoginInformation = default;
+            ArcDataBasicLoginInformation metricsDashboardCredential = default;
+            ArcDataBasicLoginInformation logsDashboardCredential = default;
             LogAnalyticsWorkspaceConfig logAnalyticsWorkspaceConfig = default;
             UploadServicePrincipal uploadServicePrincipal = default;
             string provisioningState = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    onPremiseProperty = OnPremiseProperty.DeserializeOnPremiseProperty(prop.Value, options);
+                    onPremiseProperty = DataControllerOnPremisesConfig.DeserializeDataControllerOnPremisesConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("k8sRaw"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    uploadWatermark = UploadWatermark.DeserializeUploadWatermark(prop.Value, options);
+                    uploadWatermark = DataControllerUploadWatermark.DeserializeDataControllerUploadWatermark(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastUploadedDate"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    basicLoginInformation = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    basicLoginInformation = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metricsDashboardCredential"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    metricsDashboardCredential = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    metricsDashboardCredential = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logsDashboardCredential"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    logsDashboardCredential = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    logsDashboardCredential = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceConfig"u8))

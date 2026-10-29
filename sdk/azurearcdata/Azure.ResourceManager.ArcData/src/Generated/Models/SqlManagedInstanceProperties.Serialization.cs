@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ArcData.Models
             string startTime = default;
             string endTime = default;
             SqlManagedInstanceK8sRaw k8sRaw = default;
-            BasicLoginInformation basicLoginInformation = default;
+            ArcDataBasicLoginInformation basicLoginInformation = default;
             DateTimeOffset? lastUploadedOn = default;
             string provisioningState = default;
             ActiveDirectoryInformation activeDirectoryInformation = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    basicLoginInformation = BasicLoginInformation.DeserializeBasicLoginInformation(prop.Value, options);
+                    basicLoginInformation = ArcDataBasicLoginInformation.DeserializeArcDataBasicLoginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastUploadedDate"u8))

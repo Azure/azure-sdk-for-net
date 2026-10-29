@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="certificateName"> Name of the certificate. </param>
         /// <param name="certificateExpiryOn"> The certificate expiry date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbmEndpoint(string endpointName, DatabaseMirroringRole? role, bool? isEncryptionEnabled, EncryptionAlgorithm? encryptionAlgorithm, ConnectionAuth? connectionAuth, int? port, bool? isDynamicPort, string ipAddress, string certificateName, DateTimeOffset? certificateExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbmEndpoint(string endpointName, DatabaseMirroringRole? role, bool? isEncryptionEnabled, SqlMirroringEndpointEncryptionAlgorithm? encryptionAlgorithm, SqlMirroringEndpointAuthenticationType? connectionAuth, int? port, bool? isDynamicPort, string ipAddress, string certificateName, DateTimeOffset? certificateExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             Role = role;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ArcData.Models
         public bool? IsEncryptionEnabled { get; }
 
         /// <summary> Encryption Algorithm. </summary>
-        public EncryptionAlgorithm? EncryptionAlgorithm { get; }
+        public SqlMirroringEndpointEncryptionAlgorithm? EncryptionAlgorithm { get; }
 
         /// <summary> The type of connection authentication required for connections to this endpoint. </summary>
-        public ConnectionAuth? ConnectionAuth { get; }
+        public SqlMirroringEndpointAuthenticationType? ConnectionAuth { get; }
 
         /// <summary> The port number that the endpoint is listening on. </summary>
         public int? Port { get; }

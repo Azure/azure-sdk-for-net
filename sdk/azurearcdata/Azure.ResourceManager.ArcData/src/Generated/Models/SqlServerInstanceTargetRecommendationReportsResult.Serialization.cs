@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            JobStatus? jobStatus = default;
+            SqlServerJobStatus? jobStatus = default;
             IReadOnlyList<SqlServerInstanceTargetRecommendationReport> reports = default;
             int? totalReportCount = default;
             int? nextReportOffset = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    jobStatus = new JobStatus(prop.Value.GetString());
+                    jobStatus = new SqlServerJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reports"u8))

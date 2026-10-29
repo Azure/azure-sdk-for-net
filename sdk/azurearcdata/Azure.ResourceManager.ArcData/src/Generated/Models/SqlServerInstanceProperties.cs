@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="isDigiCertPkiCertTrustConfigured"> Indicates whether DigiCert PKI root-authority certificate (trusted by Azure) exists in SQL Server and trusted for Azure database.windows.net domains. </param>
         /// <param name="authentication"> Authentication related configuration for the SQL Server Instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceProperties(SqlVersion? version, EditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, ConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? hasDbMasterKey, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, HostType? hostType, AlwaysOnRole? alwaysOnRole, DbmEndpoint databaseMirroringEndpoint, FailoverCluster failoverCluster, BackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring isMonitoring, SqlServerInstanceMigration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection isClientConnection, ServiceType? serviceType, long? maxServerMemoryMB, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, SqlServerAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceProperties(SqlVersion? version, SqlServerEditionType? edition, string containerResourceId, string vmId, string createTime, string vCore, string cores, SqlServerConnectionStatus? status, DiscoverySource? discoverySource, string patchLevel, string collation, bool? hasDbMasterKey, bool? isHadrEnabled, IReadOnlyList<int> traceFlags, string currentVersion, string instanceName, string tcpDynamicPorts, string tcpStaticPorts, string productId, ArcSqlServerLicenseType? licenseType, DateTimeOffset? azureDefenderStatusLastUpdated, DefenderStatus? azureDefenderStatus, string provisioningState, DateTimeOffset? lastInventoryUploadOn, DateTimeOffset? lastUsageUploadOn, ArcSqlServerHostType? hostType, AlwaysOnRole? alwaysOnRole, DbmEndpoint databaseMirroringEndpoint, FailoverCluster failoverCluster, SqlServerBackupPolicy backupPolicy, DateTimeOffset? upgradeLockedUntil, Monitoring isMonitoring, SqlServerInstanceMigration migration, BestPracticesAssessment bestPracticesAssessment, ClientConnection isClientConnection, SqlServerServiceType? serviceType, long? maxServerMemoryMB, bool? isMicrosoftPkiCertTrustConfigured, bool? isDigiCertPkiCertTrustConfigured, SqlServerAuthentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Edition = edition;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public SqlVersion? Version { get; set; }
 
         /// <summary> SQL Server edition. </summary>
-        public EditionType? Edition { get; set; }
+        public SqlServerEditionType? Edition { get; set; }
 
         /// <summary> ARM Resource id of the container resource (Azure Arc for Servers). </summary>
         public string ContainerResourceId { get; }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public string Cores { get; set; }
 
         /// <summary> The cloud connectivity status. </summary>
-        public ConnectionStatus? Status { get; }
+        public SqlServerConnectionStatus? Status { get; }
 
         /// <summary> Indicates the discovery agent or client for this instance. </summary>
         public DiscoverySource? DiscoverySource { get; set; }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public DateTimeOffset? LastUsageUploadOn { get; }
 
         /// <summary> Type of host for Azure Arc SQL Server. </summary>
-        public HostType? HostType { get; set; }
+        public ArcSqlServerHostType? HostType { get; set; }
 
         /// <summary> The role of the SQL Server, based on availability. </summary>
         public AlwaysOnRole? AlwaysOnRole { get; }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public FailoverCluster FailoverCluster { get; set; }
 
         /// <summary> The backup profile for the SQL server. </summary>
-        public BackupPolicy BackupPolicy { get; set; }
+        public SqlServerBackupPolicy BackupPolicy { get; set; }
 
         /// <summary> Upgrade Action for this resource is locked until it expires. The Expiration time indicated by this value. It is not locked when it is empty. </summary>
         public DateTimeOffset? UpgradeLockedUntil { get; set; }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ArcData.Models
         internal ClientConnection IsClientConnection { get; set; }
 
         /// <summary> Indicates if the resource represents a SQL Server engine or a SQL Server component service installed on the host. </summary>
-        public ServiceType? ServiceType { get; set; }
+        public SqlServerServiceType? ServiceType { get; set; }
 
         /// <summary> maximum server memory (MB) value configured for this instance. </summary>
         public long? MaxServerMemoryMB { get; }

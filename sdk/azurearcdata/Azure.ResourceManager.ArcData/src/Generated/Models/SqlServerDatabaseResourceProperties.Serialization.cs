@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ArcData.Models
             RecoveryMode? recoveryMode = default;
             SqlServerDatabaseConfig databaseOptions = default;
             SqlServerDatabaseResourcePropertiesBackupInformation backupInformation = default;
-            BackupPolicy backupPolicy = default;
+            SqlServerBackupPolicy backupPolicy = default;
             DateTimeOffset? earliestRestoreOn = default;
             DatabaseCreateMode? createMode = default;
             string sourceDatabaseId = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    backupPolicy = BackupPolicy.DeserializeBackupPolicy(prop.Value, options);
+                    backupPolicy = SqlServerBackupPolicy.DeserializeSqlServerBackupPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("earliestRestoreDate"u8))

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ArcData.Models
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupInfo"/>. </summary>
         /// <param name="failureConditionLevel"> User-defined failure condition level under which an automatic failover must be triggered. </param>
-        /// <param name="healthCheckTimeout"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
+        /// <param name="healthCheckTimeoutInMilliseconds"> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </param>
         /// <param name="automatedBackupPreferenceDescription"> Preferred location for performing backups on the availability databases in this availability group. </param>
         /// <param name="version"> SQL Server availability group current version. </param>
         /// <param name="hasBasicFeatures"> Specifies whether this is a basic availability group. </param>
-        /// <param name="dtcSupport"> Specifies whether DTC support has been enabled for this availability group. </param>
+        /// <param name="isDtcSupportEnabled"> Specifies whether DTC support has been enabled for this availability group. </param>
         /// <param name="isDbFailoverSupported"> Specifies whether the availability group supports failover for database health conditions. </param>
         /// <param name="isDistributed"> Specifies whether this is a distributed availability group. </param>
         /// <param name="clusterTypeDescription"> SQL Server availability group cluster type description. </param>
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="replicationPartnerType"></param>
         /// <param name="listener"> The listener for the sql server availability group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityGroupInfo(int? failureConditionLevel, int? healthCheckTimeout, string automatedBackupPreferenceDescription, int? version, bool? hasBasicFeatures, bool? dtcSupport, bool? isDbFailoverSupported, bool? isDistributed, string clusterTypeDescription, int? requiredSynchronizedSecondariesToCommit, bool? isContained, string primaryReplica, string primaryRecoveryHealthDescription, string secondaryRecoveryHealthDescription, string synchronizationHealthDescription, ReplicationPartnerType? replicationPartnerType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailabilityGroupInfo(int? failureConditionLevel, int? healthCheckTimeoutInMilliseconds, string automatedBackupPreferenceDescription, int? version, bool? hasBasicFeatures, bool? isDtcSupportEnabled, bool? isDbFailoverSupported, bool? isDistributed, string clusterTypeDescription, int? requiredSynchronizedSecondariesToCommit, bool? isContained, string primaryReplica, string primaryRecoveryHealthDescription, string secondaryRecoveryHealthDescription, string synchronizationHealthDescription, ReplicationPartnerType? replicationPartnerType, SqlAvailabilityGroupStaticIPListenerProperties listener, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailureConditionLevel = failureConditionLevel;
-            HealthCheckTimeout = healthCheckTimeout;
+            HealthCheckTimeoutInMilliseconds = healthCheckTimeoutInMilliseconds;
             AutomatedBackupPreferenceDescription = automatedBackupPreferenceDescription;
             Version = version;
             HasBasicFeatures = hasBasicFeatures;
-            DtcSupport = dtcSupport;
+            IsDtcSupportEnabled = isDtcSupportEnabled;
             IsDbFailoverSupported = isDbFailoverSupported;
             IsDistributed = isDistributed;
             ClusterTypeDescription = clusterTypeDescription;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public int? FailureConditionLevel { get; set; }
 
         /// <summary> Wait time (in milliseconds) for the sp_server_diagnostics system stored procedure to return server-health information, before the server instance is assumed to be slow or not responding. </summary>
-        public int? HealthCheckTimeout { get; set; }
+        public int? HealthCheckTimeoutInMilliseconds { get; set; }
 
         /// <summary> Preferred location for performing backups on the availability databases in this availability group. </summary>
         public string AutomatedBackupPreferenceDescription { get; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public bool? HasBasicFeatures { get; set; }
 
         /// <summary> Specifies whether DTC support has been enabled for this availability group. </summary>
-        public bool? DtcSupport { get; set; }
+        public bool? IsDtcSupportEnabled { get; set; }
 
         /// <summary> Specifies whether the availability group supports failover for database health conditions. </summary>
         public bool? IsDbFailoverSupported { get; set; }

@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.ArcData.Mocking
             return new DataControllerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ActiveDirectoryConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ArcDataActiveDirectoryConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActiveDirectoryConnectorResource"/> object. </returns>
-        public virtual ActiveDirectoryConnectorResource GetActiveDirectoryConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcDataActiveDirectoryConnectorResource"/> object. </returns>
+        public virtual ArcDataActiveDirectoryConnectorResource GetArcDataActiveDirectoryConnectorResource(ResourceIdentifier id)
         {
-            ActiveDirectoryConnectorResource.ValidateResourceId(id);
-            return new ActiveDirectoryConnectorResource(Client, id);
+            ArcDataActiveDirectoryConnectorResource.ValidateResourceId(id);
+            return new ArcDataActiveDirectoryConnectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SqlServerDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>

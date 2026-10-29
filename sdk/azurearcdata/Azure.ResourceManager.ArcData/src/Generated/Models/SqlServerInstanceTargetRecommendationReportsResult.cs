@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="nextReportOffset"> The report offset to use in the next request along with nextSectionOffset to continue retrieving data. This value remains the same until all sections of the current report have been retrieved. Present only when there is more data to retrieve. When both nextReportOffset and nextSectionOffset are absent, all data has been returned. </param>
         /// <param name="nextSectionOffset"> The section offset to use in the next request along with nextReportOffset to continue retrieving sections of the current report. Present only when there is more data to retrieve. When both nextReportOffset and nextSectionOffset are absent, all data has been returned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceTargetRecommendationReportsResult(JobStatus? jobStatus, IReadOnlyList<SqlServerInstanceTargetRecommendationReport> reports, int? totalReportCount, int? nextReportOffset, int? nextSectionOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceTargetRecommendationReportsResult(SqlServerJobStatus? jobStatus, IReadOnlyList<SqlServerInstanceTargetRecommendationReport> reports, int? totalReportCount, int? nextReportOffset, int? nextSectionOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobStatus = jobStatus;
             Reports = reports;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Represents the status of the latest target recommendation job. Report records are returned only when the job status is Succeeded. </summary>
-        public JobStatus? JobStatus { get; }
+        public SqlServerJobStatus? JobStatus { get; }
 
         /// <summary> A collection of target recommendation reports. Returned only when the job status is Succeeded. </summary>
         public IReadOnlyList<SqlServerInstanceTargetRecommendationReport> Reports { get; }

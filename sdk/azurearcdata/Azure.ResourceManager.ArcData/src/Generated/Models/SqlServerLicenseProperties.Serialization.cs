@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 return null;
             }
-            BillingPlan billingPlan = default;
+            SqlServerLicenseBillingPlan billingPlan = default;
             int physicalCores = default;
-            LicenseCategory licenseCategory = default;
-            ActivationState activationState = default;
-            ScopeType scopeType = default;
+            SqlServerLicenseCategory licenseCategory = default;
+            SqlServerLicenseActivationState activationState = default;
+            SqlServerLicenseScopeType scopeType = default;
             DateTimeOffset? lastActivatedOn = default;
             DateTimeOffset? lastDeactivatedOn = default;
             string tenantId = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ArcData.Models
             {
                 if (prop.NameEquals("billingPlan"u8))
                 {
-                    billingPlan = new BillingPlan(prop.Value.GetString());
+                    billingPlan = new SqlServerLicenseBillingPlan(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("physicalCores"u8))
@@ -169,17 +169,17 @@ namespace Azure.ResourceManager.ArcData.Models
                 }
                 if (prop.NameEquals("licenseCategory"u8))
                 {
-                    licenseCategory = new LicenseCategory(prop.Value.GetString());
+                    licenseCategory = new SqlServerLicenseCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("activationState"u8))
                 {
-                    activationState = new ActivationState(prop.Value.GetString());
+                    activationState = new SqlServerLicenseActivationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scopeType"u8))
                 {
-                    scopeType = new ScopeType(prop.Value.GetString());
+                    scopeType = new SqlServerLicenseScopeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastActivatedAt"u8))

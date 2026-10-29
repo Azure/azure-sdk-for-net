@@ -677,11 +677,11 @@ namespace Azure.ResourceManager.ArcData
             }
         }
 
-        /// <summary> Gets a collection of ActiveDirectoryConnectors in the <see cref="DataControllerResource"/>. </summary>
-        /// <returns> An object representing collection of ActiveDirectoryConnectors and their operations over a ActiveDirectoryConnectorResource. </returns>
-        public virtual ActiveDirectoryConnectorCollection GetActiveDirectoryConnectors()
+        /// <summary> Gets a collection of ArcDataActiveDirectoryConnectors in the <see cref="DataControllerResource"/>. </summary>
+        /// <returns> An object representing collection of ArcDataActiveDirectoryConnectors and their operations over a ArcDataActiveDirectoryConnectorResource. </returns>
+        public virtual ArcDataActiveDirectoryConnectorCollection GetArcDataActiveDirectoryConnectors()
         {
-            return GetCachedClient(client => new ActiveDirectoryConnectorCollection(client, Id));
+            return GetCachedClient(client => new ArcDataActiveDirectoryConnectorCollection(client, Id));
         }
 
         /// <summary> Retrieves an Active Directory connector resource. </summary>
@@ -690,11 +690,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ActiveDirectoryConnectorResource>> GetActiveDirectoryConnectorAsync(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcDataActiveDirectoryConnectorResource>> GetArcDataActiveDirectoryConnectorAsync(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activeDirectoryConnectorName, nameof(activeDirectoryConnectorName));
 
-            return await GetActiveDirectoryConnectors().GetAsync(activeDirectoryConnectorName, cancellationToken).ConfigureAwait(false);
+            return await GetArcDataActiveDirectoryConnectors().GetAsync(activeDirectoryConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves an Active Directory connector resource. </summary>
@@ -703,11 +703,11 @@ namespace Azure.ResourceManager.ArcData
         /// <exception cref="ArgumentNullException"> <paramref name="activeDirectoryConnectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="activeDirectoryConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ActiveDirectoryConnectorResource> GetActiveDirectoryConnector(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcDataActiveDirectoryConnectorResource> GetArcDataActiveDirectoryConnector(string activeDirectoryConnectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activeDirectoryConnectorName, nameof(activeDirectoryConnectorName));
 
-            return GetActiveDirectoryConnectors().Get(activeDirectoryConnectorName, cancellationToken);
+            return GetArcDataActiveDirectoryConnectors().Get(activeDirectoryConnectorName, cancellationToken);
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConnectorListResult"/>. </summary>
         internal ActiveDirectoryConnectorListResult()
         {
-            Value = new ChangeTrackingList<ActiveDirectoryConnectorData>();
+            Value = new ChangeTrackingList<ArcDataActiveDirectoryConnectorData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConnectorListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryConnectorListResult(IReadOnlyList<ActiveDirectoryConnectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryConnectorListResult(IReadOnlyList<ArcDataActiveDirectoryConnectorData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcData.Models
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ActiveDirectoryConnectorData> Value { get; }
+        public IReadOnlyList<ArcDataActiveDirectoryConnectorData> Value { get; }
 
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }

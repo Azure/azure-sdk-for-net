@@ -432,12 +432,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createAgConfiguration"> The configuration for the new SQL Server availability group resource. </param>
+        /// <param name="content"> The configuration for the new SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAgConfiguration"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateAvailabilityGroupAsync(WaitUntil waitUntil, AvailabilityGroupCreateUpdateConfiguration createAgConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateAvailabilityGroupAsync(WaitUntil waitUntil, SqlAvailabilityGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAgConfiguration, nameof(createAgConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateAvailabilityGroup");
             scope.Start();
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilityGroupCreateUpdateConfiguration.ToRequestContent(createAgConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlAvailabilityGroupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -491,12 +491,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createAgConfiguration"> The configuration for the new SQL Server availability group resource. </param>
+        /// <param name="content"> The configuration for the new SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAgConfiguration"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateAvailabilityGroup(WaitUntil waitUntil, AvailabilityGroupCreateUpdateConfiguration createAgConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateAvailabilityGroup(WaitUntil waitUntil, SqlAvailabilityGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAgConfiguration, nameof(createAgConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateAvailabilityGroup");
             scope.Start();
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilityGroupCreateUpdateConfiguration.ToRequestContent(createAgConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlAvailabilityGroupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -550,12 +550,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createDagConfiguration"> The configuration for the new SQL Server availability group resource. </param>
+        /// <param name="content"> The configuration for the new SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createDagConfiguration"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateDistributedAvailabilityGroupAsync(WaitUntil waitUntil, DistributedAvailabilityGroupCreateUpdateConfiguration createDagConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateDistributedAvailabilityGroupAsync(WaitUntil waitUntil, SqlDistributedAvailabilityGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createDagConfiguration, nameof(createDagConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateDistributedAvailabilityGroup");
             scope.Start();
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateDistributedAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DistributedAvailabilityGroupCreateUpdateConfiguration.ToRequestContent(createDagConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateDistributedAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlDistributedAvailabilityGroupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -609,12 +609,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createDagConfiguration"> The configuration for the new SQL Server availability group resource. </param>
+        /// <param name="content"> The configuration for the new SQL Server availability group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createDagConfiguration"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateDistributedAvailabilityGroup(WaitUntil waitUntil, DistributedAvailabilityGroupCreateUpdateConfiguration createDagConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateDistributedAvailabilityGroup(WaitUntil waitUntil, SqlDistributedAvailabilityGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createDagConfiguration, nameof(createDagConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateDistributedAvailabilityGroup");
             scope.Start();
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateDistributedAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DistributedAvailabilityGroupCreateUpdateConfiguration.ToRequestContent(createDagConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateDistributedAvailabilityGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlDistributedAvailabilityGroupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -668,12 +668,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createManagedInstanceLinkConfiguration"> The configuration for the new Managed Instance Link resource. </param>
+        /// <param name="content"> The configuration for the new Managed Instance Link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createManagedInstanceLinkConfiguration"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateManagedInstanceLinkAsync(WaitUntil waitUntil, ManagedInstanceLinkCreateUpdateConfiguration createManagedInstanceLinkConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServerAvailabilityGroupResource>> CreateManagedInstanceLinkAsync(WaitUntil waitUntil, SqlManagedInstanceLinkContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createManagedInstanceLinkConfiguration, nameof(createManagedInstanceLinkConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateManagedInstanceLink");
             scope.Start();
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateManagedInstanceLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedInstanceLinkCreateUpdateConfiguration.ToRequestContent(createManagedInstanceLinkConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateManagedInstanceLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlManagedInstanceLinkContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),
@@ -727,12 +727,12 @@ namespace Azure.ResourceManager.ArcData
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createManagedInstanceLinkConfiguration"> The configuration for the new Managed Instance Link resource. </param>
+        /// <param name="content"> The configuration for the new Managed Instance Link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createManagedInstanceLinkConfiguration"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateManagedInstanceLink(WaitUntil waitUntil, ManagedInstanceLinkCreateUpdateConfiguration createManagedInstanceLinkConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SqlServerAvailabilityGroupResource> CreateManagedInstanceLink(WaitUntil waitUntil, SqlManagedInstanceLinkContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createManagedInstanceLinkConfiguration, nameof(createManagedInstanceLinkConfiguration));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlServerAvailabilityGroupsClientDiagnostics.CreateScope("SqlServerInstanceResource.CreateManagedInstanceLink");
             scope.Start();
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ArcData
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateManagedInstanceLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedInstanceLinkCreateUpdateConfiguration.ToRequestContent(createManagedInstanceLinkConfiguration), context);
+                HttpMessage message = _sqlServerAvailabilityGroupsRestClient.CreateCreateManagedInstanceLinkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlManagedInstanceLinkContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArcDataArmOperation<SqlServerAvailabilityGroupResource> operation = new ArcDataArmOperation<SqlServerAvailabilityGroupResource>(
                     new SqlServerAvailabilityGroupResourceOperationSource(Client),

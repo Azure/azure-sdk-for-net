@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("failureConditionLevel"u8);
                 writer.WriteNumberValue(FailureConditionLevel.Value);
             }
-            if (Optional.IsDefined(HealthCheckTimeout))
+            if (Optional.IsDefined(HealthCheckTimeoutInMilliseconds))
             {
                 writer.WritePropertyName("healthCheckTimeout"u8);
-                writer.WriteNumberValue(HealthCheckTimeout.Value);
+                writer.WriteNumberValue(HealthCheckTimeoutInMilliseconds.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AutomatedBackupPreferenceDescription))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ArcData.Models
                 writer.WritePropertyName("basicFeatures"u8);
                 writer.WriteBooleanValue(HasBasicFeatures.Value);
             }
-            if (Optional.IsDefined(DtcSupport))
+            if (Optional.IsDefined(IsDtcSupportEnabled))
             {
                 writer.WritePropertyName("dtcSupport"u8);
-                writer.WriteBooleanValue(DtcSupport.Value);
+                writer.WriteBooleanValue(IsDtcSupportEnabled.Value);
             }
             if (Optional.IsDefined(IsDbFailoverSupported))
             {
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.ArcData.Models
                 return null;
             }
             int? failureConditionLevel = default;
-            int? healthCheckTimeout = default;
+            int? healthCheckTimeoutInMilliseconds = default;
             string automatedBackupPreferenceDescription = default;
             int? version = default;
             bool? hasBasicFeatures = default;
-            bool? dtcSupport = default;
+            bool? isDtcSupportEnabled = default;
             bool? isDbFailoverSupported = default;
             bool? isDistributed = default;
             string clusterTypeDescription = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    healthCheckTimeout = prop.Value.GetInt32();
+                    healthCheckTimeoutInMilliseconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("automatedBackupPreferenceDescription"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ArcData.Models
                     {
                         continue;
                     }
-                    dtcSupport = prop.Value.GetBoolean();
+                    isDtcSupportEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dbFailover"u8))
@@ -357,11 +357,11 @@ namespace Azure.ResourceManager.ArcData.Models
             }
             return new AvailabilityGroupInfo(
                 failureConditionLevel,
-                healthCheckTimeout,
+                healthCheckTimeoutInMilliseconds,
                 automatedBackupPreferenceDescription,
                 version,
                 hasBasicFeatures,
-                dtcSupport,
+                isDtcSupportEnabled,
                 isDbFailoverSupported,
                 isDistributed,
                 clusterTypeDescription,

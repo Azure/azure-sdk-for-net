@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcData.Models
         /// <param name="additionalInformation"> Additional details about the check, including any recommended actions. </param>
         /// <param name="failingDbs"> List of names of databases that are failing the given assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerInstanceManagedInstanceLinkAssessment(string name, MiLinkAssessmentCategory? category, AssessmentStatus? status, string information, string additionalInformation, IList<string> failingDbs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerInstanceManagedInstanceLinkAssessment(string name, MiLinkAssessmentCategory? category, SqlManagedInstanceLinkAssessmentStatus? status, string information, string additionalInformation, IList<string> failingDbs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Category = category;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ArcData.Models
         public MiLinkAssessmentCategory? Category { get; }
 
         /// <summary> The status of the requirement. </summary>
-        public AssessmentStatus? Status { get; }
+        public SqlManagedInstanceLinkAssessmentStatus? Status { get; }
 
         /// <summary> The information text about requirement. </summary>
         public string Information { get; }
