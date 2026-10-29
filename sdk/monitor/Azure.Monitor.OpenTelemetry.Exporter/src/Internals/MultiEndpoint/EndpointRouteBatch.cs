@@ -25,8 +25,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
         internal int Count => _count;
 
-        internal AttachStatsbeatRegistry.ObservationBuffer? AttachObservations { get; set; }
-
         /// <summary>Stitches one export's routing decisions to the sends they produced.</summary>
         internal long Sequence { get; private set; }
 
@@ -83,7 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
 
             _count = 0;
-            AttachObservations?.Clear();
         }
 
         internal sealed class Group

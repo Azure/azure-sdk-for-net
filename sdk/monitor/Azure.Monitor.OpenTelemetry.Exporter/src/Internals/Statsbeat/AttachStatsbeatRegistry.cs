@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
@@ -14,62 +15,92 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private const int NonEuRegion = 1;
         private const int EuRegion = 2;
-        private readonly Dictionary<string, Entry> _entries = new(StringComparer.Ordinal);
-        private readonly object _gate = new();
+        private RegistryState? _registry = new(NonEuRegion | EuRegion);
         private long _completedCollections;
-        private int _count;
-        private bool _closed;
-        private int _enabledRegions = NonEuRegion | EuRegion;
 
-        internal int Count => Volatile.Read(ref _count);
+        internal int Count
+        {
+            get
+            {
+                var registry = Volatile.Read(ref _registry);
+                return registry == null ? 0 : Volatile.Read(ref registry.Count);
+            }
+        }
 
         internal void Observe(EndpointRouteBatch batch, long now)
         {
-            while (true)
+            var registry = Volatile.Read(ref _registry);
+            if (registry == null)
             {
-                var enabledRegions = Volatile.Read(ref _enabledRegions);
-                if (enabledRegions == 0)
+                return;
+            }
+            var enabledRegions = Volatile.Read(ref registry.EnabledRegions);
+            if (enabledRegions == 0)
+            {
+                return;
+            }
+            if (now < 0 || now == long.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(now));
+            }
+
+            for (int i = 0; i < batch.Count; i++)
+            {
+                var group = batch[i];
+                var isEu = group.StatsbeatIsEu;
+                if (!IsRegionEnabled(enabledRegions, isEu))
                 {
-                    return;
+                    continue;
                 }
 
-                var observations = batch.AttachObservations ??= new ObservationBuffer();
-                observations.Prepare(batch, enabledRegions);
-                lock (_gate)
+                string? previousKey = null;
+                foreach (var item in group.TelemetryItems)
                 {
-                    if (_closed)
-                    {
-                        return;
-                    }
-                    // Rebuild if configuration changed which region should win for a duplicate key.
-                    if (enabledRegions != _enabledRegions)
+                    var key = item.InstrumentationKey;
+                    if (string.IsNullOrEmpty(key) || ReferenceEquals(key, previousKey))
                     {
                         continue;
                     }
-
-                    foreach (var observation in observations.Items)
-                    {
-                        ObserveKey(observation.Key, now, observation.Value);
-                    }
-                    Volatile.Write(ref _count, _entries.Count);
-                    return;
+                    previousKey = key;
+                    ObserveKey(registry, key, now, isEu);
                 }
             }
         }
 
-        private void ObserveKey(string key, long now, bool isEu)
+        private static void ObserveKey(RegistryState registry, string key, long now, bool isEu)
         {
-            if (_entries.TryGetValue(key, out var entry))
+            while (true)
             {
-                if (now >= entry.LastSeen)
+                if (registry.Entries.TryGetValue(key, out var entry))
                 {
-                    entry.LastSeen = now;
-                    entry.IsEu = isEu;
+                    if (entry.TryObserve(now, isEu))
+                    {
+                        return;
+                    }
+                    RemoveRetiredEntry(registry, key, entry);
                 }
-            }
-            else if (_entries.Count < Capacity)
-            {
-                _entries.Add(key, new Entry { LastSeen = now, IsEu = isEu });
+
+                if (!IsRegionEnabled(Volatile.Read(ref registry.EnabledRegions), isEu) || !registry.TryReserve())
+                {
+                    return;
+                }
+
+                var added = false;
+                try
+                {
+                    added = registry.Entries.TryAdd(key, new Entry(now, isEu));
+                    if (added)
+                    {
+                        return;
+                    }
+                }
+                finally
+                {
+                    if (!added)
+                    {
+                        Interlocked.Decrement(ref registry.Count);
+                    }
+                }
             }
         }
 
@@ -79,45 +110,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal IReadOnlyDictionary<string, bool> Collect(long now, long intervalTicks)
         {
             var due = new Dictionary<string, bool>(StringComparer.Ordinal);
-            lock (_gate)
+            var registry = Volatile.Read(ref _registry);
+            if (registry == null)
             {
-                var completedCollections = Interlocked.Read(ref _completedCollections);
-                List<string>? expired = null;
-                foreach (var pair in _entries)
+                return due;
+            }
+            var enabledRegions = Volatile.Read(ref registry.EnabledRegions);
+            if (enabledRegions == 0)
+            {
+                return due;
+            }
+
+            // The owner's single metric reader serializes reporting bookkeeping.
+            var completedCollections = Interlocked.Read(ref _completedCollections);
+            foreach (var pair in registry.Entries)
+            {
+                var entry = pair.Value;
+                var state = entry.State;
+                if (state == Entry.Retired)
                 {
-                    var entry = pair.Value;
-                    var enabled = IsRegionEnabled(_enabledRegions, entry.IsEu);
-                    var inactive = now - Math.Max(entry.LastSeen, entry.LastReported) >= intervalTicks;
+                    continue;
+                }
+                var isEu = state < 0;
+                var enabled = IsRegionEnabled(enabledRegions, isEu);
+                var inactive = now - Math.Max(state & long.MaxValue, entry.LastReported) >= intervalTicks;
 
-                    // An idle SDK collection must finish before its slots can be reused.
-                    // Removing an entry at the start of that collection would admit replacements
-                    // before OTel reclaims the previous points, causing identity-losing overflow.
-                    if ((!enabled || (inactive && entry.LastReported >= 0))
-                        && (entry.LastReported < 0 || completedCollections >= entry.LastCollection + 2))
+                // An idle SDK collection must finish before its slots can be reused.
+                // Removing an entry at the start of that collection would admit replacements
+                // before OTel reclaims the previous points, causing identity-losing overflow.
+                if ((!enabled || (inactive && entry.LastReported >= 0))
+                    && (entry.LastReported < 0 || completedCollections >= entry.LastCollection + 2))
+                {
+                    // A refresh wins over expiry unless this exact observation can be retired.
+                    if (entry.TryRetire(state))
                     {
-                        (expired ??= new List<string>()).Add(pair.Key);
-                        continue;
+                        RemoveRetiredEntry(registry, pair.Key, entry);
                     }
-
-                    if (!enabled || (inactive && entry.LastReported >= 0)
-                        || (entry.LastReported >= 0 && now - entry.LastReported < intervalTicks))
-                    {
-                        continue;
-                    }
-
-                    entry.LastReported = now;
-                    entry.LastCollection = completedCollections;
-                    due.Add(pair.Key, entry.IsEu);
+                    continue;
                 }
 
-                if (expired != null)
+                if (!enabled || (inactive && entry.LastReported >= 0)
+                    || (entry.LastReported >= 0 && now - entry.LastReported < intervalTicks))
                 {
-                    foreach (var key in expired)
-                    {
-                        _entries.Remove(key);
-                    }
-                    Volatile.Write(ref _count, _entries.Count);
+                    continue;
                 }
+
+                entry.LastReported = now;
+                entry.LastCollection = completedCollections;
+                due.Add(pair.Key, isEu);
             }
 
             return due;
@@ -125,89 +165,109 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal void SetEnabledRegions(bool nonEuEnabled, bool euEnabled)
         {
-            lock (_gate)
+            var enabledRegions = (nonEuEnabled ? NonEuRegion : 0) | (euEnabled ? EuRegion : 0);
+            var registry = Volatile.Read(ref _registry);
+            if (enabledRegions != 0)
             {
-                if (_closed)
+                if (registry != null)
+                {
+                    Volatile.Write(ref registry.EnabledRegions, enabledRegions);
+                }
+                return;
+            }
+
+            while (registry != null && Volatile.Read(ref registry.EnabledRegions) != 0)
+            {
+                // In-flight admissions keep their old counter; they cannot repopulate a reset registry.
+                var replacement = new RegistryState(0);
+                var observed = Interlocked.CompareExchange(ref _registry, replacement, registry);
+                if (ReferenceEquals(observed, registry))
                 {
                     return;
                 }
-                Volatile.Write(ref _enabledRegions, (nonEuEnabled ? NonEuRegion : 0) | (euEnabled ? EuRegion : 0));
-                if (!nonEuEnabled && !euEnabled)
-                {
-                    _entries.Clear();
-                    Volatile.Write(ref _count, 0);
-                }
+                registry = observed;
             }
         }
 
         internal void CompleteCollection() => Interlocked.Increment(ref _completedCollections);
 
-        internal void Close()
+        internal void Close() => Interlocked.Exchange(ref _registry, null);
+
+        private static void RemoveRetiredEntry(RegistryState registry, string key, Entry entry)
         {
-            lock (_gate)
+            if (((ICollection<KeyValuePair<string, Entry>>)registry.Entries).Remove(new(key, entry)))
             {
-                _closed = true;
-                Volatile.Write(ref _enabledRegions, 0);
-                _entries.Clear();
-                Volatile.Write(ref _count, 0);
+                Interlocked.Decrement(ref registry.Count);
             }
         }
 
-        internal sealed class ObservationBuffer
+        private sealed class RegistryState
         {
-            private readonly Dictionary<string, int> _indices = new(StringComparer.Ordinal);
+            internal readonly ConcurrentDictionary<string, Entry> Entries = new(StringComparer.Ordinal);
+            internal int EnabledRegions;
+            // Includes slots reserved by additions that have not published their entries yet.
+            internal int Count;
 
-            internal List<KeyValuePair<string, bool>> Items { get; } = new();
-
-            internal void Prepare(EndpointRouteBatch batch, int enabledRegions)
+            internal RegistryState(int enabledRegions)
             {
-                Clear();
-                for (int i = 0; i < batch.Count; i++)
+                EnabledRegions = enabledRegions;
+            }
+
+            internal bool TryReserve()
+            {
+                var count = Volatile.Read(ref Count);
+                while (count < Capacity)
                 {
-                    var group = batch[i];
-                    var isEu = group.StatsbeatIsEu;
-                    if (!IsRegionEnabled(enabledRegions, isEu))
+                    var observed = Interlocked.CompareExchange(ref Count, count + 1, count);
+                    if (observed == count)
                     {
-                        continue;
+                        return true;
                     }
-
-                    string? previousKey = null;
-                    foreach (var item in group.TelemetryItems)
-                    {
-                        var key = item.InstrumentationKey;
-                        if (string.IsNullOrEmpty(key) || string.Equals(key, previousKey, StringComparison.Ordinal))
-                        {
-                            continue;
-                        }
-                        previousKey = key;
-
-                        if (_indices.TryGetValue(key, out var index))
-                        {
-                            Items[index] = new(Items[index].Key, isEu);
-                        }
-                        else
-                        {
-                            // Keep first-admission order while the last enabled group supplies the region.
-                            _indices.Add(key, Items.Count);
-                            Items.Add(new(key, isEu));
-                        }
-                    }
+                    count = observed;
                 }
-            }
-
-            internal void Clear()
-            {
-                _indices.Clear();
-                Items.Clear();
+                return false;
             }
         }
 
-        private sealed class Entry
+        internal sealed class Entry
         {
-            internal long LastSeen;
+            internal const long Retired = long.MaxValue;
+
+            // The sign bit holds the region; the other bits hold the exact timestamp.
+            // MaxValue is reserved so refresh and retirement can use the same atomic operation.
+            private long _state;
+
+            internal Entry(long now, bool isEu)
+            {
+                _state = now | (isEu ? long.MinValue : 0);
+            }
+
+            internal long State => Volatile.Read(ref _state);
             internal long LastReported = -1;
             internal long LastCollection;
-            internal bool IsEu;
+
+            internal bool TryObserve(long now, bool isEu)
+            {
+                var updated = now | (isEu ? long.MinValue : 0);
+                var previous = State;
+                while (previous != Retired)
+                {
+                    if (now < (previous & long.MaxValue) || previous == updated)
+                    {
+                        return true;
+                    }
+                    var observed = Interlocked.CompareExchange(ref _state, updated, previous);
+                    if (observed == previous)
+                    {
+                        return true;
+                    }
+                    previous = observed;
+                }
+                return false;
+            }
+
+            internal bool TryRetire(long expected)
+                => expected != Retired && Interlocked.CompareExchange(ref _state, Retired, expected) == expected;
         }
     }
 }
