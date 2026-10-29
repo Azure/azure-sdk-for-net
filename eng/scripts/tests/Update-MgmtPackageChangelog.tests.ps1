@@ -3,6 +3,181 @@
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
+Describe 'Trusted AutoPR changelog writeback' {
+    BeforeAll {
+        $workflow = Get-Content (Join-Path $PSScriptRoot '../../../.github/workflows/management-changelog.yml') -Raw
+        $scriptMatch = [regex]::Match($workflow, '(?m)^          script: \|\r?\n(?<script>(?:^            [^\r\n]*(?:\r?\n|\z)|^\r?\n)+)\z', [System.Text.RegularExpressions.RegexOptions]::None, [TimeSpan]::FromSeconds(5))
+        $writebackScript = $scriptMatch.Groups['script'].Value -replace '(?m)^            ', ''
+        $harness = @'
+const assert = require('node:assert/strict');
+const { script, scenario } = JSON.parse(require('node:fs').readFileSync(0, 'utf8'));
+const filename = 'sdk/netapp/Azure.ResourceManager.NetApp/CHANGELOG.md';
+const normalizedContent = 'generated changelog\n\nHistorical entry\n';
+const lineEndingScenario = ['crlf', 'mixed-eol-noop', 'repair-crlf'].includes(scenario);
+const generatedContent = lineEndingScenario ? 'generated changelog\r\n\r\nHistorical entry\n' : 'generated changelog';
+const currentContent = scenario === 'mixed-eol-noop' ? normalizedContent : scenario === 'repair-crlf' ? normalizedContent.replace(/\n/g, '\r\n') : scenario === 'noop' ? 'generated changelog' : 'old changelog';
+const sourceSha = 'a'.repeat(40);
+const pr = { state: 'open', head: { sha: sourceSha, ref: 'sdkauto/test', repo: { full_name: 'Azure/azure-sdk-for-net' } } };
+const run = { head_repository: { full_name: 'Azure/azure-sdk-for-net' }, event: 'pull_request', head_branch: 'sdkauto/test', head_sha: sourceSha };
+const build = { definition: { id: 7327 }, reason: 'pullRequest', repository: { type: 'GitHub', id: 'Azure/azure-sdk-for-net' },
+    id: 123, sourceBranch: 'refs/pull/42/merge', triggerInfo: { 'pr.sourceSha': sourceSha, 'pr.sourceBranch': 'sdkauto/test' } };
+const timeline = { records: [ { id: 'job', type: 'Job', state: 'completed', identifier: 'Build.AutoPrManagementChangelog.__default', result: 'succeeded' },
+    { parentId: 'job', name: 'Run management changelog tool', result: 'succeeded' } ] };
+const artifacts = { value: [ { name: 'ManagementChangelogs', source: 'job', resource: { downloadUrl: 'https://example.artifacts.visualstudio.com/changelogs.zip' } } ] };
+let entries = `ManagementChangelogs/${filename}\n`;
+if (scenario === 'stale') pr.head.sha = 'b'.repeat(40);
+if (scenario === 'fork') pr.head.repo.full_name = 'someone/fork';
+if (scenario === 'non-autopr') pr.head.ref = 'users/test';
+if (scenario === 'closed') pr.state = 'closed';
+if (scenario === 'run-fork') run.head_repository.full_name = 'someone/fork';
+if (scenario === 'run-non-autopr') run.head_branch = 'users/test';
+if (scenario === 'run-not-pr') run.event = 'push';
+if (scenario === 'definition') build.definition.id = 1;
+if (scenario === 'reason') build.reason = 'manual';
+if (scenario === 'repository-type') build.repository.type = 'TfsGit';
+if (scenario === 'repository-id') build.repository.id = 'someone/fork';
+if (scenario === 'merge-ref') build.sourceBranch = 'refs/heads/main';
+if (scenario === 'dispatch-wrong-pr') build.sourceBranch = 'refs/pull/99/merge';
+if (scenario === 'failed-job') timeline.records[0].result = 'failed';
+if (scenario === 'failed-tool') timeline.records[1].result = 'failed';
+if (scenario === 'tool-parent') timeline.records[1].parentId = 'other-job';
+if (scenario === 'artifact-source') artifacts.value[0].source = 'other-job';
+if (scenario === 'artifact-name') artifacts.value[0].name = 'Other';
+if (scenario === 'download-host') artifacts.value[0].resource.downloadUrl = 'https://evil.example/zip';
+if (scenario === 'download-suffix') artifacts.value[0].resource.downloadUrl = 'https://example.artifacts.visualstudio.com.evil.example/zip';
+if (scenario === 'download-http') artifacts.value[0].resource.downloadUrl = 'http://example.artifacts.visualstudio.com/zip';
+if (scenario === 'unrelated-package') entries = 'sdk/other/Azure.ResourceManager.Other/CHANGELOG.md\n';
+if (scenario === 'traversal') entries = 'sdk/../Azure.ResourceManager.NetApp/CHANGELOG.md\n';
+if (scenario === 'duplicate') entries += entries;
+if (scenario === 'patch-only') entries = 'ManagementChangelogs/changelog.patch\n';
+if (scenario === 'too-many-entries') entries = 'ignored\n'.repeat(1001);
+const updates = [], trees = [], commits = [], requests = [];
+let reads = 0, unzips = 0, cleanups = 0;
+const dispatch = scenario.startsWith('dispatch');
+const github = { paginate: async () => Array.from({ length: scenario === 'truncated-files' ? 3000 : 1 }, () =>
+    ({ filename: 'sdk/netapp/Azure.ResourceManager.NetApp/api/test.cs', status: scenario === 'removed-package' ? 'removed' : 'modified' })), rest: {
+    pulls: { get: async p => { assert.equal(p.pull_number, 42); reads++;
+        return { data: ['race', 'race-closed', 'race-branch'].includes(scenario) && reads > 1 ?
+            { ...pr, state: scenario === 'race-closed' ? 'closed' : pr.state,
+                head: { ...pr.head, sha: scenario === 'race' ? 'b'.repeat(40) : pr.head.sha,
+                    ref: scenario === 'race-branch' ? 'sdkauto/other' : pr.head.ref } } : pr }; }, listFiles: {} },
+    repos: { getContent: async p => { assert.equal(p.path, filename); assert.equal(p.ref, sourceSha);
+        return { data: { type: scenario === 'symlink' ? 'symlink' : 'file', encoding: scenario === 'encoding' ? 'none' : 'base64', content: Buffer.from(currentContent).toString('base64') } }; } },
+    git: { getCommit: async p => { assert.equal(p.commit_sha, sourceSha); return { data: { tree: { sha: 'oldtree' } } }; },
+        createTree: async p => { assert.equal(p.base_tree, 'oldtree'); trees.push(p); return { data: { sha: 'newtree' } }; },
+        createCommit: async p => { assert.deepEqual(p.parents, [sourceSha]); assert.equal(p.tree, 'newtree');
+            assert.equal(p.message, 'Update management SDK changelogs [skip ci]'); commits.push(p); return { data: { sha: 'newcommit' } }; },
+        updateRef: async p => { if (scenario === 'nonfastforward') throw new Error('Reference update failed'); updates.push(p); } }
+} };
+async function fetch(url) {
+    url = String(url); requests.push(url);
+    assert.ok(url.startsWith('https://dev.azure.com/azure-sdk/public/') || url === 'https://example.artifacts.visualstudio.com/changelogs.zip');
+    const listing = url.includes('definitions=7327');
+    const candidate = { ...build, triggerInfo: { ...build.triggerInfo } };
+    if (['lookup-sha', 'lookup-branch'].includes(scenario)) {
+        // Include an unmatched build first, then the correct one: only the latter's timeline may be read.
+        candidate.id = 999;
+        candidate.triggerInfo[scenario === 'lookup-sha' ? 'pr.sourceSha' : 'pr.sourceBranch'] = 'wrong';
+    }
+    if (scenario === 'changed-sha' && !listing) build.triggerInfo['pr.sourceSha'] = 'b'.repeat(40);
+    if (scenario === 'changed-branch' && !listing) build.triggerInfo['pr.sourceBranch'] = 'sdkauto/other';
+    const data = listing ? { value: [candidate, build] } : url.includes('/timeline?') ? timeline : url.includes('/artifacts?') ? artifacts : build;
+    assert.ok(!url.includes('/999/'), 'must not select an unmatched build');
+    const ok = !(scenario === 'lookup-http-error' && listing) && !(scenario === 'download-error' && url.endsWith('.zip'));
+    return { ok, status: 503, json: async () => data, body: (async function* () { yield Buffer.alloc(scenario === 'oversized' ? 10 * 1024 * 1024 + 1 : 3); })() };
+}
+function safeRequire(name) {
+    if (name === 'node:fs/promises') return { mkdtemp: async () => '/temp/changelog', writeFile: async () => {}, rm: async () => { cleanups++; } };
+    if (name === 'node:child_process') {
+        const execFile = () => { throw new Error('Expected promisified execFile'); };
+        execFile[require('node:util').promisify.custom] = async (cmd, args, options) => {
+            assert.equal(cmd, 'unzip'); assert.equal(options.maxBuffer, 1024 * 1024); unzips++;
+            assert.ok(args[0] === '-Z1' || args[0] === '-p', 'never extract or execute artifacts');
+            if (args[0] === '-p') assert.equal(args[2], `ManagementChangelogs/${filename}`);
+            return { stdout: args[0] === '-Z1' ? entries : generatedContent, stderr: '' };
+        };
+        return { execFile };
+    }
+    assert.ok(['node:os', 'node:path', 'node:util'].includes(name), 'unexpected module');
+    return require(name);
+}
+(async () => {
+    let error;
+    const context = { repo: { owner: 'Azure', repo: 'azure-sdk-for-net' }, eventName: dispatch ? 'workflow_dispatch' : 'workflow_run',
+        payload: dispatch ? { inputs: { pull_request_number: scenario === 'dispatch-invalid' ? '42;evil' : '42' } } : { workflow_run: run } };
+    try { await new (Object.getPrototypeOf(async function(){}).constructor)('require', 'context', 'github', 'core', 'fetch', script)(
+        safeRequire, context, github, { info: () => {} }, fetch); }
+    catch (e) { error = e; }
+    const rejects = ['definition', 'reason', 'repository-type', 'repository-id', 'merge-ref', 'changed-sha', 'changed-branch',
+        'failed-job', 'failed-tool', 'tool-parent', 'artifact-source', 'artifact-name', 'download-host', 'download-suffix', 'download-http',
+        'unrelated-package', 'traversal', 'duplicate', 'too-many-entries', 'truncated-files', 'removed-package', 'symlink', 'encoding',
+        'oversized', 'lookup-http-error', 'download-error', 'nonfastforward', 'dispatch-invalid', 'dispatch-wrong-pr'];
+    if (rejects.includes(scenario)) assert.ok(error, 'unsafe input must be rejected');
+    else if (error) throw error;
+    const shouldUpdate = ['success', 'workflow-run', 'dispatch', 'crlf', 'repair-crlf', 'lookup-sha', 'lookup-branch'].includes(scenario);
+    assert.equal(updates.length, shouldUpdate ? 1 : 0);
+    if (shouldUpdate) {
+        assert.equal(commits.length, 1); assert.equal(updates[0].sha, 'newcommit');
+        assert.equal(updates[0].force, false); assert.equal(updates[0].ref, 'heads/sdkauto/test');
+        assert.deepEqual(trees[0].tree, [{ path: filename, mode: '100644', type: 'blob', content: lineEndingScenario ? normalizedContent : generatedContent }]);
+    }
+    if (unzips) assert.equal(cleanups, 1, 'temporary artifacts must be cleaned up on success or failure');
+    if (['run-fork', 'run-non-autopr', 'run-not-pr', 'dispatch-invalid'].includes(scenario)) assert.equal(requests.length, 0);
+    console.log('passed: ' + scenario);
+})().catch(e => { console.error(e); process.exitCode = 1; });
+'@
+    }
+
+    It 'validates writeback scenario: <Scenario>' -TestCases @(
+        @{ Scenario = 'success' }, @{ Scenario = 'workflow-run' }, @{ Scenario = 'dispatch' },
+        @{ Scenario = 'stale' }, @{ Scenario = 'fork' }, @{ Scenario = 'non-autopr' }, @{ Scenario = 'closed' },
+        @{ Scenario = 'run-fork' }, @{ Scenario = 'run-non-autopr' }, @{ Scenario = 'run-not-pr' },
+        @{ Scenario = 'definition' }, @{ Scenario = 'reason' }, @{ Scenario = 'repository-type' }, @{ Scenario = 'repository-id' },
+        @{ Scenario = 'merge-ref' }, @{ Scenario = 'changed-sha' }, @{ Scenario = 'changed-branch' },
+        @{ Scenario = 'lookup-sha' }, @{ Scenario = 'lookup-branch' }, @{ Scenario = 'lookup-http-error' },
+        @{ Scenario = 'failed-job' }, @{ Scenario = 'failed-tool' }, @{ Scenario = 'tool-parent' },
+        @{ Scenario = 'artifact-source' }, @{ Scenario = 'artifact-name' }, @{ Scenario = 'download-host' },
+        @{ Scenario = 'download-suffix' }, @{ Scenario = 'download-http' }, @{ Scenario = 'download-error' },
+        @{ Scenario = 'unrelated-package' }, @{ Scenario = 'traversal' }, @{ Scenario = 'duplicate' }, @{ Scenario = 'patch-only' },
+        @{ Scenario = 'too-many-entries' }, @{ Scenario = 'truncated-files' }, @{ Scenario = 'removed-package' },
+        @{ Scenario = 'symlink' }, @{ Scenario = 'encoding' }, @{ Scenario = 'oversized' },
+        @{ Scenario = 'noop' }, @{ Scenario = 'race' }, @{ Scenario = 'race-closed' }, @{ Scenario = 'race-branch' }, @{ Scenario = 'nonfastforward' },
+        @{ Scenario = 'dispatch-invalid' }, @{ Scenario = 'dispatch-wrong-pr' },
+        @{ Scenario = 'crlf' }, @{ Scenario = 'mixed-eol-noop' }, @{ Scenario = 'repair-crlf' }
+    ) {
+        param($Scenario)
+        $writebackScript | Should -Not -BeNullOrEmpty
+        @{ script = $writebackScript; scenario = $Scenario } | ConvertTo-Json -Compress | node -e $harness
+        $LASTEXITCODE | Should -Be 0
+    }
+
+    It 'restricts manual write access to the trusted default-branch definition' {
+        $workflow | Should -Match "(?s)if: >-\s+\(github.event_name == 'workflow_dispatch' &&\s+github.ref == format\('refs/heads/\{0\}', github.event.repository.default_branch\)\) \|\|\s+\(github.event_name == 'workflow_run' &&"
+    }
+
+    It 'uses only the dedicated trusted triggers and least-privilege pinned writer' {
+        $workflow | Should -Match '(?s)on:\s+workflow_run:\s+workflows: \[Verify Links\]\s+types: \[completed\]\s+workflow_dispatch:\s+inputs:\s+pull_request_number:'
+        $workflow | Should -Match '(?m)^permissions: \{\}\r?$'
+        $workflow | Should -Match 'permissions:\s+contents: write\s+pull-requests: read\s+steps:'
+        $workflow | Should -Match 'uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3'
+        $workflow | Should -Match 'runs-on: ubuntu-latest'
+        $workflow | Should -Not -Match 'actions/checkout|(?m)^\s+run:|check_run:|pull_request_target:'
+        $writebackScript | Should -Not -Match '\$\{\{|payload\.check_run'
+        ([regex]::Matches($workflow, '(?m)^\s+uses:')).Count | Should -Be 1
+    }
+
+    It 'leaves the shared event processor and link verification workflows untouched' {
+        $root = Join-Path $PSScriptRoot '../../..'
+        foreach ($name in 'event-processor.yml', 'verify-links.yml') {
+            $relativePath = ".github/workflows/$name"
+            $difference = & git -C $root diff HEAD -- $relativePath
+            $LASTEXITCODE | Should -Be 0
+            $difference | Should -BeNullOrEmpty
+            Get-Content (Join-Path $root $relativePath) -Raw | Should -Not -Match 'update-management-changelogs|Management Changelog Writeback|workflow_run:'
+        }
+    }
+}
+
 Describe 'Changelog generator failure detection' {
     BeforeAll {
         $generator = Join-Path $PSScriptRoot '../Gen-Mgmt-Changelog.ps1'
