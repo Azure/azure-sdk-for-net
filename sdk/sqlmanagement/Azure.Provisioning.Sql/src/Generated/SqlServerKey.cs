@@ -226,7 +226,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<ServerKeyProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

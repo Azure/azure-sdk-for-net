@@ -201,7 +201,7 @@ namespace Azure.Provisioning.WebPubSub
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<BillingInfoSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<WebPubSubService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebPubSubService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

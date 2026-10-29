@@ -139,7 +139,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RestorePointProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
