@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary>
-    /// A class representing a MetricConfigurationResource along with the instance operations that can be performed on it.
+    /// A class representing a MetricConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MetricNamespaceResource"/> using the GetMetricConfigurationResources method.
+    /// Otherwise you can get one from its parent resource <see cref="MetricNamespaceResource"/> using the GetMetricConfigurations method.
     /// </summary>
     public partial class MetricConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _metricConfigurationsClientDiagnostics;
         private readonly MetricConfigurations _metricConfigurationsRestClient;
-        private readonly MetricConfigurationResourceData _data;
+        private readonly MetricConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts/metricsContainers/namespaces/metrics";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <summary> Initializes a new instance of <see cref="MetricConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MetricConfigurationResource(ArmClient client, MetricConfigurationResourceData data) : this(client, data.Id)
+        internal MetricConfigurationResource(ArmClient client, MetricConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string metricConfigurationResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string metricConfigurationApiVersion);
             _metricConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _metricConfigurationsRestClient = new MetricConfigurations(_metricConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricConfigurationResourceApiVersion ?? "2026-09-03-preview");
+            _metricConfigurationsRestClient = new MetricConfigurations(_metricConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricConfigurationApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MetricConfigurationResourceData Data
+        public virtual MetricConfigurationData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricConfigurationResourceData> response = Response.FromValue(MetricConfigurationResourceData.FromResponse(result), result);
+                Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricConfigurationResourceData> response = Response.FromValue(MetricConfigurationResourceData.FromResponse(result), result);
+                Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         }
 
         /// <summary>
-        /// Update a MetricConfigurationResource.
+        /// Update a MetricConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MetricConfigurationResource>> UpdateAsync(WaitUntil waitUntil, MetricConfigurationResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MetricConfigurationResource>> UpdateAsync(WaitUntil waitUntil, MetricConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MetricConfigurationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MetricConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricConfigurationResourceData> response = Response.FromValue(MetricConfigurationResourceData.FromResponse(result), result);
+                Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 WorkspacesArmOperation<MetricConfigurationResource> operation = new WorkspacesArmOperation<MetricConfigurationResource>(Response.FromValue(new MetricConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         }
 
         /// <summary>
-        /// Update a MetricConfigurationResource.
+        /// Update a MetricConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MetricConfigurationResource> Update(WaitUntil waitUntil, MetricConfigurationResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MetricConfigurationResource> Update(WaitUntil waitUntil, MetricConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MetricConfigurationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MetricConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricConfigurationResourceData> response = Response.FromValue(MetricConfigurationResourceData.FromResponse(result), result);
+                Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 WorkspacesArmOperation<MetricConfigurationResource> operation = new WorkspacesArmOperation<MetricConfigurationResource>(Response.FromValue(new MetricConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

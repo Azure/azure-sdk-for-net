@@ -17,69 +17,69 @@ using Azure.ResourceManager.Monitor.Workspaces.Models;
 
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
-    /// <summary> An association between an Azure resource scope and an Azure Monitor Workspace. </summary>
-    public partial class TraceAssociationResourceData : ResourceData, IJsonModel<TraceAssociationResourceData>
+    /// <summary> A metric configuration in an Azure Monitor Workspace metric namespace. </summary>
+    public partial class MetricConfigurationData : ResourceData, IJsonModel<MetricConfigurationData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTraceAssociationResourceData(document.RootElement, options);
+                        return DeserializeMetricConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TraceAssociationResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TraceAssociationResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TraceAssociationResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MetricConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociationResourceData IPersistableModel<TraceAssociationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TraceAssociationResourceData)PersistableModelCreateCore(data, options);
+        MetricConfigurationData IPersistableModel<MetricConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MetricConfigurationData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TraceAssociationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetricConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="traceAssociationResourceData"> The <see cref="TraceAssociationResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TraceAssociationResourceData traceAssociationResourceData)
+        /// <param name="metricConfigurationData"> The <see cref="MetricConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MetricConfigurationData metricConfigurationData)
         {
-            if (traceAssociationResourceData == null)
+            if (metricConfigurationData == null)
             {
                 return null;
             }
-            return RequestContent.Create(traceAssociationResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(metricConfigurationData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TraceAssociationResourceData"/> from. </param>
-        internal static TraceAssociationResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MetricConfigurationData"/> from. </param>
+        internal static MetricConfigurationData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTraceAssociationResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMetricConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TraceAssociationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetricConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceAssociationResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricConfigurationData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociationResourceData IJsonModel<TraceAssociationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TraceAssociationResourceData)JsonModelCreateCore(ref reader, options);
+        MetricConfigurationData IJsonModel<MetricConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MetricConfigurationData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceAssociationResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricConfigurationData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTraceAssociationResourceData(document.RootElement, options);
+            return DeserializeMetricConfigurationData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TraceAssociationResourceData DeserializeTraceAssociationResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MetricConfigurationData DeserializeMetricConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TraceAssociation properties = default;
+            MetricConfigurationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                     {
                         continue;
                     }
-                    properties = TraceAssociation.DeserializeTraceAssociation(prop.Value, options);
+                    properties = MetricConfigurationProperties.DeserializeMetricConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TraceAssociationResourceData(
+            return new MetricConfigurationData(
                 id,
                 name,
                 resourceType,

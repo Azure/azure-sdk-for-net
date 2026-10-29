@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 throw new FormatException($"The model {nameof(MetricAggregationConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StoreAggregatedData))
+            if (Optional.IsDefined(ShouldStoreAggregatedData))
             {
                 writer.WritePropertyName("storeAggregatedData"u8);
-                writer.WriteBooleanValue(StoreAggregatedData.Value);
+                writer.WriteBooleanValue(ShouldStoreAggregatedData.Value);
             }
             if (Optional.IsCollectionDefined(Dimensions))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            bool? storeAggregatedData = default;
+            bool? shouldStoreAggregatedData = default;
             IList<string> dimensions = default;
             MetricAggregationFunctions aggregationFunctions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    storeAggregatedData = prop.Value.GetBoolean();
+                    shouldStoreAggregatedData = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dimensions"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetricAggregationConfiguration(storeAggregatedData, dimensions ?? new ChangeTrackingList<string>(), aggregationFunctions, additionalBinaryDataProperties);
+            return new MetricAggregationConfiguration(shouldStoreAggregatedData, dimensions ?? new ChangeTrackingList<string>(), aggregationFunctions, additionalBinaryDataProperties);
         }
     }
 }

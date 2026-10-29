@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Workspaces.Models;
 
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
-    internal partial class MetricNamespaceResourceDataAsyncCollectionResultOfT : AsyncPageable<MetricNamespaceResourceData>
+    internal partial class MetricNamespaceDataAsyncCollectionResultOfT : AsyncPageable<MetricNamespaceData>
     {
         private readonly MetricNamespaces _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MetricNamespaceResourceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MetricNamespaceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MetricNamespaces client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="metricsContainerName"> The name of the MetricsContainer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MetricNamespaceResourceDataAsyncCollectionResultOfT(MetricNamespaces client, Guid subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, string metricsContainerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MetricNamespaceDataAsyncCollectionResultOfT(MetricNamespaces client, Guid subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, string metricsContainerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MetricNamespaceResourceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MetricNamespaceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MetricNamespaceResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MetricNamespaceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MetricNamespaceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<MetricNamespaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 }
                 MetricNamespaceResourceListResult result = MetricNamespaceResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<MetricNamespaceResourceData>.FromValues((IReadOnlyList<MetricNamespaceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MetricNamespaceData>.FromValues((IReadOnlyList<MetricNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

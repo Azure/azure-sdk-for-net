@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary>
-    /// A class representing a TraceContainerResource along with the instance operations that can be performed on it.
+    /// A class representing a TraceContainer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TraceContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorWorkspaceResource"/> using the GetTraceContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorWorkspaceResource"/> using the GetTraceContainer method.
     /// </summary>
     public partial class TraceContainerResource : ArmResource
     {
         private readonly ClientDiagnostics _traceContainersClientDiagnostics;
         private readonly TraceContainers _traceContainersRestClient;
-        private readonly TraceContainerResourceData _data;
+        private readonly TraceContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts/traceContainers";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <summary> Initializes a new instance of <see cref="TraceContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TraceContainerResource(ArmClient client, TraceContainerResourceData data) : this(client, data.Id)
+        internal TraceContainerResource(ArmClient client, TraceContainerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TraceContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string traceContainerResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string traceContainerApiVersion);
             _traceContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _traceContainersRestClient = new TraceContainers(_traceContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, traceContainerResourceApiVersion ?? "2026-09-03-preview");
+            _traceContainersRestClient = new TraceContainers(_traceContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, traceContainerApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TraceContainerResourceData Data
+        public virtual TraceContainerData Data
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TraceContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceContainerResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TraceContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkspacesArmOperation<TraceContainerResource> operation = new WorkspacesArmOperation<TraceContainerResource>(
                     new TraceContainerResourceOperationSource(Client),
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TraceContainerResource> CreateOrUpdate(WaitUntil waitUntil, TraceContainerResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TraceContainerResource> CreateOrUpdate(WaitUntil waitUntil, TraceContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkspacesArmOperation<TraceContainerResource> operation = new WorkspacesArmOperation<TraceContainerResource>(
                     new TraceContainerResourceOperationSource(Client),
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TraceContainerResourceData> response = Response.FromValue(TraceContainerResourceData.FromResponse(result), result);
+                Response<TraceContainerData> response = Response.FromValue(TraceContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TraceContainerResourceData> response = Response.FromValue(TraceContainerResourceData.FromResponse(result), result);
+                Response<TraceContainerData> response = Response.FromValue(TraceContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

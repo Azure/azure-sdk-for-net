@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StoreRawData))
+            if (Optional.IsDefined(ShouldStoreRawData))
             {
                 writer.WritePropertyName("storeRawData"u8);
-                writer.WriteBooleanValue(StoreRawData.Value);
+                writer.WriteBooleanValue(ShouldStoreRawData.Value);
             }
             if (Optional.IsCollectionDefined(AggregationConfigurations))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             string metricName = default;
             MetricConfigurationType? metricType = default;
             IReadOnlyList<string> dimensions = default;
-            bool? storeRawData = default;
+            bool? shouldStoreRawData = default;
             IList<MetricAggregationConfiguration> aggregationConfigurations = default;
             ResourceIdentifier sourceMetricResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    storeRawData = prop.Value.GetBoolean();
+                    shouldStoreRawData = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("aggregationConfigurations"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 metricName,
                 metricType,
                 dimensions ?? new ChangeTrackingList<string>(),
-                storeRawData,
+                shouldStoreRawData,
                 aggregationConfigurations ?? new ChangeTrackingList<MetricAggregationConfiguration>(),
                 sourceMetricResourceId,
                 additionalBinaryDataProperties);

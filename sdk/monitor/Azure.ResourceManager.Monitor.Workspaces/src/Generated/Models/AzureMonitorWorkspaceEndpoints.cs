@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceEndpoints"/>. </summary>
-        /// <param name="query"> The query endpoint for the Azure Monitor Workspace. </param>
+        /// <param name="queryEndpoint"> The query endpoint for the Azure Monitor Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceEndpoints(Uri query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMonitorWorkspaceEndpoints(Uri queryEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Query = query;
+            QueryEndpoint = queryEndpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The query endpoint for the Azure Monitor Workspace. </summary>
-        public Uri Query { get; }
+        public Uri QueryEndpoint { get; }
     }
 }

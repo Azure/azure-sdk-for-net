@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of a trace container. </summary>
-    public partial class TraceContainer
+    public partial class TraceContainerProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TraceContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceContainerProperties"/>. </summary>
         /// <param name="traceDurationWindowInSeconds"> The trace duration window in seconds. </param>
         /// <param name="traceRetentionInDays"> The number of days for which the traces are retained. Value must be between 4 and 730 days. </param>
         /// <param name="traceMetricsState"> Controls whether trace-derived metrics are emitted for this trace container. </param>
-        public TraceContainer(int traceDurationWindowInSeconds, int traceRetentionInDays, TraceMetricsState traceMetricsState)
+        public TraceContainerProperties(int traceDurationWindowInSeconds, int traceRetentionInDays, TraceMetricsState traceMetricsState)
         {
             TraceDurationWindowInSeconds = traceDurationWindowInSeconds;
             TraceRetentionInDays = traceRetentionInDays;
             TraceMetricsState = traceMetricsState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TraceContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceContainerProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the trace container. </param>
         /// <param name="traceDurationWindowInSeconds"> The trace duration window in seconds. </param>
         /// <param name="traceRetentionInDays"> The number of days for which the traces are retained. Value must be between 4 and 730 days. </param>
         /// <param name="traceMetricsState"> Controls whether trace-derived metrics are emitted for this trace container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TraceContainer(MonitorWorkspaceProvisioningState? provisioningState, int traceDurationWindowInSeconds, int traceRetentionInDays, TraceMetricsState traceMetricsState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TraceContainerProperties(MonitorWorkspaceProvisioningState? provisioningState, int traceDurationWindowInSeconds, int traceRetentionInDays, TraceMetricsState traceMetricsState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TraceDurationWindowInSeconds = traceDurationWindowInSeconds;

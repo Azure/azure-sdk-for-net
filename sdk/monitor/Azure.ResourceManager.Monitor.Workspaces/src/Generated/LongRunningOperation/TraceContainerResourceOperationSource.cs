@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         TraceContainerResource IOperationSource<TraceContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            TraceContainerResourceData data = TraceContainerResourceData.DeserializeTraceContainerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            TraceContainerData data = TraceContainerData.DeserializeTraceContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new TraceContainerResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         async ValueTask<TraceContainerResource> IOperationSource<TraceContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            TraceContainerResourceData data = TraceContainerResourceData.DeserializeTraceContainerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            TraceContainerData data = TraceContainerData.DeserializeTraceContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new TraceContainerResource(_client, data);
         }
     }

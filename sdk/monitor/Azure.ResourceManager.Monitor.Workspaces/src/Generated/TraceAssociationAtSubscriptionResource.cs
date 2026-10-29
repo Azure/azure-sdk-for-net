@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary>
-    /// A class representing a TraceAssociationsAtResourceGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TraceAssociationsAtResourceGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTraceAssociationsAtResourceGroup method.
+    /// A class representing a TraceAssociationAtSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TraceAssociationAtSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTraceAssociationAtSubscription method.
     /// </summary>
-    public partial class TraceAssociationsAtResourceGroupResource : ArmResource
+    public partial class TraceAssociationAtSubscriptionResource : ArmResource
     {
-        private readonly ClientDiagnostics _traceAssociationsAtResourceGroupClientDiagnostics;
-        private readonly TraceAssociationsAtResourceGroup _traceAssociationsAtResourceGroupRestClient;
-        private readonly TraceAssociationResourceData _data;
+        private readonly ClientDiagnostics _traceAssociationAtSubscriptionClientDiagnostics;
+        private readonly TraceAssociationAtSubscription _traceAssociationAtSubscriptionRestClient;
+        private readonly TraceAssociationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/traceAssociations";
 
-        /// <summary> Initializes a new instance of TraceAssociationsAtResourceGroupResource for mocking. </summary>
-        protected TraceAssociationsAtResourceGroupResource()
+        /// <summary> Initializes a new instance of TraceAssociationAtSubscriptionResource for mocking. </summary>
+        protected TraceAssociationAtSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TraceAssociationsAtResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationAtSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TraceAssociationsAtResourceGroupResource(ArmClient client, TraceAssociationResourceData data) : this(client, data.Id)
+        internal TraceAssociationAtSubscriptionResource(ArmClient client, TraceAssociationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TraceAssociationsAtResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationAtSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TraceAssociationsAtResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TraceAssociationAtSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string traceAssociationsAtResourceGroupApiVersion);
-            _traceAssociationsAtResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _traceAssociationsAtResourceGroupRestClient = new TraceAssociationsAtResourceGroup(_traceAssociationsAtResourceGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, traceAssociationsAtResourceGroupApiVersion ?? "2026-09-03-preview");
+            TryGetApiVersion(ResourceType, out string traceAssociationAtSubscriptionApiVersion);
+            _traceAssociationAtSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
+            _traceAssociationAtSubscriptionRestClient = new TraceAssociationAtSubscription(_traceAssociationAtSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, traceAssociationAtSubscriptionApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TraceAssociationResourceData Data
+        public virtual TraceAssociationData Data
         {
             get
             {
@@ -73,10 +73,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,11 +94,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_CreateOrUpdate. </description>
+        /// <description> TraceAssociationsAtSubscription_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,11 +114,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TraceAssociationsAtResourceGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceAssociationResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TraceAssociationAtSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.CreateOrUpdate");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -127,12 +126,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, TraceAssociationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WorkspacesArmOperation<TraceAssociationsAtResourceGroupResource> operation = new WorkspacesArmOperation<TraceAssociationsAtResourceGroupResource>(Response.FromValue(new TraceAssociationsAtResourceGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WorkspacesArmOperation<TraceAssociationAtSubscriptionResource> operation = new WorkspacesArmOperation<TraceAssociationAtSubscriptionResource>(Response.FromValue(new TraceAssociationAtSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -151,11 +150,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_CreateOrUpdate. </description>
+        /// <description> TraceAssociationsAtSubscription_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,11 +170,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TraceAssociationsAtResourceGroupResource> CreateOrUpdate(WaitUntil waitUntil, TraceAssociationResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TraceAssociationAtSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, TraceAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.CreateOrUpdate");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -183,12 +182,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, TraceAssociationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WorkspacesArmOperation<TraceAssociationsAtResourceGroupResource> operation = new WorkspacesArmOperation<TraceAssociationsAtResourceGroupResource>(Response.FromValue(new TraceAssociationsAtResourceGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WorkspacesArmOperation<TraceAssociationAtSubscriptionResource> operation = new WorkspacesArmOperation<TraceAssociationAtSubscriptionResource>(Response.FromValue(new TraceAssociationAtSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -207,11 +206,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_Get. </description>
+        /// <description> TraceAssociationsAtSubscription_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -219,14 +218,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TraceAssociationsAtResourceGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TraceAssociationAtSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.Get");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -234,14 +233,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TraceAssociationsAtResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TraceAssociationAtSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,11 +254,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_Get. </description>
+        /// <description> TraceAssociationsAtSubscription_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -267,14 +266,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TraceAssociationsAtResourceGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TraceAssociationAtSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.Get");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -282,14 +281,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TraceAssociationsAtResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TraceAssociationAtSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,11 +302,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_Delete. </description>
+        /// <description> TraceAssociationsAtSubscription_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.Delete");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.Delete");
             scope.Start();
             try
             {
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -354,11 +353,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TraceAssociationsAtResourceGroup_Delete. </description>
+        /// <description> TraceAssociationsAtSubscription_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _traceAssociationsAtResourceGroupClientDiagnostics.CreateScope("TraceAssociationsAtResourceGroupResource.Delete");
+            using DiagnosticScope scope = _traceAssociationAtSubscriptionClientDiagnostics.CreateScope("TraceAssociationAtSubscriptionResource.Delete");
             scope.Start();
             try
             {
@@ -382,7 +381,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsAtResourceGroupRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

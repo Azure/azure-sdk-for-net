@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
     {
         private readonly ClientDiagnostics _traceAssociationsClientDiagnostics;
         private readonly TraceAssociations _traceAssociationsRestClient;
-        private readonly TraceAssociationResourceData _data;
+        private readonly TraceAssociationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/traceAssociations";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <summary> Initializes a new instance of <see cref="TraceAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TraceAssociationResource(ArmClient client, TraceAssociationResourceData data) : this(client, data.Id)
+        internal TraceAssociationResource(ArmClient client, TraceAssociationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TraceAssociationResourceData Data
+        public virtual TraceAssociationData Data
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TraceAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceAssociationResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TraceAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TraceAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, TraceAssociationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, TraceAssociationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 WorkspacesArmOperation<TraceAssociationResource> operation = new WorkspacesArmOperation<TraceAssociationResource>(Response.FromValue(new TraceAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TraceAssociationResource> CreateOrUpdate(WaitUntil waitUntil, TraceAssociationResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TraceAssociationResource> CreateOrUpdate(WaitUntil waitUntil, TraceAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, TraceAssociationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _traceAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, TraceAssociationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 WorkspacesArmOperation<TraceAssociationResource> operation = new WorkspacesArmOperation<TraceAssociationResource>(Response.FromValue(new TraceAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _traceAssociationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _traceAssociationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TraceAssociationResourceData> response = Response.FromValue(TraceAssociationResourceData.FromResponse(result), result);
+                Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

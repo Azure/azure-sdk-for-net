@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary></summary>
-    public partial class MetricConfigurationResource : IJsonModel<MetricConfigurationResourceData>
+    public partial class MetricConfigurationResource : IJsonModel<MetricConfigurationData>
     {
-        private static IJsonModel<MetricConfigurationResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MetricConfigurationData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MetricConfigurationResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MetricConfigurationResourceData();
+        private static IJsonModel<MetricConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MetricConfigurationData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MetricConfigurationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricConfigurationResourceData>)Data).Write(writer, options);
+        void IJsonModel<MetricConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricConfigurationData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricConfigurationResourceData IJsonModel<MetricConfigurationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MetricConfigurationData IJsonModel<MetricConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricConfigurationResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricConfigurationResourceData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        BinaryData IPersistableModel<MetricConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricConfigurationData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricConfigurationResourceData IPersistableModel<MetricConfigurationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricConfigurationResourceData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        MetricConfigurationData IPersistableModel<MetricConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricConfigurationData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricConfigurationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MetricConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

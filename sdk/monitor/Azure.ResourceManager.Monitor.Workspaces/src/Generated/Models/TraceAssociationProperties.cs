@@ -13,25 +13,25 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of a trace association. </summary>
-    internal partial class TraceAssociation
+    internal partial class TraceAssociationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TraceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationProperties"/>. </summary>
         /// <param name="azureMonitorWorkspaceResourceId"> The resource ID of the Azure Monitor Workspace that receives traces from the target scope. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceResourceId"/> is null. </exception>
-        public TraceAssociation(ResourceIdentifier azureMonitorWorkspaceResourceId)
+        public TraceAssociationProperties(ResourceIdentifier azureMonitorWorkspaceResourceId)
         {
             Argument.AssertNotNull(azureMonitorWorkspaceResourceId, nameof(azureMonitorWorkspaceResourceId));
 
             AzureMonitorWorkspaceResourceId = azureMonitorWorkspaceResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TraceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationProperties"/>. </summary>
         /// <param name="azureMonitorWorkspaceResourceId"> The resource ID of the Azure Monitor Workspace that receives traces from the target scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TraceAssociation(ResourceIdentifier azureMonitorWorkspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TraceAssociationProperties(ResourceIdentifier azureMonitorWorkspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureMonitorWorkspaceResourceId = azureMonitorWorkspaceResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

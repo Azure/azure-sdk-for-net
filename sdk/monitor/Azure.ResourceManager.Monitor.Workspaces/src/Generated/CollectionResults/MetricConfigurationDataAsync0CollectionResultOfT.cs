@@ -15,48 +15,45 @@ using Azure.ResourceManager.Monitor.Workspaces.Models;
 
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
-    internal partial class MetricConfigurationResourceDataAsyncCollectionResultOfT : AsyncPageable<MetricConfigurationResourceData>
+    internal partial class MetricConfigurationDataAsync0CollectionResultOfT : AsyncPageable<MetricConfigurationData>
     {
         private readonly MetricConfigurations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _azureMonitorWorkspaceName;
         private readonly string _metricsContainerName;
-        private readonly string _encodedMetricNamespace;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MetricConfigurationResourceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MetricConfigurationDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The MetricConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor Workspace. The name is case insensitive. </param>
         /// <param name="metricsContainerName"> The name of the MetricsContainer. </param>
-        /// <param name="encodedMetricNamespace"> Tilde encoding is used for the metric namespace in the URL path. It is similar to percent encoding but uses `~` instead of `%`. For example, `/` is encoded as `~2F`. Metric configurations provide the original namespace in `properties.namespace`. </param>
         /// <param name="filter"> An OData filter for source metric resource IDs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MetricConfigurationResourceDataAsyncCollectionResultOfT(MetricConfigurations client, Guid subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, string metricsContainerName, string encodedMetricNamespace, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MetricConfigurationDataAsync0CollectionResultOfT(MetricConfigurations client, Guid subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, string metricsContainerName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _azureMonitorWorkspaceName = azureMonitorWorkspaceName;
             _metricsContainerName = metricsContainerName;
-            _encodedMetricNamespace = encodedMetricNamespace;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MetricConfigurationResourceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MetricConfigurationDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MetricConfigurationResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MetricConfigurationResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MetricConfigurationDataAsync0CollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<MetricConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -64,9 +61,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     yield break;
                 }
-                MetricConfigurationResourceListResult result = MetricConfigurationResourceListResult.FromResponse(response);
+                PagedMetricConfigurationResource result = PagedMetricConfigurationResource.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<MetricConfigurationResourceData>.FromValues((IReadOnlyList<MetricConfigurationResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MetricConfigurationData>.FromValues((IReadOnlyList<MetricConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -79,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByMetricNamespaceRequest(nextLink, _subscriptionId, _resourceGroupName, _azureMonitorWorkspaceName, _metricsContainerName, _encodedMetricNamespace, _filter, _context) : _client.CreateGetByMetricNamespaceRequest(_subscriptionId, _resourceGroupName, _azureMonitorWorkspaceName, _metricsContainerName, _encodedMetricNamespace, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByMetricsContainerRequest(nextLink, _subscriptionId, _resourceGroupName, _azureMonitorWorkspaceName, _metricsContainerName, _filter, _context) : _client.CreateGetByMetricsContainerRequest(_subscriptionId, _resourceGroupName, _azureMonitorWorkspaceName, _metricsContainerName, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

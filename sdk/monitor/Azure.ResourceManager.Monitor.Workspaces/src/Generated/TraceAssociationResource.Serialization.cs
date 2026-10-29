@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary></summary>
-    public partial class TraceAssociationResource : IJsonModel<TraceAssociationResourceData>
+    public partial class TraceAssociationResource : IJsonModel<TraceAssociationData>
     {
-        private static IJsonModel<TraceAssociationResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<TraceAssociationData> s_dataDeserializationInstance;
 
-        private static IJsonModel<TraceAssociationResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TraceAssociationResourceData();
+        private static IJsonModel<TraceAssociationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TraceAssociationData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TraceAssociationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TraceAssociationResourceData>)Data).Write(writer, options);
+        void IJsonModel<TraceAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TraceAssociationData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociationResourceData IJsonModel<TraceAssociationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        TraceAssociationData IJsonModel<TraceAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TraceAssociationResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TraceAssociationResourceData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        BinaryData IPersistableModel<TraceAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TraceAssociationData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociationResourceData IPersistableModel<TraceAssociationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TraceAssociationResourceData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        TraceAssociationData IPersistableModel<TraceAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TraceAssociationData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TraceAssociationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<TraceAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

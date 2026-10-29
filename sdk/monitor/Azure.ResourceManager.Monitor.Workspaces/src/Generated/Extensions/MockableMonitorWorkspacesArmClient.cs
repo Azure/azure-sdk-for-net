@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             return new TraceContainerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TraceAssociationsAtResourceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TraceAssociationAtResourceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TraceAssociationsAtResourceGroupResource"/> object. </returns>
-        public virtual TraceAssociationsAtResourceGroupResource GetTraceAssociationsAtResourceGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
+        public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(ResourceIdentifier id)
         {
-            TraceAssociationsAtResourceGroupResource.ValidateResourceId(id);
-            return new TraceAssociationsAtResourceGroupResource(Client, id);
+            TraceAssociationAtResourceGroupResource.ValidateResourceId(id);
+            return new TraceAssociationAtResourceGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TraceAssociationsAtSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TraceAssociationAtSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TraceAssociationsAtSubscriptionResource"/> object. </returns>
-        public virtual TraceAssociationsAtSubscriptionResource GetTraceAssociationsAtSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
+        public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(ResourceIdentifier id)
         {
-            TraceAssociationsAtSubscriptionResource.ValidateResourceId(id);
-            return new TraceAssociationsAtSubscriptionResource(Client, id);
+            TraceAssociationAtSubscriptionResource.ValidateResourceId(id);
+            return new TraceAssociationAtSubscriptionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TraceAssociationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

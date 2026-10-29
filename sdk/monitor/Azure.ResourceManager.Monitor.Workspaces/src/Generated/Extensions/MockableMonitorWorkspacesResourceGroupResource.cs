@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TraceAssociationsAtResourceGroupResource"/>. </description>
+        /// <description> <see cref="TraceAssociationAtResourceGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="TraceAssociationsAtResourceGroupResource"/> object. </returns>
-        public virtual TraceAssociationsAtResourceGroupResource GetTraceAssociationsAtResourceGroup()
+        /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
+        public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroup()
         {
-            return new TraceAssociationsAtResourceGroupResource(Client, Id.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
+            return new TraceAssociationAtResourceGroupResource(Client, Id.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
         }
     }
 }

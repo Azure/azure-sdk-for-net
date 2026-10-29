@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 throw new FormatException($"The model {nameof(AzureMonitorWorkspaceEndpoints)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Query))
+            if (options.Format != "W" && Optional.IsDefined(QueryEndpoint))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query.AbsoluteUri);
+                writer.WriteStringValue(QueryEndpoint.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            Uri query = default;
+            Uri queryEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    query = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    queryEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureMonitorWorkspaceEndpoints(query, additionalBinaryDataProperties);
+            return new AzureMonitorWorkspaceEndpoints(queryEndpoint, additionalBinaryDataProperties);
         }
     }
 }

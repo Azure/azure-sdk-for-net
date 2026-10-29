@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary>
-    /// A class representing a MetricNamespaceResource along with the instance operations that can be performed on it.
+    /// A class representing a MetricNamespace along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricNamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorMetricsContainerResource"/> using the GetMetricNamespaceResources method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorMetricsContainerResource"/> using the GetMetricNamespaces method.
     /// </summary>
     public partial class MetricNamespaceResource : ArmResource
     {
         private readonly ClientDiagnostics _metricNamespacesClientDiagnostics;
         private readonly MetricNamespaces _metricNamespacesRestClient;
-        private readonly MetricNamespaceResourceData _data;
+        private readonly MetricNamespaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts/metricsContainers/namespaces";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <summary> Initializes a new instance of <see cref="MetricNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MetricNamespaceResource(ArmClient client, MetricNamespaceResourceData data) : this(client, data.Id)
+        internal MetricNamespaceResource(ArmClient client, MetricNamespaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricNamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string metricNamespaceResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string metricNamespaceApiVersion);
             _metricNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", ResourceType.Namespace, Diagnostics);
-            _metricNamespacesRestClient = new MetricNamespaces(_metricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricNamespaceResourceApiVersion ?? "2026-09-03-preview");
+            _metricNamespacesRestClient = new MetricNamespaces(_metricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricNamespaceApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MetricNamespaceResourceData Data
+        public virtual MetricNamespaceData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricNamespaceResourceData> response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                Response<MetricNamespaceData> response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricNamespaceResourceData> response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                Response<MetricNamespaceData> response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             }
         }
 
-        /// <summary> Gets a collection of MetricConfigurationResources in the <see cref="MetricNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of MetricConfigurationResources and their operations over a MetricConfigurationResource. </returns>
-        public virtual MetricConfigurationResourceCollection GetMetricConfigurationResources()
+        /// <summary> Gets a collection of MetricConfigurations in the <see cref="MetricNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of MetricConfigurations and their operations over a MetricConfigurationResource. </returns>
+        public virtual MetricConfigurationCollection GetMetricConfigurations()
         {
-            return GetCachedClient(client => new MetricConfigurationResourceCollection(client, Id));
+            return GetCachedClient(client => new MetricConfigurationCollection(client, Id));
         }
 
         /// <summary> Gets a metric configuration. </summary>
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encodedMetricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MetricConfigurationResource>> GetMetricConfigurationResourceAsync(string encodedMetricName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricConfigurationResource>> GetMetricConfigurationAsync(string encodedMetricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encodedMetricName, nameof(encodedMetricName));
 
-            return await GetMetricConfigurationResources().GetAsync(encodedMetricName, cancellationToken).ConfigureAwait(false);
+            return await GetMetricConfigurations().GetAsync(encodedMetricName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a metric configuration. </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encodedMetricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MetricConfigurationResource> GetMetricConfigurationResource(string encodedMetricName, CancellationToken cancellationToken = default)
+        public virtual Response<MetricConfigurationResource> GetMetricConfiguration(string encodedMetricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encodedMetricName, nameof(encodedMetricName));
 
-            return GetMetricConfigurationResources().Get(encodedMetricName, cancellationToken);
+            return GetMetricConfigurations().Get(encodedMetricName, cancellationToken);
         }
     }
 }

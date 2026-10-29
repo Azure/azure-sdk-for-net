@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary></summary>
-    public partial class TraceContainerResource : IJsonModel<TraceContainerResourceData>
+    public partial class TraceContainerResource : IJsonModel<TraceContainerData>
     {
-        private static IJsonModel<TraceContainerResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<TraceContainerData> s_dataDeserializationInstance;
 
-        private static IJsonModel<TraceContainerResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TraceContainerResourceData();
+        private static IJsonModel<TraceContainerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TraceContainerData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TraceContainerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TraceContainerResourceData>)Data).Write(writer, options);
+        void IJsonModel<TraceContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TraceContainerData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceContainerResourceData IJsonModel<TraceContainerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        TraceContainerData IJsonModel<TraceContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TraceContainerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TraceContainerResourceData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        BinaryData IPersistableModel<TraceContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TraceContainerData>(Data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceContainerResourceData IPersistableModel<TraceContainerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TraceContainerResourceData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
+        TraceContainerData IPersistableModel<TraceContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TraceContainerData>(data, options, AzureResourceManagerMonitorWorkspacesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TraceContainerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<TraceContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

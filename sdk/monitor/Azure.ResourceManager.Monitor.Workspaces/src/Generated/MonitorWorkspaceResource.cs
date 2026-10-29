@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
 
         /// <summary> Gets an object representing a <see cref="TraceContainerResource"/> along with the instance operations that can be performed on it in the <see cref="MonitorWorkspaceResource"/>. </summary>
         /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
-        public virtual TraceContainerResource GetTraceContainerResource()
+        public virtual TraceContainerResource GetTraceContainer()
         {
             return new TraceContainerResource(Client, Id.AppendChildResource("traceContainers", "default"));
         }

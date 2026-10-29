@@ -1,5 +1,5 @@
 directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/Accounts
-commit: 012e1a657ca0a45cfeca79703325d4e9db62ee26
+commit: a3a788240741df4b4df52fc784b517adbcfe3c86
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

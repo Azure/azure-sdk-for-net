@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MetricNamespaceResourceData item in Value)
+            foreach (MetricNamespaceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            IList<MetricNamespaceResourceData> value = default;
+            IList<MetricNamespaceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MetricNamespaceResourceData> array = new List<MetricNamespaceResourceData>();
+                    List<MetricNamespaceData> array = new List<MetricNamespaceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricNamespaceResourceData.DeserializeMetricNamespaceResourceData(item, options));
+                        array.Add(MetricNamespaceData.DeserializeMetricNamespaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetricNamespaceResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MetricNamespaceResourceListResult(value ?? new ChangeTrackingList<MetricNamespaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

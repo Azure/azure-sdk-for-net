@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
-    internal partial class TraceAssociationsAtResourceGroup
+    internal partial class TraceAssociationAtSubscription
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of TraceAssociationsAtResourceGroup for mocking. </summary>
-        protected TraceAssociationsAtResourceGroup()
+        /// <summary> Initializes a new instance of TraceAssociationAtSubscription for mocking. </summary>
+        protected TraceAssociationAtSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of TraceAssociationsAtResourceGroup. </summary>
+        /// <summary> Initializes a new instance of TraceAssociationAtSubscription. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TraceAssociationsAtResourceGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal TraceAssociationAtSubscription(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(TraceAssociationsAtResourceGroup).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(TraceAssociationAtSubscription).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,14 +44,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Monitor/traceAssociations/default", false);
             if (_apiVersion != null)
             {
@@ -66,14 +64,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Monitor/traceAssociations/default", false);
             if (_apiVersion != null)
             {
@@ -90,14 +86,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Monitor/traceAssociations/default", false);
             if (_apiVersion != null)
             {
@@ -111,14 +105,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Monitor/traceAssociations", false);
             if (_apiVersion != null)
             {
@@ -133,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

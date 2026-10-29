@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MetricConfigurationResourceData, MetricConfigurationResource>(new MetricConfigurationResourceDataAsync0CollectionResultOfT(
+            return new AsyncPageableWrapper<MetricConfigurationData, MetricConfigurationResource>(new MetricConfigurationDataAsync0CollectionResultOfT(
                 _metricConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MetricConfigurationResourceData, MetricConfigurationResource>(new MetricConfigurationResourceData0CollectionResultOfT(
+            return new PageableWrapper<MetricConfigurationData, MetricConfigurationResource>(new MetricConfigurationData0CollectionResultOfT(
                 _metricConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -387,11 +387,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             }
         }
 
-        /// <summary> Gets a collection of MetricNamespaceResources in the <see cref="MonitorMetricsContainerResource"/>. </summary>
-        /// <returns> An object representing collection of MetricNamespaceResources and their operations over a MetricNamespaceResource. </returns>
-        public virtual MetricNamespaceResourceCollection GetMetricNamespaceResources()
+        /// <summary> Gets a collection of MetricNamespaces in the <see cref="MonitorMetricsContainerResource"/>. </summary>
+        /// <returns> An object representing collection of MetricNamespaces and their operations over a MetricNamespaceResource. </returns>
+        public virtual MetricNamespaceCollection GetMetricNamespaces()
         {
-            return GetCachedClient(client => new MetricNamespaceResourceCollection(client, Id));
+            return GetCachedClient(client => new MetricNamespaceCollection(client, Id));
         }
 
         /// <summary> Gets a metric namespace. </summary>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encodedMetricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MetricNamespaceResource>> GetMetricNamespaceResourceAsync(string encodedMetricNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricNamespaceResource>> GetMetricNamespaceAsync(string encodedMetricNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            return await GetMetricNamespaceResources().GetAsync(encodedMetricNamespace, cancellationToken).ConfigureAwait(false);
+            return await GetMetricNamespaces().GetAsync(encodedMetricNamespace, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a metric namespace. </summary>
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <exception cref="ArgumentNullException"> <paramref name="encodedMetricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encodedMetricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MetricNamespaceResource> GetMetricNamespaceResource(string encodedMetricNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<MetricNamespaceResource> GetMetricNamespace(string encodedMetricNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            return GetMetricNamespaceResources().Get(encodedMetricNamespace, cancellationToken);
+            return GetMetricNamespaces().Get(encodedMetricNamespace, cancellationToken);
         }
     }
 }

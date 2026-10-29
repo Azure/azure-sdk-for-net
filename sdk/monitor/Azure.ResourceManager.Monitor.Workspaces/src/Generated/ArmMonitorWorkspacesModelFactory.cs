@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Monitor Workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
-        /// <param name="endpointsQuery"> The query endpoint for the Azure Monitor Workspace. </param>
+        /// <param name="queryEndpoint"> The query endpoint for the Azure Monitor Workspace. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <param name="actionsDefaultActionGroups"> The default action groups associated with the Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, Uri endpointsQuery, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, Uri queryEndpoint, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IEnumerable<DefaultActionGroupReference> actionsDefaultActionGroups = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 metrics,
                 provisioningState,
                 defaultIngestionSettings,
-                endpointsQuery is null ? default : new AzureMonitorWorkspaceEndpoints(endpointsQuery, default),
+                queryEndpoint is null ? default : new AzureMonitorWorkspaceEndpoints(queryEndpoint, default),
                 (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>()).ToList(),
                 publicNetworkAccess,
                 actionsDefaultActionGroups is null ? default : new AzureMonitorWorkspaceActions((actionsDefaultActionGroups ?? new ChangeTrackingList<DefaultActionGroupReference>()).ToList(), default),
@@ -454,10 +454,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="metricNamespaceProvisioningState"> The provisioning state of the metric namespace. </param>
-        /// <returns> A new <see cref="Workspaces.MetricNamespaceResourceData"/> instance for mocking. </returns>
-        public static MetricNamespaceResourceData MetricNamespaceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorWorkspaceProvisioningState? metricNamespaceProvisioningState = default)
+        /// <returns> A new <see cref="Workspaces.MetricNamespaceData"/> instance for mocking. </returns>
+        public static MetricNamespaceData MetricNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorWorkspaceProvisioningState? metricNamespaceProvisioningState = default)
         {
-            return new MetricNamespaceResourceData(
+            return new MetricNamespaceData(
                 id,
                 name,
                 resourceType,
@@ -472,10 +472,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Workspaces.MetricConfigurationResourceData"/> instance for mocking. </returns>
-        public static MetricConfigurationResourceData MetricConfigurationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetricConfigurationProperties properties = default)
+        /// <returns> A new <see cref="Workspaces.MetricConfigurationData"/> instance for mocking. </returns>
+        public static MetricConfigurationData MetricConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetricConfigurationProperties properties = default)
         {
-            return new MetricConfigurationResourceData(
+            return new MetricConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -490,11 +490,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="metricName"> The actual ingested metric name before route encoding. </param>
         /// <param name="metricType"> The metric type. </param>
         /// <param name="dimensions"> Dimensions emitted by the metric. </param>
-        /// <param name="storeRawData"> Whether raw metric data is stored. </param>
+        /// <param name="shouldStoreRawData"> Whether raw metric data is stored. </param>
         /// <param name="aggregationConfigurations"> Aggregation configurations for an aggregated metric. </param>
         /// <param name="sourceMetricResourceId"> The resource ID of the source metric for an aggregated metric. </param>
         /// <returns> A new <see cref="Models.MetricConfigurationProperties"/> instance for mocking. </returns>
-        public static MetricConfigurationProperties MetricConfigurationProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string @namespace = default, string metricName = default, MetricConfigurationType? metricType = default, IEnumerable<string> dimensions = default, bool? storeRawData = default, IEnumerable<MetricAggregationConfiguration> aggregationConfigurations = default, ResourceIdentifier sourceMetricResourceId = default)
+        public static MetricConfigurationProperties MetricConfigurationProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string @namespace = default, string metricName = default, MetricConfigurationType? metricType = default, IEnumerable<string> dimensions = default, bool? shouldStoreRawData = default, IEnumerable<MetricAggregationConfiguration> aggregationConfigurations = default, ResourceIdentifier sourceMetricResourceId = default)
         {
             dimensions ??= new ChangeTrackingList<string>();
             aggregationConfigurations ??= new ChangeTrackingList<MetricAggregationConfiguration>();
@@ -505,22 +505,22 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 metricName,
                 metricType,
                 (dimensions ?? new ChangeTrackingList<string>()).ToList(),
-                storeRawData,
+                shouldStoreRawData,
                 (aggregationConfigurations ?? new ChangeTrackingList<MetricAggregationConfiguration>()).ToList(),
                 sourceMetricResourceId,
                 default);
         }
 
         /// <summary> An aggregation configuration for an aggregated metric. </summary>
-        /// <param name="storeAggregatedData"> Whether aggregated metric data is stored. </param>
+        /// <param name="shouldStoreAggregatedData"> Whether aggregated metric data is stored. </param>
         /// <param name="dimensions"> Dimensions included in this aggregation. </param>
         /// <param name="aggregationFunctions"> Aggregation functions enabled for this aggregation. </param>
         /// <returns> A new <see cref="Models.MetricAggregationConfiguration"/> instance for mocking. </returns>
-        public static MetricAggregationConfiguration MetricAggregationConfiguration(bool? storeAggregatedData = default, IEnumerable<string> dimensions = default, MetricAggregationFunctions aggregationFunctions = default)
+        public static MetricAggregationConfiguration MetricAggregationConfiguration(bool? shouldStoreAggregatedData = default, IEnumerable<string> dimensions = default, MetricAggregationFunctions aggregationFunctions = default)
         {
             dimensions ??= new ChangeTrackingList<string>();
 
-            return new MetricAggregationConfiguration(storeAggregatedData, (dimensions ?? new ChangeTrackingList<string>()).ToList(), aggregationFunctions, default);
+            return new MetricAggregationConfiguration(shouldStoreAggregatedData, (dimensions ?? new ChangeTrackingList<string>()).ToList(), aggregationFunctions, default);
         }
 
         /// <summary> Aggregation functions enabled for an aggregated metric. </summary>
@@ -538,10 +538,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Workspaces.TraceContainerResourceData"/> instance for mocking. </returns>
-        public static TraceContainerResourceData TraceContainerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TraceContainer properties = default)
+        /// <returns> A new <see cref="Workspaces.TraceContainerData"/> instance for mocking. </returns>
+        public static TraceContainerData TraceContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TraceContainerProperties properties = default)
         {
-            return new TraceContainerResourceData(
+            return new TraceContainerData(
                 id,
                 name,
                 resourceType,
@@ -555,10 +555,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="traceDurationWindowInSeconds"> The trace duration window in seconds. </param>
         /// <param name="traceRetentionInDays"> The number of days for which the traces are retained. Value must be between 4 and 730 days. </param>
         /// <param name="traceMetricsState"> Controls whether trace-derived metrics are emitted for this trace container. </param>
-        /// <returns> A new <see cref="Models.TraceContainer"/> instance for mocking. </returns>
-        public static TraceContainer TraceContainer(MonitorWorkspaceProvisioningState? provisioningState = default, int traceDurationWindowInSeconds = default, int traceRetentionInDays = default, TraceMetricsState traceMetricsState = default)
+        /// <returns> A new <see cref="Models.TraceContainerProperties"/> instance for mocking. </returns>
+        public static TraceContainerProperties TraceContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, int traceDurationWindowInSeconds = default, int traceRetentionInDays = default, TraceMetricsState traceMetricsState = default)
         {
-            return new TraceContainer(provisioningState, traceDurationWindowInSeconds, traceRetentionInDays, traceMetricsState, default);
+            return new TraceContainerProperties(provisioningState, traceDurationWindowInSeconds, traceRetentionInDays, traceMetricsState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -566,15 +566,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="traceAssociationAzureMonitorWorkspaceResourceId"> The resource ID of the Azure Monitor Workspace that receives traces from the target scope. </param>
-        /// <returns> A new <see cref="Workspaces.TraceAssociationResourceData"/> instance for mocking. </returns>
-        public static TraceAssociationResourceData TraceAssociationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier traceAssociationAzureMonitorWorkspaceResourceId = default)
+        /// <returns> A new <see cref="Workspaces.TraceAssociationData"/> instance for mocking. </returns>
+        public static TraceAssociationData TraceAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier traceAssociationAzureMonitorWorkspaceResourceId = default)
         {
-            return new TraceAssociationResourceData(
+            return new TraceAssociationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                traceAssociationAzureMonitorWorkspaceResourceId is null ? default : new TraceAssociation(traceAssociationAzureMonitorWorkspaceResourceId, default),
+                traceAssociationAzureMonitorWorkspaceResourceId is null ? default : new TraceAssociationProperties(traceAssociationAzureMonitorWorkspaceResourceId, default),
                 default);
         }
 

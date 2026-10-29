@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         internal AzureMonitorWorkspaceActions Actions { get; set; }
 
         /// <summary> The query endpoint for the Azure Monitor Workspace. </summary>
-        public Uri EndpointsQuery
+        public Uri QueryEndpoint
         {
             get
             {
-                return Endpoints is null ? default : Endpoints.Query;
+                return Endpoints is null ? default : Endpoints.QueryEndpoint;
             }
         }
 

@@ -13,31 +13,44 @@ using Azure.ResourceManager.Monitor.Workspaces.Models;
 
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
-    /// <summary> A metric configuration in an Azure Monitor Workspace metric namespace. </summary>
-    public partial class MetricConfigurationResourceData : ResourceData
+    /// <summary> An association between an Azure resource scope and an Azure Monitor Workspace. </summary>
+    public partial class TraceAssociationData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricConfigurationResourceData"/>. </summary>
-        public MetricConfigurationResourceData()
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationData"/>. </summary>
+        public TraceAssociationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricConfigurationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricConfigurationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal TraceAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TraceAssociationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public MetricConfigurationProperties Properties { get; set; }
+        internal TraceAssociationProperties Properties { get; set; }
+
+        /// <summary> The resource ID of the Azure Monitor Workspace that receives traces from the target scope. </summary>
+        public ResourceIdentifier TraceAssociationAzureMonitorWorkspaceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureMonitorWorkspaceResourceId;
+            }
+            set
+            {
+                Properties = new TraceAssociationProperties(value);
+            }
+        }
     }
 }

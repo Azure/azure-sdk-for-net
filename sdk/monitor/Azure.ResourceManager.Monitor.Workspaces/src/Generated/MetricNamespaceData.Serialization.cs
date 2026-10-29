@@ -18,58 +18,58 @@ using Azure.ResourceManager.Monitor.Workspaces.Models;
 namespace Azure.ResourceManager.Monitor.Workspaces
 {
     /// <summary> A metric namespace in an Azure Monitor Workspace metrics container. </summary>
-    public partial class MetricNamespaceResourceData : ResourceData, IJsonModel<MetricNamespaceResourceData>
+    public partial class MetricNamespaceData : ResourceData, IJsonModel<MetricNamespaceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetricNamespaceResourceData(document.RootElement, options);
+                        return DeserializeMetricNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricNamespaceResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MetricNamespaceResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricNamespaceResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MetricNamespaceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricNamespaceResourceData IPersistableModel<MetricNamespaceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MetricNamespaceResourceData)PersistableModelCreateCore(data, options);
+        MetricNamespaceData IPersistableModel<MetricNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MetricNamespaceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricNamespaceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetricNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MetricNamespaceResourceData"/> from. </param>
-        internal static MetricNamespaceResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MetricNamespaceData"/> from. </param>
+        internal static MetricNamespaceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMetricNamespaceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMetricNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MetricNamespaceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetricNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricNamespaceResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricNamespaceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricNamespaceResourceData IJsonModel<MetricNamespaceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MetricNamespaceResourceData)JsonModelCreateCore(ref reader, options);
+        MetricNamespaceData IJsonModel<MetricNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MetricNamespaceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricNamespaceResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricNamespaceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricNamespaceResourceData(document.RootElement, options);
+            return DeserializeMetricNamespaceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MetricNamespaceResourceData DeserializeMetricNamespaceResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MetricNamespaceData DeserializeMetricNamespaceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetricNamespaceResourceData(
+            return new MetricNamespaceData(
                 id,
                 name,
                 resourceType,

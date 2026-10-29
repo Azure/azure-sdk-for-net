@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAggregationConfiguration"/>. </summary>
-        /// <param name="storeAggregatedData"> Whether aggregated metric data is stored. </param>
+        /// <param name="shouldStoreAggregatedData"> Whether aggregated metric data is stored. </param>
         /// <param name="dimensions"> Dimensions included in this aggregation. </param>
         /// <param name="aggregationFunctions"> Aggregation functions enabled for this aggregation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAggregationConfiguration(bool? storeAggregatedData, IList<string> dimensions, MetricAggregationFunctions aggregationFunctions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAggregationConfiguration(bool? shouldStoreAggregatedData, IList<string> dimensions, MetricAggregationFunctions aggregationFunctions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StoreAggregatedData = storeAggregatedData;
+            ShouldStoreAggregatedData = shouldStoreAggregatedData;
             Dimensions = dimensions;
             AggregationFunctions = aggregationFunctions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether aggregated metric data is stored. </summary>
-        public bool? StoreAggregatedData { get; set; }
+        public bool? ShouldStoreAggregatedData { get; set; }
 
         /// <summary> Dimensions included in this aggregation. </summary>
         public IList<string> Dimensions { get; }

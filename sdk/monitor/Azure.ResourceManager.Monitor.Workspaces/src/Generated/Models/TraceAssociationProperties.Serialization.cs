@@ -15,56 +15,56 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of a trace association. </summary>
-    internal partial class TraceAssociation : IJsonModel<TraceAssociation>
+    internal partial class TraceAssociationProperties : IJsonModel<TraceAssociationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="TraceAssociation"/> for deserialization. </summary>
-        internal TraceAssociation()
+        /// <summary> Initializes a new instance of <see cref="TraceAssociationProperties"/> for deserialization. </summary>
+        internal TraceAssociationProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TraceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TraceAssociationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTraceAssociation(document.RootElement, options);
+                        return DeserializeTraceAssociationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TraceAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceAssociationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TraceAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceAssociationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TraceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TraceAssociationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociation IPersistableModel<TraceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TraceAssociationProperties IPersistableModel<TraceAssociationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TraceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TraceAssociationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TraceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TraceAssociationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceAssociationProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
             writer.WriteStringValue(AzureMonitorWorkspaceResourceId);
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceAssociation IJsonModel<TraceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TraceAssociationProperties IJsonModel<TraceAssociationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TraceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TraceAssociationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceAssociationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceAssociationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTraceAssociation(document.RootElement, options);
+            return DeserializeTraceAssociationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TraceAssociation DeserializeTraceAssociation(JsonElement element, ModelReaderWriterOptions options)
+        internal static TraceAssociationProperties DeserializeTraceAssociationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TraceAssociation(azureMonitorWorkspaceResourceId, additionalBinaryDataProperties);
+            return new TraceAssociationProperties(azureMonitorWorkspaceResourceId, additionalBinaryDataProperties);
         }
     }
 }

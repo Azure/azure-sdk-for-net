@@ -14,56 +14,56 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of a trace container. </summary>
-    public partial class TraceContainer : IJsonModel<TraceContainer>
+    public partial class TraceContainerProperties : IJsonModel<TraceContainerProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="TraceContainer"/> for deserialization. </summary>
-        internal TraceContainer()
+        /// <summary> Initializes a new instance of <see cref="TraceContainerProperties"/> for deserialization. </summary>
+        internal TraceContainerProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TraceContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TraceContainerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTraceContainer(document.RootElement, options);
+                        return DeserializeTraceContainerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TraceContainer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceContainerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TraceContainer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceContainerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TraceContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TraceContainerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceContainer IPersistableModel<TraceContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TraceContainerProperties IPersistableModel<TraceContainerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TraceContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TraceContainerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TraceContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TraceContainerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceContainer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceContainerProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TraceContainer IJsonModel<TraceContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TraceContainerProperties IJsonModel<TraceContainerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TraceContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TraceContainerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TraceContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TraceContainer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceContainerProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTraceContainer(document.RootElement, options);
+            return DeserializeTraceContainerProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TraceContainer DeserializeTraceContainer(JsonElement element, ModelReaderWriterOptions options)
+        internal static TraceContainerProperties DeserializeTraceContainerProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TraceContainer(provisioningState, traceDurationWindowInSeconds, traceRetentionInDays, traceMetricsState, additionalBinaryDataProperties);
+            return new TraceContainerProperties(provisioningState, traceDurationWindowInSeconds, traceRetentionInDays, traceMetricsState, additionalBinaryDataProperties);
         }
     }
 }

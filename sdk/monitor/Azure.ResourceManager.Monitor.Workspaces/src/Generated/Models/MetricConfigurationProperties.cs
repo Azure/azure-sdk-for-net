@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="metricName"> The actual ingested metric name before route encoding. </param>
         /// <param name="metricType"> The metric type. </param>
         /// <param name="dimensions"> Dimensions emitted by the metric. </param>
-        /// <param name="storeRawData"> Whether raw metric data is stored. </param>
+        /// <param name="shouldStoreRawData"> Whether raw metric data is stored. </param>
         /// <param name="aggregationConfigurations"> Aggregation configurations for an aggregated metric. </param>
         /// <param name="sourceMetricResourceId"> The resource ID of the source metric for an aggregated metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricConfigurationProperties(MonitorWorkspaceProvisioningState? provisioningState, string @namespace, string metricName, MetricConfigurationType? metricType, IReadOnlyList<string> dimensions, bool? storeRawData, IList<MetricAggregationConfiguration> aggregationConfigurations, ResourceIdentifier sourceMetricResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricConfigurationProperties(MonitorWorkspaceProvisioningState? provisioningState, string @namespace, string metricName, MetricConfigurationType? metricType, IReadOnlyList<string> dimensions, bool? shouldStoreRawData, IList<MetricAggregationConfiguration> aggregationConfigurations, ResourceIdentifier sourceMetricResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Namespace = @namespace;
             MetricName = metricName;
             MetricType = metricType;
             Dimensions = dimensions;
-            StoreRawData = storeRawData;
+            ShouldStoreRawData = shouldStoreRawData;
             AggregationConfigurations = aggregationConfigurations;
             SourceMetricResourceId = sourceMetricResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public IReadOnlyList<string> Dimensions { get; }
 
         /// <summary> Whether raw metric data is stored. </summary>
-        public bool? StoreRawData { get; set; }
+        public bool? ShouldStoreRawData { get; set; }
 
         /// <summary> Aggregation configurations for an aggregated metric. </summary>
         public IList<MetricAggregationConfiguration> AggregationConfigurations { get; }

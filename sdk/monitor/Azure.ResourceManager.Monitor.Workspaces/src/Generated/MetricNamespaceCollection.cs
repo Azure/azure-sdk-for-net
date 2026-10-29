@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.Monitor.Workspaces
     /// <summary>
     /// A class representing a collection of <see cref="MetricNamespaceResource"/> and their operations.
     /// Each <see cref="MetricNamespaceResource"/> in the collection will belong to the same instance of <see cref="MonitorMetricsContainerResource"/>.
-    /// To get a <see cref="MetricNamespaceResourceCollection"/> instance call the GetMetricNamespaceResources method from an instance of <see cref="MonitorMetricsContainerResource"/>.
+    /// To get a <see cref="MetricNamespaceCollection"/> instance call the GetMetricNamespaces method from an instance of <see cref="MonitorMetricsContainerResource"/>.
     /// </summary>
-    public partial class MetricNamespaceResourceCollection : ArmCollection, IEnumerable<MetricNamespaceResource>, IAsyncEnumerable<MetricNamespaceResource>
+    public partial class MetricNamespaceCollection : ArmCollection, IEnumerable<MetricNamespaceResource>, IAsyncEnumerable<MetricNamespaceResource>
     {
         private readonly ClientDiagnostics _metricNamespacesClientDiagnostics;
         private readonly MetricNamespaces _metricNamespacesRestClient;
 
-        /// <summary> Initializes a new instance of MetricNamespaceResourceCollection for mocking. </summary>
-        protected MetricNamespaceResourceCollection()
+        /// <summary> Initializes a new instance of MetricNamespaceCollection for mocking. </summary>
+        protected MetricNamespaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespaceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MetricNamespaceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MetricNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MetricNamespaceResource.ResourceType, out string metricNamespaceResourceApiVersion);
+            TryGetApiVersion(MetricNamespaceResource.ResourceType, out string metricNamespaceApiVersion);
             _metricNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", MetricNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _metricNamespacesRestClient = new MetricNamespaces(_metricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricNamespaceResourceApiVersion ?? "2026-09-03-preview");
+            _metricNamespacesRestClient = new MetricNamespaces(_metricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricNamespaceApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.Get");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricNamespaceResourceData> response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                Response<MetricNamespaceData> response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.Get");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricNamespaceResourceData> response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                Response<MetricNamespaceData> response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MetricNamespaceResourceData, MetricNamespaceResource>(new MetricNamespaceResourceDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MetricNamespaceData, MetricNamespaceResource>(new MetricNamespaceDataAsyncCollectionResultOfT(
                 _metricNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "MetricNamespaceResourceCollection.GetAll"), data => new MetricNamespaceResource(Client, data));
+                "MetricNamespaceCollection.GetAll"), data => new MetricNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MetricNamespaceResourceData, MetricNamespaceResource>(new MetricNamespaceResourceDataCollectionResultOfT(
+            return new PageableWrapper<MetricNamespaceData, MetricNamespaceResource>(new MetricNamespaceDataCollectionResultOfT(
                 _metricNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "MetricNamespaceResourceCollection.GetAll"), data => new MetricNamespaceResource(Client, data));
+                "MetricNamespaceCollection.GetAll"), data => new MetricNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.Exists");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MetricNamespaceResourceData> response = default;
+                Response<MetricNamespaceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MetricNamespaceResourceData)null, result);
+                        response = Response.FromValue((MetricNamespaceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.Exists");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.Exists");
             scope.Start();
             try
             {
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MetricNamespaceResourceData> response = default;
+                Response<MetricNamespaceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MetricNamespaceResourceData)null, result);
+                        response = Response.FromValue((MetricNamespaceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MetricNamespaceResourceData> response = default;
+                Response<MetricNamespaceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MetricNamespaceResourceData)null, result);
+                        response = Response.FromValue((MetricNamespaceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             Argument.AssertNotNullOrEmpty(encodedMetricNamespace, nameof(encodedMetricNamespace));
 
-            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _metricNamespacesClientDiagnostics.CreateScope("MetricNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 HttpMessage message = _metricNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encodedMetricNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MetricNamespaceResourceData> response = default;
+                Response<MetricNamespaceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MetricNamespaceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MetricNamespaceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MetricNamespaceResourceData)null, result);
+                        response = Response.FromValue((MetricNamespaceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
