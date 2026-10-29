@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for Azure Arc user-assigned managed identities. `ManagedIdentityCredential` supports selection by client ID, resource ID, or object ID; `DefaultAzureCredential` supports selection through its client ID and resource ID options.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -11,6 +13,8 @@
 - Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
 
 ### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to `4.90.0`.
 
 ## 1.64.0 (2026-10-26)
 
