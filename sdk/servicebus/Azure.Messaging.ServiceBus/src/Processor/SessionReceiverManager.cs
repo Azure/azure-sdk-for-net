@@ -335,17 +335,17 @@ namespace Azure.Messaging.ServiceBus
                     {
                         errorSource = sbException.ProcessorErrorSource.Value;
                     }
-
-                    // Signal cancellation so user event handlers can stop whatever processing they are doing
-                    // as soon as we know the session lock has been lost. Note, we don't have analogous handling
-                    // for message locks in ReceiverManager, because there is only ever one thread processing a
-                    // single message at one time, so cancelling the token there would serve no purpose.
-                    if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
-                    {
-                        // this will be awaited when closing the receiver
-                        _ = CancelAsync();
-                    }
                 }
+
+                // A closed session transport can trip the outer disposed guard before its stored
+                // SessionLockLost exception reaches the manager. Both paths must retire that session.
+                if (ex is ServiceBusException { Reason: ServiceBusFailureReason.SessionLockLost } ||
+                    (ex is ObjectDisposedException && Receiver?.InnerReceiver?.IsSessionLinkClosed == true))
+                {
+                    // Signal cancellation to in-flight handlers; cleanup waits for them before replacing the receiver.
+                    _ = CancelAsync();
+                }
+
                 await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         ex,
