@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsMetadataResource"/> and their operations.
     /// Each <see cref="SecurityInsightsMetadataResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetSecurityInsightsMetadatas method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetAllSecurityInsightsMetadata method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsMetadataCollection : ArmCollection, IEnumerable<SecurityInsightsMetadataResource>, IAsyncEnumerable<SecurityInsightsMetadataResource>
     {
