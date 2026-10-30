@@ -5,9 +5,3 @@
 ### Features Added
 
 - Initial beta release of the Azure Resource Manager client for Private Traffic Manager.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
