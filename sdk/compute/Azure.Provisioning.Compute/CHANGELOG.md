@@ -17,10 +17,6 @@
 - Replaced `GalleryImageVersion.SecurityUefiSettings` with `SecurityProfile.UefiSettings`.
 - Replaced `GalleryResource.IsSoftDeleteEnabled` with `SoftDeletePolicy.IsSoftDeleteEnabled`.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2026-08-11)
 
 ### Features Added
