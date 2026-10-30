@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             DateTimeOffset evaluatedOn = default;
             PolicyComplianceState state = default;
             IList<SovereignViewDataEvaluation> evaluations = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evaluatedAt"u8))

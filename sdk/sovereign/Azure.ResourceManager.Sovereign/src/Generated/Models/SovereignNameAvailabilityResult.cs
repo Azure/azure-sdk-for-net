@@ -11,34 +11,34 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResult
+    public partial class SovereignNameAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="SovereignNameAvailabilityResult"/>. </summary>
+        internal SovereignNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <summary> Initializes a new instance of <see cref="SovereignNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignNameAvailabilityResult(bool? isNameAvailable, SovereignNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
 
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public SovereignNameUnavailableReason? Reason { get; }
 
         /// <summary> Detailed reason why the given name is not available. </summary>
         public string Message { get; }

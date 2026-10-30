@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="remediationId"> The remediation identifier this result corresponds to. </param>
         /// <param name="dimensionType"> The remediation dimension this result corresponds to. Only "DataResidency" is currently supported for remediation. </param>
         /// <param name="status"> The status of the remediation, e.g. "Succeeded". </param>
-        internal SovereignViewRemediationResult(string remediationId, ComplianceDimension dimensionType, SovereignViewRemediationStatus status)
+        internal SovereignViewRemediationResult(string remediationId, SovereignViewComplianceDimension dimensionType, SovereignViewRemediationStatus status)
         {
             RemediationId = remediationId;
             DimensionType = dimensionType;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="createdOn"> The time of creation of this remediation result. </param>
         /// <param name="expiresOn"> The time at which this remediation result expires and is no longer retrievable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewRemediationResult(string remediationId, ComplianceDimension dimensionType, SovereignViewRemediationStatus status, IList<SovereignViewRemediationResultItem> results, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewRemediationResult(string remediationId, SovereignViewComplianceDimension dimensionType, SovereignViewRemediationStatus status, IList<SovereignViewRemediationResultItem> results, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemediationId = remediationId;
             DimensionType = dimensionType;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public string RemediationId { get; }
 
         /// <summary> The remediation dimension this result corresponds to. Only "DataResidency" is currently supported for remediation. </summary>
-        public ComplianceDimension DimensionType { get; }
+        public SovereignViewComplianceDimension DimensionType { get; }
 
         /// <summary> The status of the remediation, e.g. "Succeeded". </summary>
         public SovereignViewRemediationStatus Status { get; }

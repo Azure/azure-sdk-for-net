@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimensionType"> The remediation dimension being addressed. Only "DataResidency" is currently supported for remediation. </param>
         /// <param name="residencyRemediationRequest"> The residency-specific remediation request, present when dimensionType is "DataResidency". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="residencyRemediationRequest"/> is null. </exception>
-        public SovereignViewRemediateContent(ComplianceDimension dimensionType, SovereignViewResidencyRemediationContent residencyRemediationRequest)
+        public SovereignViewRemediateContent(SovereignViewComplianceDimension dimensionType, SovereignViewResidencyRemediationContent residencyRemediationRequest)
         {
             Argument.AssertNotNull(residencyRemediationRequest, nameof(residencyRemediationRequest));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimensionType"> The remediation dimension being addressed. Only "DataResidency" is currently supported for remediation. </param>
         /// <param name="residencyRemediationRequest"> The residency-specific remediation request, present when dimensionType is "DataResidency". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewRemediateContent(ComplianceDimension dimensionType, SovereignViewResidencyRemediationContent residencyRemediationRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewRemediateContent(SovereignViewComplianceDimension dimensionType, SovereignViewResidencyRemediationContent residencyRemediationRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DimensionType = dimensionType;
             ResidencyRemediationRequest = residencyRemediationRequest;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The remediation dimension being addressed. Only "DataResidency" is currently supported for remediation. </summary>
-        public ComplianceDimension DimensionType { get; }
+        public SovereignViewComplianceDimension DimensionType { get; }
 
         /// <summary> The residency-specific remediation request, present when dimensionType is "DataResidency". </summary>
         public SovereignViewResidencyRemediationContent ResidencyRemediationRequest { get; }

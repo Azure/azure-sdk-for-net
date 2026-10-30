@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            ResourceIdentifier parentResourceId = default;
+            string parentResourceId = default;
             string location = default;
             IList<SovereignViewDimensionDetail> dimensionDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -152,11 +152,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("parentResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parentResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    parentResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))

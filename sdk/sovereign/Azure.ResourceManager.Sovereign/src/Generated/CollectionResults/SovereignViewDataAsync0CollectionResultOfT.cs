@@ -17,19 +17,19 @@ using Azure.ResourceManager.Sovereign.Models;
 
 namespace Azure.ResourceManager.Sovereign
 {
-    internal partial class SovereignViewResourceDataAsync0CollectionResultOfT : AsyncPageable<SovereignViewResourceData>
+    internal partial class SovereignViewDataAsync0CollectionResultOfT : AsyncPageable<SovereignViewData>
     {
         private readonly SovereignViewOperations _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SovereignViewResourceDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SovereignViewDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SovereignViewOperations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SovereignViewResourceDataAsync0CollectionResultOfT(SovereignViewOperations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SovereignViewDataAsync0CollectionResultOfT(SovereignViewOperations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Sovereign
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SovereignViewResourceDataAsync0CollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SovereignViewDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SovereignViewResourceDataAsync0CollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<SovereignViewResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SovereignViewDataAsync0CollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<SovereignViewData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<SovereignViewResourceData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<SovereignViewData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sovereign
                 }
                 SovereignViewResourceListResult result = SovereignViewResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SovereignViewResourceData>.FromValues((IReadOnlyList<SovereignViewResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SovereignViewData>.FromValues((IReadOnlyList<SovereignViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

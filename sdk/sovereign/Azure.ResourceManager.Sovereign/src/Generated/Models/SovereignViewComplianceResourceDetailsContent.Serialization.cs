@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             DateTimeOffset? evaluatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evaluatedAt"u8))

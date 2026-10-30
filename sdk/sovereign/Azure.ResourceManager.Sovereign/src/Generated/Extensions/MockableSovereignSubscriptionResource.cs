@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SovereignViewResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SovereignViewResource> GetSovereignViewResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SovereignViewResource> GetSovereignViewsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SovereignViewResourceData, SovereignViewResource>(new SovereignViewResourceDataAsync0CollectionResultOfT(SovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSovereignSubscriptionResource.GetSovereignViewResources"), data => new SovereignViewResource(Client, data));
+            return new AsyncPageableWrapper<SovereignViewData, SovereignViewResource>(new SovereignViewDataAsync0CollectionResultOfT(SovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSovereignSubscriptionResource.GetSovereignViews"), data => new SovereignViewResource(Client, data));
         }
 
         /// <summary>
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SovereignViewResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SovereignViewResource> GetSovereignViewResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<SovereignViewResource> GetSovereignViews(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SovereignViewResourceData, SovereignViewResource>(new SovereignViewResourceData0CollectionResultOfT(SovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSovereignSubscriptionResource.GetSovereignViewResources"), data => new SovereignViewResource(Client, data));
+            return new PageableWrapper<SovereignViewData, SovereignViewResource>(new SovereignViewData0CollectionResultOfT(SovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSovereignSubscriptionResource.GetSovereignViews"), data => new SovereignViewResource(Client, data));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckNameAvailabilityAsync(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignCheckNameAvailabilityRequestContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SovereignNameAvailabilityResult> CheckNameAvailability(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignCheckNameAvailabilityRequestContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(AzureLocation location, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignCheckNameAvailabilityRequestContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityLocal(AzureLocation location, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SovereignNameAvailabilityResult> CheckNameAvailabilityLocal(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -280,9 +280,9 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignCheckNameAvailabilityRequestContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckNameAvailabilityResult> response = Response.FromValue(CheckNameAvailabilityResult.FromResponse(result), result);
+                Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

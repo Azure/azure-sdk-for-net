@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ComplianceDimension dimensionType = default;
+            SovereignViewComplianceDimension dimensionType = default;
             SovereignViewResidencyRemediationContent residencyRemediationRequest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dimensionType"u8))
                 {
-                    dimensionType = new ComplianceDimension(prop.Value.GetString());
+                    dimensionType = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("residencyRemediationRequest"u8))

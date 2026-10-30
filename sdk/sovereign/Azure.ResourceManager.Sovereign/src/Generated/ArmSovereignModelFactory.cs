@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.SovereignCheckNameAvailabilityRequestContent"/> instance for mocking. </returns>
-        public static SovereignCheckNameAvailabilityRequestContent SovereignCheckNameAvailabilityRequestContent(string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.SovereignNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SovereignNameAvailabilityContent SovereignNameAvailabilityContent(string name = default, string @type = default)
         {
-            return new SovereignCheckNameAvailabilityRequestContent(name, @type, default);
+            return new SovereignNameAvailabilityContent(name, @type, default);
         }
 
         /// <summary> The check availability result. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.SovereignNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SovereignNameAvailabilityResult SovereignNameAvailabilityResult(bool? isNameAvailable = default, SovereignNameUnavailableReason? reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
+            return new SovereignNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> The Sovereign View resource type. </summary>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Sovereign.SovereignViewResourceData"/> instance for mocking. </returns>
-        public static SovereignViewResourceData SovereignViewResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SovereignViewResourceProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Sovereign.SovereignViewData"/> instance for mocking. </returns>
+        public static SovereignViewData SovereignViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SovereignViewProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SovereignViewResourceData(
+            return new SovereignViewData(
                 id,
                 name,
                 resourceType,
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="provisioningState"> The status of a user-initiated, control-plane operation on the sovereign view resource type. </param>
         /// <param name="dimensionDataResidency"> Settings for the Data Residency dimension. </param>
         /// <param name="isWorkload"> Indicates whether the Sovereign View is considered a workload. </param>
-        /// <returns> A new <see cref="Models.SovereignViewResourceProperties"/> instance for mocking. </returns>
-        public static SovereignViewResourceProperties SovereignViewResourceProperties(SovereignViewScope scope = default, IEnumerable<SovereignViewPolicyInitiativeDetail> policyInitiatives = default, SovereignViewRegulatoryDocumentName? regulatoryDocumentName = default, ProvisioningState? provisioningState = default, SovereignViewDataResidencyDimensionSettings dimensionDataResidency = default, bool? isWorkload = default)
+        /// <returns> A new <see cref="Models.SovereignViewProperties"/> instance for mocking. </returns>
+        public static SovereignViewProperties SovereignViewProperties(SovereignViewScope scope = default, IEnumerable<SovereignViewPolicyInitiativeDetail> policyInitiatives = default, SovereignViewRegulatoryDocumentName? regulatoryDocumentName = default, SovereignViewProvisioningState? provisioningState = default, SovereignViewDataResidencyDimensionSettings dimensionDataResidency = default, bool? isWorkload = default)
         {
             policyInitiatives ??= new ChangeTrackingList<SovereignViewPolicyInitiativeDetail>();
 
-            return new SovereignViewResourceProperties(
+            return new SovereignViewProperties(
                 scope,
                 (policyInitiatives ?? new ChangeTrackingList<SovereignViewPolicyInitiativeDetail>()).ToList(),
                 regulatoryDocumentName,
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="policyAssignmentIds"> The resource identifiers of existing policy assignments association with the policy initiative and scopes in the sovereign view. </param>
         /// <param name="policyVersion"> The version of the policy initiative. </param>
         /// <returns> A new <see cref="Models.SovereignViewPolicyInitiativeDetail"/> instance for mocking. </returns>
-        public static SovereignViewPolicyInitiativeDetail SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId = default, ComplianceDimension dimension = default, IEnumerable<ResourceIdentifier> policyAssignmentIds = default, string policyVersion = default)
+        public static SovereignViewPolicyInitiativeDetail SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId = default, SovereignViewComplianceDimension dimension = default, IEnumerable<ResourceIdentifier> policyAssignmentIds = default, string policyVersion = default)
         {
             policyAssignmentIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -136,36 +136,26 @@ namespace Azure.ResourceManager.Sovereign.Models
             return new SovereignViewDataResidencyDimensionSettings(resourceEvaluationScope, parametersAllowedLocations is null ? default : new SovereignViewDataResidencyParameters((parametersAllowedLocations ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
-        /// <summary> Managed service identity (either system assigned, or none). </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
-        {
-            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, default);
-        }
-
         /// <summary> The patch model for the sovereign view resource type. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SovereignViewResourcePatch"/> instance for mocking. </returns>
-        public static SovereignViewResourcePatch SovereignViewResourcePatch(IDictionary<string, string> tags = default, SystemAssignedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.SovereignViewPatch"/> instance for mocking. </returns>
+        public static SovereignViewPatch SovereignViewPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SovereignViewResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new SovereignViewPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <summary> The response for the sovereign view compliance summary action. </summary>
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
         /// <param name="error"> Error details when dataState is Error. </param>
         /// <param name="resourceId"> The resource identifier of the sovereign view. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated, in RFC3339 format. </param>
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated, in RFC3339 format. </param>
         /// <param name="overallSummary"> The overall summary of compliance across all resources in scope. </param>
         /// <param name="dimensionSummaries"> The list of compliance summaries for the dimensions in scope. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceSummaryResult"/> instance for mocking. </returns>
-        public static SovereignViewComplianceSummaryResult SovereignViewComplianceSummaryResult(ReportStatus reportStatus = default, ResponseError error = default, ResourceIdentifier resourceId = default, DateTimeOffset lastEvaluated = default, SovereignViewComplianceOverallSummary overallSummary = default, IEnumerable<SovereignViewComplianceDimensionSummary> dimensionSummaries = default)
+        public static SovereignViewComplianceSummaryResult SovereignViewComplianceSummaryResult(SovereignViewReportStatus reportStatus = default, ResponseError error = default, ResourceIdentifier resourceId = default, DateTimeOffset lastEvaluatedOn = default, SovereignViewComplianceOverallSummary overallSummary = default, IEnumerable<SovereignViewComplianceDimensionSummary> dimensionSummaries = default)
         {
             dimensionSummaries ??= new ChangeTrackingList<SovereignViewComplianceDimensionSummary>();
 
@@ -173,7 +163,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 reportStatus,
                 error,
                 resourceId,
-                lastEvaluated,
+                lastEvaluatedOn,
                 overallSummary,
                 (dimensionSummaries ?? new ChangeTrackingList<SovereignViewComplianceDimensionSummary>()).ToList(),
                 default);
@@ -181,11 +171,11 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> The compliance report generation status, including the current state and the next attempt time. </summary>
         /// <param name="state"> The current compliance report generation state. </param>
-        /// <param name="nextAttempt"> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </param>
-        /// <returns> A new <see cref="Models.ReportStatus"/> instance for mocking. </returns>
-        public static ReportStatus ReportStatus(ReportState state = default, DateTimeOffset? nextAttempt = default)
+        /// <param name="nextAttemptOn"> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </param>
+        /// <returns> A new <see cref="Models.SovereignViewReportStatus"/> instance for mocking. </returns>
+        public static SovereignViewReportStatus SovereignViewReportStatus(ReportState state = default, DateTimeOffset? nextAttemptOn = default)
         {
-            return new ReportStatus(state, nextAttempt, default);
+            return new SovereignViewReportStatus(state, nextAttemptOn, default);
         }
 
         /// <summary> The overall compliance summary in the sovereign view compliance summary action. </summary>
@@ -229,7 +219,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="notEvaluatedCount"> Number of resources in not evaluated state for the sovereign view. </param>
         /// <param name="othersCount"> Number of resources in other compliance states for the sovereign view. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDimensionSummary"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDimensionSummary SovereignViewComplianceDimensionSummary(ComplianceDimension dimension = default, int totalResources = default, int compliantCount = default, int nonCompliantCount = default, int constrainedCount = default, int conflictCount = default, int notApplicableCount = default, int notEvaluatedCount = default, int othersCount = default)
+        public static SovereignViewComplianceDimensionSummary SovereignViewComplianceDimensionSummary(SovereignViewComplianceDimension dimension = default, int totalResources = default, int compliantCount = default, int nonCompliantCount = default, int constrainedCount = default, int conflictCount = default, int notApplicableCount = default, int notEvaluatedCount = default, int othersCount = default)
         {
             return new SovereignViewComplianceDimensionSummary(
                 dimension,
@@ -272,7 +262,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimension"> The compliance dimension to filter on. </param>
         /// <param name="states"> The compliance states to optionally filter on. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailsDimensionFilter"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailsDimensionFilter SovereignViewComplianceDetailsDimensionFilter(ComplianceDimension dimension = default, IEnumerable<PolicyComplianceState> states = default)
+        public static SovereignViewComplianceDetailsDimensionFilter SovereignViewComplianceDetailsDimensionFilter(SovereignViewComplianceDimension dimension = default, IEnumerable<PolicyComplianceState> states = default)
         {
             states ??= new ChangeTrackingList<PolicyComplianceState>();
 
@@ -284,7 +274,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="operator"> The operator to apply for the filter. </param>
         /// <param name="value"> The values to filter on. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailsFilters"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailsFilters SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field = default, SovereignViewComplianceDetailsFilterOperators @operator = default, IEnumerable<string> value = default)
+        public static SovereignViewComplianceDetailsFilters SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field = default, SovereignViewComplianceDetailsFilterOperator @operator = default, IEnumerable<string> value = default)
         {
             value ??= new ChangeTrackingList<string>();
 
@@ -296,7 +286,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="direction"> The direction to sort in. </param>
         /// <param name="sortingOrder"> Explicit ordering of policy compliance states to apply when sorting on a compliance-state field. The states are ranked in the order listed. When provided for a compliance-state field, this takes precedence over `direction`, which is ignored for that field. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailsSort"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailsSort SovereignViewComplianceDetailsSort(string @field = default, SovereignViewComplianceDetailsSortDirections direction = default, IEnumerable<PolicyComplianceState> sortingOrder = default)
+        public static SovereignViewComplianceDetailsSort SovereignViewComplianceDetailsSort(string @field = default, SovereignViewComplianceDetailsSortDirection direction = default, IEnumerable<PolicyComplianceState> sortingOrder = default)
         {
             sortingOrder ??= new ChangeTrackingList<PolicyComplianceState>();
 
@@ -315,18 +305,18 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The response for the sovereign view compliance details action. </summary>
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
         /// <param name="error"> Error details when dataState is Error. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
         /// <param name="totalResources"> Total number of resources for the sovereign view. </param>
         /// <param name="resources"> The list of compliance detail resources. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailsResult"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(ReportStatus reportStatus = default, ResponseError error = default, DateTimeOffset lastEvaluated = default, int? totalResources = default, IEnumerable<SovereignViewComplianceDetailResourceInfo> resources = default)
+        public static SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(SovereignViewReportStatus reportStatus = default, ResponseError error = default, DateTimeOffset lastEvaluatedOn = default, int? totalResources = default, IEnumerable<SovereignViewComplianceDetailResourceInfo> resources = default)
         {
             resources ??= new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>();
 
             return new SovereignViewComplianceDetailsResult(
                 reportStatus,
                 error,
-                lastEvaluated,
+                lastEvaluatedOn,
                 totalResources,
                 (resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>()).ToList(),
                 default);
@@ -338,7 +328,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailResourceInfo"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailResourceInfo SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId = default, ResourceIdentifier parentResourceId = default, string location = default, IEnumerable<SovereignViewDimensionDetail> dimensionDetails = default)
+        public static SovereignViewComplianceDetailResourceInfo SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId = default, string parentResourceId = default, string location = default, IEnumerable<SovereignViewDimensionDetail> dimensionDetails = default)
         {
             dimensionDetails ??= new ChangeTrackingList<SovereignViewDimensionDetail>();
 
@@ -352,7 +342,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="evaluatedOn"> The snapshot timestamp stored for this resource and dimension, in RFC3339 format. </param>
         /// <param name="sources"> Distinct evaluation sources for this resource and dimension in the same snapshot. An empty array means that the state has no underlying evaluation. </param>
         /// <returns> A new <see cref="Models.SovereignViewDimensionDetail"/> instance for mocking. </returns>
-        public static SovereignViewDimensionDetail SovereignViewDimensionDetail(ComplianceDimension dimension = default, PolicyComplianceState state = default, IEnumerable<SovereignViewComplianceDetail> complianceDetails = default, DateTimeOffset evaluatedOn = default, IEnumerable<SovereignViewResourceEvaluationSource> sources = default)
+        public static SovereignViewDimensionDetail SovereignViewDimensionDetail(SovereignViewComplianceDimension dimension = default, PolicyComplianceState state = default, IEnumerable<SovereignViewComplianceDetail> complianceDetails = default, DateTimeOffset evaluatedOn = default, IEnumerable<SovereignViewResourceEvaluationSource> sources = default)
         {
             complianceDetails ??= new ChangeTrackingList<SovereignViewComplianceDetail>();
             sources ??= new ChangeTrackingList<SovereignViewResourceEvaluationSource>();
@@ -395,7 +385,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="totalCount"> Total number of values available for the requested filter. </param>
         /// <param name="values"> The list of filter values and their counts. </param>
         /// <returns> A new <see cref="Models.SovereignViewFilterValuesResult"/> instance for mocking. </returns>
-        public static SovereignViewFilterValuesResult SovereignViewFilterValuesResult(DataState dataState = default, ResponseError error = default, SovereignViewFilterField? requestedFilter = default, int? totalCount = default, IEnumerable<SovereignViewFilterValueItem> values = default)
+        public static SovereignViewFilterValuesResult SovereignViewFilterValuesResult(SovereignViewDataState dataState = default, ResponseError error = default, SovereignViewFilterField? requestedFilter = default, int? totalCount = default, IEnumerable<SovereignViewFilterValueItem> values = default)
         {
             values ??= new ChangeTrackingList<SovereignViewFilterValueItem>();
 
@@ -422,11 +412,11 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="mode"> The level of detail to return in the operational status response. Defaults to Detailed. </param>
         /// <param name="evaluationParameters"> The evaluation parameters that control which checks are performed when determining operational status. </param>
         /// <returns> A new <see cref="Models.SovereignViewOperationalStatusContent"/> instance for mocking. </returns>
-        public static SovereignViewOperationalStatusContent SovereignViewOperationalStatusContent(OperationalStatusRequestMode? mode = default, IEnumerable<OperationalStatusEvaluationParameter> evaluationParameters = default)
+        public static SovereignViewOperationalStatusContent SovereignViewOperationalStatusContent(SovereignViewOperationalStatusMode? mode = default, IEnumerable<SovereignViewOperationalStatusEvaluationKind> evaluationParameters = default)
         {
-            evaluationParameters ??= new ChangeTrackingList<OperationalStatusEvaluationParameter>();
+            evaluationParameters ??= new ChangeTrackingList<SovereignViewOperationalStatusEvaluationKind>();
 
-            return new SovereignViewOperationalStatusContent(mode, (evaluationParameters ?? new ChangeTrackingList<OperationalStatusEvaluationParameter>()).ToList(), default);
+            return new SovereignViewOperationalStatusContent(mode, (evaluationParameters ?? new ChangeTrackingList<SovereignViewOperationalStatusEvaluationKind>()).ToList(), default);
         }
 
         /// <summary> The response for the sovereign view operational status action. </summary>
@@ -434,7 +424,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="status"> The overall operational status of the sovereign view. </param>
         /// <param name="details"> The detailed operational status information. Returned when the operational status is evaluated in Detailed mode. </param>
         /// <returns> A new <see cref="Models.SovereignViewOperationalStatusResult"/> instance for mocking. </returns>
-        public static SovereignViewOperationalStatusResult SovereignViewOperationalStatusResult(string name = default, OperationalStatusStates status = default, IEnumerable<SovereignViewOperationalStatusDetails> details = default)
+        public static SovereignViewOperationalStatusResult SovereignViewOperationalStatusResult(string name = default, SovereignViewOperationalStatusState status = default, IEnumerable<SovereignViewOperationalStatusDetails> details = default)
         {
             details ??= new ChangeTrackingList<SovereignViewOperationalStatusDetails>();
 
@@ -445,7 +435,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="reason"> The reason the sovereign view is unhealthy. </param>
         /// <param name="affectedScopes"> The scopes affected by the issue. </param>
         /// <returns> A new <see cref="Models.SovereignViewOperationalStatusDetails"/> instance for mocking. </returns>
-        public static SovereignViewOperationalStatusDetails SovereignViewOperationalStatusDetails(OperationalStatusUnhealthyReason reason = default, IEnumerable<SovereignViewAffectedScopes> affectedScopes = default)
+        public static SovereignViewOperationalStatusDetails SovereignViewOperationalStatusDetails(SovereignViewOperationalStatusUnhealthyReason reason = default, IEnumerable<SovereignViewAffectedScopes> affectedScopes = default)
         {
             affectedScopes ??= new ChangeTrackingList<SovereignViewAffectedScopes>();
 
@@ -459,7 +449,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="status"> The operational status of the affected scope. </param>
         /// <param name="actionRequired"> The action required to remediate the affected scope, such as a role name or a policy initiative id. </param>
         /// <returns> A new <see cref="Models.SovereignViewAffectedScopes"/> instance for mocking. </returns>
-        public static SovereignViewAffectedScopes SovereignViewAffectedScopes(string name = default, string id = default, SovereignViewScopeType @type = default, ScopeLevelOperationalStatusStates status = default, string actionRequired = default)
+        public static SovereignViewAffectedScopes SovereignViewAffectedScopes(string name = default, string id = default, SovereignViewScopeType @type = default, SovereignViewScopeOperationalStatusState status = default, string actionRequired = default)
         {
             return new SovereignViewAffectedScopes(
                 name,
@@ -475,7 +465,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimension"> The compliance dimension for which reasoning is requested. </param>
         /// <param name="evaluatedOn"> The snapshot timestamp from the compliance-details response. When omitted, the latest completed snapshot is returned. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceResourceDetailsContent"/> instance for mocking. </returns>
-        public static SovereignViewComplianceResourceDetailsContent SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId = default, ComplianceDimension dimension = default, DateTimeOffset? evaluatedOn = default)
+        public static SovereignViewComplianceResourceDetailsContent SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId = default, SovereignViewComplianceDimension dimension = default, DateTimeOffset? evaluatedOn = default)
         {
             return new SovereignViewComplianceResourceDetailsContent(resourceId, dimension, evaluatedOn, default);
         }
@@ -487,7 +477,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="state"> The compliance state for this dimension. </param>
         /// <param name="evaluations"> The linked and replica resource evaluations for this resource and dimension. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceResourceDetailsResult"/> instance for mocking. </returns>
-        public static SovereignViewComplianceResourceDetailsResult SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId = default, ComplianceDimension dimension = default, DateTimeOffset evaluatedOn = default, PolicyComplianceState state = default, IEnumerable<SovereignViewDataEvaluation> evaluations = default)
+        public static SovereignViewComplianceResourceDetailsResult SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId = default, SovereignViewComplianceDimension dimension = default, DateTimeOffset evaluatedOn = default, PolicyComplianceState state = default, IEnumerable<SovereignViewDataEvaluation> evaluations = default)
         {
             evaluations ??= new ChangeTrackingList<SovereignViewDataEvaluation>();
 
@@ -541,7 +531,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimensionType"> The remediation dimension being addressed. Only "DataResidency" is currently supported for remediation. </param>
         /// <param name="residencyRemediationRequest"> The residency-specific remediation request, present when dimensionType is "DataResidency". </param>
         /// <returns> A new <see cref="Models.SovereignViewRemediateContent"/> instance for mocking. </returns>
-        public static SovereignViewRemediateContent SovereignViewRemediateContent(ComplianceDimension dimensionType = default, SovereignViewResidencyRemediationContent residencyRemediationRequest = default)
+        public static SovereignViewRemediateContent SovereignViewRemediateContent(SovereignViewComplianceDimension dimensionType = default, SovereignViewResidencyRemediationContent residencyRemediationRequest = default)
         {
             return new SovereignViewRemediateContent(dimensionType, residencyRemediationRequest, default);
         }
@@ -610,7 +600,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="createdOn"> The time of creation of this remediation result. </param>
         /// <param name="expiresOn"> The time at which this remediation result expires and is no longer retrievable. </param>
         /// <returns> A new <see cref="Models.SovereignViewRemediationResult"/> instance for mocking. </returns>
-        public static SovereignViewRemediationResult SovereignViewRemediationResult(string remediationId = default, ComplianceDimension dimensionType = default, SovereignViewRemediationStatus status = default, IEnumerable<SovereignViewRemediationResultItem> results = default, ResponseError error = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default)
+        public static SovereignViewRemediationResult SovereignViewRemediationResult(string remediationId = default, SovereignViewComplianceDimension dimensionType = default, SovereignViewRemediationStatus status = default, IEnumerable<SovereignViewRemediationResultItem> results = default, ResponseError error = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default)
         {
             results ??= new ChangeTrackingList<SovereignViewRemediationResultItem>();
 

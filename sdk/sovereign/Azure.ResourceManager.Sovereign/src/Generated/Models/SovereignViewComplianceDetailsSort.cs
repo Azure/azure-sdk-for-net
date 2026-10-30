@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="field"> The field to sort on. </param>
         /// <param name="direction"> The direction to sort in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
-        public SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirections direction)
+        public SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirection direction)
         {
             Argument.AssertNotNull(@field, nameof(@field));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="direction"> The direction to sort in. </param>
         /// <param name="sortingOrder"> Explicit ordering of policy compliance states to apply when sorting on a compliance-state field. The states are ranked in the order listed. When provided for a compliance-state field, this takes precedence over `direction`, which is ignored for that field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirections direction, IList<PolicyComplianceState> sortingOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirection direction, IList<PolicyComplianceState> sortingOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             Direction = direction;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public string Field { get; }
 
         /// <summary> The direction to sort in. </summary>
-        public SovereignViewComplianceDetailsSortDirections Direction { get; }
+        public SovereignViewComplianceDetailsSortDirection Direction { get; }
 
         /// <summary> Explicit ordering of policy compliance states to apply when sorting on a compliance-state field. The states are ranked in the order listed. When provided for a compliance-state field, this takes precedence over `direction`, which is ignored for that field. </summary>
         public IList<PolicyComplianceState> SortingOrder { get; }

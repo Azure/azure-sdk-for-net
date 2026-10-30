@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             string @field = default;
-            SovereignViewComplianceDetailsSortDirections direction = default;
+            SovereignViewComplianceDetailsSortDirection direction = default;
             IList<PolicyComplianceState> sortingOrder = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("direction"u8))
                 {
-                    direction = new SovereignViewComplianceDetailsSortDirections(prop.Value.GetString());
+                    direction = new SovereignViewComplianceDetailsSortDirection(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sortingOrder"u8))

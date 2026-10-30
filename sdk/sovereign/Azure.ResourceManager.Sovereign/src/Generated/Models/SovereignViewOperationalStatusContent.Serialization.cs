@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 writer.WritePropertyName("evaluationParameters"u8);
                 writer.WriteStartArray();
-                foreach (OperationalStatusEvaluationParameter item in EvaluationParameters)
+                foreach (SovereignViewOperationalStatusEvaluationKind item in EvaluationParameters)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            OperationalStatusRequestMode? mode = default;
-            IList<OperationalStatusEvaluationParameter> evaluationParameters = default;
+            SovereignViewOperationalStatusMode? mode = default;
+            IList<SovereignViewOperationalStatusEvaluationKind> evaluationParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    mode = new OperationalStatusRequestMode(prop.Value.GetString());
+                    mode = new SovereignViewOperationalStatusMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evaluationParameters"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    List<OperationalStatusEvaluationParameter> array = new List<OperationalStatusEvaluationParameter>();
+                    List<SovereignViewOperationalStatusEvaluationKind> array = new List<SovereignViewOperationalStatusEvaluationKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new OperationalStatusEvaluationParameter(item.GetString()));
+                        array.Add(new SovereignViewOperationalStatusEvaluationKind(item.GetString()));
                     }
                     evaluationParameters = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewOperationalStatusContent(mode, evaluationParameters ?? new ChangeTrackingList<OperationalStatusEvaluationParameter>(), additionalBinaryDataProperties);
+            return new SovereignViewOperationalStatusContent(mode, evaluationParameters ?? new ChangeTrackingList<SovereignViewOperationalStatusEvaluationKind>(), additionalBinaryDataProperties);
         }
     }
 }

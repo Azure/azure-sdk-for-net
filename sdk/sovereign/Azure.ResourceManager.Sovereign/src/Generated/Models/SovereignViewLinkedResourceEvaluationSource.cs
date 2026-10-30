@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sovereign.Models
     {
         private readonly string _value;
         /// <summary> Azure Resource Graph. </summary>
-        private const string ARGValue = "ARG";
+        private const string AzureResourceGraphValue = "ARG";
         /// <summary> Log Analytics. </summary>
         private const string LogAnalyticsValue = "LogAnalytics";
         /// <summary> The business continuity evaluation source. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> Azure Resource Graph. </summary>
-        public static SovereignViewLinkedResourceEvaluationSource ARG { get; } = new SovereignViewLinkedResourceEvaluationSource(ARGValue);
+        public static SovereignViewLinkedResourceEvaluationSource AzureResourceGraph { get; } = new SovereignViewLinkedResourceEvaluationSource(AzureResourceGraphValue);
 
         /// <summary> Log Analytics. </summary>
         public static SovereignViewLinkedResourceEvaluationSource LogAnalytics { get; } = new SovereignViewLinkedResourceEvaluationSource(LogAnalyticsValue);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusResult"/>. </summary>
         /// <param name="name"> The name of the sovereign view. </param>
         /// <param name="status"> The overall operational status of the sovereign view. </param>
-        internal SovereignViewOperationalStatusResult(string name, OperationalStatusStates status)
+        internal SovereignViewOperationalStatusResult(string name, SovereignViewOperationalStatusState status)
         {
             Name = name;
             Status = status;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="status"> The overall operational status of the sovereign view. </param>
         /// <param name="details"> The detailed operational status information. Returned when the operational status is evaluated in Detailed mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewOperationalStatusResult(string name, OperationalStatusStates status, IList<SovereignViewOperationalStatusDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewOperationalStatusResult(string name, SovereignViewOperationalStatusState status, IList<SovereignViewOperationalStatusDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public string Name { get; }
 
         /// <summary> The overall operational status of the sovereign view. </summary>
-        public OperationalStatusStates Status { get; }
+        public SovereignViewOperationalStatusState Status { get; }
 
         /// <summary> The detailed operational status information. Returned when the operational status is evaluated in Detailed mode. </summary>
         public IList<SovereignViewOperationalStatusDetails> Details { get; }

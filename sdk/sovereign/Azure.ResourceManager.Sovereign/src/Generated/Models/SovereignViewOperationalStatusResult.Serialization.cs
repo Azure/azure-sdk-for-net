@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             string name = default;
-            OperationalStatusStates status = default;
+            SovereignViewOperationalStatusState status = default;
             IList<SovereignViewOperationalStatusDetails> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new OperationalStatusStates(prop.Value.GetString());
+                    status = new SovereignViewOperationalStatusState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("details"u8))

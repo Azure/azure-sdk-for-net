@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceSummaryResult"/>. </summary>
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated, in RFC3339 format. </param>
-        internal SovereignViewComplianceSummaryResult(ReportStatus reportStatus, DateTimeOffset lastEvaluated)
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated, in RFC3339 format. </param>
+        internal SovereignViewComplianceSummaryResult(SovereignViewReportStatus reportStatus, DateTimeOffset lastEvaluatedOn)
         {
             ReportStatus = reportStatus;
-            LastEvaluated = lastEvaluated;
+            LastEvaluatedOn = lastEvaluatedOn;
             DimensionSummaries = new ChangeTrackingList<SovereignViewComplianceDimensionSummary>();
         }
 
@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
         /// <param name="error"> Error details when dataState is Error. </param>
         /// <param name="resourceId"> The resource identifier of the sovereign view. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated, in RFC3339 format. </param>
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated, in RFC3339 format. </param>
         /// <param name="overallSummary"> The overall summary of compliance across all resources in scope. </param>
         /// <param name="dimensionSummaries"> The list of compliance summaries for the dimensions in scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceSummaryResult(ReportStatus reportStatus, ResponseError error, ResourceIdentifier resourceId, DateTimeOffset lastEvaluated, SovereignViewComplianceOverallSummary overallSummary, IList<SovereignViewComplianceDimensionSummary> dimensionSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceSummaryResult(SovereignViewReportStatus reportStatus, ResponseError error, ResourceIdentifier resourceId, DateTimeOffset lastEvaluatedOn, SovereignViewComplianceOverallSummary overallSummary, IList<SovereignViewComplianceDimensionSummary> dimensionSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReportStatus = reportStatus;
             Error = error;
             ResourceId = resourceId;
-            LastEvaluated = lastEvaluated;
+            LastEvaluatedOn = lastEvaluatedOn;
             OverallSummary = overallSummary;
             DimensionSummaries = dimensionSummaries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> State indicating whether the data is processed or still being processed. </summary>
-        public ReportStatus ReportStatus { get; }
+        public SovereignViewReportStatus ReportStatus { get; }
 
         /// <summary> Error details when dataState is Error. </summary>
         public ResponseError Error { get; }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The time when compliance was last evaluated, in RFC3339 format. </summary>
-        public DateTimeOffset LastEvaluated { get; }
+        public DateTimeOffset LastEvaluatedOn { get; }
 
         /// <summary> The overall summary of compliance across all resources in scope. </summary>
         public SovereignViewComplianceOverallSummary OverallSummary { get; }

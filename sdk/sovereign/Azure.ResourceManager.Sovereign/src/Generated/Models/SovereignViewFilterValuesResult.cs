@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewFilterValuesResult"/>. </summary>
         /// <param name="dataState"> State indicating whether the data is processed or still being processed. </param>
-        internal SovereignViewFilterValuesResult(DataState dataState)
+        internal SovereignViewFilterValuesResult(SovereignViewDataState dataState)
         {
             DataState = dataState;
             Values = new ChangeTrackingList<SovereignViewFilterValueItem>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="totalCount"> Total number of values available for the requested filter. </param>
         /// <param name="values"> The list of filter values and their counts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewFilterValuesResult(DataState dataState, ResponseError error, SovereignViewFilterField? requestedFilter, int? totalCount, IList<SovereignViewFilterValueItem> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewFilterValuesResult(SovereignViewDataState dataState, ResponseError error, SovereignViewFilterField? requestedFilter, int? totalCount, IList<SovereignViewFilterValueItem> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataState = dataState;
             Error = error;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> State indicating whether the data is processed or still being processed. </summary>
-        public DataState DataState { get; }
+        public SovereignViewDataState DataState { get; }
 
         /// <summary> Error details when dataState is Error. </summary>
         public ResponseError Error { get; }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="notApplicableCount"> Number of resources in not applicable state for the sovereign view. </param>
         /// <param name="notEvaluatedCount"> Number of resources in not evaluated state for the sovereign view. </param>
         /// <param name="othersCount"> Number of resources in other compliance states for the sovereign view. </param>
-        internal SovereignViewComplianceDimensionSummary(ComplianceDimension dimension, int totalResources, int compliantCount, int nonCompliantCount, int constrainedCount, int conflictCount, int notApplicableCount, int notEvaluatedCount, int othersCount)
+        internal SovereignViewComplianceDimensionSummary(SovereignViewComplianceDimension dimension, int totalResources, int compliantCount, int nonCompliantCount, int constrainedCount, int conflictCount, int notApplicableCount, int notEvaluatedCount, int othersCount)
         {
             Dimension = dimension;
             TotalResources = totalResources;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="notEvaluatedCount"> Number of resources in not evaluated state for the sovereign view. </param>
         /// <param name="othersCount"> Number of resources in other compliance states for the sovereign view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDimensionSummary(ComplianceDimension dimension, int totalResources, int compliantCount, int nonCompliantCount, int constrainedCount, int conflictCount, int notApplicableCount, int notEvaluatedCount, int othersCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDimensionSummary(SovereignViewComplianceDimension dimension, int totalResources, int compliantCount, int nonCompliantCount, int constrainedCount, int conflictCount, int notApplicableCount, int notEvaluatedCount, int othersCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Dimension = dimension;
             TotalResources = totalResources;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The dimension representing this summary. </summary>
-        public ComplianceDimension Dimension { get; }
+        public SovereignViewComplianceDimension Dimension { get; }
 
         /// <summary> Total number of resources for the sovereign view. </summary>
         public int TotalResources { get; }

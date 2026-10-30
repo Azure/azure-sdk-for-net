@@ -13,16 +13,16 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The properties of the sovereign view resource type. </summary>
-    public partial class SovereignViewResourceProperties
+    public partial class SovereignViewProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewProperties"/>. </summary>
         /// <param name="scope"> The scope to apply for configuration. </param>
         /// <param name="policyInitiatives"> The policy initiatives selected for the sovereign view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="policyInitiatives"/> is null. </exception>
-        public SovereignViewResourceProperties(SovereignViewScope scope, IEnumerable<SovereignViewPolicyInitiativeDetail> policyInitiatives)
+        public SovereignViewProperties(SovereignViewScope scope, IEnumerable<SovereignViewPolicyInitiativeDetail> policyInitiatives)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(policyInitiatives, nameof(policyInitiatives));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             PolicyInitiatives = policyInitiatives.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewProperties"/>. </summary>
         /// <param name="scope"> The scope to apply for configuration. </param>
         /// <param name="policyInitiatives"> The policy initiatives selected for the sovereign view. </param>
         /// <param name="regulatoryDocumentName"> Stable regulatory-document key selected when this Sovereign View was created. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimensionSettings"> Optional per-dimension evaluation settings. </param>
         /// <param name="isWorkload"> Indicates whether the Sovereign View is considered a workload. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewResourceProperties(SovereignViewScope scope, IList<SovereignViewPolicyInitiativeDetail> policyInitiatives, SovereignViewRegulatoryDocumentName? regulatoryDocumentName, ProvisioningState? provisioningState, SovereignViewDimensionSettings dimensionSettings, bool? isWorkload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewProperties(SovereignViewScope scope, IList<SovereignViewPolicyInitiativeDetail> policyInitiatives, SovereignViewRegulatoryDocumentName? regulatoryDocumentName, SovereignViewProvisioningState? provisioningState, SovereignViewDimensionSettings dimensionSettings, bool? isWorkload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             PolicyInitiatives = policyInitiatives;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewRegulatoryDocumentName? RegulatoryDocumentName { get; set; }
 
         /// <summary> The status of a user-initiated, control-plane operation on the sovereign view resource type. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SovereignViewProvisioningState? ProvisioningState { get; }
 
         /// <summary> Optional per-dimension evaluation settings. </summary>
         internal SovereignViewDimensionSettings DimensionSettings { get; set; }

@@ -8,68 +8,70 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sovereign;
 
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The patch model for the sovereign view resource type. </summary>
-    public partial class SovereignViewResourcePatch : IJsonModel<SovereignViewResourcePatch>
+    public partial class SovereignViewPatch : IJsonModel<SovereignViewPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignViewResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SovereignViewPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSovereignViewResourcePatch(document.RootElement, options);
+                        return DeserializeSovereignViewPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSovereignContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SovereignViewResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SovereignViewPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourcePatch IPersistableModel<SovereignViewResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SovereignViewPatch IPersistableModel<SovereignViewPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SovereignViewResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SovereignViewPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sovereignViewResourcePatch"> The <see cref="SovereignViewResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SovereignViewResourcePatch sovereignViewResourcePatch)
+        /// <param name="sovereignViewPatch"> The <see cref="SovereignViewPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SovereignViewPatch sovereignViewPatch)
         {
-            if (sovereignViewResourcePatch == null)
+            if (sovereignViewPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(sovereignViewResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sovereignViewPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SovereignViewResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SovereignViewPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +82,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,31 +127,31 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourcePatch IJsonModel<SovereignViewResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SovereignViewPatch IJsonModel<SovereignViewPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignViewResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SovereignViewPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSovereignViewResourcePatch(document.RootElement, options);
+            return DeserializeSovereignViewPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SovereignViewResourcePatch DeserializeSovereignViewResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static SovereignViewPatch DeserializeSovereignViewPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            SystemAssignedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +182,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    identity = SystemAssignedServiceIdentity.DeserializeSystemAssignedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerSovereignContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +190,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
+            return new SovereignViewPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

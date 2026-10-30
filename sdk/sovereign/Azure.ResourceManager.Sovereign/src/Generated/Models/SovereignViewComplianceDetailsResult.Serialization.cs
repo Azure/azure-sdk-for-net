@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             writer.WritePropertyName("lastEvaluated"u8);
-            writer.WriteStringValue(LastEvaluated, "O");
+            writer.WriteStringValue(LastEvaluatedOn, "O");
             if (Optional.IsDefined(TotalResources))
             {
                 writer.WritePropertyName("totalResources"u8);
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ReportStatus reportStatus = default;
+            SovereignViewReportStatus reportStatus = default;
             ResponseError error = default;
-            DateTimeOffset lastEvaluated = default;
+            DateTimeOffset lastEvaluatedOn = default;
             int? totalResources = default;
             IList<SovereignViewComplianceDetailResourceInfo> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 if (prop.NameEquals("reportStatus"u8))
                 {
-                    reportStatus = ReportStatus.DeserializeReportStatus(prop.Value, options);
+                    reportStatus = SovereignViewReportStatus.DeserializeSovereignViewReportStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("lastEvaluated"u8))
                 {
-                    lastEvaluated = prop.Value.GetDateTimeOffset("O");
+                    lastEvaluatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("totalResources"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             return new SovereignViewComplianceDetailsResult(
                 reportStatus,
                 error,
-                lastEvaluated,
+                lastEvaluatedOn,
                 totalResources,
                 resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>(),
                 additionalBinaryDataProperties);

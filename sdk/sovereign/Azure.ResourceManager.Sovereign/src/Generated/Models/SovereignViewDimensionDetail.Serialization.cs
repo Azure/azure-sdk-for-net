@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             PolicyComplianceState state = default;
             IList<SovereignViewComplianceDetail> complianceDetails = default;
             DateTimeOffset evaluatedOn = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

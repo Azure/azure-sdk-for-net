@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="operator"> The operator to apply for the filter. </param>
         /// <param name="value"> The values to filter on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field, SovereignViewComplianceDetailsFilterOperators @operator, IEnumerable<string> value)
+        public SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field, SovereignViewComplianceDetailsFilterOperator @operator, IEnumerable<string> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="operator"> The operator to apply for the filter. </param>
         /// <param name="value"> The values to filter on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field, SovereignViewComplianceDetailsFilterOperators @operator, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsFilters(SovereignViewFilterField @field, SovereignViewComplianceDetailsFilterOperator @operator, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             Operator = @operator;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewFilterField Field { get; }
 
         /// <summary> The operator to apply for the filter. </summary>
-        public SovereignViewComplianceDetailsFilterOperators Operator { get; }
+        public SovereignViewComplianceDetailsFilterOperator Operator { get; }
 
         /// <summary> The values to filter on. </summary>
         public IList<string> Value { get; }

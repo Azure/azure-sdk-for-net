@@ -8,22 +8,54 @@ namespace Azure.ResourceManager.Sovereign
     }
     public static partial class SovereignExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult> CheckNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult> CheckNameAvailabilityLocal(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult> CheckNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>> CheckNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult> CheckNameAvailabilityLocal(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignView(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetSovereignViewAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sovereign.SovereignViewResource GetSovereignViewResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetSovereignViewResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Sovereign.SovereignViewResourceCollection GetSovereignViewResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Sovereign.SovereignViewCollection GetSovereignViews(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViews(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SovereignViewResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>
+    public partial class SovereignViewCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>, System.Collections.IEnumerable
+    {
+        protected SovereignViewCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sovereignViewName, Azure.ResourceManager.Sovereign.SovereignViewData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sovereignViewName, Azure.ResourceManager.Sovereign.SovereignViewData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> Get(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sovereign.SovereignViewResource> GetIfExists(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetIfExistsAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sovereign.SovereignViewResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sovereign.SovereignViewResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SovereignViewData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>
+    {
+        public SovereignViewData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.SovereignViewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.SovereignViewData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SovereignViewResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SovereignViewResource() { }
-        public virtual Azure.ResourceManager.Sovereign.SovereignViewResourceData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.Sovereign.SovereignViewData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -50,45 +82,13 @@ namespace Azure.ResourceManager.Sovereign
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Sovereign.SovereignViewResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.SovereignViewResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SovereignViewResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>, System.Collections.IEnumerable
-    {
-        protected SovereignViewResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sovereignViewName, Azure.ResourceManager.Sovereign.SovereignViewResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sovereignViewName, Azure.ResourceManager.Sovereign.SovereignViewResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> Get(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Sovereign.SovereignViewResource> GetIfExists(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetIfExistsAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sovereign.SovereignViewResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sovereign.SovereignViewResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.SovereignViewResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SovereignViewResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>
-    {
-        public SovereignViewResourceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.SovereignViewResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.SovereignViewResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.SovereignViewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.SovereignViewData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.SovereignViewData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sovereign.Models.SovereignViewPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sovereign.SovereignViewResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sovereign.Models.SovereignViewPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Sovereign.Mocking
@@ -101,124 +101,69 @@ namespace Azure.ResourceManager.Sovereign.Mocking
     public partial class MockableSovereignResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSovereignResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResource(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetSovereignViewResourceAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sovereign.SovereignViewResourceCollection GetSovereignViewResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignView(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.SovereignViewResource>> GetSovereignViewAsync(string sovereignViewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sovereign.SovereignViewCollection GetSovereignViews() { throw null; }
     }
     public partial class MockableSovereignSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSovereignSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult> CheckNameAvailabilityLocal(Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult> CheckNameAvailability(Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult> CheckNameAvailabilityLocal(Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViews(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sovereign.SovereignViewResource> GetSovereignViewsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Sovereign.Models
 {
     public static partial class ArmSovereignModelFactory
     {
-        public static Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.ReportStatus ReportStatus(Azure.ResourceManager.Sovereign.Models.ReportState state = default(Azure.ResourceManager.Sovereign.Models.ReportState), System.DateTimeOffset? nextAttempt = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent SovereignCheckNameAvailabilityRequestContent(string name = null, string type = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes SovereignViewAffectedScopes(string name = null, string id = null, Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType type = default(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType), Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates status = default(Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates), string actionRequired = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent SovereignNameAvailabilityContent(string name = null, string type = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult SovereignNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason? reason = default(Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes SovereignViewAffectedScopes(string name = null, string id = null, Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType type = default(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType), Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState status = default(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState), string actionRequired = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewArmTemplateBundle SovereignViewArmTemplateBundle(string template = null, string parameters = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetail SovereignViewComplianceDetail(Azure.Core.ResourceIdentifier policyInitiativeId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, System.DateTimeOffset? evaluatedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo SovereignViewComplianceDetailResourceInfo(Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier parentResourceId = null, string location = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail> dimensionDetails = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo SovereignViewComplianceDetailResourceInfo(Azure.Core.ResourceIdentifier resourceId = null, string parentResourceId = null, string location = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail> dimensionDetails = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsContent SovereignViewComplianceDetailsContent(int top = 0, int? skip = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter> complianceDimensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters> filters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort> sort = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSearch search = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter SovereignViewComplianceDetailsDimensionFilter(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> states = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters SovereignViewComplianceDetailsFilters(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField field = default(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField), Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators @operator = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators), System.Collections.Generic.IEnumerable<string> value = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(Azure.ResourceManager.Sovereign.Models.ReportStatus reportStatus = null, Azure.ResponseError error = null, System.DateTimeOffset lastEvaluated = default(System.DateTimeOffset), int? totalResources = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo> resources = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter SovereignViewComplianceDetailsDimensionFilter(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> states = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters SovereignViewComplianceDetailsFilters(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField field = default(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField), Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator @operator = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator), System.Collections.Generic.IEnumerable<string> value = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus reportStatus = null, Azure.ResponseError error = null, System.DateTimeOffset lastEvaluatedOn = default(System.DateTimeOffset), int? totalResources = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo> resources = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSearch SovereignViewComplianceDetailsSearch(string field = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort SovereignViewComplianceDetailsSort(string field = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections direction = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> sortingOrder = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary SovereignViewComplianceDimensionSummary(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), int totalResources = 0, int compliantCount = 0, int nonCompliantCount = 0, int constrainedCount = 0, int conflictCount = 0, int notApplicableCount = 0, int notEvaluatedCount = 0, int othersCount = 0) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort SovereignViewComplianceDetailsSort(string field = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection direction = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> sortingOrder = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary SovereignViewComplianceDimensionSummary(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), int totalResources = 0, int compliantCount = 0, int nonCompliantCount = 0, int constrainedCount = 0, int conflictCount = 0, int notApplicableCount = 0, int notEvaluatedCount = 0, int othersCount = 0) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceOverallSummary SovereignViewComplianceOverallSummary(int totalManagementGroups = 0, int totalSubscriptions = 0, int totalResourceGroups = 0, int totalResources = 0, int compliantCount = 0, int nonCompliantCount = 0, int constrainedCount = 0, int conflictCount = 0, int notApplicableCount = 0, int notEvaluatedCount = 0, int othersCount = 0) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsContent SovereignViewComplianceResourceDetailsContent(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), System.DateTimeOffset? evaluatedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsResult SovereignViewComplianceResourceDetailsResult(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), System.DateTimeOffset evaluatedOn = default(System.DateTimeOffset), Azure.ResourceManager.Sovereign.Models.PolicyComplianceState state = default(Azure.ResourceManager.Sovereign.Models.PolicyComplianceState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluation> evaluations = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceSummaryResult SovereignViewComplianceSummaryResult(Azure.ResourceManager.Sovereign.Models.ReportStatus reportStatus = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset lastEvaluated = default(System.DateTimeOffset), Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceOverallSummary overallSummary = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary> dimensionSummaries = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsContent SovereignViewComplianceResourceDetailsContent(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), System.DateTimeOffset? evaluatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsResult SovereignViewComplianceResourceDetailsResult(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), System.DateTimeOffset evaluatedOn = default(System.DateTimeOffset), Azure.ResourceManager.Sovereign.Models.PolicyComplianceState state = default(Azure.ResourceManager.Sovereign.Models.PolicyComplianceState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluation> evaluations = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceSummaryResult SovereignViewComplianceSummaryResult(Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus reportStatus = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset lastEvaluatedOn = default(System.DateTimeOffset), Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceOverallSummary overallSummary = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary> dimensionSummaries = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.SovereignViewData SovereignViewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sovereign.Models.SovereignViewProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluation SovereignViewDataEvaluation(string evaluationSourceId = null, Azure.ResourceManager.Sovereign.Models.SovereignViewEvaluationIntent intent = default(Azure.ResourceManager.Sovereign.Models.SovereignViewEvaluationIntent), Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource source = default(Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluationOutcome> evaluationOutcomes = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluationOutcome SovereignViewDataEvaluationOutcome(Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Sovereign.Models.PolicyComplianceState state = default(Azure.ResourceManager.Sovereign.Models.PolicyComplianceState), string actualValue = null, string expectedValue = null, string reason = null, string reasonCodeId = null, string additionalInfo = null, string additionalInfoCodeId = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings SovereignViewDataResidencyDimensionSettings(Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope resourceEvaluationScope = default(Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope), System.Collections.Generic.IEnumerable<string> parametersAllowedLocations = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail SovereignViewDimensionDetail(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), Azure.ResourceManager.Sovereign.Models.PolicyComplianceState state = default(Azure.ResourceManager.Sovereign.Models.PolicyComplianceState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetail> complianceDetails = null, System.DateTimeOffset evaluatedOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceEvaluationSource> sources = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail SovereignViewDimensionDetail(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), Azure.ResourceManager.Sovereign.Models.PolicyComplianceState state = default(Azure.ResourceManager.Sovereign.Models.PolicyComplianceState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetail> complianceDetails = null, System.DateTimeOffset evaluatedOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceEvaluationSource> sources = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValueItem SovereignViewFilterValueItem(string value = null, string displayName = null, int count = 0) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValuesContent SovereignViewFilterValuesContent(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField requestedFilter = default(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters> filters = null, string searchTerm = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValuesResult SovereignViewFilterValuesResult(Azure.ResourceManager.Sovereign.Models.DataState dataState = default(Azure.ResourceManager.Sovereign.Models.DataState), Azure.ResponseError error = null, Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField? requestedFilter = default(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField?), int? totalCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValueItem> values = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValuesResult SovereignViewFilterValuesResult(Azure.ResourceManager.Sovereign.Models.SovereignViewDataState dataState = default(Azure.ResourceManager.Sovereign.Models.SovereignViewDataState), Azure.ResponseError error = null, Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField? requestedFilter = default(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField?), int? totalCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValueItem> values = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewManagementGroupScope SovereignViewManagementGroupScope(Azure.Core.ResourceIdentifier id = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent SovereignViewOperationalStatusContent(Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode? mode = default(Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter> evaluationParameters = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails SovereignViewOperationalStatusDetails(Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason reason = default(Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes> affectedScopes = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult SovereignViewOperationalStatusResult(string name = null, Azure.ResourceManager.Sovereign.Models.OperationalStatusStates status = default(Azure.ResourceManager.Sovereign.Models.OperationalStatusStates), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails> details = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail SovereignViewPolicyInitiativeDetail(Azure.Core.ResourceIdentifier policyInitiativeId = null, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> policyAssignmentIds = null, string policyVersion = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateContent SovereignViewRemediateContent(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimensionType = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent residencyRemediationRequest = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent SovereignViewOperationalStatusContent(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode? mode = default(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind> evaluationParameters = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails SovereignViewOperationalStatusDetails(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason reason = default(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes> affectedScopes = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult SovereignViewOperationalStatusResult(string name = null, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState status = default(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails> details = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewPatch SovereignViewPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail SovereignViewPolicyInitiativeDetail(Azure.Core.ResourceIdentifier policyInitiativeId = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> policyAssignmentIds = null, string policyVersion = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProperties SovereignViewProperties(Azure.ResourceManager.Sovereign.Models.SovereignViewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> policyInitiatives = null, Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName? regulatoryDocumentName = default(Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName?), Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState? provisioningState = default(Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState?), Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings dimensionDataResidency = null, bool? isWorkload = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateContent SovereignViewRemediateContent(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimensionType = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent residencyRemediationRequest = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateResult SovereignViewRemediateResult(string remediationId = null, Azure.ResponseError error = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResult SovereignViewRemediationResult(string remediationId = null, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimensionType = default(Azure.ResourceManager.Sovereign.Models.ComplianceDimension), Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus status = default(Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResultItem> results = null, Azure.ResponseError error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResult SovereignViewRemediationResult(string remediationId = null, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimensionType = default(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension), Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus status = default(Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResultItem> results = null, Azure.ResponseError error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResultContent SovereignViewRemediationResultContent(string remediationId = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationResultItem SovereignViewRemediationResultItem(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null, Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationPayloadType type = default(Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationPayloadType), Azure.ResourceManager.Sovereign.Models.SovereignViewArmTemplateBundle result = null) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus SovereignViewReportStatus(Azure.ResourceManager.Sovereign.Models.ReportState state = default(Azure.ResourceManager.Sovereign.Models.ReportState), System.DateTimeOffset? nextAttemptOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationConfiguration SovereignViewResidencyRemediationConfiguration(string targetRegion = null, string targetResourceGroupName = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent SovereignViewResidencyRemediationContent(Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationConfiguration configuration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationResourceInfo> resources = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationResourceConfiguration SovereignViewResidencyRemediationResourceConfiguration(string sourceRegion = null, string targetResourceGroupName = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationResourceInfo SovereignViewResidencyRemediationResourceInfo(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationResourceConfiguration configuration = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.SovereignViewResourceData SovereignViewResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties properties = null, Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch SovereignViewResourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties SovereignViewResourceProperties(Azure.ResourceManager.Sovereign.Models.SovereignViewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> policyInitiatives = null, Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName? regulatoryDocumentName = default(Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName?), Azure.ResourceManager.Sovereign.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Sovereign.Models.ProvisioningState?), Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings dimensionDataResidency = null, bool? isWorkload = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewScope SovereignViewScope(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewManagementGroupScope> managementGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope> subscriptions = null) { throw null; }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope SovereignViewSubscriptionScope(System.Guid id = default(System.Guid), string name = null) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity SystemAssignedServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType type = default(Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CheckNameAvailabilityReason(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>
-    {
-        internal CheckNameAvailabilityResult() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.CheckNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComplianceDimension : System.IEquatable<Azure.ResourceManager.Sovereign.Models.ComplianceDimension>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComplianceDimension(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension BusinessContinuity { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension ControlledNetworkExposure { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension DataResidency { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension EncryptionAtRest { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension EncryptionInTransit { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ComplianceDimension EncryptionInUse { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.ComplianceDimension other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.ComplianceDimension left, Azure.ResourceManager.Sovereign.Models.ComplianceDimension right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ComplianceDimension (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ComplianceDimension? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.ComplianceDimension left, Azure.ResourceManager.Sovereign.Models.ComplianceDimension right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataResidencyResourceEvaluationScope : System.IEquatable<Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope>
@@ -235,94 +180,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public static implicit operator Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope left, Azure.ResourceManager.Sovereign.Models.DataResidencyResourceEvaluationScope right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.DataState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataState(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.DataState Error { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.DataState Processed { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.DataState Processing { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.DataState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.DataState left, Azure.ResourceManager.Sovereign.Models.DataState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.DataState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.DataState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.DataState left, Azure.ResourceManager.Sovereign.Models.DataState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalStatusEvaluationParameter : System.IEquatable<Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationalStatusEvaluationParameter(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter PermissionsEvaluation { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter PolicyAssignmentEvaluation { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter left, Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter left, Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalStatusRequestMode : System.IEquatable<Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationalStatusRequestMode(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode Detailed { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode Summary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode left, Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode left, Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalStatusStates : System.IEquatable<Azure.ResourceManager.Sovereign.Models.OperationalStatusStates>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationalStatusStates(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusStates Healthy { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusStates Unhealthy { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusStates Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.OperationalStatusStates other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.OperationalStatusStates left, Azure.ResourceManager.Sovereign.Models.OperationalStatusStates right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusStates (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusStates? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.OperationalStatusStates left, Azure.ResourceManager.Sovereign.Models.OperationalStatusStates right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalStatusUnhealthyReason : System.IEquatable<Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationalStatusUnhealthyReason(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason MIMissing { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason MIPermissionMissing { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason PolicyAssignmentMissing { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason left, Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason left, Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -348,27 +205,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.ProvisioningState left, Azure.ResourceManager.Sovereign.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.ProvisioningState left, Azure.ResourceManager.Sovereign.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReportState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.ReportState>
     {
         private readonly object _dummy;
@@ -390,53 +226,53 @@ namespace Azure.ResourceManager.Sovereign.Models
         public static bool operator !=(Azure.ResourceManager.Sovereign.Models.ReportState left, Azure.ResourceManager.Sovereign.Models.ReportState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReportStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>
+    public partial class SovereignNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>
     {
-        internal ReportStatus() { }
-        public System.DateTimeOffset? NextAttempt { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ReportState State { get { throw null; } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.ReportStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public SovereignNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.ReportStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.ReportStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.ReportStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.ReportStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SovereignNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>
+    {
+        internal SovereignNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScopeLevelOperationalStatusStates : System.IEquatable<Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates>
+    public readonly partial struct SovereignNameUnavailableReason : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ScopeLevelOperationalStatusStates(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates Unhealthy { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates other) { throw null; }
+        public SovereignNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates left, Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates left, Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason left, Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason left, Azure.ResourceManager.Sovereign.Models.SovereignNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SovereignCheckNameAvailabilityRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>
-    {
-        public SovereignCheckNameAvailabilityRequestContent() { }
-        public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignCheckNameAvailabilityRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SovereignViewAffectedScopes : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes>
     {
@@ -444,7 +280,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public string ActionRequired { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ScopeLevelOperationalStatusStates Status { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState Status { get { throw null; } }
         public Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -492,7 +328,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         internal SovereignViewComplianceDetailResourceInfo() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail> DimensionDetails { get { throw null; } }
         public string Location { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ParentResourceId { get { throw null; } }
+        public string ParentResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -525,8 +361,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     }
     public partial class SovereignViewComplianceDetailsDimensionFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter>
     {
-        public SovereignViewComplianceDetailsDimensionFilter(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> states) { }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } }
+        public SovereignViewComplianceDetailsDimensionFilter(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> states) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> States { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -539,26 +375,26 @@ namespace Azure.ResourceManager.Sovereign.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsDimensionFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SovereignViewComplianceDetailsFilterOperators : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators>
+    public readonly partial struct SovereignViewComplianceDetailsFilterOperator : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SovereignViewComplianceDetailsFilterOperators(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators In { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators other) { throw null; }
+        public SovereignViewComplianceDetailsFilterOperator(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator In { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SovereignViewComplianceDetailsFilters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters>
     {
-        public SovereignViewComplianceDetailsFilters(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField field, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators @operator, System.Collections.Generic.IEnumerable<string> value) { }
+        public SovereignViewComplianceDetailsFilters(Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField field, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator @operator, System.Collections.Generic.IEnumerable<string> value) { }
         public Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField Field { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperators Operator { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilterOperator Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsFilters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -574,8 +410,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     {
         internal SovereignViewComplianceDetailsResult() { }
         public Azure.ResponseError Error { get { throw null; } }
-        public System.DateTimeOffset LastEvaluated { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ReportStatus ReportStatus { get { throw null; } }
+        public System.DateTimeOffset LastEvaluatedOn { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus ReportStatus { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailResourceInfo> Resources { get { throw null; } }
         public int? TotalResources { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -605,8 +441,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     }
     public partial class SovereignViewComplianceDetailsSort : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort>
     {
-        public SovereignViewComplianceDetailsSort(string field, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections direction) { }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections Direction { get { throw null; } }
+        public SovereignViewComplianceDetailsSort(string field, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection direction) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection Direction { get { throw null; } }
         public string Field { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.PolicyComplianceState> SortingOrder { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -620,20 +456,41 @@ namespace Azure.ResourceManager.Sovereign.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSort>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SovereignViewComplianceDetailsSortDirections : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections>
+    public readonly partial struct SovereignViewComplianceDetailsSortDirection : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SovereignViewComplianceDetailsSortDirections(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections Asc { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections Desc { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections other) { throw null; }
+        public SovereignViewComplianceDetailsSortDirection(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection Asc { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection Desc { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirections right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetailsSortDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewComplianceDimension : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewComplianceDimension(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension BusinessContinuity { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension ControlledNetworkExposure { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension DataResidency { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension EncryptionAtRest { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension EncryptionInTransit { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension EncryptionInUse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension left, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SovereignViewComplianceDimensionSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary>
@@ -642,7 +499,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public int CompliantCount { get { throw null; } }
         public int ConflictCount { get { throw null; } }
         public int ConstrainedCount { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } }
         public int NonCompliantCount { get { throw null; } }
         public int NotApplicableCount { get { throw null; } }
         public int NotEvaluatedCount { get { throw null; } }
@@ -684,8 +541,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     }
     public partial class SovereignViewComplianceResourceDetailsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsContent>
     {
-        public SovereignViewComplianceResourceDetailsContent(Azure.Core.ResourceIdentifier resourceId, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension) { }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } }
+        public SovereignViewComplianceResourceDetailsContent(Azure.Core.ResourceIdentifier resourceId, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } }
         public System.DateTimeOffset? EvaluatedOn { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -701,7 +558,7 @@ namespace Azure.ResourceManager.Sovereign.Models
     public partial class SovereignViewComplianceResourceDetailsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceResourceDetailsResult>
     {
         internal SovereignViewComplianceResourceDetailsResult() { }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } }
         public System.DateTimeOffset EvaluatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewDataEvaluation> Evaluations { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
@@ -721,9 +578,9 @@ namespace Azure.ResourceManager.Sovereign.Models
         internal SovereignViewComplianceSummaryResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimensionSummary> DimensionSummaries { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public System.DateTimeOffset LastEvaluated { get { throw null; } }
+        public System.DateTimeOffset LastEvaluatedOn { get { throw null; } }
         public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceOverallSummary OverallSummary { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ReportStatus ReportStatus { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus ReportStatus { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceSummaryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -788,11 +645,29 @@ namespace Azure.ResourceManager.Sovereign.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewDataState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewDataState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewDataState(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataState Error { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataState Processed { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewDataState Processing { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewDataState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewDataState left, Azure.ResourceManager.Sovereign.Models.SovereignViewDataState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewDataState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewDataState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewDataState left, Azure.ResourceManager.Sovereign.Models.SovereignViewDataState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SovereignViewDimensionDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewDimensionDetail>
     {
         internal SovereignViewDimensionDetail() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDetail> ComplianceDetails { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } }
         public System.DateTimeOffset EvaluatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceEvaluationSource> Sources { get { throw null; } }
         public Azure.ResourceManager.Sovereign.Models.PolicyComplianceState State { get { throw null; } }
@@ -886,7 +761,7 @@ namespace Azure.ResourceManager.Sovereign.Models
     public partial class SovereignViewFilterValuesResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValuesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewFilterValuesResult>
     {
         internal SovereignViewFilterValuesResult() { }
-        public Azure.ResourceManager.Sovereign.Models.DataState DataState { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewDataState DataState { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.Sovereign.Models.SovereignViewFilterField? RequestedFilter { get { throw null; } }
         public int? TotalCount { get { throw null; } }
@@ -907,7 +782,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SovereignViewLinkedResourceEvaluationSource(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource ARG { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource AzureResourceGraph { get { throw null; } }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource BusinessContinuity { get { throw null; } }
         public static Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource LogAnalytics { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewLinkedResourceEvaluationSource other) { throw null; }
@@ -937,8 +812,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     public partial class SovereignViewOperationalStatusContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent>
     {
         public SovereignViewOperationalStatusContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.OperationalStatusEvaluationParameter> EvaluationParameters { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.OperationalStatusRequestMode? Mode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind> EvaluationParameters { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode? Mode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -953,7 +828,7 @@ namespace Azure.ResourceManager.Sovereign.Models
     {
         internal SovereignViewOperationalStatusDetails() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewAffectedScopes> AffectedScopes { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.OperationalStatusUnhealthyReason Reason { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason Reason { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -964,12 +839,46 @@ namespace Azure.ResourceManager.Sovereign.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewOperationalStatusEvaluationKind : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewOperationalStatusEvaluationKind(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind PermissionsEvaluation { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind PolicyAssignmentEvaluation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusEvaluationKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewOperationalStatusMode : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewOperationalStatusMode(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode Detailed { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode Summary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SovereignViewOperationalStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult>
     {
         internal SovereignViewOperationalStatusResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusDetails> Details { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.OperationalStatusStates Status { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -980,10 +889,61 @@ namespace Azure.ResourceManager.Sovereign.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewOperationalStatusState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewOperationalStatusState(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState Healthy { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState Unhealthy { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewOperationalStatusUnhealthyReason : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewOperationalStatusUnhealthyReason(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason MIMissing { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason MIPermissionMissing { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason PolicyAssignmentMissing { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason left, Azure.ResourceManager.Sovereign.Models.SovereignViewOperationalStatusUnhealthyReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SovereignViewPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>
+    {
+        public SovereignViewPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SovereignViewPolicyInitiativeDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail>
     {
-        public SovereignViewPolicyInitiativeDetail(Azure.Core.ResourceIdentifier policyInitiativeId, Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimension, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> policyAssignmentIds, string policyVersion) { }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension Dimension { get { throw null; } set { } }
+        public SovereignViewPolicyInitiativeDetail(Azure.Core.ResourceIdentifier policyInitiativeId, Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimension, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> policyAssignmentIds, string policyVersion) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension Dimension { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> PolicyAssignmentIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicyInitiativeId { get { throw null; } set { } }
         public string PolicyVersion { get { throw null; } set { } }
@@ -996,6 +956,46 @@ namespace Azure.ResourceManager.Sovereign.Models
         Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SovereignViewProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>
+    {
+        public SovereignViewProperties(Azure.ResourceManager.Sovereign.Models.SovereignViewScope scope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> policyInitiatives) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings DimensionDataResidency { get { throw null; } set { } }
+        public bool? IsWorkload { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> PolicyInitiatives { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName? RegulatoryDocumentName { get { throw null; } set { } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewScope Scope { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewProvisioningState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState left, Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState left, Azure.ResourceManager.Sovereign.Models.SovereignViewProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SovereignViewRegulatoryDocumentName : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName>
@@ -1015,8 +1015,8 @@ namespace Azure.ResourceManager.Sovereign.Models
     }
     public partial class SovereignViewRemediateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateContent>
     {
-        public SovereignViewRemediateContent(Azure.ResourceManager.Sovereign.Models.ComplianceDimension dimensionType, Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent residencyRemediationRequest) { }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension DimensionType { get { throw null; } }
+        public SovereignViewRemediateContent(Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension dimensionType, Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent residencyRemediationRequest) { }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension DimensionType { get { throw null; } }
         public Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationContent ResidencyRemediationRequest { get { throw null; } }
         protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewRemediateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Sovereign.Models
     {
         internal SovereignViewRemediationResult() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ComplianceDimension DimensionType { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.SovereignViewComplianceDimension DimensionType { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string RemediationId { get { throw null; } }
@@ -1125,6 +1125,21 @@ namespace Azure.ResourceManager.Sovereign.Models
         public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus left, Azure.ResourceManager.Sovereign.Models.SovereignViewRemediationStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SovereignViewReportStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>
+    {
+        internal SovereignViewReportStatus() { }
+        public System.DateTimeOffset? NextAttemptOn { get { throw null; } }
+        public Azure.ResourceManager.Sovereign.Models.ReportState State { get { throw null; } }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewReportStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SovereignViewResidencyRemediationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResidencyRemediationConfiguration>
     {
@@ -1203,40 +1218,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewResourceEvaluationSource left, Azure.ResourceManager.Sovereign.Models.SovereignViewResourceEvaluationSource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SovereignViewResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>
-    {
-        public SovereignViewResourcePatch() { }
-        public Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SovereignViewResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>
-    {
-        public SovereignViewResourceProperties(Azure.ResourceManager.Sovereign.Models.SovereignViewScope scope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> policyInitiatives) { }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewDataResidencyDimensionSettings DimensionDataResidency { get { throw null; } set { } }
-        public bool? IsWorkload { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sovereign.Models.SovereignViewPolicyInitiativeDetail> PolicyInitiatives { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewRegulatoryDocumentName? RegulatoryDocumentName { get { throw null; } set { } }
-        public Azure.ResourceManager.Sovereign.Models.SovereignViewScope Scope { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SovereignViewScope : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SovereignViewScope>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewScope>
     {
         public SovereignViewScope() { }
@@ -1251,6 +1232,24 @@ namespace Azure.ResourceManager.Sovereign.Models
         Azure.ResourceManager.Sovereign.Models.SovereignViewScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewScope>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewScope>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SovereignViewScopeOperationalStatusState : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SovereignViewScopeOperationalStatusState(string value) { throw null; }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState Unhealthy { get { throw null; } }
+        public static Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState left, Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState left, Azure.ResourceManager.Sovereign.Models.SovereignViewScopeOperationalStatusState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SovereignViewScopeType : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SovereignViewScopeType>
@@ -1283,38 +1282,5 @@ namespace Azure.ResourceManager.Sovereign.Models
         Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SovereignViewSubscriptionScope>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SystemAssignedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>
-    {
-        public SystemAssignedServiceIdentity(Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType type) { }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SystemAssignedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SystemAssignedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType left, Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType left, Azure.ResourceManager.Sovereign.Models.SystemAssignedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

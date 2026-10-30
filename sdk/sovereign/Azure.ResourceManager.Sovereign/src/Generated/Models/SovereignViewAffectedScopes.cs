@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="id"> The identifier of the management group or subscription affected. </param>
         /// <param name="type"> The type of the affected scope. </param>
         /// <param name="status"> The operational status of the affected scope. </param>
-        internal SovereignViewAffectedScopes(string name, string id, SovereignViewScopeType @type, ScopeLevelOperationalStatusStates status)
+        internal SovereignViewAffectedScopes(string name, string id, SovereignViewScopeType @type, SovereignViewScopeOperationalStatusState status)
         {
             Name = name;
             Id = id;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="status"> The operational status of the affected scope. </param>
         /// <param name="actionRequired"> The action required to remediate the affected scope, such as a role name or a policy initiative id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewAffectedScopes(string name, string id, SovereignViewScopeType @type, ScopeLevelOperationalStatusStates status, string actionRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewAffectedScopes(string name, string id, SovereignViewScopeType @type, SovereignViewScopeOperationalStatusState status, string actionRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewScopeType Type { get; }
 
         /// <summary> The operational status of the affected scope. </summary>
-        public ScopeLevelOperationalStatusStates Status { get; }
+        public SovereignViewScopeOperationalStatusState Status { get; }
 
         /// <summary> The action required to remediate the affected scope, such as a role name or a policy initiative id. </summary>
         public string ActionRequired { get; }

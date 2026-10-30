@@ -14,56 +14,56 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The properties of the sovereign view resource type. </summary>
-    public partial class SovereignViewResourceProperties : IJsonModel<SovereignViewResourceProperties>
+    public partial class SovereignViewProperties : IJsonModel<SovereignViewProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourceProperties"/> for deserialization. </summary>
-        internal SovereignViewResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="SovereignViewProperties"/> for deserialization. </summary>
+        internal SovereignViewProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignViewResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SovereignViewProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSovereignViewResourceProperties(document.RootElement, options);
+                        return DeserializeSovereignViewProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSovereignContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SovereignViewResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SovereignViewProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceProperties IPersistableModel<SovereignViewResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SovereignViewProperties IPersistableModel<SovereignViewProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SovereignViewResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SovereignViewProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SovereignViewResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SovereignViewProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteObjectValue(Scope, options);
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceProperties IJsonModel<SovereignViewResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SovereignViewProperties IJsonModel<SovereignViewProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignViewResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SovereignViewProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSovereignViewResourceProperties(document.RootElement, options);
+            return DeserializeSovereignViewProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SovereignViewResourceProperties DeserializeSovereignViewResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SovereignViewProperties DeserializeSovereignViewProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             SovereignViewScope scope = default;
             IList<SovereignViewPolicyInitiativeDetail> policyInitiatives = default;
             SovereignViewRegulatoryDocumentName? regulatoryDocumentName = default;
-            ProvisioningState? provisioningState = default;
+            SovereignViewProvisioningState? provisioningState = default;
             SovereignViewDimensionSettings dimensionSettings = default;
             bool? isWorkload = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SovereignViewProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensionSettings"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewResourceProperties(
+            return new SovereignViewProperties(
                 scope,
                 policyInitiatives ?? new ChangeTrackingList<SovereignViewPolicyInitiativeDetail>(),
                 regulatoryDocumentName,

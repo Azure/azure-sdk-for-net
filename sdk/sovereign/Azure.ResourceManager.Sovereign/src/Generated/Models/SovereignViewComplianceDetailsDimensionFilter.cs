@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimension"> The compliance dimension to filter on. </param>
         /// <param name="states"> The compliance states to optionally filter on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="states"/> is null. </exception>
-        public SovereignViewComplianceDetailsDimensionFilter(ComplianceDimension dimension, IEnumerable<PolicyComplianceState> states)
+        public SovereignViewComplianceDetailsDimensionFilter(SovereignViewComplianceDimension dimension, IEnumerable<PolicyComplianceState> states)
         {
             Argument.AssertNotNull(states, nameof(states));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimension"> The compliance dimension to filter on. </param>
         /// <param name="states"> The compliance states to optionally filter on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsDimensionFilter(ComplianceDimension dimension, IList<PolicyComplianceState> states, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsDimensionFilter(SovereignViewComplianceDimension dimension, IList<PolicyComplianceState> states, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Dimension = dimension;
             States = states;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The compliance dimension to filter on. </summary>
-        public ComplianceDimension Dimension { get; }
+        public SovereignViewComplianceDimension Dimension { get; }
 
         /// <summary> The compliance states to optionally filter on. </summary>
         public IList<PolicyComplianceState> States { get; }

@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The compliance report generation status, including the current state and the next attempt time. </summary>
-    public partial class ReportStatus
+    public partial class SovereignViewReportStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReportStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewReportStatus"/>. </summary>
         /// <param name="state"> The current compliance report generation state. </param>
-        internal ReportStatus(ReportState state)
+        internal SovereignViewReportStatus(ReportState state)
         {
             State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewReportStatus"/>. </summary>
         /// <param name="state"> The current compliance report generation state. </param>
-        /// <param name="nextAttempt"> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </param>
+        /// <param name="nextAttemptOn"> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportStatus(ReportState state, DateTimeOffset? nextAttempt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewReportStatus(ReportState state, DateTimeOffset? nextAttemptOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            NextAttempt = nextAttempt;
+            NextAttemptOn = nextAttemptOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ReportState State { get; }
 
         /// <summary> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </summary>
-        public DateTimeOffset? NextAttempt { get; }
+        public DateTimeOffset? NextAttemptOn { get; }
     }
 }

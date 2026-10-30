@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("lastEvaluated"u8);
-            writer.WriteStringValue(LastEvaluated, "O");
+            writer.WriteStringValue(LastEvaluatedOn, "O");
             if (Optional.IsDefined(OverallSummary))
             {
                 writer.WritePropertyName("overallSummary"u8);
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ReportStatus reportStatus = default;
+            SovereignViewReportStatus reportStatus = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
-            DateTimeOffset lastEvaluated = default;
+            DateTimeOffset lastEvaluatedOn = default;
             SovereignViewComplianceOverallSummary overallSummary = default;
             IList<SovereignViewComplianceDimensionSummary> dimensionSummaries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 if (prop.NameEquals("reportStatus"u8))
                 {
-                    reportStatus = ReportStatus.DeserializeReportStatus(prop.Value, options);
+                    reportStatus = SovereignViewReportStatus.DeserializeSovereignViewReportStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("lastEvaluated"u8))
                 {
-                    lastEvaluated = prop.Value.GetDateTimeOffset("O");
+                    lastEvaluatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("overallSummary"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 reportStatus,
                 error,
                 resourceId,
-                lastEvaluated,
+                lastEvaluatedOn,
                 overallSummary,
                 dimensionSummaries ?? new ChangeTrackingList<SovereignViewComplianceDimensionSummary>(),
                 additionalBinaryDataProperties);

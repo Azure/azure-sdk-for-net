@@ -14,56 +14,56 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The compliance report generation status, including the current state and the next attempt time. </summary>
-    public partial class ReportStatus : IJsonModel<ReportStatus>
+    public partial class SovereignViewReportStatus : IJsonModel<SovereignViewReportStatus>
     {
-        /// <summary> Initializes a new instance of <see cref="ReportStatus"/> for deserialization. </summary>
-        internal ReportStatus()
+        /// <summary> Initializes a new instance of <see cref="SovereignViewReportStatus"/> for deserialization. </summary>
+        internal SovereignViewReportStatus()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SovereignViewReportStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReportStatus(document.RootElement, options);
+                        return DeserializeSovereignViewReportStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewReportStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSovereignContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReportStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewReportStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReportStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SovereignViewReportStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportStatus IPersistableModel<ReportStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SovereignViewReportStatus IPersistableModel<SovereignViewReportStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReportStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SovereignViewReportStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReportStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SovereignViewReportStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewReportStatus)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
-            if (Optional.IsDefined(NextAttempt))
+            if (Optional.IsDefined(NextAttemptOn))
             {
                 writer.WritePropertyName("nextAttempt"u8);
-                writer.WriteStringValue(NextAttempt.Value, "O");
+                writer.WriteStringValue(NextAttemptOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,31 +105,31 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReportStatus IJsonModel<ReportStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SovereignViewReportStatus IJsonModel<SovereignViewReportStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SovereignViewReportStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewReportStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReportStatus(document.RootElement, options);
+            return DeserializeSovereignViewReportStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReportStatus DeserializeReportStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static SovereignViewReportStatus DeserializeSovereignViewReportStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReportState state = default;
-            DateTimeOffset? nextAttempt = default;
+            DateTimeOffset? nextAttemptOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    nextAttempt = prop.Value.GetDateTimeOffset("O");
+                    nextAttemptOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReportStatus(state, nextAttempt, additionalBinaryDataProperties);
+            return new SovereignViewReportStatus(state, nextAttemptOn, additionalBinaryDataProperties);
         }
     }
 }

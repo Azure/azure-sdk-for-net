@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="policyAssignmentIds"> The resource identifiers of existing policy assignments association with the policy initiative and scopes in the sovereign view. </param>
         /// <param name="policyVersion"> The version of the policy initiative. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyInitiativeId"/>, <paramref name="policyAssignmentIds"/> or <paramref name="policyVersion"/> is null. </exception>
-        public SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId, ComplianceDimension dimension, IEnumerable<ResourceIdentifier> policyAssignmentIds, string policyVersion)
+        public SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId, SovereignViewComplianceDimension dimension, IEnumerable<ResourceIdentifier> policyAssignmentIds, string policyVersion)
         {
             Argument.AssertNotNull(policyInitiativeId, nameof(policyInitiativeId));
             Argument.AssertNotNull(policyAssignmentIds, nameof(policyAssignmentIds));
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="policyAssignmentIds"> The resource identifiers of existing policy assignments association with the policy initiative and scopes in the sovereign view. </param>
         /// <param name="policyVersion"> The version of the policy initiative. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId, ComplianceDimension dimension, IList<ResourceIdentifier> policyAssignmentIds, string policyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewPolicyInitiativeDetail(ResourceIdentifier policyInitiativeId, SovereignViewComplianceDimension dimension, IList<ResourceIdentifier> policyAssignmentIds, string policyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyInitiativeId = policyInitiativeId;
             Dimension = dimension;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier PolicyInitiativeId { get; set; }
 
         /// <summary> The compliance dimension associated with the policy initiative. </summary>
-        public ComplianceDimension Dimension { get; set; }
+        public SovereignViewComplianceDimension Dimension { get; set; }
 
         /// <summary> The resource identifiers of existing policy assignments association with the policy initiative and scopes in the sovereign view. </summary>
         public IList<ResourceIdentifier> PolicyAssignmentIds { get; }

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Sovereign.Models;
 namespace Azure.ResourceManager.Sovereign
 {
     /// <summary> The Sovereign View resource type. </summary>
-    public partial class SovereignViewResourceData : TrackedResourceData, IJsonModel<SovereignViewResourceData>
+    public partial class SovereignViewData : TrackedResourceData, IJsonModel<SovereignViewData>
     {
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourceData"/> for deserialization. </summary>
-        internal SovereignViewResourceData()
+        /// <summary> Initializes a new instance of <see cref="SovereignViewData"/> for deserialization. </summary>
+        internal SovereignViewData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSovereignViewResourceData(document.RootElement, options);
+                        return DeserializeSovereignViewData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSovereignContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SovereignViewResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignViewData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SovereignViewResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SovereignViewData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceData IPersistableModel<SovereignViewResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SovereignViewResourceData)PersistableModelCreateCore(data, options);
+        SovereignViewData IPersistableModel<SovereignViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SovereignViewData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SovereignViewResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SovereignViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sovereignViewResourceData"> The <see cref="SovereignViewResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SovereignViewResourceData sovereignViewResourceData)
+        /// <param name="sovereignViewData"> The <see cref="SovereignViewData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SovereignViewData sovereignViewData)
         {
-            if (sovereignViewResourceData == null)
+            if (sovereignViewData == null)
             {
                 return null;
             }
-            return RequestContent.Create(sovereignViewResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sovereignViewData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SovereignViewResourceData"/> from. </param>
-        internal static SovereignViewResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SovereignViewData"/> from. </param>
+        internal static SovereignViewData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSovereignViewResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSovereignViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SovereignViewResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SovereignViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sovereign
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,24 +130,24 @@ namespace Azure.ResourceManager.Sovereign
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceData IJsonModel<SovereignViewResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SovereignViewResourceData)JsonModelCreateCore(ref reader, options);
+        SovereignViewData IJsonModel<SovereignViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SovereignViewData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignViewResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignViewData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSovereignViewResourceData(document.RootElement, options);
+            return DeserializeSovereignViewData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SovereignViewResourceData DeserializeSovereignViewResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SovereignViewData DeserializeSovereignViewData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Sovereign
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            SovereignViewResourceProperties properties = default;
-            Models.SystemAssignedServiceIdentity identity = default;
+            SovereignViewProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sovereign
                     {
                         continue;
                     }
-                    properties = SovereignViewResourceProperties.DeserializeSovereignViewResourceProperties(prop.Value, options);
+                    properties = SovereignViewProperties.DeserializeSovereignViewProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sovereign
                     {
                         continue;
                     }
-                    identity = Models.SystemAssignedServiceIdentity.DeserializeSystemAssignedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerSovereignContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sovereign
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewResourceData(
+            return new SovereignViewData(
                 id,
                 name,
                 resourceType,

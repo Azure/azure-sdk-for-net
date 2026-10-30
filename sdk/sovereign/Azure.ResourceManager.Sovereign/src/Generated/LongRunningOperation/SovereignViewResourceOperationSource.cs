@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sovereign
         SovereignViewResource IOperationSource<SovereignViewResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SovereignViewResourceData data = SovereignViewResourceData.DeserializeSovereignViewResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SovereignViewData data = SovereignViewData.DeserializeSovereignViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SovereignViewResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sovereign
         async ValueTask<SovereignViewResource> IOperationSource<SovereignViewResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SovereignViewResourceData data = SovereignViewResourceData.DeserializeSovereignViewResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SovereignViewData data = SovereignViewData.DeserializeSovereignViewData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SovereignViewResource(_client, data);
         }
     }

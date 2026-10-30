@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Sovereign
     /// <summary>
     /// A class representing a collection of <see cref="SovereignViewResource"/> and their operations.
     /// Each <see cref="SovereignViewResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="SovereignViewResourceCollection"/> instance call the GetSovereignViewResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SovereignViewCollection"/> instance call the GetSovereignViews method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class SovereignViewResourceCollection : ArmCollection, IEnumerable<SovereignViewResource>, IAsyncEnumerable<SovereignViewResource>
+    public partial class SovereignViewCollection : ArmCollection, IEnumerable<SovereignViewResource>, IAsyncEnumerable<SovereignViewResource>
     {
         private readonly ClientDiagnostics _sovereignViewOperationsClientDiagnostics;
         private readonly SovereignViewOperations _sovereignViewOperationsRestClient;
 
-        /// <summary> Initializes a new instance of SovereignViewResourceCollection for mocking. </summary>
-        protected SovereignViewResourceCollection()
+        /// <summary> Initializes a new instance of SovereignViewCollection for mocking. </summary>
+        protected SovereignViewCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SovereignViewResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SovereignViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _sovereignViewOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sovereign", SovereignViewResource.ResourceType.Namespace, Diagnostics);
             _sovereignViewOperationsRestClient = new SovereignViewOperations(_sovereignViewOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Sovereign/sovereignViews", out string sovereignViewOperationsApiVersionOverride) ? sovereignViewOperationsApiVersionOverride : "2026-10-31-preview");
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sovereignViewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sovereignViewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SovereignViewResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sovereignViewName, SovereignViewResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SovereignViewResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sovereignViewName, SovereignViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sovereign
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sovereignViewOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, SovereignViewResourceData.ToRequestContent(data), context);
+                HttpMessage message = _sovereignViewOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, SovereignViewData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SovereignArmOperation<SovereignViewResource> operation = new SovereignArmOperation<SovereignViewResource>(
                     new SovereignViewResourceOperationSource(Client),
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sovereignViewName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sovereignViewName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SovereignViewResource> CreateOrUpdate(WaitUntil waitUntil, string sovereignViewName, SovereignViewResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SovereignViewResource> CreateOrUpdate(WaitUntil waitUntil, string sovereignViewName, SovereignViewData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sovereign
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sovereignViewOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, SovereignViewResourceData.ToRequestContent(data), context);
+                HttpMessage message = _sovereignViewOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, SovereignViewData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SovereignArmOperation<SovereignViewResource> operation = new SovereignArmOperation<SovereignViewResource>(
                     new SovereignViewResourceOperationSource(Client),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.Get");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sovereign
                 };
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.Get");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sovereign
                 };
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sovereign
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SovereignViewResourceData, SovereignViewResource>(new SovereignViewResourceDataAsyncCollectionResultOfT(_sovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SovereignViewResourceCollection.GetAll"), data => new SovereignViewResource(Client, data));
+            return new AsyncPageableWrapper<SovereignViewData, SovereignViewResource>(new SovereignViewDataAsyncCollectionResultOfT(_sovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SovereignViewCollection.GetAll"), data => new SovereignViewResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sovereign
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SovereignViewResourceData, SovereignViewResource>(new SovereignViewResourceDataCollectionResultOfT(_sovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SovereignViewResourceCollection.GetAll"), data => new SovereignViewResource(Client, data));
+            return new PageableWrapper<SovereignViewData, SovereignViewResource>(new SovereignViewDataCollectionResultOfT(_sovereignViewOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SovereignViewCollection.GetAll"), data => new SovereignViewResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.Exists");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.Exists");
             scope.Start();
             try
             {
@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.Sovereign
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SovereignViewResourceData> response = default;
+                Response<SovereignViewData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SovereignViewResourceData)null, result);
+                        response = Response.FromValue((SovereignViewData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.Exists");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.Exists");
             scope.Start();
             try
             {
@@ -417,14 +417,14 @@ namespace Azure.ResourceManager.Sovereign
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SovereignViewResourceData> response = default;
+                Response<SovereignViewData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SovereignViewResourceData)null, result);
+                        response = Response.FromValue((SovereignViewData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -474,14 +474,14 @@ namespace Azure.ResourceManager.Sovereign
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SovereignViewResourceData> response = default;
+                Response<SovereignViewData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SovereignViewResourceData)null, result);
+                        response = Response.FromValue((SovereignViewData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sovereign
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _sovereignViewOperationsClientDiagnostics.CreateScope("SovereignViewCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -535,14 +535,14 @@ namespace Azure.ResourceManager.Sovereign
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sovereignViewName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SovereignViewResourceData> response = default;
+                Response<SovereignViewData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                        response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SovereignViewResourceData)null, result);
+                        response = Response.FromValue((SovereignViewData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

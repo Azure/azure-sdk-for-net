@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusContent"/>. </summary>
         public SovereignViewOperationalStatusContent()
         {
-            EvaluationParameters = new ChangeTrackingList<OperationalStatusEvaluationParameter>();
+            EvaluationParameters = new ChangeTrackingList<SovereignViewOperationalStatusEvaluationKind>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusContent"/>. </summary>
         /// <param name="mode"> The level of detail to return in the operational status response. Defaults to Detailed. </param>
         /// <param name="evaluationParameters"> The evaluation parameters that control which checks are performed when determining operational status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewOperationalStatusContent(OperationalStatusRequestMode? mode, IList<OperationalStatusEvaluationParameter> evaluationParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewOperationalStatusContent(SovereignViewOperationalStatusMode? mode, IList<SovereignViewOperationalStatusEvaluationKind> evaluationParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             EvaluationParameters = evaluationParameters;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The level of detail to return in the operational status response. Defaults to Detailed. </summary>
-        public OperationalStatusRequestMode? Mode { get; set; }
+        public SovereignViewOperationalStatusMode? Mode { get; set; }
 
         /// <summary> The evaluation parameters that control which checks are performed when determining operational status. </summary>
-        public IList<OperationalStatusEvaluationParameter> EvaluationParameters { get; }
+        public IList<SovereignViewOperationalStatusEvaluationKind> EvaluationParameters { get; }
     }
 }

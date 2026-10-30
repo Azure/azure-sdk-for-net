@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             ResourceIdentifier policyInitiativeId = default;
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             IList<ResourceIdentifier> policyAssignmentIds = default;
             string policyVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("policyAssignmentIds"u8))

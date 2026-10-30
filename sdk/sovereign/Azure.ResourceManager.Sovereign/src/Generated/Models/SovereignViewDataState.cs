@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The state of the report data. </summary>
-    public readonly partial struct DataState : IEquatable<DataState>
+    public readonly partial struct SovereignViewDataState : IEquatable<SovereignViewDataState>
     {
         private readonly string _value;
         /// <summary> The data is still being processed and is not yet available. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> An error occurred while processing the data. </summary>
         private const string ErrorValue = "Error";
 
-        /// <summary> Initializes a new instance of <see cref="DataState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewDataState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataState(string value)
+        public SovereignViewDataState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The data is still being processed and is not yet available. </summary>
-        public static DataState Processing { get; } = new DataState(ProcessingValue);
+        public static SovereignViewDataState Processing { get; } = new SovereignViewDataState(ProcessingValue);
 
         /// <summary> The data is processed and available. </summary>
-        public static DataState Processed { get; } = new DataState(ProcessedValue);
+        public static SovereignViewDataState Processed { get; } = new SovereignViewDataState(ProcessedValue);
 
         /// <summary> An error occurred while processing the data. </summary>
-        public static DataState Error { get; } = new DataState(ErrorValue);
+        public static SovereignViewDataState Error { get; } = new SovereignViewDataState(ErrorValue);
 
-        /// <summary> Determines if two <see cref="DataState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewDataState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DataState left, DataState right) => left.Equals(right);
+        public static bool operator ==(SovereignViewDataState left, SovereignViewDataState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DataState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewDataState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DataState left, DataState right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewDataState left, SovereignViewDataState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DataState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewDataState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataState(string value) => new DataState(value);
+        public static implicit operator SovereignViewDataState(string value) => new SovereignViewDataState(value);
 
-        /// <summary> Converts a string to a <see cref="DataState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewDataState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataState?(string value) => value == null ? null : new DataState(value);
+        public static implicit operator SovereignViewDataState?(string value) => value == null ? null : new SovereignViewDataState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataState other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewDataState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DataState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewDataState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

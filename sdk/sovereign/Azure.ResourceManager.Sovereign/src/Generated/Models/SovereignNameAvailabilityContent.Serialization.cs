@@ -15,61 +15,61 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class SovereignCheckNameAvailabilityRequestContent : IJsonModel<SovereignCheckNameAvailabilityRequestContent>
+    public partial class SovereignNameAvailabilityContent : IJsonModel<SovereignNameAvailabilityContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignCheckNameAvailabilityRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SovereignNameAvailabilityContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignCheckNameAvailabilityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSovereignCheckNameAvailabilityRequestContent(document.RootElement, options);
+                        return DeserializeSovereignNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SovereignCheckNameAvailabilityRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignCheckNameAvailabilityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSovereignContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SovereignCheckNameAvailabilityRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SovereignNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SovereignCheckNameAvailabilityRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SovereignNameAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignCheckNameAvailabilityRequestContent IPersistableModel<SovereignCheckNameAvailabilityRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SovereignNameAvailabilityContent IPersistableModel<SovereignNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SovereignCheckNameAvailabilityRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SovereignNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sovereignCheckNameAvailabilityRequestContent"> The <see cref="SovereignCheckNameAvailabilityRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SovereignCheckNameAvailabilityRequestContent sovereignCheckNameAvailabilityRequestContent)
+        /// <param name="sovereignNameAvailabilityContent"> The <see cref="SovereignNameAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SovereignNameAvailabilityContent sovereignNameAvailabilityContent)
         {
-            if (sovereignCheckNameAvailabilityRequestContent == null)
+            if (sovereignNameAvailabilityContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sovereignCheckNameAvailabilityRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sovereignNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SovereignCheckNameAvailabilityRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SovereignNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignCheckNameAvailabilityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignCheckNameAvailabilityRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignCheckNameAvailabilityRequestContent IJsonModel<SovereignCheckNameAvailabilityRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SovereignNameAvailabilityContent IJsonModel<SovereignNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SovereignCheckNameAvailabilityRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SovereignNameAvailabilityContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SovereignCheckNameAvailabilityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SovereignNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SovereignCheckNameAvailabilityRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SovereignNameAvailabilityContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSovereignCheckNameAvailabilityRequestContent(document.RootElement, options);
+            return DeserializeSovereignNameAvailabilityContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SovereignCheckNameAvailabilityRequestContent DeserializeSovereignCheckNameAvailabilityRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static SovereignNameAvailabilityContent DeserializeSovereignNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignCheckNameAvailabilityRequestContent(name, @type, additionalBinaryDataProperties);
+            return new SovereignNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
         }
     }
 }

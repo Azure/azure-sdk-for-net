@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The custom provisioning state. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct SovereignViewProvisioningState : IEquatable<SovereignViewProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The state of the resource when deleting. </summary>
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public SovereignViewProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static SovereignViewProvisioningState Succeeded { get; } = new SovereignViewProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static SovereignViewProvisioningState Failed { get; } = new SovereignViewProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+        public static SovereignViewProvisioningState Canceled { get; } = new SovereignViewProvisioningState(CanceledValue);
 
         /// <summary> The state of the resource when creating. </summary>
-        public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
+        public static SovereignViewProvisioningState Creating { get; } = new SovereignViewProvisioningState(CreatingValue);
 
         /// <summary> The state of the resource when updating. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static SovereignViewProvisioningState Updating { get; } = new SovereignViewProvisioningState(UpdatingValue);
 
         /// <summary> The state of the resource when deleting. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static SovereignViewProvisioningState Deleting { get; } = new SovereignViewProvisioningState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+        public static bool operator ==(SovereignViewProvisioningState left, SovereignViewProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewProvisioningState left, SovereignViewProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static implicit operator SovereignViewProvisioningState(string value) => new SovereignViewProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator SovereignViewProvisioningState?(string value) => value == null ? null : new SovereignViewProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

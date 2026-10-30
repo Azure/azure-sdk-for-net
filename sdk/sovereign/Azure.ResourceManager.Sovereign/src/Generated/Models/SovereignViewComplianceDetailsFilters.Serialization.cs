@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             SovereignViewFilterField @field = default;
-            SovereignViewComplianceDetailsFilterOperators @operator = default;
+            SovereignViewComplianceDetailsFilterOperator @operator = default;
             IList<string> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new SovereignViewComplianceDetailsFilterOperators(prop.Value.GetString());
+                    @operator = new SovereignViewComplianceDetailsFilterOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

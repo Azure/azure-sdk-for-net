@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         {
         }
 
-        /// <summary> Gets a collection of SovereignViewResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SovereignViewResources and their operations over a SovereignViewResource. </returns>
-        public virtual SovereignViewResourceCollection GetSovereignViewResources()
+        /// <summary> Gets a collection of SovereignViews in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SovereignViews and their operations over a SovereignViewResource. </returns>
+        public virtual SovereignViewCollection GetSovereignViews()
         {
-            return GetCachedClient(client => new SovereignViewResourceCollection(client, Id));
+            return GetCachedClient(client => new SovereignViewCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sovereignViewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sovereignViewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SovereignViewResource>> GetSovereignViewResourceAsync(string sovereignViewName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SovereignViewResource>> GetSovereignViewAsync(string sovereignViewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            return await GetSovereignViewResources().GetAsync(sovereignViewName, cancellationToken).ConfigureAwait(false);
+            return await GetSovereignViews().GetAsync(sovereignViewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sovereignViewName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sovereignViewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SovereignViewResource> GetSovereignViewResource(string sovereignViewName, CancellationToken cancellationToken = default)
+        public virtual Response<SovereignViewResource> GetSovereignView(string sovereignViewName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sovereignViewName, nameof(sovereignViewName));
 
-            return GetSovereignViewResources().Get(sovereignViewName, cancellationToken);
+            return GetSovereignViews().Get(sovereignViewName, cancellationToken);
         }
     }
 }

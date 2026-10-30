@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusDetails"/>. </summary>
         /// <param name="reason"> The reason the sovereign view is unhealthy. </param>
-        internal SovereignViewOperationalStatusDetails(OperationalStatusUnhealthyReason reason)
+        internal SovereignViewOperationalStatusDetails(SovereignViewOperationalStatusUnhealthyReason reason)
         {
             Reason = reason;
             AffectedScopes = new ChangeTrackingList<SovereignViewAffectedScopes>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="reason"> The reason the sovereign view is unhealthy. </param>
         /// <param name="affectedScopes"> The scopes affected by the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewOperationalStatusDetails(OperationalStatusUnhealthyReason reason, IList<SovereignViewAffectedScopes> affectedScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewOperationalStatusDetails(SovereignViewOperationalStatusUnhealthyReason reason, IList<SovereignViewAffectedScopes> affectedScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             AffectedScopes = affectedScopes;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The reason the sovereign view is unhealthy. </summary>
-        public OperationalStatusUnhealthyReason Reason { get; }
+        public SovereignViewOperationalStatusUnhealthyReason Reason { get; }
 
         /// <summary> The scopes affected by the issue. </summary>
         public IList<SovereignViewAffectedScopes> AffectedScopes { get; }

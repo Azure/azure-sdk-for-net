@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             string remediationId = default;
-            ComplianceDimension dimensionType = default;
+            SovereignViewComplianceDimension dimensionType = default;
             SovereignViewRemediationStatus status = default;
             IList<SovereignViewRemediationResultItem> results = default;
             ResponseError error = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("dimensionType"u8))
                 {
-                    dimensionType = new ComplianceDimension(prop.Value.GetString());
+                    dimensionType = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

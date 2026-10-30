@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             int totalResources = default;
             int compliantCount = default;
             int nonCompliantCount = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("totalResources"u8))

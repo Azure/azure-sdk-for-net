@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sovereign;
 
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The patch model for the sovereign view resource type. </summary>
-    public partial class SovereignViewResourcePatch
+    public partial class SovereignViewPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourcePatch"/>. </summary>
-        public SovereignViewResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="SovereignViewPatch"/>. </summary>
+        public SovereignViewPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewResourcePatch(IDictionary<string, string> tags, SystemAssignedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +39,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

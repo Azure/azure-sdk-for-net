@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The level of detail to return in the sovereign view operational status response. </summary>
-    public readonly partial struct OperationalStatusRequestMode : IEquatable<OperationalStatusRequestMode>
+    public readonly partial struct SovereignViewOperationalStatusMode : IEquatable<SovereignViewOperationalStatusMode>
     {
         private readonly string _value;
         /// <summary> Returns a high-level operational status suitable for quickly determining overall view health. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> Returns a comprehensive operational status, including detailed information about individual checks, dependencies, and any issues impacting view operability. </summary>
         private const string DetailedValue = "Detailed";
 
-        /// <summary> Initializes a new instance of <see cref="OperationalStatusRequestMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationalStatusRequestMode(string value)
+        public SovereignViewOperationalStatusMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> Returns a high-level operational status suitable for quickly determining overall view health. </summary>
-        public static OperationalStatusRequestMode Summary { get; } = new OperationalStatusRequestMode(SummaryValue);
+        public static SovereignViewOperationalStatusMode Summary { get; } = new SovereignViewOperationalStatusMode(SummaryValue);
 
         /// <summary> Returns a comprehensive operational status, including detailed information about individual checks, dependencies, and any issues impacting view operability. </summary>
-        public static OperationalStatusRequestMode Detailed { get; } = new OperationalStatusRequestMode(DetailedValue);
+        public static SovereignViewOperationalStatusMode Detailed { get; } = new SovereignViewOperationalStatusMode(DetailedValue);
 
-        /// <summary> Determines if two <see cref="OperationalStatusRequestMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewOperationalStatusMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationalStatusRequestMode left, OperationalStatusRequestMode right) => left.Equals(right);
+        public static bool operator ==(SovereignViewOperationalStatusMode left, SovereignViewOperationalStatusMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationalStatusRequestMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewOperationalStatusMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationalStatusRequestMode left, OperationalStatusRequestMode right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewOperationalStatusMode left, SovereignViewOperationalStatusMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationalStatusRequestMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalStatusRequestMode(string value) => new OperationalStatusRequestMode(value);
+        public static implicit operator SovereignViewOperationalStatusMode(string value) => new SovereignViewOperationalStatusMode(value);
 
-        /// <summary> Converts a string to a <see cref="OperationalStatusRequestMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalStatusRequestMode?(string value) => value == null ? null : new OperationalStatusRequestMode(value);
+        public static implicit operator SovereignViewOperationalStatusMode?(string value) => value == null ? null : new SovereignViewOperationalStatusMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationalStatusRequestMode other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewOperationalStatusMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OperationalStatusRequestMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewOperationalStatusMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

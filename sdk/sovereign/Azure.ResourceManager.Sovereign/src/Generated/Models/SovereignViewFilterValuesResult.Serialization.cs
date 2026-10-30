@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            DataState dataState = default;
+            SovereignViewDataState dataState = default;
             ResponseError error = default;
             SovereignViewFilterField? requestedFilter = default;
             int? totalCount = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 if (prop.NameEquals("dataState"u8))
                 {
-                    dataState = new DataState(prop.Value.GetString());
+                    dataState = new SovereignViewDataState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="evaluatedOn"> The snapshot timestamp from which the response was produced. </param>
         /// <param name="state"> The compliance state for this dimension. </param>
         /// <param name="evaluations"> The linked and replica resource evaluations for this resource and dimension. </param>
-        internal SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId, ComplianceDimension dimension, DateTimeOffset evaluatedOn, PolicyComplianceState state, IEnumerable<SovereignViewDataEvaluation> evaluations)
+        internal SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId, SovereignViewComplianceDimension dimension, DateTimeOffset evaluatedOn, PolicyComplianceState state, IEnumerable<SovereignViewDataEvaluation> evaluations)
         {
             ResourceId = resourceId;
             Dimension = dimension;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="state"> The compliance state for this dimension. </param>
         /// <param name="evaluations"> The linked and replica resource evaluations for this resource and dimension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId, ComplianceDimension dimension, DateTimeOffset evaluatedOn, PolicyComplianceState state, IList<SovereignViewDataEvaluation> evaluations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceResourceDetailsResult(ResourceIdentifier resourceId, SovereignViewComplianceDimension dimension, DateTimeOffset evaluatedOn, PolicyComplianceState state, IList<SovereignViewDataEvaluation> evaluations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Dimension = dimension;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The compliance dimension for which reasoning is returned. </summary>
-        public ComplianceDimension Dimension { get; }
+        public SovereignViewComplianceDimension Dimension { get; }
 
         /// <summary> The snapshot timestamp from which the response was produced. </summary>
         public DateTimeOffset EvaluatedOn { get; }

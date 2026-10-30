@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="resourceId"> The full Azure Resource Manager resource identifier of the resource for which compliance reasoning is requested. </param>
         /// <param name="dimension"> The compliance dimension for which reasoning is requested. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId, ComplianceDimension dimension)
+        public SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId, SovereignViewComplianceDimension dimension)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="dimension"> The compliance dimension for which reasoning is requested. </param>
         /// <param name="evaluatedOn"> The snapshot timestamp from the compliance-details response. When omitted, the latest completed snapshot is returned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId, ComplianceDimension dimension, DateTimeOffset? evaluatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceResourceDetailsContent(ResourceIdentifier resourceId, SovereignViewComplianceDimension dimension, DateTimeOffset? evaluatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Dimension = dimension;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The compliance dimension for which reasoning is requested. </summary>
-        public ComplianceDimension Dimension { get; }
+        public SovereignViewComplianceDimension Dimension { get; }
 
         /// <summary> The snapshot timestamp from the compliance-details response. When omitted, the latest completed snapshot is returned. </summary>
         public DateTimeOffset? EvaluatedOn { get; set; }

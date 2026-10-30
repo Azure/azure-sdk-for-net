@@ -20,39 +20,39 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailsResult"/>. </summary>
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
-        internal SovereignViewComplianceDetailsResult(ReportStatus reportStatus, DateTimeOffset lastEvaluated)
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
+        internal SovereignViewComplianceDetailsResult(SovereignViewReportStatus reportStatus, DateTimeOffset lastEvaluatedOn)
         {
             ReportStatus = reportStatus;
-            LastEvaluated = lastEvaluated;
+            LastEvaluatedOn = lastEvaluatedOn;
             Resources = new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailsResult"/>. </summary>
         /// <param name="reportStatus"> State indicating whether the data is processed or still being processed. </param>
         /// <param name="error"> Error details when dataState is Error. </param>
-        /// <param name="lastEvaluated"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
+        /// <param name="lastEvaluatedOn"> The time when compliance was last evaluated overall, in RFC3339 format. </param>
         /// <param name="totalResources"> Total number of resources for the sovereign view. </param>
         /// <param name="resources"> The list of compliance detail resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsResult(ReportStatus reportStatus, ResponseError error, DateTimeOffset lastEvaluated, int? totalResources, IList<SovereignViewComplianceDetailResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsResult(SovereignViewReportStatus reportStatus, ResponseError error, DateTimeOffset lastEvaluatedOn, int? totalResources, IList<SovereignViewComplianceDetailResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReportStatus = reportStatus;
             Error = error;
-            LastEvaluated = lastEvaluated;
+            LastEvaluatedOn = lastEvaluatedOn;
             TotalResources = totalResources;
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> State indicating whether the data is processed or still being processed. </summary>
-        public ReportStatus ReportStatus { get; }
+        public SovereignViewReportStatus ReportStatus { get; }
 
         /// <summary> Error details when dataState is Error. </summary>
         public ResponseError Error { get; }
 
         /// <summary> The time when compliance was last evaluated overall, in RFC3339 format. </summary>
-        public DateTimeOffset LastEvaluated { get; }
+        public DateTimeOffset LastEvaluatedOn { get; }
 
         /// <summary> Total number of resources for the sovereign view. </summary>
         public int? TotalResources { get; }

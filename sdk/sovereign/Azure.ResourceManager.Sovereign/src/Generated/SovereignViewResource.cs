@@ -21,15 +21,15 @@ using Azure.ResourceManager.Sovereign.Models;
 namespace Azure.ResourceManager.Sovereign
 {
     /// <summary>
-    /// A class representing a SovereignViewResource along with the instance operations that can be performed on it.
+    /// A class representing a SovereignView along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SovereignViewResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSovereignViewResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSovereignViews method.
     /// </summary>
     public partial class SovereignViewResource : ArmResource
     {
         private readonly ClientDiagnostics _sovereignViewOperationsClientDiagnostics;
         private readonly SovereignViewOperations _sovereignViewOperationsRestClient;
-        private readonly SovereignViewResourceData _data;
+        private readonly SovereignViewData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sovereign/sovereignViews";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <summary> Initializes a new instance of <see cref="SovereignViewResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SovereignViewResource(ArmClient client, SovereignViewResourceData data) : this(client, data.Id)
+        internal SovereignViewResource(ArmClient client, SovereignViewData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sovereign
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SovereignViewResourceData Data
+        public virtual SovereignViewData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sovereign
                 };
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sovereign
                 };
                 HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SovereignViewResource>> UpdateAsync(WaitUntil waitUntil, SovereignViewResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SovereignViewResource>> UpdateAsync(WaitUntil waitUntil, SovereignViewPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sovereign
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sovereignViewOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SovereignViewResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sovereignViewOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SovereignViewPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SovereignArmOperation<SovereignViewResource> operation = new SovereignArmOperation<SovereignViewResource>(
                     new SovereignViewResourceOperationSource(Client),
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SovereignViewResource> Update(WaitUntil waitUntil, SovereignViewResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SovereignViewResource> Update(WaitUntil waitUntil, SovereignViewPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sovereign
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sovereignViewOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SovereignViewResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _sovereignViewOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SovereignViewPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SovereignArmOperation<SovereignViewResource> operation = new SovereignArmOperation<SovereignViewResource>(
                     new SovereignViewResourceOperationSource(Client),
@@ -1164,13 +1164,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1212,13 +1212,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1258,13 +1258,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SovereignViewResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1300,13 +1300,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SovereignViewResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1342,13 +1342,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1388,13 +1388,13 @@ namespace Azure.ResourceManager.Sovereign
                     };
                     HttpMessage message = _sovereignViewOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SovereignViewResourceData> response = Response.FromValue(SovereignViewResourceData.FromResponse(result), result);
+                    Response<SovereignViewData> response = Response.FromValue(SovereignViewData.FromResponse(result), result);
                     return Response.FromValue(new SovereignViewResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    SovereignViewResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SovereignViewResourcePatch patch = new SovereignViewResourcePatch();
+                    SovereignViewData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SovereignViewPatch patch = new SovereignViewPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

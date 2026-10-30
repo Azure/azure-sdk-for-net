@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, ResourceIdentifier parentResourceId, string location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, string parentResourceId, string location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ParentResourceId = parentResourceId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The fully qualified Azure Resource Manager ID of the parent resource. When a resource is created as part of another Azure resource's creation and its lifecycle is managed by the platform, this is the ID of that parent resource. For a resource that was created standalone and has no parent resource, this will be empty. </summary>
-        public ResourceIdentifier ParentResourceId { get; }
+        public string ParentResourceId { get; }
 
         /// <summary> The location of the resource. </summary>
         public string Location { get; }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SovereignViewResourceData item in Value)
+            foreach (SovereignViewData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            IList<SovereignViewResourceData> value = default;
+            IList<SovereignViewData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SovereignViewResourceData> array = new List<SovereignViewResourceData>();
+                    List<SovereignViewData> array = new List<SovereignViewData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SovereignViewResourceData.DeserializeSovereignViewResourceData(item, options));
+                        array.Add(SovereignViewData.DeserializeSovereignViewData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewResourceListResult(value ?? new ChangeTrackingList<SovereignViewResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new SovereignViewResourceListResult(value ?? new ChangeTrackingList<SovereignViewData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             string name = default;
             string id = default;
             SovereignViewScopeType @type = default;
-            ScopeLevelOperationalStatusStates status = default;
+            SovereignViewScopeOperationalStatusState status = default;
             string actionRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ScopeLevelOperationalStatusStates(prop.Value.GetString());
+                    status = new SovereignViewScopeOperationalStatusState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionRequired"u8))

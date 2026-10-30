@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The compliance dimension to be associated with the policy initiative. </summary>
-    public readonly partial struct ComplianceDimension : IEquatable<ComplianceDimension>
+    public readonly partial struct SovereignViewComplianceDimension : IEquatable<SovereignViewComplianceDimension>
     {
         private readonly string _value;
         /// <summary> Data residency compliance dimension. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> Business continuity compliance dimension. </summary>
         private const string BusinessContinuityValue = "BusinessContinuity";
 
-        /// <summary> Initializes a new instance of <see cref="ComplianceDimension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDimension"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComplianceDimension(string value)
+        public SovereignViewComplianceDimension(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> Data residency compliance dimension. </summary>
-        public static ComplianceDimension DataResidency { get; } = new ComplianceDimension(DataResidencyValue);
+        public static SovereignViewComplianceDimension DataResidency { get; } = new SovereignViewComplianceDimension(DataResidencyValue);
 
         /// <summary> Encryption at rest compliance dimension. </summary>
-        public static ComplianceDimension EncryptionAtRest { get; } = new ComplianceDimension(EncryptionAtRestValue);
+        public static SovereignViewComplianceDimension EncryptionAtRest { get; } = new SovereignViewComplianceDimension(EncryptionAtRestValue);
 
         /// <summary> Encryption in transit compliance dimension. </summary>
-        public static ComplianceDimension EncryptionInTransit { get; } = new ComplianceDimension(EncryptionInTransitValue);
+        public static SovereignViewComplianceDimension EncryptionInTransit { get; } = new SovereignViewComplianceDimension(EncryptionInTransitValue);
 
         /// <summary> Encryption in use compliance dimension. </summary>
-        public static ComplianceDimension EncryptionInUse { get; } = new ComplianceDimension(EncryptionInUseValue);
+        public static SovereignViewComplianceDimension EncryptionInUse { get; } = new SovereignViewComplianceDimension(EncryptionInUseValue);
 
         /// <summary> Controlled network exposure compliance dimension. </summary>
-        public static ComplianceDimension ControlledNetworkExposure { get; } = new ComplianceDimension(ControlledNetworkExposureValue);
+        public static SovereignViewComplianceDimension ControlledNetworkExposure { get; } = new SovereignViewComplianceDimension(ControlledNetworkExposureValue);
 
         /// <summary> Business continuity compliance dimension. </summary>
-        public static ComplianceDimension BusinessContinuity { get; } = new ComplianceDimension(BusinessContinuityValue);
+        public static SovereignViewComplianceDimension BusinessContinuity { get; } = new SovereignViewComplianceDimension(BusinessContinuityValue);
 
-        /// <summary> Determines if two <see cref="ComplianceDimension"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewComplianceDimension"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComplianceDimension left, ComplianceDimension right) => left.Equals(right);
+        public static bool operator ==(SovereignViewComplianceDimension left, SovereignViewComplianceDimension right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComplianceDimension"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewComplianceDimension"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComplianceDimension left, ComplianceDimension right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewComplianceDimension left, SovereignViewComplianceDimension right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComplianceDimension"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewComplianceDimension"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComplianceDimension(string value) => new ComplianceDimension(value);
+        public static implicit operator SovereignViewComplianceDimension(string value) => new SovereignViewComplianceDimension(value);
 
-        /// <summary> Converts a string to a <see cref="ComplianceDimension"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewComplianceDimension"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComplianceDimension?(string value) => value == null ? null : new ComplianceDimension(value);
+        public static implicit operator SovereignViewComplianceDimension?(string value) => value == null ? null : new SovereignViewComplianceDimension(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComplianceDimension other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewComplianceDimension other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComplianceDimension other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewComplianceDimension other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

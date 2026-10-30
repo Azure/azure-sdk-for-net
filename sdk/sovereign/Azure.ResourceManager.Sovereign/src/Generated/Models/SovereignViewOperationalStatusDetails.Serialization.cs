@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            OperationalStatusUnhealthyReason reason = default;
+            SovereignViewOperationalStatusUnhealthyReason reason = default;
             IList<SovereignViewAffectedScopes> affectedScopes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("reason"u8))
                 {
-                    reason = new OperationalStatusUnhealthyReason(prop.Value.GetString());
+                    reason = new SovereignViewOperationalStatusUnhealthyReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("affectedScopes"u8))

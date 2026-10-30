@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Sovereign
 {
     /// <summary></summary>
-    public partial class SovereignViewResource : IJsonModel<SovereignViewResourceData>
+    public partial class SovereignViewResource : IJsonModel<SovereignViewData>
     {
-        private static IJsonModel<SovereignViewResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<SovereignViewData> s_dataDeserializationInstance;
 
-        private static IJsonModel<SovereignViewResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SovereignViewResourceData();
+        private static IJsonModel<SovereignViewData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SovereignViewData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SovereignViewResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SovereignViewResourceData>)Data).Write(writer, options);
+        void IJsonModel<SovereignViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SovereignViewData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceData IJsonModel<SovereignViewResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SovereignViewData IJsonModel<SovereignViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SovereignViewResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SovereignViewResourceData>(Data, options, AzureResourceManagerSovereignContext.Default);
+        BinaryData IPersistableModel<SovereignViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SovereignViewData>(Data, options, AzureResourceManagerSovereignContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SovereignViewResourceData IPersistableModel<SovereignViewResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SovereignViewResourceData>(data, options, AzureResourceManagerSovereignContext.Default);
+        SovereignViewData IPersistableModel<SovereignViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SovereignViewData>(data, options, AzureResourceManagerSovereignContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SovereignViewResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SovereignViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

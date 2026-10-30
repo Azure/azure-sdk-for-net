@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The overall operational status states for a sovereign view. </summary>
-    public readonly partial struct OperationalStatusStates : IEquatable<OperationalStatusStates>
+    public readonly partial struct SovereignViewOperationalStatusState : IEquatable<SovereignViewOperationalStatusState>
     {
         private readonly string _value;
         /// <summary> The sovereign view is healthy and fully operational. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The operational status of the sovereign view could not be determined. </summary>
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Initializes a new instance of <see cref="OperationalStatusStates"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewOperationalStatusState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationalStatusStates(string value)
+        public SovereignViewOperationalStatusState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The sovereign view is healthy and fully operational. </summary>
-        public static OperationalStatusStates Healthy { get; } = new OperationalStatusStates(HealthyValue);
+        public static SovereignViewOperationalStatusState Healthy { get; } = new SovereignViewOperationalStatusState(HealthyValue);
 
         /// <summary> The sovereign view is unhealthy and its operability is impacted. </summary>
-        public static OperationalStatusStates Unhealthy { get; } = new OperationalStatusStates(UnhealthyValue);
+        public static SovereignViewOperationalStatusState Unhealthy { get; } = new SovereignViewOperationalStatusState(UnhealthyValue);
 
         /// <summary> The operational status of the sovereign view could not be determined. </summary>
-        public static OperationalStatusStates Unknown { get; } = new OperationalStatusStates(UnknownValue);
+        public static SovereignViewOperationalStatusState Unknown { get; } = new SovereignViewOperationalStatusState(UnknownValue);
 
-        /// <summary> Determines if two <see cref="OperationalStatusStates"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewOperationalStatusState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationalStatusStates left, OperationalStatusStates right) => left.Equals(right);
+        public static bool operator ==(SovereignViewOperationalStatusState left, SovereignViewOperationalStatusState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationalStatusStates"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewOperationalStatusState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationalStatusStates left, OperationalStatusStates right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewOperationalStatusState left, SovereignViewOperationalStatusState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationalStatusStates"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalStatusStates(string value) => new OperationalStatusStates(value);
+        public static implicit operator SovereignViewOperationalStatusState(string value) => new SovereignViewOperationalStatusState(value);
 
-        /// <summary> Converts a string to a <see cref="OperationalStatusStates"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewOperationalStatusState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalStatusStates?(string value) => value == null ? null : new OperationalStatusStates(value);
+        public static implicit operator SovereignViewOperationalStatusState?(string value) => value == null ? null : new SovereignViewOperationalStatusState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationalStatusStates other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewOperationalStatusState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OperationalStatusStates other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewOperationalStatusState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

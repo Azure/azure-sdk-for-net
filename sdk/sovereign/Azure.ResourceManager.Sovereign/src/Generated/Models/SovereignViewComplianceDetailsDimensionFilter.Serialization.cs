@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ComplianceDimension dimension = default;
+            SovereignViewComplianceDimension dimension = default;
             IList<PolicyComplianceState> states = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dimension"u8))
                 {
-                    dimension = new ComplianceDimension(prop.Value.GetString());
+                    dimension = new SovereignViewComplianceDimension(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("states"u8))
