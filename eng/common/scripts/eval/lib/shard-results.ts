@@ -178,23 +178,23 @@ export function stageShardResults({ resultsRoot, outputDirectory, shardName, att
     return metadata;
 }
 
-export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts, artifactNamespace = "" }) {
+export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts, artifactPrefix = "" }) {
     if (!Array.isArray(expectedShards) || expectedShards.some((name) => !validShard(name)) ||
         new Set(expectedShards).size !== expectedShards.length) {
         throw new Error("Expected shards must be unique, valid shard names from Prepare.");
     }
-    if (typeof artifactNamespace !== "string" || (artifactNamespace !== "" && !validShard(artifactNamespace))) {
-        throw new Error("Invalid artifact namespace.");
+    if (typeof artifactPrefix !== "string" || (artifactPrefix !== "" && !validShard(artifactPrefix))) {
+        throw new Error("Invalid artifact prefix.");
     }
-    const artifactPrefix = `eval-result-${artifactNamespace ? `${artifactNamespace}-` : ""}`;
+    const resultPrefix = `eval-result-${artifactPrefix}`;
     emptyDirectory(selectedRoot);
     const expected = new Set(expectedShards);
     const timeline = jobAttempts?.schemaVersion === 1 && jobAttempts.valid === true ? jobAttempts.attempts : null;
     const selected = new Map();
     const seen = new Set();
     for (const entry of fs.readdirSync(resultsRoot, { withFileTypes: true })) {
-        if (!entry.name.startsWith(artifactPrefix)) continue;
-        const match = /^(.+)-(\d+)$/.exec(entry.name.slice(artifactPrefix.length));
+        if (!entry.name.startsWith(resultPrefix)) continue;
+        const match = /^(.+)-(\d+)$/.exec(entry.name.slice(resultPrefix.length));
         if (!match || !expected.has(match[1])) continue;
         if (!entry.isDirectory()) throw new Error("Shard artifact paths must be directories, not files or symbolic links.");
         const attempt = Number(match[2]);

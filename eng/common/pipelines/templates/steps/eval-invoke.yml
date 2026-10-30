@@ -19,6 +19,8 @@ parameters:
     default: ''
   - name: vallyArguments
     # Supplementary --tag/--runs/--workers/--timeout argument pairs, not shell text.
+    # --tag does not filter the matrix; callers must keep every planned eval non-empty.
+    # JSON-escape dollar signs below so agent macros cannot rewrite argument data.
     type: object
     default: []
 
@@ -45,7 +47,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        VALLY_ARGUMENTS_JSON: ${{ convertToJson(parameters.vallyArguments) }}
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
 
   - ${{ else }}:
     - script: |
@@ -58,4 +60,4 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
-        VALLY_ARGUMENTS_JSON: ${{ convertToJson(parameters.vallyArguments) }}
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}

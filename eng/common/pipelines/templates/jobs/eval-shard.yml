@@ -10,8 +10,9 @@ parameters:
     # Stage containing the generate_eval_matrix job.
     type: string
     default: Prepare
-  - name: artifactNamespace
-    # Optional track namespace (e.g. 'forced'); common adds the separator.
+  - name: artifactPrefix
+    # Literal prefix after 'eval-result-' / 'eval-debug-'; include any separator (e.g. 'forced-').
+    # Match Summary's prefix and keep final artifact names unique across this build's tracks.
     type: string
     default: ''
   - name: evalInvokeTemplate
@@ -19,8 +20,13 @@ parameters:
     type: string
     default: /eng/common/pipelines/templates/steps/eval-invoke.yml
   - name: vallyArguments
+    # --tag does not filter the supplied matrix; each planned eval must retain matching stimuli.
     type: object
     default: []
+  - name: failOnFailedTests
+    # Match Summary's gate; multi-run gating is not currently supported.
+    type: boolean
+    default: false
   - name: azureSubscription
     # Caller-owned service connection; required by the common authenticated invoke template.
     type: string
@@ -68,18 +74,12 @@ jobs:
         # The Summary job keeps only the highest attempt per shard so retries supersede cleanly.
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) raw results, JUnit and completeness'
-          ${{ if eq(parameters.artifactNamespace, '') }}:
-            artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
-          ${{ else }}:
-            artifactName: 'eval-result-${{ parameters.artifactNamespace }}-$(shardName)-$(System.JobAttempt)'
+          artifactName: 'eval-result-${{ parameters.artifactPrefix }}$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/eval-result
           condition: always()
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) transcripts (on failure)'
-          ${{ if eq(parameters.artifactNamespace, '') }}:
-            artifactName: 'eval-debug-$(shardName)-$(System.JobAttempt)'
-          ${{ else }}:
-            artifactName: 'eval-debug-${{ parameters.artifactNamespace }}-$(shardName)-$(System.JobAttempt)'
+          artifactName: 'eval-debug-${{ parameters.artifactPrefix }}$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/debug
           condition: failed()
     steps:
@@ -91,6 +91,14 @@ jobs:
         displayName: 'Use Node.js 24.x'
         inputs:
           version: 24.x
+
+      - ${{ if eq(parameters.evalInvokeTemplate, '/eng/common/pipelines/templates/steps/eval-invoke.yml') }}:
+        - script: |
+            node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" --validate-only
+          displayName: 'Validate eval run configuration'
+          env:
+            VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
+            EVAL_FAIL_ON_FAILED_TESTS: ${{ parameters.failOnFailedTests }}
 
       # 1ES Official image blocks registry.npmjs.org; restore via the azure-sdk npm mirror.
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
