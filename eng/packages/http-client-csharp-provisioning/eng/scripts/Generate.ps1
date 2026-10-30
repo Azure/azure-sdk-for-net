@@ -50,6 +50,12 @@ foreach ($project in $provisioningTypespecProjects) {
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
+
+    Write-Host "Exporting resource inventory for $($project.Name)" -ForegroundColor Cyan
+    & (Join-Path $PSScriptRoot "Export-ResourceInventory.ps1") `
+        -Path $testCsproj.FullName `
+        -OutputPath (Join-Path $project.OutputDirectory "resource-inventory.json") `
+        -ErrorAction Stop
 }
 
 # only write new launch settings if no filter was passed in
