@@ -302,7 +302,8 @@ Describe 'Compiled re-review publication guard' {
 Describe 'Re-review prompt' {
     BeforeAll {
         Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
-        $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[2]
+        $script:Frontmatter, $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[1, 2]
+        $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
     }
 
     It 'asks for the exact coverage line the guard enforces' {
@@ -323,5 +324,19 @@ Describe 'Re-review prompt' {
     It 'pages review threads with the get_review_comments cursor' {
         $script:PromptBody | Should -Match '\bget_review_comments\b'
         $script:PromptBody | Should -Match '`after`'
+    }
+
+    It 'states the same time limit as timeout-minutes' {
+        $minutes = [regex]::Match($script:Frontmatter, '(?m)^timeout-minutes:\s*(\d+)\s*$').Groups[1].Value
+        $minutes | Should -Not -BeNullOrEmpty
+        $stated = @([regex]::Matches($script:PromptBody, '\b(\d+)[- ]minutes?\b') | ForEach-Object { $_.Groups[1].Value })
+        $stated | Should -Not -BeNullOrEmpty
+        $stated | Select-Object -Unique | Should -Be $minutes
+    }
+
+    It 'reserves report_incomplete for failures that happen, not a size estimate' {
+        $script:Step4 | Should -Match '\breport_incomplete\b'
+        $script:Step4 | Should -Match '(?i)\bestimate\b'
+        $script:Step4 | Should -Match '(?i)\blist the files you reviewed\b'
     }
 }
