@@ -302,6 +302,7 @@ Describe 'Compiled re-review publication guard' {
 Describe 'Re-review prompt' {
     BeforeAll {
         Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[2]
     }
 
     It 'asks for the exact coverage line the guard enforces' {
@@ -312,5 +313,15 @@ Describe 'Re-review prompt' {
     It 'accepts that coverage line once every placeholder is a matching count' {
         $line = (Get-PrReReviewCoverageTemplate) -replace '<fetched>|<total>', '7' -replace '<verified>|<unresolved>', '3' -replace '<reviewed>|<changed>', '12'
         { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n`n$line")) } | Should -Not -Throw
+    }
+
+    It 'reads GitHub through the MCP tools, not the unauthenticated gh CLI' {
+        $script:PromptBody | Should -Not -Match '\bgh\s+(?:pr\s+(?:diff|view)|api\s+graphql)\b'
+        $script:PromptBody | Should -Match '\bpull_request_read\b'
+    }
+
+    It 'pages review threads with the get_review_comments cursor' {
+        $script:PromptBody | Should -Match '\bget_review_comments\b'
+        $script:PromptBody | Should -Match '`after`'
     }
 }
