@@ -408,7 +408,9 @@ public class EventProcessorService : BackgroundService
     {
         try
         {
-            await _processor.StopProcessingAsync(cancellationToken);
+            // The host's token may already be canceled if shutdown is running out of time; stopping
+            // without it allows the processor to complete cleanup and relinquish partition ownership.
+            await _processor.StopProcessingAsync();
         }
         finally
         {
