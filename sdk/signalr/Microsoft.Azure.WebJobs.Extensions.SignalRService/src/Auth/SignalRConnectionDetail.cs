@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Security.Claims;
+using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -21,5 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// Custom claims that added to SignalR access token.
         /// </summary>
         public IList<Claim> Claims { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application authentication expiration used by authentication refresh.
+        /// </summary>
+        public DateTimeOffset? AuthenticationExpiresOn { get; set; }
     }
 }
