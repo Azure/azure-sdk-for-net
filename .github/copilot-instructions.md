@@ -31,19 +31,12 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## Local SDK Generation and Package Lifecycle (TypeSpec)
 
-### AUTHORITATIVE REFERENCE
-For all TypeSpec-based SDK workflows (generation, building, validation, testing, versioning, and release preparation), follow `eng/common/instructions/azsdk-tools/local-sdk-workflow.instructions.md` (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
-
 ### DEFAULT BEHAVIORS
 - **Repository:** Use the current workspace as the local SDK repository unless the user specifies a different path.
 - **Configuration:** Identify `tsp-location.yaml` from files open in the editor. If unclear, ask the user.
 
 ### REQUIRED CONFIRMATIONS
 Ask the user for clarification if repository path or configuration file is ambiguous.
-
-## SDK release
-
-For detailed workflow instructions, see the shared SDK release instructions (not yet published -- tracked in [azure-sdk-tools#17247](https://github.com/Azure/azure-sdk-tools/issues/17247)).
 
 ## Pre-Commit Validation
 
