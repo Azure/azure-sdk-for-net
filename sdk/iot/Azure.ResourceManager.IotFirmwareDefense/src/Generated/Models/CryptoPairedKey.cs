@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Details of a matching paired key or certificate. </summary>
     public partial class CryptoPairedKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CryptoPairedKey"/>. </summary>
         public CryptoPairedKey()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="CryptoPairedKey"/>. </summary>
         /// <param name="pairedKeyId"> ID of the paired key or certificate. </param>
         /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoPairedKey(string pairedKeyId, string pairedKeyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CryptoPairedKey(string pairedKeyId, string pairedKeyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PairedKeyId = pairedKeyId;
             PairedKeyType = pairedKeyType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the paired key or certificate. </summary>
         public string PairedKeyId { get; set; }
+
         /// <summary> The type indicating whether the paired object is a key or certificate. </summary>
         public string PairedKeyType { get; set; }
     }

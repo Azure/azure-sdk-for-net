@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -147,12 +149,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FirmwareUriToken>> GenerateDownloadUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
             scope.Start();
             try
             {
-                var response = await _iotFirmwareFirmwaresRestClient.GenerateDownloadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGenerateDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Response.FromValue(FirmwareUriToken.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -186,12 +193,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FirmwareUriToken> GenerateDownloadUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateDownloadUri");
             scope.Start();
             try
             {
-                var response = _iotFirmwareFirmwaresRestClient.GenerateDownloadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGenerateDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                return Response.FromValue(FirmwareUriToken.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -225,12 +237,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FirmwareUriToken>> GenerateFilesystemDownloadUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
             scope.Start();
             try
             {
-                var response = await _iotFirmwareFirmwaresRestClient.GenerateFilesystemDownloadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGenerateFilesystemDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Response.FromValue(FirmwareUriToken.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -264,12 +281,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FirmwareUriToken> GenerateFilesystemDownloadUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
+            using DiagnosticScope scope = _firmwaresClientDiagnostics.CreateScope("IotFirmwareResource.GenerateFilesystemDownloadUri");
             scope.Start();
             try
             {
-                var response = _iotFirmwareFirmwaresRestClient.GenerateFilesystemDownloadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firmwaresRestClient.CreateGenerateFilesystemDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                return Response.FromValue(FirmwareUriToken.FromResponse(result), result);
             }
             catch (Exception e)
             {
