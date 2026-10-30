@@ -24,7 +24,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
         private ManagedServiceIdentity _identity;
         private BicepValue<ResourceIdentifier> _managedBy;
         private ArmPlan _plan;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new KubernetesClusterExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -417,7 +417,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _managedBy = DefineProperty<ResourceIdentifier>(nameof(ManagedBy), new string[] { "managedBy" });
             _plan = DefineModelProperty<ArmPlan>(nameof(Plan), new string[] { "plan" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

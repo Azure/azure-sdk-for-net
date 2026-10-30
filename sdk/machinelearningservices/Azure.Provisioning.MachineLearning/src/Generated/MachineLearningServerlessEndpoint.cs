@@ -24,7 +24,7 @@ namespace Azure.Provisioning.MachineLearning
         private ManagedServiceIdentity _identity;
         private BicepValue<string> _kind;
         private MachineLearningSku _sku;
-        private ResourceReference<MachineLearningWorkspace> _parent;
+        private ProvisioningResourceReference<MachineLearningWorkspace> _parent;
 
         /// <summary> Creates a new MachineLearningServerlessEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.MachineLearning
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _sku = DefineModelProperty<MachineLearningSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<MachineLearningWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MachineLearningWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.KeyVault
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<KeyVaultService> _parent;
+        private ProvisioningResourceReference<KeyVaultService> _parent;
 
         /// <summary> Creates a new KeyVaultPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.KeyVault
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<KeyVaultService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<KeyVaultService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

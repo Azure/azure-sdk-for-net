@@ -23,7 +23,7 @@ namespace Azure.Provisioning.IotHub
         private SystemData _systemData;
         private IotHubCertificateProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<IotHubDescription> _parent;
+        private ProvisioningResourceReference<IotHubDescription> _parent;
 
         /// <summary> Creates a new IotHubCertificateDescription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.IotHub
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IotHubCertificateProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<IotHubDescription>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<IotHubDescription>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

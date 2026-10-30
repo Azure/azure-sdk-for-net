@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Maps
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MapsPrivateLinkResourceProperties _properties;
-        private ResourceReference<MapsAccount> _parent;
+        private ProvisioningResourceReference<MapsAccount> _parent;
 
         /// <summary> Creates a new MapsPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Maps
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MapsPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MapsAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MapsAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

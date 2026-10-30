@@ -23,7 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         private MachineLearningSku _sku;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ResourceReference<MachineLearningWorkspace> _parent;
+        private ProvisioningResourceReference<MachineLearningWorkspace> _parent;
 
         /// <summary> Creates a new MachineLearningPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -216,7 +216,7 @@ namespace Azure.Provisioning.MachineLearning
             _sku = DefineModelProperty<MachineLearningSku>(nameof(Sku), new string[] { "sku" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<MachineLearningWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MachineLearningWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

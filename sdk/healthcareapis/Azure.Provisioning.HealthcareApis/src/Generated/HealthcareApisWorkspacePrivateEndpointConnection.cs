@@ -20,7 +20,7 @@ namespace Azure.Provisioning.HealthcareApis
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
-        private ResourceReference<HealthcareApisWorkspace> _parent;
+        private ProvisioningResourceReference<HealthcareApisWorkspace> _parent;
 
         /// <summary> Creates a new HealthcareApisWorkspacePrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.HealthcareApis
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<HealthcareApisWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
