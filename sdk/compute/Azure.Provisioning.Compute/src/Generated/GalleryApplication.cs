@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new GalleryApplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GalleryApplication(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/applications", resourceVersion ?? "2025-12-03")
+        public GalleryApplication(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/applications", resourceVersion ?? "2026-03-03")
         {
         }
 
@@ -275,6 +275,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-03". </summary>
+            public static readonly string V2026_03_03 = "2026-03-03";
             /// <summary> API version "2025-12-03". </summary>
             public static readonly string V2025_12_03 = "2025-12-03";
             /// <summary> API version "2025-03-03". </summary>

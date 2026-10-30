@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineExtensionImage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/locations/publishers/artifacttypes/types/versions", resourceVersion ?? "2026-03-01")
+        internal VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/locations/publishers/artifacttypes/types/versions", resourceVersion ?? "2026-04-01")
         {
         }
 
@@ -139,6 +139,51 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the ReleaseNotes. </summary>
+        public BicepValue<string> ReleaseNotes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseNotes;
+            }
+        }
+
+        /// <summary> Gets the ReleaseCategory. </summary>
+        public BicepValue<ReleaseCategory> ReleaseCategory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseCategory;
+            }
+        }
+
+        /// <summary> Gets the UrgencyLevel. </summary>
+        public BicepValue<UrgencyLevel> UrgencyLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UrgencyLevel;
+            }
+        }
+
+        /// <summary> Gets the RunProfile. </summary>
+        public BicepValue<RunProfile> RunProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunProfile;
+            }
+        }
+
+        /// <summary> Gets the ExtensionFeatureTags. </summary>
+        public BicepList<ExtensionFeatureTag> ExtensionFeatureTags
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtensionFeatureTags;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineExtensionImage. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -168,6 +213,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
             /// <summary> API version "2026-03-01". </summary>
             public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2025-11-01". </summary>

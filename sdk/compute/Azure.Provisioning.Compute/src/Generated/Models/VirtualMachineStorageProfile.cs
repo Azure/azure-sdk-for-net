@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Compute
         private BicepList<VirtualMachineDataDisk> _dataDisks;
         private BicepValue<DiskControllerType> _diskControllerType;
         private BicepValue<bool> _alignRegionalDisksToVmZone;
+        private BicepValue<DiskApiVersion> _diskApiVersion;
 
         /// <summary> Creates a new VirtualMachineStorageProfile. </summary>
         public VirtualMachineStorageProfile()
@@ -99,6 +100,21 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the DiskApiVersion. </summary>
+        public BicepValue<DiskApiVersion> DiskApiVersion
+        {
+            get
+            {
+                Initialize();
+                return _diskApiVersion;
+            }
+            set
+            {
+                Initialize();
+                _diskApiVersion.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineStorageProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -108,6 +124,7 @@ namespace Azure.Provisioning.Compute
             _dataDisks = DefineListProperty<VirtualMachineDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _diskControllerType = DefineProperty<DiskControllerType>(nameof(DiskControllerType), new string[] { "diskControllerType" });
             _alignRegionalDisksToVmZone = DefineProperty<bool>(nameof(AlignRegionalDisksToVmZone), new string[] { "alignRegionalDisksToVMZone" });
+            _diskApiVersion = DefineProperty<DiskApiVersion>(nameof(DiskApiVersion), new string[] { "diskApiVersion" });
             DefineAdditionalProperties();
         }
 
