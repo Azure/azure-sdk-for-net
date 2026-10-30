@@ -12,15 +12,15 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of an IaaS VM recovery point. </summary>
-    public partial class IaasVMRPExtendedInfo : RPExtendedInfo
+    public partial class IaasVMRecoveryPointExtendedInfo : RPExtendedInfo
     {
-        /// <summary> Initializes a new instance of <see cref="IaasVMRPExtendedInfo"/>. </summary>
-        internal IaasVMRPExtendedInfo() : base("IaasVMRPExtendedInfo")
+        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPointExtendedInfo"/>. </summary>
+        internal IaasVMRecoveryPointExtendedInfo() : base("IaasVMRPExtendedInfo")
         {
             DataDisks = new ChangeTrackingList<DiskInformation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaasVMRPExtendedInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPointExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="osDisk">
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// only assigned to data disks.
         /// </param>
         /// <param name="dataDisks"> Data disks of the backed up virtual machine. </param>
-        internal IaasVMRPExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiskInformation osDisk, IList<DiskInformation> dataDisks) : base(objectType, additionalBinaryDataProperties)
+        internal IaasVMRecoveryPointExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiskInformation osDisk, IList<DiskInformation> dataDisks) : base(objectType, additionalBinaryDataProperties)
         {
             OSDisk = osDisk;
             DataDisks = dataDisks;

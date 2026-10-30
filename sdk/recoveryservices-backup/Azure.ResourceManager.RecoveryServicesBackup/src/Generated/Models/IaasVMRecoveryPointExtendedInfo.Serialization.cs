@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of an IaaS VM recovery point. </summary>
-    public partial class IaasVMRPExtendedInfo : RPExtendedInfo, IJsonModel<IaasVMRPExtendedInfo>
+    public partial class IaasVMRecoveryPointExtendedInfo : RPExtendedInfo, IJsonModel<IaasVMRecoveryPointExtendedInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RPExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRPExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIaasVMRPExtendedInfo(document.RootElement, options);
+                        return DeserializeIaasVMRecoveryPointExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVMRPExtendedInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVMRecoveryPointExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRPExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVMRPExtendedInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVMRecoveryPointExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IaasVMRPExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IaasVMRecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVMRPExtendedInfo IPersistableModel<IaasVMRPExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVMRPExtendedInfo)PersistableModelCreateCore(data, options);
+        IaasVMRecoveryPointExtendedInfo IPersistableModel<IaasVMRecoveryPointExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVMRecoveryPointExtendedInfo)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IaasVMRPExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IaasVMRecoveryPointExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IaasVMRPExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IaasVMRecoveryPointExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRPExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVMRPExtendedInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVMRecoveryPointExtendedInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OSDisk))
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVMRPExtendedInfo IJsonModel<IaasVMRPExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVMRPExtendedInfo)JsonModelCreateCore(ref reader, options);
+        IaasVMRecoveryPointExtendedInfo IJsonModel<IaasVMRecoveryPointExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVMRecoveryPointExtendedInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RPExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRPExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVMRPExtendedInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVMRecoveryPointExtendedInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIaasVMRPExtendedInfo(document.RootElement, options);
+            return DeserializeIaasVMRecoveryPointExtendedInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IaasVMRPExtendedInfo DeserializeIaasVMRPExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static IaasVMRecoveryPointExtendedInfo DeserializeIaasVMRecoveryPointExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IaasVMRPExtendedInfo(objectType, additionalBinaryDataProperties, osDisk, dataDisks ?? new ChangeTrackingList<DiskInformation>());
+            return new IaasVMRecoveryPointExtendedInfo(objectType, additionalBinaryDataProperties, osDisk, dataDisks ?? new ChangeTrackingList<DiskInformation>());
         }
     }
 }

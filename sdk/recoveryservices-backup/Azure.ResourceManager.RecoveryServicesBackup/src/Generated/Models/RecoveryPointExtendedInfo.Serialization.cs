@@ -18,51 +18,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of a recovery point, wrapped in a resource envelope. </summary>
-    public partial class RPExtendedInfoResource : ResourceData, IJsonModel<RPExtendedInfoResource>
+    public partial class RecoveryPointExtendedInfo : ResourceData, IJsonModel<RecoveryPointExtendedInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RPExtendedInfoResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRPExtendedInfoResource(document.RootElement, options);
+                        return DeserializeRecoveryPointExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RPExtendedInfoResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RPExtendedInfoResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RPExtendedInfoResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RPExtendedInfoResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RPExtendedInfoResource IPersistableModel<RPExtendedInfoResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (RPExtendedInfoResource)PersistableModelCreateCore(data, options);
+        RecoveryPointExtendedInfo IPersistableModel<RecoveryPointExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryPointExtendedInfo)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RPExtendedInfoResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryPointExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RPExtendedInfoResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryPointExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RPExtendedInfoResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RPExtendedInfoResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointExtendedInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Location))
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RPExtendedInfoResource IJsonModel<RPExtendedInfoResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RPExtendedInfoResource)JsonModelCreateCore(ref reader, options);
+        RecoveryPointExtendedInfo IJsonModel<RecoveryPointExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RecoveryPointExtendedInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RPExtendedInfoResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RPExtendedInfoResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointExtendedInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRPExtendedInfoResource(document.RootElement, options);
+            return DeserializeRecoveryPointExtendedInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RPExtendedInfoResource DeserializeRPExtendedInfoResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static RecoveryPointExtendedInfo DeserializeRecoveryPointExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RPExtendedInfoResource(
+            return new RecoveryPointExtendedInfo(
                 id,
                 name,
                 resourceType,

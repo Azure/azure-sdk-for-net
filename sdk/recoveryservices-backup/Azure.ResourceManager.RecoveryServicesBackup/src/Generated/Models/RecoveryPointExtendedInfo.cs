@@ -15,18 +15,18 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional details of a recovery point, wrapped in a resource envelope. </summary>
-    public partial class RPExtendedInfoResource : ResourceData
+    public partial class RecoveryPointExtendedInfo : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RPExtendedInfoResource"/>. </summary>
-        internal RPExtendedInfoResource()
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointExtendedInfo"/>. </summary>
+        internal RecoveryPointExtendedInfo()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RPExtendedInfoResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointExtendedInfo"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="properties"> RPExtendedInfoResource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RPExtendedInfoResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, RPExtendedInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RecoveryPointExtendedInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, RPExtendedInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;

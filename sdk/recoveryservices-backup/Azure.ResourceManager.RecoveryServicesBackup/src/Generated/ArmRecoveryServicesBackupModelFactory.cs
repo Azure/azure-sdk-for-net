@@ -3478,11 +3478,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
         /// <param name="value"> List of resources. </param>
         /// <returns> A new <see cref="Models.RPExtendedInfoResourceList"/> instance for mocking. </returns>
-        public static RPExtendedInfoResourceList RPExtendedInfoResourceList(string nextLink = default, IEnumerable<RPExtendedInfoResource> value = default)
+        public static RPExtendedInfoResourceList RPExtendedInfoResourceList(string nextLink = default, IEnumerable<RecoveryPointExtendedInfo> value = default)
         {
-            value ??= new ChangeTrackingList<RPExtendedInfoResource>();
+            value ??= new ChangeTrackingList<RecoveryPointExtendedInfo>();
 
-            return new RPExtendedInfoResourceList(nextLink, default, (value ?? new ChangeTrackingList<RPExtendedInfoResource>()).ToList());
+            return new RPExtendedInfoResourceList(nextLink, default, (value ?? new ChangeTrackingList<RecoveryPointExtendedInfo>()).ToList());
         }
 
         /// <summary> Additional details of a recovery point, wrapped in a resource envelope. </summary>
@@ -3494,12 +3494,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="properties"> RPExtendedInfoResource properties. </param>
-        /// <returns> A new <see cref="Models.RPExtendedInfoResource"/> instance for mocking. </returns>
-        public static RPExtendedInfoResource RPExtendedInfoResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? eTag = default, RPExtendedInfo properties = default)
+        /// <returns> A new <see cref="Models.RecoveryPointExtendedInfo"/> instance for mocking. </returns>
+        public static RecoveryPointExtendedInfo RecoveryPointExtendedInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? eTag = default, RPExtendedInfo properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RPExtendedInfoResource(
+            return new RecoveryPointExtendedInfo(
                 id,
                 name,
                 resourceType,
@@ -3514,7 +3514,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// Base class for additional details of a recovery point. Workload-specific additional details are derived from
         /// this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IaasVMRPExtendedInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IaasVMRecoveryPointExtendedInfo"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <returns> A new <see cref="Models.RPExtendedInfo"/> instance for mocking. </returns>
@@ -3529,12 +3529,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// only assigned to data disks.
         /// </param>
         /// <param name="dataDisks"> Data disks of the backed up virtual machine. </param>
-        /// <returns> A new <see cref="Models.IaasVMRPExtendedInfo"/> instance for mocking. </returns>
-        public static IaasVMRPExtendedInfo IaasVMRPExtendedInfo(DiskInformation osDisk = default, IEnumerable<DiskInformation> dataDisks = default)
+        /// <returns> A new <see cref="Models.IaasVMRecoveryPointExtendedInfo"/> instance for mocking. </returns>
+        public static IaasVMRecoveryPointExtendedInfo IaasVMRecoveryPointExtendedInfo(DiskInformation osDisk = default, IEnumerable<DiskInformation> dataDisks = default)
         {
             dataDisks ??= new ChangeTrackingList<DiskInformation>();
 
-            return new IaasVMRPExtendedInfo(default, default, osDisk, (dataDisks ?? new ChangeTrackingList<DiskInformation>()).ToList());
+            return new IaasVMRecoveryPointExtendedInfo(default, default, osDisk, (dataDisks ?? new ChangeTrackingList<DiskInformation>()).ToList());
         }
 
         /// <summary> Base class for restore request. Workload-specific restore requests are derived from this class. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// Base class for additional details of a recovery point. Workload-specific additional details are derived from
     /// this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVMRPExtendedInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVMRecoveryPointExtendedInfo"/>.
     /// </summary>
     public abstract partial class RPExtendedInfo
     {
