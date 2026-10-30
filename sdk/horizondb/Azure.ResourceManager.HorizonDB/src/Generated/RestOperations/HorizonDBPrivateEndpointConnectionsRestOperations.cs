@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateUpdateStatusPrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

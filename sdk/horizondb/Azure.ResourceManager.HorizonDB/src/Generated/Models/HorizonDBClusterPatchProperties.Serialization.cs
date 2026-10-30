@@ -74,35 +74,25 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 throw new FormatException($"The model {nameof(HorizonDBClusterPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (Optional.IsDefined(Network))
             {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
+                writer.WritePropertyName("network"u8);
+                writer.WriteObjectValue(Network, options);
             }
-            if (Optional.IsDefined(VCores))
+            if (Optional.IsDefined(Backup))
             {
-                writer.WritePropertyName("vCores"u8);
-                writer.WriteNumberValue(VCores.Value);
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup, options);
             }
-            if (Optional.IsDefined(ParameterGroup))
+            if (Optional.IsDefined(DataEncryption))
             {
-                writer.WritePropertyName("parameterGroup"u8);
-                writer.WriteObjectValue(ParameterGroup, options);
+                writer.WritePropertyName("dataEncryption"u8);
+                writer.WriteObjectValue(DataEncryption, options);
             }
-            if (Optional.IsDefined(AuthConfig))
+            if (Optional.IsDefined(AiModelManagement))
             {
-                writer.WritePropertyName("authConfig"u8);
-                writer.WriteObjectValue(AuthConfig, options);
-            }
-            if (Optional.IsDefined(ComputeModel))
-            {
-                writer.WritePropertyName("computeModel"u8);
-                writer.WriteObjectValue(ComputeModel, options);
-            }
-            if (Optional.IsDefined(Mirroring))
-            {
-                writer.WritePropertyName("mirroring"u8);
-                writer.WriteObjectValue(Mirroring, options);
+                writer.WritePropertyName("aiModelManagement"u8);
+                writer.WriteStringValue(AiModelManagement.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,63 +136,47 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            string administratorLoginPassword = default;
-            int? vCores = default;
-            HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
-            HorizonDBClusterAuthConfig authConfig = default;
-            HorizonDBComputeModel computeModel = default;
-            HorizonDBClusterMirroring mirroring = default;
+            NetworkForPatchUpdate network = default;
+            BackupPropertiesForPatchUpdate backup = default;
+            HorizonDBClusterDataEncryptionForPatchUpdate dataEncryption = default;
+            AiModelManagementStatus? aiModelManagement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("administratorLoginPassword"u8))
-                {
-                    administratorLoginPassword = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("vCores"u8))
+                if (prop.NameEquals("network"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vCores = prop.Value.GetInt32();
+                    network = NetworkForPatchUpdate.DeserializeNetworkForPatchUpdate(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parameterGroup"u8))
+                if (prop.NameEquals("backup"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parameterGroup = HorizonDBClusterParameterGroupConnectionProperties.DeserializeHorizonDBClusterParameterGroupConnectionProperties(prop.Value, options);
+                    backup = BackupPropertiesForPatchUpdate.DeserializeBackupPropertiesForPatchUpdate(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("authConfig"u8))
+                if (prop.NameEquals("dataEncryption"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authConfig = HorizonDBClusterAuthConfig.DeserializeHorizonDBClusterAuthConfig(prop.Value, options);
+                    dataEncryption = HorizonDBClusterDataEncryptionForPatchUpdate.DeserializeHorizonDBClusterDataEncryptionForPatchUpdate(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("computeModel"u8))
+                if (prop.NameEquals("aiModelManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeModel = HorizonDBComputeModel.DeserializeHorizonDBComputeModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("mirroring"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mirroring = HorizonDBClusterMirroring.DeserializeHorizonDBClusterMirroring(prop.Value, options);
+                    aiModelManagement = new AiModelManagementStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -210,14 +184,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBClusterPatchProperties(
-                administratorLoginPassword,
-                vCores,
-                parameterGroup,
-                authConfig,
-                computeModel,
-                mirroring,
-                additionalBinaryDataProperties);
+            return new HorizonDBClusterPatchProperties(network, backup, dataEncryption, aiModelManagement, additionalBinaryDataProperties);
         }
     }
 }

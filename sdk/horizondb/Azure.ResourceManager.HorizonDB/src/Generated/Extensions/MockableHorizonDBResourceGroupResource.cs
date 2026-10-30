@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbClusters_Get. </description>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

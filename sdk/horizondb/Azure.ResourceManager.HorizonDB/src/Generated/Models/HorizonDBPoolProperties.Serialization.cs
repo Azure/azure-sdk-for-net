@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
@@ -17,6 +16,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
     /// <summary> Properties of a HorizonDB pool. </summary>
     public partial class HorizonDBPoolProperties : IJsonModel<HorizonDBPoolProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPoolProperties"/> for deserialization. </summary>
+        internal HorizonDBPoolProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HorizonDBPoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -75,30 +79,23 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 throw new FormatException($"The model {nameof(HorizonDBPoolProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicaCount))
+            writer.WritePropertyName("computeModel"u8);
+            writer.WriteObjectValue(ComputeModel, options);
+            writer.WritePropertyName("nodeCount"u8);
+            writer.WriteNumberValue(NodeCount);
+            writer.WritePropertyName("highAvailability"u8);
+            writer.WriteObjectValue(HighAvailability, options);
+            writer.WritePropertyName("parameterGroup"u8);
+            writer.WriteObjectValue(ParameterGroup, options);
+            if (Optional.IsDefined(ScheduledMaintenance))
             {
-                writer.WritePropertyName("replicaCount"u8);
-                writer.WriteNumberValue(ReplicaCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WritePropertyName("scheduledMaintenance"u8);
+                writer.WriteObjectValue(ScheduledMaintenance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -147,54 +144,52 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            AzureLocation? location = default;
-            HorizonDBClusterState? state = default;
-            int? replicaCount = default;
-            string version = default;
-            HorizonDBPoolCreateMode? createMode = default;
+            PoolState? state = default;
+            PoolComputeModel computeModel = default;
+            int nodeCount = default;
+            PoolHighAvailability highAvailability = default;
+            PoolParameterGroupReference parameterGroup = default;
+            ScheduledMaintenanceProperties scheduledMaintenance = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("location"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("state"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new HorizonDBClusterState(prop.Value.GetString());
+                    state = new PoolState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("replicaCount"u8))
+                if (prop.NameEquals("computeModel"u8))
+                {
+                    computeModel = PoolComputeModel.DeserializePoolComputeModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("nodeCount"u8))
+                {
+                    nodeCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("highAvailability"u8))
+                {
+                    highAvailability = PoolHighAvailability.DeserializePoolHighAvailability(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("parameterGroup"u8))
+                {
+                    parameterGroup = PoolParameterGroupReference.DeserializePoolParameterGroupReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("scheduledMaintenance"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicaCount = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("version"u8))
-                {
-                    version = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("createMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createMode = new HorizonDBPoolCreateMode(prop.Value.GetString());
+                    scheduledMaintenance = ScheduledMaintenanceProperties.DeserializeScheduledMaintenanceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -212,11 +207,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
             }
             return new HorizonDBPoolProperties(
-                location,
                 state,
-                replicaCount,
-                version,
-                createMode,
+                computeModel,
+                nodeCount,
+                highAvailability,
+                parameterGroup,
+                scheduledMaintenance,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

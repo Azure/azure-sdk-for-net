@@ -22,40 +22,64 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatchProperties"/>. </summary>
-        /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
-        /// <param name="authConfig"> Authentication configuration for the HorizonDB cluster. </param>
-        /// <param name="computeModel"> The compute model for the cluster. </param>
-        /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
+        /// <param name="network"> The network configuration to update for the cluster. </param>
+        /// <param name="backup"> The backup configuration for the cluster. </param>
+        /// <param name="dataEncryption"> The data encryption configuration to update for the cluster. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. </param>
+        /// <param name="aiModelManagement"> Specifies whether AI Model Management is enabled for the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDBClusterAuthConfig authConfig, HorizonDBComputeModel computeModel, HorizonDBClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatchProperties(NetworkForPatchUpdate network, BackupPropertiesForPatchUpdate backup, HorizonDBClusterDataEncryptionForPatchUpdate dataEncryption, AiModelManagementStatus? aiModelManagement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AdministratorLoginPassword = administratorLoginPassword;
-            VCores = vCores;
-            ParameterGroup = parameterGroup;
-            AuthConfig = authConfig;
-            ComputeModel = computeModel;
-            Mirroring = mirroring;
+            Network = network;
+            Backup = backup;
+            DataEncryption = dataEncryption;
+            AiModelManagement = aiModelManagement;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The administrator login password. </summary>
-        public string AdministratorLoginPassword { get; set; }
+        /// <summary> The network configuration to update for the cluster. </summary>
+        internal NetworkForPatchUpdate Network { get; set; }
 
-        /// <summary> Number of vCores. </summary>
-        public int? VCores { get; set; }
+        /// <summary> The backup configuration for the cluster. </summary>
+        internal BackupPropertiesForPatchUpdate Backup { get; set; }
 
-        /// <summary> Defines connection to a parameter group. </summary>
-        public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
+        /// <summary> The data encryption configuration to update for the cluster. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. </summary>
+        public HorizonDBClusterDataEncryptionForPatchUpdate DataEncryption { get; set; }
 
-        /// <summary> Authentication configuration for the HorizonDB cluster. </summary>
-        public HorizonDBClusterAuthConfig AuthConfig { get; set; }
+        /// <summary> Specifies whether AI Model Management is enabled for the cluster. </summary>
+        public AiModelManagementStatus? AiModelManagement { get; set; }
 
-        /// <summary> The compute model for the cluster. </summary>
-        public HorizonDBComputeModel ComputeModel { get; set; }
+        /// <summary> Specifies whether public access is enabled for the cluster. Omission preserves the current value. </summary>
+        public HorizonDBPublicNetworkAccessState? NetworkPublicAccess
+        {
+            get
+            {
+                return Network is null ? default : Network.PublicAccess;
+            }
+            set
+            {
+                if (Network is null)
+                {
+                    Network = new NetworkForPatchUpdate();
+                }
+                Network.PublicAccess = value;
+            }
+        }
 
-        /// <summary> Mirroring configuration for the HorizonDB cluster. </summary>
-        public HorizonDBClusterMirroring Mirroring { get; set; }
+        /// <summary> The number of days that automatic backups are retained. </summary>
+        public int? BackupRetentionDays
+        {
+            get
+            {
+                return Backup is null ? default : Backup.RetentionDays;
+            }
+            set
+            {
+                if (Backup is null)
+                {
+                    Backup = new BackupPropertiesForPatchUpdate();
+                }
+                Backup.RetentionDays = value;
+            }
+        }
     }
 }

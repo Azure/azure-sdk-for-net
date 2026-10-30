@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
-        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
+        /// <param name="startIPAddress"> The start IPv4 address of the firewall rule in dotted-decimal notation. </param>
+        /// <param name="endIPAddress"> The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public HorizonDBFirewallRuleProperties(string startIPAddress, string endIPAddress)
         {
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/>. </summary>
-        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
-        /// <param name="description"> The description of the HorizonDB firewall rule. </param>
+        /// <param name="startIPAddress"> The start IPv4 address of the firewall rule in dotted-decimal notation. </param>
+        /// <param name="endIPAddress"> The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress. </param>
+        /// <param name="description"> The description of the HorizonDB firewall rule. The maximum length is 1024 characters. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HorizonDBFirewallRuleProperties(string startIPAddress, string endIPAddress, string description, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The start IP address of the firewall rule (IPv4). </summary>
+        /// <summary> The start IPv4 address of the firewall rule in dotted-decimal notation. </summary>
         public string StartIPAddress { get; set; }
 
-        /// <summary> The end IP address of the firewall rule (IPv4). </summary>
+        /// <summary> The end IPv4 address of the firewall rule in dotted-decimal notation. This address must be numerically greater than or equal to startIpAddress. </summary>
         public string EndIPAddress { get; set; }
 
-        /// <summary> The description of the HorizonDB firewall rule. </summary>
+        /// <summary> The description of the HorizonDB firewall rule. The maximum length is 1024 characters. </summary>
         public string Description { get; set; }
 
         /// <summary> The provisioning state of the firewall rule. </summary>

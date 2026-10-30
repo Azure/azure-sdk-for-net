@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     yield break;
                 }
-                HorizonDBPoolListResult result = HorizonDBPoolListResult.FromResponse(response);
+                PoolListResult result = PoolListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<HorizonDBPoolData>.FromValues((IReadOnlyList<HorizonDBPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
