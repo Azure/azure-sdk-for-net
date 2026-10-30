@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(Limits))
+            {
+                writer.WritePropertyName("limits"u8);
+                writer.WriteObjectValue(Limits, options);
+            }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 return null;
             }
             MonitorWorkspaceProvisioningState? provisioningState = default;
+            MetricsLimits limits = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,6 +146,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     provisioningState = new MonitorWorkspaceProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("limits"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    limits = MetricsLimits.DeserializeMetricsLimits(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("version"u8))
                 {
                     version = prop.Value.GetString();
@@ -150,7 +165,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorMetricsContainerProperties(provisioningState, version, additionalBinaryDataProperties);
+            return new MonitorMetricsContainerProperties(provisioningState, limits, version, additionalBinaryDataProperties);
         }
     }
 }

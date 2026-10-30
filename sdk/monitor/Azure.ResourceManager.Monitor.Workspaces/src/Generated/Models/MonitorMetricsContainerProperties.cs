@@ -23,17 +23,22 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricsContainerProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the metrics container. </param>
+        /// <param name="limits"> Metrics limits. </param>
         /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState, MetricsLimits limits, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
+            Limits = limits;
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the metrics container. </summary>
         public MonitorWorkspaceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Metrics limits. </summary>
+        public MetricsLimits Limits { get; set; }
 
         /// <summary> The version of Metrics Query Service that this AMW will use for all metric queries. </summary>
         public string Version { get; set; }

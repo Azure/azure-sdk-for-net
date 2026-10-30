@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 writer.WritePropertyName("defaultIngestionSettings"u8);
                 writer.WriteObjectValue(DefaultIngestionSettings, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteObjectValue(Endpoints, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
@@ -108,6 +113,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteObjectValue(Actions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -155,8 +165,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             MonitorWorkspaceMetrics metrics = default;
             MonitorWorkspaceProvisioningState? provisioningState = default;
             MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default;
+            AzureMonitorWorkspaceEndpoints endpoints = default;
             IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default;
             MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default;
+            AzureMonitorWorkspaceActions actions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,6 +204,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("endpoints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoints = AzureMonitorWorkspaceEndpoints.DeserializeAzureMonitorWorkspaceEndpoints(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("privateEndpointConnections"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -215,6 +236,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     publicNetworkAccess = new MonitorWorkspacePublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("actions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actions = AzureMonitorWorkspaceActions.DeserializeAzureMonitorWorkspaceActions(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -225,8 +255,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 metrics,
                 provisioningState,
                 defaultIngestionSettings,
+                endpoints,
                 privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>(),
                 publicNetworkAccess,
+                actions,
                 additionalBinaryDataProperties);
         }
     }

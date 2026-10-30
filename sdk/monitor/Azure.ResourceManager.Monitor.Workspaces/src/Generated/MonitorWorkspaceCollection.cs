@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         internal MonitorWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string azureMonitorWorkspacesApiVersionOverride) ? azureMonitorWorkspacesApiVersionOverride : "2025-10-03");
+            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/accounts", out string azureMonitorWorkspacesApiVersionOverride) ? azureMonitorWorkspacesApiVersionOverride : "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

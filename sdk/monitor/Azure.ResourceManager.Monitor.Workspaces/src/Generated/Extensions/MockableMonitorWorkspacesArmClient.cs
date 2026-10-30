@@ -52,5 +52,67 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
             MonitorMetricsContainerResource.ValidateResourceId(id);
             return new MonitorMetricsContainerResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="MetricNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetricNamespaceResource"/> object. </returns>
+        public virtual MetricNamespaceResource GetMetricNamespaceResource(ResourceIdentifier id)
+        {
+            MetricNamespaceResource.ValidateResourceId(id);
+            return new MetricNamespaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MetricConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetricConfigurationResource"/> object. </returns>
+        public virtual MetricConfigurationResource GetMetricConfigurationResource(ResourceIdentifier id)
+        {
+            MetricConfigurationResource.ValidateResourceId(id);
+            return new MetricConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
+        public virtual TraceContainerResource GetTraceContainerResource(ResourceIdentifier id)
+        {
+            TraceContainerResource.ValidateResourceId(id);
+            return new TraceContainerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceAssociationAtResourceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
+        public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(ResourceIdentifier id)
+        {
+            TraceAssociationAtResourceGroupResource.ValidateResourceId(id);
+            return new TraceAssociationAtResourceGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceAssociationAtSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
+        public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(ResourceIdentifier id)
+        {
+            TraceAssociationAtSubscriptionResource.ValidateResourceId(id);
+            return new TraceAssociationAtSubscriptionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceAssociationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
+        public virtual TraceAssociationResource GetTraceAssociationResource(ResourceIdentifier id)
+        {
+            TraceAssociationResource.ValidateResourceId(id);
+            return new TraceAssociationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TraceAssociationResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="TraceAssociationResource"/> object. </returns>
+        public virtual TraceAssociationResource GetTraceAssociation(ResourceIdentifier scope)
+        {
+            return new TraceAssociationResource(Client, scope.AppendProviderResource("Microsoft.Monitor", "traceAssociations", "default"));
+        }
     }
 }
