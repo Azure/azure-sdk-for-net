@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ClusterUnplannedFailoverContent))]
     [ModelReaderWriterBuildable(typeof(ClusterUnplannedFailoverContentProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterUnplannedFailoverProviderSpecificContent))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialDiskEncryptionInfo))]
     [ModelReaderWriterBuildable(typeof(ConsistencyCheckTaskDetails))]
     [ModelReaderWriterBuildable(typeof(CriticalJobHistoryDetails))]
     [ModelReaderWriterBuildable(typeof(CurrentJobDetails))]

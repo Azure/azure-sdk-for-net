@@ -441,6 +441,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
+            if (Optional.IsDefined(RecoveryConfidentialDataDiskEncryptionIdentity))
+            {
+                writer.WritePropertyName("recoveryConfidentialDataDiskEncryptionIdentity"u8);
+                writer.WriteStringValue(RecoveryConfidentialDataDiskEncryptionIdentity);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -538,6 +543,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             long? autoAgentUpgradeRetryCount = default;
             bool? isAgentUpgradeRetryThresholdExhausted = default;
             int? platformFaultDomain = default;
+            ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("instanceType"u8))
@@ -1086,6 +1092,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     platformFaultDomain = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("recoveryConfidentialDataDiskEncryptionIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryConfidentialDataDiskEncryptionIdentity = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -1161,7 +1176,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 isAgentUpgradeInProgress,
                 autoAgentUpgradeRetryCount,
                 isAgentUpgradeRetryThresholdExhausted,
-                platformFaultDomain);
+                platformFaultDomain,
+                recoveryConfidentialDataDiskEncryptionIdentity);
         }
     }
 }

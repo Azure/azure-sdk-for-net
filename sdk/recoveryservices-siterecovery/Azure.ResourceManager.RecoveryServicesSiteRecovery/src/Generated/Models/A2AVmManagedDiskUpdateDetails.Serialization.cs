@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
             }
+            if (Optional.IsDefined(ConfidentialDiskEncryptionInfo))
+            {
+                writer.WritePropertyName("confidentialDiskEncryptionInfo"u8);
+                writer.WriteObjectValue(ConfidentialDiskEncryptionInfo, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             string failoverDiskName = default;
             string tfoDiskName = default;
+            UpdateConfidentialDiskEncryptionInfo confidentialDiskEncryptionInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,6 +195,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoDiskName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("confidentialDiskEncryptionInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidentialDiskEncryptionInfo = UpdateConfidentialDiskEncryptionInfo.DeserializeUpdateConfidentialDiskEncryptionInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -201,6 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskEncryptionInfo,
                 failoverDiskName,
                 tfoDiskName,
+                confidentialDiskEncryptionInfo,
                 additionalBinaryDataProperties);
         }
     }

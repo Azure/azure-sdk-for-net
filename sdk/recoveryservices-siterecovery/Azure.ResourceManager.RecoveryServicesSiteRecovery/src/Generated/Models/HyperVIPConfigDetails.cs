@@ -42,8 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoStaticIPAddress"></param>
         /// <param name="tfoPublicIPAddressId"></param>
         /// <param name="tfoLBBackendAddressPoolIds"></param>
+        /// <param name="ipVersion"> The IP version (IPv4 / IPv6) of the ip-config, as reported by the service. Read-only - it reflects the discovered NIC configuration and cannot be set by the caller. Orthogonal to the allocation type (static / dynamic). Omitted when IPv6 support is not enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVIPConfigDetails(string name, bool? isPrimary, string subnetName, IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, ResourceIdentifier recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HyperVIPConfigDetails(string name, bool? isPrimary, string subnetName, IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, ResourceIdentifier recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds, IPVersion? ipVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsPrimary = isPrimary;
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoStaticIPAddress = tfoStaticIPAddress;
             TfoPublicIPAddressId = tfoPublicIPAddressId;
             TfoLBBackendAddressPoolIds = tfoLBBackendAddressPoolIds;
+            IPVersion = ipVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -107,5 +109,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Gets the TfoLBBackendAddressPoolIds. </summary>
         public IReadOnlyList<string> TfoLBBackendAddressPoolIds { get; }
+
+        /// <summary> The IP version (IPv4 / IPv6) of the ip-config, as reported by the service. Read-only - it reflects the discovered NIC configuration and cannot be set by the caller. Orthogonal to the allocation type (static / dynamic). Omitted when IPv6 support is not enabled. </summary>
+        public IPVersion? IPVersion { get; }
     }
 }
