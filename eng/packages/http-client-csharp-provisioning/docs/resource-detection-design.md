@@ -296,15 +296,23 @@ for structural child resources, but that property is not part of the provider
 body. Provisioning should model parent as a resource relationship, not as an
 ordinary serialized body property.
 
+The generated `Parent` relationship is optional. Callers can instead supply a
+slash-separated composite resource name. Child singleton names keep their
+relative default for explicit-parent declarations, but remain settable so that
+the composite-name form is also available.
+
 Some ARM paths skip intermediate resources. Therefore, a child resource may be
 addressed by a relative name tuple instead of a single relative name. The design
 must allow that identity shape.
 
 Extension resources are scoped by the path prefix before the final provider
-segment. The public Bicep reference shows a language-level `scope` property for
-writable extension resources, unless the resource is already treated as a
-structural child resource. Provisioning should model this as a scope
-relationship, not as a provider body property.
+segment. Both deployable and existing-only extension resources need a
+language-level `scope` relationship. Structural children instead expose their
+typed immediate `parent` and inherit its external scope; they must not emit both
+`parent` and `scope`. Provisioning models these relationships independently of
+body writability. The generated `Scope` relationship remains optional, including
+for extension-only and existing-only resources; the generator does not impose
+an explicit-scope requirement.
 
 Readable and writable scopes are sets of deployment scopes, not simple
 read/write booleans. GET contributes the path-derived scope to readable scopes.
