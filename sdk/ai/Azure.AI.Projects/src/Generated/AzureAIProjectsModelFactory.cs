@@ -2666,10 +2666,11 @@ namespace Azure.AI.Projects
         /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/> instance for mocking. </returns>
-        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
-            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
         }
 
         /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>

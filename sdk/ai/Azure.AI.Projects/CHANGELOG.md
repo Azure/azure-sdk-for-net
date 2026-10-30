@@ -1,17 +1,16 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
 
 - Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
 - Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
+- Added the `MaxSamples` property to `SimulationSeedDataGenerationJobConfiguration`.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `SimulationSeedDataGenerationJobConfiguration` now requires a `maxSamples` constructor argument. Replace parameterless construction with `new SimulationSeedDataGenerationJobConfiguration(maxSamples)`.
+- Added an optional `maxSamples` parameter to `AzureAIProjectsModelFactory.SimulationSeedDataGenerationJobConfiguration`, changing its binary signature. Recompile code that uses this factory.
 
 ### Sample Updates
 
