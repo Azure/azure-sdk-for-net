@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> and their operations.
-    /// Each <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoCollection"/> instance call the GetDatabaseMigrationsMongoToCosmosDbRUMongos method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> and their operations.
+    /// Each <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoCollection"/> instance call the GetDatabaseMigrationsMongoToCosmosDBRUMongos method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class DatabaseMigrationsMongoToCosmosDbRUMongoCollection : ArmCollection, IEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>, IAsyncEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>
+    public partial class DatabaseMigrationsMongoToCosmosDBRUMongoCollection : ArmCollection, IEnumerable<DatabaseMigrationsMongoToCosmosDBRUMongoResource>, IAsyncEnumerable<DatabaseMigrationsMongoToCosmosDBRUMongoResource>
     {
         private readonly ClientDiagnostics _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics;
         private readonly DatabaseMigrationsMongoToCosmosDBRUMongo _databaseMigrationsMongoToCosmosDBRUMongoRestClient;
 
-        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDbRUMongoCollection for mocking. </summary>
-        protected DatabaseMigrationsMongoToCosmosDbRUMongoCollection()
+        /// <summary> Initializes a new instance of DatabaseMigrationsMongoToCosmosDBRUMongoCollection for mocking. </summary>
+        protected DatabaseMigrationsMongoToCosmosDBRUMongoCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseMigrationsMongoToCosmosDbRUMongoCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DatabaseMigrationsMongoToCosmosDBRUMongoCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DatabaseMigrationsMongoToCosmosDbRUMongoResource.ResourceType, out string databaseMigrationsMongoToCosmosDbRUMongoApiVersion);
-            _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationsMongoToCosmosDbRUMongoResource.ResourceType.Namespace, Diagnostics);
-            _databaseMigrationsMongoToCosmosDBRUMongoRestClient = new DatabaseMigrationsMongoToCosmosDBRUMongo(_databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationsMongoToCosmosDbRUMongoApiVersion ?? "2025-09-01-preview");
+            TryGetApiVersion(DatabaseMigrationsMongoToCosmosDBRUMongoResource.ResourceType, out string databaseMigrationsMongoToCosmosDBRUMongoApiVersion);
+            _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationsMongoToCosmosDBRUMongoResource.ResourceType.Namespace, Diagnostics);
+            _databaseMigrationsMongoToCosmosDBRUMongoRestClient = new DatabaseMigrationsMongoToCosmosDBRUMongo(_databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationsMongoToCosmosDBRUMongoApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationName, DatabaseMigrationCosmosDBMongoData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationName, DatabaseMigrationCosmosDBMongoData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DataMigration
                 };
                 HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(
-                    new DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource(Client),
+                DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource>(
+                    new DatabaseMigrationsMongoToCosmosDBRUMongoResourceOperationSource(Client),
                     _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource> CreateOrUpdate(WaitUntil waitUntil, string migrationName, DatabaseMigrationCosmosDBMongoData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource> CreateOrUpdate(WaitUntil waitUntil, string migrationName, DatabaseMigrationCosmosDBMongoData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.DataMigration
                 };
                 HttpMessage message = _databaseMigrationsMongoToCosmosDBRUMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDBMongoData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(
-                    new DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource(Client),
+                DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDBRUMongoResource>(
+                    new DatabaseMigrationsMongoToCosmosDBRUMongoResourceOperationSource(Client),
                     _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource>> GetAsync(string migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDBRUMongoResource>> GetAsync(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource> Get(string migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationsMongoToCosmosDBRUMongoResource> Get(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseMigrationsMongoToCosmosDbRUMongoResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseMigrationsMongoToCosmosDBRUMongoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbRUMongoResource>(new DatabaseMigrationCosmosDBMongoDataAsync0CollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDBRUMongoResource>(new DatabaseMigrationCosmosDBMongoDataAsync0CollectionResultOfT(
                 _databaseMigrationsMongoToCosmosDBRUMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetAll"), data => new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, data));
+                "DatabaseMigrationsMongoToCosmosDBRUMongoCollection.GetAll"), data => new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseMigrationsMongoToCosmosDbRUMongoResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseMigrationsMongoToCosmosDBRUMongoResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbRUMongoResource>(new DatabaseMigrationCosmosDBMongoData0CollectionResultOfT(
+            return new PageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDBRUMongoResource>(new DatabaseMigrationCosmosDBMongoData0CollectionResultOfT(
                 _databaseMigrationsMongoToCosmosDBRUMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetAll"), data => new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, data));
+                "DatabaseMigrationsMongoToCosmosDBRUMongoCollection.GetAll"), data => new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.Exists");
             scope.Start();
             try
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.Exists");
             scope.Start();
             try
             {
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DatabaseMigrationsMongoToCosmosDbRUMongoResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DatabaseMigrationsMongoToCosmosDBRUMongoResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(response.GetRawResponse());
+                    return new NoValueResponse<DatabaseMigrationsMongoToCosmosDBRUMongoResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DatabaseMigrationsMongoToCosmosDbRUMongoResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DatabaseMigrationsMongoToCosmosDBRUMongoResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDbRUMongoCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsMongoToCosmosDBRUMongoClientDiagnostics.CreateScope("DatabaseMigrationsMongoToCosmosDBRUMongoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DatabaseMigrationsMongoToCosmosDbRUMongoResource>(response.GetRawResponse());
+                    return new NoValueResponse<DatabaseMigrationsMongoToCosmosDBRUMongoResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        IEnumerator<DatabaseMigrationsMongoToCosmosDbRUMongoResource> IEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.GetEnumerator()
+        IEnumerator<DatabaseMigrationsMongoToCosmosDBRUMongoResource> IEnumerable<DatabaseMigrationsMongoToCosmosDBRUMongoResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DatabaseMigrationsMongoToCosmosDbRUMongoResource> IAsyncEnumerable<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DatabaseMigrationsMongoToCosmosDBRUMongoResource> IAsyncEnumerable<DatabaseMigrationsMongoToCosmosDBRUMongoResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

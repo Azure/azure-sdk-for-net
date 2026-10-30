@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationListResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationPropertiesCosmosDBMongo))]
-    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDbRUMongoResource))]
+    [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDBRUMongoResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationsMongoToCosmosDbvCoreMongoResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBData))]
     [ModelReaderWriterBuildable(typeof(DatabaseMigrationSqlDBProperties))]

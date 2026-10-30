@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    internal partial class DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource : IOperationSource<DatabaseMigrationsMongoToCosmosDbRUMongoResource>
+    internal partial class DatabaseMigrationsMongoToCosmosDBRUMongoResourceOperationSource : IOperationSource<DatabaseMigrationsMongoToCosmosDBRUMongoResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DatabaseMigrationsMongoToCosmosDbRUMongoResourceOperationSource(ArmClient client)
+        internal DatabaseMigrationsMongoToCosmosDBRUMongoResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DatabaseMigrationsMongoToCosmosDbRUMongoResource IOperationSource<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseMigrationsMongoToCosmosDBRUMongoResource IOperationSource<DatabaseMigrationsMongoToCosmosDBRUMongoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             DatabaseMigrationCosmosDBMongoData data = DatabaseMigrationCosmosDBMongoData.DeserializeDatabaseMigrationCosmosDBMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(_client, data);
+            return new DatabaseMigrationsMongoToCosmosDBRUMongoResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DatabaseMigrationsMongoToCosmosDbRUMongoResource> IOperationSource<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseMigrationsMongoToCosmosDBRUMongoResource> IOperationSource<DatabaseMigrationsMongoToCosmosDBRUMongoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             DatabaseMigrationCosmosDBMongoData data = DatabaseMigrationCosmosDBMongoData.DeserializeDatabaseMigrationCosmosDBMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(_client, data);
+            return new DatabaseMigrationsMongoToCosmosDBRUMongoResource(_client, data);
         }
     }
 }
