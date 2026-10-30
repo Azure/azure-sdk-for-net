@@ -1,0 +1,30 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/azurearcdata/**/*.cs'
+    words:
+      - Hadr
+      - Payg
+      - Mbps
+      - Wsfc
+      - Ntlm
+      - Onpremises
+      - PERDB
+      - AESRC
+      - AWSVM
+      - GCPVM
+      - DMSCLI
+      - DMSPS
+      - DMSSDK
+      - Ssma
+      - Ssms
+      - Tlsciphers
+      - Tlsprotocols
+      - tlsciphers
+      - tlsprotocols
+      - Pbirs
+      - Ssas
+      - Ssis
+      - Ssrs
+      - Hekaton
+      - Digi
