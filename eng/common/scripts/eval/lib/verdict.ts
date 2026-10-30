@@ -7,6 +7,19 @@ import fs from "node:fs";
 import path from "node:path";
 import { globFiles } from "./glob.ts";
 
+export function parseFailedTestsGate(value: unknown = "false") {
+  if (typeof value !== "string" || !/^(true|false)$/i.test(value)) {
+    throw new Error("EVAL_FAIL_ON_FAILED_TESTS must be true or false.");
+  }
+  return value.toLowerCase() === "true";
+}
+
+export function assertSupportedEvalGate({ runs, failOnFailedTests }) {
+  if (failOnFailedTests && runs > 1) {
+    throw new Error("This eval configuration is not currently supported: multiple runs cannot be combined with failOnFailedTests=true. Disable the gate or set --runs to 1.");
+  }
+}
+
 // Formats a 0..1 ratio as a fixed-1-decimal percentage string (e.g. 97.1).
 function pct(ratio) {
   return (ratio * 100).toFixed(1);

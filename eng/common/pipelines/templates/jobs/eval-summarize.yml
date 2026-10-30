@@ -8,10 +8,13 @@ parameters:
   - name: evalStageName
     type: string
     default: Eval
-  - name: artifactNamespace
+  - name: artifactPrefix
+    # Literal prefix, including any separator (e.g. 'forced-'); must match the shard job.
+    # Callers are responsible for unique final artifact names across tracks in one build.
     type: string
     default: ''
   - name: failOnFailedTests
+    # Only single-run evaluations support this gate; multi-run observations must leave it off.
     type: boolean
     default: false
   - name: createDashboardBundle
@@ -36,17 +39,14 @@ jobs:
       outputs:
         - output: pipelineArtifact
           displayName: 'Retain selected build summary and saved bundle'
-          ${{ if eq(parameters.artifactNamespace, '') }}:
-            artifactName: 'eval-summary-$(System.JobAttempt)'
-          ${{ else }}:
-            artifactName: 'eval-summary-${{ parameters.artifactNamespace }}-$(System.JobAttempt)'
+          artifactName: 'eval-summary-${{ parameters.artifactPrefix }}$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/eval-summary
           condition: always()
     steps:
       # Dashboard archives identify a single build-wide summary, not separate tracks.
-      - ${{ if and(ne(parameters.artifactNamespace, ''), or(parameters.createDashboardBundle, parameters.publishDashboardResults)) }}:
+      - ${{ if and(ne(parameters.artifactPrefix, ''), or(parameters.createDashboardBundle, parameters.publishDashboardResults)) }}:
         - script: |
-            echo "##vso[task.logissue type=error]Namespaced eval tracks support artifact-only summaries, not dashboard bundles or publication."
+            echo "##vso[task.logissue type=error]Prefixed eval tracks support artifact-only summaries, not dashboard bundles or publication."
             exit 1
           displayName: 'Reject ambiguous multi-track dashboard identity'
 
@@ -59,15 +59,15 @@ jobs:
         inputs:
           version: 24.x
 
-      # Allowlist result data only, excluding debug, MCP, SDL and signing artifacts.
+      # Download only this track's result data; an empty prefix retains all eval-result-* artifacts.
       - task: DownloadPipelineArtifact@2
         displayName: 'Download all shard results'
         inputs:
           buildType: 'current'
           itemPattern: |
-            eval-result-*/results.jsonl
-            eval-result-*/shard.json
-            eval-result-*/**/*.junit.xml
+            eval-result-${{ parameters.artifactPrefix }}*/results.jsonl
+            eval-result-${{ parameters.artifactPrefix }}*/shard.json
+            eval-result-${{ parameters.artifactPrefix }}*/**/*.junit.xml
           targetPath: $(Pipeline.Workspace)/eval-results
 
       # Only attempt verification needs the current build token; rendering uses saved evidence.
@@ -91,7 +91,7 @@ jobs:
         condition: always()
         env:
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
-          EVAL_ARTIFACT_NAMESPACE: ${{ parameters.artifactNamespace }}
+          EVAL_ARTIFACT_PREFIX: ${{ parameters.artifactPrefix }}
 
       - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults) }}:
         - template: ../steps/eval-publish-results.yml
