@@ -34,6 +34,14 @@ namespace Azure.Provisioning
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, [System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute(false)] out Azure.Provisioning.BicepValue<T> value) { throw null; }
     }
+    public partial class BicepExtensionConstruct : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public BicepExtensionConstruct(string reference, string? alias = null) { }
+        public string? Alias { get { throw null; } set { } }
+        public string Reference { get { throw null; } }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
+        protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+    }
     public partial class BicepList<T> : Azure.Provisioning.BicepValue, System.Collections.Generic.ICollection<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IEnumerable<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IList<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IReadOnlyCollection<Azure.Provisioning.BicepValue<T>>, System.Collections.Generic.IReadOnlyList<Azure.Provisioning.BicepValue<T>>, System.Collections.IEnumerable
     {
         public BicepList() { }
@@ -679,6 +687,13 @@ namespace Azure.Provisioning.Expressions
     {
         public ExpressionStatement(Azure.Provisioning.Expressions.BicepExpression expression) { }
         public Azure.Provisioning.Expressions.BicepExpression Expression { get { throw null; } }
+    }
+    public partial class ExtensionStatement : Azure.Provisioning.Expressions.BicepStatement
+    {
+        public ExtensionStatement(Azure.Provisioning.Expressions.BicepExpression reference, Azure.Provisioning.Expressions.ObjectExpression? configuration = null, string? alias = null) { }
+        public string? Alias { get { throw null; } }
+        public Azure.Provisioning.Expressions.ObjectExpression? Configuration { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Reference { get { throw null; } }
     }
     public partial class FunctionCallExpression : Azure.Provisioning.Expressions.BicepExpression
     {

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `BicepExtensionConstruct` and `ExtensionStatement` to declare named or artifact-based Bicep extensions with optional configuration and namespace aliases.
+
 ### Breaking Changes
 
 ### Bugs Fixed
