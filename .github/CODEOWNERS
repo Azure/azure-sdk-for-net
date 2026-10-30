@@ -706,10 +706,10 @@
 # ServiceOwners: @jbhanuchand
 
 # PRLabel: %Device Registry
-/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal @siongithub @mryanlo
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @jobeland @chgennar @vascoveigams @siongithub
 
 # ServiceLabel: %Device Registry %Mgmt
-# ServiceOwners:                                                   @atastrophic @rohankhandelwal
+# ServiceOwners:                                                   @jobeland @chgennar @vascoveigams
 
 # PRLabel: %Device Update
 /sdk/deviceupdate/                                                 @wuqiten @devlie
