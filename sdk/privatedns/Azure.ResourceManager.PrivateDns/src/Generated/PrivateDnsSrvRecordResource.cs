@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="privateZoneName"> The privateZoneName. </param>
-        /// <param name="srvRecordName"> The relativeRecordSetName. </param>
+        /// <param name="srvRecordName"> The srvRecordName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string srvRecordName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/SRV/{srvRecordName}";
