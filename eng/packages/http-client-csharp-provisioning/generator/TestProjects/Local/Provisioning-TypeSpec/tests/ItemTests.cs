@@ -12,6 +12,33 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Tests;
 public class ItemTests
 {
     [Test]
+    public async Task DeploymentScopedChildWithCompositeName()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                Item item = new("item") { Name = "store/item" };
+                Item existing = Item.FromExisting("existing");
+                existing.Name = "store/existing";
+                infra.Add(item);
+                infra.Add(existing);
+                return infra;
+            });
+
+        test.Compare(
+            """
+            resource item 'ProvisioningTypeSpec/configurationStores/items@2024-05-01' = {
+              name: 'store/item'
+            }
+
+            resource existing 'ProvisioningTypeSpec/configurationStores/items@2024-05-01' existing = {
+              name: 'store/existing'
+            }
+            """);
+    }
+
+    [Test]
     public async Task InheritedAndCreateBodyProperties()
     {
         await using Trycep test = new Trycep().Define(

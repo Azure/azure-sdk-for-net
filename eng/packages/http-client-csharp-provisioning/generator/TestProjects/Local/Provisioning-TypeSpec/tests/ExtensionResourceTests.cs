@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -67,16 +68,11 @@ public class ExtensionResourceTests
                 ExtensionChild existing = ExtensionChild.FromExisting("existing");
                 existing.Name = "existing";
                 existing.Parent = lab;
-                ExtensionChild composite = new("composite") { Name = "lab/composite" };
-                ExtensionChild compositeExisting = ExtensionChild.FromExisting("compositeExisting");
-                compositeExisting.Name = "lab/compositeExisting";
                 infra.Add(billing);
                 infra.Add(grant);
                 infra.Add(lab);
                 infra.Add(student);
                 infra.Add(existing);
-                infra.Add(composite);
-                infra.Add(compositeExisting);
                 return infra;
             });
 
@@ -84,6 +80,7 @@ public class ExtensionResourceTests
             """
             resource billing 'Microsoft.Billing/billingAccounts/billingProfiles@2024-04-01' existing = {
               name: 'account/profile'
+              scope: tenant()
             }
 
             resource grant 'ProvisioningTypeSpec/readOnlyExtensions@2024-05-01' existing = {
@@ -104,14 +101,6 @@ public class ExtensionResourceTests
             resource existing 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' existing = {
               name: 'existing'
               parent: lab
-            }
-
-            resource composite 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' = {
-              name: 'lab/composite'
-            }
-
-            resource compositeExisting 'ProvisioningTypeSpec/extensionAssignments/children@2024-05-01' existing = {
-              name: 'lab/compositeExisting'
             }
             """);
     }
@@ -136,6 +125,7 @@ public class ExtensionResourceTests
             """
             resource billing 'Microsoft.Billing/billingAccounts/billingProfiles@2024-04-01' existing = {
               name: 'account/profile'
+              scope: tenant()
             }
 
             resource root 'ProvisioningTypeSpec/multiScopeAssignments@2024-05-01' = {
@@ -161,6 +151,8 @@ public class ExtensionResourceTests
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("Name", ["name"], isRequired: true, defaultValue: "account/profile");
+            DefineProperty<string>("Scope", ["scope"],
+                defaultValue: new BicepValue<string>(new FunctionCallExpression(new IdentifierExpression("tenant"))));
         }
     }
 }

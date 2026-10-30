@@ -44,14 +44,14 @@ input because they cannot be assigned when defining infrastructure.
 | --- | --- |
 | `ConfigurationStore` | Tracked resource envelope and resource-level properties |
 | `KeyValue` | Child resource with a generated typed parent |
-| `Item` | Writable properties discovered from a separate create body |
+| `Item` | Writable properties discovered from a separate create body; deployment-scoped child composite names for deployable and existing resources |
 | `Profile` and `ProfileRevision` | Distinct resources generated from one input model |
 | `ResourceProfile` | Resource models exposed as model properties |
 | `DiscriminatedResourceProfile` and `SpecializedResourceProfile` | Resource inheritance with a discriminator |
 | `ResourceProfileRevision` | Read-only child resource used as a model property |
 | `ExtensionAssignment` | Billing-profile extension resource with an optional generic scope |
 | `ReadOnlyExtension` | Existing-only billing-profile singleton preserving scope without a public constructor |
-| `ExtensionChild` | Child of an extension resource with an optional typed parent or composite name and no duplicate scope |
+| `ExtensionChild` | Child of an extension resource with an optional typed parent and no duplicate scope; billing-scoped tests preserve external identity through the parent |
 | `MultiScopeAssignment` | Extension or resource-group identity with optional scope |
 | `SingletonSetting` | `@singleton` resource with an optional typed parent and an overridable relative default name |
 | `LegacySingleton` | Top-level singleton inferred from a legacy fixed route |
