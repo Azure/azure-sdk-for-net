@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public  class AzureMonitorExporterExtensionsTests
+    public class AzureMonitorExporterExtensionsTests
     {
         [Fact]
         public void AddAzureMonitorLogExporterWithNamedOptions()
@@ -27,16 +27,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     services.Configure<AzureMonitorExporterOptions>(o =>
                     {
                         o.ConnectionString = connectionString;
+                        o.DisableOfflineStorage = true;
+                        o.EnableStatsbeat = false;
                         defaultConfigureExporterOptionsInvocations++;
                     });
                     services.Configure<AzureMonitorExporterOptions>("Exporter2", o =>
                     {
                         o.ConnectionString = connectionString;
+                        o.DisableOfflineStorage = true;
+                        o.EnableStatsbeat = false;
                         namedConfigureExporterOptionsInvocations++;
                     });
                     services.Configure<AzureMonitorExporterOptions>("Exporter3", o =>
                     {
                         o.ConnectionString = connectionString;
+                        o.DisableOfflineStorage = true;
+                        o.EnableStatsbeat = false;
                         namedConfigureExporterOptionsInvocations++;
                     });
                 })

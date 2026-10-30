@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void VerifyNullConnectionString()
         {
             var factory = new TransmitterFactory();
-            var options = new AzureMonitorExporterOptions() { ConnectionString = null };
+            var options = new AzureMonitorExporterOptions() { ConnectionString = null, DisableOfflineStorage = true, EnableStatsbeat = false };
 
             var mockPlatform = new MockPlatform();
             mockPlatform.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", "InstrumentationKey=00000000-0000-0000-0000-000000000000;");
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void VerifyRepeatedCallsGenerateOnlyOneTransmitter()
         {
             var factory = new TransmitterFactory();
-            var options = new AzureMonitorExporterOptions { ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;" };
+            var options = new AzureMonitorExporterOptions { ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;", DisableOfflineStorage = true, EnableStatsbeat = false };
 
             var transmitter1 = factory.Get(options);
             var transmitter2 = factory.Get(options);

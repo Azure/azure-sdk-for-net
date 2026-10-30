@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
@@ -19,6 +20,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 using Xunit;
 
@@ -160,6 +162,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var routeBatch = Convert(Measure(1));
 
             Assert.Equal(0, routeBatch.Count);
+        }
+
+        [Fact]
+        public void InternalRoutingUsesTheDefaultOnlyForUnselectedMeters()
+        {
+            using var routedMeter = new Meter("InternalRouted." + Guid.NewGuid().ToString("N"));
+            using var defaultMeter = new Meter("InternalDefault." + Guid.NewGuid().ToString("N"));
+            routedMeter.CreateObservableGauge("Attach", () => new[]
+            {
+                new Measurement<long>(1, Ikey("internal-eu"), Endpoint(WestUs), Tag("cikey", "customer")),
+                new Measurement<long>(1, Tag("cikey", "missing-route"))
+            });
+            defaultMeter.CreateObservableGauge("Feature", () => new Measurement<long>(2, Tag("cikey", "host")));
+            var transmitter = new MockTransmitter(new List<TelemetryItem>(), "internal-us");
+            using var exporter = new AzureMonitorMetricExporter(
+                transmitter, multiEndpointEnabled: true,
+                ConnectionStringParser.GetValues("InstrumentationKey=internal-us;IngestionEndpoint=" + EastUs),
+                routedMeter.Name);
+            using var provider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(routedMeter.Name, defaultMeter.Name)
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("internal-host"))
+                .AddReader(new BaseExportingMetricReader(exporter) { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
+            Assert.True(provider.ForceFlush());
+            Assert.Equal(2, transmitter.Sends.Count);
+            var routed = Assert.Single(transmitter.Sends.Single(send => send.IngestionEndpoint == WestUs).TelemetryItems);
+            Assert.Equal("internal-eu", routed.InstrumentationKey);
+            Assert.Equal("customer", ((MetricsData)routed.Data.BaseData).Properties["cikey"]);
+            var fallback = Assert.Single(transmitter.Sends.Single(send => send.IngestionEndpoint == EastUs).TelemetryItems);
+            Assert.Equal("internal-us", fallback.InstrumentationKey);
+            Assert.Equal("Feature", Assert.Single(((MetricsData)fallback.Data.BaseData).Metrics).Name);
+            Assert.Equal("internal-host", routed.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("internal-host", fallback.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(0, transmitter.TrackAsyncCallCount);
         }
 
         /// <summary>

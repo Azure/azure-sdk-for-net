@@ -17,8 +17,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// VM "os" dimension fallback.
     /// </summary>
     [Collection(nameof(DistroSdkStatsRoutingCollection))]
-    public class StatsbeatEnvVarTests
+    public class StatsbeatEnvVarTests : IDisposable
     {
+        private readonly MockStatsbeatScope _stats = new();
+
+        public void Dispose() => _stats.Dispose();
+
         private const string NonEuConnectionString =
             "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus.in.applicationinsights.azure.com/";
 
@@ -40,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ShortExportInterval_DefaultsToNetworkStatsbeatInterval()
         {
-            using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), new MockPlatform());
+            using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), _stats.Platform);
 
             Assert.Equal(StatsbeatConstants.NetworkStatsbeatInterval, statsbeat._networkExportIntervalMilliseconds);
         }
@@ -48,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ShortExportInterval_OverriddenFromEnvVarInSeconds()
         {
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL, "30");
 
             using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), platform);
@@ -63,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("2147484")] // seconds * 1000 would overflow int; must fall back to default.
         public void ShortExportInterval_InvalidValueFallsBackToDefault(string value)
         {
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL, value);
 
             using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), platform);
@@ -74,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void LongExportInterval_DefaultsToAttachEmissionInterval()
         {
-            using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), new MockPlatform());
+            using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), _stats.Platform);
 
             Assert.Equal(StatsbeatConstants.AttachEmissionInterval, statsbeat._attachEmissionInterval);
         }
@@ -82,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void LongExportInterval_OverriddenFromEnvVarInSeconds()
         {
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL, "3600");
 
             using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), platform);
@@ -93,10 +97,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ConnectionStringOverride_TakesPrecedenceOverRegionEndpoint()
         {
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             var overrideConnectionString =
                 "InstrumentationKey=11111111-1111-1111-1111-111111111111;IngestionEndpoint=https://sdkstats.test.example.com/";
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, overrideConnectionString);
+            _stats.Add(overrideConnectionString);
 
             using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), platform);
 
@@ -108,10 +113,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             // An unknown region normally throws in the legacy path; the override must short-circuit
             // that resolution so SDKStats still initialize against the override destination.
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             var overrideConnectionString =
                 "InstrumentationKey=11111111-1111-1111-1111-111111111111;IngestionEndpoint=https://sdkstats.test.example.com/";
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, overrideConnectionString);
+            _stats.Add(overrideConnectionString);
 
             var unknownRegion = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
 
@@ -130,10 +136,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AppContext.SetSwitch(switchName, true);
             try
             {
-                var platform = new MockPlatform();
+                var platform = _stats.Platform;
                 var overrideConnectionString =
                     "InstrumentationKey=11111111-1111-1111-1111-111111111111;IngestionEndpoint=https://sdkstats.test.example.com/";
                 platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, overrideConnectionString);
+                _stats.Add(overrideConnectionString);
 
                 using var statsbeat = new AzureMonitorStatsbeat(ConnectionStringParser.GetValues(NonEuConnectionString), platform);
 
@@ -150,7 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void DisabledAll_KillSwitch_PreventsStatsbeatInitialization()
         {
-            var platform = new MockPlatform();
+            var platform = _stats.Platform;
             platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL, "true");
 
             using var transmitter = new AzureMonitorTransmitter(
@@ -163,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void DisabledAll_UnsetByDefault_StatsbeatIsInitialized()
         {
             using var transmitter = new AzureMonitorTransmitter(
-                new AzureMonitorExporterOptions { ConnectionString = NonEuConnectionString }, new MockPlatform());
+                new AzureMonitorExporterOptions { ConnectionString = NonEuConnectionString }, _stats.Platform);
 
             Assert.NotNull(transmitter._statsbeat);
         }
