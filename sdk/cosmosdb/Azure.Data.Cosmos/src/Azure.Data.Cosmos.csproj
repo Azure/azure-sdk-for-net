@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Cosmos DB client library for .NET, backed by the Azure Cosmos DB Rust driver.</Description>
+    <AssemblyTitle>Azure Cosmos DB client library for .NET</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft Azure Cosmos DB;Microsoft;Azure;Cosmos;CosmosDB;NoSQL;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+</Project>
