@@ -1,9 +1,8 @@
 # Azure Semantic Reranker client library for .NET
 
-> [!IMPORTANT]
-> `Azure.Data.AI` is a provisional package and namespace for the Semantic Reranker service. Product naming is not final.
-
 Azure.Data.AI provides semantic reranking operations for .NET applications.
+
+Version 1.0.0 is the first stable release and targets service API version `2026-10-30`.
 
 ## Getting started
 
@@ -12,7 +11,7 @@ Azure.Data.AI provides semantic reranking operations for .NET applications.
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Data.AI --prerelease
+dotnet add package Azure.Data.AI
 ```
 
 ### Prerequisites

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> ExpressRoutePort properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ExpressRoutePortAuthorizationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRoutePortAuthorizationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ExpressRoutePortAuthorizationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ExpressRoutePortAuthorizationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.AuthorizationUseStatus;
+            }
+        }
+
+        /// <summary> The reference to the ExpressRoute circuit resource using the authorization. </summary>
+        [WirePath("properties.circuitResourceUri")]
+        public Uri CircuitResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CircuitResourceUri;
             }
         }
 

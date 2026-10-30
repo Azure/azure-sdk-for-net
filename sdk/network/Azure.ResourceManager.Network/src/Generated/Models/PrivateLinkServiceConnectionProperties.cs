@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
+        /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
         /// <param name="approvalReference"> A reference to an existing approved private endpoint whose connection approval state should be inherited by this connection at creation time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkServiceConnectionProperties(NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ApprovalReference approvalReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkServiceConnectionProperties(NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState, ApprovalReference approvalReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateLinkServiceId = privateLinkServiceId;
             GroupIds = groupIds;
             RequestMessage = requestMessage;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ApprovalReference = approvalReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> A reference to an existing approved private endpoint whose connection approval state should be inherited by this connection at creation time. </summary>
         [WirePath("approvalReference")]

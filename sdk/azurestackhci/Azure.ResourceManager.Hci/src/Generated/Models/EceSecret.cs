@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Hci.Models
         private const string LocalAdminCredentialValue = "LocalAdminCredential";
         /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
         private const string WitnessStorageKeyValue = "WitnessStorageKey";
+        /// <summary> chapCredential used for iSCSI CHAP authentication during edge machine node preparation. </summary>
+        private const string ChapCredentialValue = "chapCredential";
+        /// <summary> mutualChapCredential used for iSCSI mutual (bidirectional) CHAP authentication during edge machine node preparation. </summary>
+        private const string MutualChapCredentialValue = "mutualChapCredential";
 
         /// <summary> Initializes a new instance of <see cref="EceSecret"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +49,12 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
         public static EceSecret WitnessStorageKey { get; } = new EceSecret(WitnessStorageKeyValue);
+
+        /// <summary> chapCredential used for iSCSI CHAP authentication during edge machine node preparation. </summary>
+        public static EceSecret ChapCredential { get; } = new EceSecret(ChapCredentialValue);
+
+        /// <summary> mutualChapCredential used for iSCSI mutual (bidirectional) CHAP authentication during edge machine node preparation. </summary>
+        public static EceSecret MutualChapCredential { get; } = new EceSecret(MutualChapCredentialValue);
 
         /// <summary> Determines if two <see cref="EceSecret"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -20,29 +20,62 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
         public RaiPolicyProperties()
         {
+            AcsRegos = new ChangeTrackingList<RaiRegoReference>();
             ContentFilters = new ChangeTrackingList<RaiPolicyContentFilter>();
             CustomBlocklists = new ChangeTrackingList<CustomBlocklistConfig>();
             SafetyProviders = new ChangeTrackingList<RaiSafetyProviderSourceConfig>();
+            CustomExternalSafetyProviders = new ChangeTrackingList<RaiPolicyCustomExternalSafetyProviderReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
+        /// <param name="format">
+        /// The policy representation. Omission selects ContentFilters when creating a policy. ACS policy
+        /// creation and replacement require ACS.
+        /// </param>
+        /// <param name="acs"> The ACS manifest. Required by service validation when format is ACS. </param>
+        /// <param name="acsRegos"> Reusable same-account Rego resources loaded with the ACS manifest. </param>
         /// <param name="policyType"> Content Filters policy type. </param>
         /// <param name="mode"> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </param>
         /// <param name="basePolicyName"> Name of Rai policy. </param>
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <param name="customExternalSafetyProviders"> Optional external safety-provider references used by this policy. </param>
+        /// <param name="egressPolicy">
+        /// Egress (outbound network) policy controlling which external endpoints sandboxed
+        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<RaiSafetyProviderSourceConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyProperties(RaiPolicyFormat? format, RaiAcsManifest acs, IList<RaiRegoReference> acsRegos, RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<RaiSafetyProviderSourceConfig> safetyProviders, IList<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders, RaiEgressPolicyConfig egressPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Format = format;
+            Acs = acs;
+            AcsRegos = acsRegos;
             PolicyType = policyType;
             Mode = mode;
             BasePolicyName = basePolicyName;
             ContentFilters = contentFilters;
             CustomBlocklists = customBlocklists;
             SafetyProviders = safetyProviders;
+            CustomExternalSafetyProviders = customExternalSafetyProviders;
+            EgressPolicy = egressPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// The policy representation. Omission selects ContentFilters when creating a policy. ACS policy
+        /// creation and replacement require ACS.
+        /// </summary>
+        [WirePath("format")]
+        public RaiPolicyFormat? Format { get; set; }
+
+        /// <summary> The ACS manifest. Required by service validation when format is ACS. </summary>
+        [WirePath("acs")]
+        public RaiAcsManifest Acs { get; set; }
+
+        /// <summary> Reusable same-account Rego resources loaded with the ACS manifest. </summary>
+        [WirePath("acsRegos")]
+        public IList<RaiRegoReference> AcsRegos { get; }
 
         /// <summary> Content Filters policy type. </summary>
         [WirePath("type")]
@@ -67,5 +100,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The list of Safety Providers. </summary>
         [WirePath("safetyProviders")]
         public IList<RaiSafetyProviderSourceConfig> SafetyProviders { get; }
+
+        /// <summary> Optional external safety-provider references used by this policy. </summary>
+        [WirePath("customExternalSafetyProviders")]
+        public IList<RaiPolicyCustomExternalSafetyProviderReference> CustomExternalSafetyProviders { get; }
+
+        /// <summary>
+        /// Egress (outbound network) policy controlling which external endpoints sandboxed
+        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+        /// </summary>
+        [WirePath("egressPolicy")]
+        public RaiEgressPolicyConfig EgressPolicy { get; set; }
     }
 }

@@ -1,14 +1,15 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.9.0 (2026-10-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version from `2026-06-01` to `2026-09-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/fd6b671904429f73310b882648f81346b05024d1/specification/storage/resource-manager/Microsoft.Storage/Storage.
+    - Supported new `BlobAccessPointConfigurationResource` for managing Blob Access Point configurations and testing proposed and existing connections to backing data stores.
+    - Supported attaching blob containers to Blob Access Point configurations and enabling Blob Access Points through `StorageDataCollaborationPolicyProperties.AllowBlobAccessPoints`.
+    - Supported new `TurboTier` configuration on storage account create/update, including status and target percentage.
+    - Supported context cache name availability checks.
+    - Supported new `ServiceTags` property on `NspAccessRuleProperties` for inbound network security perimeter access rules.
 
 ## 1.8.0 (2026-09-23)
 

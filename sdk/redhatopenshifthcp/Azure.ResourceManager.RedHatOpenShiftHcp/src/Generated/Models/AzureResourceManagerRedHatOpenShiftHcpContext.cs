@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterActiveVersion))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredential))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredentialRequestContent))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterApiProfile))]
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterKmsEncryptionProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterKmsKey))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolActiveVersion))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolAutoScaling))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolData))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolLabel))]
@@ -47,11 +49,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolPlatformProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolProperties))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolResource))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolResourceStatus))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolTaint))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterNodePoolVersionProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterPlatformProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterProperties))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterResource))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterResourceStatus))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterUserAssignedIdentitiesProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterVersionProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftVersionData))]

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of DeletedServers and their operations over a DeletedServerResource. </returns>
         public virtual DeletedServerCollection GetDeletedServers(AzureLocation locationName)
         {
-            return GetCachedClient(client => new DeletedServerCollection(client, Id, locationName));
+            return new DeletedServerCollection(Client, Id, locationName);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of SubscriptionLongTermRetentionBackups and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
         public virtual SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            return GetCachedClient(client => new SubscriptionLongTermRetentionBackupCollection(client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName));
+            return new SubscriptionLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackups and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
         public virtual SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(AzureLocation locationName, string managedInstanceName, string databaseName)
         {
-            return GetCachedClient(client => new SubscriptionLongTermRetentionManagedInstanceBackupCollection(client, Id, locationName, managedInstanceName, databaseName));
+            return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of SubscriptionUsages and their operations over a SubscriptionUsageResource. </returns>
         public virtual SubscriptionUsageCollection GetSubscriptionUsages(AzureLocation locationName)
         {
-            return GetCachedClient(client => new SubscriptionUsageCollection(client, Id, locationName));
+            return new SubscriptionUsageCollection(Client, Id, locationName);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of SqlTimeZones and their operations over a SqlTimeZoneResource. </returns>
         public virtual SqlTimeZoneCollection GetSqlTimeZones(AzureLocation locationName)
         {
-            return GetCachedClient(client => new SqlTimeZoneCollection(client, Id, locationName));
+            return new SqlTimeZoneCollection(Client, Id, locationName);
         }
 
         /// <summary>

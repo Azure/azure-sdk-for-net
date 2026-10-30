@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the web application firewall policy. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyPropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -125,6 +126,48 @@ namespace Azure.ResourceManager.Network
                     Properties = new WebApplicationFirewallPolicyPropertiesFormat();
                 }
                 Properties.ManagedRules = value;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway http listeners. </summary>
+        [WirePath("properties.httpListeners")]
+        public IReadOnlyList<WritableSubResource> HttpListeners
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.HttpListeners;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway path rules. </summary>
+        [WirePath("properties.pathBasedRules")]
+        public IReadOnlyList<WritableSubResource> PathBasedRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.PathBasedRules;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway for containers. </summary>
+        [WirePath("properties.applicationGatewayForContainers")]
+        public IReadOnlyList<SubResource> ApplicationGatewayForContainers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
+                }
+                return Properties.ApplicationGatewayForContainers;
             }
         }
 

@@ -66,23 +66,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Preferred IP version of the connection. </summary>
         [WirePath("preferredIPVersion")]
         public NetworkIPVersion? PreferredIPVersion { get; set; }
-
-        /// <summary> HTTP configuration of the connectivity check. </summary>
-        [WirePath("protocolConfiguration.HTTPConfiguration")]
-        public NetworkHttpConfiguration ProtocolHTTPConfiguration
-        {
-            get
-            {
-                return ProtocolConfiguration is null ? default : ProtocolConfiguration.HTTPConfiguration;
-            }
-            set
-            {
-                if (ProtocolConfiguration is null)
-                {
-                    ProtocolConfiguration = new ProtocolConfiguration();
-                }
-                ProtocolConfiguration.HTTPConfiguration = value;
-            }
-        }
     }
 }
