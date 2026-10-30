@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-09-01",
+            "2026-12-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ContextCachesClientDiagnostics => _contextCachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.Storage.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-09-01",
+            "2026-12-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-12-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-12-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-12-01");
 
         /// <summary> Gets a collection of DeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedAccounts and their operations over a DeletedAccountResource. </returns>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>

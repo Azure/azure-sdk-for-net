@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded api-version from `2026-09-01` to `2026-12-01`.
+- Added `MetadataPolicyResource` for managing storage account metadata policies, including metadata snapshot policy settings.
+
 ### Breaking Changes
 
 ### Bugs Fixed

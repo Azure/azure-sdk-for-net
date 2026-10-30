@@ -125,6 +125,15 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageAccountManagementPolicyResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="MetadataPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetadataPolicyResource"/> object. </returns>
+        public virtual MetadataPolicyResource GetMetadataPolicyResource(ResourceIdentifier id)
+        {
+            MetadataPolicyResource.ValidateResourceId(id);
+            return new MetadataPolicyResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>

@@ -1379,6 +1379,42 @@ namespace Azure.ResourceManager.Storage.Models
             return new ManagementPolicyTagFilter(name, @operator, value, default);
         }
 
+        /// <summary> The metadata policy for a storage account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Storage.MetadataPolicyData"/> instance for mocking. </returns>
+        public static MetadataPolicyData MetadataPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetadataPolicyProperties properties = default)
+        {
+            return new MetadataPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The properties of a storage account metadata policy. </summary>
+        /// <param name="lastModifiedOn"> The date and time when the metadata policy was last modified. </param>
+        /// <param name="snapshotPolicy"> The metadata snapshot policy for the storage account. </param>
+        /// <returns> A new <see cref="Models.MetadataPolicyProperties"/> instance for mocking. </returns>
+        public static MetadataPolicyProperties MetadataPolicyProperties(DateTimeOffset? lastModifiedOn = default, MetadataSnapshotPolicy snapshotPolicy = default)
+        {
+            return new MetadataPolicyProperties(lastModifiedOn, snapshotPolicy, default);
+        }
+
+        /// <param name="name"> The server-assigned metadata snapshot policy name. </param>
+        /// <param name="status"> The status of the metadata snapshot policy. </param>
+        /// <param name="definitionRefreshFrequency"> The frequency at which metadata snapshots are refreshed. </param>
+        /// <returns> A new <see cref="Models.MetadataSnapshotPolicy"/> instance for mocking. </returns>
+        public static MetadataSnapshotPolicy MetadataSnapshotPolicy(string name = default, MetadataSnapshotPolicyStatus status = default, MetadataSnapshotRefreshFrequency? definitionRefreshFrequency = default)
+        {
+            return new MetadataSnapshotPolicy(name, status, definitionRefreshFrequency is null ? default : new MetadataSnapshotPolicyDefinition(definitionRefreshFrequency, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
