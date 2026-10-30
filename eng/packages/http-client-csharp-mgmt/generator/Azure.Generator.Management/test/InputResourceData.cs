@@ -831,7 +831,13 @@ namespace Azure.Generator.Management.Tests.Common
         /// Child:  .../parents/{parentName}/nestedTypes/{nestedTypeName}/children/{childName}
         /// The child has one extra path parameter (nestedTypeName) between parent and child.
         /// </summary>
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource(string childResourceName = "ChildType", bool? resourceNameIsExplicit = null)
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource(
+            string pathParameterName = "nestedTypeName",
+            string? clientParameterName = null,
+            bool isExactName = false,
+            bool childHasParent = true,
+            string childResourceName = "ChildType",
+            bool? resourceNameIsExplicit = null)
         {
             const string ParentClientName = "ParentClient";
             const string ChildClientName = "ChildClient";
@@ -870,11 +876,11 @@ namespace Azure.Generator.Management.Tests.Common
             var parentDataOpParam = InputFactory.BodyParameter("data", parentModel, isRequired: true);
 
             // Child operation parameters (includes nestedTypeName as extra path param)
-            var nestedTypeNameOpParam = InputFactory.PathParameter("nestedTypeName", InputPrimitiveType.String, isRequired: true);
+            var nestedTypeNameOpParam = InputFactory.PathParameter(pathParameterName, InputPrimitiveType.String, isRequired: true);
             var childNameOpParam = InputFactory.PathParameter("childName", InputPrimitiveType.String, isRequired: true);
 
             var parentIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/parents/{parentName}";
-            var childIdPattern = parentIdPattern + "/nestedTypes/{nestedTypeName}/children/{childName}";
+            var childIdPattern = parentIdPattern + $"/nestedTypes/{{{pathParameterName}}}/children/{{childName}}";
 
             // Parent operations
             var parentGetOp = InputFactory.Operation(name: "get", responses: [parentResponseType], parameters: [subsIdOpParam, rgOpParam, parentNameOpParam], path: parentIdPattern);
@@ -886,7 +892,7 @@ namespace Azure.Generator.Management.Tests.Common
             var childCreateOp = InputFactory.Operation(name: "createChild", responses: [childResponseType], parameters: [subsIdOpParam, rgOpParam, parentNameOpParam, nestedTypeNameOpParam, childNameOpParam, childDataOpParam], path: childIdPattern, httpMethod: "PUT");
 
             // List operation for the child (needed so the collection detects path parameters)
-            var childListPath = parentIdPattern + "/nestedTypes/{nestedTypeName}/children";
+            var childListPath = parentIdPattern + $"/nestedTypes/{{{pathParameterName}}}/children";
             var childPageModel = InputFactory.Model("ChildListResult",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                 properties:
@@ -903,7 +909,9 @@ namespace Azure.Generator.Management.Tests.Common
             var parentDataParam = InputFactory.MethodParameter("data", parentModel, location: InputRequestLocation.Body, isRequired: true);
 
             // Child method parameters
-            var nestedTypeNameParam = InputFactory.MethodParameter("nestedTypeName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var nestedTypeNameParam = InputFactory.MethodParameter(clientParameterName ?? pathParameterName, InputPrimitiveType.String,
+                serializedName: pathParameterName, location: InputRequestLocation.Path, isRequired: true);
+            typeof(InputMethodParameter).GetProperty(nameof(InputMethodParameter.IsExactName))!.SetValue(nestedTypeNameParam, isExactName);
             var childNameParam = InputFactory.MethodParameter("childName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
             var childDataParam = InputFactory.MethodParameter("data", childModel, location: InputRequestLocation.Body, isRequired: true);
 
@@ -927,7 +935,7 @@ namespace Azure.Generator.Management.Tests.Common
                     new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
                     new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
-                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, childResourceName, parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup), ResourceNameIsExplicit: resourceNameIsExplicit)
+                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, childResourceName, childHasParent ? parentIdPattern : null, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
 
             var parentClient = InputFactory.Client(

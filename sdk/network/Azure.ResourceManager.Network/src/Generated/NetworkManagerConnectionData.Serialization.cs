@@ -202,7 +202,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        eTag = null;
                         continue;
                     }
                     eTag = new ETag(prop.Value.GetString());

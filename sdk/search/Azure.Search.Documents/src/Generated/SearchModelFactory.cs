@@ -939,10 +939,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="bufferSize"> The read buffer size in bytes. Default is 256. </param>
         /// <returns> A new <see cref="Indexes.Models.KeywordTokenizer"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         public static KeywordTokenizer KeywordTokenizer(string name = default, int? bufferSize = default)
         {
             return new KeywordTokenizer("#Microsoft.Azure.Search.KeywordTokenizer", name, additionalBinaryDataProperties: null, bufferSize);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> Divides text using language-specific rules. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
@@ -1176,10 +1180,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. </param>
         /// <returns> A new <see cref="Indexes.Models.NGramTokenFilter"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         public static NGramTokenFilter NGramTokenFilter(string name = default, int? minGram = default, int? maxGram = default)
         {
             return new NGramTokenFilter("#Microsoft.Azure.Search.NGramTokenFilter", name, additionalBinaryDataProperties: null, minGram, maxGram);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> Uses Java regexes to emit multiple tokens - one for each capture group in one or more patterns. This token filter is implemented using Apache Lucene. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>

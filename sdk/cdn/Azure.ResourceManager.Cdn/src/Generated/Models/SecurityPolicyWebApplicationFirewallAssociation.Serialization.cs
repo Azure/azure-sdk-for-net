@@ -99,6 +99,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Routes))
+            {
+                writer.WritePropertyName("routes"u8);
+                writer.WriteStartArray();
+                foreach (CdnResourceReference item in Routes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,6 +153,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             IList<FrontDoorActivatedResourceInfo> domains = default;
             IList<string> patternsToMatch = default;
+            IList<CdnResourceReference> routes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,12 +192,26 @@ namespace Azure.ResourceManager.Cdn.Models
                     patternsToMatch = array;
                     continue;
                 }
+                if (prop.NameEquals("routes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
+                    }
+                    routes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallAssociation(domains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), patternsToMatch ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new SecurityPolicyWebApplicationFirewallAssociation(domains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), patternsToMatch ?? new ChangeTrackingList<string>(), routes ?? new ChangeTrackingList<CdnResourceReference>(), additionalBinaryDataProperties);
         }
     }
 }

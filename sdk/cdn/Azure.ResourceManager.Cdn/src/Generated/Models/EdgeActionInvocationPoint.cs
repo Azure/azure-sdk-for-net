@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly string _value;
         private const string ClientRequestValue = "ClientRequest";
         private const string OriginRequestValue = "OriginRequest";
+        /// <summary> Invoked at the client response stage, before the response is returned to the client. Currently only supported for edge actions. </summary>
+        private const string ClientResponseValue = "ClientResponse";
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionInvocationPoint"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the OriginRequest. </summary>
         public static EdgeActionInvocationPoint OriginRequest { get; } = new EdgeActionInvocationPoint(OriginRequestValue);
+
+        /// <summary> Invoked at the client response stage, before the response is returned to the client. Currently only supported for edge actions. </summary>
+        public static EdgeActionInvocationPoint ClientResponse { get; } = new EdgeActionInvocationPoint(ClientResponseValue);
 
         /// <summary> Determines if two <see cref="EdgeActionInvocationPoint"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -14,11 +14,11 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the properties of a connection monitor. </summary>
-    public partial class ConnectionMonitorResultProperties : ConnectionMonitorCreateOrUpdateContent, IJsonModel<ConnectionMonitorResultProperties>
+    internal partial class ConnectionMonitorResultProperties : ConnectionMonitorParameters, IJsonModel<ConnectionMonitorResultProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConnectionMonitorCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ConnectionMonitorParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConnectionMonitorCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ConnectionMonitorParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.Network.Models
             string notes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkProvisioningState? provisioningState = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string monitoringStatus = default;
-            ConnectionMonitorEndpointType? connectionMonitorType = default;
+            ConnectionMonitorType? connectionMonitorType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("source"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("monitoringStatus"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    connectionMonitorType = new ConnectionMonitorEndpointType(prop.Value.GetString());
+                    connectionMonitorType = new ConnectionMonitorType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 notes,
                 additionalBinaryDataProperties,
                 provisioningState,
-                startOn,
+                startsOn,
                 monitoringStatus,
                 connectionMonitorType);
         }

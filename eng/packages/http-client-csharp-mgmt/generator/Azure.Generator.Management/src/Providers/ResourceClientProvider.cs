@@ -466,6 +466,8 @@ namespace Azure.Generator.Management.Providers
             var parameters = new List<ParameterProvider>();
             var formatBuilder = new StringBuilder();
             var refCount = 0;
+            var parameterTypes = _operationContext.ContextualPath.Where(segment => !segment.IsConstant)
+                .Select(segment => ResourceHelpers.GetRequestPathParameterType(segment.VariableName, _readMethod.InputMethod)).ToArray();
 
             foreach (var segment in _operationContext.ContextualPath)
             {
@@ -483,7 +485,14 @@ namespace Azure.Generator.Management.Providers
                         formatBuilder.Append('/');
                     }
                     var variableName = segment.VariableName;
-                    var parameter = new ParameterProvider(variableName, $"The {variableName}", ResourceHelpers.GetRequestPathParameterType(variableName, _readMethod.InputMethod));
+                    var inputParameter = SynthesizedParameterNameHelper.GetPathParameter(variableName, _readMethod.InputMethod);
+                    var parameterName = inputParameter?.IsExactName == true
+                        ? inputParameter.Name
+                        : SynthesizedParameterNameHelper.GetExistingParameterName(this, "CreateResourceIdentifier", parameterTypes, parameters.Count)
+                            ?? SynthesizedParameterNameHelper.GetPathParameterName(variableName, _readMethod.InputMethod);
+                    var parameter = SynthesizedParameterNameHelper.PreserveName(new ParameterProvider(parameterName, $"The {parameterName}", parameterTypes[parameters.Count],
+                        wireInfo: new WireInformation(SerializationFormat.Default, variableName),
+                        inputParameter: inputParameter));
                     parameters.Add(parameter);
                     formatBuilder.Append($"{{{refCount++}}}");
                 }

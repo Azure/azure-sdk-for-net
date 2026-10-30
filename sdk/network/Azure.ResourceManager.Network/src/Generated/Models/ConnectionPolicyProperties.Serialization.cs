@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             bool? enableInternetSecurity = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration routingConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<string> associatedConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

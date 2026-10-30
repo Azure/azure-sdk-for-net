@@ -86,7 +86,7 @@ internal class ResourceNameTests
     public void PublishedCollectionAccessorSurvivesRegeneration(string name, bool legacy, bool child)
     {
         var (client, models) = InputResourceData.ClientWithResource(resourceName: name, resourceNameIsExplicit: false);
-        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource(name, false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource(childResourceName: name, resourceNameIsExplicit: false);
         var clients = child ? new[] { parentClient, childClient } : new[] { client };
         var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models, clients: () => clients);
         var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == name);
@@ -121,7 +121,7 @@ internal class ResourceNameTests
         [Values("extra", "type", "name", "ref", "static", "generic")] string shape)
     {
         var (client, models) = InputResourceData.ClientWithResource(resourceName: "OS", resourceNameIsExplicit: false);
-        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource("OS", false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource(childResourceName: "OS", resourceNameIsExplicit: false);
         var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
             clients: () => child ? [parentClient, childClient] : [client]);
         var parameters = child ? "string nestedTypeName" : "";
@@ -194,7 +194,7 @@ internal class ResourceNameTests
         [Values(false, true)] bool legacy)
     {
         var (client, models) = InputResourceData.ClientWithResource(resourceName: "OS", resourceNameIsExplicit: false);
-        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource("OS", false);
+        var (parentClient, childClient, childModels) = InputResourceData.ClientWithNestedChildResource(childResourceName: "OS", resourceNameIsExplicit: false);
         ManagementMockHelpers.LoadMockPlugin(inputModels: () => child ? childModels : models,
             clients: () => child ? [parentClient, childClient] : [client]);
         var getter = legacy ? "GetOs" : "GetAllOS";
@@ -313,7 +313,7 @@ internal class ResourceNameTests
     [TestCase("Ipv6Address", "GetIPv6Addresses")]
     public void ChildGettersUseFinalStem(string input, string getter)
     {
-        var (parent, child, models) = InputResourceData.ClientWithNestedChildResource(input, false);
+        var (parent, child, models) = InputResourceData.ClientWithNestedChildResource(childResourceName: input, resourceNameIsExplicit: false);
         var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parent, child]);
         var parentResource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>()
             .Single(r => r.ResourceName == "ParentType");

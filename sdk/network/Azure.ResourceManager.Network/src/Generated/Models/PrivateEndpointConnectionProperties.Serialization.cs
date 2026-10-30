@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             PrivateEndpointData privateEndpoint = default;
-            NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            NetworkPrivateLinkServiceConnectionState connectionState = default;
             NetworkProvisioningState? provisioningState = default;
             string linkIdentifier = default;
             string privateEndpointLocation = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new PrivateEndpointConnectionProperties(
                 privateEndpoint,
-                privateLinkServiceConnectionState,
+                connectionState,
                 provisioningState,
                 linkIdentifier,
                 privateEndpointLocation,
