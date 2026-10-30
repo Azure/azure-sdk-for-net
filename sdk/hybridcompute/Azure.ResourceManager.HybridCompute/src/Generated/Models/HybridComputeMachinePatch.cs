@@ -172,6 +172,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
+        /// <summary> Public Key that the client provides to be used during initial resource onboarding. </summary>
+        [WirePath("properties.clientPublicKey")]
+        public string ClientPublicKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientPublicKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineUpdateProperties();
+                }
+                Properties.ClientPublicKey = value;
+            }
+        }
+
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         [WirePath("properties.cloudMetadata.provider")]
         public string CloudMetadataProvider
